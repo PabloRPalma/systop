@@ -85,7 +85,7 @@ jQuery.noConflict();
 			 <s:else>
       		<s:submit value="修改" cssClass="button"/>
     		</s:else>
-            <s:reset value="清空" cssClass="button" onClick="clearFCK();"/>
+            <s:reset value="清空" cssClass="button" onclick="clearFCK();"/>
 	    </td>
 	  </tr>
 	</table>
