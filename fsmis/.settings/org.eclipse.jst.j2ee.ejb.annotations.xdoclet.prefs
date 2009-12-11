@@ -1,0 +1,21 @@
+#Fri Dec 11 10:02:31 CST 2009
+XDOCLETBUILDERACTIVE=false
+XDOCLETHOME=
+XDOCLETUSEGLOBAL=false
+XDOCLETVERSION=1.2.1
+eclipse.preferences.version=1
+org.eclipse.jst.j2ee.xdoclet.runtime.internal.tasks.DaoEjbdocletTaskProvider.defaultSelection=false
+org.eclipse.jst.j2ee.xdoclet.runtime.internal.tasks.DataObjectEjbdocletTaskProvider.defaultSelection=false
+org.eclipse.jst.j2ee.xdoclet.runtime.internal.tasks.DeploymentDescriptorEjbdocletTaskProvider.defaultSelection=false
+org.eclipse.jst.j2ee.xdoclet.runtime.internal.tasks.DeploymentDescriptorWebdocletTaskProvider.defaultSelection=false
+org.eclipse.jst.j2ee.xdoclet.runtime.internal.tasks.EntitybmpEjbdocletTaskProvider.defaultSelection=false
+org.eclipse.jst.j2ee.xdoclet.runtime.internal.tasks.EntitycmpEjbdocletTaskProvider.defaultSelection=false
+org.eclipse.jst.j2ee.xdoclet.runtime.internal.tasks.EntitypkEjbdocletTaskProvider.defaultSelection=false
+org.eclipse.jst.j2ee.xdoclet.runtime.internal.tasks.HomeInterfaceEjbdocletTaskProvider.defaultSelection=false
+org.eclipse.jst.j2ee.xdoclet.runtime.internal.tasks.LocalHomeInterfaceEjbdocletTaskProvider.defaultSelection=false
+org.eclipse.jst.j2ee.xdoclet.runtime.internal.tasks.LocalInterfaceEjbdocletTaskProvider.defaultSelection=false
+org.eclipse.jst.j2ee.xdoclet.runtime.internal.tasks.MdbEjbdocletTaskProvider.defaultSelection=false
+org.eclipse.jst.j2ee.xdoclet.runtime.internal.tasks.RemoteInterfaceEjbdocletTaskProvider.defaultSelection=false
+org.eclipse.jst.j2ee.xdoclet.runtime.internal.tasks.SessionEjbdocletTaskProvider.defaultSelection=false
+org.eclipse.jst.j2ee.xdoclet.runtime.internal.tasks.UtilObjectEjbdocletTaskProvider.defaultSelection=false
+org.eclipse.jst.j2ee.xdoclet.runtime.internal.tasks.ValueObjectEjbdocletTaskProvider.defaultSelection=false
