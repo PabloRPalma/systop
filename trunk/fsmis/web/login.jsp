@@ -57,11 +57,6 @@
 <br><br><br>
 <table align="center" width="350" cellpadding="2" cellspacing="2">
 <tr><td align="left">
-<c:if test="${param.login_error == 'code_error'}">
-   <div style="border:1px solid #a9a9a9; width: 350; padding: 2px; margin: 2px">
-       <img border="0" src="<c:url value='/images/icons/warning.gif'/>"/>&nbsp;验证码输入错误！
-   </div>
-</c:if> 
 <c:if test="${param.login_error == 'user_psw_error' || param.login_error == '1'}">
    <div style="border:1px solid #a9a9a9; width: 350; padding: 2px; margin: 2px">
        <img border="0" src="<c:url value='/images/icons/warning.gif'/>"/>&nbsp;用户名或密码错误，请重试！
@@ -94,26 +89,6 @@
               <td><input name="j_password" id="j_password" type="password" size="16" class="password" /></td>
             </tr>
             <tr>
-              <td><span class="STYLE3">验证码：</span></td>
-              <td>
-	            <table>
-	              <tr>
-	              <td>
-		                <input name="j_captcha_response" type="text" 
-		                id="captcha" style="width: 50px;" autocomplete="off"/>
-		          </td>
-		          <td>
-		             <iframe id="captchaFrame" name="cf" src="<c:url value='/captcha.jpg' />" frameborder="0" scrolling="no" style="width:95px;height:26px;" marginheight="0" marginwidth="0"></iframe>						
-				  </td>
-				  <td>
-					<a href="#" style="color:#425E8D;" onclick="frames['cf'].location='<c:url value="/captcha.jpg" />';">
-					[刷]</a>
-				  </td>
-				 </tr>
-				</table>
-			  </td>
-            </tr>
-            <tr>
             	<td colspan="2"><img src="${ctx}/images/icons/key.gif" style="width:16px;height:16px;">
             	<a href="${ctx}/restorePassword/edit.do">忘记密码?</a></td>
             </tr>
@@ -131,24 +106,11 @@
     </table></td>
   </tr>
 </table>
-<div id="alert">请输入验证码!</div>
 <br><br><br>
 
 <script type="text/javascript">
 $(function() {
-   var dlg = $('#alert').dialog({
-       autoOpen:false,
-       modal:true,
-       buttons:{'确定' : function() {
-           $('#captcha').focus();
-           $(this).dialog('close');}
-       }
-   });
    $('#signOn').click(function() {
-        if($('#captcha').val() == '') {
-           $('#alert').dialog('open');
-           return false;
-       }
        $('#loginForm').submit();
    });
    $('#reg').click(function(){
