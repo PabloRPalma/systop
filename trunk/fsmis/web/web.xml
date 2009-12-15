@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app 
+   xmlns="http://java.sun.com/xml/ns/j2ee" 
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" 
+   version="2.4"> 
+
+	<!--
+	The display-name element contains a short name that 
+	is intended to be displayed by tools. The display 
+	name need not be unique.
+	-->
+	<display-name>cnhrVideo</display-name>
+	
+	<!--
+	The context-param element contains the declaration of a web
+	application's servlet context initialization parameters.
+	-->	
+	<context-param>
+		<param-name>webAppRootKey</param-name>
+		<param-value>/cnhrVideo</param-value>
+	</context-param>
+	<!-- Red5 Global Scope -->
+	<context-param>
+	    <param-name>globalScope</param-name>
+	    <param-value>default</param-value>
+	</context-param>
+	<!-- Red5 Parent Context 
+	<context-param>
+	    <param-name>parentContextKey</param-name>
+	    <param-value>default.context</param-value>
+	</context-param>
+	-->
+	<!-- Spring Context files -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			classpath*:spring/applicationContext-*.xml
+		</param-value>
+	</context-param>
+	
+	<!--i18n-->
+	<context-param>
+		<param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+		<param-value>application</param-value>
+	</context-param>
+	
+	<!--Ecside Properties-->
+	<context-param>
+		<param-name>ecsidePreferencesLocation</param-name>
+		<param-value>/ecside.properties</param-value>
+	</context-param>
+    <!-- 
+    remove the following servlet tags if you want 
+    to disable remoting for this application 
+    -->
+	<servlet>
+		<servlet-name>gateway</servlet-name>
+		<servlet-class>
+			org.red5.server.net.servlet.AMFGatewayServlet
+		</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+    
+    <!--
+	The servlet-mapping element defines a mapping 
+	between a servlet and a url pattern
+	-->
+	<servlet-mapping>
+		<servlet-name>gateway</servlet-name>
+		<url-pattern>/gateway</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>rtmpt</servlet-name>
+		<servlet-class>
+			org.red5.server.net.rtmpt.RTMPTServlet
+		</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>rtmpt</servlet-name>
+		<url-pattern>/open/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>rtmpt</servlet-name>
+		<url-pattern>/idle/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>rtmpt</servlet-name>
+		<url-pattern>/send/*</url-pattern>
+	</servlet-mapping>
+ 
+	<servlet-mapping>
+		<servlet-name>rtmpt</servlet-name>
+		<url-pattern>/close/*</url-pattern>
+	</servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>rtmpt</servlet-name>
+        <url-pattern>/fcs/*</url-pattern>
+    </servlet-mapping>
+	<!-- Logger 
+	<listener>
+		<listener-class>org.red5.logging.ContextLoggingListener</listener-class>
+	</listener>
+
+	<filter>
+		<filter-name>LoggerContextFilter</filter-name>
+		<filter-class>org.red5.logging.LoggerContextFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>LoggerContextFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>-->
+	<!-- Listeners Spring Context loader-->
+	
+	<listener>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+	
+	<!-- Spring refresh Introspector prevent from memory leak-->
+	
+	<listener>
+		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+	</listener>
+	 
+	<!--Open Session in View Filter -->
+	<filter>
+		<filter-name>hibernateFilter</filter-name>
+		<filter-class>
+			com.systop.core.dao.hibernate.OpenSessionInViewFilter
+		</filter-class>
+		<init-param>
+			<param-name>excludeSuffixs</param-name>
+			<param-value>js,css,jpg,gif,png</param-value>
+		</init-param>
+		
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>hibernateFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- Spring Character Encoding filter-->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>
+			org.springframework.web.filter.CharacterEncodingFilter
+		</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>	
+	<!--Acegi-->
+	<filter>
+        <filter-name>Acegi Filter Chain Proxy</filter-name>
+       
+        <filter-class>org.acegisecurity.util.FilterToBeanProxy</filter-class>
+        <init-param>
+            <param-name>targetClass</param-name>
+            <param-value>org.acegisecurity.util.FilterChainProxy</param-value>
+        </init-param>       
+    </filter>
+    
+    <filter-mapping>
+		<filter-name>Acegi Filter Chain Proxy</filter-name>
+		<url-pattern>/j_security_check</url-pattern>		
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>Acegi Filter Chain Proxy</filter-name>		
+		<url-pattern>/j_acegi_logout</url-pattern>		
+	</filter-mapping>
+	 <filter-mapping>
+		<filter-name>Acegi Filter Chain Proxy</filter-name>
+		<url-pattern>*.jsp</url-pattern>
+	</filter-mapping>
+	 <filter-mapping>
+		<filter-name>Acegi Filter Chain Proxy</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+	 <filter-mapping>
+		<filter-name>Acegi Filter Chain Proxy</filter-name>
+		<url-pattern>*.shtml</url-pattern>
+	</filter-mapping>
+	<!-- ecside is great Table tablib,and it is created by chinese -->
+	<filter>
+		<filter-name>ecsideExport</filter-name>
+		<filter-class>org.ecside.filter.ECSideFilter</filter-class>
+		
+		<init-param>
+			<param-name>useEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>		
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>ecsideExport</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- struts2 filter -->
+	<filter>
+		<filter-name>struts</filter-name>
+		<filter-class>
+			org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>struts</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+	
+	<!-- FreeMarkerServlet Config -->
+	<servlet>
+		<servlet-name>freeMarkerServlet</servlet-name>
+		<servlet-class>
+			com.systop.cms.webview.servlet.CmsWebViewServlet
+		</servlet-class>
+
+		<init-param>
+			<param-name>NoCache</param-name>
+			<param-value>true</param-value>
+		</init-param>
+
+		<!-- FreeMarker settings: -->
+		<init-param>
+			<param-name>template_update_delay</param-name>
+			<param-value>0</param-value><!-- 0 is for development only! Use higher value otherwise. -->
+		</init-param>
+		<init-param>
+			<param-name>default_encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>number_format</param-name>
+			<param-value>0.##########</param-value>
+		</init-param>
+
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>freeMarkerServlet</servlet-name>
+		<url-pattern>*.shtml</url-pattern>
+	</servlet-mapping>
+	<!-- Servlets DWR Ajax, plugins/DWR -->
+	<servlet>
+		<servlet-name>dwr-invoker</servlet-name>
+		<servlet-class>
+			org.directwebremoting.servlet.DwrServlet
+		</servlet-class>
+		<init-param>
+			<param-name>debug</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dwr-invoker</servlet-name>
+		<url-pattern>/dwr/*</url-pattern>
+	</servlet-mapping>
+	<!-- JCaptcha servlet -->
+	<servlet>
+        <servlet-name>jcaptcha</servlet-name>
+        <servlet-class>com.systop.common.modules.security.jcaptcha.ImageCaptchaServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>jcaptcha</servlet-name>
+        <url-pattern>/captcha.jpg</url-pattern>
+    </servlet-mapping>
+    
+    <!-- FCKEditor -->
+	<servlet>
+		<servlet-name>Connector</servlet-name>
+		<servlet-class>net.fckeditor.connector.ConnectorServlet</servlet-class>
+		<load-on-startup>3</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Connector</servlet-name>
+		<url-pattern>/scripts/fckeditor/editor/filemanager/connectors/*</url-pattern>
+	</servlet-mapping>
+    <!--minutes of session out of time-->
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+	<jsp-config>
+		
+		<taglib>
+			<taglib-uri>http://www.ecside.org</taglib-uri>
+			<taglib-location>
+				/WEB-INF/tld/ecside.tld
+			</taglib-location>
+		</taglib>
+		
+		<taglib>
+			<taglib-uri>/systop/common</taglib-uri>
+			<taglib-location>/WEB-INF/tld/common.tld</taglib-location>
+		</taglib>
+	</jsp-config>
+	
+	<welcome-file-list>
+		<welcome-file>index.shtml</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+	<!-- 
+	<error-page>
+		<error-code>403</error-code>
+		<location>/pages/error/403.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/pages/error/404.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/pages/error/500.jsp</location>
+	</error-page>
+	 -->
+	<!--
+	The security-constraint element is used to associate security
+	constraints with one or more web resource collections
+	-->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Forbidden</web-resource-name>
+            <url-pattern>/streams/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint/>
+    </security-constraint>
+
+</web-app>

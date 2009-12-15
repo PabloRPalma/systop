@@ -109,7 +109,11 @@
 	</div>
 	
 	<div id="menu_sys">
-		<div style="padding-left:5px;">          
+		<div style="padding-left:5px;">
+		    <div style="padding-top:2px">
+				<img src="${ctx}/images/icons/group.gif" class="icon">
+				<a href="${ctx}/admin/dept/index.do" target="main">单位/部门管理</a>
+			</div>          
 			<div style="padding-top:2px">
 				<img src="${ctx}/images/icons/user.gif" class="icon">
 				<a href="${ctx}/security/user/index.do" target="main">用户管理</a>
