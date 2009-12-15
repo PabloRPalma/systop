@@ -128,6 +128,14 @@
 			</td>
 		</tr>
 		<tr>
+			<td class="simple" align="right">所属部门：</td>
+			<td class="simple">			
+				<div id="comboxWithTree"  style="float: left;margin-left:2px;"></div><font color="red" style="margin-left:2px;">*</font>
+				<s:hidden name="model.dept.id" id="deptId"></s:hidden>
+			</td>
+			<td colspan="2"></td>
+		</tr>
+		<tr>
 			<td class="simple" align="right">工作单位：</td>
 			<td class="simple">&nbsp;<s:textfield name="model.unit"
 				cssClass="required" theme="simple" size="25" /> <font color="red">*</font></td>
@@ -277,6 +285,24 @@ $(function() {
 <script type="text/javascript">
 	$(document).ready(function() {
 	$("#save").validate();
+});
+</script>
+
+<script type="text/javascript" src="${ctx}/pages/admin/dept/edit.js"></script>
+<script type="text/javascript">
+Ext.onReady(function() {
+	var dtree = new DeptTree({
+		url : '/admin/dept/deptTree.do',
+		parent : '<stc:loginUserDept showPath="false" propertyName="id" showTopDept="true"></stc:loginUserDept>',
+		initValue : '${model.dept.name}',
+		el : 'comboxWithTree',
+		innerTree :'inner-tree',
+		onclick : function(nodeId) {
+		  Ext.get('deptId').dom.value = nodeId;
+		}
+	});
+	dtree.init();	
+	
 });
 </script>
 </body>

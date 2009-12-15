@@ -10,7 +10,7 @@ public final class DeptConstants {
   /**
    * 顶级部门名称
    */
-  public static final String TOP_DEPT_NAME = "公司"; 
+  public static final String TOP_DEPT_NAME = "河北省电力公司"; 
     
   
   /**
@@ -22,6 +22,12 @@ public final class DeptConstants {
    * 第一个部门的编号
    */
   public static final String FIRST_SERIAL_NO = "01";
+  
+  /**
+   * 部门类别
+   */
+  public static final String TYPE_COMPANY = "1";
+  public static final String TYPE_DEPT = "0";
   /**
    * private constructor
    */
