@@ -7,23 +7,11 @@
 <%@include file="/common/taglibs.jsp" %>
 <%@include file="/common/extjs.jsp" %>
 <%@include file="/common/meta.jsp" %>
+<link href="${ctx}/styles/treeSelect.css" type='text/css' rel='stylesheet'>
 <style type="text/css">
-.x-form-field-wrap .x-form-trigger{
-    display: none;
+input[type='text'] {
+    width : 200px;
 }
-.x-form-field-wrap .x-form-text,.x-form-field,.x-combo-noedit,.x-form-focus {
-   border:1px #cecece solid;
-   margin: 0 0 0 0;
-   padding: 0 0 0 0;
-   background: #ffffff url(${ctx}/images/exticons/drop-between.gif) no-repeat right;
-}
-.x-combo-list {
-    border:1px solid #cecece;
-    background:#ffffff;
-    zoom:1;
-    overflow:hidden;
-}
-
 </style>
 </head>
 
@@ -61,12 +49,18 @@
 				<table width="100%">
                         <tr>
                              <td>部门名称：</td>
-                             <td style="text-align:left;"><s:textfield name="model.name" id="deptName" theme="simple" size="30"/>*</td>
+                             <td style="text-align:left;"><s:textfield name="model.name" id="deptName" cssStyle="width:200px;"/>*</td>
+                        </tr>
+                        <tr>
+                             <td>类型：</td>
+                             <td style="text-align:left;">
+                             <s:select list="#{'1':'单位','0':'部门'}" name="model.type" cssClass="required" cssStyle="width:200px;"></s:select>
+                             *</td>
                         </tr>
                         <tr>
                              <td>上级部门：</td>
                              <td style="text-align:left;">
-		                         <div id="comboxWithTree"></div>
+		                         <div id="comboxWithTree" style="width:200px;"></div>
 		                         <s:hidden id="parentId" name="model.parentDept.id"/>
                              </td>
                         </tr>
@@ -75,7 +69,7 @@
                              <td>部门描述：</td>
                              <td style="text-align:left;">
                              <s:textarea name="model.descn" id="descn" theme="simple" rows="7" cols="32"
-                             cssStyle="border:1px #cbcbcb solid;z-index:auto;"/></td>
+                             cssStyle="border:1px #cbcbcb solid;z-index:auto; width:200px;"/></td>
                         </tr>
                         
                 </table>
@@ -92,19 +86,23 @@
                 
     	</div>
   </div>
-
-<script>
-   var initValue = '';
-   <s:if test="model.parentDept != null">
-     initValue = '${model.parentDept.name}';
-   </s:if>
-</script>
-
 <script type="text/javascript" src="${ctx}/pages/admin/dept/edit.js"></script>
 <script type="text/javascript">
-nodeIdCallback = function(nodeId) {
-  Ext.get('parentId').dom.value = nodeId;
-};
+Ext.onReady(function() {
+	var dtree = new DeptTree({
+		url : '/admin/dept/deptTree.do',
+		parent : '<stc:loginUserDept showPath="false" propertyName="id" showTopDept="true"></stc:loginUserDept>',
+		initValue : '${model.parentDept.name}',
+		el : 'comboxWithTree',
+		innerTree :'inner-tree',
+		onclick : function(nodeId) {
+		  Ext.get('parentId').dom.value = nodeId;
+		}
+	});
+	dtree.init();	
+	
+});
 </script>
+
 </body>
 </html>

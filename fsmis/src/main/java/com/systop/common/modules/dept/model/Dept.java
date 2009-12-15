@@ -46,6 +46,11 @@ public class Dept extends BaseModel implements Serializable {
      * 部门名称
      */
     private String name;
+    
+    /**
+     * 部门类别
+     */
+    private String type;
     /**
      * 部门编号规则：两位数字，从1自动排；
      */
@@ -203,4 +208,12 @@ public class Dept extends BaseModel implements Serializable {
     public String toString() {
         return new ToStringBuilder(this).append("id", getId()).toString();
     }
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 }

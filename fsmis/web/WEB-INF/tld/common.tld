@@ -79,4 +79,26 @@
     	</attribute>
     </tag>
     
+    <tag>
+    	<name>loginUserDept</name>
+    	<tag-class>com.systop.common.modules.security.acegi.taglibs.LoginUserDeptTag</tag-class>
+    	<body-content>JSP</body-content>
+    	<attribute>
+    		<name>showPath</name>
+    		<type>boolean</type>
+    		<description>if true show current user's dept path.</description>    		
+    	</attribute>
+    	<attribute>
+    		<name>showTopDept</name>
+    		<type>boolean</type>
+    		<description>if true show current user's top dept properties.default is true.</description>    		
+    	</attribute>
+    	<attribute>
+    		<name>propertyName</name>
+    		<type>java.lang.String</type>
+    		<description>To indicat which property of the user's dept to be display.</description>    		
+    	</attribute>
+    	
+    </tag>
+    
 </taglib>
