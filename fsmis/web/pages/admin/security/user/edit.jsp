@@ -4,8 +4,11 @@
 <%@include file="/common/taglibs.jsp"%>
 <html>
 <head>
+
+<%@include file="/common/extjs.jsp" %>
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/validator.jsp"%>
+<link href="${ctx}/styles/treeSelect.css" type='text/css' rel='stylesheet'>
 <style type="text/css">
 <!--
 .Message {

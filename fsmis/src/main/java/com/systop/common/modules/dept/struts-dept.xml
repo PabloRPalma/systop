@@ -4,7 +4,7 @@
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
 	<!-- Dept management -->
-	<!--隐藏部门管理
+	
 	<package name="admin.dept" extends="json" namespace="/admin/dept">
 		 <action name="index" class="deptAction" method="index">
 		     <result name="index" type="dispatcher">/pages/admin/dept/index.jsp</result>
@@ -33,6 +33,6 @@
 		     <result name="success" type="redirect">index.do</result>
 		 </action>
 	</package>
-	-->
+	
 </struts>
 
