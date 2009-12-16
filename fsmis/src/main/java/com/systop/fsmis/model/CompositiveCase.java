@@ -1,7 +1,5 @@
 package com.systop.fsmis.model;
 
-// Generated 2009-12-16 9:41:03 by Hibernate Tools 3.2.4.GA
-
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
