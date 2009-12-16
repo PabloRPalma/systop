@@ -91,19 +91,19 @@ public class Expert extends BaseModel implements Serializable {
 	 */
 	private String position;
 	/**
-	 * 头衔
+	 * 职称
 	 */
 	private String title;
 	/**
-	 * 研究领域
+	 * 研究方向
 	 */
 	private String research;
 	/**
-	 * 摘要
+	 * 专家简介
 	 */
 	private Clob summery;
 	/**
-	 * 评论
+	 * 备注
 	 */
 	private String remark;
 	/**
