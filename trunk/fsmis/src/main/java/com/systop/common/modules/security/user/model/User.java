@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
@@ -32,6 +33,7 @@ import org.hibernate.annotations.GenericGenerator;
 import com.systop.common.modules.dept.model.Dept;
 import com.systop.core.Constants;
 import com.systop.core.model.BaseModel;
+import com.systop.fsmis.model.Assessment;
 
 /**
  * 用户表 The persistent class for the users database table.
@@ -200,7 +202,14 @@ public class User extends BaseModel implements UserDetails, Serializable {
    * 对应的Dept
    */
   private Dept dept;
-  
+  /**
+   * 评估审核人
+   */
+  private Set<Assessment> assessmentsForAuditor = new HashSet<Assessment>(0);
+  /**
+   * 评估申请人
+   */
+	private Set<Assessment> assessmentsForProposer = new HashSet<Assessment>(0);
   
   /**
    * 缺省构造器
@@ -690,4 +699,22 @@ public class User extends BaseModel implements UserDetails, Serializable {
   public void setIndustry(String industry) {
     this.industry = industry;
   }
+  
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "usersByAuditor")
+	public Set<Assessment> getAssessmentsForAuditor() {
+		return this.assessmentsForAuditor;
+	}
+
+	public void setAssessmentsForAuditor(Set<Assessment> assessmentsForAuditor) {
+		this.assessmentsForAuditor = assessmentsForAuditor;
+	}
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usersByProposer")
+	public Set<Assessment> getAssessmentsForProposer() {
+		return this.assessmentsForProposer;
+	}
+
+	public void setAssessmentsForProposer(Set<Assessment> assessmentsForProposer) {
+		this.assessmentsForProposer = assessmentsForProposer;
+	}
 }
