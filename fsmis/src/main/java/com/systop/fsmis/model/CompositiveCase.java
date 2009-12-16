@@ -1,6 +1,6 @@
 package com.systop.fsmis.model;
 
-// Generated 2009-12-16 9:15:02 by Hibernate Tools 3.2.4.GA
+// Generated 2009-12-16 9:41:03 by Hibernate Tools 3.2.4.GA
 
 import java.util.Date;
 import java.util.HashSet;
@@ -34,6 +34,7 @@ public class CompositiveCase implements java.io.Serializable {
 	private Set<JointTask> jointTasks = new HashSet<JointTask>(0);
 	private Set<Task> tasks = new HashSet<Task>(0);
 	private Set<Assessment> assessments = new HashSet<Assessment>(0);
+	private Set<SmsSend> smsSends = new HashSet<SmsSend>(0);
 	private Set<GenericCase> genericCases = new HashSet<GenericCase>(0);
 
 	public CompositiveCase() {
@@ -46,7 +47,8 @@ public class CompositiveCase implements java.io.Serializable {
 	public CompositiveCase(long id, String title, Date beginDate, Date endDate,
 			Character isRead, String descn, Character status,
 			Set<JointTask> jointTasks, Set<Task> tasks,
-			Set<Assessment> assessments, Set<GenericCase> genericCases) {
+			Set<Assessment> assessments, Set<SmsSend> smsSends,
+			Set<GenericCase> genericCases) {
 		this.id = id;
 		this.title = title;
 		this.beginDate = beginDate;
@@ -57,6 +59,7 @@ public class CompositiveCase implements java.io.Serializable {
 		this.jointTasks = jointTasks;
 		this.tasks = tasks;
 		this.assessments = assessments;
+		this.smsSends = smsSends;
 		this.genericCases = genericCases;
 	}
 
@@ -153,8 +156,17 @@ public class CompositiveCase implements java.io.Serializable {
 		this.assessments = assessments;
 	}
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "compositiveCase")
+	public Set<SmsSend> getSmsSends() {
+		return this.smsSends;
+	}
+
+	public void setSmsSends(Set<SmsSend> smsSends) {
+		this.smsSends = smsSends;
+	}
+
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "CASE_COMPOSITIVE", joinColumns = { @JoinColumn(name = "COMPOSITIVE_CASE_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "GENERIC_CASE_ID", nullable = false, updatable = false) })
+	@JoinTable(name = "CASE_COMPOSITIVE", joinColumns = { @JoinColumn(name = "COMPOSITIVE_CASE_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "GENERIC_CASE", nullable = false, updatable = false) })
 	public Set<GenericCase> getGenericCases() {
 		return this.genericCases;
 	}

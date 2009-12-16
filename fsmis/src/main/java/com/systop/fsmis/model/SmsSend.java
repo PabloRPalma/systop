@@ -1,6 +1,6 @@
 package com.systop.fsmis.model;
 
-// Generated 2009-12-16 9:15:02 by Hibernate Tools 3.2.4.GA
+// Generated 2009-12-16 9:41:03 by Hibernate Tools 3.2.4.GA
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -22,6 +22,7 @@ public class SmsSend implements java.io.Serializable {
 
 	private String id;
 	private GenericCase genericCase;
+	private CompositiveCase compositiveCase;
 	private String mobileNum;
 	private Date createTime;
 	private Date sendTime;
@@ -39,11 +40,13 @@ public class SmsSend implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public SmsSend(String id, GenericCase genericCase, String mobileNum,
-			Date createTime, Date sendTime, String content, String isNew,
-			String isReceive, String name, String remark, Long masid) {
+	public SmsSend(String id, GenericCase genericCase,
+			CompositiveCase compositiveCase, String mobileNum, Date createTime,
+			Date sendTime, String content, String isNew, String isReceive,
+			String name, String remark, Long masid) {
 		this.id = id;
 		this.genericCase = genericCase;
+		this.compositiveCase = compositiveCase;
 		this.mobileNum = mobileNum;
 		this.createTime = createTime;
 		this.sendTime = sendTime;
@@ -73,6 +76,16 @@ public class SmsSend implements java.io.Serializable {
 
 	public void setGenericCase(GenericCase genericCase) {
 		this.genericCase = genericCase;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "COMPOSITIVE_CASE")
+	public CompositiveCase getCompositiveCase() {
+		return this.compositiveCase;
+	}
+
+	public void setCompositiveCase(CompositiveCase compositiveCase) {
+		this.compositiveCase = compositiveCase;
 	}
 
 	@Column(name = "MOBILE_NUM", length = 40)

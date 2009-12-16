@@ -1,11 +1,19 @@
 package com.systop.fsmis.model;
 
-// Generated 2009-12-16 9:15:02 by Hibernate Tools 3.2.4.GA
+// Generated 2009-12-16 9:41:03 by Hibernate Tools 3.2.4.GA
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -20,6 +28,7 @@ public class Users implements java.io.Serializable {
 
 	private long id;
 	private Long version;
+	private Depts depts;
 	private String name;
 	private String sez;
 	private Date birthday;
@@ -39,7 +48,11 @@ public class Users implements java.io.Serializable {
 	private String post;
 	private String status;
 	private String userType;
-	private Long deptId;
+	private Set<Assessment> assessmentsForAuditor = new HashSet<Assessment>(0);
+	private Set<Roles> roleses = new HashSet<Roles>(0);
+	private Set<Assessment> assessmentsForProposer = new HashSet<Assessment>(0);
+	private Set<Message> messagesForReceiver = new HashSet<Message>(0);
+	private Set<Message> messagesForSender = new HashSet<Message>(0);
 
 	public Users() {
 	}
@@ -48,13 +61,17 @@ public class Users implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public Users(long id, String name, String sez, Date birthday, String folk,
-			String HTel, String mobile, String email, String descn,
-			Character isMesreceive, Character isSys, String lastLoginIp,
-			Date lastLoginTime, String loginId, Long loginTimes,
-			String password, String photo, String post, String status,
-			String userType, Long deptId) {
+	public Users(long id, Depts depts, String name, String sez, Date birthday,
+			String folk, String HTel, String mobile, String email,
+			String descn, Character isMesreceive, Character isSys,
+			String lastLoginIp, Date lastLoginTime, String loginId,
+			Long loginTimes, String password, String photo, String post,
+			String status, String userType,
+			Set<Assessment> assessmentsForAuditor, Set<Roles> roleses,
+			Set<Assessment> assessmentsForProposer,
+			Set<Message> messagesForReceiver, Set<Message> messagesForSender) {
 		this.id = id;
+		this.depts = depts;
 		this.name = name;
 		this.sez = sez;
 		this.birthday = birthday;
@@ -74,7 +91,11 @@ public class Users implements java.io.Serializable {
 		this.post = post;
 		this.status = status;
 		this.userType = userType;
-		this.deptId = deptId;
+		this.assessmentsForAuditor = assessmentsForAuditor;
+		this.roleses = roleses;
+		this.assessmentsForProposer = assessmentsForProposer;
+		this.messagesForReceiver = messagesForReceiver;
+		this.messagesForSender = messagesForSender;
 	}
 
 	@Id
@@ -95,6 +116,16 @@ public class Users implements java.io.Serializable {
 
 	public void setVersion(Long version) {
 		this.version = version;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "DEPT_ID")
+	public Depts getDepts() {
+		return this.depts;
+	}
+
+	public void setDepts(Depts depts) {
+		this.depts = depts;
 	}
 
 	@Column(name = "NAME", length = 510)
@@ -270,13 +301,50 @@ public class Users implements java.io.Serializable {
 		this.userType = userType;
 	}
 
-	@Column(name = "DEPT_ID", precision = 10, scale = 0)
-	public Long getDeptId() {
-		return this.deptId;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usersByAuditor")
+	public Set<Assessment> getAssessmentsForAuditor() {
+		return this.assessmentsForAuditor;
 	}
 
-	public void setDeptId(Long deptId) {
-		this.deptId = deptId;
+	public void setAssessmentsForAuditor(Set<Assessment> assessmentsForAuditor) {
+		this.assessmentsForAuditor = assessmentsForAuditor;
+	}
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "USER_ROLE", joinColumns = { @JoinColumn(name = "USER_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID", nullable = false, updatable = false) })
+	public Set<Roles> getRoleses() {
+		return this.roleses;
+	}
+
+	public void setRoleses(Set<Roles> roleses) {
+		this.roleses = roleses;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usersByProposer")
+	public Set<Assessment> getAssessmentsForProposer() {
+		return this.assessmentsForProposer;
+	}
+
+	public void setAssessmentsForProposer(Set<Assessment> assessmentsForProposer) {
+		this.assessmentsForProposer = assessmentsForProposer;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usersByReceiver")
+	public Set<Message> getMessagesForReceiver() {
+		return this.messagesForReceiver;
+	}
+
+	public void setMessagesForReceiver(Set<Message> messagesForReceiver) {
+		this.messagesForReceiver = messagesForReceiver;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usersBySender")
+	public Set<Message> getMessagesForSender() {
+		return this.messagesForSender;
+	}
+
+	public void setMessagesForSender(Set<Message> messagesForSender) {
+		this.messagesForSender = messagesForSender;
 	}
 
 }

@@ -1,6 +1,6 @@
 package com.systop.fsmis.model;
 
-// Generated 2009-12-16 9:15:02 by Hibernate Tools 3.2.4.GA
+// Generated 2009-12-16 9:41:03 by Hibernate Tools 3.2.4.GA
 
 import java.util.HashSet;
 import java.util.Set;
@@ -29,6 +29,7 @@ public class Depts implements java.io.Serializable {
 	private String isLawDept;
 	private String isTownship;
 	private String serialNo;
+	private Set<Users> userses = new HashSet<Users>(0);
 	private Set<GenericCase> genericCases = new HashSet<GenericCase>(0);
 	private Set<ReceiveRecord> receiveRecords = new HashSet<ReceiveRecord>(0);
 	private Set<TaskDetail> taskDetails = new HashSet<TaskDetail>(0);
@@ -45,7 +46,7 @@ public class Depts implements java.io.Serializable {
 
 	public Depts(long id, Depts depts, String name, String deptSort,
 			String descn, Long ordernum, String isLawDept, String isTownship,
-			String serialNo, Set<GenericCase> genericCases,
+			String serialNo, Set<Users> userses, Set<GenericCase> genericCases,
 			Set<ReceiveRecord> receiveRecords, Set<TaskDetail> taskDetails,
 			Set<Enterprise> enterprises, Set<Depts> deptses,
 			Set<Supervisor> supervisors) {
@@ -58,6 +59,7 @@ public class Depts implements java.io.Serializable {
 		this.isLawDept = isLawDept;
 		this.isTownship = isTownship;
 		this.serialNo = serialNo;
+		this.userses = userses;
 		this.genericCases = genericCases;
 		this.receiveRecords = receiveRecords;
 		this.taskDetails = taskDetails;
@@ -147,6 +149,15 @@ public class Depts implements java.io.Serializable {
 
 	public void setSerialNo(String serialNo) {
 		this.serialNo = serialNo;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "depts")
+	public Set<Users> getUserses() {
+		return this.userses;
+	}
+
+	public void setUserses(Set<Users> userses) {
+		this.userses = userses;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "depts")

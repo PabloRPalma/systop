@@ -1,6 +1,6 @@
 package com.systop.fsmis.model;
 
-// Generated 2009-12-16 9:15:02 by Hibernate Tools 3.2.4.GA
+// Generated 2009-12-16 9:41:03 by Hibernate Tools 3.2.4.GA
 
 import java.sql.Clob;
 import java.util.Date;
@@ -29,6 +29,8 @@ public class Assessment implements java.io.Serializable {
 	private long id;
 	private GenericCase genericCase;
 	private CompositiveCase compositiveCase;
+	private Users usersByAuditor;
+	private Users usersByProposer;
 	private Date askDate;
 	private Clob askCause;
 	private Date auditDate;
@@ -49,13 +51,16 @@ public class Assessment implements java.io.Serializable {
 	}
 
 	public Assessment(long id, GenericCase genericCase,
-			CompositiveCase compositiveCase, Date askDate, Clob askCause,
-			Date auditDate, Character isConsent, Date resultDate,
-			String result, Character isComplete, Long leaderId,
-			Set<Expert> experts, Set<AssessmentAttach> assessmentAttachs) {
+			CompositiveCase compositiveCase, Users usersByAuditor,
+			Users usersByProposer, Date askDate, Clob askCause, Date auditDate,
+			Character isConsent, Date resultDate, String result,
+			Character isComplete, Long leaderId, Set<Expert> experts,
+			Set<AssessmentAttach> assessmentAttachs) {
 		this.id = id;
 		this.genericCase = genericCase;
 		this.compositiveCase = compositiveCase;
+		this.usersByAuditor = usersByAuditor;
+		this.usersByProposer = usersByProposer;
 		this.askDate = askDate;
 		this.askCause = askCause;
 		this.auditDate = auditDate;
@@ -96,6 +101,26 @@ public class Assessment implements java.io.Serializable {
 
 	public void setCompositiveCase(CompositiveCase compositiveCase) {
 		this.compositiveCase = compositiveCase;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "AUDITOR")
+	public Users getUsersByAuditor() {
+		return this.usersByAuditor;
+	}
+
+	public void setUsersByAuditor(Users usersByAuditor) {
+		this.usersByAuditor = usersByAuditor;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "PROPOSER")
+	public Users getUsersByProposer() {
+		return this.usersByProposer;
+	}
+
+	public void setUsersByProposer(Users usersByProposer) {
+		this.usersByProposer = usersByProposer;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
