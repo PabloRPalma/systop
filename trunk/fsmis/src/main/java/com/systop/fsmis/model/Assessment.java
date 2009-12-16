@@ -24,6 +24,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.GenericGenerator;
 
+import com.systop.common.modules.security.user.model.User;
 import com.systop.core.model.BaseModel;
 
 /**
@@ -50,11 +51,11 @@ public class Assessment extends BaseModel implements Serializable {
 	/**
    * 审核人
    */
-	private Users usersByAuditor;
+	private User usersByAuditor;
 	/**
    * 申请人
    */
-	private Users usersByProposer;
+	private User usersByProposer;
 	/**
    * 申请日期
    */
@@ -136,21 +137,21 @@ public class Assessment extends BaseModel implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "AUDITOR")
-	public Users getUsersByAuditor() {
+	public User getUsersByAuditor() {
 		return this.usersByAuditor;
 	}
 
-	public void setUsersByAuditor(Users usersByAuditor) {
+	public void setUsersByAuditor(User usersByAuditor) {
 		this.usersByAuditor = usersByAuditor;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PROPOSER")
-	public Users getUsersByProposer() {
+	public User getUsersByProposer() {
 		return this.usersByProposer;
 	}
 
-	public void setUsersByProposer(Users usersByProposer) {
+	public void setUsersByProposer(User usersByProposer) {
 		this.usersByProposer = usersByProposer;
 	}
 
