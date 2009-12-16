@@ -1,6 +1,6 @@
 package com.systop.fsmis.model;
 
-// Generated 2009-12-16 9:15:02 by Hibernate Tools 3.2.4.GA
+// Generated 2009-12-16 9:41:03 by Hibernate Tools 3.2.4.GA
 
 import java.util.HashSet;
 import java.util.Set;
@@ -31,7 +31,7 @@ public class Roles implements java.io.Serializable {
 	private String name;
 	private Set<Roles> roleses = new HashSet<Roles>(0);
 	private Set<Permissions> permissionses = new HashSet<Permissions>(0);
-	private Set<UserRole> userRoles = new HashSet<UserRole>(0);
+	private Set<Users> userses = new HashSet<Users>(0);
 
 	public Roles() {
 	}
@@ -42,7 +42,7 @@ public class Roles implements java.io.Serializable {
 
 	public Roles(long id, Roles roles, String descn, Character isSys,
 			String name, Set<Roles> roleses, Set<Permissions> permissionses,
-			Set<UserRole> userRoles) {
+			Set<Users> userses) {
 		this.id = id;
 		this.roles = roles;
 		this.descn = descn;
@@ -50,7 +50,7 @@ public class Roles implements java.io.Serializable {
 		this.name = name;
 		this.roleses = roleses;
 		this.permissionses = permissionses;
-		this.userRoles = userRoles;
+		this.userses = userses;
 	}
 
 	@Id
@@ -129,13 +129,14 @@ public class Roles implements java.io.Serializable {
 		this.permissionses = permissionses;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "roles")
-	public Set<UserRole> getUserRoles() {
-		return this.userRoles;
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "USER_ROLE", joinColumns = { @JoinColumn(name = "ROLE_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "USER_ID", nullable = false, updatable = false) })
+	public Set<Users> getUserses() {
+		return this.userses;
 	}
 
-	public void setUserRoles(Set<UserRole> userRoles) {
-		this.userRoles = userRoles;
+	public void setUserses(Set<Users> userses) {
+		this.userses = userses;
 	}
 
 }

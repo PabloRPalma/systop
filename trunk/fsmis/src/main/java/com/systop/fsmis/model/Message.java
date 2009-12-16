@@ -1,11 +1,14 @@
 package com.systop.fsmis.model;
 
-// Generated 2009-12-16 9:15:02 by Hibernate Tools 3.2.4.GA
+// Generated 2009-12-16 9:41:03 by Hibernate Tools 3.2.4.GA
 
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -18,6 +21,8 @@ import javax.persistence.TemporalType;
 public class Message implements java.io.Serializable {
 
 	private long id;
+	private Users usersByReceiver;
+	private Users usersBySender;
 	private String content;
 	private Date createTime;
 	private Date receiveTime;
@@ -30,9 +35,11 @@ public class Message implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public Message(long id, String content, Date createTime, Date receiveTime,
-			Character isNew) {
+	public Message(long id, Users usersByReceiver, Users usersBySender,
+			String content, Date createTime, Date receiveTime, Character isNew) {
 		this.id = id;
+		this.usersByReceiver = usersByReceiver;
+		this.usersBySender = usersBySender;
 		this.content = content;
 		this.createTime = createTime;
 		this.receiveTime = receiveTime;
@@ -47,6 +54,26 @@ public class Message implements java.io.Serializable {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "RECEIVER")
+	public Users getUsersByReceiver() {
+		return this.usersByReceiver;
+	}
+
+	public void setUsersByReceiver(Users usersByReceiver) {
+		this.usersByReceiver = usersByReceiver;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "SENDER")
+	public Users getUsersBySender() {
+		return this.usersBySender;
+	}
+
+	public void setUsersBySender(Users usersBySender) {
+		this.usersBySender = usersBySender;
 	}
 
 	@Column(name = "CONTENT", length = 500)
