@@ -1,6 +1,5 @@
 package com.systop.fsmis.model;
 
-import java.io.Serializable;
 import java.sql.Clob;
 import java.util.Date;
 import java.util.HashSet;
@@ -19,9 +18,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.systop.common.modules.security.user.model.User;
@@ -34,7 +30,7 @@ import com.systop.core.model.BaseModel;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "ASSESSMENT")
-public class Assessment extends BaseModel implements Serializable {
+public class Assessment extends BaseModel {
 
 	/**
    * 主键
@@ -248,32 +244,4 @@ public class Assessment extends BaseModel implements Serializable {
 	public void setAssessmentAttachs(Set<AssessmentAttach> assessmentAttachs) {
 		this.assessmentAttachs = assessmentAttachs;
 	}
-
-	/**
-   * @see Object#equals(Object)
-   */
-  public boolean equals(Object other) {
-    if (this == other) {
-      return true;
-    }
-    if (!(other instanceof Assessment)) {
-      return false;
-    }
-    Assessment assessment = (Assessment) other;
-    return new EqualsBuilder().append(this.getId(), assessment.getId()).isEquals();
-  }
-
-  /**
-   * @see Object#hashCode()
-   */
-  public int hashCode() {
-    return new HashCodeBuilder().append(getId()).toHashCode();
-  }
-
-  /**
-   * @see Object#toString()
-   */
-  public String toString() {
-    return new ToStringBuilder(this).append("id", getId()).toString();
-  }
 }
