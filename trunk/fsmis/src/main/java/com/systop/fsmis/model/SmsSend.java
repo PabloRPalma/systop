@@ -140,7 +140,7 @@ public class SmsSend extends BaseModel {
 		this.content = content;
 	}
 
-	@Column(name = "IS_NEW", columnDefinition = "char(1) default '0'")
+	@Column(name = "IS_NEW", columnDefinition = "char(1) default '1'")
 	public String getIsNew() {
 		return this.isNew;
 	}
