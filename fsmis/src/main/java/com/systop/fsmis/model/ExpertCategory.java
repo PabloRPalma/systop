@@ -1,6 +1,5 @@
 package com.systop.fsmis.model;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -11,9 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.systop.core.model.BaseModel;
@@ -25,7 +21,7 @@ import com.systop.core.model.BaseModel;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "EXPERT_CATEGORY")
-public class ExpertCategory extends BaseModel implements Serializable {
+public class ExpertCategory extends BaseModel {
 
 	/**
    * 主键
@@ -88,32 +84,4 @@ public class ExpertCategory extends BaseModel implements Serializable {
 	public void setExperts(Set<Expert> experts) {
 		this.experts = experts;
 	}
-
-	/**
-   * @see Object#equals(Object)
-   */
-  public boolean equals(Object other) {
-    if (this == other) {
-      return true;
-    }
-    if (!(other instanceof ExpertCategory)) {
-      return false;
-    }
-    ExpertCategory expertCategory = (ExpertCategory) other;
-    return new EqualsBuilder().append(this.getId(), expertCategory.getId()).isEquals();
-  }
-
-  /**
-   * @see Object#hashCode()
-   */
-  public int hashCode() {
-    return new HashCodeBuilder().append(getId()).toHashCode();
-  }
-
-  /**
-   * @see Object#toString()
-   */
-  public String toString() {
-    return new ToStringBuilder(this).append("id", getId()).toString();
-  }
 }
