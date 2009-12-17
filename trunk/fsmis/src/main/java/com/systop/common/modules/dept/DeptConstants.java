@@ -10,7 +10,7 @@ public final class DeptConstants {
   /**
    * 顶级部门名称
    */
-  public static final String TOP_DEPT_NAME = "河北省电力公司"; 
+  public static final String TOP_DEPT_NAME = "石家庄市政府"; 
     
   
   /**
