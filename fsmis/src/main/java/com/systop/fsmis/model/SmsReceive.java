@@ -23,7 +23,7 @@ import com.systop.core.model.BaseModel;
  */
 @Entity
 @SuppressWarnings("serial")
-@Table(name = "SMS_RECEIVE")
+@Table(name = "SMS_RECEIVES")
 public class SmsReceive extends BaseModel {
 	/**
 	 * 主键
@@ -74,10 +74,10 @@ public class SmsReceive extends BaseModel {
 	 */
 	private String remark;
 
-	  @Id
-	  @GeneratedValue(generator = "hibseq")
-	  @GenericGenerator(name = "hibseq", strategy = "hilo")
-	  @Column(name = "ID", unique = true, nullable = false)
+	@Id
+	@GeneratedValue(generator = "hibseq")
+	@GenericGenerator(name = "hibseq", strategy = "hilo")
+	@Column(name = "ID", unique = true, nullable = false)
 	public Integer getId() {
 		return this.id;
 	}
@@ -114,7 +114,7 @@ public class SmsReceive extends BaseModel {
 		this.mobileNum = mobileNum;
 	}
 
-	@Column(name = "IS_NEW",columnDefinition = "char(1) default '1'")
+	@Column(name = "IS_NEW", columnDefinition = "char(1) default '1'")
 	public String getIsNew() {
 		return this.isNew;
 	}
@@ -188,28 +188,4 @@ public class SmsReceive extends BaseModel {
 		this.remark = remark;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		final SmsReceive other = (SmsReceive) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
 }

@@ -23,7 +23,7 @@ import com.systop.core.model.BaseModel;
  */
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "SMS_SEND")
+@Table(name = "SMS_SENDS")
 public class SmsSend extends BaseModel {
 
 	private Integer id;
