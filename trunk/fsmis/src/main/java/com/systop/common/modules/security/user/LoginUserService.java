@@ -45,14 +45,14 @@ public class LoginUserService {
     return dept;
   }
   /**
-   * 返回当前登录用户所在公司
+   * 返回当前登录用户所在部门的归属机构
    */
-  public Dept getLoginUserCompany(HttpServletRequest request) {
+  public Dept getLoginUserCounty(HttpServletRequest request) {
     Dept dept = getLoginUserDept(request);
     if(dept == null) {
       return null;
     }
-    while(!DeptConstants.TYPE_COMPANY.equals(dept.getType())){
+    while(!DeptConstants.TYPE_COUNTY.equals(dept.getType())){
       dept = dept.getParentDept();
     }
     return dept;
