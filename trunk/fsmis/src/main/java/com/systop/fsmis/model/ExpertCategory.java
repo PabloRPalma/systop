@@ -20,7 +20,7 @@ import com.systop.core.model.BaseModel;
  */
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "EXPERT_CATEGORY")
+@Table(name = "EXPERT_CATEGORY", schema = "FSMIS")
 public class ExpertCategory extends BaseModel {
 
 	/**
