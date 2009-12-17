@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.systop.core.model.BaseModel;
+
 /**
  * 事件类别
  * @author shaozhiyuan
@@ -20,7 +22,7 @@ import javax.persistence.Table;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "CASE_TYPE")
-public class CaseType implements java.io.Serializable {
+public class CaseType extends BaseModel {
 
 	/** 主键 */
 	private Integer id;
