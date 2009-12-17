@@ -39,7 +39,7 @@ public class LoginUserDeptTag extends BodyTagSupport {
     Dept dept = loginUserService.getLoginUserDept(request);
     if(showTopDept) { //显示用户所在顶级部门（公司）的属性
       showPath = false; //肯定不会显示PATH了
-      dept = loginUserService.getLoginUserCompany(request);
+      dept = loginUserService.getLoginUserCounty(request);
     }
     if (dept != null) {
       if(propertyName != null) { //显示当前部门的某个属性
