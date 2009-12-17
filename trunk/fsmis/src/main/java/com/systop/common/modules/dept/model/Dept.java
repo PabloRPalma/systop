@@ -23,7 +23,9 @@ import org.hibernate.annotations.GenericGenerator;
 import com.systop.common.modules.security.user.model.User;
 import com.systop.core.model.BaseModel;
 import com.systop.fsmis.model.Enterprise;
+import com.systop.fsmis.model.GenericCase;
 import com.systop.fsmis.model.Supervisor;
+import com.systop.fsmis.model.TaskDetail;
 
 /**
  * The persistent class for the depts database table.
@@ -89,6 +91,14 @@ public class Dept extends BaseModel implements Serializable {
      * 部门下监管员
      */
   	private Set<Supervisor> supervisors = new HashSet<Supervisor>(0);
+  	/**
+     * 部门对应的一般事件
+     */
+  	private Set<GenericCase> genericCases = new HashSet<GenericCase>(0);
+	/**
+     * 部门对应的任务详情
+     */
+  	private Set<TaskDetail> taskDetails = new HashSet<TaskDetail>(0);
   	
     /**
      * 缺省构造
@@ -200,6 +210,23 @@ public class Dept extends BaseModel implements Serializable {
 
 		public void setSupervisors(Set<Supervisor> supervisors) {
 			this.supervisors = supervisors;
+		}
+		
+		@OneToMany(fetch = FetchType.LAZY, mappedBy = "dept")
+		public Set<GenericCase> getGenericCases() {
+			return this.genericCases;
+		}
+
+		public void setGenericCases(Set<GenericCase> genericCases) {
+			this.genericCases = genericCases;
+		}
+		@OneToMany(fetch = FetchType.LAZY, mappedBy = "dept")
+		public Set<TaskDetail> getTaskDetails() {
+			return this.taskDetails;
+		}
+
+		public void setTaskDetails(Set<TaskDetail> taskDetails) {
+			this.taskDetails = taskDetails;
 		}
 
 		@Transient
