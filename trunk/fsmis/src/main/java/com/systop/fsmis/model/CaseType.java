@@ -26,6 +26,7 @@ public class CaseType extends BaseModel {
 
 	/** 主键 */
 	private Integer id;
+	/** 类别ID */
 	private CaseType caseType;
 	/** 名称 */
 	private String name;
