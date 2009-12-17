@@ -114,7 +114,14 @@ FCKConfig.ToolbarSets["Default"] = [
 	['TextColor','BGColor'],
 	['FitWindow','ShowBlocks','-','About']		// No comma for the last row.
 ] ;
-
+FCKConfig.ToolbarSets["BasicA"] = [
+    ['Source','Bold','Italic','Underline','StrikeThrough','-','Subscript','Superscript'],
+    ['OrderedList','UnorderedList','-','Outdent','Indent','Blockquote','CreateDiv'],
+    '/',
+    ['Style','FontFormat','FontName','FontSize'],
+    ['TextColor','BGColor'],
+    ['FitWindow','ShowBlocks','-','About']		// No comma for the last row.
+] ;
 FCKConfig.ToolbarSets["Basic"] = [
 	['Bold','Italic','-','OrderedList','UnorderedList','-','Link','Unlink','-','About']
 ] ;
