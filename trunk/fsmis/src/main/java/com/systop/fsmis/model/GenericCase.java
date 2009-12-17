@@ -114,45 +114,6 @@ public class GenericCase extends BaseModel {
 	 */
 	private Set<SmsSend> smsSends = new HashSet<SmsSend>(0);
 
-	public GenericCase() {
-	}
-
-	public GenericCase(Integer id) {
-		this.id = id;
-	}
-
-	public GenericCase(Integer id, Supervisor supervisor, Depts depts,
-			CaseType caseType, Enterprise enterprise, String title,
-			Date eventDate, String address, String code, String descn,
-			String coordinate, Date submitTime, String informer,
-			String informerPhone, Date closedTime, String status,
-			Character isSubmitSj, Set<SmsReceive> smsReceives,
-			Set<Assessment> assessments, Set<CompositiveCase> compositiveCases,
-			Set<Task> tasks, Set<JointTask> jointTasks, Set<SmsSend> smsSends) {
-		this.id = id;
-		this.supervisor = supervisor;
-		this.depts = depts;
-		this.caseType = caseType;
-		this.enterprise = enterprise;
-		this.title = title;
-		this.eventDate = eventDate;
-		this.address = address;
-		this.code = code;
-		this.descn = descn;
-		this.coordinate = coordinate;
-		this.submitTime = submitTime;
-		this.informer = informer;
-		this.informerPhone = informerPhone;
-		this.closedTime = closedTime;
-		this.status = status;
-		this.isSubmitSj = isSubmitSj;
-		this.smsReceives = smsReceives;
-		this.assessments = assessments;
-		this.compositiveCases = compositiveCases;
-		this.tasks = tasks;
-		this.jointTasks = jointTasks;
-		this.smsSends = smsSends;
-	}
 
 	@Id
 	@GeneratedValue(generator = "hibseq")
