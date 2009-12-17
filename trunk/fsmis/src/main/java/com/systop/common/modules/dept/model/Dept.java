@@ -22,6 +22,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import com.systop.common.modules.security.user.model.User;
 import com.systop.core.model.BaseModel;
+import com.systop.fsmis.model.Enterprise;
+import com.systop.fsmis.model.Supervisor;
 
 /**
  * The persistent class for the depts database table.
@@ -78,7 +80,16 @@ public class Dept extends BaseModel implements Serializable {
      */
     private Set<User> users = new HashSet<User>(0);
     
+    /**
+     * 部门下企业
+     */
+    private Set<Enterprise> enterprises = new HashSet<Enterprise>(0);
 
+    /**
+     * 部门下监管员
+     */
+  	private Set<Supervisor> supervisors = new HashSet<Supervisor>(0);
+  	
     /**
      * 缺省构造
      */
@@ -173,7 +184,25 @@ public class Dept extends BaseModel implements Serializable {
       this.users = users;
     }
 
-    @Transient
+    @OneToMany(cascade = { }, fetch = FetchType.LAZY, mappedBy = "dept")    
+    public Set<Enterprise> getEnterprises() {
+			return enterprises;
+		}
+
+		public void setEnterprises(Set<Enterprise> enterprises) {
+			this.enterprises = enterprises;
+		}
+
+		@OneToMany(cascade = { }, fetch = FetchType.LAZY, mappedBy = "dept")
+		public Set<Supervisor> getSupervisors() {
+			return supervisors;
+		}
+
+		public void setSupervisors(Set<Supervisor> supervisors) {
+			this.supervisors = supervisors;
+		}
+
+		@Transient
     public boolean getHasChild() {
         return this.getChildDepts().size() > 0;
     }
