@@ -60,7 +60,7 @@ public class ReceiveRecord implements java.io.Serializable {
 		return this.dept;
 	}
 
-	public void setDepts(Dept dept) {
+	public void setDept(Dept dept) {
 		this.dept = dept;
 	}
 
