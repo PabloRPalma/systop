@@ -66,31 +66,7 @@ public class CompositiveCase extends BaseModel {
 	 */
 	private Set<GenericCase> genericCases = new HashSet<GenericCase>(0);
 
-	public CompositiveCase() {
-	}
 
-	public CompositiveCase(Integer id) {
-		this.id = id;
-	}
-
-	public CompositiveCase(Integer id, String title, Date beginDate, Date endDate,
-			Character isRead, String descn, Character status,
-			Set<JointTask> jointTasks, Set<Task> tasks,
-			Set<Assessment> assessments,Set<SmsSend> smsSends,
-		    Set<GenericCase> genericCases) {
-		this.id = id;
-		this.title = title;
-		this.beginDate = beginDate;
-		this.endDate = endDate;
-		this.isRead = isRead;
-		this.descn = descn;
-		this.status = status;
-		this.jointTasks = jointTasks;
-		this.tasks = tasks;
-		this.assessments = assessments;
-		this.smsSends = smsSends;
-		this.genericCases = genericCases;
-	}
 
 	@Id
 	@GeneratedValue(generator = "hibseq")
