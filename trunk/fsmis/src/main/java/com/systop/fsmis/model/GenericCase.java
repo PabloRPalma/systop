@@ -144,7 +144,7 @@ public class GenericCase extends BaseModel {
 		return this.dept;
 	}
 
-	public void setDepts(Dept dept) {
+	public void setDept(Dept dept) {
 		this.dept = dept;
 	}
 
