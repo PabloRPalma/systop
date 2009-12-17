@@ -18,6 +18,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.GenericGenerator;
 
+import com.systop.common.modules.dept.model.Dept;
 import com.systop.core.model.BaseModel;
 
 /**
@@ -42,7 +43,7 @@ public class TaskDetail extends BaseModel {
 	/**
 	 * 对应部门
 	 */
-	private Depts depts;
+	private Dept dept;
 	
 	/**
 	 * 填写人
@@ -119,12 +120,12 @@ public class TaskDetail extends BaseModel {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "DEPT")
-	public Depts getDepts() {
-		return this.depts;
+	public Dept getDept() {
+		return this.dept;
 	}
 
-	public void setDepts(Depts depts) {
-		this.depts = depts;
+	public void setDepts(Dept dept) {
+		this.dept = dept;
 	}
 
 	@Column(name = "INPUTER", length = 110)
