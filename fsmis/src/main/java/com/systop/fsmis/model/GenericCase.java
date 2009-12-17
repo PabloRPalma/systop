@@ -21,6 +21,7 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.systop.common.modules.dept.model.Dept;
 import com.systop.core.model.BaseModel;
 
 /**
@@ -39,7 +40,7 @@ public class GenericCase extends BaseModel {
 	private Supervisor supervisor;
 	
 	/** 本一般案件对应部门*/
-	private Depts depts;
+	private Dept depts;
 	
 	/** 本一般案件对应案件类别*/
 	private CaseType caseType;
@@ -139,11 +140,11 @@ public class GenericCase extends BaseModel {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "REPORT_DEPT")
-	public Depts getDepts() {
+	public Dept getDepts() {
 		return this.depts;
 	}
 
-	public void setDepts(Depts depts) {
+	public void setDepts(Dept depts) {
 		this.depts = depts;
 	}
 
