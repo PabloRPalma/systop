@@ -29,7 +29,7 @@ import com.systop.core.model.BaseModel;
  */
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "ASSESSMENT")
+@Table(name = "ASSESSMENT", schema = "FSMIS")
 public class Assessment extends BaseModel {
 
 	/**
