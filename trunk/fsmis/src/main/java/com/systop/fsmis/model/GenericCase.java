@@ -40,7 +40,7 @@ public class GenericCase extends BaseModel {
 	private Supervisor supervisor;
 	
 	/** 本一般案件对应部门*/
-	private Dept depts;
+	private Dept dept;
 	
 	/** 本一般案件对应案件类别*/
 	private CaseType caseType;
@@ -139,13 +139,13 @@ public class GenericCase extends BaseModel {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "REPORT_DEPT")
-	public Dept getDepts() {
-		return this.depts;
+	@JoinColumn(name = "DEPT")
+	public Dept getDept() {
+		return this.dept;
 	}
 
-	public void setDepts(Dept depts) {
-		this.depts = depts;
+	public void setDepts(Dept dept) {
+		this.dept = dept;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
