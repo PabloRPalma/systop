@@ -88,6 +88,34 @@ public class EnterpriseAction extends ExtJsCrudAction<Enterprise, EnterpriseMana
 		return setupSort(criteria);
 	}
 	
+	/**
+	 * 删除企业信息
+	 */
+	@Override
+	public String remove(){
+		Enterprise enterprise = getManager().get(getModel().getId());
+		//检查是否与事件关联
+		if(enterprise.getGenericCases().size() != 0)
+		{
+			addActionError("该企业涉及食品安全事件，无法删除！");
+			return "error";
+		}
+		//如果存在照片，则连照片一起删除
+		String Path = getModel().getPhotoUrl();
+		if(StringUtils.isNotBlank(Path)){
+			getManager().remove(enterprise, getRealPath(Path));
+			return SUCCESS;
+		}
+		return super.remove();
+	}
+	
+	/**
+	 * 查看企业信息
+	 */
+	public String look(){
+		return "look";
+	}
+	
 	public File getPhoto() {
   	return photo;
   }
