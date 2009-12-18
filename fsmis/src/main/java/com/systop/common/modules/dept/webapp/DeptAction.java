@@ -7,12 +7,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
@@ -21,6 +25,7 @@ import com.systop.common.modules.dept.DeptConstants;
 import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.dept.service.DeptManager;
 import com.systop.common.modules.dept.service.DeptSerialNoManager;
+import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.core.util.RequestUtil;
 import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
 
@@ -34,222 +39,240 @@ import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
 @Controller
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class DeptAction extends ExtJsCrudAction<Dept, DeptManager> {
-  /**
-   * 当前上级部门ID
-   */
-  private Integer parentId;
+	/**
+	 * 当前上级部门ID
+	 */
+	private Integer parentId;
 
-  /**
-   * 部门序列号管理器
-   */
-  private DeptSerialNoManager serialNoManager;
+	/**
+	 * 部门序列号管理器
+	 */
+	private DeptSerialNoManager serialNoManager;
 
-  /**
-   * 用于查询的部门名称
-   */
-  private String deptName = StringUtils.EMPTY;
+	/**
+	 * 用于查询的部门名称
+	 */
+	private String deptName = StringUtils.EMPTY;
 
-  private List depts;
+	private List depts;
 
-  /**
-   * 部门查询。根据指定的上级部门id(通过{@link #parentId}属性)，查询下级部门。 如果{@link #parentId}为null,则查询顶级部门（没有上级部门的）
-   */
-  @Override
-  @SkipValidation
-  public String index() {
-    return INDEX;
-  }
+	/**
+	 * 部门查询。根据指定的上级部门id(通过{@link #parentId}属性)，查询下级部门。 如果{@link #parentId}
+	 * 为null,则查询顶级部门（没有上级部门的）
+	 */
+	@Override
+	@SkipValidation
+	public String index() {
+		return INDEX;
+	}
 
-  /**
-   * Build a tree as json format.
-   */
-  public String deptTree() {
-    if (RequestUtil.isJsonRequest(getRequest())) {
-      Dept parent = null;
-      if (parentId != null) {
-        parent = getManager().get(parentId);
-      } else {
-        parent = getManager().findObject("from Dept d where d.parentDept is null");
-      }
-      Map parentMap = null;
-      if (parent != null) {
-        parentMap = new HashMap();
-        parentMap.put("id", parent.getId());
-        parentMap.put("text", parent.getName());
-        parentMap.put("type", parent.getType());
-      }
-      
-      Map deptTree = getDeptTree(parentMap, true);
-      depts = new ArrayList();
-      depts.add(deptTree);
-      return JSON;
-    }
-    return INDEX;
-  }
+	/**
+	 * Build a tree as json format.
+	 */
+	public String deptTree() {
+		if (RequestUtil.isJsonRequest(getRequest())) {
+			Dept parent = null;
+			if (parentId != null) {
+				parent = getManager().get(parentId);
+			} else {
+				// 得到Spring WebApplicationContext
+				WebApplicationContext ctx = WebApplicationContextUtils
+						.getWebApplicationContext(getServletContext());
+				// 得到Spring管理的LoginUserService
+				LoginUserService loginUserService = (LoginUserService) ctx
+						.getBean("loginUserService");
+				Dept dept = loginUserService.getLoginUserDept(getRequest());
+				if (dept != null && dept.getParentDept() != null) {
+					parent = dept;
+				} else {
+					parent = getManager().findObject(
+							"from Dept d where d.parentDept is null");
+				}
+			}
+			Map parentMap = null;
+			if (parent != null) {
+				parentMap = new HashMap();
+				parentMap.put("id", parent.getId());
+				parentMap.put("text", parent.getName());
+				parentMap.put("type", parent.getType());
+			}
 
-  /**
-   * 根据指定的父部门id查询子部门
-   */
-  private List<Dept> getByParentId(Integer parentDeptId) {
-    List list = Collections.EMPTY_LIST;
-    if (parentDeptId == null || parentDeptId.equals(DeptConstants.TOP_DEPT_ID)) {
-      list = getManager().query("from Dept d where d.parentDept is null");
-    } else {
-      list = getManager().query("from Dept d where d.parentDept.id = ?", parentDeptId);
-    }
+			Map deptTree = getDeptTree(parentMap, true);
+			depts = new ArrayList();
+			depts.add(deptTree);
+			return JSON;
+		}
+		return INDEX;
+	}
 
-    return list;
-  }
+	/**
+	 * 根据指定的父部门id查询子部门
+	 */
+	private List<Dept> getByParentId(Integer parentDeptId) {
+		List list = Collections.EMPTY_LIST;
+		if (parentDeptId == null
+				|| parentDeptId.equals(DeptConstants.TOP_DEPT_ID)) {
+			list = getManager().query("from Dept d where d.parentDept is null");
+		} else {
+			list = getManager().query("from Dept d where d.parentDept.id = ?",
+					parentDeptId);
+		}
 
-  /**
-   * 返回部门树形列表，每一个部门用一个<code>java.util.Map</code>表示，子部门
-   * 用Map的“childNodes”key挂接一个<code>java.util.List</code>.<br>
-   * 本方法供DWR调用，Map中key符合jsam dojo Tree的要求。
-   * 
-   * @param parent
-   *          父部门，如果为null，则表示顶级部门
-   * @param nested
-   *          是否递归查询子部门，true表示递归查询子部门
-   * @return
-   */
-  public Map getDeptTree(Map parent, boolean nested) {
-    if (parent == null || parent.isEmpty() || parent.get("id") == null) {
-      return Collections.EMPTY_MAP;
-    }
-    // 得到子部门
-    List<Dept> depts = this.getByParentId((Integer) parent.get("id"));
+		return list;
+	}
 
-    logger.debug("Dept {} has {} children.", parent.get("text"), depts.size());
-    // 转换所有子部门为Map对象，一来防止dwr造成延迟加载，
-    // 二来可以符合Ext的数据要求.
-    List children = new ArrayList();
-    for (Iterator<Dept> itr = depts.iterator(); itr.hasNext();) {
-      Dept dept = itr.next();
-      Map child = new HashMap();
-      child.put("id", dept.getId());
-      child.put("text", dept.getName());
-      child.put("descn", dept.getDescn());
-      child.put("type", dept.getType());
-      if (nested) { // 递归查询子部门
-        child = this.getDeptTree(child, nested);
-      }
-      children.add(child);
-    }
-    if (!children.isEmpty()) {
-      parent.put("children", children);
-      parent.put("childNodes", children);
-      parent.put("leaf", false);
-    } else {
-      parent.put("leaf", true);
-    }
+	/**
+	 * 返回部门树形列表，每一个部门用一个<code>java.util.Map</code>表示，子部门
+	 * 用Map的“childNodes”key挂接一个<code>java.util.List</code>.<br>
+	 * 本方法供DWR调用，Map中key符合jsam dojo Tree的要求。
+	 * 
+	 * @param parent
+	 *            父部门，如果为null，则表示顶级部门
+	 * @param nested
+	 *            是否递归查询子部门，true表示递归查询子部门
+	 * @return
+	 */
+	public Map getDeptTree(Map parent, boolean nested) {
+		if (parent == null || parent.isEmpty() || parent.get("id") == null) {
+			return Collections.EMPTY_MAP;
+		}
+		// 得到子部门
+		List<Dept> depts = this.getByParentId((Integer) parent.get("id"));
 
-    return parent;
-  }
+		logger.debug("Dept {} has {} children.", parent.get("text"), depts
+				.size());
+		// 转换所有子部门为Map对象，一来防止dwr造成延迟加载，
+		// 二来可以符合Ext的数据要求.
+		List children = new ArrayList();
+		for (Iterator<Dept> itr = depts.iterator(); itr.hasNext();) {
+			Dept dept = itr.next();
+			Map child = new HashMap();
+			child.put("id", dept.getId());
+			child.put("text", dept.getName());
+			child.put("descn", dept.getDescn());
+			child.put("type", dept.getType());
+			if (nested) { // 递归查询子部门
+				child = this.getDeptTree(child, nested);
+			}
+			children.add(child);
+		}
+		if (!children.isEmpty()) {
+			parent.put("children", children);
+			parent.put("childNodes", children);
+			parent.put("leaf", false);
+		} else {
+			parent.put("leaf", true);
+		}
 
-  /**
-   * @return 当前上级部门ID
-   */
-  public Integer getParentId() {
-    return parentId;
-  }
+		return parent;
+	}
 
-  /**
-   * @param parentId
-   *          the parentId to set
-   */
-  public void setParentId(Integer parentId) {
-    this.parentId = parentId;
-  }
+	/**
+	 * @return 当前上级部门ID
+	 */
+	public Integer getParentId() {
+		return parentId;
+	}
 
-  /**
-   * 得到当前部门（通过{@link #parentId}指定）的上级部门.
-   */
-  public Dept getParent() {
-    if (parentId == null || parentId.equals(DeptConstants.TOP_DEPT_ID)) {
-      Dept dept = new Dept();
-      dept.setName(DeptConstants.TOP_DEPT_NAME);
-      return dept;
-    }
+	/**
+	 * @param parentId
+	 *            the parentId to set
+	 */
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
+	}
 
-    return getManager().get(parentId);
-  }
+	/**
+	 * 得到当前部门（通过{@link #parentId}指定）的上级部门.
+	 */
+	public Dept getParent() {
+		if (parentId == null || parentId.equals(DeptConstants.TOP_DEPT_ID)) {
+			Dept dept = new Dept();
+			dept.setName(DeptConstants.TOP_DEPT_NAME);
+			return dept;
+		}
 
-  /**
-   * @return the deptName
-   */
-  public String getDeptName() {
-    return deptName;
-  }
+		return getManager().get(parentId);
+	}
 
-  /**
-   * @param deptName
-   *          the deptName to set
-   */
-  public void setDeptName(String deptName) {
-    this.deptName = deptName;
-  }
+	/**
+	 * @return the deptName
+	 */
+	public String getDeptName() {
+		return deptName;
+	}
 
-  /**
-   * 覆盖父类，处理父部门ID为{@link DeptConstants#TOP_DEPT_ID}的情况。
-   */
-  @Override
-  @Validations(requiredStrings = { @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "model.name", message = "部门名称是必须的.") })
-  public String save() {
-    // 如果页面选择了顶级部门作为父部门，则设置父部门为null
-    if (getModel().getParentDept() != null && getModel().getParentDept().getId() != null
-        && getModel().getParentDept().getId().equals(DeptConstants.TOP_DEPT_ID)) {
-      getModel().setParentDept(null);
-    }
-    if (getModel().getParentDept() == null || getModel().getParentDept().getId() == null) {
-      logger.debug("保存第一级部门.");
-    }
-    return super.save();
-  }
+	/**
+	 * @param deptName
+	 *            the deptName to set
+	 */
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
 
-  /**
-   * 处理parentDept为null的情况
-   */
-  @Override
-  @SkipValidation
-  public String edit() {
-    if (getModel().getId() != null) {
-      setModel(getManager().get(getModel().getId()));
-      if (getModel().getParentDept() == null) {
-        Dept dept = new Dept(); // 构建一个父部门
-        dept.setId(DeptConstants.TOP_DEPT_ID);
-        dept.setName(DeptConstants.TOP_DEPT_NAME);
-        getModel().setParentDept(dept);
-        getManager().getDao().evict(getModel()); // 将dept脱离hibernate
-        logger.debug("编辑第一级部门");
-      }
-    }
-    return INPUT;
-  }
+	/**
+	 * 覆盖父类，处理父部门ID为{@link DeptConstants#TOP_DEPT_ID}的情况。
+	 */
+	@Override
+	@Validations(requiredStrings = { @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "model.name", message = "部门名称是必须的.") })
+	public String save() {
+		// 如果页面选择了顶级部门作为父部门，则设置父部门为null
+		if (getModel().getParentDept() != null
+				&& getModel().getParentDept().getId() != null
+				&& getModel().getParentDept().getId().equals(
+						DeptConstants.TOP_DEPT_ID)) {
+			getModel().setParentDept(null);
+		}
+		if (getModel().getParentDept() == null
+				|| getModel().getParentDept().getId() == null) {
+			logger.debug("保存第一级部门.");
+		}
+		return super.save();
+	}
 
-  /**
-   * 重置所有部门编号
-   */
-  @SkipValidation
-  public String updateSerialNo() {
-    serialNoManager.updateAllSerialNo();
-    return SUCCESS;
-  }
+	/**
+	 * 处理parentDept为null的情况
+	 */
+	@Override
+	@SkipValidation
+	public String edit() {
+		if (getModel().getId() != null) {
+			setModel(getManager().get(getModel().getId()));
+			if (getModel().getParentDept() == null) {
+				Dept dept = new Dept(); // 构建一个父部门
+				dept.setId(DeptConstants.TOP_DEPT_ID);
+				dept.setName(DeptConstants.TOP_DEPT_NAME);
+				getModel().setParentDept(dept);
+				getManager().getDao().evict(getModel()); // 将dept脱离hibernate
+				logger.debug("编辑第一级部门");
+			}
+		}
+		return INPUT;
+	}
 
-  public DeptSerialNoManager getSerialNoManager() {
-    return serialNoManager;
-  }
+	/**
+	 * 重置所有部门编号
+	 */
+	@SkipValidation
+	public String updateSerialNo() {
+		serialNoManager.updateAllSerialNo();
+		return SUCCESS;
+	}
 
-  @Autowired(required = true)
-  public void setSerialNoManager(DeptSerialNoManager serialNoManager) {
-    this.serialNoManager = serialNoManager;
-  }
+	public DeptSerialNoManager getSerialNoManager() {
+		return serialNoManager;
+	}
 
-  public List getDepts() {
-    return depts;
-  }
+	@Autowired(required = true)
+	public void setSerialNoManager(DeptSerialNoManager serialNoManager) {
+		this.serialNoManager = serialNoManager;
+	}
 
-  public void setDepts(List depts) {
-    this.depts = depts;
-  }
+	public List getDepts() {
+		return depts;
+	}
+
+	public void setDepts(List depts) {
+		this.depts = depts;
+	}
 }
-
