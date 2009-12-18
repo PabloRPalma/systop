@@ -31,7 +31,7 @@ public class Enterprise extends BaseModel {
 	/**
 	 * 主键
 	 */
-	private long id;
+	private Integer id;
 	/**
 	 * 部门
 	 */
@@ -129,11 +129,11 @@ public class Enterprise extends BaseModel {
 	@GeneratedValue(generator = "hibseq")
 	@GenericGenerator(name = "hibseq", strategy = "hilo")
 	@Column(name = "ID", unique = true, nullable = false, precision = 10, scale = 0)
-	public long getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
