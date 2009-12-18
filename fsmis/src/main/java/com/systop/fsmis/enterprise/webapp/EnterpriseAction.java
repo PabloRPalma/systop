@@ -1,6 +1,9 @@
 package com.systop.fsmis.enterprise.webapp;
 
 import java.io.File;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
@@ -32,11 +35,18 @@ public class EnterpriseAction extends ExtJsCrudAction<Enterprise, EnterpriseMana
 	 * 企业照片
 	 */
 	private File photo;
-	
 	/** 
 	 * 照片存储名称
 	 */
 	private String photoFileName;
+	/**
+	 * 企业ID
+	 */
+	private String corpId;
+		/**
+	 * json返回结果
+	 */
+	private Map<String, String> delResult;
 	
 	/**
 	 * 企业信息查询列表
@@ -68,7 +78,7 @@ public class EnterpriseAction extends ExtJsCrudAction<Enterprise, EnterpriseMana
 			Dept dept = getManager().getDao().get(Dept.class,
 			    getModel().getDept().getId());
 			getModel().setDept(dept);*/
-			getManager().getDao().clear();
+			//getManager().getDao().clear();
 			getManager().save(getModel());
 			return SUCCESS;
 		} catch (Exception e) {
@@ -110,6 +120,32 @@ public class EnterpriseAction extends ExtJsCrudAction<Enterprise, EnterpriseMana
 	}
 	
 	/**
+	 * 删除企业照片
+	 */
+	public String deletePhoto() {
+		logger.debug("要删除的企业ID:" + corpId);
+		delResult = Collections.synchronizedMap(new HashMap<String, String>());
+		// 对于编辑企业信息的情况，处理删除原照片的请求
+		if (StringUtils.isNotEmpty(corpId)) {
+			Enterprise enterprise = getManager().get(Integer.valueOf(corpId));
+			String relativePath = enterprise.getPhotoUrl();
+			if (StringUtils.isNotEmpty(relativePath)) {
+				File file = new File(getServletContext().getRealPath(relativePath));
+				if (file.exists()) {
+					file.delete();
+				}
+			}
+			// 删除数据库中企业照片的路径
+			enterprise.setPhotoUrl(null);
+			getManager().save(enterprise);
+			delResult.put("result", "success");
+		} else {
+			delResult.put("result", "error");
+		}
+		return "jsonRst";
+	}
+	
+	/**
 	 * 查看企业信息
 	 */
 	public String look(){
@@ -130,5 +166,21 @@ public class EnterpriseAction extends ExtJsCrudAction<Enterprise, EnterpriseMana
 
 	public void setPhotoFileName(String photoFileName) {
   	this.photoFileName = photoFileName;
+  }
+	
+	public Map<String, String> getDelResult() {
+  	return delResult;
+  }
+
+	public void setDelResult(Map<String, String> delResult) {
+  	this.delResult = delResult;
+  }
+	
+	public String getCorpId() {
+  	return corpId;
+  }
+
+	public void setCorpId(String corpId) {
+  	this.corpId = corpId;
   }
 }
