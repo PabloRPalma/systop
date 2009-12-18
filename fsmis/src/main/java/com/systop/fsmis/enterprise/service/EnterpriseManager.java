@@ -1,5 +1,8 @@
 package com.systop.fsmis.enterprise.service;
 
+import java.io.File;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,5 +44,33 @@ public class EnterpriseManager extends BaseGenericsManager<Enterprise> {
 			}
 		}
 		super.save(enterprise);
+	}
+	
+	/**
+	 * 删除企业信息，如存在照片则删除照片
+	 * @param enterprise 企业
+	 * @param realPath 照片地址
+	 */
+	@Transactional
+	public void remove(Enterprise enterprise, String realPath) {
+		if (!enterprise.getPhotoUrl().isEmpty()) {
+			File file = new File(realPath);
+			if (file.exists()) {
+				file.delete();
+			}
+		}
+		super.remove(enterprise);
+	}
+	
+	/**
+	 * 根据企业编号取得该企业实体信息
+	 */
+	public Enterprise getEnterpriseByCode(String code) {
+		String hql = "from Enterprise en where en.code=?";
+		List<Enterprise> li = query(hql, code);
+		if (!li.isEmpty()) {
+			return li.get(0);
+		}
+		return new Enterprise();
 	}
 }
