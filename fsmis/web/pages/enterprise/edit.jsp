@@ -6,57 +6,15 @@
 <head>
 <title></title>
 <%@include file="/common/meta.jsp"%>
-<%@include file="/common/dwr.jsp" %>
+<%@include file="/common/validator.jsp"%>
 <script type="text/javascript" src="${ctx}/scripts/fckeditor/fckeditor.js"></script>
-<script type="text/javascript" src="${ctx}/dwr/interface/CompanyDwrAction.js"></script>
-<script type="text/javascript">
-  //检查上传照片
-  function checkPhotoPath(){
-    try{
-      document.getElementById("companyForm").submit();
-    }catch(e){
-      alert("上传的监管员照片无效!");      
-      return false;
-    }
-  }
-  //异步删除照片
-  function deletePhoto(spId){
-    if(confirm("确定要删除该监管员的照片吗?")){           
-      CompanyDwrAction.deletePhoto(spId, function(mes){
-		    if(mes == "success"){
-		          document.getElementById("photoOperSpan1").innerHTML=
-		            "<img alt='企业照片' align='center' width='300' height='255' id='imgphoto' src='${ctx}/images/com_nophoto_big.gif'/><br/>";
-		          document.getElementById("photoOperSpan2").innerHTML=
-		           "<input type='file' id='photo' name='photo' class='FileText' onchange='changeImg()'/>";
-		    }else{
-		          alert("删除企业照片失败，请与管理员联系！");
-		    }     
-      });    
-    }    
-  }
-  
-  function changeImg(){
-  	var img = document.getElementById("photo");
-  	var imgphoto = document.getElementById("imgphoto");
-  	imgphoto.src = img.value;
-  }
-  
-  //文本编辑组件
-  function preFckEditor(){
-	var fckEditor = new FCKeditor( 'integrityRecord' ) ;
-    fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
-    fckEditor.ToolbarSet = 'BasicA';
-    fckEditor.Height = 350;
-    fckEditor.ReplaceTextarea();
-}
-</script>
 </head>
 <body onload="preFckEditor()">
 <div class="x-panel">
 <div class="x-panel-header">诚信企业管理&nbsp;>&nbsp;企业列表&nbsp;>&nbsp;企业信息</div>
 <div align="center" >
- <s:form id="companyForm" action="save.do" method="post" theme="simple" enctype="multipart/form-data" onsubmit="return checkPhotoPath()">
-	<s:hidden name="model.id" />
+ <s:form id="companyForm" action="save.do" method="post" theme="simple" enctype="multipart/form-data">
+	<s:hidden id="corpId" name="model.id" />
 	<fieldset style="width: 830px; padding: 10px 10px 10px 10px;">
 	<legend>企业信息</legend>
 	<table width="800">
@@ -187,7 +145,7 @@
 							</c:when>
 							<c:otherwise>
 								<input name="button" type="button"
-									onClick="deletePhoto(${model.id})" value="删除照片" />
+									onClick="deletePhoto()" value="删除照片" />
 							</c:otherwise>
 						</c:choose>
 		            </td>
@@ -218,5 +176,44 @@
 </s:form>
 </div>
 </div>
+<script type="text/javascript">
+  //删除照片
+  function deletePhoto(){
+    if(confirm("确定要删除该企业的照片吗?")){           
+    	var enId = $("#corpId")[0].value;
+        $.ajax({
+    		url: '${ctx}/enterprise/deletePhoto.do',
+    		type: 'post',
+    		dataType: 'json',
+    		data: {corpId : enId},
+    		success: function(rst, textStatus){
+    	  		if(rst.result == "success"){
+    	  		  document.getElementById("photoOperSpan1").innerHTML=
+    	            "<img alt='企业照片' align='center' width='300' height='255' id='imgphoto' src='${ctx}/images/corp/com_nophoto_big.gif'/><br/>";
+    	          document.getElementById("photoOperSpan2").innerHTML=
+    	           "<input type='file' id='photo' name='photo' class='FileText' onchange='changeImg()'/>";
+    	  	  	}else{
+    	  	  	  alert("删除企业照片失败，请与管理员联系！");
+    	  	  	}
+    		}
+    	  });
+    }
+  }
+  
+  function changeImg(){
+  	var img = document.getElementById("photo");
+  	var imgphoto = document.getElementById("imgphoto");
+  	imgphoto.src = img.value;
+  }
+  
+  //文本编辑组件
+  function preFckEditor(){
+	var fckEditor = new FCKeditor( 'integrityRecord' ) ;
+    fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
+    fckEditor.ToolbarSet = 'BasicA';
+    fckEditor.Height = 350;
+    fckEditor.ReplaceTextarea();
+}
+</script>
 </body>
 </html>
