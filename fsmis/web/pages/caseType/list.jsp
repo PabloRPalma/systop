@@ -11,6 +11,9 @@
 function removeNo(){
 	alert("此类别存在事件关联，不能删除！");
 }
+function removeAo(){
+	alert("此类别存在子类别，不能删除！");
+}
 function remove(id){
 	if (confirm("确认要删除类别吗?")){
 		url="${ctx}/caseType/remove.do?model.id=" + id;
@@ -60,7 +63,12 @@ function remove(id){
 			     <img src="${ctx}/images/icons/delete.gif" /></a>
 			</a>
 			</c:if>
-			<c:if test="${item.genericCases == '[]'}">
+			<c:if test="${item.caseTypes != '[]'}">
+			<a href="#" onclick="removeAo()">
+			     <img src="${ctx}/images/icons/delete.gif" /></a>
+			</a>
+			</c:if>
+			<c:if test="${item.genericCases == '[]' && item.caseTypes == '[]'}">
 			<a href="#" onclick="remove(${item.id})">
 			     <img src="${ctx}/images/icons/delete.gif" /></a>
 			</a>
