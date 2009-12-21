@@ -43,7 +43,6 @@ public class SupervisorAction extends DefaultCrudAction<Supervisor, SupervisorMa
 	private String photoFileName;
 	
 	/** 按姓名、监管区域、所属部门查询监管员信息*/
-	@SuppressWarnings("unchecked")
 	public String index(){
 		indexSuperviosr();
 		return INDEX;

@@ -58,7 +58,6 @@ public class SupervisorManager extends BaseGenericsManager<Supervisor> {
 
 		
 	/** 删除监管员信息，如果有照片存在则删除照片*/
-	@SuppressWarnings("unchecked")
 	@Transactional
 	public void remove(Supervisor supervisor, String realPath){
 		if (!supervisor.getPhotoUrl().isEmpty()) {
@@ -71,7 +70,6 @@ public class SupervisorManager extends BaseGenericsManager<Supervisor> {
 	}
 
 	/** 父类保存方法*/
-	@SuppressWarnings("unchecked")
 	@Transactional
 	public void superSave(Supervisor supervisor){
 			super.save(supervisor);
