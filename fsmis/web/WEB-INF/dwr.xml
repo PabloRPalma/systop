@@ -30,8 +30,11 @@
    	         <param name="beanName" value="linkCatasAction" ></param>
    	         <include method="dwrRemove"/>
    	    </create>
-   	    <create javascript="AnnounceDwrAction" creator="spring">
-   	         <param name="beanName" value="announceDwrAction" ></param>
+   	    <create creator="spring" javascript="SupervisorDwrAction">
+			<param name="beanName" value="supervisorDwrAction"></param>
+		</create>  	    
+   	    <create javascript="SupervisorDwrAction" creator="spring">
+   	         <param name="beanName" value="supervisorDwrAction" ></param>
    	    </create>
    	    
    	    <convert converter="bean"  match="com.systop.common.core.dao.support.Page"  />
@@ -43,6 +46,7 @@
    	    <convert converter="bean"  match="com.systop.common.modules.dept.model.Dept"  />
    	    <convert converter="bean"  match="com.systop.common.modules.employee.model.Employee"  />
    	    <convert converter="map"   match="java.util.Map" />
+   	    <convert converter="bean"  match="com.systop.fsmis.model.Supervisor"/>
 	</allow>
 
 
