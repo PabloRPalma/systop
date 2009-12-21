@@ -1,5 +1,6 @@
 package com.systop.fsmis.casetype.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,8 +39,31 @@ public class CaseTypeManager  extends
 	@Transactional
 	public void save(CaseType caseType) {
 		Assert.notNull(caseType);
-		
+		// 处理父类别
+		if (caseType.getCaseType().getId() != null) { 
+			 CaseType parent = get(caseType.getCaseType().getId());
+			 parent.getCaseTypes().add(caseType);
+			 caseType.setCaseType(parent); 
+		} else {
+			 caseType.setCaseType(null); // 处理parentId为null的情况 
+	    }
 		getDao().getHibernateTemplate().clear();
 		super.save(caseType);
+	}
+	
+	/**
+	 * 获得二级单体类别根据一级Id
+	 */
+	public List getLevelTwoList(Integer id) {
+		List<CaseType> caseTypes = query(
+				"from CaseType where caseType.id = ?", id);
+		List caseTypesList = new ArrayList();
+		for (CaseType caseType : caseTypes) {
+			Map caseTypemap = new HashMap();
+			caseTypemap.put("id", caseType.getId());
+			caseTypemap.put("name", caseType.getName());
+			caseTypesList.add(caseTypemap);
+		}
+		return caseTypesList;
 	}
 }
