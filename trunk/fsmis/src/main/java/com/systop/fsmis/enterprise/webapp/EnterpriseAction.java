@@ -55,7 +55,6 @@ public class EnterpriseAction extends ExtJsCrudAction<Enterprise, EnterpriseMana
 	/**
 	 * 企业信息查询列表
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public String index() {
 		Page page = PageUtil.getPage(getPageNo(), getPageSize());
