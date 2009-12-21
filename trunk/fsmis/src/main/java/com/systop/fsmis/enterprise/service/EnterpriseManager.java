@@ -3,6 +3,7 @@ package com.systop.fsmis.enterprise.service;
 import java.io.File;
 import java.util.List;
 
+import org.apache.commons.lang.xwork.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,22 +25,22 @@ public class EnterpriseManager extends BaseGenericsManager<Enterprise> {
 	@Transactional
 	public void save(Enterprise enterprise) {
 		if (getDao().exists(enterprise, "businessLicense")) {
-			if (enterprise.getBusinessLicense() != null) {
+			if (StringUtils.isNotEmpty(enterprise.getBusinessLicense())) {
 				throw new ApplicationException("添加的营业执照号已存在。");
 			}
 		}
 		if (getDao().exists(enterprise, "produceLicense")) {
-			if (enterprise.getProduceLicense() != null) {
+			if (StringUtils.isNotEmpty(enterprise.getProduceLicense())) {
 				throw new ApplicationException("添加的生产许可证号已存在。");
 			}
 		}
 		if (getDao().exists(enterprise, "sanitationLicense")) {
-			if (enterprise.getSanitationLicense() != null) {
+			if (StringUtils.isNotEmpty(enterprise.getSanitationLicense())) {
 				throw new ApplicationException("添加的卫生许可证号已存在。");
 			}
 		}
 		if (getDao().exists(enterprise, "code")) {
-			if (enterprise.getCode() != null) {
+			if (StringUtils.isNotEmpty(enterprise.getCode())) {
 				throw new ApplicationException("添加的企业编号已存在。");
 			}
 		}
