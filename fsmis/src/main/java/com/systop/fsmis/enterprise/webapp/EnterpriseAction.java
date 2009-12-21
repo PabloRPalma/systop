@@ -12,7 +12,11 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
+import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
+import com.opensymphony.xwork2.validator.annotations.Validations;
 import com.systop.cms.utils.PageUtil;
+import com.systop.common.modules.dept.model.Dept;
 import com.systop.core.dao.support.Page;
 import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
 import com.systop.core.webapp.upload.UpLoadUtil;
@@ -62,8 +66,13 @@ public class EnterpriseAction extends ExtJsCrudAction<Enterprise, EnterpriseMana
 	}
 
 	/**
-	 * 保存企业信息，其中公司名称、地址、编号为必填
+	 * 保存企业信息，其中企业名称、地址、编号为必填
 	 */
+	@Validations(requiredStrings = {
+			@RequiredStringValidator(fieldName = "model.name",message = "请填写企业名称！"),
+			@RequiredStringValidator(fieldName = "model.address",message = "请填写企业地址！"),
+			@RequiredStringValidator(fieldName = "model.code",message = "请填写企业编号！")			
+	},requiredFields = {@RequiredFieldValidator(fieldName = "model.dept.id",message = "请选择所属部门！")})
 	@Override
 	public String save() {
 		try {
@@ -74,10 +83,10 @@ public class EnterpriseAction extends ExtJsCrudAction<Enterprise, EnterpriseMana
 				logger.debug("photo path:" + fileRelativePath);
 				getModel().setPhotoUrl(fileRelativePath);
 			}
-			/*// 当更改部门时需要重新设置部门
+			// 当更改部门时需要重新设置部门
 			Dept dept = getManager().getDao().get(Dept.class,
 			    getModel().getDept().getId());
-			getModel().setDept(dept);*/
+			getModel().setDept(dept);
 			//getManager().getDao().clear();
 			getManager().save(getModel());
 			return SUCCESS;
