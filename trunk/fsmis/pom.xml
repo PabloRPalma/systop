@@ -439,7 +439,14 @@
 			<version>${spring.version}</version>
 		</dependency>
 		<!-- test end -->
-
+		<!-- axis begin -->
+		<dependency>
+    		<groupId>org.apache.axis</groupId>
+    		<artifactId>axis</artifactId>
+    		<version>1.4</version>
+		</dependency> 
+		
+		<!-- axis end -->
 	</dependencies>
 
 </project>
