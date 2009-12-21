@@ -29,7 +29,7 @@ public class CaseType extends BaseModel {
 
 	/** 主键 */
 	private Integer id;
-	/** 类别ID */
+	/** 上级类别ID */
 	private CaseType caseType;
 	/** 名称 */
 	private String name;
@@ -37,6 +37,7 @@ public class CaseType extends BaseModel {
 	private String descn;
 	/** 类别对应的一般事件 */
 	private Set<GenericCase> genericCases = new HashSet<GenericCase>(0);
+	/** 类别记录 */
 	private Set<CaseType> caseTypes = new HashSet<CaseType>(0);
 
 
