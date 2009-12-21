@@ -19,6 +19,7 @@
 				<value>classpath:application.properties</value>
 				<value>classpath:dao.properties</value>
 				<value>classpath:red5.properties</value>
+				<value>classpath:sms.properties</value>
 			</list>
 		</property>
 	</bean>
