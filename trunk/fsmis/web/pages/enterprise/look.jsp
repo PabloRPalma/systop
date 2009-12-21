@@ -130,7 +130,7 @@ function openImg(img){
 							<img width="300" height="225" src="${ctx}/${model.photoUrl}" onclick="openImg(this)" title="点击查看图片"/>
 						</c:if>
 						<c:if test="${empty model.photoUrl}">
-							<img width="300" height="225" src="${ctx}/images/com_nophoto_big.gif"/>
+							<img width="300" height="225" src="${ctx}/images/corp/com_nophoto_big.gif"/>
 						</c:if>
 					</td>
 				</tr>
@@ -164,7 +164,9 @@ function openImg(img){
 									</div>
 								</td>
 								<td	width="50%" height="240">
+									<!--  
 									<iframe height="240" src="${ctx}/company/singleevents/index.do?companyId=${param['model.id']}" frameborder="0" width="100%" name="singleEvents"></iframe>
+									-->
 								</td>
 							</tr>
 						</table>
@@ -178,7 +180,7 @@ function openImg(img){
 			<table width="100%">
 				<tr>
 					<td>
-						<div class="x-toolbar" style="padding:5px 5px 5px 5px">公司简介</div>
+						<div class="x-toolbar" style="padding:5px 5px 5px 5px">企业简介</div>
 					</td>
 				</tr>
 				<tr>
