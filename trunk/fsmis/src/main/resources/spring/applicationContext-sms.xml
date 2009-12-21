@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-lazy-init="false">
+	<!-- 定义目标bean和bean中的方法 -->
+	<bean id="jobDetailSmsManager"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<!-- 目标业务对象 -->
+		<property name="targetObject">
+			<!-- 实际完成业务操作的类 -->
+			<ref bean="smsManager" />
+		</property>
+		<!-- 业务类的方法 -->
+		<property name="targetMethod">
+			<value>sendMessages</value>
+		</property>
+	</bean>
+	<!-- 定义触发的精确时间 -->
+	<bean id="smsManagerTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<!-- jobDetail 属性告诉触发器调度哪个工作 -->
+		<property name="jobDetail">
+			<!-- 引用业务操作 -->
+			<ref bean="jobDetailSmsManager" />
+		</property>
+		<property name="startDelay">
+			<value>${sms.SmsSend.startDelay}</value>
+		</property>
+		<property name="repeatInterval">
+			<value>${sms.SmsSend.repeatInterval}</value>
+		</property>
+
+	</bean>
+	<!-- 总管理 日程安排工厂-->
+	<bean autowire="no"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<!-- triggers属性接受一组触发器 -->
+		<property name="triggers">
+			<list>
+				<!-- 引用定义触发器的实现 -->
+				<ref bean="smsManagerTrigger" />
+			</list>
+		</property>
+	</bean>
+
+</beans>
