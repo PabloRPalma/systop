@@ -5,9 +5,11 @@
 <html>
 <head>
 <title></title>
+<%@include file="/common/extjs.jsp" %>
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/validator.jsp"%>
 <script type="text/javascript" src="${ctx}/scripts/fckeditor/fckeditor.js"></script>
+<link href="${ctx}/styles/treeSelect.css" type='text/css' rel='stylesheet'>
 </head>
 <body onload="preFckEditor()">
 <div class="x-panel">
@@ -86,6 +88,8 @@
             </td>
             <td width="80" align="right">部　门：</td>
             <td width="150" align="left">
+            	<div id="comboxWithTree"  style="float: left;margin-left:0px;" ></div><font color="red" style="margin-left:2px;">*</font>
+				<s:hidden name="model.dept.id" id="deptId"></s:hidden>
             </td>
           </tr>
           <tr>
@@ -121,7 +125,7 @@
             </td>
           </tr>
           <tr>
-            <td width="119" align="right">公司简介：</td>
+            <td width="119" align="right">企业简介：</td>
             <td align="left" colspan="3">
             	<s:textarea id="descn" name="model.descn" cssStyle="width:350px; height:70px"/>
             </td>
@@ -214,6 +218,22 @@
     fckEditor.Height = 350;
     fckEditor.ReplaceTextarea();
 }
+</script>
+<script type="text/javascript" src="${ctx}/pages/admin/dept/edit.js"></script>
+<script type="text/javascript">
+Ext.onReady(function() {
+	var dtree = new DeptTree({
+		url : '/admin/dept/deptTree.do',
+		parent : '<stc:loginUserDept showPath="false" propertyName="id" showTopDept="true"></stc:loginUserDept>',
+		initValue : '${model.dept.name}',
+		el : 'comboxWithTree',
+		innerTree :'inner-tree',
+		onclick : function(nodeId) {
+		  Ext.get('deptId').dom.value = nodeId;
+		}
+	});
+	dtree.init();
+});
 </script>
 </body>
 </html>

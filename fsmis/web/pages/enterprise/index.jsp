@@ -46,12 +46,13 @@ function removeCompany(cID){
 		<td align="right">
 		<table>
 			<tr>
+				<td><a href="edit.do"><img
+					src="${ctx}/images/icons/add.gif" />添加</a></td>
+				<!--
 				<td><span class="ytb-sep"></span></td>
 				<td><a href="${ctx}/pages/opengis/mapCompanyLabel.jsp"><img
 					src="${ctx}/images/fs_index/search.gif" />企业分布图</a></td>
-				<td><span class="ytb-sep"></span></td>
-				<td><a href="edit.do"><img
-					src="${ctx}/images/icons/add.gif" />添加</a></td>
+				-->
 			</tr>
 		</table>
 		</td>
@@ -78,20 +79,23 @@ function removeCompany(cID){
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	<ec:row>
 		<ec:column width="40" property="_no" value="${GLOBALROWCOUNT}" title="No." style="text-align:center"/>
-		<ec:column width="270" property="name" title="企业名称" />
+		<ec:column width="270" property="name" title="企业名称" >
+			<a href="look.do?model.id=${item.id}" target="_blank"><font color="blue">${item.name}</font></a>
+		</ec:column>
 		<ec:column width="120" property="code" title="企业编号" />
 		<ec:column width="80" property="legalPerson" title="法人" />
 		<ec:column width="220" property="address" title="企业地址"/>
-		<ec:column width="140" property="_0" title="操作" style="text-align:center" sortable="false">
+		<ec:column width="100" property="_0" title="操作" style="text-align:center" sortable="false">
 			<a href="edit.do?model.id=${item.id}">
 				<img src="${ctx}/images/icons/modify.gif" border="0" title="编辑" />
-			</a>
+			</a> |
 			<a href="look.do?model.id=${item.id}" target="_blank">
 				<img src="${ctx}/images/icons/resource.gif" border="0" title="查看" />
-			</a>
+			</a> |
 			<a href="#">
 				<img src="${ctx}/images/icons/delete.gif" title="删除" border="0" onclick="removeCompany(${item.id})"/>
 			</a>
+			<!--
 			<s:if test="#attr.item.locationType != null">
 			    <a href="${ctx}/pages/opengis/mapCompany.jsp?value='${item.id}'">
 				    <img src="${ctx}/images/company.gif" title="查看地理位置" board="0"/>
@@ -102,6 +106,7 @@ function removeCompany(cID){
 				    <img src="${ctx}/images/company_NoLocation.gif" title="标注地理位置" board="0"/>
 			    </a>
 			</s:else>
+			-->
 		</ec:column>
 	</ec:row>
 </ec:table></div>
