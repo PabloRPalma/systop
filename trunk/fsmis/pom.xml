@@ -439,14 +439,18 @@
 			<version>${spring.version}</version>
 		</dependency>
 		<!-- test end -->
-		<!-- axis begin -->
+		<!-- sms_webService begin -->
 		<dependency>
     		<groupId>org.apache.axis</groupId>
     		<artifactId>axis</artifactId>
     		<version>1.4</version>
 		</dependency> 
-		
-		<!-- axis end -->
+		<dependency>
+    		<groupId>javax.xml</groupId>
+    		<artifactId>jaxrpc</artifactId>
+    		<version>1.1</version>
+		</dependency>
+		<!-- sms_webService end -->
 	</dependencies>
 
 </project>
