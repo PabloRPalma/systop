@@ -38,7 +38,7 @@
 </head>
 <body>
 <div class="x-panel">
-<div class="x-panel-header">协调指挥&nbsp;>&nbsp;单体事件/任务管理&nbsp;>&nbsp;事件/任务列表&nbsp;>&nbsp;事件/任务查看</div>
+<div class="x-panel-header"></div>
 <div class="x-toolbar">
 	<table width="99%">
 	<tr>

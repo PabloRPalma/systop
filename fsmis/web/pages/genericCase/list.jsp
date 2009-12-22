@@ -18,13 +18,11 @@ function removeNo(){
 
 function remove(id){
 	if (confirm("确认要删除事件信息吗?")){
-		url="${ctx}/genericCase/remove.do?model.id=" + id;
+		url="${ctx}/genericcase/remove.do?model.id=" + id;
 		window.open(url,'main');
 	}
 }
-function addSendMsg(seId){
-	window.location.href = "${ctx}/genericCase/addSendMsg.do?model.id=" + seId;
-}
+
 </script>
 </head>
 <body>
@@ -39,23 +37,18 @@ function addSendMsg(seId){
 						事件编号：
 			<s:textfield name="model.code"></s:textfield>
 			             事件状态:
-			<s:select name="model.status" list="stateMap" />		
+			<s:select name="model.status" list="stateMap" headerKey="" headerValue="请选择"/>		
 			<s:submit value="查询" cssClass="button"></s:submit>
 		</s:form></td>
 		<td align="right">
 		<stc:role ifNotGranted="ROLE_DEPT_OPER">
 		<table>
 			<tr>
-				<td><a href="${ctx}/genericCase/index.do"><img
+				<td><a href="${ctx}/genericcase/index.do"><img
 					src="${ctx}/images/icons/house.gif" />首页</a></td>
 				<td><span class="ytb-sep"></span></td>
-				<td><a href="${ctx}/pages/opengis/mapSingleEventLabel.jsp"><img
-					src="${ctx}/images/fs_index/search.gif"/> 事件分布图</a></td>
 				<td><span class="ytb-sep"></span></td>
-				<td><a href="${ctx}/genericCase/indexSubSj.do"><img
-					src="${ctx}/images/icons/arrow_turn_left.gif" />查看已上报市平台事件</a></td>
-				<td><span class="ytb-sep"></span></td>
-				<td><a href="${ctx}/genericCase/edit.do"><img
+				<td><a href="${ctx}/genericcase/edit.do"><img
 					src="${ctx}/images/icons/add.gif" /> 添加事件信息</a></td>
 			</tr>
 		</table>
@@ -94,40 +87,42 @@ function addSendMsg(seId){
 			<c:if test="${item.status == '2'}"><font color="green">已处理</font></c:if>
 			<c:if test="${item.status == '3'}"><font color="gray">已回退</font></c:if>
 			<c:if test="${item.status == '4'}"><font color="blue">已核实</font></c:if>
-			<a href="${ctx}/genericCase/look.do?model.id=${item.id}"> <img src="${ctx}/images/icons/resource.gif" border="0"/>查看 </a>
 		</ec:column>
 		<stc:role ifNotGranted="ROLE_DEPT_OPER">
 		<ec:column width="150" property="_0" title="操作" style="text-align:left" sortable="false">
 			 &nbsp;&nbsp;
+			 <a href="${ctx}/genericcase/view.do?model.id=${item.id}">
+			      <font color="#FF9D07">查看</font>
+			 </a>  
 			 <stc:role ifAnyGranted="ROLE_ADMIN">
-			    <a href="${ctx}/genericCase/edit.do?model.id=${item.id}">
-                 <img src="${ctx}/images/icons/modify.gif" border="0" title="编辑" />
+			    <a href="${ctx}/genericcase/edit.do?model.id=${item.id}">
+                   <font color="green"> 编辑</font>
                </a>
              </stc:role>
             <stc:role  ifNotGranted="ROLE_ADMIN">
             <c:if test="${item.status == '2' || item.status == '4'}">
                 <a href="#">
-                <img src="${ctx}/images/icons/modify_disable.gif" border="0" title="编辑" />
+                <font color="gray">编辑</font>
              </a>
             </c:if>
 			<c:if test="${item.status == '0' || item.status == '1'}">
-			   <a href="${ctx}/genericCase/edit.do?model.id=${item.id}">
-                <img src="${ctx}/images/icons/modify.gif" border="0" title="编辑" />
+			   <a href="${ctx}/genericcase/edit.do?model.id=${item.id}">
+                 <font color="green">编辑</font>
              </a>	
             </c:if>
             </stc:role>
 			<c:if test="${item.status != '0'}">
 			<a href="#" onclick="removeNo()">
-			       <img src="${ctx}/images/icons/delete_disable.gif" border="0" title="删除" />
+			     <font color="gray">删除</font>
 			</a>
 			</c:if>
 			<c:if test="${item.status == '0'}">
 			 <a href="#" onclick="remove(${item.id})" >
-			       <img src="${ctx}/images/icons/delete.gif" border="0" title="删除" />
+			     <font color="red"> 删除</font>
 			 </a>
 			</c:if>
 				
-			<img src="${ctx}/images/fs_index/search.gif" border="0" title="地图位置" />
+			  <font color="blue"> 地图</font>
 			
 				
 		</ec:column>
