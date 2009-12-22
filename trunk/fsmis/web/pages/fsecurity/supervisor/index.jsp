@@ -50,8 +50,7 @@ function exportMobileNum(){
 			<td width="80"><s:textfield name="model.superviseRegion" 
 				cssStyle="width:80px" /></td>
 			<td width="60" align="right">负责人：</td>
-			<td width="20"><input type="checkbox" name="model.isLeader" 
-				value="1"/></td>
+			<td width="80"><s:radio list="#{'1':'是', '0':'否'}" name="isLeader" id="model.isLeader" cssStyle="border:0;"></s:radio></td>
 		</s:form>
 		<td align="left">
 			<input type="button" value="查询" class="button" onclick="index()" style="width: 40px"/>
@@ -59,8 +58,6 @@ function exportMobileNum(){
 		<td align="right">
 		<table>
 			<tr>
-				<td><a href="${ctx}/pages/opengis/mapSupervisorLabel.jsp"><img
-					src="${ctx}/images/fs_index/search.gif" />监管员分布图</a></td>
 				<td><span class="ytb-sep"></span></td>
 				<td><a href="editNew.do"><img
 					src="${ctx}/images/icons/add.gif" />添加</a></td>
@@ -106,22 +103,9 @@ function exportMobileNum(){
 		<ec:column width="120" property="dept.name" title="所属街道"/>
 		<ec:column width="250" property="superviseRegion" title="监管区域" />
 		<ec:column width="120" property="_0" title="操作" style="text-align:center" sortable="false">
-			<a href="edit.do?model.id=${item.id}">
-				<img src="${ctx}/images/icons/modify.gif" border="0" title="编辑" />
-			</a>
-			<a href="look.do?model.id=${item.id}" target="_blank">
-				<img src="${ctx}/images/icons/resource.gif" border="0" title="查看" />
-			</a>
-			<a href="#">
-				<img src="${ctx}/images/icons/delete.gif" title="删除" border="0" onclick="removeSupervisor(${item.id})"/>
-			<a href="${ctx}/pages/opengis/mapSupervisor.jsp?value='${item.id}'">
-				<s:if test="#attr.item.locationType != null">
-					<img src="${ctx}/images/superVisor02.gif" title="查看地域位置" board="0"/>
-				</s:if>
-				<s:else>
-					<img src="${ctx}/images/superVisor_NoLocation.gif" title="标注地域位置" board="0"/>
-				</s:else>
-			</a>
+			<a href="edit.do?model.id=${item.id}">编辑</a>|
+			<a href="look.do?model.id=${item.id}" target="_blank">查看</a>|
+			<a href="#" onclick="removeSupervisor(${item.id})">删除</a>				
 		</ec:column>
 	</ec:row>
 </ec:table></div>

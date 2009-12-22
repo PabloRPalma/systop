@@ -8,31 +8,26 @@
 <%@include file="/common/extjs.jsp" %>
 <link href="${ctx}/styles/treeSelect.css" type='text/css' rel='stylesheet'>
 <%@include file="/common/meta.jsp"%>
-<%@include file="/common/dwr.jsp" %>
-<script type="text/javascript" src="${ctx}/dwr/interface/SupervisorDwrAction.js"></script>
 <script type="text/javascript">
-  //检查上传照片
-  function checkPhotoPath(){
-    try{
-      document.getElementById("supervisorForm").submit();
-    }catch(e){
-      alert("上传的监管员照片无效!");      
-      return false;
-    }
-  }
   //异步删除照片
-  function deletePhoto(spId){
-    if(confirm("确定要删除该监管员的照片吗?")){           
-      SupervisorDwrAction.deletePhoto(spId, function(mes){
-		    if(mes == "success"){
-		          document.getElementById("photoOperSpan").innerHTML=
-		            "<img id='imgphoto' width='106' height='142' alt='监管员照片' align='center' src='${ctx}/images/noSupervisor.gif'/><br/>"
-		           +"<input type='file' id='photo' name='photo' class='FileText' onchange='changeImg()'/>";
-		    }else{
-		          alert("删除监管员照片失败，请与管理员联系！");
-		    }     
-      });    
-    }    
+   function deletePhoto(){
+    if(confirm("确定要删除该信息员的照片吗?")){           
+    	var spsId = $("#spId")[0].value;
+        $.ajax({
+    		url: '${ctx}/supervisor/deletePhoto.do',
+    		type: 'post',
+    		dataType: 'json',
+    		data: {spId : spsId},
+    		success: function(rst, textStatus){
+    	  		if(rst.result == "success"){
+    	  		  document.getElementById("photoOperSpan1").innerHTML=
+    	            "<div align='left'><img alt='照片' align='center' width='106' height='142' id='imgphoto' src='${ctx}/images/noSupervisor.gif'/></div><input type='file' id='photo' name='photo' class='FileText' onchange='changeImg()'/>";
+    	  	  	}else{
+    	  	  	  alert("删除企业照片失败，请与管理员联系！");
+    	  	  	}
+    		}
+    	  });
+    }
   }
   
   function changeImg(){
@@ -50,7 +45,7 @@
   <s:form id="supervisorForm" action="save.do" method="post" theme="simple" enctype="multipart/form-data" onsubmit="return checkPhotoPath()">
   <fieldset style="width: 600px; padding: 50px 10px 10px 10px;">
 	<legend>监管员信息</legend>
-		<s:hidden name="model.id" />
+		<s:hidden id="spId" name="model.id" />
 		<table width="532" align="center">
 		  <tr>
 			<td colspan="4"><%@ include file="/common/messages.jsp"%></td>
@@ -58,11 +53,16 @@
 		</table>
 		<table width="532" align="center" border="0" cellpadding="2" cellspacing="1">
 		  <tr>
+			<td width="100" align="right">编　　号：</td>
+			<td colspan="2" align="left">
+		  <s:textfield id="mobile" name="model.code" cssStyle="width:180px" /><font color="red">&nbsp;*</font>			</td>
+	      </tr>
+		  <tr>
 			<td width="100" align="right">姓　　名：</td>
 			<td colspan="2" align="left">
 				<s:textfield id="name" name="model.name" cssStyle="width:180px"/><font color="red">&nbsp;*</font>						
 			</td>
-		    <td width="150" rowspan="8" id="photoOperSpan">
+		    <td width="150" rowspan="8" id="photoOperSpan1">
 		    	<div align="left"> 
 		    		<img alt="照片"  align="center" width="106" height="142" id="imgphoto" 
 						src="<c:if test='${not empty model.photoUrl}'>${ctx}${model.photoUrl}</c:if>
@@ -72,7 +72,7 @@
 	                      <s:file id="photo" name="photo" cssClass="FileText" onchange="changeImg()"></s:file>
 	                    </c:when>
 	                    <c:otherwise>
-	                      <input name="button" type="button" onClick="deletePhoto(${model.id})" value="删除照片"/>
+	                      <input name="button" type="button" onClick="deletePhoto()" value="删除照片"/>
 	                    </c:otherwise>
 	                  </c:choose>
             	</div>
@@ -87,18 +87,13 @@
 		 </c:if>
 		  <tr>
 				<td width="100" align="right">性　　别：</td>
-				<td colspan="2" align="left"><s:radio id="gender" name="model.gender" list="GenderMap" ></s:radio></td>
+				<td colspan="2" align="left"><s:radio id="gender" name="model.gender" list="GenderMap" cssStyle="border:0;"></s:radio></td>
 		  </tr>
 		  <tr>
 			  <td align="right">出生日期：</td>
 			  <td colspan="2" align="left"><input type="text" name="model.birthday" value='<s:date name="model.birthday" format="yyyy-MM-dd"/>'
 					  onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})" class="Wdate" style="width:100px;height:16px" readonly="readonly"/></td>
 		 </tr>
-		<tr>
-			<td width="100" align="right">编　　号：</td>
-			<td colspan="2" align="left">
-		  <s:textfield id="mobile" name="model.code" cssStyle="width:180px" /><font color="red">&nbsp;*</font>			</td>
-	    </tr>
 		<tr>
 			<td width="100" align="right">单　　位：</td>
 			<td colspan="2" align="left"><s:textfield id="unit" name="model.unit" cssStyle="width:180px" /></td>
@@ -117,7 +112,7 @@
 	    <tr>
 			<td width="100" align="right">负责人：</td>
 			<td colspan="3" align="left">
-				<s:radio list="#{'1':'是', '0':'否'}" name="isLeader" id="model.isLeader"></s:radio>
+				<s:radio list="#{'1':'是', '0':'否'}" name="isLeader" id="model.isLeader" cssStyle="border:0;" value="0"></s:radio>
 			</td>
 	    </tr>
 		<tr>
