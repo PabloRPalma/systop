@@ -80,7 +80,7 @@ public final class FsConstants {
   /** 通知附件路径 */
   public static final String NOTICE_ATT_FOLDER = ResourceBundleUtil.getString(RESOURCE_BUNDLE,
       "notice_att_path", "/uploadFiles/notice/att/");
-  /** 监管员照片上传路径 */
+  /** 信息员照片上传路径 */
   public static final String SUPERVISOR_PHOTOS_FOLDER = ResourceBundleUtil.getString(RESOURCE_BUNDLE,
       "supervisor_photos_file_path", "/uploadFiles/supervisor/");
   
