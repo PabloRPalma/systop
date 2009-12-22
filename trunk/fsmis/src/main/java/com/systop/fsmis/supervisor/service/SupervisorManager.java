@@ -9,7 +9,7 @@ import com.systop.core.ApplicationException;
 import com.systop.core.service.BaseGenericsManager;
 import com.systop.fsmis.model.Supervisor;
 /**
- * 信息监管员管理
+ * 信息信息员管理
  * 
  * @author zhaozhg
  */
@@ -18,13 +18,13 @@ import com.systop.fsmis.model.Supervisor;
 public class SupervisorManager extends BaseGenericsManager<Supervisor> {
 
 	/**
-	 * 保存监管员信息并验证监管员编号、手机号的唯一性
+	 * 保存信息员信息并验证信息员编号、手机号的唯一性
 	 */
 	@Transactional
 	public void save(Supervisor supervisor) {
 		getDao().getHibernateTemplate().clear();
 		if (getDao().exists(supervisor, "code")) {
-		throw new ApplicationException("添加的监管员编号已存在。");
+		throw new ApplicationException("添加的信息员编号已存在。");
 		}
 		if (!supervisor.getMobile().isEmpty() && getDao().exists(supervisor, "mobile")) {
 			throw new ApplicationException("添加的手机号已存在。");
@@ -33,7 +33,7 @@ public class SupervisorManager extends BaseGenericsManager<Supervisor> {
 	}
 
 	/**
-	 * 根据监管员编号取得该监管员实体信息
+	 * 根据信息员编号取得该信息员实体信息
 	 */
 	public Supervisor getSupervisorByCode(String code) {
 		String hql = "from Supervisor supervisor where supervisor.code = ?";
@@ -45,7 +45,7 @@ public class SupervisorManager extends BaseGenericsManager<Supervisor> {
 	}
 
 	/**
-	 * 根据监管员手机号取得该监管员实体信息
+	 * 根据信息员手机号取得该信息员实体信息
 	 */
 	public Supervisor getSupervisorByMobile(String mobile) {
 		String hql = "from Supervisor s where s.mobile = ? ";
@@ -57,7 +57,7 @@ public class SupervisorManager extends BaseGenericsManager<Supervisor> {
 	}
 
 		
-	/** 删除监管员信息，如果有照片存在则删除照片*/
+	/** 删除信息员信息，如果有照片存在则删除照片*/
 	@Transactional
 	public void remove(Supervisor supervisor, String realPath){
 		if (!supervisor.getPhotoUrl().isEmpty()) {
