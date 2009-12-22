@@ -1,5 +1,6 @@
 package com.systop.fsmis.casetype.webapp;
 
+
 import java.util.List;
 import java.util.Map;
 
@@ -38,8 +39,28 @@ public class CaseTypeAction extends
 		return SUCCESS;
 	}
 
+	/**
+	 * 获得一级类别 Map方法
+	 * @return
+	 */
 	public Map getLevelOne() {
 		return getManager().getLevelOneMap();
+	}
+	
+	/**
+	 * 获得一级类别  List方法
+	 * @return
+	 */
+	public List getLevelOneList() {
+		return getManager().getLevelOneList();
+	}
+	
+	/**
+	 * 根据一级ID得到二级类别
+	 * @return
+	 */
+	public List getLevelTwoList(Integer id) {
+		return getManager().getLevelTwoList(id);
 	}
 	
 	@Validations(requiredStrings = { @RequiredStringValidator(fieldName = "model.name", message = "请填写名称。") })

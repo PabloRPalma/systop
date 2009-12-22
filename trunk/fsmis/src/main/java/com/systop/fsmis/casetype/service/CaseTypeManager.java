@@ -36,6 +36,7 @@ public class CaseTypeManager  extends
 		}
 		return levelOne;
 	}
+	
 	@Transactional
 	public void save(CaseType caseType) {
 		Assert.notNull(caseType);
@@ -52,11 +53,27 @@ public class CaseTypeManager  extends
 	}
 	
 	/**
-	 * 获得二级单体类别根据一级Id
+	 * 获得二级单体类别根据一级Id list方法
 	 */
 	public List getLevelTwoList(Integer id) {
 		List<CaseType> caseTypes = query(
 				"from CaseType where caseType.id = ?", id);
+		List caseTypesList = new ArrayList();
+		for (CaseType caseType : caseTypes) {
+			Map caseTypemap = new HashMap();
+			caseTypemap.put("id", caseType.getId());
+			caseTypemap.put("name", caseType.getName());
+			caseTypesList.add(caseTypemap);
+		}
+		return caseTypesList;
+	}
+	
+	/**
+	 * 获得一级类别 List方法
+	 */
+	public List getLevelOneList() {
+		List<CaseType> caseTypes = query(
+				"from CaseType where caseType.id is null");
 		List caseTypesList = new ArrayList();
 		for (CaseType caseType : caseTypes) {
 			Map caseTypemap = new HashMap();
