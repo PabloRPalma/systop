@@ -110,6 +110,37 @@ function exportMobileNum(){
 	</ec:row>
 </ec:table></div>
 </div>
+<table width="100%">
+	<tr>
+		<td align="left"><s:form action="importData"
+			namespace="/supervisor" theme="simple" method="POST"
+			enctype="multipart/form-data">
+			<fieldset style="margin: 10px;"><legend>监管员信息导入</legend>
+			<table align="left">
+				<tr>
+					<td>批量导入数据：</td>
+					<td><s:file name="data" size="30" /></td>
+					<td>&nbsp;&nbsp;<s:submit value="数据导入" cssClass="button"
+						action="importData" onclick="return confirm('您是否导入监管员信息？')" />
+					</td>
+					<td align="left">&nbsp;&nbsp;&nbsp;&nbsp;<a
+						href="${ctx}/uploaded/template/import/PersonInfo.xls"><font
+						color="blue">模板下载</font></a></td>				
+				</tr>
+				<tr>
+					<s:if test="errorInfo.size() > 0">
+						<td align="left"><font color="red">系统提示信息：</font></td>
+						<td align="left" colspan="3"><s:iterator value="errorInfo">
+							<font color="red"><s:property /></font>
+							<br />
+						</s:iterator></td>
+					</s:if>
+				</tr>
+			</table>
+			</fieldset>
+		</s:form></td>
+	</tr>
+</table>	
 </div>
 </body>
 </html>
