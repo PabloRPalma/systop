@@ -11,7 +11,6 @@
 <div class="x-panel">
     <div class="x-panel-header">友情链接管理</div>
     <div class="x-toolbar">
-	 &nbsp;
     </div>
 	<div><%@ include file="/common/messages.jsp"%></div> 
 	<s:form namespace="/admin/links" action="saveLink" method="post" theme="simple" enctype="multipart/form-data" validate="true">

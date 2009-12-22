@@ -6,12 +6,12 @@
 <head>
 <title></title>
 <%@include file="/common/meta.jsp" %>
+<%@include file="/common/ec.jsp" %>
 </head>
 <body>
 <div class="x-panel">
     <div class="x-panel-header">软件类别管理</div>
     <div class="x-toolbar">
-	 &nbsp;
     </div>
 	<div><%@ include file="/common/messages.jsp"%></div> 
 	<s:form  action="savecatas.do" method="post" theme="simple" enctype="multipart/form-data">

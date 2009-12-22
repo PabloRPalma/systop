@@ -25,6 +25,11 @@ function remove(id) {
 			<a href="addcatas.do">
 				<img src="${ctx}/images/icons/add.gif">添加类别
 			</a>
+			&nbsp;&nbsp;
+			<a href="${ctx}/admin/software/index.do">
+				<img src="${ctx}/images/icons/compressed.gif" class="icon">软件管理
+			</a>
+			&nbsp;&nbsp;&nbsp;&nbsp;
 		</td>
   	  </tr>
   	</table>

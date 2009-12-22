@@ -10,9 +10,14 @@
 </head>
 <body>
 <div class="x-panel">
-  <div class="x-panel-header">友情链接管理</div>
+  <div class="x-panel-header">链接排序</div>
   <div class="x-toolbar">
-  	&nbsp;
+  	<table width="100%"><tr>
+  		<td style="padding: 10 5 5 5;">
+			<img src="${ctx}/images/icons/link.gif" class="icon">
+			<a href="${ctx}/admin/links/listLink.do" target="main">链接管理</a>
+  		</td>
+  	</tr></table>
   </div>
   <s:form id="frmOrder" name="frmOrder" namespace="/admin/links" action="saveOrderLink" method="post" theme="simple">
     <s:hidden name="seqNoList"/>

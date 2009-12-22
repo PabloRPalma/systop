@@ -40,10 +40,10 @@ jQuery.noConflict();
   <div class="x-panel-header">文章排序</div>
   <div class="x-toolbar">
   	<table width="100%"><tr>
-	  		<td align="right">
+	  		<td>
+	  			&nbsp;&nbsp;&nbsp;&nbsp;
 		  		<img src="${ctx}/images/icons/folder_table.gif">
 		  		<a href="${ctx}/admin/article/listArticles.do" target="main">文章管理</a>
-		  		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	  		</td>
 	  	</tr></table>
   </div>
