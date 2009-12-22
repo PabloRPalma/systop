@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.systop.fsmis.model.SmsReceive;
-import com.systop.fsmis.sms.SMSConstants;
+import com.systop.fsmis.sms.SmsConstants;
 
 /**
  * 短信内容解析工具类
@@ -26,10 +26,10 @@ public final class MessagePraseUtil {
 
 		if ("1".equals(type)) {
 
-			smsReceive.setIsParsed(SMSConstants.Y);
+			smsReceive.setIsParsed(SmsConstants.Y);
 			smsReceive.setIsReport("1");
 		} else if ("2".equals(type)) {
-			smsReceive.setIsParsed(SMSConstants.Y);
+			smsReceive.setIsParsed(SmsConstants.Y);
 			smsReceive.setIsReport("2");
 			String eventid = hm.get("eventId");
 			if (eventid != null) {
@@ -42,10 +42,10 @@ public final class MessagePraseUtil {
 					// logger.error(e.getMessage());
 				}
 			} else {
-				smsReceive.setIsParsed(SMSConstants.Y);
+				smsReceive.setIsParsed(SmsConstants.Y);
 			}
 		} else {
-			smsReceive.setIsParsed(SMSConstants.N);
+			smsReceive.setIsParsed(SmsConstants.N);
 		}
 		return smsReceive;
 	}
@@ -58,10 +58,10 @@ public final class MessagePraseUtil {
 	 */
 	public static HashMap<String, String> stringArithmetic(String content) {
 		// 举报专用
-		String[] quoteString = SMSConstants.QUOTE_STRING.split(",");
+		String[] quoteString = SmsConstants.QUOTE_STRING.split(",");
 
 		// 反馈专用
-		String[] feedbackString = SMSConstants.FEEDBACK_STRING.split(",");
+		String[] feedbackString = SmsConstants.FEEDBACK_STRING.split(",");
 
 		HashMap<String, String> hm = new HashMap<String, String>();
 		content = content.trim();
