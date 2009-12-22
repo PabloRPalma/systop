@@ -51,7 +51,7 @@ function onRemove() {
     }
 }
 function onQuery() {
-	${"frmQuery"}.action = "listArticles.do";
+	$("frmQuery").action = "listArticles.do";
 	$("frmQuery").submit();
 }
 /** set parentId */
@@ -90,7 +90,7 @@ function onQuery() {
 					  标题：<input type="text" name="articleName" value="${articleName}" style="width:100px"/>&nbsp;
 					</td>
 					<td>
-					  所属栏目：<select id="catalogId" name="catalogId" />
+					  所属栏目：<select id="catalogId" name="catalogId"></select>
 					</td>
 					<td>
 						从：
@@ -120,6 +120,11 @@ function onQuery() {
 					<td>
 						<a href="#" onclick="onRemove()">
 						<img src="${ctx}/images/icons/delete.gif" />删除文章</a>
+					</td>
+					<td><span class="ytb-sep"></span></td>
+					<td>
+						<img src="${ctx}/images/icons/article_go.gif" class="icon">
+						<a href="${ctx}/admin/article/orderArticle.do" target="main">文章排序</a>
 					</td>
 				</tr>
 			</table>
