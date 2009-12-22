@@ -35,9 +35,9 @@ public class SmsSendManager extends BaseGenericsManager<SmsSend> {
 		 */
 		Session session = getDao().getSessionFactory().openSession();
 		Criteria criteria = session.createCriteria(SmsSend.class);
-		criteria.add(Restrictions.eq("isNew", SMSConstants.SMS_SMS_SEND_IS_NEW));
+		criteria.add(Restrictions.eq("isNew", SmsConstants.SMS_SMS_SEND_IS_NEW));
 		criteria.addOrder(Order.asc("createTime"));
-		criteria.setMaxResults(SMSConstants.SMS_SMS_SEND_COUNT);
+		criteria.setMaxResults(SmsConstants.SMS_SMS_SEND_COUNT);
 
 		// getDao().getHibernateTemplate().findByCriteria(criteria);
 		smsSendList = criteria.list();
