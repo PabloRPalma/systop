@@ -20,9 +20,11 @@ import com.opensymphony.xwork2.validator.annotations.RegexFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
 import com.opensymphony.xwork2.validator.annotations.ValidatorType;
+import com.systop.cms.utils.PageUtil;
 import com.systop.common.modules.dept.DeptConstants;
 import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.security.user.LoginUserService;
+import com.systop.core.dao.support.Page;
 import com.systop.core.webapp.struts2.action.DefaultCrudAction;
 import com.systop.core.webapp.upload.UpLoadUtil;
 import com.systop.fsmis.FsConstants;
@@ -73,7 +75,7 @@ public class SupervisorAction extends DefaultCrudAction<Supervisor, SupervisorMa
 	 */
 	public void indexSuperviosr(){
 		//创建分页查询的Page对象
-		//Page page = PageUtil.buildPage(getPageNo(), getPageSize());
+		Page page = PageUtil.getPage(getPageNo(), getPageSize());
 		HttpServletRequest request = (HttpServletRequest) getRequest();
     //得到Spring WebApplicationContext
     WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(
@@ -126,10 +128,8 @@ public class SupervisorAction extends DefaultCrudAction<Supervisor, SupervisorMa
 				args.add(getModel().getIsLeader());
 		}
 		hql = hql + " order by s.code";
-		//page = getManager().pageQuery(page, hql, args.toArray());
-		//items = page.getData();
-		//restorePageData(page);
-		items = getManager().query(hql, args.toArray());
+		page = getManager().pageQuery(page, hql, args.toArray());
+		restorePageData(page);
 	}
 	
 	/**
