@@ -24,7 +24,7 @@ import com.systop.fsmis.sms.smproxy.cmcc.webservice.IfSMSServiceProxy;
  * 
  */
 @Service("smsProxy")
-public class SMSProxyCMCCWebServiceImpl implements SMSProxy {
+public class SmsProxyCmccWebServiceImpl implements SMSProxy {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Override
