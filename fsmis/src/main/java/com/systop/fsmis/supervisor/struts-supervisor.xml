@@ -15,6 +15,12 @@
 		   		<param name="root">delResult</param>
 			</result>  
 		</action>
+		
+	    <action name="importData" class="supervisorImportAction" method="importData">
+			<result name="success" type="redirect">/pages/fsecurity/supervisor/index.do</result>
+			<result name="input">/pages/fsecurity/supervisor/index.jsp</result>
+		</action>
+		
 	</package>
 </struts>
 
