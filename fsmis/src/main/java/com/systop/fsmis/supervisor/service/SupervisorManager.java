@@ -83,7 +83,7 @@ public class SupervisorManager extends BaseGenericsManager<Supervisor> {
 	 * 得到当前登录用户所属部门下所有信息员
 	 * @param request
 	 * @param servletContext
-	 * @return 
+	 * @return 当前部门为空，返回null，否则返回所有信息员
 	 */
 	public Collection<Supervisor> getAllSupervisor(HttpServletRequest request, ServletContext servletContext){
 		//得到Spring WebApplicationContext
