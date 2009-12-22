@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -46,7 +47,7 @@ public class EnterpriseAction extends ExtJsCrudAction<Enterprise, EnterpriseMana
 	/**
 	 * 企业ID
 	 */
-	private String corpId;
+	private Integer corpId;
 		/**
 	 * json返回结果
 	 */
@@ -59,7 +60,6 @@ public class EnterpriseAction extends ExtJsCrudAction<Enterprise, EnterpriseMana
 	public String index() {
 		Page page = PageUtil.getPage(getPageNo(), getPageSize());
 		page = getManager().pageQuery(page, setupDetachedCriteria());
-		items = page.getData();
 		restorePageData(page);
 		return INDEX;
 	}
@@ -79,14 +79,14 @@ public class EnterpriseAction extends ExtJsCrudAction<Enterprise, EnterpriseMana
 				String fileRelativePath = null;
 				fileRelativePath = UpLoadUtil.doUpload(photo, photoFileName,
 						EnterpriseConstants.COMPANY_PHOTOS_FOLDER, getServletContext(), true);
-				logger.debug("photo path:" + fileRelativePath);
+				logger.info("photo path:{}", fileRelativePath);
 				getModel().setPhotoUrl(fileRelativePath);
+	
 			}
 			// 当更改部门时需要重新设置部门
 			Dept dept = getManager().getDao().get(Dept.class,
 			    getModel().getDept().getId());
 			getModel().setDept(dept);
-			//getManager().getDao().clear();
 			getManager().save(getModel());
 			return SUCCESS;
 		} catch (Exception e) {
@@ -101,7 +101,8 @@ public class EnterpriseAction extends ExtJsCrudAction<Enterprise, EnterpriseMana
 	private DetachedCriteria setupDetachedCriteria() {
 		DetachedCriteria criteria = DetachedCriteria.forClass(Enterprise.class);
 		if (StringUtils.isNotBlank(getModel().getName())) {
-			criteria.add(Restrictions.like("name", "%" + getModel().getName() + "%"));
+			criteria.add(Restrictions.like("name", 
+					MatchMode.ANYWHERE.toMatchString(getModel().getName())));
 		}
 		return setupSort(criteria);
 	}
@@ -134,8 +135,8 @@ public class EnterpriseAction extends ExtJsCrudAction<Enterprise, EnterpriseMana
 		logger.debug("要删除的企业ID:" + corpId);
 		delResult = Collections.synchronizedMap(new HashMap<String, String>());
 		// 对于编辑企业信息的情况，处理删除原照片的请求
-		if (StringUtils.isNotEmpty(corpId)) {
-			Enterprise enterprise = getManager().get(Integer.valueOf(corpId));
+		if (corpId != null) {
+			Enterprise enterprise = getManager().get(corpId);
 			String relativePath = enterprise.getPhotoUrl();
 			if (StringUtils.isNotEmpty(relativePath)) {
 				File file = new File(getServletContext().getRealPath(relativePath));
@@ -151,13 +152,6 @@ public class EnterpriseAction extends ExtJsCrudAction<Enterprise, EnterpriseMana
 			delResult.put("result", "error");
 		}
 		return "jsonRst";
-	}
-	
-	/**
-	 * 查看企业信息
-	 */
-	public String look(){
-		return "look";
 	}
 	
 	public File getPhoto() {
@@ -184,11 +178,11 @@ public class EnterpriseAction extends ExtJsCrudAction<Enterprise, EnterpriseMana
   	this.delResult = delResult;
   }
 	
-	public String getCorpId() {
+	public Integer getCorpId() {
   	return corpId;
   }
 
-	public void setCorpId(String corpId) {
+	public void setCorpId(Integer corpId) {
   	this.corpId = corpId;
   }
 }
