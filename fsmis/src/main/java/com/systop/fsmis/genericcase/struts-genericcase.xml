@@ -3,13 +3,15 @@
     "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-	<package name="fsmis.genericCase" extends="default"  namespace="/genericCase">
+	<package name="fsmis.genericcase" extends="json"  namespace="/genericcase">
 		<action name="*" class="genericCaseAction" method="{1}">
 			<result name="index">/pages/genericCase/list.jsp</result> 
 			<result name="input">/pages/genericCase/edit.jsp</result> 
 			<result name="view">/pages/genericCase/view.jsp</result>
-			<result name="look">/pages/genericCase/look.jsp</result>
 			<result name="success" type="redirect">index.do</result> 
+			<result type="json" name="jsonRst">
+		   		<param name="root">typeRst</param>
+			</result>
 		</action>
 	</package>
 </struts>
