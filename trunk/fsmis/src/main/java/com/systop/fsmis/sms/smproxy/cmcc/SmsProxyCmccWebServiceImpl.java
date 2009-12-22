@@ -11,7 +11,7 @@ import com.systop.core.ApplicationException;
 import com.systop.fsmis.model.SmsReceive;
 import com.systop.fsmis.model.SmsSend;
 import com.systop.fsmis.sms.SMSConstants;
-import com.systop.fsmis.sms.smproxy.SMSProxy;
+import com.systop.fsmis.sms.smproxy.SmsProxy;
 import com.systop.fsmis.sms.smproxy.cmcc.webservice.IfSMSService;
 import com.systop.fsmis.sms.smproxy.cmcc.webservice.IfSMSServiceProxy;
 
@@ -24,7 +24,7 @@ import com.systop.fsmis.sms.smproxy.cmcc.webservice.IfSMSServiceProxy;
  * 
  */
 @Service("smsProxy")
-public class SmsProxyCmccWebServiceImpl implements SMSProxy {
+public class SmsProxyCmccWebServiceImpl implements SmsProxy {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Override
