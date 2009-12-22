@@ -12,9 +12,8 @@ import org.springframework.stereotype.Service;
 import com.systop.core.ApplicationException;
 import com.systop.fsmis.model.SmsReceive;
 import com.systop.fsmis.model.SmsSend;
-import com.systop.fsmis.sms.service.SmsReceiveManager;
-import com.systop.fsmis.sms.service.SmsSendManager;
-import com.systop.fsmis.sms.smproxy.SMSProxy;
+
+import com.systop.fsmis.sms.smproxy.SmsProxy;
 
 /**
  * 短信管理类,短信模块的顶层类<br>
@@ -35,7 +34,7 @@ public class SMSManager {
 	/**
 	 * 依赖短信服务代理接口,用于完成特定的短信平台的短信发送/接收/查询操作
 	 */
-	private SMSProxy smsProxy;
+	private SmsProxy smsProxy;
 	/**
 	 * 依赖发送短信Manager,用于进行发送短信的数据库操作
 	 */
@@ -61,17 +60,17 @@ public class SMSManager {
 		this.smsReceiveManager = smsReceiveManager;
 	}
 
-	public SMSProxy getSmsProxy() {
+	public SmsProxy getSmsProxy() {
 		return smsProxy;
 	}
 
 	@Autowired(required = true)
-	public void setSmsProxy(@Qualifier("smsProxy") SMSProxy smsProxy) {
+	public void setSmsProxy(@Qualifier("smsProxy") SmsProxy smsProxy) {
 		this.smsProxy = smsProxy;
 	}
 
 	/**
-	 * @see {@link SMSProxy#querySmsSendState()}
+	 * @see {@link SmsProxy#querySmsSendState()}
 	 */
 
 	public void querySmsSendState() {
@@ -120,7 +119,7 @@ public class SMSManager {
 
 				if (state > 0) {// 如果发送成功
 					// 更新数据库中短信的状态,不为新短信,短信发送时间
-					smsSend.setIsNew(SMSConstants.SMS_SMS_SEND_IS_NOT_NEW);
+					smsSend.setIsNew(SmsConstants.SMS_SMS_SEND_IS_NOT_NEW);
 					smsSend.setSendTime(new java.util.Date());
 					getSmsSendManager().update(smsSend);
 
