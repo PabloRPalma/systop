@@ -82,7 +82,7 @@ public class GenericCase extends BaseModel {
 	private String status;
 	
 	/** 是否提交市级*/
-	private Character isSubmitSj;
+	private Character isSubmited;
 	
 	/**
 	 * 本一般事件对应的短信接收
@@ -270,13 +270,13 @@ public class GenericCase extends BaseModel {
 		this.status = status;
 	}
 
-	@Column(name = "IS_SUBMIT_SJ", length = 1)
-	public Character getIsSubmitSj() {
-		return this.isSubmitSj;
+	@Column(name = "IS_SUBMITED", length = 1)
+	public Character getIsSubmited() {
+		return this.isSubmited;
 	}
 
-	public void setIsSubmitSj(Character isSubmitSj) {
-		this.isSubmitSj = isSubmitSj;
+	public void setIsSubmited(Character isSubmited) {
+		this.isSubmited = isSubmited;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "genericCase")
