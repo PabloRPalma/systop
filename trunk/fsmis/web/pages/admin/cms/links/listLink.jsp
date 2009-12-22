@@ -24,7 +24,7 @@ function remove(id, name) {
 	<s:property value="@com.systop.cms.CmsConstants@N"/>
 </c:set>
 <div class="x-panel">
-  <div class="x-panel-header">友情链接管理</div>
+  <div class="x-panel-header">链接管理</div>
   <div class="x-toolbar">
   	<table width="99%">
   	  <tr>
@@ -37,10 +37,14 @@ function remove(id, name) {
 	    </s:form>
   		</td>
   		<td align="right">
-			<a href="${ctx}/admin/links/newLink.do">
-				<img src="${ctx}/images/icons/add.gif">添加链接</a>&nbsp;&nbsp;
-			<a href="${ctx}/admin/links/orderLink.do">
+			<a href="newLink.do">
+				<img src="${ctx}/images/icons/add.gif">添加链接</a>
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="orderLink.do">
 				<img src="${ctx}/images/icons/link_go.gif">链接排序</a> 
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="listCatas.do">
+				<img src="${ctx}/images/icons/link_catalog.gif">类别管理</a>
 		</td>
   	  </tr>
   	</table>

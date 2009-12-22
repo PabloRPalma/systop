@@ -11,7 +11,6 @@
 <div class="x-panel">
     <div class="x-panel-header">链接类别管理</div>
     <div class="x-toolbar">
-	   &nbsp;
     </div>
 	<div><%@ include file="/common/messages.jsp"%></div> 
 	<s:form namespace="/admin/links" action="saveCatas" method="post" theme="simple" validate="true">

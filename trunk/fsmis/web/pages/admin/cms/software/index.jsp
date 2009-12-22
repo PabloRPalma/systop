@@ -32,14 +32,23 @@ function remove(){
 	    	<s:submit value="查询" cssClass="button"/>
 	    </s:form>
   		</td>
-  		<td align="right">
-			<a href="newSoft.do">
-				<img src="${ctx}/images/icons/add.gif">添加软件
-			</a>
-			<a href="#" onclick="remove()">
-				<img src="${ctx}/images/icons/delete.gif">删除软件
-			</a>
-		</td>
+  		<td>
+	  	  <table align="right">
+	  	    <tr>
+	  	      <td>
+	  	      	<a href="newSoft.do"><img src="${ctx}/images/icons/add.gif">添加软件</a>
+			  </td>
+			  <td><span class="ytb-sep"></span></td>
+		      <td>
+		        <a href="#" onclick="remove()"><img src="${ctx}/images/icons/delete.gif">删除软件</a>
+		      </td>
+		      <td><span class="ytb-sep"></span></td>
+		      <td> 
+		      	<a href="${ctx}/admin/software/listcatas.do"><img src="${ctx}/images/icons/softcatalog.gif">软件类别</a>
+			  </td>
+	  		</tr>
+	  	  </table>
+  		</td>
   	  </tr>
   	</table>
   </div>

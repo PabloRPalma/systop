@@ -34,7 +34,10 @@ function remove(id, name) {
     			<TR>
     				<TD align="right">
     					<a href="${ctx}/admin/links/newCatas.do">
-	    				<img src="${ctx}/images/icons/add.gif"/>添加类别</a>&nbsp;&nbsp;
+	    				<img src="${ctx}/images/icons/add.gif"/>添加类别</a>
+	    				&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="${ctx}/admin/links/listLink.do">
+						<img src="${ctx}/images/icons/link.gif">链接管理</a>
     				</TD>
     			</TR>
     		</table>
