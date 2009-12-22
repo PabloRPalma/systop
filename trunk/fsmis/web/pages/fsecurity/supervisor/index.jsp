@@ -69,7 +69,7 @@ function exportMobileNum(){
 <div class="x-panel-body">
 <div style="margin-left: -3px;" align="center">
 <ec:table
-	items="items" var="item" retrieveRowsCallback="process" sortRowsCallback="process"
+	items="items" var="item" retrieveRowsCallback="limit" sortRowsCallback="limit"
 	action="index.do" 
 	useAjax="false"
 	doPreload="false" 
