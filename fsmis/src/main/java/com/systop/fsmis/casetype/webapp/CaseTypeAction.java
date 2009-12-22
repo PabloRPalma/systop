@@ -1,9 +1,12 @@
 package com.systop.fsmis.casetype.webapp;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+import org.hibernate.criterion.MatchMode;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.validator.annotations.Validations;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 
+import com.systop.core.dao.support.Page;
 import com.systop.core.webapp.struts2.action.DefaultCrudAction;
 import com.systop.fsmis.casetype.service.CaseTypeManager;
 import com.systop.fsmis.model.CaseType;
@@ -29,7 +33,40 @@ public class CaseTypeAction extends
        DefaultCrudAction<CaseType, CaseTypeManager>{
 
 	  
+	/**
+	 * 查询类别列表，分页查询
+	 */
+	public String index() {
+		Page page = new Page(Page.start(getPageNo(), getPageSize()),
+				getPageSize());
+		String sql = "from CaseType ct where ct.caseType.id is null ";
+		List args = new ArrayList();
+		if (StringUtils.isNotBlank(getModel().getName())) {
+			sql = sql + "and ct.name like ? ";
+			args.add(MatchMode.ANYWHERE.toMatchString(getModel().getName()));
+			
+		}
+		
+		page = getManager().pageQuery(page, sql,args.toArray());
+		restorePageData(page);
+		return INDEX;
+	}	
 
+	/**
+	 * 查询子类别列表，分页查询
+	 */
+	public String listchildType(){
+		Page page = new Page(Page.start(getPageNo(), getPageSize()),
+				getPageSize());
+		String sql = "from CaseType ct where ct.caseType.id = ? ";
+		List args = new ArrayList();
+		args.add(getModel().getId());
+		
+		page = getManager().pageQuery(page, sql,args.toArray());
+		restorePageData(page);
+		return "listchildType";
+	}
+	
 	/**
 	 * 删除类别
 	 * @return
