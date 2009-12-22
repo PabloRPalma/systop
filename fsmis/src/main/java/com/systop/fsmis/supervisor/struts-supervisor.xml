@@ -3,14 +3,17 @@
     "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-	<package name="fsmis.supervisor" extends="default"  namespace="/supervisor">
+	<package name="fsmis.supervisor" extends="json"  namespace="/supervisor">
 		<action name="*" class="supervisorAction" method="{1}">
 			<result name="index">/pages/fsecurity/supervisor/index.jsp</result> 
 			<result name="input">/pages/fsecurity/supervisor/edit.jsp</result> 
 			<result name="success" type="redirect">index.do</result>
 			<result name="look">/pages/fsecurity/supervisor/look.jsp</result>
 			<result name="error">/pages/fsecurity/supervisor/error.jsp</result>
-			<result name="exportmobilenum">/pages/fsecurity/supervisor/exportMobileNum.jsp</result>  
+			<result name="exportmobilenum">/pages/fsecurity/supervisor/exportMobileNum.jsp</result>
+			<result type="json" name="jsonRst">
+		   		<param name="root">delResult</param>
+			</result>  
 		</action>
 	</package>
 </struts>

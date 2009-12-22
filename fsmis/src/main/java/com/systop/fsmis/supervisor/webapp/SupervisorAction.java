@@ -2,6 +2,8 @@ package com.systop.fsmis.supervisor.webapp;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +35,7 @@ import com.systop.fsmis.supervisor.service.SupervisorManager;
 public class SupervisorAction extends DefaultCrudAction<Supervisor, SupervisorManager> {
 
 	/**
-	 * 上传的监管员照片
+	 * 上传的信息员照片
 	 */
 	private File photo;	
 	
@@ -42,7 +44,17 @@ public class SupervisorAction extends DefaultCrudAction<Supervisor, SupervisorMa
 	 */
 	private String photoFileName;
 	
-	/** 按姓名、监管区域、所属部门查询监管员信息*/
+	/**
+	 * 信息员ID
+	 */
+	private String spId;
+	
+	/**
+	 * json返回结果
+	 */
+	private Map<String, String> delResult;
+	
+	/** 按姓名、监管区域、所属部门查询信息员信息*/
 	public String index(){
 		indexSuperviosr();
 		return INDEX;
@@ -69,7 +81,7 @@ public class SupervisorAction extends DefaultCrudAction<Supervisor, SupervisorMa
     //得到Spring管理的LoginUserService
     LoginUserService loginUserService = (LoginUserService) ctx.getBean("loginUserService");
     Dept dept = loginUserService.getLoginUserDept(request);
-    //显示登录用户所属部门下的监管员
+    //显示登录用户所属部门下的信息员
 		String hql = "";
 		if (dept != null) {
 			//顶级部门则查询全部
@@ -121,11 +133,11 @@ public class SupervisorAction extends DefaultCrudAction<Supervisor, SupervisorMa
 	}
 	
 	/**
-	 * 保存监管员信息
+	 * 保存信息员信息
 	 */
 	@Validations(requiredStrings = {
 			@RequiredStringValidator(fieldName = "model.name",message = "请填写姓名！"),
-			@RequiredStringValidator(fieldName = "model.code",message = "请填写监管员编号！")},
+			@RequiredStringValidator(fieldName = "model.code",message = "请填写信息员编号！")},
 				regexFields = {
 			@RegexFieldValidator(expression = "\\d{11,11}",type = ValidatorType.FIELD,fieldName = "model.mobile",message = "输入的手机号格式有误，请检查！"),
 			@RegexFieldValidator(expression = "^(\\d{3,5}-)?\\d{7,20}$",type = ValidatorType.FIELD,fieldName = "model.phone",message = "输入的固话格式有误，请检查！")	})
@@ -150,13 +162,13 @@ public class SupervisorAction extends DefaultCrudAction<Supervisor, SupervisorMa
 	}
 	
 	/**
-	 * 删除监管员信息
+	 * 删除信息员信息
 	 */
 	@Override
 	public String remove(){
 		Supervisor supervisor = getManager().get(getModel().getId());
 		if(supervisor.getGenericCases().size() != 0){
-			addActionError("无法删除该监管员，该监管员已经与某事件关联！");
+			addActionError("无法删除该信息员，该信息员已经与某事件关联！");
 			return "error";
 		}
 		String path = getModel().getPhotoUrl();
@@ -168,7 +180,33 @@ public class SupervisorAction extends DefaultCrudAction<Supervisor, SupervisorMa
 	}
 	
 	/**
-	 * 查看监管员信息
+	 * 删除企业照片
+	 */
+	public String deletePhoto() {
+		logger.debug("要删除的信息员ID:" + spId);
+		delResult = Collections.synchronizedMap(new HashMap<String, String>());
+		// 对于编辑企业信息的情况，处理删除原照片的请求
+		if (StringUtils.isNotEmpty(spId)) {
+			Supervisor supervisor = getManager().get(Integer.valueOf(spId));
+			String relativePath = supervisor.getPhotoUrl();
+			if (StringUtils.isNotEmpty(relativePath)) {
+				File file = new File(getServletContext().getRealPath(relativePath));
+				if (file.exists()) {
+					file.delete();
+				}
+			}
+			// 删除数据库中企业照片的路径
+			supervisor.setPhotoUrl(null);
+			getManager().save(supervisor);
+			delResult.put("result", "success");
+		} else {
+			delResult.put("result", "error");
+		}
+		return "jsonRst";
+	}
+	
+	/**
+	 * 查看信息员信息
 	 */
 	public String look(){
 		return "look";
@@ -196,5 +234,21 @@ public class SupervisorAction extends DefaultCrudAction<Supervisor, SupervisorMa
 	
 	public void setPhotoFileName(String photoFileName) {
 		this.photoFileName = photoFileName;
+	}
+	
+	public String getSpId() {
+		return spId;
+	}
+
+	public void setSpId(String spId) {
+		this.spId = spId;
+	}
+
+	public Map<String, String> getDelResult() {
+		return delResult;
+	}
+
+	public void setDelResult(Map<String, String> delResult) {
+		this.delResult = delResult;
 	}
 }
