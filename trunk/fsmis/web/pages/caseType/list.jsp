@@ -29,7 +29,7 @@ function remove(id){
      <table width="100%">
        <tr>
              <td style=" padding-left:5px; padding-top:5px;" align="right">   
-             <a href="${ctx}/caseType/edit.do"><img src="${ctx}/images/icons/add.gif"/> 新建类别</a>
+             <a href="${ctx}/casetype/edit.do"><img src="${ctx}/images/icons/add.gif"/> 新建类别</a>
              	</td>
        </tr>
      </table>
@@ -60,17 +60,17 @@ function remove(id){
 			</a>
 			<c:if test="${item.genericCases != '[]'}">
 			<a href="#" onclick="removeNo()">
-			     <img src="${ctx}/images/icons/delete.gif" /></a>
+			     <img src="${ctx}/images/icons/delete.gif" />
 			</a>
 			</c:if>
 			<c:if test="${item.caseTypes != '[]'}">
 			<a href="#" onclick="removeAo()">
-			     <img src="${ctx}/images/icons/delete.gif" /></a>
+			     <img src="${ctx}/images/icons/delete.gif" />
 			</a>
 			</c:if>
 			<c:if test="${item.genericCases == '[]' && item.caseTypes == '[]'}">
 			<a href="#" onclick="remove(${item.id})">
-			     <img src="${ctx}/images/icons/delete.gif" /></a>
+			     <img src="${ctx}/images/icons/delete.gif" />
 			</a>
 			</c:if>
 		</ec:column>
