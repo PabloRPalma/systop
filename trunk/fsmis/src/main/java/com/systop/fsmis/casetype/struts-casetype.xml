@@ -7,6 +7,7 @@
 		<action name="*" class="caseTypeAction" method="{1}">
 			<result name="index">/pages/caseType/list.jsp</result> 
 			<result name="input">/pages/caseType/edit.jsp</result> 
+			<result name="listchildType">/pages/caseType/listchildType.jsp</result> 
 			<result name="success" type="redirect">index.do</result> 
 		</action>
 	</package>
