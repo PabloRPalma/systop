@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.systop.core.ApplicationException;
 import com.systop.fsmis.model.SmsReceive;
 import com.systop.fsmis.model.SmsSend;
-import com.systop.fsmis.sms.SMSConstants;
+import com.systop.fsmis.sms.SmsConstants;
 import com.systop.fsmis.sms.smproxy.SmsProxy;
 import com.systop.fsmis.sms.smproxy.cmcc.webservice.IfSMSService;
 import com.systop.fsmis.sms.smproxy.cmcc.webservice.IfSMSServiceProxy;
@@ -39,8 +39,8 @@ public class SmsProxyCmccWebServiceImpl implements SmsProxy {
 		IfSMSService service = null;
 		service = new IfSMSServiceProxy();
 		try {
-			String[] receives = service.receive(SMSConstants.CONN_NAME,
-					SMSConstants.CONN_PASS, SMSConstants.DEST_ADDR);
+			String[] receives = service.receive(SmsConstants.CONN_NAME,
+					SmsConstants.CONN_PASS, SmsConstants.DEST_ADDR);
 			if (receives != null) {
 				logger.info(receives.toString());
 			}
@@ -60,8 +60,8 @@ public class SmsProxyCmccWebServiceImpl implements SmsProxy {
 		int[] states = null;
 		try {
 			// 如果提交成功会返回提交到Mas数据库中的主键
-			states = service.sendState(SMSConstants.CONN_NAME,
-					SMSConstants.CONN_PASS, destAddreses, smsSend.getContent(), 1);
+			states = service.sendState(SmsConstants.CONN_NAME,
+					SmsConstants.CONN_PASS, destAddreses, smsSend.getContent(), 1);
 			return states[0];
 		} catch (RemoteException e) {
 			e.printStackTrace();
