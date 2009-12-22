@@ -31,6 +31,8 @@ public class Supervisor extends BaseModel {
 
 	/**主键*/
 	private Integer id;
+	/**身份证号*/
+	private String idNumber;
 	/**部门*/
 	private Dept dept;
 	/**姓名*/
@@ -200,4 +202,12 @@ public class Supervisor extends BaseModel {
 		this.genericCases = genericCases;
 	}
 
+	@Column(name = "ID_NUMBER", length = 510)
+	public String getIdNumber() {
+		return idNumber;
+	}
+
+	public void setIdNumber(String idNumber) {
+		this.idNumber = idNumber;
+	}
 }
