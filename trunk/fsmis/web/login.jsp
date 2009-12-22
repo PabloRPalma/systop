@@ -72,7 +72,7 @@
 </table>
 <table width="500" height="372" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
-    <td valign="top" background="images/002.gif"><table width="500" border="0" cellspacing="0" cellpadding="0">
+    <td valign="top" background="images/background.gif"><table width="500" border="0" cellspacing="0" cellpadding="0">
       <tr>
         <td height="81">&nbsp;</td>
       </tr>
@@ -98,8 +98,8 @@
       <tr>
         <td height="78">
         	<div align="center">
-        		<img src="images/11.gif" id="signOn" width="92" height="22" style="CURSOR:hand;cursor:pointer""/> &nbsp;&nbsp;&nbsp;&nbsp;
-        		<img src="images/22.gif" id="reg" width="92" height="22" style="CURSOR:hand;cursor:pointer"/>
+        		<img src="images/login.gif" id="signOn" width="92" height="22" style="CURSOR:hand;cursor:pointer""/> &nbsp;&nbsp;&nbsp;&nbsp;
+        		<img src="images/register.gif" id="reg" width="92" height="22" style="CURSOR:hand;cursor:pointer"/>
         	</div>
         </td>
       </tr>
