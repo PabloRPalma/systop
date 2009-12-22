@@ -39,7 +39,13 @@ jQuery.noConflict();
 <div class="x-panel">
   <div class="x-panel-header">文章排序</div>
   <div class="x-toolbar">
-  	&nbsp;
+  	<table width="100%"><tr>
+	  		<td align="right">
+		  		<img src="${ctx}/images/icons/folder_table.gif">
+		  		<a href="${ctx}/admin/article/listArticles.do" target="main">文章管理</a>
+		  		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	  		</td>
+	  	</tr></table>
   </div>
   <s:form id="frmOrder" name="frmOrder" namespace="/admin/article" action="saveOrderArticle" method="post" theme="simple">
     <s:hidden name="seqNoList"/>
