@@ -1,20 +1,14 @@
 package com.systop.fsmis.supervisor.service;
 
 import java.io.File;
-import java.util.Collection;
 import java.util.List;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.systop.common.modules.dept.DeptConstants;
 import com.systop.common.modules.dept.model.Dept;
-import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.core.ApplicationException;
 import com.systop.core.service.BaseGenericsManager;
 import com.systop.fsmis.model.Supervisor;
@@ -81,19 +75,10 @@ public class SupervisorManager extends BaseGenericsManager<Supervisor> {
 	
 	/**
 	 * 得到当前登录用户所属部门下所有信息员
-	 * @param request
-	 * @param servletContext
 	 * @return 当前部门为空，返回null，否则返回所有信息员
 	 */
-	public Collection<Supervisor> getAllSupervisor(HttpServletRequest request, ServletContext servletContext){
-		//得到Spring WebApplicationContext
-    WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(
-    		servletContext);
-    //得到Spring管理的LoginUserService
-    LoginUserService loginUserService = (LoginUserService) ctx.getBean("loginUserService");
-    Dept dept = loginUserService.getLoginUserDept(request);
-    //显示登录用户所属部门下的信息员
-		String hql = "";
+	public List<Supervisor> getAllSupervisor(Dept dept){
+    String hql = "";
 		if (dept != null) {
 			//顶级部门则查询全部
 			if (dept.getName().equals(DeptConstants.TOP_DEPT_NAME)) {
