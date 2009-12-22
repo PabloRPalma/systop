@@ -88,7 +88,7 @@ public class Dept extends BaseModel implements Serializable {
     private Set<Enterprise> enterprises = new HashSet<Enterprise>(0);
 
     /**
-     * 部门下监管员
+     * 部门下信息员
      */
   	private Set<Supervisor> supervisors = new HashSet<Supervisor>(0);
   	/**
