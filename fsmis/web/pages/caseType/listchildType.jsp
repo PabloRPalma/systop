@@ -73,11 +73,6 @@ function remove(id){
 			     <font color="red"> 删除</font>
 			  </a>
 			</c:if>
-			<c:if test="${item.caseTypes != '[]'}">
-			  <a href="listchildType.do?model.id=${item.id}">
-			    <font color="#FF9D07"> 查看子类别</font>
-			  </a>
-			</c:if>
 		</ec:column>
  		
 	  </ec:row>
