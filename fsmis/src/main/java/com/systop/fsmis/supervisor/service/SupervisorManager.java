@@ -79,6 +79,12 @@ public class SupervisorManager extends BaseGenericsManager<Supervisor> {
 		super.remove(supervisor);
 	}
 	
+	/**
+	 * 得到当前登录用户所属部门下所有信息员
+	 * @param request
+	 * @param servletContext
+	 * @return 
+	 */
 	public Collection<Supervisor> getAllSupervisor(HttpServletRequest request, ServletContext servletContext){
 		//得到Spring WebApplicationContext
     WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(
