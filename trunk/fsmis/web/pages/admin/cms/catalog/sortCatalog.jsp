@@ -39,11 +39,16 @@ jQuery.noConflict();
 </head>
 <body>
 <div class="x-panel">
-  <div class="x-panel-header">栏目管理</div>
-  <div class="x-toolbar">
-  	&nbsp;
-  </div>
- 
+  <div class="x-panel-header">栏目排序</div>
+  	<div class="x-toolbar" >
+	  	<table width="100%"><tr>
+	  		<td align="right">
+		  		<img src="${ctx}/images/icons/folder_table.gif">
+		  		<a href="${ctx}/admin/catalog/listCatalog.do" target="main">栏目管理</a>
+		  		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	  		</td>
+	  	</tr></table>
+  	</div>
 	<table align="center">
 	<s:form id="frmOrder" name="frmOrder" namespace="/admin/catalog" action="saveOrderCatalog" method="post" theme="simple">
 		
@@ -52,7 +57,7 @@ jQuery.noConflict();
 				<fieldset style="margin:10px; width: 300px">
               		<legend>栏目查询</legend>
              		 栏目名称:
-             		<select id="parentId" name="parentId"/>
+             		<select id="parentId" name="parentId"></select>
 					<input type="button" value="查询" class="button" onclick="onQuery()" />
               	</fieldset>
 			</td>

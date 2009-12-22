@@ -66,11 +66,11 @@ function onRemove() {
 		         <td align="right">
 		         <table>
 			         <tr>
-			         <td><a href="${ctx}/admin/catalog/listCatalog.do"><img src="${ctx}/images/icons/house.gif"/>栏目管理首页</a></td>
-			         <td><span class="ytb-sep"></span></td>
 			         <td><a href="${ctx}/admin/catalog/newCatalog.do"><img src="${ctx}/images/icons/add.gif"/>添加栏目</a></td>
 			         <td><span class="ytb-sep"></span></td>
 		         	 <td><a href="#" onclick="onRemove()"><img src="${ctx}/images/icons/delete.gif"/> 删除栏目</a></td>
+			         <td><span class="ytb-sep"></span></td>
+			         <td><a href="${ctx}/admin/catalog/listOrderCatalog.do"><img src="${ctx}/images/icons/folder_go.gif">栏目排序</a></td>
 		         </tr>
 		         </table>
 		         </td>
