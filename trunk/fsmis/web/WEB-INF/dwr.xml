@@ -33,9 +33,6 @@
    	    <create creator="spring" javascript="SupervisorDwrAction">
 			<param name="beanName" value="supervisorDwrAction"></param>
 		</create>  	    
-   	    <create javascript="SupervisorDwrAction" creator="spring">
-   	         <param name="beanName" value="supervisorDwrAction" ></param>
-   	    </create>
    	    
    	    <convert converter="bean"  match="com.systop.common.core.dao.support.Page"  />
    	    <convert converter="bean"  match="com.systop.common.core.webapp.ajax.RemoteQueryParams"></convert>
