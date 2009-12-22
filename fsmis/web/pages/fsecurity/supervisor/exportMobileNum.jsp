@@ -7,6 +7,13 @@
 <title>监管员信息管理</title>
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/ec.jsp"%>
+<script type="text/javascript">
+function copymobile(){
+	var mobilenums = document.getElementById('mobilenum').innerText;
+	window.clipboardData.setData("Text",mobilenums);
+	alert("已复制到剪切板！");
+}
+</script>
 </head>
 <body>
 <div class="x-panel">
@@ -17,7 +24,7 @@
 <div style="margin-left: -3px;" align="left">
 	<table width="800" align="center" border="0" cellpadding="3" cellspacing="5">
 		<tr>
-			<td align="left">
+			<td align="left" id="mobilenum">
 				<%
 					int iMobileCount = 0;
 					int iNoMobileCount = 0;
@@ -35,6 +42,7 @@
 						}
 					}
 				%>
+				<input type="button" class="button" name="copy" value="复制" onclick="copymobile()"/>
 			</td>
 		</tr>
 		<tr>

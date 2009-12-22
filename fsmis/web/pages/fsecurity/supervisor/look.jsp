@@ -21,9 +21,15 @@
 	<legend>监管员信息</legend>
 		<table width="532" align="center" border="0" cellpadding="2" cellspacing="1">
 		<tr>
+			<td width="100" align="right">编　　号：</td>
+			<td colspan="2" align="left">
+		  		<s:textfield id="mobile" name="model.code" cssStyle="width:100px" cssClass="inputBorder" readonly="true"/>
+		  	</td>
+	      </tr>
+		<tr>
 			<td width="100" align="right">姓　　名：</td>
 			<td colspan="2" align="left">
-				<s:textfield id="name" name="model.name" cssStyle="width:180px" cssClass="inputBorder" readonly="true"/>					
+				<s:textfield id="name" name="model.name" cssStyle="width:100px" cssClass="inputBorder" readonly="true"/>					
 			</td>
 		    <td width="150" rowspan="8" id="photoOperSpan">
 		    	<div align="left"> 
@@ -35,7 +41,13 @@
 		</tr>
 		<tr>
 			<td width="100" align="right">性　　别：</td>
-			<td colspan="2" align="left"><s:textfield id="gender" name="model.gender" readonly="true" cssClass="inputBorder" cssStyle="width:60px"/></td>
+			<td colspan="2" align="left">
+			<c:if test="${model.gender == 'M'}">
+				<input type="text" name="model.gender" value="男" class="inputBorder" style="width:100px;height:16px" readonly="true"/>
+			</c:if>
+			<c:if test="${model.gender == 'F'}">
+				<input type="text" name="model.gender" value="女"	class="inputBorder" style="width:100px;height:16px" readonly="true"/></td>
+			</c:if>
 	    </tr>
 	    <tr>
 		  <td align="right">出生日期：</td>
@@ -43,12 +55,6 @@
 		  	<input type="text" name="model.birthday2" value='<s:date name="model.birthday" format="yyyy-MM-dd"/>'
 				  class="inputBorder" style="width:100px;height:16px" readonly="true"/></td>
 		</tr>
-		<tr>
-			<td width="100" align="right">编　　号：</td>
-			<td colspan="2" align="left">
-		  		<s:textfield id="mobile" name="model.code" cssStyle="width:180px" cssClass="inputBorder" readonly="true"/>
-		  	</td>
-	      </tr>
 		<tr>
 			<td width="100" align="right">单　　位：</td>
 			<td colspan="2" align="left"><s:textfield id="unit" name="model.unit" cssStyle="width:180px" cssClass="inputBorder" readonly="true"/></td>
