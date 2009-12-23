@@ -104,7 +104,7 @@ function exportMobileNum(){
 		<ec:column width="250" property="superviseRegion" title="监管区域" />
 		<ec:column width="120" property="_0" title="操作" style="text-align:center" sortable="false">
 			<a href="edit.do?model.id=${item.id}">编辑</a>|
-			<a href="look.do?model.id=${item.id}" target="_blank">查看</a>|
+			<a href="view.do?model.id=${item.id}" target="_blank">查看</a>|
 			<a href="#" onclick="removeSupervisor(${item.id})">删除</a>				
 		</ec:column>
 	</ec:row>
