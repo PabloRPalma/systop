@@ -15,17 +15,15 @@
 		</property>
 	</bean>
 	<!-- 定义触发的精确时间 -->
-	<bean id="smsManagerTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+	<bean id="smsManagerTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<!-- jobDetail 属性告诉触发器调度哪个工作 -->
 		<property name="jobDetail">
 			<!-- 引用业务操作 -->
 			<ref bean="jobDetailSmsManager" />
 		</property>
-		<property name="startDelay">
-			<value>${sms.SmsSend.startDelay}</value>
-		</property>
-		<property name="repeatInterval">
-			<value>${sms.SmsSend.repeatInterval}</value>
+
+		<property name="cronExpression">
+			<value>${sms.SmsSend.cronExpression}</value>
 		</property>
 
 	</bean>
@@ -38,6 +36,10 @@
 				<!-- 引用定义触发器的实现 -->
 				<ref bean="smsManagerTrigger" />
 			</list>
+		</property>
+		<property name="autoStartup" value="true"></property>
+		<property name="startupDelay">
+			<value>${sms.SmsSend.startDelay}</value>
 		</property>
 	</bean>
 
