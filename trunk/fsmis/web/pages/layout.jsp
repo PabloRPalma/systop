@@ -5,7 +5,7 @@
 <%@page import="com.systop.common.modules.security.user.model.User"%>
 <html>
 <head>
-<title>地震数据共享省级中心网站平台</title>
+<title>石家庄市食品安全信息管理系统</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <%@include file="/common/extjs.jsp"%>
 <LINK href="${ctx}/styles/style.css" type='text/css' rel='stylesheet'>
