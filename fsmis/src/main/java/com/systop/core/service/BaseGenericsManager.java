@@ -20,7 +20,6 @@ import com.systop.core.util.GenericsUtil;
  * @author Sam Lee
  * @version 3.0
  */
-@SuppressWarnings("unchecked")
 public class BaseGenericsManager<T> implements Manager<T> {
 	/**
 	 * Log,子类可以直接使用，不必重新声明
