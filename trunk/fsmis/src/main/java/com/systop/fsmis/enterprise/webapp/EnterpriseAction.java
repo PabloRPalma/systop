@@ -3,6 +3,7 @@ package com.systop.fsmis.enterprise.webapp;
 import java.io.File;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
@@ -13,9 +14,6 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
-import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
-import com.opensymphony.xwork2.validator.annotations.Validations;
 import com.systop.cms.utils.PageUtil;
 import com.systop.common.modules.dept.model.Dept;
 import com.systop.core.dao.support.Page;
@@ -31,7 +29,7 @@ import com.systop.fsmis.model.Enterprise;
  * @author DU
  * 
  */
-@SuppressWarnings("serial")
+@SuppressWarnings({"serial", "unchecked"})
 @Controller
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class EnterpriseAction extends ExtJsCrudAction<Enterprise, EnterpriseManager> {
@@ -48,10 +46,18 @@ public class EnterpriseAction extends ExtJsCrudAction<Enterprise, EnterpriseMana
 	 * 企业ID
 	 */
 	private Integer corpId;
-		/**
+	/**
 	 * json返回结果
 	 */
 	private Map<String, String> delResult;
+	/**
+	 * 处罚记录
+	 */
+  private List punishRecords;
+  /**
+   * 处罚记录数
+   */
+	private Integer psRecordSize;
 	
 	/**
 	 * 企业信息查询列表
@@ -67,11 +73,6 @@ public class EnterpriseAction extends ExtJsCrudAction<Enterprise, EnterpriseMana
 	/**
 	 * 保存企业信息，其中企业名称、地址、编号为必填
 	 */
-	@Validations(requiredStrings = {
-			@RequiredStringValidator(fieldName = "model.name",message = "请填写企业名称！"),
-			@RequiredStringValidator(fieldName = "model.address",message = "请填写企业地址！"),
-			@RequiredStringValidator(fieldName = "model.code",message = "请填写企业编号！")			
-	},requiredFields = {@RequiredFieldValidator(fieldName = "model.dept.id",message = "请选择所属部门！")})
 	@Override
 	public String save() {
 		try {
@@ -154,6 +155,21 @@ public class EnterpriseAction extends ExtJsCrudAction<Enterprise, EnterpriseMana
 		return "jsonRst";
 	}
 	
+	/**
+	 * 查看企业信息
+	 */
+	public String view() {
+		punishRecords = Collections.EMPTY_LIST;
+		/*
+		 * 取得企业的处罚记录
+		 * 处罚记录的取得依赖于其他模块的完成，暂时测试用，有待完善。
+		 */
+		/*punishRecords = queryPunishRecords();*/
+		getRequest().setAttribute("psRecords", punishRecords);
+		psRecordSize = 2; //punishRecords.size();
+		return super.view();
+	}
+	
 	public File getPhoto() {
   	return photo;
   }
@@ -184,5 +200,21 @@ public class EnterpriseAction extends ExtJsCrudAction<Enterprise, EnterpriseMana
 
 	public void setCorpId(Integer corpId) {
   	this.corpId = corpId;
+  }
+	
+	public List getPunishRecords() {
+  	return punishRecords;
+  }
+
+	public void setPunishRecords(List punishRecords) {
+  	this.punishRecords = punishRecords;
+  }
+	
+	public Integer getPsRecordSize() {
+  	return psRecordSize;
+  }
+
+	public void setPsRecordSize(Integer psRecordSize) {
+  	this.psRecordSize = psRecordSize;
   }
 }
