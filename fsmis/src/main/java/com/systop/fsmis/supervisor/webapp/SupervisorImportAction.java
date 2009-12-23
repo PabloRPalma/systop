@@ -3,7 +3,9 @@ package com.systop.fsmis.supervisor.webapp;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,9 +18,8 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import com.systop.common.modules.security.user.UserUtil;
-import com.systop.common.modules.security.user.model.User;
-import com.systop.core.util.DateUtil;
+import com.systop.common.modules.dept.model.Dept;
+import com.systop.common.modules.dept.service.DeptManager;
 import com.systop.core.util.XlsImportHelper;
 import com.systop.core.webapp.struts2.action.BaseAction;
 import com.systop.core.webapp.struts2.upload.UploadedFileHandler;
@@ -38,6 +39,11 @@ public class SupervisorImportAction extends BaseAction {
 	 * 处理文件上传的接口
 	 */
 	protected UploadedFileHandler uploadedFileHandler;
+	
+	/**
+	 * 部门管理Manager
+	 */
+	private DeptManager deptManager;
 	
 	/**
 	 * 监管员管理Manager
@@ -121,36 +127,32 @@ public class SupervisorImportAction extends BaseAction {
 					continue;
 				}
 				//获得当前登录用户
-				User user = UserUtil.getPrincipal(getRequest());	
-				if (user.getDept().getName().equals(deptName)) {
-					/*
-					 * List<PersonInfo> persons = personInfoManager.getPersons(enterprise
-					 * .getId(), personName, idcard); 
-					 * for (PersonInfo personInfo :persons) { 
-					 * supervisorManager.remove(personInfo); 
-					 * }
-					 */
-					Supervisor supervisor = new Supervisor();
-					supervisor.setDept(user.getDept());
+				Dept dept = deptManager.getDeptByName(deptName);
+				if (dept != null) {        
+					Supervisor supervisor = supervisorManager.getSupervisorInfo(dept.getId(), code, name);
+				  if (supervisor == null) {
+				  	supervisor = new Supervisor();	
+				  }
+					supervisor.setDept(dept);
 					supervisor.setCode(code);
 					supervisor.setName(name);
 					supervisor.setIdNumber(idNumber);
 					supervisor.setGender(gender);
-					supervisor.setBirthday(DateUtil.convertStringToDate(birthday));
+					supervisor.setBirthday(parseDate(birthday));
 					supervisor.setUnit(unit);
 					supervisor.setDuty(duty);
 					supervisor.setIsLeader(isLeader);
 					supervisor.setMobile(mobile);
 					supervisor.setPhone(phone);
 					supervisor.setSuperviseRegion(superviseRegion);
-					supervisorManager.save(supervisor);
+					supervisorManager.saveSupervisor(supervisor);
 				} else {
-					list.add("所属部门【" + deptName + "】不是当前登录所在部门，不允许导入!");
+					list.add("所属部门【" + deptName + "】不存在，不允许导入!");
 					continue;
 				}
 			}
 		} catch (Exception e) {
-			errorInfo.add("Excel表连接失败.");
+			errorInfo.add(e.getMessage());
 			return INPUT;
 		}
 		if (list.size() > 0) {
@@ -159,6 +161,31 @@ public class SupervisorImportAction extends BaseAction {
 		}
 		return SUCCESS;
 	}
+
+  /**
+   * 将yyyy/mm/dd 格式的字符型日期转换成 yyyy-mm-dd 格式的Date型日期
+   * @param str
+   * @return 若str字符为空或空字符串或非日期格式 返回值 为New Date()
+   */
+  public Date parseDate(String str) {
+  	Date date = null;
+    if (StringUtils.isBlank(str)) {
+      return new Date();
+    }
+    java.text.SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    try {
+      if (StringUtils.isNotBlank(str)) {
+        String strNew = str.substring(0, 4) + "-" + str.substring(5, 7) + "-"
+            + str.substring(8, 10);
+        if (strNew.equals(sdf.format(sdf.parse(strNew)))) {
+          date = sdf.parse(strNew);
+        }
+      }
+    } catch (Exception e) {
+    	return new Date();
+    }
+    return (date);
+  }
 
 	/**
    * 
@@ -230,4 +257,11 @@ public class SupervisorImportAction extends BaseAction {
 		this.errorInfo = errorInfo;
 	}
 
+	public DeptManager getDeptManager() {
+		return deptManager;
+	}
+
+	public void setDeptManager(DeptManager deptManager) {
+		this.deptManager = deptManager;
+	}
 }

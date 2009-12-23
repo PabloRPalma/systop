@@ -28,11 +28,19 @@ public class SupervisorManager extends BaseGenericsManager<Supervisor> {
 	public void save(Supervisor supervisor) {
 		getDao().getHibernateTemplate().clear();
 		if (getDao().exists(supervisor, "code")) {
-		throw new ApplicationException("添加的信息员编号已存在。");
+		throw new ApplicationException("添加的信息员编号【"+ supervisor.getCode()+"】已存在。");
 		}
 		if (!supervisor.getMobile().isEmpty() && getDao().exists(supervisor, "mobile")) {
-			throw new ApplicationException("添加的手机号已存在。");
+			throw new ApplicationException("添加的手机号【"+ supervisor.getMobile()+"】已存在。");
 		}
+		super.save(supervisor);
+	}
+	
+	/**
+	 * 保存信息员信息
+	 */
+	@Transactional
+	public void saveSupervisor(Supervisor supervisor) {
 		super.save(supervisor);
 	}
 
@@ -97,5 +105,18 @@ public class SupervisorManager extends BaseGenericsManager<Supervisor> {
 			return null;
 		}
 		return query(hql);
+	}
+	
+  /**
+   * 根据部门ID、监管员姓名以及身份证号获取监管员实体
+   * @param deptId 部门ID
+   * @param name  监管员姓名
+   * @param idNumber 身份证号
+   * @return Supervisor 监管员实体
+   */
+	public Supervisor getSupervisorInfo(Integer deptId, String code, String name) {
+		String hql = "from Supervisor s where s.dept.id = ? and s.code = ? and s.name = ? ";
+		Supervisor supervisor = (Supervisor) getDao().findObject(hql, new Object[] {deptId, code, name});
+	  return supervisor;	
 	}
 }
