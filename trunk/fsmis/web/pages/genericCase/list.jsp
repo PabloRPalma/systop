@@ -18,8 +18,8 @@ function removeNo(){
 
 function remove(id){
 	if (confirm("确认要删除事件信息吗?")){
-		url="${ctx}/genericcase/remove.do?model.id=" + id;
-		window.open(url,'main');
+		window.location.href="${ctx}/genericcase/remove.do?model.id=" + id;
+		
 	}
 }
 
