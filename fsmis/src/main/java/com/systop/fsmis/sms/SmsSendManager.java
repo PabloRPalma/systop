@@ -25,7 +25,6 @@ public class SmsSendManager extends BaseGenericsManager<SmsSend> {
 	 * 
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public List<SmsSend> getNewSmsSends() {
 		List<SmsSend> smsSendList = null;
 		/*
