@@ -8,6 +8,7 @@
 <%@include file="/common/extjs.jsp" %>
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/validator.jsp"%>
+<script type="text/javascript" src="${ctx}/scripts/fckeditor/fckeditor.js"></script>
 <link href="${ctx}/styles/treeSelect.css" type='text/css' rel='stylesheet'>
 <script type="text/javascript">
   function valileader(){
@@ -54,10 +55,20 @@
 			});
 	    });
   });
-  
+
+
+  //文本编辑组件
+  function preFckEditor(){
+	var fckEditor = new FCKeditor( 'descn' ) ;
+    fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
+    fckEditor.ToolbarSet = 'BasicA';
+    fckEditor.Height = 300;
+    fckEditor.Width = 530;
+    fckEditor.ReplaceTextarea();
+  }
 </script>
 </head>
-<body>
+<body onload="preFckEditor()">
 <div class="x-panel">
 <div class="x-panel-header"></div>
 <div class="x-toolbar">&nbsp;</div>
@@ -69,7 +80,7 @@
 	<s:hidden name="eventInfoId"/>
 	<fieldset style="width: 800px; padding: 10px 10px 10px 10px;">
 	<legend>编辑事件</legend>
-	<table width="750px" align="center">
+	<table width="760px" align="center">
 		<tr>
 			<td align="right" width="200">事件标题：</td>
 			<td align="left"><s:textfield id="name"
@@ -79,7 +90,7 @@
 		
 		<tr>
 			<td align="right">事发时间：</td>
-			<td align="left"><input type="text" name="model.eventDate"  style="width: 160px"
+			<td align="left"><input type="text" name="model.eventDate"  style="width: 160px" class="required"
 				value='<s:date name="model.eventDate" format="yyyy-MM-dd HH:mm:ss"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})"
 				class="Wdate" /><font color="red">&nbsp;*</font></td>
@@ -97,7 +108,7 @@
 		<tr>
 			<td align="right">事件类别：</td>
 			<td align="left">
-				 <select id="levelone" name="typeoneId" style="width:120px;">
+				 <select id="levelone" name="typeoneId" style="width:120px;" class="required">
 					    <option value="">请选择...</option>
 						<c:forEach items="${levelone}" var="item">
 					       <option value="${item.id}">${item.name}</option>
@@ -112,7 +123,7 @@
 		<tr>
 			<td align="right">所属区县：</td>
 			<td align="left">		
-				<div id="comboxWithTree"  style="float: left;margin-left:2px;"></div><font color="red" style="margin-left:2px;">*</font>
+				<div id="comboxWithTree"  style="float: left;margin-left:2px;" class="required"></div><font color="red" style="margin-left:2px;">*</font>
 				<s:hidden name="model.dept.id" id="deptId"></s:hidden>
 			</td>
 		</tr>
@@ -128,8 +139,10 @@
 		</tr>
 		<tr>
 			<td align="right">事件描述：</td>
-			<td align="left"><s:textarea id="descn" name="model.descn"
-				cssStyle="width:380px; height:150px" cssClass="required"/><font color="red">&nbsp;*</font></td>
+			<td align="left">
+				<textarea id="descn" name="model.descn" cols="45" rows="4" class="required" >${model.descn}</textarea>
+				<font color="red">*</font>
+			</td>
 		</tr>
 		<c:if test="${model.status == '2'}">
 			<td align="right">是否核实：</td>
