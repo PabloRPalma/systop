@@ -34,7 +34,7 @@
              confirmMsg:'确认要删除角色吗？'})"><img src="${ctx}/images/icons/delete.gif"/> 删除角色</a></td>
            </tr>
          </table>
-         <td>
+         </td>
        </tr>
      </table>
    </div>   
