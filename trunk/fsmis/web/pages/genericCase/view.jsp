@@ -1,40 +1,43 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@include file="/common/taglibs.jsp"%>
 <html>
 <head>
-<title></title>
 <%@include file="/common/meta.jsp"%>
-<%@include file="/common/ec.jsp"%>
+<link href="${ctx}/styles/datashare.css" type='text/css' rel='stylesheet'>
+<link type="text/css" href="${ctx}/scripts/jquery/ui/css/jquery-ui-min.css" rel="stylesheet" />
+<script type="text/javascript" src="${ctx}/scripts/jquery/jquery-1.3.2.js"></script>
+<script type="text/javascript" src="${ctx}/scripts/jquery/ui/jquery-ui-1.7.1.js"></script>
 <script type="text/javascript">
-	function togovernment(id){
-	    window.location.href="${ctx}/genericCase/saveSubSj.do?model.id=" + id;
-		alert('申请已发送，等待审核');
+$(function(){
+	var hasReward = $('#rewardContent').val();
+	var punishListSize = $('#psRecordSize').val();
+	if (hasReward == "" || hasReward == null) {
+		$('#reward').hide();
 	}
-	function send(id){
-		window.location.href="${ctx}/sendType/choose.do?eventid=" + id;
-		//window.open(url,'main'); 
+	if (punishListSize == 0) {
+		$('#punish').hide();
 	}
-	function ally(id){
-	   
-		window.location.href="${ctx}/allyTask/input.do?model.singleEvent.id=" + id +"&eventType=s";
-		//window.open(url,'main'); 
-	}
-	function ret(id){
-	   
-		url="${ctx }/singleTaskDetail/listreteventid.do?eventid=" + id;
-		window.open(url); 
-	}
-	//申请评估
-	function apply(id){
-		window.location.href="${ctx}/riskeval/input.do?model.singleEvent.id=" + id + "&eventType=s";	 
-	}
-	//在地图中标注事件位置
-	function mapLabel(id){
-	    window.location.href="${ctx}/pages/opengis/mapSingleEvent.jsp?value="+id;
-	}
+	// Tabs
+	$('#tabs').tabs();
+});
 </script>
+<title>事件列表</title>
+<style type="text/css">
+#mytable {
+	border: 1px solid #A6C9E2;
+	margin-left: -21px;
+	margin-top: -10px;
+	margin-right: -21px;
+	width: 100%;
+	border-collapse: collapse;
+}
+
+#mytable td {
+	border: 0px solid #A6C9E2;
+	height: 26;
+}
+</style>
 </head>
 <body>
 <div class="x-panel">
@@ -42,93 +45,101 @@
 <div class="x-toolbar">
 	<table width="99%">
 	<tr>
-		<td align="right"><a href="${ctx}/singleEvent/index.do"><img
-					src="${ctx}/images/icons/house.gif" /> 事件列表</a></td>
+	    <td width="75%" align="left"><a href="${ctx}/genericcase/index.do"><img
+					src="${ctx}/images/icons/house.gif" />首页列表</a>
+		</td>
+		<td align="right"><a href="#"> 地理位置</a></td>
+		<td><span class="ytb-sep"></span></td>
+		<td align="right"><a href="#"> 上报市级</a></td>
+		<td><span class="ytb-sep"></span></td>
+		<td align="right"><a href="#"> 任务派遣</a></td>
+		<td><span class="ytb-sep"></span></td>
+		<td align="right"><a href="#"> 联合整治</a></td>
+		<td><span class="ytb-sep"></span></td>
+		<td align="right"><a href="#"> 查看退回</a></td>
 	</tr>
 	</table>
 </div>
-<div align="center">
-  <s:form action="#" method="post" theme="simple" >
-	<s:hidden name="model.id" />
-	<fieldset style="width: 66%; padding: 0px 10px 10px 10px;">
-	<legend>事件描述</legend>
-	<table width="600px" align="center">
-		<tr>
-			<td colspan="2"><%@ include file="/common/messages.jsp"%>
-			</td>
-		</tr>
-		<tr>
-			<td align="right" width="120">事件标题：</td>
-			<td align="left" width="420"><s:property value="model.title" /></td>
-		</tr>
-		<tr>
-			<td align="right" width="120">事件类别：</td>
-			<td align="left" width="420"><s:property
-				value="model.caseType.name" /></td>
-		</tr>
-		<tr>
-			<td align="right" width="120">事发时间：</td>
-
-
-			<td align="left" width="420"><s:date name="model.eventDate"
-				format="yyyy-MM-dd HH:mm:ss" /></td>
-
-
-		</tr>
-		<tr>
-			<td align="right" width="120">事发地点：</td>
-			<td align="left" width="420"><s:property value="model.address" /></td>
-		</tr>
-
-		<tr>
-			<td align="right" width="120">事件报告人：</td>
-			<td align="left" width="420"><s:property
-				value="model.informer" /></td>
-		</tr>
-		<tr>
-			<td align="right" width="120">报告人电话：</td>
-			<td align="left" width="420"><s:property
-				value="model.informerPhone" /></td>
-		</tr>
-		<tr>
-			<td align="" colspan="2">
-				<div class="x-toolbar" style="padding:5px;5px;5px;5px;border: 1px solid #A9BFD3;" align="center">事件描述</div>
-			</td>
-		</tr>
-		<tr>
-			<td align="left" colspan="2" style="padding:5px 10px 5px 10px; border-bottom: 1px solid #A9BFD3;word-break:break-all;">
-				${model.descn}
-			</td>
-		</tr>
-	</table>
-	</fieldset>
+<div class="x-panel-body">
+<div id="tabs">
+<s:hidden id="psRecordSize" name="psRecordSize" />
+<ul>
+	<li><a href="#tabs-1">基本信息</a></li>
+	<li><a href="#tabs-2">事件描述</a></li>
+	<li id="reward"><a href="#tabs-3">任务信息</a></li>
 	
-	<table width="510px" style="margin-bottom: 10px;">
-		<tr>
-		    <td style="text-align: center;"><input type="button" value="地理位置" class="button"  onclick="mapLabel(${model.id})"/></td>
-			<c:if test="${model.status == 0 || model.status == 3}">
-			<td style="text-align: center;"><input type="button" value="上报市级" class="button"  onclick="togovernment(${model.id})"/></td>
-			<td style="text-align: center;"><input type="button" value="任务派遣" class="button" onclick="send(${model.id})"/></td>
-			<td style="text-align: center;"><input type="button" value="申请联合整治" class="button" onclick="ally(${model.id})"/></td>
-			<td style="text-align: center;">
-				<!--<s:if test="model.riskEval.size == 0">-->
-					<input type="button" value="申请评估" class="button" onclick="apply(${model.id})"/>
-				<!--</s:if>-->
-			</td>
-			<td style="text-align: center;"><input type="button" value="查看退回记录" class="button" onclick="ret(${model.id})"/></td>
-		    </c:if>
-		</tr>
-	</table>
-	
-	
-</s:form>
+</ul>
+<div id="tabs-1" style="margin-bottom: -16px;">
+  <table id="mytable" height="320">
+	<tr>
+		<td width="800">
+		<table width="800" align="left" border="0" cellpadding="0"
+			cellspacing="0">
+			<tr>
+				<td class="simple" width="300" align="right">事件标题：</td>
+				<td class="simple" align="left" colspan="3"><s:textfield id="title"
+					name="model.title" cssStyle="width:370px" readonly="true" theme="simple" /></td>
+			</tr>
+			<tr>
+				<td align="right">事件类别：</td>
+				<td align="left" colspan="3"><s:textfield id="address"
+					name="model.caseType.name" cssStyle="width:370px" cssClass="inputBorder"
+					readonly="true" />
+			</tr>
+			<tr>
+				<td align="right">事发地点：</td>
+				<td align="left" colspan="3"><s:textfield
+					id="address" name="model.address" cssStyle="width:370px"
+					cssClass="inputBorder" readonly="true" /></td>
+			</tr>
+			<tr>
+				<td align="right">事发时间：</td>
+				<td align="left" colspan="3"><input type="text"
+					name="model.eventDate"
+					value='<s:date name="model.eventDate" format="yyyy-MM-dd"/>'
+					class="inputBorder" style="height: 16px"
+					readonly="readonly" /></td>
+			</tr>
+			<tr>
+				<td align="right">事件报告人：</td>
+				<td width="149" align="left"><s:textfield
+					id="informer" name="model.informer"
+					cssClass="inputBorder" readonly="true" /></td>
+			</tr>
+			<tr>
+				<td align="right">报告人电话：</td>
+				<td width="149" align="left"><s:textfield id="informerPhone"
+					name="model.informerPhone" cssClass="inputBorder" readonly="true" /></td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+  </table>
+</div>
+<div id="tabs-2" style="margin-bottom: -16px;">
+  <table id="mytable" height="320">
+	<tr>
+	  <td height="200" align="left" valign="top">
+		<div style="line-height: 20px; padding: 10px 10px 10px 10px;">
+			${model.descn}</div>
+	  </td>
+	</tr>
+  </table>
+</div>
+<div id="tabs-3" style="margin-bottom: -16px;">
+  <s:hidden id="rewardContent" name="model.integrityRecord" />
+  <table id="mytable" height="320">
+	<tr>
+	  <td height="200" align="left" valign="top">
+		<div style="line-height: 20px; padding: 10px 10px 10px 10px;">
+		</div>
+	  </td>
+	</tr>
+  </table>
 </div>
 
 </div>
-<div align="center" style="width:630; border-left: 1px solid;">
-<c:if test="${model.status != 0 && model.status != 3 }">
-<iframe height="250" align="center" id="iFrame1" name="iFrame1" width="630" onload="this.height=iFrame1.document.body.scrollHeight" frameborder="0" src="${ctx }/singleTaskDetail/listbyeventid.do?eventid=${model.id}"></iframe>
-</c:if>
+</div>
 </div>
 </body>
 </html>
