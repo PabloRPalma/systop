@@ -41,6 +41,8 @@ public class DeptAction extends ExtJsCrudAction<Dept, DeptManager> {
 	 * 当前上级部门ID
 	 */
 	private Integer parentId;
+	// 除去部门管理以外，页面显示部门标识
+	private String noLowerDept;
 
 	/**
 	 * 部门序列号管理器
@@ -70,19 +72,23 @@ public class DeptAction extends ExtJsCrudAction<Dept, DeptManager> {
 	public String deptTree() {
 		if (RequestUtil.isJsonRequest(getRequest())) {
 			Dept parent = null;
-			if (parentId != null) {
+			Dept dept = null;
+			// 得到Spring WebApplicationContext
+			WebApplicationContext ctx = WebApplicationContextUtils
+					.getWebApplicationContext(getServletContext());
+			// 得到Spring管理的LoginUserService
+			LoginUserService loginUserService = (LoginUserService) ctx
+					.getBean("loginUserService");
+			// 当前登陆用户 注意admin部门为空
+			dept = loginUserService.getLoginUserDept(getRequest());
+			if (parentId != null) {// 部门编辑，用户添加使用
 				parent = getManager().get(parentId);
-			} else {
-				// 得到Spring WebApplicationContext
-				WebApplicationContext ctx = WebApplicationContextUtils
-						.getWebApplicationContext(getServletContext());
-				// 得到Spring管理的LoginUserService
-				LoginUserService loginUserService = (LoginUserService) ctx
-						.getBean("loginUserService");
-				Dept dept = loginUserService.getLoginUserDept(getRequest());
+			} else {// 部门列表树显示使用
 				if (dept != null && dept.getParentDept() != null) {
+					// 显示当前登陆用户部门
 					parent = dept;
 				} else {
+					// 显示所有部门
 					parent = getManager().findObject(
 							"from Dept d where d.parentDept is null");
 				}
@@ -131,11 +137,22 @@ public class DeptAction extends ExtJsCrudAction<Dept, DeptManager> {
 	 * @return
 	 */
 	public Map getDeptTree(Map parent, boolean nested) {
+		List<Dept> depts;
 		if (parent == null || parent.isEmpty() || parent.get("id") == null) {
 			return Collections.EMPTY_MAP;
 		}
-		// 得到子部门
-		List<Dept> depts = this.getByParentId((Integer) parent.get("id"));
+		// 得到子部门，区县用户直接返回，市级或admin用户查询24个区县
+		if (noLowerDept == null) {
+			depts = this.getByParentId((Integer) parent.get("id"));
+		} else {
+			Dept dept = getManager().get((Integer) parent.get("id"));
+			if (dept.getParentDept() == null) {
+				depts = this.getByParentId((Integer) parent.get("id"));
+			} else {
+				parent.put("leaf", true);
+				return parent;
+			}
+		}
 
 		logger.debug("Dept {} has {} children.", parent.get("text"), depts
 				.size());
@@ -149,12 +166,21 @@ public class DeptAction extends ExtJsCrudAction<Dept, DeptManager> {
 			child.put("text", dept.getName());
 			child.put("descn", dept.getDescn());
 			child.put("type", dept.getType());
-			if (nested) { // 递归查询子部门
-				child = this.getDeptTree(child, nested);
+			// noSonDept不为空，无须递归查询
+			if (noLowerDept == null) {
+				if (nested) { // 递归查询子部门
+					child = this.getDeptTree(child, nested);
+				}
+			}
+			// 标识当前节点为叶子节点，其实是区县部门
+			if (noLowerDept != null) {
+				child.put("leaf", true);
 			}
 			children.add(child);
+
 		}
-		if (!children.isEmpty()) {
+		// noSonDept不为空，代表事件或部门不需要查看下级部门
+		if (!children.isEmpty() || noLowerDept != null) {
 			parent.put("children", children);
 			parent.put("childNodes", children);
 			parent.put("leaf", false);
@@ -273,4 +299,13 @@ public class DeptAction extends ExtJsCrudAction<Dept, DeptManager> {
 	public void setDepts(List depts) {
 		this.depts = depts;
 	}
+
+	public String getNoSonDept() {
+		return noLowerDept;
+	}
+
+	public void setNoSonDept(String noSonDept) {
+		this.noLowerDept = noSonDept;
+	}
+
 }
