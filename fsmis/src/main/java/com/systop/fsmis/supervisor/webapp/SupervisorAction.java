@@ -16,10 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import com.opensymphony.xwork2.validator.annotations.RegexFieldValidator;
-import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
-import com.opensymphony.xwork2.validator.annotations.Validations;
-import com.opensymphony.xwork2.validator.annotations.ValidatorType;
 import com.systop.cms.utils.PageUtil;
 import com.systop.common.modules.dept.DeptConstants;
 import com.systop.common.modules.dept.model.Dept;
@@ -135,12 +131,6 @@ public class SupervisorAction extends DefaultCrudAction<Supervisor, SupervisorMa
 	/**
 	 * 保存信息员信息
 	 */
-	@Validations(requiredStrings = {
-			@RequiredStringValidator(fieldName = "model.name",message = "请填写姓名！"),
-			@RequiredStringValidator(fieldName = "model.code",message = "请填写信息员编号！")},
-				regexFields = {
-			@RegexFieldValidator(expression = "\\d{11,11}",type = ValidatorType.FIELD,fieldName = "model.mobile",message = "输入的手机号格式有误，请检查！"),
-			@RegexFieldValidator(expression = "^(\\d{3,5}-)?\\d{7,20}$",type = ValidatorType.FIELD,fieldName = "model.phone",message = "输入的固话格式有误，请检查！")	})
 	@Override
 	public String save(){
 		try{
