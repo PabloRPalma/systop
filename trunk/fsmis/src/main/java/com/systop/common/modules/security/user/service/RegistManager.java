@@ -30,6 +30,7 @@ import com.systop.core.util.ReflectUtil;
  * @author DU
  *
  */
+@Deprecated
 @SuppressWarnings("unchecked")
 @Service
 public class RegistManager extends BaseGenericsManager<User> {
