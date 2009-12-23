@@ -139,7 +139,7 @@ public class DeptAction extends ExtJsCrudAction<Dept, DeptManager> {
 	public Map getDeptTree(Map parent, boolean nested) {
 		List<Dept> depts;
 		if (parent == null || parent.isEmpty() || parent.get("id") == null) {
-			return Collections.EMPTY_MAP;
+			return null;
 		}
 		// 得到子部门，区县用户直接返回，市级或admin用户查询24个区县
 		if (noLowerDept == null) {
