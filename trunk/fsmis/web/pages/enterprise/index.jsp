@@ -46,8 +46,9 @@ function removeCompany(cID){
 		<td align="right">
 		<table>
 			<tr>
-				<td><a href="edit.do"><img
-					src="${ctx}/images/icons/add.gif" />添加</a></td>
+				<td><a href="edit.do" title="添加企业信息"><img
+					src="${ctx}/images/icons/add.gif" /></a></td>
+				<td valign="middle"><a href="edit.do" title="添加企业信息">添加</a></td>
 				<!--
 				<td><span class="ytb-sep"></span></td>
 				<td><a href="${ctx}/pages/opengis/mapCompanyLabel.jsp"><img
@@ -79,15 +80,15 @@ function removeCompany(cID){
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	<ec:row>
 		<ec:column width="40" property="_no" value="${GLOBALROWCOUNT}" title="No." style="text-align:center"/>
-		<ec:column width="270" property="name" title="企业名称" >
-			<a href="view.do?model.id=${item.id}" target="_blank" title="查看企业信息"><font color="blue">${item.name}</font></a>
+		<ec:column width="230" property="name" title="企业名称" >
+			<a href="view.do?model.id=${item.id}" target="_self" title="查看企业信息"><font color="blue">${item.name}</font></a>
 		</ec:column>
 		<ec:column width="120" property="code" title="企业编号" />
 		<ec:column width="80" property="legalPerson" title="法人" />
 		<ec:column width="220" property="address" title="企业地址"/>
 		<ec:column width="140" property="_0" title="操作" style="text-align:center" sortable="false">
 			<a href="edit.do?model.id=${item.id}">编辑</a> |
-			<a href="view.do?model.id=${item.id}" target="_blank">查看</a> |
+			<a href="view.do?model.id=${item.id}" target="_self">查看</a> |
 			<a href="#" onclick="removeCompany(${item.id})">删除</a>
 			<!--
 			<s:if test="#attr.item.locationType != null">
