@@ -15,34 +15,42 @@ import com.systop.fsmis.model.SmsSend;
  * 
  */
 public interface SmsProxy {
-	
-
 	/**
+	 * 
 	 * 发送单个短信方法
 	 * 
 	 * @param smsSend
 	 * @return
+	 * @throws ApplicationException
 	 */
-	int sendMessage(SmsSend smsSend) throws ApplicationException;
+	Integer sendMessage(SmsSend smsSend) throws ApplicationException;
 
 	/**
+	 * 
 	 * 群发短信方法
 	 * 
 	 * @param smsSendList
-	 * @return
+	 *          要发送的短信实体集合
+	 * @return 返回短信在短信服务端的id
+	 * @throws ApplicationException
 	 */
-	int sendMessage(List<SmsSend> smsSendList) throws ApplicationException;
+	Integer sendMessage(List<SmsSend> smsSendList) throws ApplicationException;
 
 	/**
 	 * 接收短信方法
 	 * 
-	 * @return
+	 * @return 得到的短信实体
+	 * @throws ApplicationException
 	 */
 
 	List<SmsReceive> receiveMessage() throws ApplicationException;
 
 	/**
+	 * 
 	 * 检查已发送短信的接收状态
+	 * 
+	 * @return
+	 * @throws ApplicationException
 	 */
 	List<String> querySmsSendState() throws ApplicationException;
 
