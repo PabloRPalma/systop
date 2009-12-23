@@ -99,26 +99,31 @@ public class SupervisorAction extends DefaultCrudAction<Supervisor, SupervisorMa
 			hql = hql + "from Supervisor s where 1=1";
 		}
 		List args = new ArrayList();
+		//根据姓名查询
 		if (StringUtils.isNotBlank(getModel().getName())) {
 			hql = hql + " and s.name like ?";
 			args.add("%" + getModel().getName() + "%");
 		}
+		//根据监管区域查询
 		if (StringUtils.isNotBlank(getModel().getSuperviseRegion())){
 			hql = hql + " and s.superviseRegion like ?";
 			args.add("%" + getModel().getSuperviseRegion() + "%");
 		}
+		//根据部门查询
 		if(getModel().getDept() != null){
 			if (StringUtils.isNotBlank(getModel().getDept().getName())){
 				hql = hql + " and s.dept.name like ?";
 				args.add("%" + getModel().getDept().getName() + "%");
 			}
 		}
+		//根据手机号查询
 		if(getModel().getMobile() != null){
 			if (StringUtils.isNotBlank(getModel().getMobile())){
 				hql = hql + " and s.mobile like ?";
 				args.add("%" + getModel().getMobile() + "%");
 			}
 		}
+		//根据负责人查询
 		if(getModel().getIsLeader() != null){
 				hql = hql + " and s.isLeader = ?";
 				args.add(getModel().getIsLeader());
@@ -157,11 +162,8 @@ public class SupervisorAction extends DefaultCrudAction<Supervisor, SupervisorMa
 	@Override
 	public String remove(){
 		Supervisor supervisor = getManager().get(getModel().getId());
-		if(supervisor.getGenericCases().size() != 0){
-			addActionError("无法删除该信息员，该信息员已经与某事件关联！");
-			return "error";
-		}
 		String path = getModel().getPhotoUrl();
+		//getRealPath获取路径时需要保证path为非空，如果为空则直接删除
 		if(StringUtils.isBlank(path)){
 			return super.remove();
 		}
@@ -193,13 +195,6 @@ public class SupervisorAction extends DefaultCrudAction<Supervisor, SupervisorMa
 			delResult.put("result", "error");
 		}
 		return "jsonRst";
-	}
-	
-	/**
-	 * 查看信息员信息
-	 */
-	public String look(){
-		return "look";
 	}
 	
 	public String editNew(){
