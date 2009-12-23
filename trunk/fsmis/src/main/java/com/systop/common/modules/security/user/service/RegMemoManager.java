@@ -14,6 +14,7 @@ import com.systop.core.dao.hibernate.BaseHibernateDao;
  * 注册说明信息service
  * @author DU
  */
+@Deprecated
 @Service
 public class RegMemoManager {
   
