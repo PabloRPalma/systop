@@ -15,7 +15,7 @@
 <div class="x-panel">
 <div class="x-panel-header">诚信企业管理&nbsp;>&nbsp;企业列表&nbsp;>&nbsp;企业信息</div>
 <div align="center" >
- <s:form id="companyForm" action="save.do" method="post" theme="simple" enctype="multipart/form-data">
+ <s:form id="companyForm" action="save.do" method="post" theme="simple" validate="true" enctype="multipart/form-data">
 	<s:hidden id="corpId" name="model.id" />
 	<fieldset style="width: 830px; padding: 10px 10px 10px 10px;">
 	<legend>企业信息</legend>
@@ -27,18 +27,18 @@
 	<table width="800" border="0">
 	  <tr>
 		<td width="500">
-		  <table width="498" align="center" border="0" cellpadding="2" cellspacing="1">
+		  <table width="498" align="left" border="0" cellpadding="2" cellspacing="1">
           <tr>
             <td width="119" align="right">企业名称：</td>
             <td align="left" colspan="3">
-            	<s:textfield id="name" name="model.name" cssStyle="width:350px" />
+            	<s:textfield id="name" name="model.name" cssClass="required" cssStyle="width:350px" />
                 <font color="red">&nbsp;*</font> 
             </td>
           </tr>
           <tr>
             <td width="119" align="right">地　　址：</td>
             <td align="left" colspan="3">
-            	<s:textfield id="address" name="model.address" cssStyle="width:350px" />
+            	<s:textfield id="address" name="model.address" cssClass="required" cssStyle="width:350px" />
                 <font color="red">&nbsp;*</font> </td>
           </tr>
           <tr>
@@ -83,12 +83,12 @@
           <tr>
             <td width="119" align="right">企业编号：</td>
             <td width="149" align="left">
-            	<s:textfield id="code" name="model.code"/>
+            	<s:textfield id="code" name="model.code" cssClass="required" />
                 <font color="red">&nbsp;*</font> 
             </td>
             <td width="80" align="right">部　门：</td>
             <td width="150" align="left">
-            	<div id="comboxWithTree"  style="float: left;margin-left:0px;" ></div><font color="red" style="margin-left:2px;">*</font>
+            	<div id="comboxWithTree" class="required" style="float: left;margin-left:0px;" ></div><font color="red" style="margin-left:2px;">*</font>
 				<s:hidden name="model.dept.id" id="deptId"></s:hidden>
             </td>
           </tr>
@@ -233,6 +233,11 @@ Ext.onReady(function() {
 		}
 	});
 	dtree.init();
+});
+</script>
+<script type="text/javascript">
+	$(document).ready(function() {
+	$("#companyForm").validate();
 });
 </script>
 </body>

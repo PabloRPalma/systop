@@ -10,6 +10,14 @@
 <script type="text/javascript" src="${ctx}/scripts/jquery/ui/jquery-ui-1.7.1.js"></script>
 <script type="text/javascript">
 $(function(){
+	var hasReward = $('#rewardContent').val();
+	var punishListSize = $('#psRecordSize').val();
+	if (hasReward == "" || hasReward == null) {
+		$('#reward').hide();
+	}
+	if (punishListSize == 0) {
+		$('#punish').hide();
+	}
 	// Tabs
 	$('#tabs').tabs();
 });
@@ -19,14 +27,14 @@ $(function(){
 #mytable {
 	border: 1px solid #A6C9E2;
 	margin-left: -21px;
-	margin-top: -1px;
-	width: 97%;
+	margin-top: -10px;
+	width: 80%;
 	border-collapse: collapse;
 }
 
 #mytable td {
-	border: 1px solid #A6C9E2;
-	height: 24;
+	border: 0px solid #A6C9E2;
+	height: 26;
 }
 </style>
 </head>
@@ -35,6 +43,7 @@ $(function(){
 <div class="x-panel-header">诚信企业管理&nbsp;>&nbsp;企业列表&nbsp;>&nbsp;企业信息</div>
 <div class="x-panel-body">
 <div id="tabs">
+<s:hidden id="psRecordSize" name="psRecordSize" />
 <ul>
 	<li><a href="#tabs-1">基本信息</a></li>
 	<li><a href="#tabs-2">企业简介</a></li>
@@ -42,27 +51,26 @@ $(function(){
 	<li id="punish"><a href="#tabs-4">处罚记录</a></li>
 </ul>
 <div id="tabs-1" style="margin-bottom: -16px;">
-  <table id="mytable">
+  <table id="mytable" height="320">
 	<tr>
-		<td width="640">
-		<table width="498" align="center" border="0" cellpadding="2"
-			cellspacing="1">
+		<td width="498">
+		<table width="498" align="left" border="0" cellpadding="0"
+			cellspacing="0">
 			<tr>
-				<td width="119" align="right">企业名称：</td>
-				<td align="left" colspan="3"><s:textfield id="name"
-					name="model.name" cssStyle="width:350px" cssClass="inputBorder"
-					readonly="true" /></td>
+				<td class="simple" width="119" align="right">企业名称：</td>
+				<td class="simple" align="left" colspan="3"><s:textfield id="name"
+					name="model.name" cssStyle="width:370px" readonly="true" theme="simple" /></td>
 			</tr>
 			<tr>
 				<td width="119" align="right">地 址：</td>
 				<td align="left" colspan="3"><s:textfield id="address"
-					name="model.address" cssStyle="width:350px" cssClass="inputBorder"
+					name="model.address" cssStyle="width:370px" cssClass="inputBorder"
 					readonly="true" />
 			</tr>
 			<tr>
 				<td width="119" align="right">法 人：</td>
 				<td align="left" colspan="3"><s:textfield id="legalPerson"
-					name="model.legalPerson" cssStyle="width:350px"
+					name="model.legalPerson" cssStyle="width:370px"
 					cssClass="inputBorder" readonly="true" /></td>
 			</tr>
 			<tr>
@@ -74,7 +82,7 @@ $(function(){
 				<td width="150" align="left"><input type="text"
 					name="model.businessLicenseDate"
 					value='<s:date name="model.businessLicenseDate" format="yyyy-MM-dd"/>'
-					class="inputBorder" style="width: 115px; height: 16px"
+					class="inputBorder" style="height: 16px"
 					readonly="readonly" /></td>
 			</tr>
 			<tr>
@@ -86,7 +94,7 @@ $(function(){
 				<td width="150" align="left"><input type="text"
 					name="model.produceLicenseDate"
 					value='<s:date name="model.produceLicenseDate" format="yyyy-MM-dd"/>'
-					class="inputBorder" style="width: 115px; height: 16px"
+					class="inputBorder" style="height: 16px"
 					readonly="readonly" /></td>
 			</tr>
 			<tr>
@@ -98,7 +106,7 @@ $(function(){
 				<td width="150" align="left"><input type="text"
 					name="model.sanitationLicenseDate"
 					value='<s:date name="model.sanitationLicenseDate" format="yyyy-MM-dd"/>'
-					class="inputBorder" style="width: 115px; height: 16px"
+					class="inputBorder" style="height: 16px"
 					readonly="readonly" /></td>
 			</tr>
 			<tr>
@@ -107,7 +115,7 @@ $(function(){
 					name="model.code" cssClass="inputBorder" readonly="true" /></td>
 				<td width="80" align="right">部 门：</td>
 				<td width="150" align="left"><s:textfield
-					name="model.dept.name" cssClass="inputBorder" readonly="true" /></td>
+					name="model.dept.name"  cssClass="inputBorder" readonly="true" /></td>
 			</tr>
 			<tr>
 				<td width="119" align="right">固 话：</td>
@@ -115,7 +123,7 @@ $(function(){
 					name="model.phone" cssClass="inputBorder" readonly="true" /></td>
 				<td width="80" align="right">手 机：</td>
 				<td width="150" align="left"><s:textfield id="mobile"
-					name="model.mobile" cssStyle="width:115px" cssClass="inputBorder"
+					name="model.mobile"  cssClass="inputBorder"
 					readonly="true" /></td>
 			</tr>
 			<tr>
@@ -125,25 +133,25 @@ $(function(){
 				</td>
 				<td width="80" align="right">邮 编：</td>
 				<td width="150" align="left"><s:textfield id="zip"
-					name="model.zip" cssStyle="width:115px" cssClass="inputBorder"
+					name="model.zip"  cssClass="inputBorder"
 					readonly="true" /></td>
 			</tr>
 			<tr>
 				<td width="119" align="right">经营范围：</td>
 				<td align="left" colspan="3"><s:textfield id="operateDetails"
-					name="model.operateDetails" cssStyle="width:350px;"
+					name="model.operateDetails" cssStyle="width:370px;"
 					cssClass="inputBorder" readonly="true" /></td>
 			</tr>
 			<tr>
 				<td width="119" align="right">备 注：</td>
 				<td align="left" colspan="3"><s:textfield id="remark"
-					name="model.remark" cssStyle="width:350px;" cssClass="inputBorder"
+					name="model.remark" cssStyle="width:370px;" cssClass="inputBorder"
 					readonly="true" /></td>
 			</tr>
 		</table>
 		</td>
-		<td width="350" valign="top" style="border-left: 1px dotted #099EBD;">
-		<table width="100%" border="0">
+		<td width="350" valign="top" align="left" style="border-left: 1px dotted #099EBD;">
+		  <table width="100%" border="0">
 			<tr>
 				<td><c:if test="${not empty model.photoUrl}">
 					<img width="300" height="225" src="${ctx}/${model.photoUrl}"
@@ -154,78 +162,44 @@ $(function(){
 				</c:if></td>
 			</tr>
 			<tr>
-				<td align="center"
-					style="border-top: 1px dotted #099EBD; padding-top: 10px">
+				<td align="center" height="26" style="border-top: 1px dotted #099EBD; padding-top: 10px">
 				企业照片</td>
 			</tr>
-		</table>
+		  </table>
 		</td>
 	</tr>
   </table>
 </div>
 <div id="tabs-2" style="margin-bottom: -16px;">
-  <table id="mytable">
-  	<tr>
-  		<td width="350" valign="top" style="border-left: 1px dotted #099EBD;">
-			<table width="100%" border="0" >
-				<tr>
-					<td>
-						<c:if test="${not empty model.photoUrl}">
-							<img width="300" height="225" src="${ctx}/${model.photoUrl}" onclick="openImg(this)" title="点击查看图片"/>
-						</c:if>
-						<c:if test="${empty model.photoUrl}">
-							<img width="300" height="225" src="${ctx}/images/corp/com_nophoto_big.gif"/>
-						</c:if>
-					</td>
-				</tr>
-				<tr>
-		            <td align="center"  style="border-top: 1px dotted #099EBD; padding-top: 10px">
-		            	企业照片
-		            </td>
-		        </tr>
-			</table>
-		</td>
-  	</tr>
+  <table id="mytable" height="320">
+	<tr>
+	  <td height="200" align="left" valign="top">
+		<div style="line-height: 20px; padding: 10px 10px 10px 10px;">
+			${model.descn}</div>
+	  </td>
+	</tr>
   </table>
 </div>
 <div id="tabs-3" style="margin-bottom: -16px;">
-  <table id="mytable">
-  	<tr>
-	  	<td colspan="2">
-			<table width="100%" border="0" cellpadding="0" cellspacing="0">
-				<tr>
-					<td>
-						<div class="x-toolbar" style="padding:5px 5px 5px 5px">诚信记录</div>
-					</td>
-				</tr>
-				<tr>
-					<td height="" align="left">
-						<table width="100%" border="0">
-							<tr>
-								<td align="center" style="border-bottom: 1px dashed #C0C0C0;border-right: 1px dashed #C0C0C0;">奖励记录</td>
-								<td align="center" style="border-bottom: 1px dashed #C0C0C0;">处罚记录</td>
-							</tr>
-							<tr>
-								<td width="50%" style="border-right: 1px dashed #C0C0C0;">
-									<div style="line-height: 20px; padding: 10px 10px 10px 10px;">
-										${model.integrityRecord}&nbsp;
-									</div>
-								</td>
-								<td	width="50%" height="240">
-									<!--  
-									<iframe height="240" src="${ctx}/company/singleevents/index.do?companyId=${param['model.id']}" frameborder="0" width="100%" name="singleEvents"></iframe>
-									-->
-								</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-			</table>
-	  	</td>
-	  </tr>
+  <s:hidden id="rewardContent" name="model.integrityRecord" />
+  <table id="mytable" height="320">
+	<tr>
+	  <td height="200" align="left" valign="top">
+		<div style="line-height: 20px; padding: 10px 10px 10px 10px;">
+			${model.integrityRecord}</div>
+	  </td>
+	</tr>
   </table>
 </div>
-<div id="tabs-4" style="margin-bottom: -16px;"></div>
+<div id="tabs-4" style="margin-bottom: -16px;">
+  <table id="mytable" height="320">
+	<tr>
+	  <td height="200" align="left" valign="top">
+		<div style="line-height: 20px; padding: 10px 10px 10px 10px;"></div>
+	  </td>
+	</tr>
+  </table>
+</div>
 </div>
 </div>
 </div>
