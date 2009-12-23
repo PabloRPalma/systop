@@ -15,6 +15,7 @@ import com.systop.core.webapp.struts2.action.BaseAction;
  * 注册说明信息管理Action
  * @author DU
  */
+@Deprecated
 @SuppressWarnings("serial")
 @Controller
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
