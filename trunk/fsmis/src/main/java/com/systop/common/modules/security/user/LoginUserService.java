@@ -76,7 +76,6 @@ public class LoginUserService {
   /**
    * 判断当前登陆用户是否具有某个角色
    */
-  @SuppressWarnings("unchecked")
   public boolean isGranted(HttpServletRequest request, String roleName) {
     User user = getLoginUser(request);
     List<Role> roleList = dao.query("select r from Role r join r.users u "

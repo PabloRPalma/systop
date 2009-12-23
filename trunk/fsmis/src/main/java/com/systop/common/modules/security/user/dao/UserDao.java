@@ -14,7 +14,6 @@ import com.systop.core.dao.hibernate.BaseHibernateDao;
  * @author Sam Lee
  *
  */
-@SuppressWarnings("unchecked")
 @Repository
 public class UserDao extends BaseHibernateDao {
   /**
