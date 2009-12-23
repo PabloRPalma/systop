@@ -132,6 +132,15 @@
 			</div>
 		</div>		
 	</div>
+	<div id="supervisor">
+		<div style="padding-left:5px;">          
+			<div style="padding-top:2px">
+				<img src="${ctx}/images/icons/folder_table.gif" class="icon">
+				<a href="${ctx}/supervisor/index.do" target="main">信息员管理</a>
+			</div>
+			<br>
+		</div>
+	</div>
 	<div id="counter">
 		<div  style="padding-left:5px;">
 			<div style="padding-top:2px">
