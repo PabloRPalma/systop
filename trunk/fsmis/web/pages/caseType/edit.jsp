@@ -18,15 +18,10 @@
 	<div align="center">
 	<s:form  action="save.do" id="save" method="post" theme="simple" validate="true" enctype="multipart/form-data">
 	<s:hidden name="model.id"/>
+	<s:hidden name="model.caseType.id"/>
 	<fieldset style="width:510px; padding:10px 10px 10px 10px;">
     	<legend>编辑类别</legend>
         <table width="520px" align="center">
-          <tr>
-             <td align="right" width="90">选择上级类别：</td>
-             <td align="left" width="420">
-             	<s:select id="levelOne" list="levelOne" name="model.caseType.id" headerKey="" headerValue="请选择"  cssStyle="width:150px;border:0px"/>
-             </td>
-          </tr>
           <tr>
              <td align="right" width="90">名称：</td>
              <td align="left" width="420">
@@ -36,7 +31,7 @@
            <tr>
              <td align="right" width="90">描述：</td>
              <td align="left" width="420">
-             	<s:textfield id="name" name="model.descn" cssStyle="width:400px;height:150px"/>
+             	<s:textfield id="descn" name="model.descn" cssStyle="width:400px;height:150px"/>
              </td>
           </tr>
           

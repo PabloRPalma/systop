@@ -16,7 +16,7 @@ function removeAo(){
 }
 function remove(id){
 	if (confirm("确认要删除类别吗?")){
-		url="${ctx}/caseType/remove.do?model.id=" + id;
+		url="${ctx}/casetype/remove.do?model.id=" + id;
 		window.open(url,'main');
 	}
 }
