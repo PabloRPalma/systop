@@ -43,6 +43,11 @@
 					border : false,
 					iconCls : 'cms'
 				}, {
+					title : '企业管理',
+					html : document.getElementById('menu_corp').innerHTML,
+					border : false,
+					iconCls : 'corp'
+				}, {
 					title : '许可管理',
 					html : document.getElementById('menu_sys').innerHTML,
 					border : false,
