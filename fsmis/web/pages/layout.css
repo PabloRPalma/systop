@@ -49,28 +49,8 @@ a[href='#']{
 	color:red;
 }
 
-.catalog{
-	background-image: url(../images/icons/folder.gif);
-}
-
-.article{
-	background-image: url(../images/icons/article.gif);
-}
-
-.software{
+.cms{
 	background-image: url(../images/icons/software.gif);
-}
-
-.template{
-	background-image: url(../images/icons/xhtml.gif);
-}
-
-.announce{
-	background-image: url(../images/exticons/album.gif);
-}
-
-.links{
-	background-image: url(../images/icons/link_m.gif);
 }
 
 .permit {
