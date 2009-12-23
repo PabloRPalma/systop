@@ -28,7 +28,7 @@ function remove(id){
   <div class="x-toolbar">
      <table width="100%">
        <tr>
-             <td width="85%" align="left">
+             <td width="90%" align="left">
                                      父类别名称:${model.name}
              </td>
              <td  align="right">
@@ -36,9 +36,8 @@ function remove(id){
 					src="${ctx}/images/icons/house.gif" />首页</a>
 			 </td>
 			 <td><span class="ytb-sep"></span></td>
-			 <td><span class="ytb-sep"></span></td>
              <td style=" padding-left:5px; padding-top:5px;" align="right">   
-               <a href="${ctx}/casetype/edit.do?model.caseType.id=${model.id }">
+               <a href="${ctx}/casetype/edit.do?model.caseType.id=${model.id}">
              <img src="${ctx}/images/icons/add.gif"/> 添加类别</a>
              </td>
        </tr>
