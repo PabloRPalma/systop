@@ -100,7 +100,7 @@
             </td>
             <td width="80" align="right">部　门：</td>
             <td width="150" align="left">
-            	<div id="comboxWithTree" class="required" style="float: left;margin-left:0px;" ></div><font color="red" style="margin-left:2px;">*</font>
+            	<div id="comboxWithTree" class="required" style="float: left;margin-left:0px;" ></div>
 				<s:hidden name="model.dept.id" id="deptId"></s:hidden>
             </td>
           </tr>
