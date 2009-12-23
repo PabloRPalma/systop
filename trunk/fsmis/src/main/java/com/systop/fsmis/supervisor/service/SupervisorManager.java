@@ -41,11 +41,8 @@ public class SupervisorManager extends BaseGenericsManager<Supervisor> {
 	 */
 	public Supervisor getSupervisorByCode(String code) {
 		String hql = "from Supervisor supervisor where supervisor.code = ?";
-		List<Supervisor> li = super.query(hql, code);
-		if (!li.isEmpty()) {
-			return li.get(0);
-		}
-		return new Supervisor();
+		Supervisor supervisor = (Supervisor)getDao().findObject(hql, code);
+		return supervisor;
 	}
 
 	/**
@@ -53,11 +50,8 @@ public class SupervisorManager extends BaseGenericsManager<Supervisor> {
 	 */
 	public Supervisor getSupervisorByMobile(String mobile) {
 		String hql = "from Supervisor s where s.mobile = ? ";
-		List<Supervisor> li = query(hql, mobile);
-		if (!li.isEmpty()) {
-			return li.get(0);
-		}
-		return new Supervisor();
+		Supervisor supervisor = (Supervisor)getDao().findObject(hql, mobile);
+		return supervisor;
 	}
 
 		
