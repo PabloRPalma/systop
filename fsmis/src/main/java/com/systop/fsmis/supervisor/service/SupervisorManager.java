@@ -108,7 +108,8 @@ public class SupervisorManager extends BaseGenericsManager<Supervisor> {
    */
 	public Supervisor getSupervisorInfo(Integer deptId, String code, String name) {
 		String hql = "from Supervisor s where s.dept.id = ? and s.code = ? and s.name = ? ";
-		Supervisor supervisor = (Supervisor) getDao().findObject(hql, new Object[] {deptId, code, name});
+		Supervisor supervisor = (Supervisor) getDao().findObject(hql, 
+				       new Object[] {deptId, code, name});
 	  return supervisor;	
 	}
 	
