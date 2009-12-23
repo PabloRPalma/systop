@@ -27,12 +27,17 @@ import com.systop.fsmis.sms.smproxy.cmcc.webservice.IfSMSServiceProxy;
 public class SmsProxyCmccWebServiceImpl implements SmsProxy {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
+	/**
+	 * @see{@link SmsProxy#querySmsSendState}
+	 */
 	@Override
 	public List<String> querySmsSendState() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/**
+	 * @see{@link SmsProxy#receiveMessage()}
+	 */
 	@Override
 	public List<SmsReceive> receiveMessage() throws ApplicationException {
 		logger.info("receiveMessage....");
@@ -46,12 +51,14 @@ public class SmsProxyCmccWebServiceImpl implements SmsProxy {
 			}
 
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 	}
 
+	/**
+	 * @see{@link SmsProxy#sendMessage()}
+	 */
 	@Override
 	public int sendMessage(SmsSend smsSend) throws ApplicationException {
 		IfSMSService service = null;
@@ -70,9 +77,11 @@ public class SmsProxyCmccWebServiceImpl implements SmsProxy {
 
 	}
 
+	/**
+	 * @see{@link SmsProxy#sendMessage()}
+	 */
 	@Override
 	public int sendMessage(List<SmsSend> smsSendList) throws ApplicationException {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

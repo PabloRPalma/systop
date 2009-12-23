@@ -6,14 +6,13 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.systop.core.ApplicationException;
 import com.systop.fsmis.model.SmsReceive;
 import com.systop.fsmis.model.SmsSend;
-
 import com.systop.fsmis.sms.smproxy.SmsProxy;
+import com.systop.fsmis.sms.util.MobileNumChecker;
 
 /**
  * 短信管理类,短信模块的顶层类<br>
@@ -29,8 +28,9 @@ import com.systop.fsmis.sms.smproxy.SmsProxy;
  */
 @Service("smsManager")
 public class SmsManager {
-	private SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss:SSS");
-	private Logger logger = LoggerFactory.getLogger(getClass());
+	// private SimpleDateFormat sf = new
+	// SimpleDateFormat("yyyy-MM-dd hh:mm:ss:SSS");
+	private static Logger logger = LoggerFactory.getLogger(SmsManager.class);
 	/**
 	 * 依赖短信服务代理接口,用于完成特定的短信平台的短信发送/接收/查询操作
 	 */
@@ -44,38 +44,7 @@ public class SmsManager {
 	 */
 	private SmsReceiveManager smsReceiveManager;
 
-	public SmsSendManager getSmsSendManager() {
-		return smsSendManager;
-	}
-
-	public void setSmsSendManager(SmsSendManager smsSendManager) {
-		this.smsSendManager = smsSendManager;
-	}
-
-	public SmsReceiveManager getSmsReceiveManager() {
-		return smsReceiveManager;
-	}
-
-	public void setSmsReceiveManager(SmsReceiveManager smsReceiveManager) {
-		this.smsReceiveManager = smsReceiveManager;
-	}
-
-	public SmsProxy getSmsProxy() {
-		return smsProxy;
-	}
-
-	@Autowired(required = true)
-	public void setSmsProxy(@Qualifier("smsProxy") SmsProxy smsProxy) {
-		this.smsProxy = smsProxy;
-	}
-
-	/**
-	 * @see {@link SmsProxy#querySmsSendState()}
-	 */
-
 	public void querySmsSendState() {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void receiveMessages() {
@@ -91,7 +60,7 @@ public class SmsManager {
 	}
 
 	public void sendMessage() {
-		System.out.println(">>>>>>>");
+
 	}
 
 	public void sendMessages() {
@@ -105,12 +74,10 @@ public class SmsManager {
 			if (smsSend == null) {
 				continue;
 			}
-			if (smsSend.getMobileNum() == null
-					|| smsSend.getMobileNum().length() < 11) {
-				logger.error(sf.format(new java.util.Date()) + " ID为:"
-						+ smsSend.getId() + "的短信,接收手机号[" + smsSend.getMobileNum()
-						+ "]有误,发送失败!");
+			if (!MobileNumChecker.checkMobilNumberDigit(smsSend.getMobileNum())) {
 
+				logger.error("ID为:{}的短信,接收手机号[{}]有误,发送失败!", smsSend.getId(), smsSend
+						.getMobileNum());
 				continue;
 			}
 			try {
@@ -123,17 +90,49 @@ public class SmsManager {
 					smsSend.setSendTime(new java.util.Date());
 					getSmsSendManager().update(smsSend);
 
-					logger.info(sf.format(new java.util.Date()) + " Id为: "
-							+ smsSend.getId() + " 的短信发送成功");
+					logger.info("ID为:{}的短信,接收手机号为[{}],发送成功!", smsSend.getId(), smsSend
+							.getMobileNum());
 				}
 			} catch (ApplicationException ex) {
-				logger.error(sf.format(new java.util.Date()) + "ID为: "
-						+ smsSend.getId() + "接收手机号为:" + smsSend.getMobileNum()
-						+ "的短信发送失败!  错误原因:" + ex.getMessage());
+
+				/*
+				 * logger.error("ID为:{}的短信,接收手机号为[{}]有误,发送失败! 错误原因:{}", smsSend.getId(),
+				 * smsSend .getMobileNum(),ex.getMessage());
+				 * logger.error("ID为:{}的短信,接收手机号[{}],发送失败! 错误原因:{}", smsSend.getId(),
+				 * smsSend.getMobileNum(), ex.getMessage());
+				 */
+
 			}
 
 		}
 		getSmsProxy().receiveMessage();
+	}
+
+	public SmsSendManager getSmsSendManager() {
+		return smsSendManager;
+	}
+
+	@Autowired(required = true)
+	public void setSmsSendManager(SmsSendManager smsSendManager) {
+		this.smsSendManager = smsSendManager;
+	}
+
+	public SmsReceiveManager getSmsReceiveManager() {
+		return smsReceiveManager;
+	}
+
+	@Autowired(required = true)
+	public void setSmsReceiveManager(SmsReceiveManager smsReceiveManager) {
+		this.smsReceiveManager = smsReceiveManager;
+	}
+
+	public SmsProxy getSmsProxy() {
+		return smsProxy;
+	}
+
+	@Autowired(required = true)
+	public void setSmsProxy(SmsProxy smsProxy) {
+		this.smsProxy = smsProxy;
 	}
 
 }
