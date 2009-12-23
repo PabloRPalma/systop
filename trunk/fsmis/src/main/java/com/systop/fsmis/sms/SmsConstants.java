@@ -35,6 +35,11 @@ public final class SmsConstants {
 
 	public final static String N = "0";
 
+	public final static String PLITER = ResourceBundleUtil.getString(
+			RESOURCE_BUNDLE, "sms.spliter", ",");
+	public final static String[] ALLOW_MOBILE_NUM_DIGIT = ResourceBundleUtil
+			.getString(RESOURCE_BUNDLE, "sms.SmsReceive.quoteString", "11").split(
+					PLITER);
 	/** 举报短信头 */
 	public final static String QUOTE_STRING = ResourceBundleUtil.getString(
 			RESOURCE_BUNDLE, "sms.SmsReceive.quoteString", "1,A,a");

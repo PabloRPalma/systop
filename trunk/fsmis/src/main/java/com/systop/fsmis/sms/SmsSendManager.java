@@ -2,10 +2,6 @@ package com.systop.fsmis.sms;
 
 import java.util.List;
 
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
 import com.systop.core.service.BaseGenericsManager;
@@ -21,28 +17,21 @@ import com.systop.fsmis.model.SmsSend;
 @Service
 public class SmsSendManager extends BaseGenericsManager<SmsSend> {
 	/**
-	 * 得到需要发送的短信方法
+	 * 得到需要发送的短信方法(最大记录数由系统变量限定)
 	 * 
 	 * @return
 	 */
 	public List<SmsSend> getNewSmsSends() {
-		List<SmsSend> smsSendList = null;
-		/*
-		 * String hql = "from SmsSend ss where ss.isNew = ?"; // 查询新短信 List<SmsSend>
-		 * smsSendList = query(hql, new Object[] { SMSConstants.SMS_SMS_SEND_IS_NEW
-		 * });
-		 */
-		Session session = getDao().getSessionFactory().openSession();
-		Criteria criteria = session.createCriteria(SmsSend.class);
-		criteria.add(Restrictions.eq("isNew", SmsConstants.SMS_SMS_SEND_IS_NEW));
-		criteria.addOrder(Order.asc("createTime"));
-		criteria.setMaxResults(SmsConstants.SMS_SMS_SEND_COUNT);
+		List<SmsSend> smsSends = null;
+		// 查询新短信并且以短信记录创建时间早晚排序
+		String hql = "from SmsSend ss where ss.isNew = ? order by ss.createTime";
+		smsSends = query(hql, SmsConstants.SMS_SMS_SEND_IS_NEW);
+		// 如果得到的记录数大于系统所指定的一次发送记录数,则只取得指定的记录
+		if (smsSends != null && smsSends.size() > SmsConstants.SMS_SMS_SEND_COUNT) {
+			return smsSends.subList(0, SmsConstants.SMS_SMS_SEND_COUNT - 1);
+		}
 
-		// getDao().getHibernateTemplate().findByCriteria(criteria);
-		smsSendList = criteria.list();
-
-		session.close();
-
-		return smsSendList;
+		return smsSends;
 	}
+
 }

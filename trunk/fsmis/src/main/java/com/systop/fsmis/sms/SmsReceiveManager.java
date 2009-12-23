@@ -1,5 +1,7 @@
 package com.systop.fsmis.sms;
 
+import org.springframework.stereotype.Service;
+
 import com.systop.core.service.BaseGenericsManager;
 import com.systop.fsmis.model.SmsReceive;
 
@@ -10,6 +12,7 @@ import com.systop.fsmis.model.SmsReceive;
  * @author WorkShopers
  * 
  */
+@Service
 public class SmsReceiveManager extends BaseGenericsManager<SmsReceive> {
-	
+
 }
