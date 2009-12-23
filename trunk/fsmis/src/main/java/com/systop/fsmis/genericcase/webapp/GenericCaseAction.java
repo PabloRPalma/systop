@@ -1,5 +1,6 @@
 package com.systop.fsmis.genericcase.webapp;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.hibernate.criterion.MatchMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -71,6 +73,22 @@ public class GenericCaseAction extends
 		if (StringUtils.isNotBlank(getModel().getCode())) {
 			sql = sql + "and gc.code = ? ";
 			args.add("'" + getModel().getCode() + "'");
+		}
+		Date eventDate = new Date();
+		if(StringUtils.isNotBlank(getRequest().getParameter("eventDate"))){
+			try {
+				eventDate = DateUtils.parseDate(getRequest().getParameter("eventDate"),
+							new String[] { "yyyy-MM-dd HH:mm:ss" });
+	 
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		//根据事发时间查询
+		if(StringUtils.isNotBlank(getRequest().getParameter("eventDate"))){
+			sql =  sql +  " and gc.eventDate <= ?";
+			args.add(eventDate);
+			
 		}
 		sql += " order by gc.eventDate desc,gc.status";
 		page = getManager().pageQuery(page, sql,args.toArray());
