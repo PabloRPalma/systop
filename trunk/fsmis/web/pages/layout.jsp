@@ -10,6 +10,11 @@
 <%@include file="/common/extjs.jsp"%>
 <LINK href="${ctx}/styles/style.css" type='text/css' rel='stylesheet'>
 <LINK href="${ctx}/pages/layout.css" type='text/css' rel='stylesheet'>
+<style type="text/css">
+.title{
+	font-weight: bold;
+}
+</style>
 </head>
 <body>
 <script type="text/javascript">
@@ -26,7 +31,7 @@
 					}), {
 				region : 'west',
 				id : 'west-panel',
-				title : '系统菜单',
+				title : '&nbsp;',
 				split : true,
 				width : 150,
 				minSize : 150,
@@ -38,36 +43,56 @@
 					animate : true
 				},
 				items : [ {
-					title : '网站管理',
-					html : document.getElementById('cms').innerHTML,
+					title : '<span class="title">协调指挥</span>',
+					html : document.getElementById('xtzh').innerHTML,
 					border : false,
 					iconCls : 'cms'
 				}, {
-					title : '企业管理',
-					html : document.getElementById('menu_corp').innerHTML,
+					title : '<span class="title">专家评估</span>',
+					html : document.getElementById('zjpg').innerHTML,
 					border : false,
-					iconCls : 'corp'
+					iconCls : 'cms'
+				},{
+					title : '<span class="title">应急指挥</span>',
+					html : document.getElementById('yjzh').innerHTML,
+					border : false,
+					iconCls : 'cms'
+				},{
+					title : '<span class="title">统计分析</span>',
+					html : document.getElementById('tjfx').innerHTML,
+					border : false,
+					iconCls : 'cms'
+				},{
+					title : '<span class="title">企业诚信</span>',
+					html : document.getElementById('qycx').innerHTML,
+					border : false,
+					iconCls : 'cms'
+				},{
+					title : '<span class="title">信息员管理</span>',
+					html : document.getElementById('xxy').innerHTML,
+					border : false,
+					iconCls : 'cms'
+				},{
+					title : '<span class="title">短信管理</span>',
+					html : document.getElementById('dxgl').innerHTML,
+					border : false,
+					iconCls : 'cms'
+				},{
+					title : '<span class="title">内部办公</span>',
+					html : document.getElementById('nbbg').innerHTML,
+					border : false,
+					iconCls : 'cms'
+				},{
+					title : '<span class="title">网站管理</span>',
+					html : document.getElementById('wzgl').innerHTML,
+					border : false,
+					iconCls : 'cms'
 				}, {
-					title : '许可管理',
-					html : document.getElementById('menu_sys').innerHTML,
+					title : '<span class="title">许可管理</span>',
+					html : document.getElementById('xkgl').innerHTML,
 					border : false,
 					iconCls : 'permit'
-				}, {
-					title : '系统配置',
-					html : document.getElementById('smtpsetting').innerHTML,
-					border : false,
-					iconCls : 'system'
-				}, {
-					title : '网站统计',
-					html : document.getElementById('counter').innerHTML,
-					border : false,
-					iconCls : 'system'
-				} , {
-					title : '信息员管理',
-					html : document.getElementById('supervisor').innerHTML,
-					border : false,
-					iconCls : 'system'
-				}]
+				} ]
 			},
 
 			{
