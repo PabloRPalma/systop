@@ -124,7 +124,7 @@ function exportMobileNum(){
 						action="importData" onclick="return confirm('您是否导入监管员信息？')" />
 					</td>
 					<td align="left">&nbsp;&nbsp;&nbsp;&nbsp;<a
-						href="${ctx}/uploaded/template/import/PersonInfo.xls"><font
+						href="${ctx}/uploadFiles/template/import/SupervisorInfo.xls"><font
 						color="blue">模板下载</font></a></td>				
 				</tr>
 				<tr>
