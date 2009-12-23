@@ -32,7 +32,11 @@ import com.systop.fsmis.model.CaseType;
 public class CaseTypeAction extends
        DefaultCrudAction<CaseType, CaseTypeManager>{
 
-	  
+
+	private Integer parentId;
+
+	
+
 	/**
 	 * 查询类别列表，分页查询
 	 */
@@ -72,6 +76,13 @@ public class CaseTypeAction extends
 	 * @return
 	 */
 	public String remove(){
+		//判断是否有上级类别，有返回上级类别列表
+		if (getModel().getCaseType()!=null && 
+			getModel().getCaseType().getId() != null){
+			parentId=getModel().getCaseType().getId();
+			getManager().remove(getModel());
+			return "listchildSuccess";
+		}
 		getManager().remove(getModel());
 		return SUCCESS;
 	}
@@ -100,18 +111,26 @@ public class CaseTypeAction extends
 		return getManager().getLevelTwoList(id);
 	}
 	
-	@Validations(requiredStrings = { @RequiredStringValidator(fieldName = "model.name", message = "请填写名称。") })
-	public String save() {
-		//判断上级类别是否是自己，不允许将自身设置为上级类别
-		if (getModel().getCaseType().getId() != null
-				&& getModel().getId() != null) {
-			if (getModel().getId().equals(getModel().getCaseType().getId())) {
-				addActionError("不允许将自身设置为上级类别。");
-				return INPUT;
-			}
 
+	public String save() {
+		//判断是否有上级类别，有返回上级类别列表
+		if (getModel().getCaseType()!= null && 
+			getModel().getCaseType().getId() != null) {
+		   parentId=getModel().getCaseType().getId();
+           getManager().save(getModel());
+           return "listchildSuccess";
 		}
 		return super.save();
+	}
+	
+	
+	
+	public Integer getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
 	}
 	
 
