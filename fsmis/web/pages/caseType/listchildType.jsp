@@ -16,7 +16,7 @@ function removeAo(){
 }
 function remove(id){
 	if (confirm("确认要删除类别吗?")){
-		url="${ctx}/caseType/remove.do?model.id=" + id;
+		url="${ctx}/casetype/remove.do?model.id=" + id;
 		window.open(url,'main');
 	}
 }
@@ -28,16 +28,26 @@ function remove(id){
   <div class="x-toolbar">
      <table width="100%">
        <tr>
+             <td width="85%" align="left">
+                                     父类别名称:${model.name}
+             </td>
+             <td  align="right">
+               <a href="${ctx}/casetype/index.do"><img
+					src="${ctx}/images/icons/house.gif" />首页</a>
+			 </td>
+			 <td><span class="ytb-sep"></span></td>
+			 <td><span class="ytb-sep"></span></td>
              <td style=" padding-left:5px; padding-top:5px;" align="right">   
-             <a href="${ctx}/casetype/edit.do"><img src="${ctx}/images/icons/add.gif"/> 新建类别</a>
-             	</td>
+               <a href="${ctx}/casetype/edit.do?model.caseType.id=${model.id }">
+             <img src="${ctx}/images/icons/add.gif"/> 添加类别</a>
+             </td>
        </tr>
      </table>
    </div>
    <div class="x-panel-body">
      <div style="margin-left:-3px;" align="center">
      <ec:table items="items" var="item" retrieveRowsCallback="process" sortRowsCallback="process"
-	   action="index.do" 
+	   action="listchildType.do" 
 	   useAjax="true"
 	   doPreload="false"
 	   pageSizeList="20,50,100" 
