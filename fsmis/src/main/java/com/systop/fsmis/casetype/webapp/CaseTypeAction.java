@@ -11,9 +11,6 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import com.opensymphony.xwork2.validator.annotations.Validations;
-import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
-
 import com.systop.core.dao.support.Page;
 import com.systop.core.webapp.struts2.action.DefaultCrudAction;
 import com.systop.fsmis.casetype.service.CaseTypeManager;
@@ -113,12 +110,18 @@ public class CaseTypeAction extends
 	
 
 	public String save() {
+		//判断是否有重复名称
+		if(getManager().getDao().exists(getModel(), "name")){
+			addActionError("类别名称已存在！");
+			return INPUT;
+		}
+		
 		//判断是否有上级类别，有返回上级类别列表
 		if (getModel().getCaseType()!= null && 
 			getModel().getCaseType().getId() != null) {
-		   parentId=getModel().getCaseType().getId();
-           getManager().save(getModel());
-           return "listchildSuccess";
+		    parentId=getModel().getCaseType().getId();
+            getManager().save(getModel());
+            return "listchildSuccess";
 		}
 		return super.save();
 	}
