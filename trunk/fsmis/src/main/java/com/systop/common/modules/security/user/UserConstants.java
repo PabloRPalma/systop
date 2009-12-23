@@ -170,13 +170,6 @@ public final class UserConstants {
   
   static {
     SYS_ROLES.add(sysRole(ROLE_ADMIN, "系统管理员角色"));
-    SYS_ROLES.add(sysRole(ROLE_SENIOR, "高级用户角色"));
-    SYS_ROLES.add(sysRole(ROLE_NORMAL, "普通用户角色"));
-    SYS_ROLES.add(sysRole(ROLE_LONGLAT, "经纬度用户角色"));
-    SYS_ROLES.add(sysRole(ROLE_CATALOG, "地震目录用户角色"));
-    SYS_ROLES.add(sysRole(ROLE_PHASE, "震相用户角色"));
-    SYS_ROLES.add(sysRole(ROLE_EVENT, "事件波形用户角色"));
-    SYS_ROLES.add(sysRole(ROLE_CONTINUE, "连续波形用户角色"));
   }
   
   /**
