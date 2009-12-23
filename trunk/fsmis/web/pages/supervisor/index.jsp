@@ -3,13 +3,13 @@
 <%@include file="/common/taglibs.jsp"%>
 <html>
 <head>
-<title>监管员信息管理</title>
+<title>信息员管理</title>
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/ec.jsp"%>
 <script type="text/javascript">
 
 function removeSupervisor(sID){
-	if(confirm("确实要删除改监管员信息吗？")){
+	if(confirm("确实要删除该信息员的信息吗？")){
 		location.href = "remove.do?model.id="+sID;
 	}
 }
@@ -32,7 +32,7 @@ function exportMobileNum(){
 
 <body>
 <div class="x-panel">
-<div class="x-panel-header">监管员管理&nbsp;>&nbsp;监管员列表</div>
+<div class="x-panel-header">信息员管理&nbsp;>&nbsp;信息员列表</div>
 <div class="x-toolbar">
 <table width="100%" border="0">
 	<tr>
