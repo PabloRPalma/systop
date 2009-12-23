@@ -16,8 +16,8 @@ function removeAo(){
 }
 function remove(id){
 	if (confirm("确认要删除类别吗?")){
-		url="${ctx}/casetype/remove.do?model.id=" + id;
-		window.open(url,'main');
+		window.location.href="${ctx}/casetype/remove.do?model.id=" + id;
+		
 	}
 }
 </script>
