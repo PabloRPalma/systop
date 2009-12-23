@@ -40,7 +40,7 @@
              confirmMsg:'确认要禁用这些用户吗？'})"><img src="${ctx}/images/icons/delete.gif"/> 禁用用户</a></td>
          </tr>
             </table>
-          <td>
+          </td>
         </tr>
       </table>
     </div>   

@@ -84,7 +84,7 @@
 			<td class="simple" align="right">电子信箱：</td>
 			<td class="simple">&nbsp;<s:textfield name="model.email" id="email"
 				theme="simple" size="25" cssClass="regEmail required"/> <font color="red">*</font></td>
-			<td algin="left" colspan="2" id="usemail">
+			<td align="left" colspan="2" id="usemail">
 				请输入您常用的电子邮箱
 				<c:if test="${model.loginId == 'admin'}">
 					,<font color="red">修改邮箱后请同时修改</font><a href="${ctx}/admin/mail/view.do" target="main" title="SMTP配置"><font color="blue">SMTP配置</font></a><font color="red">中的用户名及密码。</font>
