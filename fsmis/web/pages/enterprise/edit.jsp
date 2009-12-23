@@ -1,6 +1,6 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@include file="/common/taglibs.jsp"%>
 <html>
 <head>
@@ -14,17 +14,29 @@
 <body onload="preFckEditor()">
 <div class="x-panel">
 <div class="x-panel-header">诚信企业管理&nbsp;>&nbsp;企业列表&nbsp;>&nbsp;企业信息</div>
+<div class="x-toolbar">
+    <table width="100%">
+      <tr>
+        <td align="right">
+          <a href="${ctx}/enterprise/index.do">
+             <img src="${ctx}/images/icons/building_go.png" class="icon" border="0">企业列表&nbsp;&nbsp;
+          </a>
+        </td>
+      </tr>
+    </table>
+</div>
+<div class="x-panel-body">
 <div align="center" >
  <s:form id="companyForm" action="save.do" method="post" theme="simple" validate="true" enctype="multipart/form-data">
 	<s:hidden id="corpId" name="model.id" />
-	<fieldset style="width: 830px; padding: 10px 10px 10px 10px;">
+	<fieldset style="width: 800px; padding: 10px 10px 10px 10px;">
 	<legend>企业信息</legend>
-	<table width="800">
+	<table width="780">
 		<tr>
 			<td><%@ include file="/common/messages.jsp"%> </td>
 		</tr>
 	</table>
-	<table width="800" border="0">
+	<table width="780" border="0">
 	  <tr>
 		<td width="500">
 		  <table width="498" align="left" border="0" cellpadding="2" cellspacing="1">
@@ -178,6 +190,7 @@
 		</tr>
 	</table>
 </s:form>
+</div>
 </div>
 </div>
 <script type="text/javascript">

@@ -3,8 +3,8 @@
 <%@include file="/common/taglibs.jsp"%>
 <html>
 <head>
+<title>企业信息查看</title>
 <%@include file="/common/meta.jsp"%>
-<link href="${ctx}/styles/datashare.css" type='text/css' rel='stylesheet'>
 <link type="text/css" href="${ctx}/scripts/jquery/ui/css/jquery-ui-min.css" rel="stylesheet" />
 <script type="text/javascript" src="${ctx}/scripts/jquery/jquery-1.3.2.js"></script>
 <script type="text/javascript" src="${ctx}/scripts/jquery/ui/jquery-ui-1.7.1.js"></script>
@@ -22,7 +22,6 @@ $(function(){
 	$('#tabs').tabs();
 });
 </script>
-<title>企业信息查看</title>
 <style type="text/css">
 #mytable {
 	border: 1px solid #A6C9E2;
@@ -41,6 +40,18 @@ $(function(){
 <body>
 <div class="x-panel">
 <div class="x-panel-header">诚信企业管理&nbsp;>&nbsp;企业列表&nbsp;>&nbsp;企业信息</div>
+<div class="x-toolbar">
+    <table width="100%">
+      <tr>
+        <td align="left">&nbsp;<font color="#15428B"><b>所属单位：${model.dept.name}</b></font></td>
+        <td align="right">
+          <a href="${ctx}/enterprise/index.do">
+             <img src="${ctx}/images/icons/building_go.png" class="icon" border="0">企业列表&nbsp;&nbsp;
+          </a>
+        </td>
+      </tr>
+    </table>
+</div>
 <div class="x-panel-body">
 <div id="tabs">
 <s:hidden id="psRecordSize" name="psRecordSize" />
