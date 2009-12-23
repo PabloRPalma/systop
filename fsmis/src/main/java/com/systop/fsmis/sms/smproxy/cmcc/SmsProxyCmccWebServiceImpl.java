@@ -25,7 +25,8 @@ import com.systop.fsmis.sms.smproxy.cmcc.webservice.IfSMSServiceProxy;
  */
 @Service("smsProxy")
 public class SmsProxyCmccWebServiceImpl implements SmsProxy {
-	private Logger logger = LoggerFactory.getLogger(getClass());
+	private static Logger logger = LoggerFactory
+			.getLogger(SmsProxyCmccWebServiceImpl.class);
 
 	/**
 	 * @see{@link SmsProxy#querySmsSendState}
@@ -50,8 +51,9 @@ public class SmsProxyCmccWebServiceImpl implements SmsProxy {
 				logger.info(receives.toString());
 			}
 
-		} catch (RemoteException e) {
-			e.printStackTrace();
+		} catch (RemoteException ex) {
+			logger.error(ex.getMessage());
+			throw new ApplicationException(ex);
 		}
 		return null;
 	}
@@ -60,7 +62,7 @@ public class SmsProxyCmccWebServiceImpl implements SmsProxy {
 	 * @see{@link SmsProxy#sendMessage()}
 	 */
 	@Override
-	public int sendMessage(SmsSend smsSend) throws ApplicationException {
+	public Integer sendMessage(SmsSend smsSend) throws ApplicationException {
 		IfSMSService service = null;
 		service = new IfSMSServiceProxy();
 		String[] destAddreses = new String[] { smsSend.getMobileNum() };
@@ -70,9 +72,10 @@ public class SmsProxyCmccWebServiceImpl implements SmsProxy {
 			states = service.sendState(SmsConstants.CONN_NAME,
 					SmsConstants.CONN_PASS, destAddreses, smsSend.getContent(), 1);
 			return states[0];
-		} catch (RemoteException e) {
-			e.printStackTrace();
-			return -1;
+		} catch (RemoteException ex) {
+			logger.error("ID为:{},接收号码为{}的短信发送失败,错误原因为:{}", smsSend.getMobileNum(), ex
+					.getMessage());
+			throw new ApplicationException(ex);
 		}
 
 	}
@@ -81,8 +84,10 @@ public class SmsProxyCmccWebServiceImpl implements SmsProxy {
 	 * @see{@link SmsProxy#sendMessage()}
 	 */
 	@Override
-	public int sendMessage(List<SmsSend> smsSendList) throws ApplicationException {
-		return 0;
+	@Deprecated
+	public Integer sendMessage(List<SmsSend> smsSendList)
+			throws ApplicationException {
+		return null;
 	}
 
 }

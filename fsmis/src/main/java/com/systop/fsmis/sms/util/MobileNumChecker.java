@@ -33,7 +33,7 @@ public final class MobileNumChecker {
 		// 如果要验证的手机号码的位数在允许序列，则养正成功
 		Collections.addAll(allowMobilNumberDigits,
 				SmsConstants.ALLOW_MOBILE_NUM_DIGIT);
-		if (allowMobilNumberDigits.contains(mobileNum)) {
+		if (allowMobilNumberDigits.contains(String.valueOf(mobileNum.length()))) {
 			return true;
 		} else {
 			return false;
