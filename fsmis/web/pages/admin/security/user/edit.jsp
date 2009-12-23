@@ -65,7 +65,7 @@
 				theme="simple" size="25" cssClass="userName required"/> <font color="red">*</font>
 			</s:else>
 			</td>
-			<td id="denglu" algin="left" colspan="2">
+			<td id="denglu" align="left" colspan="2">
 				请填写登录名
 			</td>
 		</tr>
@@ -74,7 +74,7 @@
 			<td class="simple" align="right">输入密码：</td>
 			<td class="simple">&nbsp;<s:password name="model.password" id="pwd"
 				theme="simple" size="26" cssClass="pwdCheck required"/> <font color="red">*</font></td>
-			<td algin="left" colspan="2" id="pswdck">
+			<td align="left" colspan="2" id="pswdck">
 				请输入不小于六位的密码
 			</td>
 		</tr>
@@ -82,7 +82,7 @@
 			<td class="simple" align="right">确认密码：</td>
 			<td class="simple">&nbsp;<s:password name="model.confirmPwd"
 				id="repwd" theme="simple" size="26" cssClass="passwordCheck required"/> <font color="red">*</font></td>
-			<td algin="left" colspan="2" id="pswd">
+			<td align="left" colspan="2" id="pswd">
 				请再次输入密码
 			</td>
 		</tr>
@@ -123,7 +123,7 @@
 			<td class="simple" align="right">电子信箱：</td>
 			<td class="simple">&nbsp;<s:textfield name="model.email" id="email"
 				theme="simple" size="25" cssClass="regEmail required"/> <font color="red">*</font></td>
-			<td algin="left" colspan="2" id="usemail">
+			<td align="left" colspan="2" id="usemail">
 				请输入您常用的电子邮箱
 				<c:if test="${model.loginId == 'admin'}">
 					,<font color="red">修改邮箱后请同时修改</font><a href="${ctx}/admin/mail/view.do" target="main" title="SMTP配置"><font color="blue">SMTP配置</font></a><font color="red">中的用户名及密码。</font>
