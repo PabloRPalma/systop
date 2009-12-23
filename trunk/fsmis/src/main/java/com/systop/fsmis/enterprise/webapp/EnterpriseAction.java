@@ -10,12 +10,14 @@ import org.apache.commons.lang.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.systop.cms.utils.PageUtil;
 import com.systop.common.modules.dept.model.Dept;
+import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.core.dao.support.Page;
 import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
 import com.systop.core.webapp.upload.UpLoadUtil;
@@ -59,6 +61,9 @@ public class EnterpriseAction extends ExtJsCrudAction<Enterprise, EnterpriseMana
    */
 	private Integer psRecordSize;
 	
+	@Autowired
+	private LoginUserService loginUserService;
+	
 	/**
 	 * 企业信息查询列表
 	 */
@@ -101,6 +106,16 @@ public class EnterpriseAction extends ExtJsCrudAction<Enterprise, EnterpriseMana
 	 */
 	private DetachedCriteria setupDetachedCriteria() {
 		DetachedCriteria criteria = DetachedCriteria.forClass(Enterprise.class);
+		criteria.createAlias("dept", "dept");
+		Dept dept = loginUserService.getLoginUserDept(getRequest());
+		if (dept != null) {
+			if (dept.getChildDepts().size() > 0) {
+				criteria.add(Restrictions.like("dept.serialNo", 
+						MatchMode.START.toMatchString(dept.getSerialNo())));
+			} else {
+				criteria.add(Restrictions.eq("dept.id", dept.getId()));
+			}
+		}
 		if (StringUtils.isNotBlank(getModel().getName())) {
 			criteria.add(Restrictions.like("name", 
 					MatchMode.ANYWHERE.toMatchString(getModel().getName())));
