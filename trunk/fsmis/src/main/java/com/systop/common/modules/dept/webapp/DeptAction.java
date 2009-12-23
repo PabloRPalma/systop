@@ -44,6 +44,8 @@ public class DeptAction extends ExtJsCrudAction<Dept, DeptManager> {
 	// 除去部门管理以外，页面显示部门标识
 	private String noLowerDept;
 
+
+
 	/**
 	 * 部门序列号管理器
 	 */
@@ -299,13 +301,11 @@ public class DeptAction extends ExtJsCrudAction<Dept, DeptManager> {
 	public void setDepts(List depts) {
 		this.depts = depts;
 	}
-
-	public String getNoSonDept() {
+	public String getNoLowerDept() {
 		return noLowerDept;
 	}
 
-	public void setNoSonDept(String noSonDept) {
-		this.noLowerDept = noSonDept;
+	public void setNoLowerDept(String noLowerDept) {
+		this.noLowerDept = noLowerDept;
 	}
-
 }
