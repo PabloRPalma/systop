@@ -42,7 +42,7 @@ public interface SmsProxy {
 	List<SmsReceive> receiveMessage() throws ApplicationException;
 
 	/**
-	 * 检查已返送短信的接收状态
+	 * 检查已发送短信的接收状态
 	 */
 	List<String> querySmsSendState() throws ApplicationException;
 
