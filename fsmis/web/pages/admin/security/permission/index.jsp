@@ -34,7 +34,7 @@
 					src="${ctx}/images/icons/delete.gif" /> 删除权限</a>
 			</tr>
 		</table>
-		<td>
+		</td>
 	</tr>
 </table>
 </div>
