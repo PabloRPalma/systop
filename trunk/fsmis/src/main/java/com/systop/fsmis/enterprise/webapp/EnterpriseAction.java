@@ -19,7 +19,7 @@ import com.systop.common.modules.dept.model.Dept;
 import com.systop.core.dao.support.Page;
 import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
 import com.systop.core.webapp.upload.UpLoadUtil;
-import com.systop.fsmis.enterprise.EnterpriseConstants;
+import com.systop.fsmis.FsConstants;
 import com.systop.fsmis.enterprise.service.EnterpriseManager;
 import com.systop.fsmis.model.Enterprise;
 
@@ -79,7 +79,7 @@ public class EnterpriseAction extends ExtJsCrudAction<Enterprise, EnterpriseMana
 			if (photo != null) {
 				String fileRelativePath = null;
 				fileRelativePath = UpLoadUtil.doUpload(photo, photoFileName,
-						EnterpriseConstants.COMPANY_PHOTOS_FOLDER, getServletContext(), true);
+						FsConstants.COMPANY_PHOTOS_FOLDER, getServletContext(), true);
 				logger.info("photo path:{}", fileRelativePath);
 				getModel().setPhotoUrl(fileRelativePath);
 	
