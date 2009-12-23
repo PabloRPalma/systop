@@ -71,7 +71,16 @@
 <body onload="preFckEditor()">
 <div class="x-panel">
 <div class="x-panel-header"></div>
-<div class="x-toolbar">&nbsp;</div>
+<div class="x-toolbar">
+ <table width="100%">
+     <tr>
+        <td  align="right">
+               <a href="${ctx}/genericcase/index.do"><img
+					src="${ctx}/images/icons/house.gif" />首页</a>
+        </td>
+     </tr>
+ </table>
+</div>
 <div><%@ include file="/common/messages.jsp"%></div>
 <div align="center">
 <s:form action="save.do" id="save" method="post" theme="simple" validate="true" onsubmit="return valileader()">
