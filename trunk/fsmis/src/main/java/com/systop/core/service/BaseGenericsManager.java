@@ -100,6 +100,7 @@ public class BaseGenericsManager<T> implements Manager<T> {
 	/**
 	 * @see {@link BaseHibernateDao#findObject(String, Object...)}
 	 */
+	@SuppressWarnings("unchecked")
 	@Transactional(readOnly = true)
 	public T findObject(String hql, Object... args) {
 		return (T) getDao().findObject(hql, args);
@@ -108,6 +109,7 @@ public class BaseGenericsManager<T> implements Manager<T> {
 	/**
 	 * @see {@link BaseHibernateDao#query(String, Object...)}
 	 */
+	@SuppressWarnings("unchecked")
 	@Transactional(readOnly = true)
 	public List<T> query(String hql, Object... args) {
 		return getDao().query(hql, args);
@@ -140,6 +142,7 @@ public class BaseGenericsManager<T> implements Manager<T> {
 	/**
 	 * 取得entityClass的函数. JDK1.4不支持泛型的子类可以抛开Class entityClass,重载此函数达到相同效果。
 	 */
+	@SuppressWarnings("unchecked")
 	protected Class<T> getEntityClass() {
 		if (entityClass == null) {
 			entityClass = GenericsUtil.getGenericClass(getClass());
