@@ -82,4 +82,15 @@ public class DeptManager extends BaseGenericsManager<Dept> {
     
     super.remove(dept);
   }  
+  
+  /**
+   * 根据部门名称得到部门对应的实体
+   * @return
+   */
+  public Dept getDeptByName(String name) {
+    String hql = "from Dept d where d.name = ? ";
+    Dept dept = (Dept)getDao().findObject(hql, name);
+    return dept;
+  }
+
 }
