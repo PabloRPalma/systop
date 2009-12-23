@@ -36,6 +36,11 @@ function remove(id){
 			<s:textfield name="model.title"></s:textfield>	
 						事件编号：
 			<s:textfield name="model.code"></s:textfield>
+						事发时间:
+			<input type="text" name="eventDate" style="width: 160px"
+				value='<s:date name="eventDate" format="yyyy-MM-dd HH:mm:ss"/>'
+				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})"
+				class="Wdate" />
 			             事件状态:
 			<s:select name="model.status" list="stateMap" headerKey="" headerValue="请选择"/>		
 			<s:submit value="查询" cssClass="button"></s:submit>
@@ -44,9 +49,6 @@ function remove(id){
 		<stc:role ifNotGranted="ROLE_DEPT_OPER">
 		<table>
 			<tr>
-				<td><a href="${ctx}/genericcase/index.do"><img
-					src="${ctx}/images/icons/house.gif" />首页</a></td>
-				<td><span class="ytb-sep"></span></td>
 				<td><span class="ytb-sep"></span></td>
 				<td><a href="${ctx}/genericcase/edit.do"><img
 					src="${ctx}/images/icons/add.gif" /> 添加事件信息</a></td>
