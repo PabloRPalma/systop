@@ -226,11 +226,8 @@
 	</jsp-config>
 	
 	<welcome-file-list>
-		<welcome-file>index.shtml</welcome-file>
+		<welcome-file>login.jsp</welcome-file>
 		<welcome-file>index.jsp</welcome-file>
-		<welcome-file>default.html</welcome-file>
-		<welcome-file>default.htm</welcome-file>
-		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
 	<error-page>
 		<error-code>403</error-code>
