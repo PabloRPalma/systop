@@ -22,6 +22,14 @@
 	<fieldset style="width:510px; padding:10px 10px 10px 10px;">
     	<legend>编辑类别</legend>
         <table width="520px" align="center">
+           <c:if test="${model.caseType.id != null}">
+           <tr>
+             <td align="right" width="90">父类名称：</td>
+             <td align="left" width="420">
+             	${parentName}
+             </td>
+           </tr>
+           </c:if>
           <tr>
              <td align="right" width="90">名称：</td>
              <td align="left" width="420">
