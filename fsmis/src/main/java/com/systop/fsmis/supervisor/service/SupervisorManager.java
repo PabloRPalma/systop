@@ -35,14 +35,6 @@ public class SupervisorManager extends BaseGenericsManager<Supervisor> {
 		}
 		super.save(supervisor);
 	}
-	
-	/**
-	 * 保存信息员信息
-	 */
-	@Transactional
-	public void saveSupervisor(Supervisor supervisor) {
-		super.save(supervisor);
-	}
 
 	/**
 	 * 根据信息员编号取得该信息员实体信息
@@ -118,5 +110,13 @@ public class SupervisorManager extends BaseGenericsManager<Supervisor> {
 		String hql = "from Supervisor s where s.dept.id = ? and s.code = ? and s.name = ? ";
 		Supervisor supervisor = (Supervisor) getDao().findObject(hql, new Object[] {deptId, code, name});
 	  return supervisor;	
+	}
+	
+	/**
+	 * 保存从Excel表中导入的监管员信息
+	 */
+	@Transactional
+	public void saveSupervisor(Supervisor supervisor) {
+		super.save(supervisor);
 	}
 }
