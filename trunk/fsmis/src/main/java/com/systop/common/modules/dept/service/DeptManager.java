@@ -15,7 +15,6 @@ import com.systop.core.service.BaseGenericsManager;
  * @author Sam Lee
  *
  */
-@SuppressWarnings("unchecked")
 @Service
 public class DeptManager extends BaseGenericsManager<Dept> {
   /**
