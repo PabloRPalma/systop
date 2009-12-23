@@ -57,7 +57,12 @@
 					html : document.getElementById('counter').innerHTML,
 					border : false,
 					iconCls : 'system'
-				} ]
+				} , {
+					title : '信息员管理',
+					html : document.getElementById('supervisor').innerHTML,
+					border : false,
+					iconCls : 'system'
+				}]
 			},
 
 			{
