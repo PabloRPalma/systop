@@ -83,4 +83,15 @@ public class CaseTypeManager  extends
 		}
 		return caseTypesList;
 	}
+	
+	/**
+	 * 获得父类别 Name  方法
+	 */
+	public String getParentName(Integer id) {
+		String parentName=null;
+		CaseType cType = this.getDao().get(
+				CaseType.class, id);
+		parentName=cType.getName();
+		return parentName;
+	}
 }
