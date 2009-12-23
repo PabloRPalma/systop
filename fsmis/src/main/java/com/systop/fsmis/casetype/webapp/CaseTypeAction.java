@@ -34,6 +34,7 @@ public class CaseTypeAction extends
 
 	
 
+
 	/**
 	 * 查询类别列表，分页查询
 	 */
@@ -126,7 +127,18 @@ public class CaseTypeAction extends
 		return super.save();
 	}
 	
-	
+	/**
+	 * 重写父类方法，用于添加二级类别
+	 * @return
+	 */
+	@Override
+	public String edit(){
+		if (getModel().getCaseType()!= null && 
+			getModel().getCaseType().getId() != null){
+			getRequest().setAttribute("parentName",getManager().getParentName(getModel().getCaseType().getId()));
+		}
+		return super.edit();		
+	}
 	
 	public Integer getParentId() {
 		return parentId;
@@ -135,6 +147,8 @@ public class CaseTypeAction extends
 	public void setParentId(Integer parentId) {
 		this.parentId = parentId;
 	}
+	
+
 	
 
 }
