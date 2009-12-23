@@ -224,7 +224,7 @@
 Ext.onReady(function() {
 	var dtree = new DeptTree({
 		url : '/admin/dept/deptTree.do',
-		parent : '<stc:loginUserDept showPath="false" propertyName="id" showTopDept="true"></stc:loginUserDept>',
+		parent : '<stc:loginUserDept showPath="false" propertyName="id" showTopDept="true"></stc:loginUserDept>&noLowerDept=1',
 		initValue : '${model.dept.name}',
 		el : 'comboxWithTree',
 		innerTree :'inner-tree',
