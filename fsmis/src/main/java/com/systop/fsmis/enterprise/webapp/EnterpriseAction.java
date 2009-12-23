@@ -89,9 +89,12 @@ public class EnterpriseAction extends ExtJsCrudAction<Enterprise, EnterpriseMana
 				getModel().setPhotoUrl(fileRelativePath);
 	
 			}
-			// 当更改部门时需要重新设置部门
-			Dept dept = getManager().getDao().get(Dept.class,
-			    getModel().getDept().getId());
+			Dept dept = loginUserService.getLoginUserDept(getRequest());
+			if (getModel().getDept().getId() != null) {
+			  // 当更改部门时需要重新设置部门
+				dept = getManager().getDao().get(Dept.class,
+				    getModel().getDept().getId());
+			}
 			getModel().setDept(dept);
 			getManager().save(getModel());
 			return SUCCESS;
