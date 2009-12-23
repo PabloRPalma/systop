@@ -66,7 +66,7 @@
 					title : '<span class="title">企业诚信</span>',
 					html : document.getElementById('qycx').innerHTML,
 					border : false,
-					iconCls : 'cms'
+					iconCls : 'corp'
 				},{
 					title : '<span class="title">信息员管理</span>',
 					html : document.getElementById('xxy').innerHTML,
