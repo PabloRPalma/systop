@@ -9,10 +9,11 @@
 </head>
 <body>
 	<div style="padding: 50 10 10 100;">
-		<h1 style="color:red;">1.代码格式!</h1>
-		<h1 style="color:blue">2.代码注释!</h1>
-		<h1 style="color:green;">3.业务清晰!</h1>
-		<h1 style="color:black;">4.单元测试!</h1>
+		<h1 style="color:green;">
+			旧版回顾地址<br>
+			<a href="http://192.168.1.244:8088/fsmis/">http://192.168.1.244:8088/fsmis/</a>
+		</h1>
+		
 	</div>
 </body>
 </html>
