@@ -13,8 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
@@ -48,6 +46,11 @@ public class DeptAction extends ExtJsCrudAction<Dept, DeptManager> {
 	 * 部门序列号管理器
 	 */
 	private DeptSerialNoManager serialNoManager;
+	/**
+	 *获得当前登陆部门
+	 */
+	@Autowired
+	private LoginUserService loginUserService;
 
 	/**
 	 * 用于查询的部门名称
@@ -73,12 +76,7 @@ public class DeptAction extends ExtJsCrudAction<Dept, DeptManager> {
 		if (RequestUtil.isJsonRequest(getRequest())) {
 			Dept parent = null;
 			Dept dept = null;
-			// 得到Spring WebApplicationContext
-			WebApplicationContext ctx = WebApplicationContextUtils
-					.getWebApplicationContext(getServletContext());
-			// 得到Spring管理的LoginUserService
-			LoginUserService loginUserService = (LoginUserService) ctx
-					.getBean("loginUserService");
+
 			// 当前登陆用户 注意admin部门为空
 			dept = loginUserService.getLoginUserDept(getRequest());
 			if (parentId != null) {// 部门编辑，用户添加使用
@@ -299,6 +297,7 @@ public class DeptAction extends ExtJsCrudAction<Dept, DeptManager> {
 	public void setDepts(List depts) {
 		this.depts = depts;
 	}
+
 	public String getNoLowerDept() {
 		return noLowerDept;
 	}
