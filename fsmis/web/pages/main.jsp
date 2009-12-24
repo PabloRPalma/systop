@@ -11,7 +11,8 @@
 	<div style="padding: 50 10 10 100;">
 		<h1 style="color:green;">
 			旧版回顾地址<br>
-			<a href="http://192.168.1.244:8088/fsmis/">http://192.168.1.244:8088/fsmis/</a>
+			用户:admin&nbsp;&nbsp;|&nbsp;&nbsp;密码:123<br>
+			<a href="http://192.168.1.244:8088/fsmis/" target="_blank">http://192.168.1.244:8088/fsmis/</a><br>
 		</h1>
 		
 	</div>
