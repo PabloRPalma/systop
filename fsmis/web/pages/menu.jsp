@@ -4,7 +4,14 @@
 <%@ taglib prefix="stc" uri="/systop/common" %>
 <div id="menu" style="display:none">
 	<div id="command">
-		
+		<div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/genericcase/index.do" target="main">案件管理</a>
+		</div>
+		<div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/casetype/index.do" target="main">案件类别</a>
+		</div>
 	</div>
 	<div id="assess">
 	
@@ -28,7 +35,10 @@
 		</div>
 	</div>
 	<div id="supervisor">
-	
+		<div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/supervisor/index.do" target="main">信息员</a>
+		</div>
 	</div>
 	<div id="sms">
 	
