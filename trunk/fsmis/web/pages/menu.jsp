@@ -3,19 +3,19 @@
 <%request.setAttribute("ctx", request.getContextPath()); %>
 <%@ taglib prefix="stc" uri="/systop/common" %>
 <div id="menu" style="display:none">
-	<div id="xtzh">
+	<div id="command">
 		
 	</div>
-	<div id="zjpg">
+	<div id="assess">
 	
 	</div>
-	<div id="yjzh">
+	<div id="urgent">
 	
 	</div>
-	<div id="tjfx">
+	<div id="analyse">
 	
 	</div>
-	<div id="qycx">
+	<div id="enterprise">
 		<div style="padding-left:5px;">
 		    <div style="padding-top:2px">
 				<img src="${ctx}/images/icons/add.gif" class="icon">
@@ -27,16 +27,16 @@
 			</div>
 		</div>
 	</div>
-	<div id="xxy">
+	<div id="supervisor">
 	
 	</div>
-	<div id="dxgl">
+	<div id="sms">
 	
 	</div>
-	<div id="nbbg">
+	<div id="office">
 	
 	</div>
-	<div id="wzgl">
+	<div id="cms">
 		<div style="padding-left:5px;">   
 			<div style="padding-top:2px">
 				<a href="${ctx}/admin/template/listTemplate.do" target="main">
