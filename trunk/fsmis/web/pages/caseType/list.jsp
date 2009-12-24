@@ -81,6 +81,9 @@ function remove(id){
 			    <font color="#FF9D07"> 查看子类</font>
 			  </a>
 			</c:if>
+			<c:if test="${item.caseTypes == '[]'}">
+			   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			</c:if>
 		</ec:column>
  		
 	  </ec:row>
