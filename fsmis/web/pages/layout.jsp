@@ -44,47 +44,47 @@
 				},
 				items : [ {
 					title : '<span class="title">协调指挥</span>',
-					html : document.getElementById('xtzh').innerHTML,
+					html : document.getElementById('command').innerHTML,
 					border : false,
 					iconCls : 'cms'
 				}, {
 					title : '<span class="title">专家评估</span>',
-					html : document.getElementById('zjpg').innerHTML,
+					html : document.getElementById('assess').innerHTML,
 					border : false,
 					iconCls : 'cms'
 				},{
 					title : '<span class="title">应急指挥</span>',
-					html : document.getElementById('yjzh').innerHTML,
+					html : document.getElementById('urgent').innerHTML,
 					border : false,
 					iconCls : 'cms'
 				},{
 					title : '<span class="title">统计分析</span>',
-					html : document.getElementById('tjfx').innerHTML,
+					html : document.getElementById('analyse').innerHTML,
 					border : false,
 					iconCls : 'cms'
 				},{
 					title : '<span class="title">企业诚信</span>',
-					html : document.getElementById('qycx').innerHTML,
+					html : document.getElementById('enterprise').innerHTML,
 					border : false,
 					iconCls : 'corp'
 				},{
 					title : '<span class="title">信息员管理</span>',
-					html : document.getElementById('xxy').innerHTML,
+					html : document.getElementById('supervisor').innerHTML,
 					border : false,
 					iconCls : 'cms'
 				},{
 					title : '<span class="title">短信管理</span>',
-					html : document.getElementById('dxgl').innerHTML,
+					html : document.getElementById('sms').innerHTML,
 					border : false,
 					iconCls : 'cms'
 				},{
 					title : '<span class="title">内部办公</span>',
-					html : document.getElementById('nbbg').innerHTML,
+					html : document.getElementById('office').innerHTML,
 					border : false,
 					iconCls : 'cms'
 				},{
 					title : '<span class="title">网站管理</span>',
-					html : document.getElementById('wzgl').innerHTML,
+					html : document.getElementById('cms').innerHTML,
 					border : false,
 					iconCls : 'cms'
 				}, {
