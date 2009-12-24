@@ -74,7 +74,7 @@ function remove(id){
 			  </a>
 			</c:if>
 			<a href="edit.do?model.caseType.id=${item.id}">
-			    <font color="#FF9D07"> 添加子类</font>
+			    <font color="blue"> 添加子类</font>
 			  </a>
 			<c:if test="${item.caseTypes != '[]'}">
 			  <a href="listchildType.do?model.id=${item.id}">
