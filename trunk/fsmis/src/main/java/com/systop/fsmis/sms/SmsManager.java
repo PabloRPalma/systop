@@ -27,8 +27,7 @@ import com.systop.fsmis.sms.util.MobileNumChecker;
  */
 @Service("smsManager")
 public class SmsManager {
-	// private SimpleDateFormat sf = new
-	// SimpleDateFormat("yyyy-MM-dd hh:mm:ss:SSS");
+
 	private static Logger logger = LoggerFactory.getLogger(SmsManager.class);
 	/**
 	 * 依赖短信服务代理接口,用于完成特定的短信平台的短信发送/接收/查询操作
@@ -81,28 +80,23 @@ public class SmsManager {
 			}
 			try {
 				// 调用代理的发送功能
+
+				@SuppressWarnings("unused")
 				int state = getSmsProxy().sendMessage(smsSend);
 
-				if (state > 0) {// 如果发送成功
-					// 更新数据库中短信的状态,不为新短信,短信发送时间
-					smsSend.setIsNew(SmsConstants.SMS_SMS_SEND_IS_NOT_NEW);
-					smsSend.setSendTime(new java.util.Date());
-					getSmsSendManager().update(smsSend);
+				// 更新数据库中短信的状态,不为新短信,短信发送时间
+				smsSend.setIsNew(SmsConstants.SMS_SMS_SEND_IS_NOT_NEW);
+				smsSend.setSendTime(new java.util.Date());
+				getSmsSendManager().update(smsSend);
 
-					logger.info("ID为:{}的短信,接收手机号为[{}],发送成功!", smsSend.getId(), smsSend
-							.getMobileNum());
-				}
+				logger.info("ID为:{}的短信,接收手机号为[{}],发送成功! ", smsSend.getId(), smsSend
+						.getMobileNum());
+
 			} catch (ApplicationException ex) {
-
-				/*
-				 * logger.error("ID为:{}的短信,接收手机号为[{}]有误,发送失败! 错误原因:{}", smsSend.getId(),
-				 * smsSend .getMobileNum(),ex.getMessage());
-				 * logger.error("ID为:{}的短信,接收手机号[{}],发送失败! 错误原因:{}", smsSend.getId(),
-				 * smsSend.getMobileNum(), ex.getMessage());
-				 */
-
+				Object[] objs = { smsSend.getId(), smsSend.getMobileNum(),
+						ex.getMessage() };
+				logger.error("ID为:{}的短信,接收手机号为[{}],发送失败! 错误原因:{}", objs);
 			}
-
 		}
 		getSmsProxy().receiveMessage();
 	}

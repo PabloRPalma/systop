@@ -3,6 +3,7 @@ package com.systop.fsmis.sms.smproxy.cmcc;
 import java.rmi.RemoteException;
 import java.util.List;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -71,7 +72,12 @@ public class SmsProxyCmccWebServiceImpl implements SmsProxy {
 			// 如果提交成功会返回提交到Mas数据库中的主键
 			states = service.sendState(SmsConstants.CONN_NAME,
 					SmsConstants.CONN_PASS, destAddreses, smsSend.getContent(), 1);
-			return states[0];
+			if (!ArrayUtils.isEmpty(states)) {
+				return states[0];
+			} else {
+				throw new ApplicationException("ID为:" + smsSend.getId() + ",接收号码为"
+						+ smsSend.getMobileNum() + "的短信发送失败!");
+			}
 		} catch (RemoteException ex) {
 			logger.error("ID为:{},接收号码为{}的短信发送失败,错误原因为:{}", smsSend.getMobileNum(), ex
 					.getMessage());
