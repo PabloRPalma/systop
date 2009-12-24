@@ -10,11 +10,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.systop.cms.utils.PageUtil;
 import com.systop.common.modules.dept.DeptConstants;
@@ -52,6 +51,12 @@ public class SupervisorAction extends DefaultCrudAction<Supervisor, SupervisorMa
 	 */
 	private Map<String, String> delResult;
 	
+	/**
+	 * 
+	 */
+	@Autowired
+	private LoginUserService loginUserService;
+	
 	/** 按姓名、监管区域、所属部门查询信息员信息*/
 	public String index(){
 		indexSuperviosr();
@@ -73,11 +78,6 @@ public class SupervisorAction extends DefaultCrudAction<Supervisor, SupervisorMa
 		//创建分页查询的Page对象
 		Page page = PageUtil.getPage(getPageNo(), getPageSize());
 		HttpServletRequest request = (HttpServletRequest) getRequest();
-    //得到Spring WebApplicationContext
-    WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(
-        getServletContext());
-    //得到Spring管理的LoginUserService
-    LoginUserService loginUserService = (LoginUserService) ctx.getBean("loginUserService");
     Dept dept = loginUserService.getLoginUserDept(request);
     //显示登录用户所属部门下的信息员
 		String hql = "";
