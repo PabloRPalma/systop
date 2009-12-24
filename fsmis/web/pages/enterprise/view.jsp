@@ -53,8 +53,9 @@ $(function(){
     </table>
 </div>
 <div class="x-panel-body">
-<div id="tabs">
 <s:hidden id="psRecordSize" name="psRecordSize" />
+<s:hidden id="rewardContent" name="model.integrityRecord" />
+<div id="tabs">
 <ul>
 	<li><a href="#tabs-1">基本信息</a></li>
 	<li><a href="#tabs-2">企业简介</a></li>
@@ -192,7 +193,6 @@ $(function(){
   </table>
 </div>
 <div id="tabs-3" style="margin-bottom: -16px;">
-  <s:hidden id="rewardContent" name="model.integrityRecord" />
   <table id="mytable" height="320">
 	<tr>
 	  <td height="200" align="left" valign="top">
