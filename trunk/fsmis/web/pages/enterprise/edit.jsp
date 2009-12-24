@@ -48,19 +48,19 @@
             </td>
           </tr>
           <tr>
-            <td width="119" align="right">地　　址：</td>
+            <td width="119" align="right">地　址：</td>
             <td align="left" colspan="3">
             	<s:textfield id="address" name="model.address" cssClass="required" cssStyle="width:350px" />
                 <font color="red">&nbsp;*</font> </td>
           </tr>
           <tr>
-            <td width="119" align="right">法　　人：</td>
+            <td width="119" align="right">法　人：</td>
             <td align="left" colspan="3">
             	<s:textfield id="legalPerson" name="model.legalPerson" cssStyle="width:350px" />
             </td>
           </tr>
           <tr>
-            <td width="119" align="right">工商营业执照：</td>
+            <td width="119" align="right">营业执照：</td>
             <td width="149" align="left">
             	<s:textfield id="businessLicense" name="model.businessLicense" />
             </td>
@@ -131,7 +131,7 @@
             </td>
           </tr>
           <tr>
-            <td width="119" align="right">备　　注：</td>
+            <td width="119" align="right">备　注：</td>
             <td align="left" colspan="3">
             	<s:textfield id="remark" name="model.remark" cssStyle="width:350px;"/>
             </td>
@@ -176,7 +176,7 @@
 	<table width="100%" align="center">
 		<tr>
 			<td align="left" width="100%">
-				<textarea id="integrityRecord" name="model.integrityRecord" cols="70" rows="8">${model.integrityRecord}</textarea>
+				<textarea id="integrityRecord" name="model.integrityRecord" cols="30" rows="8">${model.integrityRecord}</textarea>
 			</td>
 		</tr>
 	</table>
@@ -228,7 +228,7 @@
 	var fckEditor = new FCKeditor( 'integrityRecord' ) ;
     fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
     fckEditor.ToolbarSet = 'BasicA';
-    fckEditor.Height = 350;
+    fckEditor.Height = 230;
     fckEditor.ReplaceTextarea();
 }
 </script>

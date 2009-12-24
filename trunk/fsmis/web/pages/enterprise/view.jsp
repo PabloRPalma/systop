@@ -85,7 +85,7 @@ $(function(){
 					cssClass="inputBorder" readonly="true" /></td>
 			</tr>
 			<tr>
-				<td width="119" align="right">工商营业执照：</td>
+				<td width="119" align="right">营业执照：</td>
 				<td width="149" align="left"><s:textfield
 					id="businessLicenseCode" name="model.businessLicenseCode"
 					cssClass="inputBorder" readonly="true" /></td>
