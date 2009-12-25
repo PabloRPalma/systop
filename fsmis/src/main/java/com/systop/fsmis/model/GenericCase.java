@@ -46,7 +46,7 @@ public class GenericCase extends BaseModel {
 	private CaseType caseType;
 	
 	/** 本一般案件对应企业*/
-	private Enterprise enterprise;
+	private Corp enterprise;
 	
 	/** 标题*/
 	private String title;
@@ -160,11 +160,11 @@ public class GenericCase extends BaseModel {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ENTERPRISE")
-	public Enterprise getEnterprise() {
+	public Corp getEnterprise() {
 		return this.enterprise;
 	}
 
-	public void setEnterprise(Enterprise enterprise) {
+	public void setEnterprise(Corp enterprise) {
 		this.enterprise = enterprise;
 	}
 
