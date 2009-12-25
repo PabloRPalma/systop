@@ -16,34 +16,29 @@ function removeCompany(cID){
 </head>
 <body>
 <div class="x-panel">
-<div class="x-panel-header">诚信企业管理&nbsp;&gt;&nbsp;企业管理</div>
+<div class="x-panel-header">企业管理</div>
 <div class="x-toolbar">
 <table width="99%">
 	<tr>
-		<td>
 		<s:form action="index.do" method="post">
-		<td width="70" align="right">
-			企业名称：
-		</td>
-		<td width="60">
+		<td width="83" align="right">
+			企业名称：		</td>
+		<td width="69">
 			<s:textfield name="model.name" cssStyle="width:80px"/>
 		</td>
-		<td width="70" align="right">
-			法&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人：
-		</td>
-		<td width="60">
+		<td width="56" align="right">
+			法&nbsp;&nbsp;人：		</td>
+		<td width="68">
 			<s:textfield name="model.legalPerson" cssStyle="width:80px"/>
 		</td>
-		<td width="70" align="right">
-			企业地址：
-		</td>
-		<td>
+		<td width="80" align="right">
+			企业地址：		</td>
+		<td width="179">
 			<s:textfield name="model.address" cssStyle="width:80px"/>
 			<input type="submit" value="查询" class="button" />
 		</td>
 		</s:form>
-		</td>
-		<td align="right">
+		<td width="398" align="right">
 		<table>
 			<tr>
 				<td><a href="edit.do" title="添加企业信息"><img
@@ -83,13 +78,13 @@ function removeCompany(cID){
 		<ec:column width="230" property="name" title="企业名称" >
 			<a href="view.do?model.id=${item.id}" target="_self" title="查看企业信息"><font color="blue">${item.name}</font></a>
 		</ec:column>
-		<ec:column width="120" property="code" title="企业编号" />
-		<ec:column width="80" property="legalPerson" title="法人" />
+		<ec:column width="100" property="code" title="企业编号" />
+		<ec:column width="100" property="legalPerson" title="法人" />
 		<ec:column width="220" property="address" title="企业地址"/>
 		<ec:column width="140" property="_0" title="操作" style="text-align:center" sortable="false">
 			<a href="edit.do?model.id=${item.id}">编辑</a> |
 			<a href="view.do?model.id=${item.id}" target="_self">查看</a> |
-			<a href="#" onclick="removeCompany(${item.id})">删除</a>
+			<a href="#" onClick="removeCompany(${item.id})">删除</a>
 			<!--
 			<s:if test="#attr.item.locationType != null">
 			    <a href="${ctx}/pages/opengis/mapCompany.jsp?value='${item.id}'">
