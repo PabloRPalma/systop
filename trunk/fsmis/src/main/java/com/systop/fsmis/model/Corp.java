@@ -26,7 +26,7 @@ import com.systop.core.model.BaseModel;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "ENTERPRISE", schema = "FSMIS")
-public class Enterprise extends BaseModel {
+public class Corp extends BaseModel {
 
 	/**
 	 * 主键
