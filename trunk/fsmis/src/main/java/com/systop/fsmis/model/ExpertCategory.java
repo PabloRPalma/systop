@@ -15,7 +15,7 @@ import org.hibernate.annotations.GenericGenerator;
 import com.systop.core.model.BaseModel;
 
 /**
- * 专家类别表 
+ * 专家类别表
  */
 @Entity
 @Table(name = "EXPERT_CATEGORYS", schema = "FSMIS")
@@ -23,32 +23,32 @@ import com.systop.core.model.BaseModel;
 public class ExpertCategory extends BaseModel {
 
 	/**
-   * 主键
-   */
+	 * 主键
+	 */
 	private Integer id;
 	/**
-   * 名称
-   */
+	 * 名称
+	 */
 	private String name;
 	/**
-   * 描述
-   */
-	private String descb;
+	 * 描述
+	 */
+	private String descn;
 	/**
-   * 专家
-   */
+	 * 专家
+	 */
 	private Set<Expert> experts = new HashSet<Expert>(0);
 
 	/**
-   * 缺省构造器
-   */
+	 * 缺省构造器
+	 */
 	public ExpertCategory() {
 	}
 
 	@Id
-  @GeneratedValue(generator = "hibseq")
-  @GenericGenerator(name = "hibseq", strategy = "hilo")
-  @Column(name = "ID", unique = true, nullable = false)
+	@GeneratedValue(generator = "hibseq")
+	@GenericGenerator(name = "hibseq", strategy = "hilo")
+	@Column(name = "ID", unique = true, nullable = false)
 	public Integer getId() {
 		return this.id;
 	}
@@ -66,13 +66,13 @@ public class ExpertCategory extends BaseModel {
 		this.name = name;
 	}
 
-	@Column(name = "DESCB", length = 500)
-	public String getDescb() {
-		return this.descb;
+	@Column(name = "DESCN", length = 500)
+	public String getDescn() {
+		return this.descn;
 	}
 
-	public void setDescb(String descb) {
-		this.descb = descb;
+	public void setDescn(String descn) {
+		this.descn = descn;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "expertCategory")
