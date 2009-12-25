@@ -29,7 +29,7 @@ import com.systop.core.model.BaseModel;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "FOOD_CASES", schema = "FSMIS")
-public class FoodCase extends BaseModel {
+public class FsCase extends BaseModel {
 
 	private Integer id;
 	private Supervisor supervisor;
@@ -38,7 +38,7 @@ public class FoodCase extends BaseModel {
 	/**
 	 * 对应上报市级后的案件
 	 */
-	private FoodCase selfSJ;
+	private FsCase selfSJ;
 	private Dept deptsByReportDept;
 	private Dept deptsByCounty;
 	private CaseType caseType;
@@ -93,23 +93,23 @@ public class FoodCase extends BaseModel {
 
 	private Set<Assessment> assessmentses = new HashSet<Assessment>(0);
 
-	private Set<FoodCase> submitCases = new HashSet<FoodCase>(0);
+	private Set<FsCase> submitCases = new HashSet<FsCase>(0);
 
 	/**
 	 * 若为一般案件，代表所属的综合案件集合
 	 */
-	private Set<FoodCase> compositiveCases = new HashSet<FoodCase>(0);
+	private Set<FsCase> compositiveCases = new HashSet<FsCase>(0);
 	
 	/**
 	 * 若为综合案件，代表包含一般案件的集合
 	 */
-	private Set<FoodCase> genericCases = new HashSet<FoodCase>(0);
+	private Set<FsCase> genericCases = new HashSet<FsCase>(0);
 
 	private Set<SmsSend> smsSendses = new HashSet<SmsSend>(0);
 
 	private Set<SmsReceive> smsReceiveses = new HashSet<SmsReceive>(0);
 
-	public FoodCase() {
+	public FsCase() {
 	}
 
 	@Id
@@ -146,11 +146,11 @@ public class FoodCase extends BaseModel {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "SELF_SJ")
-	public FoodCase getSelfSJ() {
+	public FsCase getSelfSJ() {
 		return this.selfSJ;
 	}
 
-	public void setSelfSJ(FoodCase selfSJ) {
+	public void setSelfSJ(FsCase selfSJ) {
 		this.selfSJ = selfSJ;
 	}
 
@@ -371,31 +371,31 @@ public class FoodCase extends BaseModel {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "selfSJ")
-	public Set<FoodCase> getSubmitCases() {
+	public Set<FsCase> getSubmitCases() {
 		return this.submitCases;
 	}
 
-	public void setSubmitCases(Set<FoodCase> submitCases) {
+	public void setSubmitCases(Set<FsCase> submitCases) {
 		this.submitCases = submitCases;
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "GENERIC_COMPOSITIVE", joinColumns = { @JoinColumn(name = "COMPOSITIVE_CASE_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "GENERIC_CASE_ID", nullable = false, updatable = false) })
-	public Set<FoodCase> getGenericCases() {
+	public Set<FsCase> getGenericCases() {
 		return this.genericCases;
 	}
 
-	public void setGenericCases(Set<FoodCase> genericCases) {
+	public void setGenericCases(Set<FsCase> genericCases) {
 		this.genericCases = genericCases;
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "GENERIC_COMPOSITIVE", joinColumns = { @JoinColumn(name = "GENERIC_CASE_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "COMPOSITIVE_CASE_ID", nullable = false, updatable = false) })
-	public Set<FoodCase> getCompositiveCases() {
+	public Set<FsCase> getCompositiveCases() {
 		return this.compositiveCases;
 	}
 
-	public void setCompositiveCases(Set<FoodCase> compositiveCases) {
+	public void setCompositiveCases(Set<FsCase> compositiveCases) {
 		this.compositiveCases = compositiveCases;
 	}
 

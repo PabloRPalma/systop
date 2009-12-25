@@ -123,7 +123,7 @@ public class Corp extends BaseModel {
 	/**
 	 * 涉及的案件
 	 */
-	private Set<FoodCase> genericCases = new HashSet<FoodCase>(0);
+	private Set<FsCase> genericCases = new HashSet<FsCase>(0);
 
 	@Id
 	@GeneratedValue(generator = "hibseq")
@@ -340,11 +340,11 @@ public class Corp extends BaseModel {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "enterprise")
-	public Set<FoodCase> getGenericCases() {
+	public Set<FsCase> getGenericCases() {
 		return this.genericCases;
 	}
 
-	public void setGenericCases(Set<FoodCase> genericCases) {
+	public void setGenericCases(Set<FsCase> genericCases) {
 		this.genericCases = genericCases;
 	}
 

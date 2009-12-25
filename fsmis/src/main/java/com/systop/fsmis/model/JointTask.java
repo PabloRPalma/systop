@@ -39,7 +39,7 @@ public class JointTask extends BaseModel {
 	/**
 	 * 一般案件
 	 */
-	private FoodCase genericCase;
+	private FsCase genericCase;
 
 	/**
 	 * 综合案件
@@ -133,11 +133,11 @@ public class JointTask extends BaseModel {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "GENERIC_CASE")
-	public FoodCase getGenericCase() {
+	public FsCase getGenericCase() {
 		return this.genericCase;
 	}
 
-	public void setGenericCase(FoodCase genericCase) {
+	public void setGenericCase(FsCase genericCase) {
 		this.genericCase = genericCase;
 	}
 

@@ -34,7 +34,7 @@ public class CaseType extends BaseModel {
 	/** 描述 */
 	private String descn;
 	/** 类别对应的一般事件 */
-	private Set<FoodCase> genericCases = new HashSet<FoodCase>(0);
+	private Set<FsCase> genericCases = new HashSet<FsCase>(0);
 	/** 类别记录 */
 	private Set<CaseType> caseTypes = new HashSet<CaseType>(0);
 
@@ -80,11 +80,11 @@ public class CaseType extends BaseModel {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "caseType")
-	public Set<FoodCase> getGenericCases() {
+	public Set<FsCase> getGenericCases() {
 		return this.genericCases;
 	}
 
-	public void setGenericCases(Set<FoodCase> genericCases) {
+	public void setGenericCases(Set<FsCase> genericCases) {
 		this.genericCases = genericCases;
 	}
 
