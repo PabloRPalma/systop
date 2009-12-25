@@ -22,15 +22,15 @@
 	<div id="analyse">
 	
 	</div>
-	<div id="enterprise">
+	<div id="corp">
 		<div style="padding-left:5px;">
 		    <div style="padding-top:2px">
 				<img src="${ctx}/images/icons/add.gif" class="icon">
-				<a href="${ctx}/enterprise/edit.do" target="main">添加企业</a>
+				<a href="${ctx}/corp/edit.do" target="main">添加企业</a>
 			</div>          
 			<div style="padding-top:2px">
 				<img src="${ctx}/images/icons/building_go.png" class="icon">
-				<a href="${ctx}/enterprise/index.do" target="main">企业管理</a>
+				<a href="${ctx}/corp/index.do" target="main">企业管理</a>
 			</div>
 		</div>
 	</div>
