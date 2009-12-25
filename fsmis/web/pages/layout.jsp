@@ -64,7 +64,7 @@
 					iconCls : 'cms'
 				},{
 					title : '<span class="title">企业诚信</span>',
-					html : document.getElementById('enterprise').innerHTML,
+					html : document.getElementById('corp').innerHTML,
 					border : false,
 					iconCls : 'corp'
 				},{
