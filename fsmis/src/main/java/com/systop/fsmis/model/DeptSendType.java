@@ -14,6 +14,7 @@ import org.hibernate.annotations.GenericGenerator;
 import com.systop.common.modules.dept.model.Dept;
 
 /**
+ * 
  */
 @Entity
 @Table(name = "DEPT_SEND_SYPES", schema = "FSMIS")
@@ -21,7 +22,7 @@ public class DeptSendType implements java.io.Serializable {
 
 	private Integer id;
 	private SendType sendTypes;
-	private Dept dept;
+	private Dept county;
 	private String leaderDept;
 	private String generalDept;
 
@@ -52,12 +53,12 @@ public class DeptSendType implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "COUNTY")
-	public Dept getDepts() {
-		return this.dept;
+	public Dept getCounty() {
+		return this.county;
 	}
 
-	public void setDept(Dept dept) {
-		this.dept = dept;
+	public void setCounty(Dept county) {
+		this.county = county;
 	}
 
 	@Column(name = "LEADER_DEPT")

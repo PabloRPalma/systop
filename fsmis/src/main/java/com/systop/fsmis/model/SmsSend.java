@@ -1,6 +1,7 @@
 package com.systop.fsmis.model;
 
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +13,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.systop.common.modules.dept.model.Dept;
 import com.systop.core.model.BaseModel;
 
 /**
@@ -27,10 +29,6 @@ import com.systop.core.model.BaseModel;
 public class SmsSend extends BaseModel {
 
 	private Integer id;
-	/**
-	 * 一般案件
-	 */
-	private FsCase fsCase;
 	/**
 	 * 接收手机号码
 	 */
@@ -66,8 +64,27 @@ public class SmsSend extends BaseModel {
 	/**
 	 * 移动代理服务器Id
 	 */
-	private Long masid;
+	private Integer masid;
+	
+	/**
+	 * 一般案件
+	 */
+	private FsCase fsCase;
+	
+	/**
+	 * 任务
+	 */
+	private Task task;
+	
+	/**
+	 * 联合任务
+	 */
+	private JointTask jointTask;
 
+	/**
+	 * 所属区县
+	 */
+	private Dept county;
 	@Id
 	@GeneratedValue(generator = "hibseq")
 	@GenericGenerator(name = "hibseq", strategy = "hilo")
@@ -78,16 +95,6 @@ public class SmsSend extends BaseModel {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	@ManyToOne(cascade = {}, fetch = FetchType.LAZY)
-	@JoinColumn(name = "GENERIC_CASE")
-	public FsCase getFsCase() {
-		return this.fsCase;
-	}
-
-	public void setFsCase(FsCase fsCase) {
-		this.fsCase = fsCase;
 	}
 
 	@Column(name = "MOBILE_NUM", length = 40)
@@ -163,12 +170,52 @@ public class SmsSend extends BaseModel {
 	}
 
 	@Column(name = "MASID")
-	public Long getMasid() {
+	public Integer getMasid() {
 		return this.masid;
 	}
 
-	public void setMasid(Long masid) {
+	public void setMasid(Integer masid) {
 		this.masid = masid;
+	}
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "FS_CASE")
+	public FsCase getFsCase() {
+		return this.fsCase;
+	}
+
+	public void setFsCase(FsCase fsCase) {
+		this.fsCase = fsCase;
+	}
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "TASK")
+	public Task getTask() {
+		return this.task;
+	}
+
+	public void setTask(Task task) {
+		this.task = task;
+	}
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "JOINT_TASK")
+	public JointTask getJointTask() {
+		return this.jointTask;
+	}
+
+	public void setJointTask(JointTask jointTask) {
+		this.jointTask = jointTask;
+	}
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "COUNTY")
+	public Dept getCounty() {
+		return this.county;
+	}
+
+	public void setCounty(Dept county) {
+		this.county = county;
 	}
 
 }

@@ -16,18 +16,18 @@ import com.systop.core.model.BaseModel;
  */
 @Entity
 @SuppressWarnings("serial")
-@Table(name = "SMS_COUNTS")
+@Table(name = "SMS_COUNTS", schema="FSMIS")
 public class SmsCount extends BaseModel {
 
 	private Integer id;
 	/**
 	 * 移动发送数量
 	 */
-	private Long mobileCount;
+	private Integer mobileCount;
 	/**
 	 * 联通及其他发送数量
 	 */
-	private Long otherCount;
+	private Integer otherCount;
 	/**
 	 * 发送日期
 	 */
@@ -46,20 +46,20 @@ public class SmsCount extends BaseModel {
 	}
 
 	@Column(name = "MOBILE_COUNT")
-	public Long getMobileCount() {
+	public Integer getMobileCount() {
 		return this.mobileCount;
 	}
 
-	public void setMobileCount(Long mobileCount) {
+	public void setMobileCount(Integer mobileCount) {
 		this.mobileCount = mobileCount;
 	}
 
 	@Column(name = "OTHER_COUNT")
-	public Long getOtherCount() {
+	public Integer getOtherCount() {
 		return this.otherCount;
 	}
 
-	public void setOtherCount(Long otherCount) {
+	public void setOtherCount(Integer otherCount) {
 		this.otherCount = otherCount;
 	}
 

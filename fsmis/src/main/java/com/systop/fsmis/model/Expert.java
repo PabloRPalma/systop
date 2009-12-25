@@ -4,15 +4,15 @@ import java.sql.Clob;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -105,10 +105,11 @@ public class Expert extends BaseModel {
 	 * 级别
 	 */
 	private String level;
+
 	/**
-	 * 评估
+	 * 评估的成员
 	 */
-	private Set<Assessment> assessments = new HashSet<Assessment>(0);
+	private Set<AsseMember> asseMemberse = new HashSet<AsseMember>(0);
 
 	public Expert() {
 	}
@@ -289,13 +290,12 @@ public class Expert extends BaseModel {
 		this.level = level;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "ASSESSMENT_EXPERT", joinColumns = { @JoinColumn(name = "EXPERT_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "ASSESSMENT_ID", nullable = false, updatable = false) })
-	public Set<Assessment> getAssessments() {
-		return this.assessments;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "expert")
+	public Set<AsseMember> getAsseMemberse() {
+		return this.asseMemberse;
 	}
 
-	public void setAssessments(Set<Assessment> assessments) {
-		this.assessments = assessments;
+	public void setAsseMemberse(Set<AsseMember> asseMemberse) {
+		this.asseMemberse = asseMemberse;
 	}
 }

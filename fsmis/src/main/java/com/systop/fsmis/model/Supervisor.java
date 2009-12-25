@@ -1,7 +1,5 @@
 package com.systop.fsmis.model;
 
-// Generated 2009-12-16 9:41:03 by Hibernate Tools 3.2.4.GA
-
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,38 +27,38 @@ import com.systop.core.model.BaseModel;
 @Table(name = "SUPERVISORS", schema = "FSMIS")
 public class Supervisor extends BaseModel {
 
-	/**主键*/
+	/** 主键 */
 	private Integer id;
-	/**身份证号*/
+	/** 身份证号 */
 	private String idNumber;
-	/**部门*/
+	/** 部门 */
 	private Dept dept;
-	/**姓名*/
+	/** 姓名 */
 	private String name;
-	/**性别*/
+	/** 性别 */
 	private String gender;
-	/**出生日期*/
+	/** 出生日期 */
 	private Date birthday;
-	/**编号*/
+	/** 编号 */
 	private String code;
-	/**单位*/
+	/** 单位 */
 	private String unit;
-	/**职务*/
+	/** 职务 */
 	private String duty;
-	/**手机*/
+	/** 手机 */
 	private String mobile;
-	/**固话*/
+	/** 固话 */
 	private String phone;
-	/**监管区域*/
+	/** 监管区域 */
 	private String superviseRegion;
-	/**坐标*/
+	/** 坐标 */
 	private String coordinate;
-	/**相片Url*/
+	/** 相片Url */
 	private String photoUrl;
-	/**是否负责人*/
+	/** 是否负责人 */
 	private String isLeader;
-	/**一般案件*/
-	private Set<FsCase> genericCases = new HashSet<FsCase>(0);
+	/** 一般案件 */
+	private Set<FsCase> fsCase = new HashSet<FsCase>(0);
 
 	@Id
 	@GeneratedValue(generator = "hibseq")
@@ -192,14 +190,14 @@ public class Supervisor extends BaseModel {
 	public void setIsLeader(String isLeader) {
 		this.isLeader = isLeader;
 	}
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "supervisor")
-	public Set<FsCase> getGenericCases() {
-		return this.genericCases;
+	public Set<FsCase> getFsCase() {
+		return this.fsCase;
 	}
 
-	public void setGenericCases(Set<FsCase> genericCases) {
-		this.genericCases = genericCases;
+	public void setFsCase(Set<FsCase> fsCase) {
+		this.fsCase = fsCase;
 	}
 
 	@Column(name = "ID_NUMBER", length = 510)

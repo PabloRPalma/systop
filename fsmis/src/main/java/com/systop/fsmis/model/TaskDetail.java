@@ -77,7 +77,7 @@ public class TaskDetail extends BaseModel {
 	/**
 	 * 任务状态
 	 */
-	private Character status;
+	private String status;
 	
 	/**
 	 * 退回负责人
@@ -183,11 +183,11 @@ public class TaskDetail extends BaseModel {
 	}
 
 	@Column(name = "STATUS", length = 1)
-	public Character getStatus() {
+	public String getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(Character status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
