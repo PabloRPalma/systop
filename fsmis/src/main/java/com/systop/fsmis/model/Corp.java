@@ -123,7 +123,7 @@ public class Corp extends BaseModel {
 	/**
 	 * 涉及的案件
 	 */
-	private Set<FsCase> genericCases = new HashSet<FsCase>(0);
+	private Set<FsCase> fsCases = new HashSet<FsCase>(0);
 
 	@Id
 	@GeneratedValue(generator = "hibseq")
@@ -339,13 +339,13 @@ public class Corp extends BaseModel {
 		this.sanitationLicenseIndate = sanitationLicenseIndate;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "enterprise")
-	public Set<FsCase> getGenericCases() {
-		return this.genericCases;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "corp")
+	public Set<FsCase> getFsCases() {
+		return this.fsCases;
 	}
 
-	public void setGenericCases(Set<FsCase> genericCases) {
-		this.genericCases = genericCases;
+	public void setFsCases(Set<FsCase> fsCases) {
+		this.fsCases = fsCases;
 	}
 
 }
