@@ -21,7 +21,7 @@ public class SendType implements java.io.Serializable {
 	private String descn;
 	private BigDecimal sortId;
 	private Set<DeptSendSype> deptSendSypeses = new HashSet<DeptSendSype>(0);
-	private Set<FsCase> foodCases = new HashSet<FsCase>(0);
+	private Set<FsCase> fsCases = new HashSet<FsCase>(0);
 
 	public SendType() {
 	}
@@ -77,12 +77,12 @@ public class SendType implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sendTypes")
-	public Set<FsCase> getFoodCases() {
-		return this.foodCases;
+	public Set<FsCase> getFsCases() {
+		return this.fsCases;
 	}
 
-	public void setFoodCases(Set<FsCase> cases) {
-		this.foodCases = cases;
+	public void setFsCases(Set<FsCase> cases) {
+		this.fsCases = cases;
 	}
 
 }
