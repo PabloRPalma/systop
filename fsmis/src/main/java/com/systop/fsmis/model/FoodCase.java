@@ -34,12 +34,19 @@ public class FoodCase extends BaseModel {
 	private Integer id;
 	private Supervisor supervisor;
 	private SendType sendType;
-	private FoodCase foodCase;
+
+	/**
+	 * 对应上报市级后的案件
+	 */
+	private FoodCase selfSJ;
 	private Dept deptsByReportDept;
 	private Dept deptsByCounty;
 	private CaseType caseType;
 	private Corp corp;
 	private String title;
+	/**
+	 * 案发时间
+	 */
 	private Date caseTime;
 	private String address;
 	private String code;
@@ -47,21 +54,54 @@ public class FoodCase extends BaseModel {
 	private String coordinate;
 	private String informer;
 	private String informerPhone;
+	/**
+	 * 结案时间
+	 */
 	private Date closedTime;
 	private String status;
-	private Character isRead;
-	private Character isMultiple;
+
+	/**
+	 * 是否查看（可能综合要使用）
+	 */
+	private String isRead;
+
+	/**
+	 * 是否综合案件
+	 */
+	private String isMultiple;
+
+	/**
+	 * 综合开始时间
+	 */
 	private Date beginDate;
+
+	/**
+	 * 综合结束时间
+	 */
 	private Date endDate;
-	private Character isSubmitSj;
+
+	/**
+	 * 是否上报市级
+	 */
+	private String isSubmitSj;
 	private Date submitSjTime;
+
 	private Set<SmsSend> smsSendses = new HashSet<SmsSend>(0);
 	private Set<Assessment> assessmentses = new HashSet<Assessment>(0);
 	private Set<Task> taskses = new HashSet<Task>(0);
-	private Set<FoodCase> foodCaseses = new HashSet<FoodCase>(0);
-	private Set<FoodCase> foodCasesesForGenericCaseId = new HashSet<FoodCase>(0);
-	private Set<FoodCase> foodCasesesForCompositiveCaseId = new HashSet<FoodCase>(
-			0);
+
+	private Set<FoodCase> submitCases = new HashSet<FoodCase>(0);
+
+	/**
+	 * 若为一般案件，代表所属的综合案件集合
+	 */
+	private Set<FoodCase> compositiveCases = new HashSet<FoodCase>(0);
+	
+	/**
+	 * 若为综合案件，代表包含一般案件的集合
+	 */
+	private Set<FoodCase> genericCases = new HashSet<FoodCase>(0);
+
 	private Set<JointTask> jointTaskses = new HashSet<JointTask>(0);
 	private Set<SmsReceive> smsReceiveses = new HashSet<SmsReceive>(0);
 
@@ -102,12 +142,12 @@ public class FoodCase extends BaseModel {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "SELF_SJ")
-	public FoodCase getFoodCase() {
-		return this.foodCase;
+	public FoodCase getSelfSJ() {
+		return this.selfSJ;
 	}
 
-	public void setFoodCase(FoodCase foodCase) {
-		this.foodCase = foodCase;
+	public void setSelfSJ(FoodCase selfSJ) {
+		this.selfSJ = selfSJ;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -243,20 +283,20 @@ public class FoodCase extends BaseModel {
 	}
 
 	@Column(name = "IS_READ", length = 1)
-	public Character getIsRead() {
+	public String getIsRead() {
 		return this.isRead;
 	}
 
-	public void setIsRead(Character isRead) {
+	public void setIsRead(String isRead) {
 		this.isRead = isRead;
 	}
 
 	@Column(name = "IS_MULTIPLE", length = 1)
-	public Character getIsMultiple() {
+	public String getIsMultiple() {
 		return this.isMultiple;
 	}
 
-	public void setIsMultiple(Character isMultiple) {
+	public void setIsMultiple(String isMultiple) {
 		this.isMultiple = isMultiple;
 	}
 
@@ -281,11 +321,11 @@ public class FoodCase extends BaseModel {
 	}
 
 	@Column(name = "IS_SUBMIT_SJ", length = 1)
-	public Character getIsSubmitSj() {
+	public String getIsSubmitSj() {
 		return this.isSubmitSj;
 	}
 
-	public void setIsSubmitSj(Character isSubmitSj) {
+	public void setIsSubmitSj(String isSubmitSj) {
 		this.isSubmitSj = isSubmitSj;
 	}
 
@@ -326,35 +366,33 @@ public class FoodCase extends BaseModel {
 		this.taskses = taskses;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "foodCase")
-	public Set<FoodCase> getFoodCaseses() {
-		return this.foodCaseses;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "selfSJ")
+	public Set<FoodCase> getSubmitCases() {
+		return this.submitCases;
 	}
 
-	public void setFoodCaseses(Set<FoodCase> foodCaseses) {
-		this.foodCaseses = foodCaseses;
+	public void setSubmitCases(Set<FoodCase> submitCases) {
+		this.submitCases = submitCases;
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "CASE_COMPOSITIVE", joinColumns = { @JoinColumn(name = "COMPOSITIVE_CASE_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "GENERIC_CASE_ID", nullable = false, updatable = false) })
-	public Set<FoodCase> getFoodCasesesForGenericCaseId() {
-		return this.foodCasesesForGenericCaseId;
+	public Set<FoodCase> getGenericCases() {
+		return this.genericCases;
 	}
 
-	public void setFoodCasesesForGenericCaseId(
-			Set<FoodCase> foodCasesesForGenericCaseId) {
-		this.foodCasesesForGenericCaseId = foodCasesesForGenericCaseId;
+	public void setGenericCases(Set<FoodCase> genericCases) {
+		this.genericCases = genericCases;
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "CASE_COMPOSITIVE", joinColumns = { @JoinColumn(name = "GENERIC_CASE_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "COMPOSITIVE_CASE_ID", nullable = false, updatable = false) })
-	public Set<FoodCase> getFoodCasesesForCompositiveCaseId() {
-		return this.foodCasesesForCompositiveCaseId;
+	public Set<FoodCase> getCompositiveCases() {
+		return this.compositiveCases;
 	}
 
-	public void setFoodCasesesForCompositiveCaseId(
-			Set<FoodCase> foodCasesesForCompositiveCaseId) {
-		this.foodCasesesForCompositiveCaseId = foodCasesesForCompositiveCaseId;
+	public void setCompositiveCases(Set<FoodCase> compositiveCases) {
+		this.compositiveCases = compositiveCases;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "foodCase")
