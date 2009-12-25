@@ -115,7 +115,7 @@ public class Notice implements java.io.Serializable {
 		this.att = att;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "notices")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "notice")
 	public Set<ReceiveRecord> getRecRecordses() {
 		return this.recRecordses;
 	}

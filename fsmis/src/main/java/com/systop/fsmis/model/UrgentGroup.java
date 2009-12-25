@@ -127,7 +127,7 @@ public class UrgentGroup implements java.io.Serializable {
 		this.template = template;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "urgentGroups")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "urgentGroup")
 	public Set<User> getUser() {
 		return this.user;
 	}

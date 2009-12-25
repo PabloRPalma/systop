@@ -21,7 +21,7 @@ import com.systop.common.modules.dept.model.Dept;
 public class DeptSendType implements java.io.Serializable {
 
 	private Integer id;
-	private SendType sendTypes;
+	private SendType sendType;
 	private Dept county;
 	private String leaderDept;
 	private String generalDept;
@@ -43,12 +43,12 @@ public class DeptSendType implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "SEND_TYPE")
-	public SendType getSendTypes() {
-		return this.sendTypes;
+	public SendType getSendType() {
+		return this.sendType;
 	}
 
-	public void setSendTypes(SendType sendTypes) {
-		this.sendTypes = sendTypes;
+	public void setSendType(SendType sendType) {
+		this.sendType = sendType;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
