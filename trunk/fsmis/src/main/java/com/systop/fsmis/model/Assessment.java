@@ -4,21 +4,17 @@ import java.sql.Clob;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.GenericGenerator;
 
 import com.systop.common.modules.security.user.model.User;
 import com.systop.core.model.BaseModel;
@@ -31,78 +27,38 @@ import com.systop.core.model.BaseModel;
 @SuppressWarnings("serial")
 public class Assessment extends BaseModel {
 
-	/**
-	 * 主键
-	 */
 	private Integer id;
-	/**
-	 * 基本案件
-	 */
-	private FsCase genericCase;
-	/**
-	 * 综合案件
-	 */
-	private CompositiveCase compositiveCase;
-	/**
-	 * 审核人
-	 */
-	private User usersByAuditor;
+	private FsCase fsCases;
 	/**
 	 * 申请人
 	 */
-	private User usersByProposer;
+	private User proposer;
+	
 	/**
-	 * 申请日期
+	 * 审核人
 	 */
+	private User auditor;
 	private Date askDate;
-	/**
-	 * 申请原因
-	 */
-	private Clob askCause;
-	/**
-	 * 审核日期
-	 */
+	private String askCause;
 	private Date auditDate;
 	/**
 	 * 是否通过
 	 */
-	private Character isConsent;
-	/**
-	 * 结果日期
-	 */
+	private String isConsent;
+	private String opinion;
 	private Date resultDate;
-	/**
-	 * 评估结果
-	 */
-	private String result;
-	/**
-	 * 是否完成
-	 */
-	private Character isComplete;
-	/**
-	 * 专家组长ID
-	 */
-	private Long leaderId;
-	/**
-	 * 专家
-	 */
-	private Set<Expert> experts = new HashSet<Expert>(0);
-	/**
-	 * 附件
-	 */
-	private Set<AssessmentAttach> assessmentAttachs = new HashSet<AssessmentAttach>(
+	private Clob result;
+	private String isComplete;
+	private Set<ExpertGroup> expertGroupses = new HashSet<ExpertGroup>(0);
+	private Set<AssessmentAttach> assessmentAttachses = new HashSet<AssessmentAttach>(
 			0);
 
-	/**
-	 * 缺省构造器
-	 */
 	public Assessment() {
 	}
 
+
 	@Id
-	@GeneratedValue(generator = "hibseq")
-	@GenericGenerator(name = "hibseq", strategy = "hilo")
-	@Column(name = "ID", unique = true, nullable = false)
+	@Column(name = "ID", unique = true, nullable = false, precision = 10, scale = 0)
 	public Integer getId() {
 		return this.id;
 	}
@@ -112,43 +68,33 @@ public class Assessment extends BaseModel {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "GENERIC_CASE")
-	public FsCase getGenericCase() {
-		return this.genericCase;
+	@JoinColumn(name = "FS_CASE")
+	public FsCase getFsCase() {
+		return this.fsCases;
 	}
 
-	public void setGenericCase(FsCase genericCase) {
-		this.genericCase = genericCase;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "COMPOSITIVE_CASE")
-	public CompositiveCase getCompositiveCase() {
-		return this.compositiveCase;
-	}
-
-	public void setCompositiveCase(CompositiveCase compositiveCase) {
-		this.compositiveCase = compositiveCase;
+	public void setFsCase(FsCase fsCases) {
+		this.fsCases = fsCases;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "AUDITOR")
-	public User getUsersByAuditor() {
-		return this.usersByAuditor;
+	public User getAuditor() {
+		return this.auditor;
 	}
 
-	public void setUsersByAuditor(User usersByAuditor) {
-		this.usersByAuditor = usersByAuditor;
+	public void setAuditor(User auditor) {
+		this.auditor = auditor;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PROPOSER")
-	public User getUsersByProposer() {
-		return this.usersByProposer;
+	public User getProposer() {
+		return this.proposer;
 	}
 
-	public void setUsersByProposer(User usersByProposer) {
-		this.usersByProposer = usersByProposer;
+	public void setProposer(User proposer) {
+		this.proposer = proposer;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -161,12 +107,12 @@ public class Assessment extends BaseModel {
 		this.askDate = askDate;
 	}
 
-	@Column(name = "ASK_CAUSE")
-	public Clob getAskCause() {
+	@Column(name = "ASK_CAUSE", length = 1000)
+	public String getAskCause() {
 		return this.askCause;
 	}
 
-	public void setAskCause(Clob askCause) {
+	public void setAskCause(String askCause) {
 		this.askCause = askCause;
 	}
 
@@ -181,12 +127,21 @@ public class Assessment extends BaseModel {
 	}
 
 	@Column(name = "IS_CONSENT", length = 1)
-	public Character getIsConsent() {
+	public String getIsConsent() {
 		return this.isConsent;
 	}
 
-	public void setIsConsent(Character isConsent) {
+	public void setIsConsent(String isConsent) {
 		this.isConsent = isConsent;
+	}
+
+	@Column(name = "OPINION", length = 500)
+	public String getOpinion() {
+		return this.opinion;
+	}
+
+	public void setOpinion(String opinion) {
+		this.opinion = opinion;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -199,49 +154,41 @@ public class Assessment extends BaseModel {
 		this.resultDate = resultDate;
 	}
 
-	@Column(name = "RESULT", length = 4000)
-	public String getResult() {
+	@Column(name = "RESULT")
+	public Clob getResult() {
 		return this.result;
 	}
 
-	public void setResult(String result) {
+	public void setResult(Clob result) {
 		this.result = result;
 	}
 
 	@Column(name = "IS_COMPLETE", length = 1)
-	public Character getIsComplete() {
+	public String getIsComplete() {
 		return this.isComplete;
 	}
 
-	public void setIsComplete(Character isComplete) {
+	public void setIsComplete(String isComplete) {
 		this.isComplete = isComplete;
 	}
 
-	@Column(name = "LEADER_ID", precision = 10, scale = 0)
-	public Long getLeaderId() {
-		return this.leaderId;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "assessments")
+	public Set<ExpertGroup> getExpertGroupses() {
+		return this.expertGroupses;
 	}
 
-	public void setLeaderId(Long leaderId) {
-		this.leaderId = leaderId;
+	public void setExpertGroupses(Set<ExpertGroup> expertGroupses) {
+		this.expertGroupses = expertGroupses;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "ASSESSMENT_EXPERT", joinColumns = { @JoinColumn(name = "ASSESSMENT_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "EXPERT_ID", nullable = false, updatable = false) })
-	public Set<Expert> getExperts() {
-		return this.experts;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "assessments")
+	public Set<AssessmentAttach> getAssessmentAttachses() {
+		return this.assessmentAttachses;
 	}
 
-	public void setExperts(Set<Expert> experts) {
-		this.experts = experts;
+	public void setAssessmentAttachses(
+			Set<AssessmentAttach> assessmentAttachses) {
+		this.assessmentAttachses = assessmentAttachses;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "assessment")
-	public Set<AssessmentAttach> getAssessmentAttachs() {
-		return this.assessmentAttachs;
-	}
-
-	public void setAssessmentAttachs(Set<AssessmentAttach> assessmentAttachs) {
-		this.assessmentAttachs = assessmentAttachs;
-	}
 }
