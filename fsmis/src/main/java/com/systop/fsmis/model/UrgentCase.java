@@ -26,7 +26,7 @@ import com.systop.common.modules.dept.model.Dept;
 @Table(name = "URGENT_CASES", schema="FSMIS")
 public class UrgentCase implements java.io.Serializable {
 
-	private long id;
+	private Integer id;
 	private UrgentCase urgentCases;
 	private Dept dept;
 	private String title;
@@ -61,11 +61,11 @@ public class UrgentCase implements java.io.Serializable {
 
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, precision = 10, scale = 0)
-	public long getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
