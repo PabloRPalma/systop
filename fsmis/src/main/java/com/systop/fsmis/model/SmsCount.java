@@ -13,9 +13,6 @@ import com.systop.core.model.BaseModel;
 
 /**
  * 短信发送数量实体
- * 
- * @author Workshopers
- * 
  */
 @Entity
 @SuppressWarnings("serial")

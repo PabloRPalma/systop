@@ -15,12 +15,11 @@ import org.hibernate.annotations.GenericGenerator;
 import com.systop.core.model.BaseModel;
 
 /**
- * 专家类别表 The persistent class for the EXPERT_CATEGORY database table.
- * @author DU
+ * 专家类别表 
  */
-@SuppressWarnings("serial")
 @Entity
-@Table(name = "EXPERT_CATEGORY", schema = "FSMIS")
+@Table(name = "EXPERT_CATEGORYS", schema = "FSMIS")
+@SuppressWarnings("serial")
 public class ExpertCategory extends BaseModel {
 
 	/**

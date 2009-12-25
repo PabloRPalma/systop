@@ -1,6 +1,5 @@
 package com.systop.fsmis.model;
 
-// Generated 2009-12-16 9:41:03 by Hibernate Tools 3.2.4.GA
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,11 +19,10 @@ import com.systop.core.model.BaseModel;
 
 /**
  * 事件类别
- * @author shaozhiyuan
  */
-@SuppressWarnings("serial")
 @Entity
-@Table(name = "CASE_TYPE")
+@Table(name = "CASE_TYPES", schema = "FSMIS")
+@SuppressWarnings("serial")
 public class CaseType extends BaseModel {
 
 	/** 主键 */
@@ -36,10 +34,9 @@ public class CaseType extends BaseModel {
 	/** 描述 */
 	private String descn;
 	/** 类别对应的一般事件 */
-	private Set<GenericCase> genericCases = new HashSet<GenericCase>(0);
+	private Set<FoodCase> genericCases = new HashSet<FoodCase>(0);
 	/** 类别记录 */
 	private Set<CaseType> caseTypes = new HashSet<CaseType>(0);
-
 
 
 	@Id
@@ -83,11 +80,11 @@ public class CaseType extends BaseModel {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "caseType")
-	public Set<GenericCase> getGenericCases() {
+	public Set<FoodCase> getGenericCases() {
 		return this.genericCases;
 	}
 
-	public void setGenericCases(Set<GenericCase> genericCases) {
+	public void setGenericCases(Set<FoodCase> genericCases) {
 		this.genericCases = genericCases;
 	}
 

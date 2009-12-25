@@ -17,34 +17,33 @@ import org.hibernate.annotations.GenericGenerator;
 import com.systop.core.model.BaseModel;
 
 /**
- * 联合任务附件表 The persistent class for the JOINT_TASK_ATTACH database table.
- * @author zw
+ * 联合任务附件表
  */
-@SuppressWarnings("serial")
 @Entity
-@Table(name = "JOINT_TASK_ATTACH")
+@Table(name = "JOINT_TASK_ATTACHS", schema = "FSMIS")
+@SuppressWarnings("serial")
 public class JointTaskAttach extends BaseModel {
 
 	/**
 	 * 主键
 	 */
 	private Integer id;
-	
+
 	/**
 	 * 所属联合任务
 	 */
 	private JointTask jointTask;
-	
+
 	/**
 	 * 标题
 	 */
 	private String title;
-	
+
 	/**
 	 * 路径
 	 */
 	private String path;
-	
+
 	/**
 	 * 备注
 	 */
@@ -116,8 +115,8 @@ public class JointTaskAttach extends BaseModel {
 			return false;
 		}
 		JointTaskAttach jointTaskAttach = (JointTaskAttach) other;
-		return new EqualsBuilder().append(this.getId(), jointTaskAttach.getId())
-				.isEquals();
+		return new EqualsBuilder()
+				.append(this.getId(), jointTaskAttach.getId()).isEquals();
 	}
 
 	/**

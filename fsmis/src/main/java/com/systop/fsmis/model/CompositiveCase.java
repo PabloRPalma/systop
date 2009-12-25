@@ -1,7 +1,5 @@
 package com.systop.fsmis.model;
 
-// Generated 2009-12-16 9:15:02 by Hibernate Tools 3.2.4.GA
-
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,7 +22,6 @@ import com.systop.core.model.BaseModel;
 
 /**
  * 综合案件
- * @author shaozhiyuan
  */
 @SuppressWarnings("serial")
 @Entity
@@ -64,9 +61,7 @@ public class CompositiveCase extends BaseModel {
 	/**
 	 * 本综合事件对应的一般事件
 	 */
-	private Set<GenericCase> genericCases = new HashSet<GenericCase>(0);
-
-
+	private Set<FoodCase> genericCases = new HashSet<FoodCase>(0);
 
 	@Id
 	@GeneratedValue(generator = "hibseq")
@@ -162,7 +157,7 @@ public class CompositiveCase extends BaseModel {
 	public void setAssessments(Set<Assessment> assessments) {
 		this.assessments = assessments;
 	}
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "compositiveCase")
 	public Set<SmsSend> getSmsSends() {
 		return this.smsSends;
@@ -174,11 +169,11 @@ public class CompositiveCase extends BaseModel {
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "CASE_COMPOSITIVE", joinColumns = { @JoinColumn(name = "COMPOSITIVE_CASE_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "GENERIC_CASE_ID", nullable = false, updatable = false) })
-	public Set<GenericCase> getGenericCases() {
+	public Set<FoodCase> getGenericCases() {
 		return this.genericCases;
 	}
 
-	public void setGenericCases(Set<GenericCase> genericCases) {
+	public void setGenericCases(Set<FoodCase> genericCases) {
 		this.genericCases = genericCases;
 	}
 

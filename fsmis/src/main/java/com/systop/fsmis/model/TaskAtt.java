@@ -17,12 +17,11 @@ import org.hibernate.annotations.GenericGenerator;
 import com.systop.core.model.BaseModel;
 
 /**
- * 任务附件表 The persistent class for the TASK_ATT database table.
- * @author zw
+ * 任务附件表 
  */
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "TASK_ATT")
+@Table(name = "TASK_ATTS")
 public class TaskAtt extends BaseModel {
 
 	/**
