@@ -22,12 +22,11 @@ import com.systop.common.modules.dept.model.Dept;
 import com.systop.core.model.BaseModel;
 
 /**
- * 任务明细表 The persistent class for the TASK_DETAIL database table.
- * @author zw
+ * 任务明细表
  */
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "TASK_DETAIL")
+@Table(name = "TASK_DETAILS")
 public class TaskDetail extends BaseModel {
 
 	/**

@@ -22,12 +22,11 @@ import org.hibernate.annotations.GenericGenerator;
 import com.systop.core.model.BaseModel;
 
 /**
- * 专家表 The persistent class for the EXPERT database table.
- * @author DU
+ * 专家表
  */
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "EXPERT", schema = "FSMIS")
+@Table(name = "EXPERTS", schema = "FSMIS")
 public class Expert extends BaseModel {
 
 	/**
@@ -115,9 +114,9 @@ public class Expert extends BaseModel {
 	}
 
 	@Id
-  @GeneratedValue(generator = "hibseq")
-  @GenericGenerator(name = "hibseq", strategy = "hilo")
-  @Column(name = "ID", unique = true, nullable = false)
+	@GeneratedValue(generator = "hibseq")
+	@GenericGenerator(name = "hibseq", strategy = "hilo")
+	@Column(name = "ID", unique = true, nullable = false)
 	public Integer getId() {
 		return this.id;
 	}

@@ -21,7 +21,7 @@ import com.systop.common.modules.dept.model.Dept;
 import com.systop.core.model.BaseModel;
 
 /**
- * 企业表 The persistent class for the CORPS database table.
+ * 企业表
  */
 @SuppressWarnings("serial")
 @Entity
@@ -123,7 +123,7 @@ public class Corp extends BaseModel {
 	/**
 	 * 涉及的案件
 	 */
-	private Set<GenericCase> genericCases = new HashSet<GenericCase>(0);
+	private Set<FoodCase> genericCases = new HashSet<FoodCase>(0);
 
 	@Id
 	@GeneratedValue(generator = "hibseq")
@@ -340,11 +340,11 @@ public class Corp extends BaseModel {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "enterprise")
-	public Set<GenericCase> getGenericCases() {
+	public Set<FoodCase> getGenericCases() {
 		return this.genericCases;
 	}
 
-	public void setGenericCases(Set<GenericCase> genericCases) {
+	public void setGenericCases(Set<FoodCase> genericCases) {
 		this.genericCases = genericCases;
 	}
 

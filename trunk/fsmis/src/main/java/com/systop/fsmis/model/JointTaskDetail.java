@@ -21,12 +21,11 @@ import org.hibernate.annotations.GenericGenerator;
 import com.systop.core.model.BaseModel;
 
 /**
- * 联合任务明细表 The persistent class for the JOINT_TASK_DETAIL database table.
- * @author zw
+ * 联合任务明细表 
  */
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "JOINT_TASK_DETAIL")
+@Table(name = "JOINT_TASK_DETAILS", schema="FSMIS")
 public class JointTaskDetail extends BaseModel {
 
 	/**

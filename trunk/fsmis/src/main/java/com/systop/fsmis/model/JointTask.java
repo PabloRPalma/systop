@@ -24,23 +24,22 @@ import org.hibernate.annotations.GenericGenerator;
 import com.systop.core.model.BaseModel;
 
 /**
- * 联合任务表 The persistent class for the JOINT_TASK database table.
- * @author zw
+ * 联合任务表
  */
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "JOINT_TASK")
+@Table(name = "JOINT_TASKS", schema="FSMIS")
 public class JointTask extends BaseModel {
 
 	/**
 	 * 主键
 	 */
 	private Integer id;
-	
+
 	/**
 	 * 一般案件
 	 */
-	private GenericCase genericCase;
+	private FoodCase genericCase;
 
 	/**
 	 * 综合案件
@@ -96,7 +95,7 @@ public class JointTask extends BaseModel {
 	 * 拟办意见
 	 */
 	private String opinion;
-	
+
 	/**
 	 * 审核时间
 	 */
@@ -120,7 +119,6 @@ public class JointTask extends BaseModel {
 	public JointTask() {
 	}
 
-	
 	@Id
 	@GeneratedValue(generator = "hibseq")
 	@GenericGenerator(name = "hibseq", strategy = "hilo")
@@ -135,11 +133,11 @@ public class JointTask extends BaseModel {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "GENERIC_CASE")
-	public GenericCase getGenericCase() {
+	public FoodCase getGenericCase() {
 		return this.genericCase;
 	}
 
-	public void setGenericCase(GenericCase genericCase) {
+	public void setGenericCase(FoodCase genericCase) {
 		this.genericCase = genericCase;
 	}
 

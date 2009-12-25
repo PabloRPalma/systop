@@ -14,12 +14,11 @@ import org.hibernate.annotations.GenericGenerator;
 import com.systop.core.model.BaseModel;
 
 /**
- * 评估附件表 The persistent class for the ASSESSMENT_ATTACH database table.
- * @author DU
+ * 评估附件表
  */
-@SuppressWarnings("serial")
 @Entity
-@Table(name = "ASSESSMENT_ATTACH", schema = "FSMIS")
+@Table(name = "ASSESSMENT_ATTACHS", schema = "FSMIS")
+@SuppressWarnings("serial")
 public class AssessmentAttach extends BaseModel {
 
 	/**

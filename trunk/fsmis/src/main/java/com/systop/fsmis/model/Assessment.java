@@ -24,85 +24,85 @@ import com.systop.common.modules.security.user.model.User;
 import com.systop.core.model.BaseModel;
 
 /**
- * 评估表 The persistent class for the ASSESSMENT database table.
- * @author DU
+ * 评估表
  */
-@SuppressWarnings("serial")
 @Entity
-@Table(name = "ASSESSMENT", schema = "FSMIS")
+@Table(name = "ASSESSMENTS", schema = "FSMIS")
+@SuppressWarnings("serial")
 public class Assessment extends BaseModel {
 
 	/**
-   * 主键
-   */
+	 * 主键
+	 */
 	private Integer id;
 	/**
-   * 基本案件
-   */
-	private GenericCase genericCase;
+	 * 基本案件
+	 */
+	private FoodCase genericCase;
 	/**
-   * 综合案件
-   */
+	 * 综合案件
+	 */
 	private CompositiveCase compositiveCase;
 	/**
-   * 审核人
-   */
+	 * 审核人
+	 */
 	private User usersByAuditor;
 	/**
-   * 申请人
-   */
+	 * 申请人
+	 */
 	private User usersByProposer;
 	/**
-   * 申请日期
-   */
+	 * 申请日期
+	 */
 	private Date askDate;
 	/**
-   * 申请原因
-   */
+	 * 申请原因
+	 */
 	private Clob askCause;
 	/**
-   * 审核日期
-   */
+	 * 审核日期
+	 */
 	private Date auditDate;
 	/**
-   * 是否通过
-   */
+	 * 是否通过
+	 */
 	private Character isConsent;
 	/**
-   * 结果日期
-   */
+	 * 结果日期
+	 */
 	private Date resultDate;
 	/**
-   * 评估结果
-   */
+	 * 评估结果
+	 */
 	private String result;
 	/**
-   * 是否完成
-   */
+	 * 是否完成
+	 */
 	private Character isComplete;
 	/**
-   * 专家组长ID
-   */
+	 * 专家组长ID
+	 */
 	private Long leaderId;
 	/**
-   * 专家
-   */
+	 * 专家
+	 */
 	private Set<Expert> experts = new HashSet<Expert>(0);
 	/**
-   * 附件
-   */
-	private Set<AssessmentAttach> assessmentAttachs = new HashSet<AssessmentAttach>(0);
+	 * 附件
+	 */
+	private Set<AssessmentAttach> assessmentAttachs = new HashSet<AssessmentAttach>(
+			0);
 
 	/**
-   * 缺省构造器
-   */
+	 * 缺省构造器
+	 */
 	public Assessment() {
 	}
 
 	@Id
-  @GeneratedValue(generator = "hibseq")
-  @GenericGenerator(name = "hibseq", strategy = "hilo")
-  @Column(name = "ID", unique = true, nullable = false)
+	@GeneratedValue(generator = "hibseq")
+	@GenericGenerator(name = "hibseq", strategy = "hilo")
+	@Column(name = "ID", unique = true, nullable = false)
 	public Integer getId() {
 		return this.id;
 	}
@@ -113,11 +113,11 @@ public class Assessment extends BaseModel {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "GENERIC_CASE")
-	public GenericCase getGenericCase() {
+	public FoodCase getGenericCase() {
 		return this.genericCase;
 	}
 
-	public void setGenericCase(GenericCase genericCase) {
+	public void setGenericCase(FoodCase genericCase) {
 		this.genericCase = genericCase;
 	}
 
