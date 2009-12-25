@@ -85,10 +85,13 @@ public class FoodCase extends BaseModel {
 	 */
 	private String isSubmitSj;
 	private Date submitSjTime;
-
-	private Set<SmsSend> smsSendses = new HashSet<SmsSend>(0);
-	private Set<Assessment> assessmentses = new HashSet<Assessment>(0);
+	
+	
 	private Set<Task> taskses = new HashSet<Task>(0);
+
+	private Set<JointTask> jointTaskses = new HashSet<JointTask>(0);
+
+	private Set<Assessment> assessmentses = new HashSet<Assessment>(0);
 
 	private Set<FoodCase> submitCases = new HashSet<FoodCase>(0);
 
@@ -102,7 +105,8 @@ public class FoodCase extends BaseModel {
 	 */
 	private Set<FoodCase> genericCases = new HashSet<FoodCase>(0);
 
-	private Set<JointTask> jointTaskses = new HashSet<JointTask>(0);
+	private Set<SmsSend> smsSendses = new HashSet<SmsSend>(0);
+
 	private Set<SmsReceive> smsReceiveses = new HashSet<SmsReceive>(0);
 
 	public FoodCase() {
