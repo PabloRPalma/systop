@@ -32,10 +32,6 @@ public class SmsSend extends BaseModel {
 	 */
 	private FsCase fsCase;
 	/**
-	 * 综合案件
-	 */
-	private CompositiveCase compositiveCase;
-	/**
 	 * 接收手机号码
 	 */
 	private String mobileNum;
@@ -92,16 +88,6 @@ public class SmsSend extends BaseModel {
 
 	public void setFsCase(FsCase fsCase) {
 		this.fsCase = fsCase;
-	}
-
-	@ManyToOne(cascade = {}, fetch = FetchType.LAZY)
-	@JoinColumn(name = "COMPOSITIVE_CASE")
-	public CompositiveCase getCompositiveCase() {
-		return this.compositiveCase;
-	}
-
-	public void setCompositiveCase(CompositiveCase compositiveCase) {
-		this.compositiveCase = compositiveCase;
 	}
 
 	@Column(name = "MOBILE_NUM", length = 40)

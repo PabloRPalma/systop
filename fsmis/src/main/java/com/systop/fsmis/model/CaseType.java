@@ -1,6 +1,5 @@
 package com.systop.fsmis.model;
 
-
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -34,10 +33,9 @@ public class CaseType extends BaseModel {
 	/** 描述 */
 	private String descn;
 	/** 类别对应的一般事件 */
-	private Set<FsCase> genericCases = new HashSet<FsCase>(0);
+	private Set<FsCase> fsCases = new HashSet<FsCase>(0);
 	/** 类别记录 */
 	private Set<CaseType> caseTypes = new HashSet<CaseType>(0);
-
 
 	@Id
 	@GeneratedValue(generator = "hibseq")
@@ -80,12 +78,12 @@ public class CaseType extends BaseModel {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "caseType")
-	public Set<FsCase> getGenericCases() {
-		return this.genericCases;
+	public Set<FsCase> getFsCases() {
+		return this.fsCases;
 	}
 
-	public void setGenericCases(Set<FsCase> genericCases) {
-		this.genericCases = genericCases;
+	public void setFsCases(Set<FsCase> fsCases) {
+		this.fsCases = fsCases;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "caseType")

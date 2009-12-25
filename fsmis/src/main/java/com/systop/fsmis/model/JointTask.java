@@ -42,11 +42,6 @@ public class JointTask extends BaseModel {
 	private FsCase fsCase;
 
 	/**
-	 * 综合案件
-	 */
-	private CompositiveCase compositiveCase;
-
-	/**
 	 * 标题
 	 */
 	private String title;
@@ -139,16 +134,6 @@ public class JointTask extends BaseModel {
 
 	public void setFsCase(FsCase fsCase) {
 		this.fsCase = fsCase;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "COMPOSITIVE_CASE")
-	public CompositiveCase getCompositiveCase() {
-		return this.compositiveCase;
-	}
-
-	public void setCompositiveCase(CompositiveCase compositiveCase) {
-		this.compositiveCase = compositiveCase;
 	}
 
 	@Column(name = "TITLE", length = 510)

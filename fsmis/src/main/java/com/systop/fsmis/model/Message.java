@@ -4,6 +4,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -11,13 +12,15 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import com.systop.common.modules.security.user.model.User;
 
 @Entity
 @Table(name = "MESSAGES", schema="FSMIS")
 public class Message implements java.io.Serializable {
 
-	private long id;
+	private Integer id;
 	private User usersByReceiver;
 	private User usersBySender;
 	private String content;
@@ -28,28 +31,15 @@ public class Message implements java.io.Serializable {
 	public Message() {
 	}
 
-	public Message(long id) {
-		this.id = id;
-	}
-
-	public Message(long id, User usersByReceiver, User usersBySender,
-			String content, Date createTime, Date receiveTime, Character isNew) {
-		this.id = id;
-		this.usersByReceiver = usersByReceiver;
-		this.usersBySender = usersBySender;
-		this.content = content;
-		this.createTime = createTime;
-		this.receiveTime = receiveTime;
-		this.isNew = isNew;
-	}
-
 	@Id
-	@Column(name = "ID", unique = true, nullable = false, precision = 10, scale = 0)
-	public long getId() {
+	@GeneratedValue(generator = "hibseq")
+	@GenericGenerator(name = "hibseq", strategy = "hilo")
+	@Column(name = "ID", unique = true, nullable = false)
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

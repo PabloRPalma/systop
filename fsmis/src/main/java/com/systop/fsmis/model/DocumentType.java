@@ -20,20 +20,20 @@ import com.systop.core.model.BaseModel;
  * 文档类别
  */
 @Entity
-@Table(name = "DOCUMENT_TYPES")
+@Table(name = "DOCUMENT_TYPES", schema="FSMIS")
 public class DocumentType extends BaseModel implements java.io.Serializable {
 
-	/**主键*/
+	/** 主键 */
 	private long id;
-	/**上级栏目*/
+	/** 上级栏目 */
 	private DocumentType documentType;
-	/**名称*/
+	/** 名称 */
 	private String name;
-	/**描述*/
+	/** 描述 */
 	private String descn;
-	/**包含栏目*/
+	/** 包含栏目 */
 	private Set<DocumentType> documentTypes = new HashSet<DocumentType>(0);
-	/**包含文章*/
+	/** 包含文章 */
 	private Set<Document> documents = new HashSet<Document>(0);
 
 	@Id

@@ -33,10 +33,10 @@ public class SmsCount extends BaseModel {
 	 */
 	private Date sendDate;
 
-	  @Id
-	  @GeneratedValue(generator = "hibseq")
-	  @GenericGenerator(name = "hibseq", strategy = "hilo")
-	  @Column(name = "ID", unique = true, nullable = false)
+	@Id
+	@GeneratedValue(generator = "hibseq")
+	@GenericGenerator(name = "hibseq", strategy = "hilo")
+	@Column(name = "ID", unique = true, nullable = false)
 	public Integer getId() {
 		return this.id;
 	}
