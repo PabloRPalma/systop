@@ -10,22 +10,6 @@
 <%@include file="/common/validator.jsp"%>
 <script type="text/javascript" src="${ctx}/scripts/fckeditor/fckeditor.js"></script>
 <link href="${ctx}/styles/treeSelect.css" type='text/css' rel='stylesheet'>
-<script type="text/javascript">
-Ext.onReady(function(){
-    var tabs = new Ext.TabPanel({
-        renderTo: 'tabs',
-        anchor : '100% 100%',
-        height : 380,
-        activeTab: 0,
-        frame:false,
-        defaults:{autoHeight: false},
-        items:[
-            {contentEl:'basic', title: '基本信息'},
-            {contentEl:'reward', title: '企业诚信'}
-        ]
-    });
-});
-</script>
 <style type="text/css">
 #mytable {
 	border: 0px solid #A6C9E2;
@@ -42,6 +26,22 @@ Ext.onReady(function(){
 </style>
 </head>
 <body onLoad="preFckEditor()">
+<script type="text/javascript">
+Ext.onReady(function(){
+    var tabs = new Ext.TabPanel({
+        renderTo: 'tabs',
+        anchor : '100% 100%',
+        height : 380,
+        activeTab: 0,
+        frame:false,
+        defaults:{autoHeight: false},
+        items:[
+            {contentEl:'basic', title: '基本信息'},
+            {contentEl:'reward', title: '企业诚信'}
+        ]
+    });
+});
+</script>
 <div class="x-panel">
 <div class="x-panel-header">编辑企业信息</div>
 <div class="x-toolbar">
@@ -55,6 +55,7 @@ Ext.onReady(function(){
       </tr>
     </table>
 </div>
+<div><%@ include file="/common/messages.jsp"%></div>
 <s:form id="companyForm" action="save.do" method="post" theme="simple" validate="true" enctype="multipart/form-data">
 <div id="tabs">
 <div id="basic" class="x-hide-display">
