@@ -60,7 +60,7 @@ public class Supervisor extends BaseModel {
 	/**是否负责人*/
 	private String isLeader;
 	/**一般案件*/
-	private Set<FoodCase> genericCases = new HashSet<FoodCase>(0);
+	private Set<FsCase> genericCases = new HashSet<FsCase>(0);
 
 	@Id
 	@GeneratedValue(generator = "hibseq")
@@ -194,11 +194,11 @@ public class Supervisor extends BaseModel {
 	}
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "supervisor")
-	public Set<FoodCase> getGenericCases() {
+	public Set<FsCase> getGenericCases() {
 		return this.genericCases;
 	}
 
-	public void setGenericCases(Set<FoodCase> genericCases) {
+	public void setGenericCases(Set<FsCase> genericCases) {
 		this.genericCases = genericCases;
 	}
 
