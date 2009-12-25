@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class ExpertGroup implements java.io.Serializable {
 
 	private long id;
-	private Expert expert;
+	private Expert leader;
 	private Assessment assessment;
 	private String members;
 
@@ -36,12 +36,12 @@ public class ExpertGroup implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "LEADER")
-	public Expert getExpert() {
-		return this.expert;
+	public Expert getLeader() {
+		return this.leader;
 	}
 
-	public void setExpert(Expert expert) {
-		this.expert = expert;
+	public void setLeader(Expert leader) {
+		this.leader = leader;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
