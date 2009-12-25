@@ -162,7 +162,7 @@ public class JointTask extends BaseModel {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "jointTask")
-	public Set<JointTaskDetail> getJTaskDetailses() {
+	public Set<JointTaskDetail> getTaskDetailses() {
 		return this.taskDetailses;
 	}
 
@@ -180,7 +180,7 @@ public class JointTask extends BaseModel {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "jointTask")
-	public Set<SmsSend> getSmsSendse() {
+	public Set<SmsSend> getSmsSendses() {
 		return this.smsSendses;
 	}
 

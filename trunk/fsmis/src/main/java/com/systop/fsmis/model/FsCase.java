@@ -130,7 +130,7 @@ public class FsCase extends BaseModel {
 		return this.supervisor;
 	}
 
-	public void setSupervisors(Supervisor supervisor) {
+	public void setSupervisor(Supervisor supervisor) {
 		this.supervisor = supervisor;
 	}
 
