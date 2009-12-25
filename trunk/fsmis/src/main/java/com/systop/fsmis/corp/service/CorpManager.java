@@ -23,6 +23,11 @@ public class CorpManager extends BaseGenericsManager<Corp> {
 	 */
 	@Transactional
 	public void save(Corp corp) {
+		if (getDao().exists(corp, "name")) {
+			if (StringUtils.isNotEmpty(corp.getName())) {
+				throw new ApplicationException("企业'" + corp.getName() + "'已存在。");
+			}
+		}
 		if (getDao().exists(corp, "businessLicense")) {
 			if (StringUtils.isNotEmpty(corp.getBusinessLicense())) {
 				throw new ApplicationException("添加的营业执照号已存在。");
