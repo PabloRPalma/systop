@@ -4,8 +4,8 @@
 <html>
 <head>
 <title>企业信息管理</title>
-<%@include file="/common/meta.jsp"%>
 <%@include file="/common/ec.jsp"%>
+<%@include file="/common/meta.jsp"%>
 <script type="text/javascript">
 function removeCompany(cID){
 	if(confirm("确实要删除该企业信息吗？")){
