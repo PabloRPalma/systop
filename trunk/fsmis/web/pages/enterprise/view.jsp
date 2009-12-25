@@ -5,26 +5,28 @@
 <head>
 <title>企业信息查看</title>
 <%@include file="/common/meta.jsp"%>
-<link type="text/css" href="${ctx}/scripts/jquery/ui/css/jquery-ui-min.css" rel="stylesheet" />
-<script type="text/javascript" src="${ctx}/scripts/jquery/jquery-1.3.2.js"></script>
-<script type="text/javascript" src="${ctx}/scripts/jquery/ui/jquery-ui-1.7.1.js"></script>
+<%@include file="/common/ec.jsp"%>
+<%@include file="/common/extjs.jsp"%>
 <script type="text/javascript">
-$(function(){
-	var hasReward = $('#rewardContent').val();
-	var punishListSize = $('#psRecordSize').val();
-	if (hasReward == "" || hasReward == null) {
-		$('#reward').hide();
-	}
-	if (punishListSize == 0) {
-		$('#punish').hide();
-	}
-	// Tabs
-	$('#tabs').tabs();
+Ext.onReady(function(){
+    var tabs = new Ext.TabPanel({
+        renderTo: 'tabs',
+        anchor : '100% 100%',
+        activeTab: 0,
+        frame:false,
+        defaults:{autoHeight: false},
+        items:[
+            {contentEl:'basic', title: '基本信息'},
+            {contentEl:'descr', title: '企业简介'},
+            {contentEl:'reward', title: '奖励记录'},
+            {contentEl:'punish', title: '处罚记录'}
+        ]
+    });
 });
 </script>
 <style type="text/css">
 #mytable {
-	border: 1px solid #A6C9E2;
+	border: 0px solid #A6C9E2;
 	margin-left: -21px;
 	margin-top: -10px;
 	width: 80%;
@@ -39,7 +41,7 @@ $(function(){
 </head>
 <body>
 <div class="x-panel">
-<div class="x-panel-header">诚信企业管理&nbsp;>&nbsp;企业列表&nbsp;>&nbsp;企业信息</div>
+<div class="x-panel-header">诚信企业管理&nbsp;&gt;&nbsp;企业列表&nbsp;&gt;&nbsp;企业信息</div>
 <div class="x-toolbar">
     <table width="100%">
       <tr>
@@ -53,17 +55,9 @@ $(function(){
     </table>
 </div>
 <div class="x-panel-body">
-<s:hidden id="psRecordSize" name="psRecordSize" />
-<s:hidden id="rewardContent" name="model.integrityRecord" />
 <div id="tabs">
-<ul>
-	<li><a href="#tabs-1">基本信息</a></li>
-	<li><a href="#tabs-2">企业简介</a></li>
-	<li id="reward"><a href="#tabs-3">奖励记录</a></li>
-	<li id="punish"><a href="#tabs-4">处罚记录</a></li>
-</ul>
-<div id="tabs-1" style="margin-bottom: -16px;">
-  <table id="mytable" height="320">
+<div id="basic" class="x-hide-display">
+  <table id="mytable" height="350">
 	<tr>
 		<td width="498">
 		<table width="498" align="left" border="0" cellpadding="0"
@@ -182,7 +176,7 @@ $(function(){
 	</tr>
   </table>
 </div>
-<div id="tabs-2" style="margin-bottom: -16px;">
+<div id="descr" class="x-hide-display">
   <table id="mytable" height="320">
 	<tr>
 	  <td height="200" align="left" valign="top">
@@ -192,7 +186,7 @@ $(function(){
 	</tr>
   </table>
 </div>
-<div id="tabs-3" style="margin-bottom: -16px;">
+<div id="reward" class="x-hide-display">
   <table id="mytable" height="320">
 	<tr>
 	  <td height="200" align="left" valign="top">
@@ -202,7 +196,7 @@ $(function(){
 	</tr>
   </table>
 </div>
-<div id="tabs-4" style="margin-bottom: -16px;">
+<div id="punish" class="x-hide-display">
   <table id="mytable" height="320">
 	<tr>
 	  <td height="200" align="left" valign="top">
@@ -214,5 +208,7 @@ $(function(){
 </div>
 </div>
 </div>
+<s:hidden id="psRecordSize" name="psRecordSize" />
+<s:hidden id="rewardContent" name="model.integrityRecord" />
 </body>
 </html>
