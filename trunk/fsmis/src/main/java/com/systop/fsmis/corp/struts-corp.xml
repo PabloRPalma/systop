@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="fsmis.corp" extends="json"  namespace="/corp">
+		<action name="*" class="corpAction" method="{1}">
+			<result name="index">/pages/corp/index.jsp</result> 
+			<result name="input">/pages/corp/edit.jsp</result> 
+			<result name="success" type="redirect">index.do</result>
+			<result name="view">/pages/corp/view.jsp</result>
+			<result type="json" name="jsonRst">
+		   		<param name="root">delResult</param>
+			</result>			
+		</action>
+	</package>
+</struts>
+
