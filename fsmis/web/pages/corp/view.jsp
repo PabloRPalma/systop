@@ -41,7 +41,7 @@ Ext.onReady(function(){
 </head>
 <body>
 <div class="x-panel">
-<div class="x-panel-header">企业信息</div>
+<div class="x-panel-header">查看企业信息</div>
 <div class="x-toolbar">
     <table width="100%">
       <tr>

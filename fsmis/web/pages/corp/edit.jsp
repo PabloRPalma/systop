@@ -10,10 +10,40 @@
 <%@include file="/common/validator.jsp"%>
 <script type="text/javascript" src="${ctx}/scripts/fckeditor/fckeditor.js"></script>
 <link href="${ctx}/styles/treeSelect.css" type='text/css' rel='stylesheet'>
+<script type="text/javascript">
+Ext.onReady(function(){
+    var tabs = new Ext.TabPanel({
+        renderTo: 'tabs',
+        anchor : '100% 100%',
+        height : 380,
+        activeTab: 0,
+        frame:false,
+        defaults:{autoHeight: false},
+        items:[
+            {contentEl:'basic', title: '基本信息'},
+            {contentEl:'reward', title: '企业诚信'}
+        ]
+    });
+});
+</script>
+<style type="text/css">
+#mytable {
+	border: 0px solid #A6C9E2;
+	margin-left: 0px;
+	margin-top: 0px;
+	width: 100%;
+	border-collapse: collapse;
+}
+
+#mytable td {
+	border: 0px solid #A6C9E2;
+	height: 28;
+}
+</style>
 </head>
-<body onload="preFckEditor()">
+<body onLoad="preFckEditor()">
 <div class="x-panel">
-<div class="x-panel-header">诚信企业管理&nbsp;&gt;&nbsp;企业列表&nbsp;&gt;&nbsp;企业信息</div>
+<div class="x-panel-header">编辑企业信息</div>
 <div class="x-toolbar">
     <table width="100%">
       <tr>
@@ -25,121 +55,116 @@
       </tr>
     </table>
 </div>
-<div class="x-panel-body">
-<div align="center" >
- <s:form id="companyForm" action="save.do" method="post" theme="simple" validate="true" enctype="multipart/form-data">
+<s:form id="companyForm" action="save.do" method="post" theme="simple" validate="true" enctype="multipart/form-data">
+<div id="tabs">
+<div id="basic" class="x-hide-display">
 	<s:hidden id="corpId" name="model.id" />
-	<fieldset style="width: 800px; padding: 10px 10px 10px 10px;">
-	<legend>企业信息</legend>
-	<table width="780">
-		<tr>
-			<td><%@ include file="/common/messages.jsp"%> </td>
-		</tr>
-	</table>
-	<table width="780" border="0">
+	<table id="mytable" height="340">
 	  <tr>
-		<td width="500">
-		  <table width="498" align="left" border="0" cellpadding="2" cellspacing="1">
+		<td width="520">
+		  <table width="562" align="left" border="0" cellspacing="2">
+		  <tr>
+            <td height="5" colspan="4"></td>
+          </tr>
           <tr>
-            <td width="119" align="right">企业名称：</td>
+            <td width="112" align="right">企业名称：</td>
             <td align="left" colspan="3">
-            	<s:textfield id="name" name="model.name" cssClass="required" cssStyle="width:350px" />
+            	<s:textfield id="name" name="model.name" cssClass="required" cssStyle="width:365px" />
                 <font color="red">&nbsp;*</font> 
             </td>
           </tr>
           <tr>
-            <td width="119" align="right">地　址：</td>
+            <td width="112" align="right">地　址：</td>
             <td align="left" colspan="3">
-            	<s:textfield id="address" name="model.address" cssClass="required" cssStyle="width:350px" />
+            	<s:textfield id="address" name="model.address" cssClass="required" cssStyle="width:365px" />
                 <font color="red">&nbsp;*</font> </td>
           </tr>
           <tr>
-            <td width="119" align="right">法　人：</td>
+            <td width="112" align="right">法　人：</td>
             <td align="left" colspan="3">
-            	<s:textfield id="legalPerson" name="model.legalPerson" cssStyle="width:350px" />
+            	<s:textfield id="legalPerson" name="model.legalPerson" cssStyle="width:365px" />
             </td>
           </tr>
           <tr>
-            <td width="119" align="right">营业执照：</td>
-            <td width="149" align="left">
+            <td width="112" align="right">营业执照：</td>
+            <td width="129" align="left">
             	<s:textfield id="businessLicense" name="model.businessLicense" />
             </td>
-            <td align="right" width="80">有效期：</td>
-            <td width="150" align="left">
+            <td align="right" width="90">有效期：</td>
+            <td width="213" align="left">
             	<input type="text" name="model.businessLicenseDate" value='<s:date name="model.businessLicenseDate" format="yyyy-MM-dd"/>'
 				  onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})" class="Wdate" style="width:115px;height:16px" readonly="readonly"/>
             </td>
           </tr>
           <tr>
-            <td width="119" align="right">生产许可证：</td>
-            <td width="149" align="left">
+            <td width="112" align="right">生产许可证：</td>
+            <td width="129" align="left">
             	<s:textfield id="produceLicense" name="model.produceLicense"/>
             </td>
-            <td align="right" width="80">有效期：</td>
-            <td width="150" align="left">
+            <td align="right" width="90">有效期：</td>
+            <td width="213" align="left">
             	<input type="text" name="model.produceLicenseDate" value='<s:date name="model.produceLicenseDate" format="yyyy-MM-dd"/>'
 				  onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})" class="Wdate" style="width:115px;height:16px" readonly="readonly"/>
             </td>
           </tr>
           <tr>
-            <td width="119" align="right">卫生许可证：</td>
-            <td width="149" align="left">
+            <td width="112" align="right">卫生许可证：</td>
+            <td width="129" align="left">
             	<s:textfield id="sanitationLicense" name="model.sanitationLicense" />
             </td>
-            <td align="right" width="80">有效期：</td>
-            <td width="150" align="left">
+            <td align="right" width="90">有效期：</td>
+            <td width="213" align="left">
             	<input type="text" name="model.sanitationLicenseDate" value='<s:date name="model.sanitationLicenseDate" format="yyyy-MM-dd"/>'
 				  onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})" class="Wdate" style="width:115px;height:16px" readonly="readonly"/>
             </td>
           </tr>
           <tr>
-            <td width="119" align="right">企业编号：</td>
-            <td width="149" align="left">
-            	<s:textfield id="code" name="model.code" cssClass="required" />
-                <font color="red">&nbsp;*</font> 
+            <td width="112" align="right">企业编号：</td>
+            <td width="129" align="left">
+            	<s:textfield id="code" name="model.code" />
             </td>
-            <td width="80" align="right">部　门：</td>
-            <td width="150" align="left">
+            <td width="90" align="right">部　门：</td>
+            <td width="213" align="left">
             	<div id="comboxWithTree" class="required" style="float: left;margin-left:0px;" ></div>
 				<s:hidden name="model.dept.id" id="deptId"></s:hidden>
             </td>
           </tr>
           <tr>
-            <td width="119" align="right">固　话：</td>
-            <td width="149" align="left">
+            <td width="112" align="right">固　话：</td>
+            <td width="129" align="left">
             	<s:textfield id="phone" name="model.phone"/>
             </td>
-            <td width="80" align="right">手　机：</td>
-            <td width="150" align="left">
-            	<s:textfield id="mobile" name="model.mobile" cssStyle="width:115px"/>
+            <td width="90" align="right">手　机：</td>
+            <td width="213" align="left">
+            	<s:textfield id="mobile" name="model.mobile" cssStyle="width:135px"/>
             </td>
           </tr>
           <tr>
-            <td width="119" align="right">诚信等级：</td>
-            <td width="149" align="left">
+            <td width="112" align="right">诚信等级：</td>
+            <td width="129" align="left">
             	<s:select id="integrityGrade" name="model.integrityGrade" list="{'A','B','C','D'}" headerKey="" headerValue="诚信等级..."/>
             </td>
-            <td width="80" align="right">邮　编：</td>
-            <td width="150" align="left">
-            	<s:textfield id="zip" name="model.zip" cssStyle="width:115px"/>
+            <td width="90" align="right">邮　编：</td>
+            <td width="213" align="left">
+            	<s:textfield id="zip" name="model.zip" cssStyle="width:135px"/>
             </td>
           </tr>
           <tr>
-            <td width="119" align="right">经营范围：</td>
+            <td width="112" align="right">经营范围：</td>
             <td align="left" colspan="3">
-            	<s:textfield id="operateDetails" name="model.operateDetails" cssStyle="width:350px;"/>
+            	<s:textfield id="operateDetails" name="model.operateDetails" cssStyle="width:362px;"/>
             </td>
           </tr>
           <tr>
-            <td width="119" align="right">备　注：</td>
+            <td width="112" align="right">备　注：</td>
             <td align="left" colspan="3">
-            	<s:textfield id="remark" name="model.remark" cssStyle="width:350px;"/>
+            	<s:textfield id="remark" name="model.remark" cssStyle="width:362px;"/>
             </td>
           </tr>
           <tr>
-            <td width="119" align="right">企业简介：</td>
+            <td width="112" align="right">企业简介：</td>
             <td align="left" colspan="3">
-            	<s:textarea id="descn" name="model.descn" cssStyle="width:350px; height:70px"/>
+            	<s:textarea id="descn" name="model.descn" cssStyle="width:362px; height:70px"/>
             </td>
           </tr>
         </table></td>
@@ -170,28 +195,29 @@
 		</td>
 	  </tr>
 	</table>
-	<div class="x-toolbar" style="padding: 6px 0px 3px 0px; color:#15428B">
-	诚信记录
-	</div>
-	<table width="100%" align="center">
+</div>
+<div id="reward" class="x-hide-display">
+  <table id="mytable" height="380">
+	<tr>
+	  <td align="left" style="vertical-align: top;" width="100%">
+		<textarea id="integrityRecord" name="model.integrityRecord" cols="30" rows="8">${model.integrityRecord}</textarea>
+	  </td>
+	</tr>
+  </table>
+</div>
+</div>
+<table width="100%" style="margin-bottom: 0px;">
 		<tr>
-			<td align="left" width="100%">
-				<textarea id="integrityRecord" name="model.integrityRecord" cols="30" rows="8">${model.integrityRecord}</textarea>
-			</td>
+			<td height="5"></td>
 		</tr>
-	</table>
-	</fieldset>
-	<table width="600px" style="margin-bottom: 10px;">
 		<tr>
 			<td style="text-align: center;">
-				<s:submit value="保存" cssClass="button"/> 
+				<s:submit value="保存" cssClass="button"/>&nbsp;&nbsp;
 				<s:reset value="重置" cssClass="button"/>
 			</td>
 		</tr>
-	</table>
+</table>
 </s:form>
-</div>
-</div>
 </div>
 <script type="text/javascript">
   //删除照片
@@ -199,7 +225,7 @@
     if(confirm("确定要删除该企业的照片吗?")){           
     	var enId = $("#corpId")[0].value;
         $.ajax({
-    		url: '${ctx}/enterprise/deletePhoto.do',
+    		url: '${ctx}/corp/deletePhoto.do',
     		type: 'post',
     		dataType: 'json',
     		data: {corpId : enId},
@@ -228,7 +254,7 @@
 	var fckEditor = new FCKeditor( 'integrityRecord' ) ;
     fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
     fckEditor.ToolbarSet = 'BasicA';
-    fckEditor.Height = 230;
+    fckEditor.Height = 360;
     fckEditor.ReplaceTextarea();
 }
 </script>
