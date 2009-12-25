@@ -16,7 +16,7 @@ function removeCompany(cID){
 </head>
 <body>
 <div class="x-panel">
-<div class="x-panel-header">诚信企业管理&nbsp;>&nbsp;企业管理</div>
+<div class="x-panel-header">诚信企业管理&nbsp;&gt;&nbsp;企业管理</div>
 <div class="x-toolbar">
 <table width="99%">
 	<tr>

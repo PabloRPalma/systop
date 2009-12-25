@@ -13,7 +13,7 @@
 </head>
 <body onload="preFckEditor()">
 <div class="x-panel">
-<div class="x-panel-header">诚信企业管理&nbsp;>&nbsp;企业列表&nbsp;>&nbsp;企业信息</div>
+<div class="x-panel-header">诚信企业管理&nbsp;&gt;&nbsp;企业列表&nbsp;&gt;&nbsp;企业信息</div>
 <div class="x-toolbar">
     <table width="100%">
       <tr>
