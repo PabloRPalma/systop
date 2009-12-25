@@ -123,6 +123,14 @@ public class CorpAction extends ExtJsCrudAction<Corp, CorpManager> {
 			criteria.add(Restrictions.like("name", 
 					MatchMode.ANYWHERE.toMatchString(getModel().getName())));
 		}
+		if (StringUtils.isNotBlank(getModel().getLegalPerson())) {
+			criteria.add(Restrictions.like("legalPerson", 
+					MatchMode.ANYWHERE.toMatchString(getModel().getLegalPerson())));
+		}
+		if (StringUtils.isNotBlank(getModel().getAddress())) {
+			criteria.add(Restrictions.like("address", 
+					MatchMode.ANYWHERE.toMatchString(getModel().getAddress())));
+		}
 		return setupSort(criteria);
 	}
 	
