@@ -27,8 +27,8 @@ Ext.onReady(function(){
 <style type="text/css">
 #mytable {
 	border: 0px solid #A6C9E2;
-	margin-left: -21px;
-	margin-top: -10px;
+	margin-left: 0px;
+	margin-top: 0px;
 	width: 80%;
 	border-collapse: collapse;
 }
@@ -41,11 +41,13 @@ Ext.onReady(function(){
 </head>
 <body>
 <div class="x-panel">
-<div class="x-panel-header">诚信企业管理&nbsp;&gt;&nbsp;企业列表&nbsp;&gt;&nbsp;企业信息</div>
+<div class="x-panel-header">企业信息</div>
 <div class="x-toolbar">
     <table width="100%">
       <tr>
+      	<!--  
         <td align="left">&nbsp;<font color="#15428B"><b>所属单位：${model.dept.name}</b></font></td>
+        -->
         <td align="right">
           <a href="${ctx}/enterprise/index.do">
              <img src="${ctx}/images/icons/building_go.png" class="icon" border="0">企业列表&nbsp;&nbsp;
@@ -54,109 +56,108 @@ Ext.onReady(function(){
       </tr>
     </table>
 </div>
-<div class="x-panel-body">
 <div id="tabs">
 <div id="basic" class="x-hide-display">
-  <table id="mytable" height="350">
+  <table id="mytable" height="320">
 	<tr>
-		<td width="498">
-		<table width="498" align="left" border="0" cellpadding="0"
+		<td width="520">
+		  <table width="530" align="left" border="0" cellpadding="0"
 			cellspacing="0">
 			<tr>
-				<td class="simple" width="119" align="right">企业名称：</td>
+				<td class="simple" width="117" align="right">企业名称：</td>
 				<td class="simple" align="left" colspan="3"><s:textfield id="name"
-					name="model.name" cssStyle="width:370px" readonly="true" theme="simple" /></td>
+					name="model.name" cssStyle="width:375px" readonly="true" theme="simple" /></td>
 			</tr>
 			<tr>
-				<td width="119" align="right">地 址：</td>
+				<td width="117" align="right">地 址：</td>
 				<td align="left" colspan="3"><s:textfield id="address"
-					name="model.address" cssStyle="width:370px" cssClass="inputBorder"
+					name="model.address" cssStyle="width:375px" cssClass="inputBorder"
 					readonly="true" />
 			</tr>
 			<tr>
-				<td width="119" align="right">法 人：</td>
+				<td width="117" align="right">法 人：</td>
 				<td align="left" colspan="3"><s:textfield id="legalPerson"
-					name="model.legalPerson" cssStyle="width:370px"
+					name="model.legalPerson" cssStyle="width:375px"
 					cssClass="inputBorder" readonly="true" /></td>
 			</tr>
 			<tr>
-				<td width="119" align="right">营业执照：</td>
-				<td width="149" align="left"><s:textfield
+				<td width="117" align="right">营业执照：</td>
+				<td width="139" align="left"><s:textfield
 					id="businessLicenseCode" name="model.businessLicenseCode"
 					cssClass="inputBorder" readonly="true" /></td>
-				<td align="right" width="80">有效期：</td>
-				<td width="150" align="left"><input type="text"
+				<td align="right" width="71">有效期：</td>
+				<td width="203" align="left"><input type="text"
 					name="model.businessLicenseDate"
 					value='<s:date name="model.businessLicenseDate" format="yyyy-MM-dd"/>'
 					class="inputBorder" style="height: 16px"
 					readonly="readonly" /></td>
 			</tr>
 			<tr>
-				<td width="119" align="right">生产许可证：</td>
-				<td width="149" align="left"><s:textfield
+				<td width="117" align="right">生产许可证：</td>
+				<td width="139" align="left"><s:textfield
 					id="produceLicenseCode" name="model.produceLicenseCode"
 					cssClass="inputBorder" readonly="true" /></td>
-				<td align="right" width="80">有效期：</td>
-				<td width="150" align="left"><input type="text"
+				<td align="right" width="71">有效期：</td>
+				<td width="203" align="left"><input type="text"
 					name="model.produceLicenseDate"
 					value='<s:date name="model.produceLicenseDate" format="yyyy-MM-dd"/>'
 					class="inputBorder" style="height: 16px"
 					readonly="readonly" /></td>
 			</tr>
 			<tr>
-				<td width="119" align="right">卫生许可证：</td>
-				<td width="149" align="left"><s:textfield
+				<td width="117" align="right">卫生许可证：</td>
+				<td width="139" align="left"><s:textfield
 					id="sanitationLicenseCode" name="model.sanitationLicenseCode"
 					cssClass="inputBorder" readonly="true" /></td>
-				<td align="right" width="80">有效期：</td>
-				<td width="150" align="left"><input type="text"
+				<td align="right" width="71">有效期：</td>
+				<td width="203" align="left"><input type="text"
 					name="model.sanitationLicenseDate"
 					value='<s:date name="model.sanitationLicenseDate" format="yyyy-MM-dd"/>'
 					class="inputBorder" style="height: 16px"
 					readonly="readonly" /></td>
 			</tr>
 			<tr>
-				<td width="119" align="right">企业编号：</td>
-				<td width="149" align="left"><s:textfield id="code"
+				<td width="117" align="right">企业编号：</td>
+				<td width="139" align="left"><s:textfield id="code"
 					name="model.code" cssClass="inputBorder" readonly="true" /></td>
-				<td width="80" align="right">部 门：</td>
-				<td width="150" align="left"><s:textfield
+				<td width="71" align="right">部 门：</td>
+				<td width="203" align="left"><s:textfield
 					name="model.dept.name"  cssClass="inputBorder" readonly="true" /></td>
 			</tr>
 			<tr>
-				<td width="119" align="right">固 话：</td>
-				<td width="149" align="left"><s:textfield id="phone"
+				<td width="117" align="right">固 话：</td>
+				<td width="139" align="left"><s:textfield id="phone"
 					name="model.phone" cssClass="inputBorder" readonly="true" /></td>
-				<td width="80" align="right">手 机：</td>
-				<td width="150" align="left"><s:textfield id="mobile"
+				<td width="71" align="right">手 机：</td>
+				<td width="203" align="left"><s:textfield id="mobile"
 					name="model.mobile"  cssClass="inputBorder"
 					readonly="true" /></td>
 			</tr>
 			<tr>
-				<td width="119" align="right">诚信等级：</td>
-				<td width="149" align="left"><s:textfield id="integrityGrade"
+				<td width="117" align="right">诚信等级：</td>
+				<td width="139" align="left"><s:textfield id="integrityGrade"
 					name="model.integrityGrade" cssClass="inputBorder" readonly="true" />
 				</td>
-				<td width="80" align="right">邮 编：</td>
-				<td width="150" align="left"><s:textfield id="zip"
+				<td width="71" align="right">邮 编：</td>
+				<td width="203" align="left"><s:textfield id="zip"
 					name="model.zip"  cssClass="inputBorder"
 					readonly="true" /></td>
 			</tr>
 			<tr>
-				<td width="119" align="right">经营范围：</td>
+				<td width="117" align="right">经营范围：</td>
 				<td align="left" colspan="3"><s:textfield id="operateDetails"
-					name="model.operateDetails" cssStyle="width:370px;"
+					name="model.operateDetails" cssStyle="width:375px;"
 					cssClass="inputBorder" readonly="true" /></td>
 			</tr>
 			<tr>
-				<td width="119" align="right">备 注：</td>
+				<td width="117" align="right">备 注：</td>
 				<td align="left" colspan="3"><s:textfield id="remark"
-					name="model.remark" cssStyle="width:370px;" cssClass="inputBorder"
+					name="model.remark" cssStyle="width:375px;" cssClass="inputBorder"
 					readonly="true" /></td>
 			</tr>
-		</table>
+		  </table>
 		</td>
-		<td width="350" valign="top" align="left" style="border-left: 1px dotted #099EBD;">
+		<td width="300" valign="top" align="center" style="border-left: 1px dotted #099EBD;">
 		  <table width="100%" border="0">
 			<tr>
 				<td><c:if test="${not empty model.photoUrl}">
@@ -204,7 +205,6 @@ Ext.onReady(function(){
 	  </td>
 	</tr>
   </table>
-</div>
 </div>
 </div>
 </div>
