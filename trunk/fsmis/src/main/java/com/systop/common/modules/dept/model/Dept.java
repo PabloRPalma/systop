@@ -23,7 +23,7 @@ import org.hibernate.annotations.GenericGenerator;
 import com.systop.common.modules.security.user.model.User;
 import com.systop.core.model.BaseModel;
 import com.systop.fsmis.model.Corp;
-import com.systop.fsmis.model.FoodCase;
+import com.systop.fsmis.model.FsCase;
 import com.systop.fsmis.model.Supervisor;
 import com.systop.fsmis.model.TaskDetail;
 
@@ -93,7 +93,7 @@ public class Dept extends BaseModel implements Serializable {
 	/**
 	 * 部门对应的一般事件
 	 */
-	private Set<FoodCase> foodCases = new HashSet<FoodCase>(0);
+	private Set<FsCase> fsCases = new HashSet<FsCase>(0);
 	/**
 	 * 部门对应的任务详情
 	 */
@@ -213,13 +213,13 @@ public class Dept extends BaseModel implements Serializable {
 		this.supervisors = supervisors;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "dept")
-	public Set<FoodCase> getFoodCases() {
-		return this.foodCases;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "deptsByCounty")
+	public Set<FsCase> getFsCases() {
+		return this.fsCases;
 	}
 
-	public void setFoodCases(Set<FoodCase> foodCases) {
-		this.foodCases = foodCases;
+	public void setFsCases(Set<FsCase> fsCases) {
+		this.fsCases = fsCases;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "dept")
