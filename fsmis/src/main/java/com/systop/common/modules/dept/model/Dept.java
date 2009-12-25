@@ -22,7 +22,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import com.systop.common.modules.security.user.model.User;
 import com.systop.core.model.BaseModel;
-import com.systop.fsmis.model.Enterprise;
+import com.systop.fsmis.model.Corp;
 import com.systop.fsmis.model.GenericCase;
 import com.systop.fsmis.model.Supervisor;
 import com.systop.fsmis.model.TaskDetail;
@@ -85,7 +85,7 @@ public class Dept extends BaseModel implements Serializable {
     /**
      * 部门下企业
      */
-    private Set<Enterprise> enterprises = new HashSet<Enterprise>(0);
+    private Set<Corp> corps = new HashSet<Corp>(0);
 
     /**
      * 部门下信息员
@@ -195,12 +195,12 @@ public class Dept extends BaseModel implements Serializable {
     }
 
     @OneToMany(cascade = { }, fetch = FetchType.LAZY, mappedBy = "dept")    
-    public Set<Enterprise> getEnterprises() {
-			return enterprises;
+    public Set<Corp> getCorps() {
+			return corps;
 		}
 
-		public void setEnterprises(Set<Enterprise> enterprises) {
-			this.enterprises = enterprises;
+		public void setCorps(Set<Corp> corps) {
+			this.corps = corps;
 		}
 
 		@OneToMany(cascade = { }, fetch = FetchType.LAZY, mappedBy = "dept")
