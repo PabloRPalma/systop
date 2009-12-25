@@ -1,8 +1,8 @@
 package com.systop.fsmis.model;
 
-import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,7 +29,7 @@ public class SendType implements java.io.Serializable {
 	/**
 	 * 排号
 	 */
-	private BigDecimal sortId;
+	private Integer sortId;
 
 	private Set<DeptSendType> deptSendSypeses = new HashSet<DeptSendType>(0);
 
@@ -75,12 +75,12 @@ public class SendType implements java.io.Serializable {
 		this.descn = descn;
 	}
 
-	@Column(name = "SORT_ID", precision = 22, scale = 0)
-	public BigDecimal getSortId() {
+	@Column(name = "SORT_ID", precision = 22)
+	public Integer getSortId() {
 		return this.sortId;
 	}
 
-	public void setSortId(BigDecimal sortId) {
+	public void setSortId(Integer sortId) {
 		this.sortId = sortId;
 	}
 

@@ -22,7 +22,7 @@ import com.systop.core.model.BaseModel;
 public class Document extends BaseModel implements java.io.Serializable {
 
 	/** 主键 */
-	private long id;
+	private Integer id;
 	/** 文章类型 */
 	private DocumentType documentType;
 	/** 标题 */
@@ -38,11 +38,11 @@ public class Document extends BaseModel implements java.io.Serializable {
 	@GeneratedValue(generator = "hibseq")
 	@GenericGenerator(name = "hibseq", strategy = "hilo")
 	@Column(name = "ID", unique = true, nullable = false, precision = 10, scale = 0)
-	public long getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

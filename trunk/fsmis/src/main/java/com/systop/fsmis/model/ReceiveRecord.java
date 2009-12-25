@@ -23,7 +23,7 @@ public class ReceiveRecord implements java.io.Serializable {
 	private Integer id;
 	private Dept dept;
 	private Notice notice;
-	private Character isNew;
+	private String isNew;
 	private Date receiveDate;
 
 	public ReceiveRecord() {
@@ -62,11 +62,11 @@ public class ReceiveRecord implements java.io.Serializable {
 	}
 
 	@Column(name = "IS_NEW", length = 1)
-	public Character getIsNew() {
+	public String getIsNew() {
 		return this.isNew;
 	}
 
-	public void setIsNew(Character isNew) {
+	public void setIsNew(String isNew) {
 		this.isNew = isNew;
 	}
 

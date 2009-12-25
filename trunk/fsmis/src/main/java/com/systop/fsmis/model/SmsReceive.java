@@ -87,7 +87,7 @@ public class SmsReceive extends BaseModel {
 	}
 
 	@ManyToOne(cascade = {}, fetch = FetchType.LAZY)
-	@JoinColumn(name = "GENERIC_CASE")
+	@JoinColumn(name = "FS_CASE")
 	public FsCase getFsCase() {
 		return this.fsCase;
 	}

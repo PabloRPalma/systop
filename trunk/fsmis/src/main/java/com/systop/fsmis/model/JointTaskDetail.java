@@ -5,7 +5,6 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -13,11 +12,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.hibernate.annotations.GenericGenerator;
-
+import com.systop.common.modules.dept.model.Dept;
+import com.systop.common.modules.security.user.model.User;
 import com.systop.core.model.BaseModel;
 
 /**
@@ -28,77 +24,62 @@ import com.systop.core.model.BaseModel;
 @Table(name = "JOINT_TASK_DETAILS", schema="FSMIS")
 public class JointTaskDetail extends BaseModel {
 
-	/**
-	 * 主键
-	 */
 	private Integer id;
+	/**
+	 * 录入人
+	 */
+	private User inputer;
 	
 	/**
-	 * 所属联合任务
+	 * 执行部门
 	 */
-	private JointTask jointTask;
-	
-	/**
-	 * 填写人
-	 */
-	private String inputer;
+	private Dept dept;
 	
 	/**
 	 * 处理人
 	 */
 	private String processor;
-	
-	/**
-	 * 处理过程
-	 */
 	private String process;
-	
-	/**
-	 * 处理结果
-	 */
 	private String result;
-	
-	/**
-	 * 处理依据
-	 */
 	private String basis;
-	
-	/**
-	 * 是否牵头
-	 */
-	private Character isLeader;
-	
-	/**
-	 * 任务状态
-	 */
-	private Character status;
-	
-	/**
-	 * 任务完成时间
-	 */
+	private String isLeader;
+	private String status;
+	private Date receiveTime;
 	private Date completionTime;
-	
-	/**
-	 * 所属部门
-	 */
-	private Long dept;
 
-	/**
-	 * 缺省构造方法
-	 */
+	private JointTask jointTask;
+
 	public JointTaskDetail() {
 	}
 
 	@Id
-	@GeneratedValue(generator = "hibseq")
-	@GenericGenerator(name = "hibseq", strategy = "hilo")
-	@Column(name = "ID", unique = true, nullable = false)
+	@Column(name = "ID", unique = true, nullable = false, precision = 10, scale = 0)
 	public Integer getId() {
 		return this.id;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "INPUTER")
+	public User getInputer() {
+		return this.inputer;
+	}
+
+	public void setInputer(User inputer) {
+		this.inputer = inputer;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "DEPT")
+	public Dept getDept() {
+		return this.dept;
+	}
+
+	public void setDept(Dept dept) {
+		this.dept = dept;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -111,16 +92,7 @@ public class JointTaskDetail extends BaseModel {
 		this.jointTask = jointTask;
 	}
 
-	@Column(name = "INPUTER", length = 110)
-	public String getInputer() {
-		return this.inputer;
-	}
-
-	public void setInputer(String inputer) {
-		this.inputer = inputer;
-	}
-
-	@Column(name = "PROCESSOR", length = 110)
+	@Column(name = "PROCESSOR", length = 510)
 	public String getProcessor() {
 		return this.processor;
 	}
@@ -157,21 +129,31 @@ public class JointTaskDetail extends BaseModel {
 	}
 
 	@Column(name = "IS_LEADER", length = 1)
-	public Character getIsLeader() {
+	public String getIsLeader() {
 		return this.isLeader;
 	}
 
-	public void setIsLeader(Character isLeader) {
+	public void setIsLeader(String isLeader) {
 		this.isLeader = isLeader;
 	}
 
 	@Column(name = "STATUS", length = 1)
-	public Character getStatus() {
+	public String getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(Character status) {
+	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "RECEIVE_TIME", length = 11)
+	public Date getReceiveTime() {
+		return this.receiveTime;
+	}
+
+	public void setReceiveTime(Date receiveTime) {
+		this.receiveTime = receiveTime;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -184,41 +166,4 @@ public class JointTaskDetail extends BaseModel {
 		this.completionTime = completionTime;
 	}
 
-	@Column(name = "DEPT", precision = 10, scale = 0)
-	public Long getDept() {
-		return this.dept;
-	}
-
-	public void setDept(Long dept) {
-		this.dept = dept;
-	}
-
-	/**
-	 * @see Object#equals(Object)
-	 */
-	public boolean equals(Object other) {
-		if (this == other) {
-			return true;
-		}
-		if (!(other instanceof JointTaskDetail)) {
-			return false;
-		}
-		JointTaskDetail jointTaskDetail = (JointTaskDetail) other;
-		return new EqualsBuilder().append(this.getId(), jointTaskDetail.getId())
-				.isEquals();
-	}
-
-	/**
-	 * @see Object#hashCode()
-	 */
-	public int hashCode() {
-		return new HashCodeBuilder().append(getId()).toHashCode();
-	}
-
-	/**
-	 * @see Object#toString()
-	 */
-	public String toString() {
-		return new ToStringBuilder(this).append("id", getId()).toString();
-	}
 }

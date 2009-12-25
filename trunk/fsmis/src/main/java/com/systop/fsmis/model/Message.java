@@ -21,12 +21,12 @@ import com.systop.common.modules.security.user.model.User;
 public class Message implements java.io.Serializable {
 
 	private Integer id;
-	private User usersByReceiver;
-	private User usersBySender;
+	private User receiver;
+	private User sender;
 	private String content;
 	private Date createTime;
 	private Date receiveTime;
-	private Character isNew;
+	private String isNew;
 
 	public Message() {
 	}
@@ -45,22 +45,22 @@ public class Message implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "RECEIVER")
-	public User getUsersByReceiver() {
-		return this.usersByReceiver;
+	public User getReceiver() {
+		return this.receiver;
 	}
 
-	public void setUsersByReceiver(User usersByReceiver) {
-		this.usersByReceiver = usersByReceiver;
+	public void setReceiver(User receiver) {
+		this.receiver = receiver;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "SENDER")
-	public User getUsersBySender() {
-		return this.usersBySender;
+	public User getSender() {
+		return this.sender;
 	}
 
-	public void setUsersBySender(User usersBySender) {
-		this.usersBySender = usersBySender;
+	public void setSender(User sender) {
+		this.sender = sender;
 	}
 
 	@Column(name = "CONTENT", length = 500)
@@ -93,11 +93,11 @@ public class Message implements java.io.Serializable {
 	}
 
 	@Column(name = "IS_NEW", length = 1)
-	public Character getIsNew() {
+	public String getIsNew() {
 		return this.isNew;
 	}
 
-	public void setIsNew(Character isNew) {
+	public void setIsNew(String isNew) {
 		this.isNew = isNew;
 	}
 

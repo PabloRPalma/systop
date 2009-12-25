@@ -31,7 +31,7 @@ import com.systop.core.model.BaseModel;
 public class Assessment extends BaseModel {
 
 	private Integer id;
-	private FsCase fsCases;
+	private FsCase fsCase;
 	/**
 	 * 申请人
 	 */
@@ -53,7 +53,7 @@ public class Assessment extends BaseModel {
 	private Clob result;
 	private String isComplete;
 
-	private Set<AsseMember> asseMemberses = new HashSet<AsseMember>(0);
+	private Set<AsseMember> asseMemberse = new HashSet<AsseMember>(0);
 	private Set<AssessmentAttach> asseAtts = new HashSet<AssessmentAttach>(0);
 
 	public Assessment() {
@@ -74,11 +74,11 @@ public class Assessment extends BaseModel {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "FS_CASE")
 	public FsCase getFsCase() {
-		return this.fsCases;
+		return this.fsCase;
 	}
 
-	public void setFsCase(FsCase fsCases) {
-		this.fsCases = fsCases;
+	public void setFsCase(FsCase fsCase) {
+		this.fsCase = fsCase;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -178,11 +178,11 @@ public class Assessment extends BaseModel {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "assessment")
 	public Set<AsseMember> getAsseMemberse() {
-		return this.asseMemberses;
+		return this.asseMemberse;
 	}
 
-	public void setAsseMemberse(Set<AsseMember> asseMemberses) {
-		this.asseMemberses = asseMemberses;
+	public void setAsseMemberse(Set<AsseMember> asseMemberse) {
+		this.asseMemberse = asseMemberse;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "assessment")

@@ -7,7 +7,6 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,11 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.hibernate.annotations.GenericGenerator;
-
+import com.systop.common.modules.security.user.model.User;
 import com.systop.core.model.BaseModel;
 
 /**
@@ -28,96 +23,31 @@ import com.systop.core.model.BaseModel;
  */
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "JOINT_TASKS", schema="FSMIS")
+@Table(name = "JOINT_TASKS", schema = "FSMIS")
 public class JointTask extends BaseModel {
 
-	/**
-	 * 主键
-	 */
 	private Integer id;
-
-	/**
-	 * 一般案件
-	 */
 	private FsCase fsCase;
-
-	/**
-	 * 标题
-	 */
+	private User proposer;
+	private User auditor;
 	private String title;
-
-	/**
-	 * 描述
-	 */
 	private String descn;
-
-	/**
-	 * 申请人
-	 */
-	private String proposer;
-
-	/**
-	 * 创建日期
-	 */
 	private Date createDate;
-
-	/**
-	 * 规定完成时间
-	 */
 	private Date presetTime;
-
-	/**
-	 * 备注
-	 */
-	private String remark;
-
-	/**
-	 * 任务状态
-	 */
 	private Character status;
-
-	/**
-	 * 审核人
-	 */
-	private Long auditor;
-
-	/**
-	 * 是否审核
-	 */
 	private Character isAgree;
-
-	/**
-	 * 拟办意见
-	 */
 	private String opinion;
-
-	/**
-	 * 审核时间
-	 */
 	private Date auditDate;
 
-	/**
-	 * 联合任务明细
-	 */
-	private Set<JointTaskDetail> jointTaskDetails = new HashSet<JointTaskDetail>(
-			0);
+	private Set<JointTaskDetail> taskDetailses = new HashSet<JointTaskDetail>(0);
+	private Set<JointTaskAttach> taskAttachses = new HashSet<JointTaskAttach>(0);
+	private Set<SmsSend> smsSendses = new HashSet<SmsSend>(0);
 
-	/**
-	 * 联合任务附件
-	 */
-	private Set<JointTaskAttach> jointTaskAttachs = new HashSet<JointTaskAttach>(
-			0);
-
-	/**
-	 * 缺省构造方法
-	 */
 	public JointTask() {
 	}
 
 	@Id
-	@GeneratedValue(generator = "hibseq")
-	@GenericGenerator(name = "hibseq", strategy = "hilo")
-	@Column(name = "ID", unique = true, nullable = false)
+	@Column(name = "ID", unique = true, nullable = false, precision = 10, scale = 0)
 	public Integer getId() {
 		return this.id;
 	}
@@ -127,13 +57,33 @@ public class JointTask extends BaseModel {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "GENERIC_CASE")
+	@JoinColumn(name = "FS_CASE")
 	public FsCase getFsCase() {
 		return this.fsCase;
 	}
 
 	public void setFsCase(FsCase fsCase) {
 		this.fsCase = fsCase;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "AUDITOR")
+	public User getAuditor() {
+		return this.auditor;
+	}
+
+	public void setAuditor(User auditor) {
+		this.auditor = auditor;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "PROPOSER")
+	public User getProposer() {
+		return this.proposer;
+	}
+
+	public void setProposer(User proposer) {
+		this.proposer = proposer;
 	}
 
 	@Column(name = "TITLE", length = 510)
@@ -152,15 +102,6 @@ public class JointTask extends BaseModel {
 
 	public void setDescn(String descn) {
 		this.descn = descn;
-	}
-
-	@Column(name = "PROPOSER", length = 110)
-	public String getProposer() {
-		return this.proposer;
-	}
-
-	public void setProposer(String proposer) {
-		this.proposer = proposer;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -183,15 +124,6 @@ public class JointTask extends BaseModel {
 		this.presetTime = presetTime;
 	}
 
-	@Column(name = "REMARK", length = 510)
-	public String getRemark() {
-		return this.remark;
-	}
-
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
-
 	@Column(name = "STATUS", length = 1)
 	public Character getStatus() {
 		return this.status;
@@ -199,15 +131,6 @@ public class JointTask extends BaseModel {
 
 	public void setStatus(Character status) {
 		this.status = status;
-	}
-
-	@Column(name = "AUDITOR", precision = 10, scale = 0)
-	public Long getAuditor() {
-		return this.auditor;
-	}
-
-	public void setAuditor(Long auditor) {
-		this.auditor = auditor;
 	}
 
 	@Column(name = "IS_AGREE", length = 1)
@@ -239,49 +162,30 @@ public class JointTask extends BaseModel {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "jointTask")
-	public Set<JointTaskDetail> getJointTaskDetails() {
-		return this.jointTaskDetails;
+	public Set<JointTaskDetail> getJTaskDetailses() {
+		return this.taskDetailses;
 	}
 
-	public void setJointTaskDetails(Set<JointTaskDetail> jointTaskDetails) {
-		this.jointTaskDetails = jointTaskDetails;
+	public void setTaskDetailses(Set<JointTaskDetail> taskDetailses) {
+		this.taskDetailses = taskDetailses;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "jointTask")
-	public Set<JointTaskAttach> getJointTaskAttachs() {
-		return this.jointTaskAttachs;
+	public Set<JointTaskAttach> getTaskAttachses() {
+		return this.taskAttachses;
 	}
 
-	public void setJointTaskAttachs(Set<JointTaskAttach> jointTaskAttachs) {
-		this.jointTaskAttachs = jointTaskAttachs;
+	public void setTaskAttachses(Set<JointTaskAttach> taskAttachses) {
+		this.taskAttachses = taskAttachses;
 	}
 
-	/**
-	 * @see Object#equals(Object)
-	 */
-	public boolean equals(Object other) {
-		if (this == other) {
-			return true;
-		}
-		if (!(other instanceof JointTask)) {
-			return false;
-		}
-		JointTask jointTask = (JointTask) other;
-		return new EqualsBuilder().append(this.getId(), jointTask.getId())
-				.isEquals();
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "jointTask")
+	public Set<SmsSend> getSmsSendse() {
+		return this.smsSendses;
 	}
 
-	/**
-	 * @see Object#hashCode()
-	 */
-	public int hashCode() {
-		return new HashCodeBuilder().append(getId()).toHashCode();
+	public void setSmsSendses(Set<SmsSend> smsSendses) {
+		this.smsSendses = smsSendses;
 	}
 
-	/**
-	 * @see Object#toString()
-	 */
-	public String toString() {
-		return new ToStringBuilder(this).append("id", getId()).toString();
-	}
 }

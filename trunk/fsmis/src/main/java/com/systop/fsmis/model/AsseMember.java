@@ -21,7 +21,7 @@ public class AsseMember implements java.io.Serializable {
 	private Integer id;
 	private Expert expert;
 	private Assessment assessment;
-	private Character type;
+	private String type;
 	private String descn;
 
 	public AsseMember() {
@@ -60,11 +60,11 @@ public class AsseMember implements java.io.Serializable {
 	}
 
 	@Column(name = "TYPE", length = 1)
-	public Character getType() {
+	public String getType() {
 		return this.type;
 	}
 
-	public void setType(Character type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 
