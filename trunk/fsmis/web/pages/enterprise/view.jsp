@@ -4,9 +4,9 @@
 <html>
 <head>
 <title>企业信息查看</title>
-<%@include file="/common/meta.jsp"%>
 <%@include file="/common/ec.jsp"%>
 <%@include file="/common/extjs.jsp"%>
+<%@include file="/common/meta.jsp"%>
 <script type="text/javascript">
 Ext.onReady(function(){
     var tabs = new Ext.TabPanel({
@@ -29,7 +29,7 @@ Ext.onReady(function(){
 	border: 0px solid #A6C9E2;
 	margin-left: 0px;
 	margin-top: 0px;
-	width: 80%;
+	width: 100%;
 	border-collapse: collapse;
 }
 
