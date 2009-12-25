@@ -23,7 +23,7 @@ import org.hibernate.annotations.GenericGenerator;
 import com.systop.common.modules.security.user.model.User;
 import com.systop.core.model.BaseModel;
 import com.systop.fsmis.model.Corp;
-import com.systop.fsmis.model.GenericCase;
+import com.systop.fsmis.model.FoodCase;
 import com.systop.fsmis.model.Supervisor;
 import com.systop.fsmis.model.TaskDetail;
 
@@ -35,235 +35,238 @@ import com.systop.fsmis.model.TaskDetail;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "depts", uniqueConstraints = {})
-
 public class Dept extends BaseModel implements Serializable {
 
-    /**
-     * id
-     */
-    private Integer id;
-    /**
-     * 部门描述
-     */
-    private String descn;
-    /**
-     * 部门名称
-     */
-    private String name;
-    
-    /**
-     * 部门类别
-     */
-    private String type;
-    /**
-     * 部门编号规则：两位数字，从1自动排；
-     */
-    private String serialNo;
-    /**
-     * 部门类别
-     */
-    private String deptSort = "0";
-    /**
-     * 部门的角色
-
-    private Set<Role> roles = new HashSet<Role>(0);
-    */
-    /**
-     * 上级部门
-     */
-    private Dept parentDept;
-    /**
-     * 部门记录
-     */
-    private Set<Dept> childDepts = new HashSet<Dept>(0);
-    
-    /**
-     * 部门下用户
-     */
-    private Set<User> users = new HashSet<User>(0);
-    
-    /**
-     * 部门下企业
-     */
-    private Set<Corp> corps = new HashSet<Corp>(0);
-
-    /**
-     * 部门下信息员
-     */
-  	private Set<Supervisor> supervisors = new HashSet<Supervisor>(0);
-  	/**
-     * 部门对应的一般事件
-     */
-  	private Set<GenericCase> genericCases = new HashSet<GenericCase>(0);
 	/**
-     * 部门对应的任务详情
-     */
-  	private Set<TaskDetail> taskDetails = new HashSet<TaskDetail>(0);
-  	
-    /**
-     * 缺省构造
-     */
-    public Dept() {
-    }
+	 * id
+	 */
+	private Integer id;
+	/**
+	 * 部门描述
+	 */
+	private String descn;
+	/**
+	 * 部门名称
+	 */
+	private String name;
 
-    @Id
-    @GeneratedValue(generator = "hibseq")
-    @GenericGenerator(name = "hibseq", strategy = "hilo")
-    @Column(name = "ID", unique = true, nullable = false)
-    public Integer getId() {
-        return this.id;
-    }
+	/**
+	 * 部门类别
+	 */
+	private String type;
+	/**
+	 * 部门编号规则：两位数字，从1自动排；
+	 */
+	private String serialNo;
+	/**
+	 * 部门类别
+	 */
+	private String deptSort = "0";
+	/**
+	 * 部门的角色
+	 * 
+	 * private Set<Role> roles = new HashSet<Role>(0);
+	 */
+	/**
+	 * 上级部门
+	 */
+	private Dept parentDept;
+	/**
+	 * 部门记录
+	 */
+	private Set<Dept> childDepts = new HashSet<Dept>(0);
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	/**
+	 * 部门下用户
+	 */
+	private Set<User> users = new HashSet<User>(0);
 
-    @Column(name = "descn")
-    public String getDescn() {
-        return this.descn;
-    }
+	/**
+	 * 部门下企业
+	 */
+	private Set<Corp> corps = new HashSet<Corp>(0);
 
-    public void setDescn(String descn) {
-        this.descn = descn;
-    }
+	/**
+	 * 部门下信息员
+	 */
+	private Set<Supervisor> supervisors = new HashSet<Supervisor>(0);
+	/**
+	 * 部门对应的一般事件
+	 */
+	private Set<FoodCase> foodCases = new HashSet<FoodCase>(0);
+	/**
+	 * 部门对应的任务详情
+	 */
+	private Set<TaskDetail> taskDetails = new HashSet<TaskDetail>(0);
 
-    @Column(name = "name")
-    public String getName() {
-        return this.name;
-    }
-   
-    public void setName(String name) {
-        this.name = name;
-    }
+	/**
+	 * 缺省构造
+	 */
+	public Dept() {
+	}
 
-    @Column(name = "serial_no")
-    public String getSerialNo() {
-        return this.serialNo;
-    }
+	@Id
+	@GeneratedValue(generator = "hibseq")
+	@GenericGenerator(name = "hibseq", strategy = "hilo")
+	@Column(name = "ID", unique = true, nullable = false)
+	public Integer getId() {
+		return this.id;
+	}
 
-    public void setSerialNo(String serialNo) {
-        this.serialNo = serialNo;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    @Column(name = "dept_sort")
-    public String getDeptSort() {
-        return deptSort;
-    }
+	@Column(name = "descn")
+	public String getDescn() {
+		return this.descn;
+	}
 
-    public void setDeptSort(String deptSort) {
-        this.deptSort = deptSort;
-    }
+	public void setDescn(String descn) {
+		this.descn = descn;
+	}
 
-    /** 隐藏部门管理，对应的角色关联关系删除
-    @ManyToMany(cascade = {}, fetch = FetchType.LAZY, targetEntity = Role.class)
-    @JoinTable(name = "dept_role", joinColumns = {@JoinColumn(name = "dept_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id")})
-    public Set<Role> getRoles() {
-        return this.roles;
-    }
+	@Column(name = "name")
+	public String getName() {
+		return this.name;
+	}
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-    */
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    @ManyToOne(cascade = {}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id")
-    public Dept getParentDept() {
-        return this.parentDept;
-    }
+	@Column(name = "serial_no")
+	public String getSerialNo() {
+		return this.serialNo;
+	}
 
-    public void setParentDept(Dept parentDept) {
-        this.parentDept = parentDept;
-    }
+	public void setSerialNo(String serialNo) {
+		this.serialNo = serialNo;
+	}
 
-    @OneToMany(cascade = {}, fetch = FetchType.LAZY, mappedBy = "parentDept")
-    public Set<Dept> getChildDepts() {
-        return this.childDepts;
-    }
+	@Column(name = "dept_sort")
+	public String getDeptSort() {
+		return deptSort;
+	}
 
-    public void setChildDepts(Set<Dept> childDepts) {
-        this.childDepts = childDepts;
-    }
-    
-    @OneToMany(cascade = { }, fetch = FetchType.LAZY, mappedBy = "dept")
-    public Set<User> getUsers() {
-      return users;
-    }
+	public void setDeptSort(String deptSort) {
+		this.deptSort = deptSort;
+	}
 
-    public void setUsers(Set<User> users) {
-      this.users = users;
-    }
+	/**
+	 * 隐藏部门管理，对应的角色关联关系删除
+	 * 
+	 * @ManyToMany(cascade = {}, fetch = FetchType.LAZY, targetEntity =
+	 *                     Role.class)
+	 * @JoinTable(name = "dept_role", joinColumns =                 {@JoinColumn(name
+	 *  = "dept_id")}, inverseJoinColumns =
+	 *                 {@JoinColumn(name = "role_id")}) public
+	 *                 Set<Role> getRoles() { return this.roles; }
+	 * 
+	 *                 public void setRoles(Set<Role> roles) { this.roles =
+	 *                 roles; }
+	 */
 
-    @OneToMany(cascade = { }, fetch = FetchType.LAZY, mappedBy = "dept")    
-    public Set<Corp> getCorps() {
-			return corps;
+	@ManyToOne(cascade = {}, fetch = FetchType.LAZY)
+	@JoinColumn(name = "parent_id")
+	public Dept getParentDept() {
+		return this.parentDept;
+	}
+
+	public void setParentDept(Dept parentDept) {
+		this.parentDept = parentDept;
+	}
+
+	@OneToMany(cascade = {}, fetch = FetchType.LAZY, mappedBy = "parentDept")
+	public Set<Dept> getChildDepts() {
+		return this.childDepts;
+	}
+
+	public void setChildDepts(Set<Dept> childDepts) {
+		this.childDepts = childDepts;
+	}
+
+	@OneToMany(cascade = {}, fetch = FetchType.LAZY, mappedBy = "dept")
+	public Set<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
+	}
+
+	@OneToMany(cascade = {}, fetch = FetchType.LAZY, mappedBy = "dept")
+	public Set<Corp> getCorps() {
+		return corps;
+	}
+
+	public void setCorps(Set<Corp> corps) {
+		this.corps = corps;
+	}
+
+	@OneToMany(cascade = {}, fetch = FetchType.LAZY, mappedBy = "dept")
+	public Set<Supervisor> getSupervisors() {
+		return supervisors;
+	}
+
+	public void setSupervisors(Set<Supervisor> supervisors) {
+		this.supervisors = supervisors;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "dept")
+	public Set<FoodCase> getFoodCases() {
+		return this.foodCases;
+	}
+
+	public void setFoodCases(Set<FoodCase> foodCases) {
+		this.foodCases = foodCases;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "dept")
+	public Set<TaskDetail> getTaskDetails() {
+		return this.taskDetails;
+	}
+
+	public void setTaskDetails(Set<TaskDetail> taskDetails) {
+		this.taskDetails = taskDetails;
+	}
+
+	@Transient
+	public boolean getHasChild() {
+		return this.getChildDepts().size() > 0;
+	}
+
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object other) {
+		if (this == other) {
+			return true;
 		}
-
-		public void setCorps(Set<Corp> corps) {
-			this.corps = corps;
+		if (!(other instanceof Dept)) {
+			return false;
 		}
+		Dept castOther = (Dept) other;
+		return new EqualsBuilder().append(this.getId(), castOther.getId())
+				.isEquals();
+	}
 
-		@OneToMany(cascade = { }, fetch = FetchType.LAZY, mappedBy = "dept")
-		public Set<Supervisor> getSupervisors() {
-			return supervisors;
-		}
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder().append(getId()).toHashCode();
+	}
 
-		public void setSupervisors(Set<Supervisor> supervisors) {
-			this.supervisors = supervisors;
-		}
-		
-		@OneToMany(fetch = FetchType.LAZY, mappedBy = "dept")
-		public Set<GenericCase> getGenericCases() {
-			return this.genericCases;
-		}
-
-		public void setGenericCases(Set<GenericCase> genericCases) {
-			this.genericCases = genericCases;
-		}
-		@OneToMany(fetch = FetchType.LAZY, mappedBy = "dept")
-		public Set<TaskDetail> getTaskDetails() {
-			return this.taskDetails;
-		}
-
-		public void setTaskDetails(Set<TaskDetail> taskDetails) {
-			this.taskDetails = taskDetails;
-		}
-
-		@Transient
-    public boolean getHasChild() {
-        return this.getChildDepts().size() > 0;
-    }
-
-    /**
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (!(other instanceof Dept)) {
-            return false;
-        }
-        Dept castOther = (Dept) other;
-        return new EqualsBuilder().append(this.getId(), castOther.getId()).isEquals();
-    }
-
-    /**
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder().append(getId()).toHashCode();
-    }
-
-    /**
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this).append("id", getId()).toString();
-    }
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this).append("id", getId()).toString();
+	}
 
 	public String getType() {
 		return type;
