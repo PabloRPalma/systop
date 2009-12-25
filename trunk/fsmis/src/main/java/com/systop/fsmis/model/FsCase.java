@@ -28,7 +28,7 @@ import com.systop.core.model.BaseModel;
  */
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "FOOD_CASES", schema = "FSMIS")
+@Table(name = "FS_CASES", schema = "FSMIS")
 public class FsCase extends BaseModel {
 
 	private Integer id;
