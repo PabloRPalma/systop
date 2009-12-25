@@ -7,17 +7,20 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 @Table(name = "NOTICES", schema="FSMIS")
 public class Notice implements java.io.Serializable {
 
-	private long id;
+	private Integer id;
 	private String title;
 	private Clob content;
 	private Long publisher;
@@ -28,28 +31,15 @@ public class Notice implements java.io.Serializable {
 	public Notice() {
 	}
 
-	public Notice(long id) {
-		this.id = id;
-	}
-
-	public Notice(long id, String title, Clob content, Long publisher,
-			Date createTime, String att, Set<ReceiveRecord> receiveRecords) {
-		this.id = id;
-		this.title = title;
-		this.content = content;
-		this.publisher = publisher;
-		this.createTime = createTime;
-		this.att = att;
-		this.receiveRecords = receiveRecords;
-	}
-
 	@Id
-	@Column(name = "ID", unique = true, nullable = false, precision = 10, scale = 0)
-	public long getId() {
+	@GeneratedValue(generator = "hibseq")
+	@GenericGenerator(name = "hibseq", strategy = "hilo")
+	@Column(name = "ID", unique = true, nullable = false)
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

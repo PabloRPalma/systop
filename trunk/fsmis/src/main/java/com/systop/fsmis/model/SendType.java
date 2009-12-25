@@ -6,37 +6,54 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-/**
- */
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
-@Table(name = "SEND_TYPES",schema="FSMIS")
+@Table(name = "SEND_TYPES", schema = "FSMIS")
 public class SendType implements java.io.Serializable {
 
-	private long id;
+	private Integer id;
+	/**
+	 * 派遣类别
+	 */
 	private String name;
+	/**
+	 * 类别描述
+	 */
 	private String descn;
+	/**
+	 * 排号
+	 */
 	private BigDecimal sortId;
-	private Set<DeptSendSype> deptSendSypeses = new HashSet<DeptSendSype>(0);
+
+	private Set<DeptSendType> deptSendSypeses = new HashSet<DeptSendType>(0);
+
+	/**
+	 * 对应的食品安全案件
+	 */
 	private Set<FsCase> fsCases = new HashSet<FsCase>(0);
 
 	public SendType() {
 	}
 
-	public SendType(long id) {
+	public SendType(Integer id) {
 		this.id = id;
 	}
 
 	@Id
-	@Column(name = "ID", unique = true, nullable = false, precision = 10, scale = 0)
-	public long getId() {
+	@GeneratedValue(generator = "hibseq")
+	@GenericGenerator(name = "hibseq", strategy = "hilo")
+	@Column(name = "ID", unique = true, nullable = false)
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -67,12 +84,12 @@ public class SendType implements java.io.Serializable {
 		this.sortId = sortId;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sendTypes")
-	public Set<DeptSendSype> getDeptSendSypeses() {
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sendType")
+	public Set<DeptSendType> getDeptSendSypeses() {
 		return this.deptSendSypeses;
 	}
 
-	public void setDeptSendSypeses(Set<DeptSendSype> deptSendSypeses) {
+	public void setDeptSendSypeses(Set<DeptSendType> deptSendSypeses) {
 		this.deptSendSypeses = deptSendSypeses;
 	}
 

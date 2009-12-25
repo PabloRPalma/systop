@@ -3,10 +3,13 @@ package com.systop.fsmis.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import com.systop.common.modules.dept.model.Dept;
 
@@ -14,24 +17,26 @@ import com.systop.common.modules.dept.model.Dept;
  */
 @Entity
 @Table(name = "DEPT_SEND_SYPES", schema = "FSMIS")
-public class DeptSendSype implements java.io.Serializable {
+public class DeptSendType implements java.io.Serializable {
 
-	private long id;
+	private Integer id;
 	private SendType sendTypes;
 	private Dept dept;
 	private String leaderDept;
 	private String generalDept;
 
-	public DeptSendSype() {
+	public DeptSendType() {
 	}
 
 	@Id
-	@Column(name = "ID", unique = true, nullable = false, precision = 10, scale = 0)
-	public long getId() {
+	@GeneratedValue(generator = "hibseq")
+	@GenericGenerator(name = "hibseq", strategy = "hilo")
+	@Column(name = "ID", unique = true, nullable = false)
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,6 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import com.systop.common.modules.security.user.model.User;
 
@@ -24,7 +27,7 @@ import com.systop.common.modules.security.user.model.User;
 @Table(name = "URGENT_GROUPS", schema="FSMIS")
 public class UrgentGroup implements java.io.Serializable {
 
-	private long id;
+	private Integer id;
 	private UrgentCase urgentCases;
 	private String name;
 	private String descn;
@@ -39,12 +42,14 @@ public class UrgentGroup implements java.io.Serializable {
 	}
 
 	@Id
-	@Column(name = "ID", unique = true, nullable = false, precision = 10, scale = 0)
-	public long getId() {
+	@GeneratedValue(generator = "hibseq")
+	@GenericGenerator(name = "hibseq", strategy = "hilo")
+	@Column(name = "ID", unique = true, nullable = false)
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

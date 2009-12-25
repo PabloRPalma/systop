@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,6 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import com.systop.common.modules.security.user.model.User;
 import com.systop.core.model.BaseModel;
@@ -33,7 +36,7 @@ public class Assessment extends BaseModel {
 	 * 申请人
 	 */
 	private User proposer;
-	
+
 	/**
 	 * 审核人
 	 */
@@ -49,16 +52,17 @@ public class Assessment extends BaseModel {
 	private Date resultDate;
 	private Clob result;
 	private String isComplete;
-	private Set<ExpertGroup> expertGroupses = new HashSet<ExpertGroup>(0);
-	private Set<AssessmentAttach> assessmentAttachses = new HashSet<AssessmentAttach>(
-			0);
+
+	private Set<AsseMember> asseMemberses = new HashSet<AsseMember>(0);
+	private Set<AssessmentAttach> asseAtts = new HashSet<AssessmentAttach>(0);
 
 	public Assessment() {
 	}
 
-
 	@Id
-	@Column(name = "ID", unique = true, nullable = false, precision = 10, scale = 0)
+	@GeneratedValue(generator = "hibseq")
+	@GenericGenerator(name = "hibseq", strategy = "hilo")
+	@Column(name = "ID", unique = true, nullable = false)
 	public Integer getId() {
 		return this.id;
 	}
@@ -172,23 +176,22 @@ public class Assessment extends BaseModel {
 		this.isComplete = isComplete;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "assessments")
-	public Set<ExpertGroup> getExpertGroupses() {
-		return this.expertGroupses;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "assessment")
+	public Set<AsseMember> getAsseMemberse() {
+		return this.asseMemberses;
 	}
 
-	public void setExpertGroupses(Set<ExpertGroup> expertGroupses) {
-		this.expertGroupses = expertGroupses;
+	public void setAsseMemberse(Set<AsseMember> asseMemberses) {
+		this.asseMemberses = asseMemberses;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "assessments")
-	public Set<AssessmentAttach> getAssessmentAttachses() {
-		return this.assessmentAttachses;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "assessment")
+	public Set<AssessmentAttach> getAsseAtts() {
+		return this.asseAtts;
 	}
 
-	public void setAssessmentAttachses(
-			Set<AssessmentAttach> assessmentAttachses) {
-		this.assessmentAttachses = assessmentAttachses;
+	public void setAsseAtts(Set<AssessmentAttach> asseAtts) {
+		this.asseAtts = asseAtts;
 	}
 
 }
