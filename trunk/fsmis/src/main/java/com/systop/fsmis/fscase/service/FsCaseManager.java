@@ -13,7 +13,7 @@ import com.systop.fsmis.model.FsCase;
  *
  */
 @Service
-public class GenericCaseManager extends BaseGenericsManager<FsCase>{
+public class FsCaseManager extends BaseGenericsManager<FsCase>{
 	
 	/**
 	 * 保存一般事件信息
@@ -29,6 +29,6 @@ public class GenericCaseManager extends BaseGenericsManager<FsCase>{
 	 * @return 对应的单体事件
 	 */
 	public FsCase getGenericCaseByCode(String code) {
-		return findObject("from GenericCase g where g.code =?", code);
+		return findObject("from FsCase g where g.code =?", code);
 	}
 }

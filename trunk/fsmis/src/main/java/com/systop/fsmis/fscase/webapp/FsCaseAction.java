@@ -21,7 +21,7 @@ import com.systop.core.dao.support.Page;
 import com.systop.core.webapp.struts2.action.DefaultCrudAction;
 import com.systop.fsmis.CaseConstants;
 import com.systop.fsmis.casetype.service.CaseTypeManager;
-import com.systop.fsmis.foodcase.service.GenericCaseManager;
+import com.systop.fsmis.fscase.service.FsCaseManager;
 import com.systop.fsmis.model.CaseType;
 import com.systop.fsmis.model.FsCase;
 
@@ -36,8 +36,8 @@ import com.systop.fsmis.model.FsCase;
 @SuppressWarnings({ "serial", "unchecked" })
 @Controller
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-public class GenericCaseAction extends
-      DefaultCrudAction<FsCase, GenericCaseManager>{
+public class FsCaseAction extends
+      DefaultCrudAction<FsCase, FsCaseManager>{
 	
 	@Autowired
 	private CaseTypeManager caseTypeManager;
@@ -58,7 +58,7 @@ public class GenericCaseAction extends
 	public String index() {
 		Page page = new Page(Page.start(getPageNo(), getPageSize()),
 				getPageSize());
-		String sql = "from GenericCase gc where isSubmited=0 ";
+		String sql = "from FsCase gc where isSubmited=0 ";
 		List args = new ArrayList();
 		if (StringUtils.isNotBlank(getModel().getTitle())) {
 			sql = sql + "and gc.title like ? ";
@@ -108,13 +108,13 @@ public class GenericCaseAction extends
 				getRequest().setAttribute("levelone", getLevelOne());
 				return INPUT;
 			}
-			getModel().setSubmitTime(new Date());
+			getModel().setCaseTime(new Date());
 			getModel().setStatus(CaseConstants.CASE_STATUS_RESOLVEUN);
 		}
 		
 		
-		if (getModel().getDept() == null
-				|| getModel().getDept().getId() == null) {
+		if (getModel().getDeptsByCounty() == null
+				|| getModel().getDeptsByCounty().getId() == null) {
 			addActionError("请选择事件所属区县.");
 			getRequest().setAttribute("levelone", getLevelOne());
 			return INPUT;
@@ -138,7 +138,7 @@ public class GenericCaseAction extends
 		}
 		
 		getModel().setCaseType(cType);
-		getModel().setIsSubmited(Character.valueOf((char) 0));
+		getModel().setIsSubmitSj(String.valueOf(0));
 		getManager().getDao().clear();
 		getManager().save(getModel());
 		return SUCCESS;
