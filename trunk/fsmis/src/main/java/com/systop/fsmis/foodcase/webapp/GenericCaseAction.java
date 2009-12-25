@@ -23,7 +23,7 @@ import com.systop.fsmis.CaseConstants;
 import com.systop.fsmis.casetype.service.CaseTypeManager;
 import com.systop.fsmis.foodcase.service.GenericCaseManager;
 import com.systop.fsmis.model.CaseType;
-import com.systop.fsmis.model.FoodCase;
+import com.systop.fsmis.model.FsCase;
 
 
 
@@ -37,7 +37,7 @@ import com.systop.fsmis.model.FoodCase;
 @Controller
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class GenericCaseAction extends
-      DefaultCrudAction<FoodCase, GenericCaseManager>{
+      DefaultCrudAction<FsCase, GenericCaseManager>{
 	
 	@Autowired
 	private CaseTypeManager caseTypeManager;

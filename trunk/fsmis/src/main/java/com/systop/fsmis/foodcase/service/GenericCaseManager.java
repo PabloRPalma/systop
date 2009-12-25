@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.systop.core.service.BaseGenericsManager;
-import com.systop.fsmis.model.FoodCase;
+import com.systop.fsmis.model.FsCase;
 
 
 /**
@@ -13,13 +13,13 @@ import com.systop.fsmis.model.FoodCase;
  *
  */
 @Service
-public class GenericCaseManager extends BaseGenericsManager<FoodCase>{
+public class GenericCaseManager extends BaseGenericsManager<FsCase>{
 	
 	/**
 	 * 保存一般事件信息
 	 */
 	@Transactional
-	public void save(FoodCase genericCase) {
+	public void save(FsCase genericCase) {
 		getDao().saveOrUpdate(genericCase);
 	}
 
@@ -28,7 +28,7 @@ public class GenericCaseManager extends BaseGenericsManager<FoodCase>{
 	 * @param code 单体事件编号
 	 * @return 对应的单体事件
 	 */
-	public FoodCase getGenericCaseByCode(String code) {
+	public FsCase getGenericCaseByCode(String code) {
 		return findObject("from GenericCase g where g.code =?", code);
 	}
 }
