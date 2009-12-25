@@ -14,7 +14,10 @@
 		</div>
 	</div>
 	<div id="assess">
-	
+		<div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/assessment/index.do" target="main">评估管理</a>
+		</div>
 	</div>
 	<div id="urgent">
 	
