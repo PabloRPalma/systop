@@ -30,7 +30,7 @@ public class SmsSend extends BaseModel {
 	/**
 	 * 一般案件
 	 */
-	private FsCase genericCase;
+	private FsCase fsCase;
 	/**
 	 * 综合案件
 	 */
@@ -86,12 +86,12 @@ public class SmsSend extends BaseModel {
 
 	@ManyToOne(cascade = {}, fetch = FetchType.LAZY)
 	@JoinColumn(name = "GENERIC_CASE")
-	public FsCase getGenericCase() {
-		return this.genericCase;
+	public FsCase getFsCase() {
+		return this.fsCase;
 	}
 
-	public void setGenericCase(FsCase genericCase) {
-		this.genericCase = genericCase;
+	public void setFsCase(FsCase fsCase) {
+		this.fsCase = fsCase;
 	}
 
 	@ManyToOne(cascade = {}, fetch = FetchType.LAZY)

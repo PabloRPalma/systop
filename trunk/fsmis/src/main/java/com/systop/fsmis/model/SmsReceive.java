@@ -32,7 +32,7 @@ public class SmsReceive extends BaseModel {
 	/**
 	 * 关联案件
 	 */
-	private FsCase genericCase;
+	private FsCase fsCase;
 	/**
 	 * 短信内容
 	 */
@@ -88,12 +88,12 @@ public class SmsReceive extends BaseModel {
 
 	@ManyToOne(cascade = {}, fetch = FetchType.LAZY)
 	@JoinColumn(name = "GENERIC_CASE")
-	public FsCase getGenericCase() {
-		return this.genericCase;
+	public FsCase getFsCase() {
+		return this.fsCase;
 	}
 
-	public void setGenericCase(FsCase genericCase) {
-		this.genericCase = genericCase;
+	public void setFsCase(FsCase fsCase) {
+		this.fsCase = fsCase;
 	}
 
 	@Column(name = "CONTENT", length = 200)

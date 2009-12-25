@@ -76,7 +76,7 @@ public class SendType implements java.io.Serializable {
 		this.deptSendSypeses = deptSendSypeses;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sendTypes")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sendType")
 	public Set<FsCase> getFsCases() {
 		return this.fsCases;
 	}

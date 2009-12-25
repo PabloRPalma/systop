@@ -343,7 +343,7 @@ public class FsCase extends BaseModel {
 		this.submitSjTime = submitSjTime;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "foodCase")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "fsCase")
 	public Set<SmsSend> getSmsSendses() {
 		return this.smsSendses;
 	}
@@ -352,7 +352,7 @@ public class FsCase extends BaseModel {
 		this.smsSendses = smsSendses;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "foodCase")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "fsCase")
 	public Set<Assessment> getAssessmentses() {
 		return this.assessmentses;
 	}
@@ -361,7 +361,7 @@ public class FsCase extends BaseModel {
 		this.assessmentses = assessmentses;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "foodCase")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "fsCase")
 	public Set<Task> getTaskses() {
 		return this.taskses;
 	}
@@ -399,7 +399,7 @@ public class FsCase extends BaseModel {
 		this.compositiveCases = compositiveCases;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "foodCase")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "fsCase")
 	public Set<JointTask> getJointTaskses() {
 		return this.jointTaskses;
 	}
@@ -408,7 +408,7 @@ public class FsCase extends BaseModel {
 		this.jointTaskses = jointTaskses;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "foodCase")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "fsCase")
 	public Set<SmsReceive> getSmsReceiveses() {
 		return this.smsReceiveses;
 	}
