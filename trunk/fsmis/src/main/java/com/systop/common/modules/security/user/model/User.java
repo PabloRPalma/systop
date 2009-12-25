@@ -34,6 +34,7 @@ import com.systop.common.modules.dept.model.Dept;
 import com.systop.core.Constants;
 import com.systop.core.model.BaseModel;
 import com.systop.fsmis.model.Assessment;
+import com.systop.fsmis.model.UrgentGroup;
 
 /**
  * 用户表 The persistent class for the users database table.
@@ -202,14 +203,20 @@ public class User extends BaseModel implements UserDetails, Serializable {
 	 * 对应的Dept
 	 */
 	private Dept dept;
+
+	/**
+	 * 对应应急组
+	 */
+	private UrgentGroup urgentGroup;
+	
 	/**
 	 * 评估审核人
 	 */
-	private Set<Assessment> assessmentsForAuditor = new HashSet<Assessment>(0);
+	private Set<Assessment> asseForAuditor = new HashSet<Assessment>(0);
 	/**
 	 * 评估申请人
 	 */
-	private Set<Assessment> assessmentsForProposer = new HashSet<Assessment>(0);
+	private Set<Assessment> asseForProposer = new HashSet<Assessment>(0);
 
 	/**
 	 * 缺省构造器
@@ -654,6 +661,16 @@ public class User extends BaseModel implements UserDetails, Serializable {
 	public void setDept(Dept dept) {
 		this.dept = dept;
 	}
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "URGENT_GROUP")
+	public UrgentGroup getUrgentGroup() {
+		return this.urgentGroup;
+	}
+
+	public void setUrgentGroup(UrgentGroup urgentGroup) {
+		this.urgentGroup = urgentGroup;
+	}
 
 	/**
 	 * @return the registTime
@@ -712,21 +729,21 @@ public class User extends BaseModel implements UserDetails, Serializable {
 		this.industry = industry;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usersByAuditor")
-	public Set<Assessment> getAssessmentsForAuditor() {
-		return this.assessmentsForAuditor;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "auditor")
+	public Set<Assessment> getAsseForAuditor() {
+		return this.asseForAuditor;
 	}
 
-	public void setAssessmentsForAuditor(Set<Assessment> assessmentsForAuditor) {
-		this.assessmentsForAuditor = assessmentsForAuditor;
+	public void setAsseForAuditor(Set<Assessment> asseForAuditor) {
+		this.asseForAuditor = asseForAuditor;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usersByProposer")
-	public Set<Assessment> getAssessmentsForProposer() {
-		return this.assessmentsForProposer;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "proposer")
+	public Set<Assessment> getAsseForProposer() {
+		return this.asseForProposer;
 	}
 
-	public void setAssessmentsForProposer(Set<Assessment> assessmentsForProposer) {
-		this.assessmentsForProposer = assessmentsForProposer;
+	public void setAsseForProposer(Set<Assessment> asseForProposer) {
+		this.asseForProposer = asseForProposer;
 	}
 }
