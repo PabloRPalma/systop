@@ -21,11 +21,11 @@ import com.systop.common.modules.dept.model.Dept;
 import com.systop.core.model.BaseModel;
 
 /**
- * 企业表 The persistent class for the ENTERPRISES database table.
+ * 企业表 The persistent class for the CORPS database table.
  */
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "ENTERPRISE", schema = "FSMIS")
+@Table(name = "CORPS", schema = "FSMIS")
 public class Corp extends BaseModel {
 
 	/**
