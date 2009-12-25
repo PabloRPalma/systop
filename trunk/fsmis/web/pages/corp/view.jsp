@@ -49,7 +49,7 @@ Ext.onReady(function(){
         <td align="left">&nbsp;<font color="#15428B"><b>所属单位：${model.dept.name}</b></font></td>
         -->
         <td align="right">
-          <a href="${ctx}/enterprise/index.do">
+          <a href="${ctx}/corp/index.do">
              <img src="${ctx}/images/icons/building_go.png" class="icon" border="0">企业列表&nbsp;&nbsp;
           </a>
         </td>

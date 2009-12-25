@@ -18,7 +18,7 @@
     <table width="100%">
       <tr>
         <td align="right">
-          <a href="${ctx}/enterprise/index.do">
+          <a href="${ctx}/corp/index.do">
              <img src="${ctx}/images/icons/building_go.png" class="icon" border="0">企业列表&nbsp;&nbsp;
           </a>
         </td>
