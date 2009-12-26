@@ -28,9 +28,6 @@
 		<td align="right">
 		<table>
 			<tr>
-				<td><a href="index.do"><img
-					src="${ctx}/images/icons/house.gif" />首页</a></td>
-				<td><span class="ytb-sep"></span></td>
 				<td><a href="edit.do"><img
 					src="${ctx}/images/icons/add.gif" />添加</a></td>
 			</tr>
