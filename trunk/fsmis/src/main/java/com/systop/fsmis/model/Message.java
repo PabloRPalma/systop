@@ -1,6 +1,7 @@
 package com.systop.fsmis.model;
 
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,19 +16,51 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.systop.common.modules.security.user.model.User;
+import com.systop.core.model.BaseModel;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "MESSAGES", schema="FSMIS")
-public class Message implements java.io.Serializable {
+public class Message extends BaseModel {
 
+	/** 
+	 * 主键 
+	 */
 	private Integer id;
+	
+	/** 
+	 * 收信人 
+	 */
 	private User receiver;
+	
+	/** 
+	 * 发信人
+	 */
 	private User sender;
+	
+	/** 
+	 * 内容
+	 */
 	private String content;
+	
+	/** 
+	 * 创建时间 
+	 */
 	private Date createTime;
+	
+	/** 
+	 * 接收时间
+	 */
 	private Date receiveTime;
+	
+	/** 
+	 * 是否最新
+	 */
 	private String isNew;
 
+	/** 
+	 * 默认构造器 
+	 */
 	public Message() {
 	}
 
