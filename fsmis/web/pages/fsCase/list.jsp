@@ -120,7 +120,7 @@ function remove(id){
 			</c:if>
 			<c:if test="${item.status == '0'}">
 			 <a href="#" onclick="remove(${item.id})" >
-			     <font color="red"> 删除</font>
+			               删除
 			 </a>
 			</c:if>
 				
