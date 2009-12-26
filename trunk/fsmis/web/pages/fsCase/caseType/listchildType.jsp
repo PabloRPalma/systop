@@ -8,17 +8,24 @@
 <%@include file="/common/dwr.jsp" %>
 <title>事件类别列表</title>
 <script type="text/javascript">
-function removeNo(){
-	alert("此类别存在事件关联，不能删除！");
-}
-function removeAo(){
-	alert("此类别存在子类别，不能删除！");
-}
+
 function remove(id){
 	if (confirm("确认要删除类别吗?")){
 		window.location.href="${ctx}/casetype/remove.do?model.id=" + id;
 		
 	}
+}
+function removeAo(fscase,casetype){
+    var str1="";
+    var str2="";
+    var str3="";
+   if(fscase=='1'){
+      str1="事件关联";
+   }
+   if(casetype=='1'){
+      str2="子类别";
+   }
+	alert('此类别已有'+ str1 +','+ str2 +'，不能删除!');
 }
 </script>
 </head>
@@ -67,19 +74,22 @@ function remove(id){
 			<a href="edit.do?model.id=${item.id}">
 			           编辑
 			</a>
-			<c:if test="${item.fsCases != '[]'}">
-			  <a href="#" onclick="removeNo()">
-			     <font color="gray">删除</font>
-			  </a>
-			</c:if>
-			<c:if test="${item.caseTypes != '[]'}">
-			  <a href="#" onclick="removeAo()">
+			<c:if test="${item.fsCases != '[]' || item.caseTypes != '[]'}">
+			  <c:set var="fscase" value="0"></c:set>
+			  <c:set var="casetype" value="0"></c:set>
+			   <c:if test="${item.fsCases != '[]'}">
+			        <c:set var="fscase" value="1"></c:set>
+			   </c:if>
+			    <c:if test="${item.caseTypes != '[]'}">
+			        <c:set var="casetype" value="1"></c:set>
+			   </c:if>
+			  <a href="#" onclick="removeAo(${fscase},${casetype})">
 			     <font color="gray">删除</font>
 			  </a>
 			</c:if>
 			<c:if test="${item.fsCases == '[]' && item.caseTypes == '[]'}">
 			  <a href="#" onclick="remove(${item.id})">
-			     <font color="red"> 删除</font>
+			              删除
 			  </a>
 			</c:if>
 		</ec:column>
