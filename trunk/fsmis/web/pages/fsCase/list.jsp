@@ -11,9 +11,6 @@
 function examine(id){
 	alert(id);
 }
-function removeNo(){
-	alert('只能删除未派遣的事件！');
-}
 
 
 function remove(id){
@@ -104,7 +101,7 @@ function remove(id){
             <stc:role  ifNotGranted="ROLE_ADMIN">
             <c:if test="${item.status == '2' || item.status == '4'}">
                 <a href="#">
-                <font color="gray">编辑</font>
+                <font color="#999999">编辑</font>
              </a>
             </c:if>
 			<c:if test="${item.status == '0' || item.status == '1'}">
@@ -114,9 +111,7 @@ function remove(id){
             </c:if>
             </stc:role>
 			<c:if test="${item.status != '0'}">
-			<a href="#" onclick="removeNo()">
-			     <font color="gray">删除</font>
-			</a>
+			     <font color="#999999" title="已派遣事件不能删除">删除</font>
 			</c:if>
 			<c:if test="${item.status == '0'}">
 			 <a href="#" onclick="remove(${item.id})" >

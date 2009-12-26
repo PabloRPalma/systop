@@ -84,7 +84,7 @@ function removeAo(fscase,casetype){
 			        <c:set var="casetype" value="1"></c:set>
 			   </c:if>
 			  <a href="#" onclick="removeAo(${fscase},${casetype})">
-			     <font color="gray">删除</font>
+			     <font color="#999999">删除</font>
 			  </a>
 			</c:if>
 			<c:if test="${item.fsCases == '[]' && item.caseTypes == '[]'}">
