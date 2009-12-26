@@ -32,7 +32,11 @@
    	    </create>
    	    <create creator="spring" javascript="SupervisorDwrAction">
 			<param name="beanName" value="supervisorDwrAction"></param>
-		</create>  	    
+		</create>
+		
+		<create creator="spring" javascript="SendTypeDwrAction">
+			<param name="beanName" value="sendTypeDwrAction"></param>
+		</create>  	  	    
    	    
    	    <convert converter="bean"  match="com.systop.common.core.dao.support.Page"  />
    	    <convert converter="bean"  match="com.systop.common.core.webapp.ajax.RemoteQueryParams"></convert>
