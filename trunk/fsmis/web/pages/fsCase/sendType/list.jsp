@@ -62,13 +62,16 @@
 			<ec:extend>
 				<div align="right" style="padding-right: 10px;">
 					<div id="ready" style="cursor: hand;" onclick="readySort(this)">
-						<span style="color: red">↑</span><b>我要排序</b><span style="color: red;">↓</span>
+						<span style="color: green; font-weight: bold;">↑我要排序↓</span>
 					</div>
 					<div id="confirm" style="display: none; cursor: hand;" onclick="confirmSort()">
-						<span style="color: red">↑</span><b>确认排序</b><span style="color: red;">↓</span>
+						<span style="color: red; font-weight: bold;">↑确认排序↓</span>
 					</div>
 				</div>
 			</ec:extend>
+			<ec:extendbar>
+				<div style="margin: 10 10 10 10;"><b>注</b>：点击右下角的<span style="color: green; font-weight: bold; cursor: hand;">我要排序</span>，对派遣环节进行排序操作。</div>
+			</ec:extendbar>
 		</ec:table>
 	</div>
 </div>
