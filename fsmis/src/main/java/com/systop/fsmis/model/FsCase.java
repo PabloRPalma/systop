@@ -39,8 +39,8 @@ public class FsCase extends BaseModel {
 	 * 对应上报市级后的案件
 	 */
 	private FsCase selfSJ;
-	private Dept deptsByReportDept;
-	private Dept deptsByCounty;
+	private Dept reportDept;
+	private Dept county;
 	private CaseType caseType;
 	private Corp corp;
 	private String title;
@@ -156,22 +156,22 @@ public class FsCase extends BaseModel {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "REPORT_DEPT")
-	public Dept getDeptsByReportDept() {
-		return this.deptsByReportDept;
+	public Dept getReportDept() {
+		return this.reportDept;
 	}
 
-	public void setDeptsByReportDept(Dept deptsByReportDept) {
-		this.deptsByReportDept = deptsByReportDept;
+	public void setReportDept(Dept reportDept) {
+		this.reportDept = reportDept;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "COUNTY")
-	public Dept getDeptsByCounty() {
-		return this.deptsByCounty;
+	public Dept getCounty() {
+		return this.county;
 	}
 
-	public void setDeptsByCounty(Dept deptsByCounty) {
-		this.deptsByCounty = deptsByCounty;
+	public void setCounty(Dept county) {
+		this.county = county;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
