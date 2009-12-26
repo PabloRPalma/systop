@@ -18,24 +18,19 @@ import org.hibernate.annotations.GenericGenerator;
 public class SendType implements java.io.Serializable {
 
 	private Integer id;
-	/**
-	 * 派遣类别
-	 */
+	
+	/** 类别名称 */
 	private String name;
-	/**
-	 * 类别描述
-	 */
+	
+	/** 类别描述 */
 	private String descn;
-	/**
-	 * 排号
-	 */
+	
+	/** 排列序号 */
 	private Integer sortId;
 
 	private Set<DeptSendType> deptSendSypeses = new HashSet<DeptSendType>(0);
 
-	/**
-	 * 对应的食品安全案件
-	 */
+	/** 对应案件 */
 	private Set<FsCase> fsCases = new HashSet<FsCase>(0);
 
 	public SendType() {
