@@ -12,6 +12,11 @@
 			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/casetype/index.do" target="main">案件类别</a>
 		</div>
+		
+		<div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/sendType/index.do" target="main">派遣环节</a>
+		</div>
 	</div>
 	<div id="assess">
 		<div style="padding-top:2px">
