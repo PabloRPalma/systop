@@ -20,12 +20,22 @@ import com.systop.common.modules.dept.model.Dept;
 @Table(name = "COUNTY_SEND_SYPES", schema = "FSMIS")
 public class CountySendType implements java.io.Serializable {
 
+	/** 主键 */
 	private Integer id;
+
+	/** 派遣类别 */
 	private SendType sendType;
+
+	/** 区县 */
 	private Dept county;
+
+	/** 牵头部门 */
 	private String leaderDept;
+
+	/** 一般部门 */
 	private String generalDept;
 
+	/** 默认构造 */
 	public CountySendType() {
 	}
 
