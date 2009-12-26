@@ -129,7 +129,7 @@ Ext.onReady(function(){
             </td>
           </tr> 
           <tr>
-            <td width="112" align="right">学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位：</td>
+            <td width="112" align="right">单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位：</td>
             <td width="139" align="left">
             	<s:textfield id="units" name="model.units" />
             </td>
