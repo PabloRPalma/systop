@@ -70,13 +70,12 @@
 </head>
 <body onload="preFckEditor()">
 <div class="x-panel">
-<div class="x-panel-header"></div>
+<div class="x-panel-header">事件列表</div>
 <div class="x-toolbar">
  <table width="100%">
      <tr>
         <td  align="right">
-               <a href="${ctx}/fscase/index.do"><img
-					src="${ctx}/images/icons/house.gif" />首页</a>
+               <a href="${ctx}/fscase/index.do">首页</a>
         </td>
      </tr>
  </table>
@@ -133,7 +132,7 @@
 			<td align="right">所属区县：</td>
 			<td align="left">		
 				<div id="comboxWithTree"  style="float: left;margin-left:2px;" class="required"></div><font color="red" style="margin-left:2px;">*</font>
-				<s:hidden name="model.deptsByCounty.id" id="deptId"></s:hidden>
+				<s:hidden name="model.county.id" id="deptId"></s:hidden>
 			</td>
 		</tr>
 		<tr>
@@ -176,7 +175,7 @@ Ext.onReady(function() {
 	var dtree = new DeptTree({
 		url : '/admin/dept/deptTree.do',
 		parent : '<stc:loginUserDept showPath="false" propertyName="id" showTopDept="true"></stc:loginUserDept>&noLowerDept=1',
-		initValue : '${model.deptsByCounty.name}',
+		initValue : '${model.county.name}',
 		el : 'comboxWithTree',
 		innerTree :'inner-tree',
 		onclick : function(nodeId) {

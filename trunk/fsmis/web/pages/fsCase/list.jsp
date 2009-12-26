@@ -47,8 +47,7 @@ function remove(id){
 		<table>
 			<tr>
 				<td><span class="ytb-sep"></span></td>
-				<td><a href="${ctx}/fscase/edit.do"><img
-					src="${ctx}/images/icons/add.gif" /> 添加事件信息</a></td>
+				<td><a href="${ctx}/fscase/edit.do"> 添加事件信息</a></td>
 			</tr>
 		</table>
 		</stc:role>
