@@ -36,8 +36,8 @@ function removeAo(fscase,casetype){
      <table width="100%">
        <tr>
              <td style=" padding-left:5px; padding-top:5px;" align="right">   
-             <a href="${ctx}/casetype/edit.do"><img src="${ctx}/images/icons/add.gif"/> 新建类别</a>
-             	</td>
+               <a href="${ctx}/casetype/edit.do"> 新建类别</a>
+             </td>
        </tr>
      </table>
    </div>
