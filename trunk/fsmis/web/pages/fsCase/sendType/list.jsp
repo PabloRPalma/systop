@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@include file="/common/taglibs.jsp"%>
 <html>
 <head>
-<title>派遣环节管理</title>
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/ec.jsp"%>
 <%@include file="/common/dwr.jsp" %>
 <script type="text/javascript" src="${ctx}/dwr/interface/SendTypeDwrAction.js"></script>
+<title>派遣环节管理</title>
 
 <style type="text/css">
 	.newBorder{
@@ -52,6 +52,7 @@
 				</ec:column>
 				<ec:column width="50" property="_0" title="操作" style="text-align:center">
 					<a href="edit.do?model.id=${item.id}">编辑 </a>
+					<a href="#" onclick='remove(${item.id})'>删除</a>
 				</ec:column>
 			</ec:row>
 			<ec:extend>
@@ -71,10 +72,7 @@
 	</div>
 </div>
 <script type="text/javascript">
-
-	/**
-	 * 为排序做准备
-	 */
+	//为排序做准备
 	function readySort(obj){
 		inputs = getInputs();
 		if(inputs.length == 0){
@@ -91,9 +89,7 @@
 		inputs[0].select();
 	}
 
-	/**
-	 * 确认排序
-	 */
+	// 确认排序
 	function confirmSort(){
 		inputs = getInputs();
 		var items = new Array();
@@ -117,11 +113,17 @@
 		}
 	}
 
+	//获得所有排序ID的输入框 
 	function getInputs(){
 		return document.getElementsByName("itemSortId");
 	}
 	
-		
+	//删除
+	function remove(id){
+		if (confirm("确认重删除本条记录吗？")){
+			window.location.href = "${ctx}/sendType/remove.do?model.id=" + id;
+		}
+	}
 </script>
 </body>
 </html>

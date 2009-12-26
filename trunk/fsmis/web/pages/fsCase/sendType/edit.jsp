@@ -11,7 +11,10 @@
 <div class="x-panel">
 <div class="x-panel-header">派遣环节编辑</div>
 <div class="x-toolbar">
-	<div style="margin: 7 20 4 10;" align="right">&nbsp;</div>
+	<div style="padding: 5 20 3 10;" align="right">
+	  <img src="${ctx}/images/icons/add.gif"/>
+      <a href="${ctx}/sendType/index.do">派遣环节管理</a>
+	</div>
 </div>
 <div>
 	<%@ include file="/common/messages.jsp"%>
@@ -42,8 +45,8 @@
           </tr>
         </table> 
 	  </fieldset>
-		<div align="center">
-			<input type="submit" value="保存"/>
+		<div align="center" style="margin: 10 0 0 0;">
+			<input type="submit" value="保存"/>&nbsp;&nbsp;
            	<input type="reset" value="重置"/>
 		</div>
 	</form>
