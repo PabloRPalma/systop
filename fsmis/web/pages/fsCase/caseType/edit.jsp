@@ -2,12 +2,14 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@include file="/common/taglibs.jsp" %>
+
 <html>
 <head>
-<title></title>
+
 <%@include file="/common/meta.jsp" %>
 <%@include file="/common/validator.jsp"%>
 </head>
+
 <body>
 <div class="x-panel">
 <div class="x-panel-header">类别</div>
