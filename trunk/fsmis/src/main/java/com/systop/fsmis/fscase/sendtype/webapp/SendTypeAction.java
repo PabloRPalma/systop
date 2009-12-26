@@ -10,6 +10,13 @@ import com.systop.fsmis.model.SendType;
 
 @Controller
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-public class SendTypeAction extends DefaultCrudAction<SendType, SendTypeManager> {
+public class SendTypeAction extends
+		DefaultCrudAction<SendType, SendTypeManager> {
 
+	@Override
+	public String index() {
+		String hql = "from SendType s order by s.sortId";
+		items = getManager().query(hql);
+		return INDEX;
+	}
 }
