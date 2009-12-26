@@ -75,7 +75,7 @@ function view(aID){
 		<ec:column width="120" property="documentType.name" title="所属栏目" sortable="false"/>
 		<ec:column width="100" property="_0" title="操作" style="text-align:center" sortable="false">
 			<a href="edit.do?model.id=${item.id}">编辑</a>|
-			<a href="view.do?model.id=${item.id}" target="_blank">查看</a>
+			<a href="view.do?model.id=${item.id}" target="_blank">查看</a>|
 			<a href="#" onclick="removeArticle(${item.id})">删除	</a>
 		</ec:column>
 	</ec:row>
