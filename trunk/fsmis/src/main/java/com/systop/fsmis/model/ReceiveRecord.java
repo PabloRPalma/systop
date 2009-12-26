@@ -15,17 +15,45 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.systop.common.modules.dept.model.Dept;
+import com.systop.core.model.BaseModel;
 
+/**
+ * 部门接收纪录
+ * @author zw
+ */
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "RECEIVE_RECORDS", schema = "FSMIS")
-public class ReceiveRecord implements java.io.Serializable {
+public class ReceiveRecord extends BaseModel {
 
+	/**
+	 * 主键
+	 */
 	private Integer id;
+	
+	/**
+	 * 接收部门
+	 */
 	private Dept dept;
+	
+	/**
+	 * 对应通知
+	 */
 	private Notice notice;
+	
+	/**
+	 * 是否最新
+	 */
 	private String isNew;
+	
+	/**
+	 * 接收时间
+	 */
 	private Date receiveDate;
 
+	/**
+	 * 默认构造器
+	 */
 	public ReceiveRecord() {
 	}
 

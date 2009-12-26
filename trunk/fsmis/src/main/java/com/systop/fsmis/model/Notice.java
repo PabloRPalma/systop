@@ -21,11 +21,21 @@ import org.hibernate.annotations.GenericGenerator;
 
 import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.security.user.model.User;
+import com.systop.core.model.BaseModel;
 
+/**
+ * 通知
+ * @author zw
+ *
+ */
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "NOTICES", schema = "FSMIS")
-public class Notice implements java.io.Serializable {
+public class Notice extends BaseModel {
 
+	/**
+	 * 主键
+	 */
 	private Integer id;
 	
 	/**
@@ -37,12 +47,35 @@ public class Notice implements java.io.Serializable {
 	 * 发布部门
 	 */
 	private Dept pubDept;
+	
+	/**
+	 * 标题
+	 */
 	private String title;
+	
+	/**
+	 * 内容
+	 */
 	private Clob content;
+	
+	/**
+	 * 创建时间
+	 */
 	private Date createTime;
+	
+	/**
+	 * 附件路径
+	 */
 	private String att;
+	
+	/**
+	 * 部门接收记录
+	 */
 	private Set<ReceiveRecord> recRecordses = new HashSet<ReceiveRecord>(0);
-
+	
+	/**
+	 * 默认构造器
+	 */
 	public Notice() {
 	}
 
