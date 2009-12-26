@@ -73,9 +73,9 @@ public final class FsConstants {
   public static final String RISKVE_FOLDER = ResourceBundleUtil.getString(RESOURCE_BUNDLE,
       "riskve_file_path", "/uploadFiles/risk_ev/");
   
-  /** 单体任务附件路径 */
-  public static final String SINGLE_TASK_ATT_FOLDER = ResourceBundleUtil.getString(RESOURCE_BUNDLE,
-      "single_task_att_path", "/uploadFiles/singtask/att/");
+  /** 任务附件路径 */
+  public static final String TASK_ATT_FOLDER = ResourceBundleUtil.getString(RESOURCE_BUNDLE,
+      "fscase_task_att_path", "/uploadFiles/task/att/");
   
   /** 通知附件路径 */
   public static final String NOTICE_ATT_FOLDER = ResourceBundleUtil.getString(RESOURCE_BUNDLE,
