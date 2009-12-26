@@ -96,7 +96,7 @@ public class Expert extends BaseModel {
 	/**
 	 * 专家简介
 	 */
-	private Clob summery;
+	private String summery;
 	/**
 	 * 备注
 	 */
@@ -263,12 +263,12 @@ public class Expert extends BaseModel {
 		this.research = research;
 	}
 
-	@Column(name = "SUMMERY")
-	public Clob getSummery() {
+	@Column(name = "SUMMERY", length = 510)
+	public String getSummery() {
 		return this.summery;
 	}
 
-	public void setSummery(Clob summery) {
+	public void setSummery(String summery) {
 		this.summery = summery;
 	}
 
