@@ -213,7 +213,7 @@ public class Dept extends BaseModel implements Serializable {
 		this.supervisors = supervisors;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "deptsByCounty")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "county")
 	public Set<FsCase> getFsCases() {
 		return this.fsCases;
 	}
