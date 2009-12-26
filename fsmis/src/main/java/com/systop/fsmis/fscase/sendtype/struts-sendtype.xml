@@ -5,12 +5,8 @@
 <struts>
 	<package name="fsmis.sendType" extends="default"  namespace="/sendType">
 		<action name="*" class="sendTypeAction" method="{1}">
-			<result name="index">/pages/fsecurity/singleEvent/sendType/list.jsp</result> 
-			<result name="verify">/pages/fsecurity/singleEvent/sendType/verify.jsp</result> 
-			<result name="input">/pages/fsecurity/singleEvent/sendType/edit.jsp</result> 
-			<result name="look">/pages/fsecurity/singleEvent/sendType/look.jsp</result>
-			<result name="choose">/pages/fsecurity/singleEvent/sendType/choosesendtype.jsp</result>
-			<result name="send">/pages/fsecurity/singleEvent/task/task.jsp</result>
+			<result name="index">/pages/fsCase/sendType/list.jsp</result> 
+			<result name="input">/pages/fsCase/sendType/edit.jsp</result> 
 			<result name="success" type="redirect">index.do</result> 
 		</action>
 	</package>
