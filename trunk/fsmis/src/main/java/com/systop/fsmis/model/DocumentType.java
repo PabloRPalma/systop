@@ -18,7 +18,7 @@ import com.systop.core.model.BaseModel;
 
 /**
  * 文档类别
- * @author zw
+ * @author ZW
  */
 @SuppressWarnings("serial")
 @Entity
@@ -33,7 +33,7 @@ public class DocumentType extends BaseModel {
 	/** 
 	 * 上级栏目 
 	 */
-	private DocumentType documentType;
+	private DocumentType parentDocumentType;
 	
 	/** 
 	 * 名称 
@@ -48,7 +48,7 @@ public class DocumentType extends BaseModel {
 	/** 
 	 * 包含栏目
 	 */
-	private Set<DocumentType> documentTypes = new HashSet<DocumentType>(0);
+	private Set<DocumentType> childDocumentTypes = new HashSet<DocumentType>(0);
 	
 	/** 
 	 * 包含文章
@@ -75,12 +75,12 @@ public class DocumentType extends BaseModel {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PARENT")
-	public DocumentType getDocumentType() {
-		return this.documentType;
+	public DocumentType getParentDocumentType() {
+		return this.parentDocumentType;
 	}
 
-	public void setDocumentType(DocumentType documentType) {
-		this.documentType = documentType;
+	public void setParentDocumentType(DocumentType parentDocumentType) {
+		this.parentDocumentType = parentDocumentType;
 	}
 
 	@Column(name = "NAME", length = 100)
@@ -101,13 +101,13 @@ public class DocumentType extends BaseModel {
 		this.descn = descn;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "documentType")
-	public Set<DocumentType> getDocumentTypes() {
-		return this.documentTypes;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "parentDocumentType")
+	public Set<DocumentType> getChildDocumentTypes() {
+		return this.childDocumentTypes;
 	}
 
-	public void setDocumentTypes(Set<DocumentType> documentTypes) {
-		this.documentTypes = documentTypes;
+	public void setChildDocumentTypes(Set<DocumentType> childDocumentTypes) {
+		this.childDocumentTypes = childDocumentTypes;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "documentType")
