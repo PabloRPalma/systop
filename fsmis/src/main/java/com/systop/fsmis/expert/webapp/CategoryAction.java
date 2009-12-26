@@ -44,7 +44,7 @@ public class CategoryAction extends ExtJsCrudAction<ExpertCategory, CategoryMana
 	}
 	
 	/**
-	 * 删除专家信息
+	 * 删除专家类别信息
 	 */
 	@Override
 	public String remove(){
