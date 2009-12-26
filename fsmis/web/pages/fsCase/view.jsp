@@ -52,7 +52,7 @@ Ext.onReady(function(){
 		<td><span class="ytb-sep"></span></td>
 		<td align="right"><a href="#"> 上报市级</a></td>
 		<td><span class="ytb-sep"></span></td>
-		<td align="right"><a href="#"> 任务派遣</a></td>
+		<td align="right"><a href="${ctx}/sendtype/send.do?fsCase.id=${model.id}"> 任务派遣</a></td>
 		<td><span class="ytb-sep"></span></td>
 		<td align="right"><a href="#"> 联合整治</a></td>
 	</tr>
