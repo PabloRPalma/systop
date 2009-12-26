@@ -56,7 +56,7 @@ function remove(id){
 		<ec:column width="350" property="name" title="类别名称" />
 		<ec:column width="200" property="_0" title="操作" style="text-align:center" sortable="false">
 			<a href="edit.do?model.id=${item.id}">
-			      <font color="green"> 编辑</font>
+			           编辑
 			</a>
 			<c:if test="${item.fsCases != '[]'}">
 			  <a href="#" onclick="removeNo()">
@@ -74,11 +74,11 @@ function remove(id){
 			  </a>
 			</c:if>
 			<a href="edit.do?model.caseType.id=${item.id}">
-			    <font color="blue"> 添加子类</font>
+			                添加子类
 			  </a>
 			<c:if test="${item.caseTypes != '[]'}">
 			  <a href="listchildType.do?model.id=${item.id}">
-			    <font color="#FF9D07"> 查看子类</font>
+			               查看子类
 			  </a>
 			</c:if>
 			<c:if test="${item.caseTypes == '[]'}">
