@@ -52,7 +52,7 @@ public class UrgentType extends BaseModel {
 		this.id = id;
 	}
 
-	@Column(name = "name", length = 255)
+	@Column(name = "NAME", length = 255)
 	public String getName() {
 		return name;
 	}
@@ -61,7 +61,7 @@ public class UrgentType extends BaseModel {
 		this.name = name;
 	}
 
-	@Column(name = "remark", length = 255)
+	@Column(name = "REMARK", length = 255)
 	public String getRemark() {
 		return remark;
 	}
