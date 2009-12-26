@@ -6,7 +6,7 @@
 	<div id="command">
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
-			<a href="${ctx}/genericcase/index.do" target="main">案件管理</a>
+			<a href="${ctx}/fscase/index.do" target="main">案件管理</a>
 		</div>
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
