@@ -7,9 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.xwork.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.systop.core.ApplicationException;
 import com.systop.core.service.BaseGenericsManager;
 import com.systop.fsmis.model.Expert;
 import com.systop.fsmis.model.ExpertCategory;
@@ -21,7 +23,20 @@ import com.systop.fsmis.model.ExpertCategory;
  */
 @Service
 public class ExpertManager extends BaseGenericsManager<Expert>{
-  
+ 
+	/**
+	 * 保存专家信息,并验证手机号的唯一性
+	 */
+	@Transactional
+	public void save(Expert expert) {
+		if (getDao().exists(expert, "mobile")) {
+			if (StringUtils.isNotEmpty(expert.getMobile())) {
+				throw new ApplicationException("手机号【" + expert.getMobile() + "】已存在。");
+			}
+		}
+		super.save(expert);
+	}
+	
 	/**
    * 查询所有的专家类别
    * @return
