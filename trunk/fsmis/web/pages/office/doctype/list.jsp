@@ -64,16 +64,17 @@ function showArticles(cID){
 		<ec:column width="35" property="_No" title="No." style="text-align:center" sortable="false" value="${GLOBALROWCOUNT}"/>
 		<ec:column width="200" property="name" title="栏目名称" style="cursor:hand" onclick="showArticles('${item.id}')"/>
 		<ec:column width="400" property="descn" title="描述"/>
-		<ec:column width="70" property="_0" title="操作" style="text-align:center" sortable="false">
-			<a href="edit.do?model.id=${item.id}">
-				<img src="${ctx}/images/icons/modify.gif" title="编辑"></img>
-			</a>
-			<a href="#">
-				<img src="${ctx}/images/icons/delete.gif" title="删除" onclick="removeDocType(${item.id })"/>
-			</a>
-			<a href="index.do?model.id=${item.id}">
-				<img src="${ctx}/images/icons/resource.gif" title="查看下级栏目"/>
-			</a>
+		<ec:column width="150" property="_0" title="操作" style="text-align:center" sortable="false">
+			<a href="edit.do?model.id=${item.id}">编辑</a>|
+		<c:choose>
+	     <c:when test="${!empty item.childDocumentTypes && !empty item.documents}"> 
+	        <font color="#999999">删除</font>|
+	     </c:when>
+	     <c:otherwise>
+	        <a href="#" onClick="removeDocType(${item.id })"">删除</a>|  
+	     </c:otherwise>
+	    </c:choose>  
+			<a href="index.do?model.id=${item.id}">查看下级栏目</a>
 		</ec:column>
 	</ec:row>
 </ec:table>
