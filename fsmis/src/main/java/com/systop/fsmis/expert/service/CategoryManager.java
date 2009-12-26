@@ -28,4 +28,5 @@ public class CategoryManager extends BaseGenericsManager<ExpertCategory>{
 		}
 		super.save(expertCategory);
 	}
+	
 }
