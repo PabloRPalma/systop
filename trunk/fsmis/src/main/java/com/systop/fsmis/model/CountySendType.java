@@ -12,13 +12,14 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.systop.common.modules.dept.model.Dept;
+import com.systop.core.model.BaseModel;
 
 /**
  * 区县具体的派遣类别与部门的对应关系
  */
 @Entity
 @Table(name = "COUNTY_SEND_SYPES", schema = "FSMIS")
-public class CountySendType implements java.io.Serializable {
+public class CountySendType extends BaseModel {
 
 	/** 主键 */
 	private Integer id;

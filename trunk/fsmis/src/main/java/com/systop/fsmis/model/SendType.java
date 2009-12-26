@@ -13,9 +13,11 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.systop.core.model.BaseModel;
+
 @Entity
 @Table(name = "SEND_TYPES", schema = "FSMIS")
-public class SendType implements java.io.Serializable {
+public class SendType extends BaseModel {
 
 	private Integer id;
 	
