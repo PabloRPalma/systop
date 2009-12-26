@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,6 +38,7 @@ public class UrgentGroup implements java.io.Serializable {
 	private Clob handleContent;
 	private String template;
 	private Set<User> user = new HashSet<User>(0);
+	private UrgentType urgentType;
 
 	public UrgentGroup() {
 	}
@@ -134,6 +136,15 @@ public class UrgentGroup implements java.io.Serializable {
 
 	public void setUser(Set<User> user) {
 		this.user = user;
+	}
+	@ManyToOne(cascade = {}, fetch = FetchType.LAZY)
+	@JoinColumn(name = "UCTYPE_ID")
+	public UrgentType getUrgentType() {
+		return urgentType;
+	}
+
+	public void setUrgentType(UrgentType urgentType) {
+		this.urgentType = urgentType;
 	}
 
 }
