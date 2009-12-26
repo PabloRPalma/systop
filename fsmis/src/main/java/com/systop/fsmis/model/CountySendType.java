@@ -14,11 +14,11 @@ import org.hibernate.annotations.GenericGenerator;
 import com.systop.common.modules.dept.model.Dept;
 
 /**
- * 
+ * 区县具体的派遣类别与部门的对应关系
  */
 @Entity
-@Table(name = "DEPT_SEND_SYPES", schema = "FSMIS")
-public class DeptSendType implements java.io.Serializable {
+@Table(name = "COUNTY_SEND_SYPES", schema = "FSMIS")
+public class CountySendType implements java.io.Serializable {
 
 	private Integer id;
 	private SendType sendType;
@@ -26,7 +26,7 @@ public class DeptSendType implements java.io.Serializable {
 	private String leaderDept;
 	private String generalDept;
 
-	public DeptSendType() {
+	public CountySendType() {
 	}
 
 	@Id

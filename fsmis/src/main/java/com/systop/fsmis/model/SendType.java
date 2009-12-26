@@ -28,7 +28,7 @@ public class SendType implements java.io.Serializable {
 	/** 排列序号 */
 	private Integer sortId;
 
-	private Set<DeptSendType> deptSendSypeses = new HashSet<DeptSendType>(0);
+	private Set<CountySendType> deptSendSypeses = new HashSet<CountySendType>(0);
 
 	/** 对应案件 */
 	private Set<FsCase> fsCases = new HashSet<FsCase>(0);
@@ -80,11 +80,11 @@ public class SendType implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sendType")
-	public Set<DeptSendType> getDeptSendSypeses() {
+	public Set<CountySendType> getDeptSendSypeses() {
 		return this.deptSendSypeses;
 	}
 
-	public void setDeptSendSypeses(Set<DeptSendType> deptSendSypeses) {
+	public void setDeptSendSypeses(Set<CountySendType> deptSendSypeses) {
 		this.deptSendSypeses = deptSendSypeses;
 	}
 
