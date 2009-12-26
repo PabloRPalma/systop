@@ -28,8 +28,19 @@
 		</div>
 	</div>
 	<div id="urgent">
-	
-	</div>
+	<div style="padding-top:2px">
+				<img src="${ctx}/images/icons/add.gif" class="icon">
+				<a href="#" target="main">应急管理</a>
+			</div>
+		<div style="padding-top:2px">
+				<img src="${ctx}/images/icons/add.gif" class="icon">
+				<a href="${ctx}/uctype/index.do" target="main">类别管理</a>
+			</div>		
+			<div style="padding-top:2px">
+				<img src="${ctx}/images/icons/add.gif" class="icon">
+				<a href="${ctx}/ucgroup/index.do" target="main">指挥组管理</a>
+			</div>
+		</div>
 	<div id="analyse">
 	
 	</div>
