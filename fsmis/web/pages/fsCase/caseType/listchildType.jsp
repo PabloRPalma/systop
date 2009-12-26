@@ -67,7 +67,7 @@ function remove(id){
 			<a href="edit.do?model.id=${item.id}">
 			      <font color="green"> 编辑</font>
 			</a>
-			<c:if test="${item.genericCases != '[]'}">
+			<c:if test="${item.fsCases != '[]'}">
 			  <a href="#" onclick="removeNo()">
 			     <font color="gray">删除</font>
 			  </a>
@@ -77,7 +77,7 @@ function remove(id){
 			     <font color="gray">删除</font>
 			  </a>
 			</c:if>
-			<c:if test="${item.genericCases == '[]' && item.caseTypes == '[]'}">
+			<c:if test="${item.fsCases == '[]' && item.caseTypes == '[]'}">
 			  <a href="#" onclick="remove(${item.id})">
 			     <font color="red"> 删除</font>
 			  </a>
