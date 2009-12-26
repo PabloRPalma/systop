@@ -1,6 +1,5 @@
 package com.systop.fsmis.model;
 
-import java.sql.Clob;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
