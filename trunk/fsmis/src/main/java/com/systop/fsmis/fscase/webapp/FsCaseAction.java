@@ -113,8 +113,8 @@ public class FsCaseAction extends
 		}
 		
 		
-		if (getModel().getDeptsByCounty() == null
-				|| getModel().getDeptsByCounty().getId() == null) {
+		if (getModel().getCounty() == null
+				|| getModel().getCounty().getId() == null) {
 			addActionError("请选择事件所属区县.");
 			getRequest().setAttribute("levelone", getLevelOne());
 			return INPUT;
