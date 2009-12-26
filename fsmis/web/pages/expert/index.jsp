@@ -60,7 +60,9 @@ function removeExpert(eID){
   toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
   <ec:row>
     <ec:column width="40" property="_num" title="No." value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center"/> 
-    <ec:column width="70" property="name" title="专家名称" style="text-align:center"/>  
+    <ec:column width="70" property="_1" title="专家名称" style="text-align:center"> 
+       <a href="view.do?model.id=${item.id}"><font color="blue">${item.name}</font></a> 
+    </ec:column>
     <ec:column width="70" property="level" title="专家级别" style="text-align:center"/>   
     <ec:column width="100" property="expertCategory.name" title="专家类别" style="text-align:left"/>  
     <ec:column width="80" property="title" title="职称" style="text-align:left"/> 
