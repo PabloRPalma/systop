@@ -58,7 +58,7 @@ public class FsCaseAction extends
 	public String index() {
 		Page page = new Page(Page.start(getPageNo(), getPageSize()),
 				getPageSize());
-		String sql = "from FsCase gc where isSubmited=0 ";
+		String sql = "from FsCase gc where isSubmitSj=0 ";
 		List args = new ArrayList();
 		if (StringUtils.isNotBlank(getModel().getTitle())) {
 			sql = sql + "and gc.title like ? ";
@@ -74,9 +74,9 @@ public class FsCaseAction extends
 			args.add("'" + getModel().getCode() + "'");
 		}
 		Date eventDate = new Date();
-		if(StringUtils.isNotBlank(getRequest().getParameter("eventDate"))){
+		if(StringUtils.isNotBlank(getRequest().getParameter("caseTime"))){
 			try {
-				eventDate = DateUtils.parseDate(getRequest().getParameter("eventDate"),
+				eventDate = DateUtils.parseDate(getRequest().getParameter("caseTime"),
 							new String[] { "yyyy-MM-dd HH:mm:ss" });
 	 
 			} catch (ParseException e) {
@@ -84,12 +84,12 @@ public class FsCaseAction extends
 			}
 		}
 		//根据事发时间查询
-		if(StringUtils.isNotBlank(getRequest().getParameter("eventDate"))){
-			sql =  sql +  " and gc.eventDate <= ?";
+		if(StringUtils.isNotBlank(getRequest().getParameter("caseTime"))){
+			sql =  sql +  " and gc.caseTime <= ?";
 			args.add(eventDate);
 			
 		}
-		sql += " order by gc.eventDate desc,gc.status";
+		sql += " order by gc.caseTime desc,gc.status";
 		page = getManager().pageQuery(page, sql,args.toArray());
 		restorePageData(page);
 		return INDEX;
