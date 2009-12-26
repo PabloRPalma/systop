@@ -69,19 +69,20 @@ public class SmsProxyCmccWebServiceImpl implements SmsProxy {
 		String[] destAddreses = new String[] { smsSend.getMobileNum() };
 		int[] states = null;
 		try {
+
 			// 如果提交成功会返回提交到Mas数据库中的主键
 			states = service.sendState(SmsConstants.CONN_NAME,
 					SmsConstants.CONN_PASS, destAddreses, smsSend.getContent(), 1);
-			if (!ArrayUtils.isEmpty(states)) {
+			if (!ArrayUtils.isEmpty(states) && states[0] > 0) {
 				return states[0];
 			} else {
 				throw new ApplicationException("ID为:" + smsSend.getId() + ",接收号码为"
-						+ smsSend.getMobileNum() + "的短信发送失败!");
+						+ smsSend.getMobileNum() + "的短信发送失败!" + "错误原因为:接收到id值" + states[0]);
 			}
 		} catch (RemoteException ex) {
-			logger.error("ID为:{},接收号码为{}的短信发送失败,错误原因为:{}", smsSend.getMobileNum(), ex
-					.getMessage());
-			throw new ApplicationException(ex);
+
+			throw new ApplicationException("ID为:" + smsSend.getId() + ",接收号码为"
+					+ smsSend.getMobileNum() + "的短信发送失败!" + "错误原因为:" + ex.getMessage());
 		}
 
 	}
