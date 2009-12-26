@@ -3,7 +3,7 @@
 <%@include file="/common/taglibs.jsp"%>
 <html>
 <head>
-<title>派遣快捷方式维护</title>
+<title>派遣环节管理</title>
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/ec.jsp"%>
 <%@include file="/common/dwr.jsp" %>
@@ -18,14 +18,11 @@
 </head>
 <body>
 <div class="x-panel">
+<div class="x-panel-header">派遣环节管理</div>
 <div class="x-toolbar">
-<table width="100%">
-  <tr>
-    <td align="right">
+	<div style="margin: 7 20 4 10;" align="right">
       <a href="${ctx}/sendType/input.do">添加派遣环节</a>
-    </td>
-  </tr>
-</table>
+	</div>
 </div>
 	<div class="x-panel-body">
 		<ec:table
@@ -39,14 +36,12 @@
 			generateScript="true"
 			resizeColWidth="false" 
 			classic="false" 
-			width="100%" height="460px"
-			minHeight="460"
+			width="100%" height="360px"
+			minHeight="360"
 			toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 			<ec:row>
 				<ec:column width="40" property="_s" title="No." value="${GLOBALROWCOUNT}" style="text-align: center" />
-				<ec:column width="250" property="_name" title="名称">
-					<span style="font-size: 14px; font-weight: bold;">${item.name}</span>
-				</ec:column>
+				<ec:column width="250" property="name" title="名称"/>
 				<ec:column width="350" property="_d" title="描述">
 					<div style="width: 350px; word-break: break-all;">
 						${item.descn }
