@@ -16,6 +16,10 @@
 	<div id="assess">
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/expert/category/index.do" target="main">专家类别管理</a>
+		</div>	
+		<div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/assessment/index.do" target="main">评估管理</a>
 		</div>
 	</div>
