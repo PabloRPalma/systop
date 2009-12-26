@@ -94,11 +94,11 @@ function remove(id){
 		<ec:column width="150" property="_0" title="操作" style="text-align:left" sortable="false">
 			 &nbsp;&nbsp;
 			 <a href="${ctx}/fscase/view.do?model.id=${item.id}">
-			      <font color="#FF9D07">查看</font>
+			                查看
 			 </a>  
 			 <stc:role ifAnyGranted="ROLE_ADMIN">
 			    <a href="${ctx}/fscase/edit.do?model.id=${item.id}">
-                   <font color="green"> 编辑</font>
+                                                 编辑
                </a>
              </stc:role>
             <stc:role  ifNotGranted="ROLE_ADMIN">
@@ -109,7 +109,7 @@ function remove(id){
             </c:if>
 			<c:if test="${item.status == '0' || item.status == '1'}">
 			   <a href="${ctx}/fscase/edit.do?model.id=${item.id}">
-                 <font color="green">编辑</font>
+                                               编辑
              </a>	
             </c:if>
             </stc:role>
@@ -124,7 +124,7 @@ function remove(id){
 			 </a>
 			</c:if>
 				
-			  <font color="blue"> 地图</font>
+			                地图
 			
 				
 		</ec:column>
