@@ -50,7 +50,7 @@
 				<ec:column width="50" property="_sortId" title="排序" style="text-align:center">
 					<input type="text" name="itemSortId" id="${item.id}" value="${item.sortId}" style="width:25px;" disabled="disabled">
 				</ec:column>
-				<ec:column width="50" property="_0" title="操作" style="text-align:center">
+				<ec:column width="90" property="_0" title="操作" style="text-align:center">
 					<a href="edit.do?model.id=${item.id}">编辑 </a>
 					<a href="#" onclick='remove(${item.id})'>删除</a>
 				</ec:column>
