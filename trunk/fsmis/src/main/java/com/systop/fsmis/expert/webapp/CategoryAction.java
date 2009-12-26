@@ -42,4 +42,17 @@ public class CategoryAction extends ExtJsCrudAction<ExpertCategory, CategoryMana
 		restorePageData(page);
 		return INDEX;
 	}
+	
+	/**
+	 * 删除专家信息
+	 */
+	@Override
+	public String remove(){
+		ExpertCategory expertCategory = getManager().get(getModel().getId());
+		if(expertCategory.getExperts().size() > 0){
+			addActionError("该专家类别【"+ expertCategory.getName() +"】存在专家信息！");
+			return "error";
+		}
+		return super.remove();
+	}
 }
