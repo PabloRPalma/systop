@@ -62,13 +62,15 @@ public class SmsManager {
 	}
 
 	public void sendMessages() {
-		logger.info("SMSManager.sendMessages()-->");
+		logger.info("##########SMSManager.sendMessages()-->");
 
 		// 得到数据库中需要发送的短信列表
 		List<SmsSend> smsSendList = getSmsSendManager().getNewSmsSends();
-
+		logger.info("##########本次共得到{}条发送短信", smsSendList.size());
+		int i = 0;
 		// 遍历列表
 		for (SmsSend smsSend : smsSendList) {
+			logger.info("**********{}", i++);
 			if (smsSend == null) {
 				continue;
 			}
@@ -93,9 +95,7 @@ public class SmsManager {
 						.getMobileNum());
 
 			} catch (ApplicationException ex) {
-				Object[] objs = { smsSend.getId(), smsSend.getMobileNum(),
-						ex.getMessage() };
-				logger.error("ID为:{}的短信,接收手机号为[{}],发送失败! 错误原因:{}", objs);
+				logger.error(ex.getMessage());
 			}
 		}
 		getSmsProxy().receiveMessage();
