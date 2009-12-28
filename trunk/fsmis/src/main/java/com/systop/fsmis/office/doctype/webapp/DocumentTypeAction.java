@@ -2,7 +2,6 @@ package com.systop.fsmis.office.doctype.webapp;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
@@ -58,7 +57,6 @@ public class DocumentTypeAction extends ExtJsCrudAction<DocumentType, DocumentTy
 	 */
 	private DetachedCriteria setupDetachedCriteria() {
 		DetachedCriteria criteria = DetachedCriteria.forClass(DocumentType.class);
-		logger.info("ID: " + getModel().getId());
 		if(getModel().getId() != null) {
 			criteria.add(Restrictions.eq("parentDocumentType.id", getModel().getId()));
 		} else {
@@ -105,9 +103,8 @@ public class DocumentTypeAction extends ExtJsCrudAction<DocumentType, DocumentTy
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Map> getDocumentTypeMap() {
-		getManager().getDocumentTypesList(null, 0);
-		return getManager().getDocumentTypeList();
+	public List getDocumentTypeMap() {
+		return getManager().getDocumentTypesList(0);
 	}
 
 	/**
