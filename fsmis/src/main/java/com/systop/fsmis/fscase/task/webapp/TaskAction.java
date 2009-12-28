@@ -17,11 +17,12 @@ import com.systop.cms.utils.PageUtil;
 import com.systop.common.modules.dept.service.DeptManager;
 import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.core.dao.support.Page;
+import com.systop.core.webapp.struts2.action.DefaultCrudAction;
 import com.systop.core.webapp.upload.UpLoadUtil;
 import com.systop.fsmis.FsConstants;
 import com.systop.fsmis.fscase.FsCaseConstants;
-import com.systop.fsmis.fscase.base.webapp.FsCaseBaseAction;
 import com.systop.fsmis.fscase.task.service.TaskManager;
+import com.systop.fsmis.model.FsCase;
 import com.systop.fsmis.model.Task;
 import com.systop.fsmis.model.TaskAtt;
 
@@ -34,7 +35,20 @@ import com.systop.fsmis.model.TaskAtt;
 @Controller
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-public class TaskAction extends FsCaseBaseAction<Task, TaskManager> {
+public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
+	/** 各个模块所共需的FsCase实例 */
+	private FsCase fsCase;
+
+	/** 为了在界面中区分当前模块的标示 */
+
+	public FsCase getFsCase() {
+
+		return fsCase;
+	}
+
+	public void setFsCase(FsCase fsCase) {
+		this.fsCase = fsCase;
+	}
 
 	private LoginUserService loginUserService;
 
@@ -97,8 +111,8 @@ public class TaskAction extends FsCaseBaseAction<Task, TaskManager> {
 		Page page = PageUtil.getPage(getPageNo(), getPageSize());
 		StringBuffer buf = new StringBuffer("from Task t where 1=1 ");
 		if (StringUtils.isNotBlank(getModel().getTitle())) {
-			buf.append("and t.title like '%").append(getModel().getTitle())
-					.append("%' ");
+			buf.append("and t.title like '%").append(getModel().getTitle()).append(
+					"%' ");
 		}
 		if (StringUtils.isNotBlank(getModel().getStatus())) {
 			buf.append("and t.status = '").append(getModel().getStatus())
@@ -176,7 +190,6 @@ public class TaskAction extends FsCaseBaseAction<Task, TaskManager> {
 		this.loginUserService = loginUserService;
 	}
 
-	@Override
 	public String getCurrentModel() {
 		return "TASK11";
 	}
