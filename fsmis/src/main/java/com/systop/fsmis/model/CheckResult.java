@@ -50,6 +50,10 @@ public class CheckResult extends BaseModel {
 	 * 应急事件审核对象
 	 */
 	private UrgentCase urgentCase;
+	/**
+	 * 风险评估对象
+	 */
+	private Assessment assessment;
 
 	@Id
 	@GeneratedValue(generator = "hibseq")
@@ -110,4 +114,15 @@ public class CheckResult extends BaseModel {
 	public void setUrgentCase(UrgentCase urgentCase) {
   	this.urgentCase = urgentCase;
   }
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ASSESSMENTS")
+	public Assessment getAssessment() {
+		return assessment;
+	}
+
+	public void setAssessment(Assessment assessment) {
+		this.assessment = assessment;
+	}
+	
 }
