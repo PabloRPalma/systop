@@ -70,9 +70,10 @@ public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseMana
 	public String save() {
 		try {
 			Dept dept = loginUserService.getLoginUserDept(getRequest());
-			if (dept != null) {
-				getModel().setCounty(dept);
+			if (dept == null) {
+				addActionError("您所在的部门为空...");
 			}
+			getModel().setCounty(dept);
 			getModel().setCreateTime(Calendar.getInstance().getTime());
 			//事件状态
 			//getModel().setStatus();
