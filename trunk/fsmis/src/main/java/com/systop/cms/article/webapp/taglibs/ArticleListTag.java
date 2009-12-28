@@ -59,12 +59,12 @@ public class ArticleListTag extends BaseFreeMarkerTagSupport {
 			List<Articles> list = cit.setMaxResults(Integer.parseInt(getSize()))
 					.list();
 		
-			this.log.debug("tag articleList tagid is:" + this.getId());
-			this.log.debug("tag articleList size is:" + this.getSize());
-			this.log.debug("tag articleList get data size:" + list.isEmpty());
+			logger.debug("tag articleList tagid is:" + this.getId());
+			logger.debug("tag articleList size is:" + this.getSize());
+			logger.debug("tag articleList get data size:" + list.isEmpty());
 			
 			for (Articles a : list) {
-				this.log.debug("tag articleList getArticles the title is:"
+				this.logger.debug("tag articleList getArticles the title is:"
 						+ a.getTitle());
 			}
 	
@@ -74,7 +74,7 @@ public class ArticleListTag extends BaseFreeMarkerTagSupport {
 			ctx.addParameter("width", this.getWidth());
 			String path = ((HttpServletRequest) pageContext.getRequest())
 					.getContextPath();
-			log.debug("PATH is: " + path);
+			logger.debug("PATH is: " + path);
 			ctx.addParameter("ctx", path);
 		}catch(Exception e){
 			e.printStackTrace();
