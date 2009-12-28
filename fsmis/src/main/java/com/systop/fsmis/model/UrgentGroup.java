@@ -27,9 +27,9 @@ public class UrgentGroup extends BaseModel {
 	/** 组名 */
 	private String name;
 	/** 描述 */
-	private String descn;
+	private String describe;
 	/** 显示内容 */
-	private String display;
+	private String displays;
 	/** 类别 内部组还是外部组 */
 	private String type;
 	/** 本组对应模板 */
@@ -40,6 +40,7 @@ public class UrgentGroup extends BaseModel {
 	private UrgentType urgentType;
 
 	private UrgentCase urgentCases;
+
 	public UrgentGroup() {
 	}
 
@@ -64,22 +65,22 @@ public class UrgentGroup extends BaseModel {
 		this.name = name;
 	}
 
-	@Column(name = "DESCN", length = 500)
-	public String getDescn() {
-		return this.descn;
+	@Column(name = "DESCRIBE", length = 500)
+	public String getDescribe() {
+		return this.describe;
 	}
 
-	public void setDescn(String descn) {
-		this.descn = descn;
+	public void setDescribe(String describe) {
+		this.describe = describe;
 	}
 
-	@Column(name = "DISPLAY", length = 500)
-	public String getDisplay() {
-		return this.display;
+	@Column(name = "DISPLAYS", length = 500)
+	public String getDisplays() {
+		return this.displays;
 	}
 
-	public void setDisplay(String display) {
-		this.display = display;
+	public void setDisplays(String displays) {
+		this.displays = displays;
 	}
 
 	@Column(name = "TYPE")
@@ -118,6 +119,7 @@ public class UrgentGroup extends BaseModel {
 	public void setUrgentType(UrgentType urgentType) {
 		this.urgentType = urgentType;
 	}
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "URGENT_CASE")
 	public UrgentCase getUrgentCases() {
