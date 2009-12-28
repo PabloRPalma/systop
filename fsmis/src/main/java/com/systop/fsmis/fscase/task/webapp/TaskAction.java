@@ -8,11 +8,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.hibernate.criterion.MatchMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import com.opensymphony.xwork2.util.ArrayUtils;
 import com.systop.cms.utils.PageUtil;
 import com.systop.common.modules.dept.service.DeptManager;
 import com.systop.common.modules.security.user.LoginUserService;
@@ -22,7 +24,6 @@ import com.systop.core.webapp.upload.UpLoadUtil;
 import com.systop.fsmis.FsConstants;
 import com.systop.fsmis.fscase.FsCaseConstants;
 import com.systop.fsmis.fscase.task.service.TaskManager;
-import com.systop.fsmis.model.FsCase;
 import com.systop.fsmis.model.Task;
 import com.systop.fsmis.model.TaskAtt;
 
@@ -36,26 +37,14 @@ import com.systop.fsmis.model.TaskAtt;
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
-	/** 各个模块所共需的FsCase实例 */
-	private FsCase fsCase;
-
-	/** 为了在界面中区分当前模块的标示 */
-
-	public FsCase getFsCase() {
-
-		return fsCase;
-	}
-
-	public void setFsCase(FsCase fsCase) {
-		this.fsCase = fsCase;
-	}
-
+	@SuppressWarnings("unused")
+	@Autowired
 	private LoginUserService loginUserService;
 
-	/** 附件 */
+	/** 附件数组 */
 	private File[] attachments;
 
-	/** 附件保存后的名称 */
+	/** 附件保存后的名称 数组 */
 	private String[] attachmentsFileName;
 
 	/** 所选部门ID集合 */
@@ -63,6 +52,8 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 	private List<Integer> deptIds = new ArrayList<Integer>();
 
 	/** 依赖部门管理类 */
+	@SuppressWarnings("unused")
+	@Autowired
 	private DeptManager deptManager;
 
 	/**
@@ -70,32 +61,30 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 	 */
 	@Override
 	public String save() {
-		logger.info("@@@@@@@@@@@@save");
 		// 设定派遣时间
 		getModel().setDispatchTime(new Date());
-		/**
-		 * 将附件信息集合保存到任务附件实体集合中<br>
-		 * 1.完成文件的上传<br>
-		 * 2.将上传文件路径信息保存到任务附件实体中
-		 */
-		// 任务附件实体集合
-		List<TaskAtt> taskAtts = new ArrayList<TaskAtt>();
+
+		// 将附件信息集合保存到任务附件实体集合中
+		// 1.完成文件的上传
+		// 2.将上传文件路径信息保存到任务附件实体中
+		List<TaskAtt> taskAtts = new ArrayList<TaskAtt>(); // 任务附件实体集合
 		// 遍历文件数组,完成各个文件的上传并将文件路径信息保存到任务附件实体中
-		if (attachments != null) {
+		if (ArrayUtils.isNotEmpty(attachments)
+				&& ArrayUtils.isNotEmpty(attachmentsFileName)) {
 			for (int i = 0; i < attachments.length; i++) {
+				if (attachments[i] != null && attachmentsFileName[i] != null) {
+					TaskAtt taskAtt = new TaskAtt();
+					// 上传文件并且把文件信息保存在任务附件实体中
+					taskAtt.setPath(UpLoadUtil.doUpload(attachments[i],
+							attachmentsFileName[i], FsConstants.TASK_ATT_FOLDER,
+							getServletContext()));
+					taskAtt.setTitle(attachmentsFileName[i]);
 
-				TaskAtt taskAtt = new TaskAtt();
-				// 上传文件并且把文件信息保存在任务附件实体中
-				taskAtt.setPath(UpLoadUtil.doUpload(attachments[i],
-						attachmentsFileName[i], FsConstants.TASK_ATT_FOLDER,
-						getServletContext()));
-				taskAtt.setTitle(attachmentsFileName[i]);
-
-				// 将附件实例保存到附件实体集合中
-				taskAtts.add(taskAtt);
+					// 将附件实例保存到附件实体集合中
+					taskAtts.add(taskAtt);
+				}
 			}
 		}
-
 		getManager().save(getModel(), deptIds, taskAtts);
 
 		return SUCCESS;
@@ -106,29 +95,29 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 	 */
 	@Override
 	public String index() {
-		logger.info("@@@@@@@@@@@@@@@2----------index");
-		Page page = PageUtil.getPage(getPageNo(), getPageSize());
 		StringBuffer buf = new StringBuffer("from Task t where 1=1 ");
+		List<Object> args = new ArrayList<Object>();
+		// 根据title查询
 		if (StringUtils.isNotBlank(getModel().getTitle())) {
-			buf.append("and t.title like '%").append(getModel().getTitle()).append(
-					"%' ");
+			buf.append("and t.title like ?");
+			args.add(MatchMode.ANYWHERE.toMatchString(getModel().getTitle()));
 		}
+		// 根据状态查询
 		if (StringUtils.isNotBlank(getModel().getStatus())) {
-			buf.append("and t.status = '").append(getModel().getStatus())
-					.append("' ");
+			buf.append("and t.status = ?");
+			args.add(getModel().getStatus());
 		}
-		logger.info("@@@@@@@@@@@@@@@3----------index");
-		// buf.append(" and t.fsCase.county.id = ? order by t.status, t.time desc");
 
-		// 查询属于当前区县的案件的任务
+		// 查询属于当前区县的案件的任务,现阶段(20091226)项目组长说暂时不考虑,待以后加上此功能时,启用代码
+		// buf.append(" and t.fsCase.county.id = ? order by t.status, t.time desc");
 		/*
 		 * page = getManager().pageQuery(page, buf.toString(),
 		 * loginUserService.getLoginUserDept(getRequest()).getId());
 		 */
-		page = getManager().pageQuery(page, buf.toString());
+		Page page = PageUtil.getPage(getPageNo(), getPageSize());
+		page = getManager().pageQuery(page, buf.toString(), args.toArray());
 
 		restorePageData(page);
-		logger.info("############################5");
 
 		return INDEX;
 	}
@@ -163,34 +152,12 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 		this.attachmentsFileName = attachmentsFileName;
 	}
 
-	public DeptManager getDeptManager() {
-		return deptManager;
-	}
-
-	@Autowired
-	public void setDeptManager(DeptManager deptManager) {
-		this.deptManager = deptManager;
-	}
-
 	public List<Integer> getDeptIds() {
 		return deptIds;
 	}
 
 	public void setDeptIds(List<Integer> deptIds) {
 		this.deptIds = deptIds;
-	}
-
-	public LoginUserService getLoginUserService() {
-		return loginUserService;
-	}
-
-	@Autowired
-	public void setLoginUserService(LoginUserService loginUserService) {
-		this.loginUserService = loginUserService;
-	}
-
-	public String getCurrentModel() {
-		return "TASK11";
 	}
 
 }
