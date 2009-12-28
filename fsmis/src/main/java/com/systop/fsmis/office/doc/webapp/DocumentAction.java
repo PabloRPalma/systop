@@ -1,7 +1,6 @@
 package com.systop.fsmis.office.doc.webapp;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
@@ -73,9 +72,8 @@ public class DocumentAction extends ExtJsCrudAction<Document, DocumentManager> {
 
 	/** 获取栏目列表 */
 	@SuppressWarnings("unchecked")
-	public List<Map> getDocumentTypeMaps() {
-		documentTypeManager.getDocumentTypesList(0);
-		return documentTypeManager.getDocumentTypeList();
+	public List getDocumentTypeMap() {
+		return documentTypeManager.getDocumentTypesList(0);
 	}
 
 	/**
