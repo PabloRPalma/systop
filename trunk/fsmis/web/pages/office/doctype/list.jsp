@@ -30,13 +30,21 @@ function showArticles(cID){
 <div class="x-toolbar">
 <table width="99%">
 	<tr>
-		<td></td>
+		<td>
+		<s:form action="index.do" method="post">
+		栏目名称：
+		<s:textfield name="typeName" />
+		<input type="submit" value="查询" class="button"/>
+		</s:form>
+		</td>
 		<td align="right">
 		<table>
 			<tr>
 				<td><span class="ytb-sep"></span></td>
-				<td><a href="edit.do"><img
-					src="${ctx}/images/icons/add.gif" /> 添加栏目信息</a></td>
+				<td>
+					<img src="${ctx}/images/icons/add.gif" />
+					<a href="edit.do">添加栏目信息</a>
+				</td>
 			</tr>
 		</table>
 		</td>
@@ -67,7 +75,7 @@ function showArticles(cID){
 		<ec:column width="150" property="_0" title="操作" style="text-align:center" sortable="false">
 			<a href="edit.do?model.id=${item.id}">编辑</a>|
 		<c:choose>
-	     <c:when test="${!empty item.childDocumentTypes && !empty item.documents}"> 
+	     <c:when test="${!empty item.childDocumentTypes || !empty item.documents}"> 
 	        <font color="#999999">删除</font>|
 	     </c:when>
 	     <c:otherwise>

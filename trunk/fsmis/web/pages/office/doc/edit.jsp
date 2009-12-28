@@ -13,7 +13,7 @@
 <div class="x-panel">
 <div class="x-panel-header">添加文章信息</div>
 <div align="center">
-<s:form action="save.do" method="post">
+<s:form action="save.do" id="save" method="post" theme="simple" validate="true">
 <fieldset style="width: 800px; padding-top: 2px">
   <legend>添加文章信息</legend>
 	<s:hidden name="model.id"/>
@@ -58,6 +58,11 @@
 </s:form>
 </div>
 </div>
+<script type="text/javascript">
+	$(document).ready(function() {
+	$("#save").validate();
+});
+</script>
 <script type="text/javascript">
 function preFckEditor(){
 	var fckEditor = new FCKeditor( 'content' ) ;
