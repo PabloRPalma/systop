@@ -9,8 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.security.user.model.User;
+import com.systop.core.service.BaseGenericsManager;
 import com.systop.fsmis.fscase.FsCaseConstants;
-import com.systop.fsmis.fscase.base.service.FsCaseBaseManager;
 import com.systop.fsmis.model.FsCase;
 import com.systop.fsmis.model.Task;
 import com.systop.fsmis.model.TaskAtt;
@@ -18,7 +18,7 @@ import com.systop.fsmis.model.TaskDetail;
 import com.systop.fsmis.sms.SmsSendManager;
 
 @Service
-public class TaskManager extends FsCaseBaseManager<Task> {
+public class TaskManager extends BaseGenericsManager<Task> {
 	private SmsSendManager smsSendManager;
 
 	@Transactional
