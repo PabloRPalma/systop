@@ -59,7 +59,7 @@ public class CheckResult extends BaseModel {
   	this.id = id;
   }
 	
-	@Column(name = "CHECKER", length = 510)
+	@Column(name = "CHECKER", length = 255)
 	public String getChecker() {
   	return checker;
   }
@@ -68,7 +68,7 @@ public class CheckResult extends BaseModel {
   	this.checker = checker;
   }
 	
-	@Column(name = "IS_AGREE", length = 510)
+	@Column(name = "IS_AGREE", length = 255)
 	public String getIs_agree() {
   	return is_agree;
   }
@@ -96,7 +96,7 @@ public class CheckResult extends BaseModel {
   	check_time = checkTime;
   }
 	
-	@Column(name = "TARGET_ID", length = 510)
+	@Column(name = "TARGET_ID", length = 255)
 	public String getTarget_id() {
   	return target_id;
   }
