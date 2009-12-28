@@ -217,7 +217,7 @@ public abstract class BaseFreeMarkerTagSupport extends
     initTempateContext(); // 初始化templateContext
     setTemplateParameters(templateContext); // 调用抽象方法，获取
     FreeMarkerTemplateRender render = (FreeMarkerTemplateRender) 
-        getBean("freemarkerTemplateRender");
+        getBean("freeMarkerTemplateRender");
     try {
       render.renderTemplate(templateContext);
     } catch (Exception e) {
