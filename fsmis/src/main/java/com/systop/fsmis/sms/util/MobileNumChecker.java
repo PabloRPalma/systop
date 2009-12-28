@@ -30,7 +30,7 @@ public final class MobileNumChecker {
 		// 取得常量类从配置文件中的手机号码位数数组,转换为List
 		List<String> allowMobilNumberDigits = new ArrayList<String>(
 				SmsConstants.ALLOW_MOBILE_NUM_DIGIT.length);
-		// 如果要验证的手机号码的位数在允许序列，则养正成功
+		// 如果要验证的手机号码的位数在允许序列，则验证成功
 		Collections.addAll(allowMobilNumberDigits,
 				SmsConstants.ALLOW_MOBILE_NUM_DIGIT);
 		if (allowMobilNumberDigits.contains(String.valueOf(mobileNum.length()))) {
