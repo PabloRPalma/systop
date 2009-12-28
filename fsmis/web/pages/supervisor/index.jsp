@@ -90,14 +90,7 @@ function exportMobileNum(){
 		<ec:column width="70" property="name" title="姓名">
 			<c:if test="${item.isLeader == '1'}"><font color="red" title="红色代表该监管员为负责人">${item.name}</font></c:if>
 		</ec:column>
-		<ec:column width="35" property="gender" title="性别" style="text-align:center">
-			<c:if test="${item.gender == 'M'}">
-				男&nbsp;
-			</c:if>
-			<c:if test="${item.gender == 'F'}">
-				女&nbsp;
-			</c:if>
-		</ec:column>
+		<ec:column width="35" property="gender" title="性别" style="text-align:center"/>
 		<ec:column width="55" property="code" title="编号" style="text-align:center"/>
 		<ec:column width="95" property="mobile" title="手机号码" style="text-align:center"/>
 		<ec:column width="120" property="dept.name" title="所属街道"/>

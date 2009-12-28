@@ -88,7 +88,7 @@
 		 </c:if>
 		  <tr>
 				<td width="100" align="right">性　　别：</td>
-				<td colspan="2" align="left"><s:radio id="gender" name="model.gender" list="GenderMap" cssStyle="border:0;"></s:radio></td>
+				<td colspan="2" align="left"><s:radio id="gender" name="model.gender" list="{'男','女'}" cssStyle="border:0;"></s:radio></td>
 		  </tr>
 		  <tr>
 			  <td align="right">出生日期：</td>
