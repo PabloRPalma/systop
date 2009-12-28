@@ -3,10 +3,11 @@
     "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-	<package name="fsmis.sendType" extends="default"  namespace="/sendType">
-		<action name="*" class="sendTypeAction" method="{1}">
-			<result name="index">/pages/fsCase/sendType/list.jsp</result> 
-			<result name="input">/pages/fsCase/sendType/edit.jsp</result> 
+	<package name="fsmis.sendType" extends="default" namespace="/sendtype">
+		<action name="*" class="countySendTypeAction" method="{1}">
+			<result name="send">/pages/fsCase/sendtype/send.jsp</result>
+			<result name="index">/pages/fsCase/sendtype/list.jsp</result> 
+			<result name="input">/pages/fsCase/sendtype/edit.jsp</result> 
 			<result name="success" type="redirect">index.do</result> 
 		</action>
 	</package>
