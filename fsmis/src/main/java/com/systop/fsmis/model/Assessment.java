@@ -38,23 +38,21 @@ public class Assessment extends BaseModel {
 	private User proposer;
 	private Date askDate;
 	private String askCause;
-	/**
-	 * 审核人
-	 */
-	private User auditor;
+
 	private Date auditDate;
 	/**
-	 * 是否通过
+	 * 风险评估状态 "0" → 待审核; "1" → 审核通过; "2" → 审核未通过;  "3" → 评估完毕
 	 */
-	private String isConsent;
+	private String state;
 	private String opinion;
 	private Date resultDate;
 	private Clob result;
-	private String isComplete;
 
 	private Set<AsseMember> asseMemberse = new HashSet<AsseMember>(0);
 	private Set<AssessmentAttach> asseAtts = new HashSet<AssessmentAttach>(0);
 
+	private Set<CheckResult> checkResults = new HashSet<CheckResult>(0);
+	
 	public Assessment() {
 	}
 
@@ -78,16 +76,6 @@ public class Assessment extends BaseModel {
 
 	public void setFsCase(FsCase fsCase) {
 		this.fsCase = fsCase;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "AUDITOR")
-	public User getAuditor() {
-		return this.auditor;
-	}
-
-	public void setAuditor(User auditor) {
-		this.auditor = auditor;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -129,13 +117,13 @@ public class Assessment extends BaseModel {
 		this.auditDate = auditDate;
 	}
 
-	@Column(name = "IS_CONSENT", length = 1)
-	public String getIsConsent() {
-		return this.isConsent;
+	@Column(name = "STATE", length = 1)
+	public String getState() {
+		return state;
 	}
 
-	public void setIsConsent(String isConsent) {
-		this.isConsent = isConsent;
+	public void setState(String state) {
+		this.state = state;
 	}
 
 	@Column(name = "OPINION", length = 500)
@@ -166,15 +154,6 @@ public class Assessment extends BaseModel {
 		this.result = result;
 	}
 
-	@Column(name = "IS_COMPLETE", length = 1)
-	public String getIsComplete() {
-		return this.isComplete;
-	}
-
-	public void setIsComplete(String isComplete) {
-		this.isComplete = isComplete;
-	}
-
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "assessment")
 	public Set<AsseMember> getAsseMemberse() {
 		return this.asseMemberse;
@@ -191,6 +170,15 @@ public class Assessment extends BaseModel {
 
 	public void setAsseAtts(Set<AssessmentAttach> asseAtts) {
 		this.asseAtts = asseAtts;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "assessment")
+	public Set<CheckResult> getCheckResults() {
+		return checkResults;
+	}
+
+	public void setCheckResults(Set<CheckResult> checkResults) {
+		this.checkResults = checkResults;
 	}
 
 }
