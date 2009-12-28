@@ -20,6 +20,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
@@ -272,6 +273,7 @@ public class Articles extends BaseModel {
   // oracle Clob 支持 @Type(type = "org.springframework.orm.hibernate3.support
   // .ClobStringType")
   @Column(name = "CONTENT")
+  @Type(type = "text")
   @Field(name = "content", index = Index.TOKENIZED, store = Store.YES)
   public String getContent() {
     return this.content;

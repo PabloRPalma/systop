@@ -16,6 +16,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import com.systop.core.model.BaseModel;
 
@@ -121,9 +122,8 @@ public class Templates extends BaseModel {
 		this.isDef = isDef;
 	}
 
-	//oracle Clob 支持@Type(type = "org.springframework.orm.hibernate3
-  //.support.ClobStringType")
 	@Column(name = "CONTENT")
+	@Type(type = "text")
 	public String getContent() {
 		return this.content;
 	}
