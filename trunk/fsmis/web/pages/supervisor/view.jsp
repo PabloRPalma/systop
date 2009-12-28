@@ -42,12 +42,8 @@
 		<tr>
 			<td width="100" align="right">性　　别：</td>
 			<td colspan="2" align="left">
-			<c:if test="${model.gender == 'M'}">
-				<input type="text" name="model.gender" value="男" class="inputBorder" style="width:100px;height:16px" readonly="true"/>
-			</c:if>
-			<c:if test="${model.gender == 'F'}">
-				<input type="text" name="model.gender" value="女"	class="inputBorder" style="width:100px;height:16px" readonly="true"/></td>
-			</c:if>
+				<s:textfield name="model.gender" cssStyle="width:100px" cssClass="inputBorder" readonly="true"/>
+			</td>
 	    </tr>
 	    <tr>
 		  <td align="right">出生日期：</td>
