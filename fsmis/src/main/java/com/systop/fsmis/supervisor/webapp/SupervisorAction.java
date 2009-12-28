@@ -201,10 +201,6 @@ public class SupervisorAction extends DefaultCrudAction<Supervisor, SupervisorMa
 		return INPUT;
 	}
 	
-	public Map getGenderMap(){
-		return FsConstants.SEX_MAP;
-	}
-	
 	public File getPhoto() {
 		return photo;
 	}
