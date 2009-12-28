@@ -34,9 +34,9 @@ public class UrgentType extends BaseModel {
 	/** 备注 */
 	private String remark;
 
-	/** 对应的组  ,其实只需要一个组(事故处理组)即可*/
+	/** 对应的组 ,其实只需要一个组(事故处理组)即可 */
 	private Set<UrgentGroup> urgentGroup = new HashSet<UrgentGroup>(0);
-	
+
 	public UrgentType() {
 	}
 
@@ -69,7 +69,8 @@ public class UrgentType extends BaseModel {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	@OneToMany(cascade = {}, fetch = FetchType.LAZY, mappedBy="urgentType")
+
+	@OneToMany(cascade = {}, fetch = FetchType.LAZY, mappedBy = "urgentType")
 	public Set<UrgentGroup> getUrgentGroup() {
 		return urgentGroup;
 	}
@@ -78,5 +79,4 @@ public class UrgentType extends BaseModel {
 		this.urgentGroup = urgentGroup;
 	}
 
-	
 }
