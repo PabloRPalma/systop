@@ -8,13 +8,12 @@
 <%@include file="/common/meta.jsp"%>
 <script type="text/javascript">
 /**
- * 删除提交
+ * 删除应急事件
  */
-function remove(id){
+function remove(caseId){
 	if (confirm("确认要删除所选择的事件信息吗?")){
-		var from = document.getElementById("ec");
-		var url ="${ctx}/emergency/event/removeEmgcEvent.do?model.id="+id;
-		window.open(url,'main');
+		var url ="${ctx}/urgentcase/remove.do?model.id=" + caseId;
+		window.location = url;
 	}
 }
 
