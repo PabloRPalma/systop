@@ -26,9 +26,6 @@ import com.systop.fsmis.sms.smproxy.cmcc.webservice.IfSMSServiceProxy;
  */
 @Service("smsProxy")
 public class SmsProxyCmccWebServiceImpl implements SmsProxy {
-	private static Logger logger = LoggerFactory
-			.getLogger(SmsProxyCmccWebServiceImpl.class);
-
 	/**
 	 * @see{@link SmsProxy#querySmsSendState}
 	 */
@@ -42,20 +39,17 @@ public class SmsProxyCmccWebServiceImpl implements SmsProxy {
 	 */
 	@Override
 	public List<SmsReceive> receiveMessage() throws ApplicationException {
-		logger.info("receiveMessage....");
-		IfSMSService service = null;
-		service = new IfSMSServiceProxy();
-		try {
-			String[] receives = service.receive(SmsConstants.CONN_NAME,
-					SmsConstants.CONN_PASS, SmsConstants.DEST_ADDR);
-			if (receives != null) {
-				logger.info(receives.toString());
-			}
-
-		} catch (RemoteException ex) {
-			logger.error(ex.getMessage());
-			throw new ApplicationException(ex);
-		}
+		/*
+		 * 由于MAS接收短信功能暂时不能使用,此代码暂不实现,待功能能够访问时,启用代码 IfSMSService service = new
+		 * IfSMSServiceProxy(); try { String[] receives =
+		 * service.receive(SmsConstants.CONN_NAME, SmsConstants.CONN_PASS,
+		 * SmsConstants.DEST_ADDR); if (receives != null) {
+		 * 
+		 * }
+		 * 
+		 * } catch (RemoteException ex) { logger.error(ex.getMessage()); throw new
+		 * ApplicationException(ex); }
+		 */
 		return null;
 	}
 
