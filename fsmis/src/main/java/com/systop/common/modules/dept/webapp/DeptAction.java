@@ -75,10 +75,9 @@ public class DeptAction extends ExtJsCrudAction<Dept, DeptManager> {
 	public String deptTree() {
 		if (RequestUtil.isJsonRequest(getRequest())) {
 			Dept parent = null;
-			Dept dept = null;
-
+			
 			// 当前登陆用户 注意admin部门为空
-			dept = loginUserService.getLoginUserDept(getRequest());
+			Dept dept = loginUserService.getLoginUserDept(getRequest());
 			if (parentId != null) {// 部门编辑，用户添加使用
 				parent = getManager().get(parentId);
 			} else {// 部门列表树显示使用
@@ -141,7 +140,6 @@ public class DeptAction extends ExtJsCrudAction<Dept, DeptManager> {
 		}
 		// 得到子部门，区县用户直接返回，市级或admin用户查询24个区县
 		if (noLowerDept == null) {
-			System.out.println("aa" + parent.get("id"));
 			depts = this.getByParentId((Integer) parent.get("id"));
 		} else {
 			Dept dept = getManager().get((Integer) parent.get("id"));
