@@ -210,10 +210,6 @@ public class User extends BaseModel implements UserDetails, Serializable {
 	private UrgentGroup urgentGroup;
 	
 	/**
-	 * 评估审核人
-	 */
-	private Set<Assessment> asseForAuditor = new HashSet<Assessment>(0);
-	/**
 	 * 评估申请人
 	 */
 	private Set<Assessment> asseForProposer = new HashSet<Assessment>(0);
@@ -727,15 +723,6 @@ public class User extends BaseModel implements UserDetails, Serializable {
 
 	public void setIndustry(String industry) {
 		this.industry = industry;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "auditor")
-	public Set<Assessment> getAsseForAuditor() {
-		return this.asseForAuditor;
-	}
-
-	public void setAsseForAuditor(Set<Assessment> asseForAuditor) {
-		this.asseForAuditor = asseForAuditor;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "proposer")
