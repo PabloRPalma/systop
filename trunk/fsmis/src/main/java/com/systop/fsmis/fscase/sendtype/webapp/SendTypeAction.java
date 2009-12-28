@@ -8,6 +8,7 @@ import com.systop.core.webapp.struts2.action.DefaultCrudAction;
 import com.systop.fsmis.fscase.sendtype.service.SendTypeManager;
 import com.systop.fsmis.model.SendType;
 
+@SuppressWarnings("serial")
 @Controller
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class SendTypeAction extends
