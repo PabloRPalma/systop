@@ -1,10 +1,5 @@
 package com.systop.fsmis.model;
 
-import java.sql.Clob;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,33 +7,39 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import com.systop.common.modules.security.user.model.User;
+import com.systop.core.model.BaseModel;
 
 /**
+ * 应急事件指挥组
+ * 
+ * @author yj
  */
+@SuppressWarnings("serial")
 @Entity
-@Table(name = "URGENT_GROUPS", schema="FSMIS")
-public class UrgentGroup implements java.io.Serializable {
-
+@Table(name = "URGENT_GROUPS", schema = "FSMIS")
+public class UrgentGroup extends BaseModel {
+	/** 主键 */
 	private Integer id;
-	private UrgentCase urgentCases;
+	/** 组名 */
 	private String name;
+	/** 描述 */
 	private String descn;
+	/** 显示内容 */
 	private String display;
+	/** 类别 内部组还是外部组 */
 	private String type;
-	private Date handleDate;
-	private Clob handleContent;
+	/** 本组对应模板 */
 	private String template;
-	private Set<User> user = new HashSet<User>(0);
+	/** 是否公用数据 Y/N */
+	private String isPublic;
+	/** 类别 */
 	private UrgentType urgentType;
 
+	private UrgentCase urgentCases;
 	public UrgentGroup() {
 	}
 
@@ -52,16 +53,6 @@ public class UrgentGroup implements java.io.Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "URGENT_CASE")
-	public UrgentCase getUrgentCases() {
-		return this.urgentCases;
-	}
-
-	public void setUrgentCases(UrgentCase urgentCases) {
-		this.urgentCases = urgentCases;
 	}
 
 	@Column(name = "NAME")
@@ -100,25 +91,6 @@ public class UrgentGroup implements java.io.Serializable {
 		this.type = type;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "HANDLE_DATE", length = 11)
-	public Date getHandleDate() {
-		return this.handleDate;
-	}
-
-	public void setHandleDate(Date handleDate) {
-		this.handleDate = handleDate;
-	}
-
-	@Column(name = "HANDLE_CONTENT")
-	public Clob getHandleContent() {
-		return this.handleContent;
-	}
-
-	public void setHandleContent(Clob handleContent) {
-		this.handleContent = handleContent;
-	}
-
 	@Column(name = "TEMPLATE")
 	public String getTemplate() {
 		return this.template;
@@ -128,14 +100,15 @@ public class UrgentGroup implements java.io.Serializable {
 		this.template = template;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "urgentGroup")
-	public Set<User> getUser() {
-		return this.user;
+	@Column(name = "IS_PUBLIC")
+	public String getIsPublic() {
+		return isPublic;
 	}
 
-	public void setUser(Set<User> user) {
-		this.user = user;
+	public void setIsPublic(String isPublic) {
+		this.isPublic = isPublic;
 	}
+
 	@ManyToOne(cascade = {}, fetch = FetchType.LAZY)
 	@JoinColumn(name = "UCTYPE_ID")
 	public UrgentType getUrgentType() {
@@ -145,5 +118,13 @@ public class UrgentGroup implements java.io.Serializable {
 	public void setUrgentType(UrgentType urgentType) {
 		this.urgentType = urgentType;
 	}
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "URGENT_CASE")
+	public UrgentCase getUrgentCases() {
+		return this.urgentCases;
+	}
 
+	public void setUrgentCases(UrgentCase urgentCases) {
+		this.urgentCases = urgentCases;
+	}
 }
