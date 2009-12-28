@@ -1,22 +1,19 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" import="java.util.List"
-	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@include file="/common/taglibs.jsp"%>
 <html>
 <head>
-<title></title>
+<title>栏目信息管理</title>
 <%@include file="/common/extjs.jsp" %>
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/validator.jsp"%>
 <script type="text/javascript" src="${ctx}/scripts/fckeditor/fckeditor.js"></script>
 <link href="${ctx}/styles/treeSelect.css" type='text/css' rel='stylesheet'>
-<script type="text/javascript">
- 
-</script>
 </head>
 <body>
 <div class="x-panel">
-<div class="x-panel-header"></div>
+<div class="x-panel-header">添加栏目信息</div>
 <div class="x-toolbar">
  <table width="100%">
      <tr>
@@ -31,7 +28,7 @@
 <div align="center">
 <s:form action="save.do" method="post">
 <fieldset style="width: 500px; padding-top: 10px">
-  <legend>栏目信息</legend>
+  <legend>添加栏目信息</legend>
 	<s:hidden name="model.id"/>
 	<s:hidden name="parentId"/>
 	<table width="500px" align="center" border="0" cellpadding="3" cellspacing="3">
@@ -42,7 +39,7 @@
 		<tr>
 			<td align="right" width="100">栏目名称：</td>
 			<td align="left">
-				<s:textfield id="name" name="model.name" cssStyle="width:350px" />
+				<s:textfield id="name" name="model.name" cssStyle="width:350px" cssClass="required" /><font color="red">*</font>
 			</td>
 		</tr>
 		<tr>
