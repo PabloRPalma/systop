@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,7 @@ import com.systop.fsmis.sms.SmsSendManager;
 
 @Service
 public class TaskManager extends BaseGenericsManager<Task> {
+	@Autowired
 	private SmsSendManager smsSendManager;
 
 	/**
@@ -42,12 +44,9 @@ public class TaskManager extends BaseGenericsManager<Task> {
 
 		// 设置任务信息,正在处理,并保存
 		task.setStatus(FsCaseConstants.TASK_STATUS_RESOLVEING);
-		save(task);
 
-		/**
-		 * 根据任务选择的部门集合,作任务明细信息操作<br>
-		 * 如果部门id集合不为空,遍历部门构建任务明细实例.
-		 */
+		// 根据任务选择的部门集合,作任务明细信息操作
+		// 如果部门id集合不为空,遍历部门构建任务明细实例.
 		if (CollectionUtils.isNotEmpty(deptIds)) {
 			for (Integer id : deptIds) {
 				TaskDetail taskDetail = new TaskDetail();
@@ -60,15 +59,12 @@ public class TaskManager extends BaseGenericsManager<Task> {
 				task.getTaskDetails().add(taskDetail);
 
 				getDao().save(taskDetail);
-				// save(task);
 
 				// 向该部门发送短信
 				sendTaskMessage(dept);
 			}
 		}
-		/**
-		 * 设置任务附件和任务的关联并保存任务附件
-		 */
+		// 设置任务附件实体和任务实体的关联并保存任务附件实体
 		if (CollectionUtils.isNotEmpty(taskAtts)) {
 			for (TaskAtt taskAtt : taskAtts) {
 				taskAtt.setTask(task);
@@ -78,7 +74,6 @@ public class TaskManager extends BaseGenericsManager<Task> {
 		}
 
 		save(task);
-		logger.info("TaskManager.save()--11>");
 	}
 
 	private void sendTaskMessage(Dept dept) {
@@ -86,20 +81,12 @@ public class TaskManager extends BaseGenericsManager<Task> {
 		StringBuffer buf = new StringBuffer();
 		buf.append(dept.getName()).append(",你部门现有一条待处理任务,请及时登录系统处理.");
 		for (User u : users) {
-			// User实体中没有isMesReceive属性,暂时无法判断是否是短信接收人
+			// User实体中没有isMesReceive属性,暂时无法判断是否是短信接收人,待加上该属性后,启用本段代码
 			/*
 			 * if(){ getSmsSendManager().addMessage(mobileNum, content) }
 			 */
-			getSmsSendManager().addMessage(u.getMobile(), buf.toString());
+			smsSendManager.addMessage(u.getMobile(), buf.toString());
 		}
-	}
-
-	public SmsSendManager getSmsSendManager() {
-		return smsSendManager;
-	}
-
-	public void setSmsSendManager(SmsSendManager smsSendManager) {
-		this.smsSendManager = smsSendManager;
 	}
 
 }
