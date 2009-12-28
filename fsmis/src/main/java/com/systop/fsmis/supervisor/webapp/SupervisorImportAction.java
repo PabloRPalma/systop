@@ -167,12 +167,12 @@ public class SupervisorImportAction extends BaseAction {
 	/**
 	 * 将yyyy/mm/dd 格式的字符型日期转换成 yyyy-mm-dd 格式的Date型日期
 	 * @param str
-	 * @return 若str字符为空或空字符串或非日期格式 返回值 为New Date()
+	 * @return 若str字符为空或空字符串或非日期格式 返回值 空
 	 */
 	public Date parseDate(String str) {
 		Date date = null;
 		if (StringUtils.isBlank(str)) {
-			return new Date();
+			return null;
 		}
 		java.text.SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		try {
@@ -184,7 +184,7 @@ public class SupervisorImportAction extends BaseAction {
 				}
 			}
 		} catch (Exception e) {
-			return new Date();
+			return null;
 		}
 		return (date);
 	}
