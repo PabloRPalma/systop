@@ -23,13 +23,15 @@ public class SmsSendManager extends BaseGenericsManager<SmsSend> {
 	 * @return
 	 */
 	public List<SmsSend> getNewSmsSends() {
-		List<SmsSend> smsSends = null;
 		// 查询新短信并且以短信记录创建时间早晚排序
-		String hql = "from SmsSend ss where ss.isNew = ? order by ss.createTime";
-		smsSends = query(hql, SmsConstants.SMS_SMS_SEND_IS_NEW);
+		StringBuffer buf = new StringBuffer("from SmsSend ss where ss.isNew = ");
+		buf.append(SmsConstants.SMS_SMS_SEND_IS_NEW);
+		buf.append(" order by ss.createTime");
+
+		List<SmsSend> smsSends = query(buf.toString(),
+				SmsConstants.SMS_SMS_SEND_IS_NEW);
 		// 如果得到的记录数大于系统所指定的一次发送记录数,则只取得指定的记录
-		if (smsSends != null
-				&& smsSends.size() > SmsConstants.SMS_SMS_SEND_COUNT) {
+		if (smsSends.size() > SmsConstants.SMS_SMS_SEND_COUNT) {
 			return smsSends.subList(0, SmsConstants.SMS_SMS_SEND_COUNT - 1);
 		}
 
