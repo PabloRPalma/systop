@@ -6,6 +6,7 @@
 <head>
 <title>文章管理</title>
 <%@include file="/common/meta.jsp"%>
+<%@include file="/common/validator.jsp"%>
 <script type="text/javascript" src="${ctx}/scripts/fckeditor/fckeditor.js"></script>
 </head>
 <body onload="preFckEditor()">
@@ -24,7 +25,7 @@
 		<tr>
 			<td align="right" width="70">文章标题：</td>
 			<td align="left">
-				<s:textfield id="title" name="model.title" cssStyle="width:450px" />
+				<s:textfield id="title" name="model.title" cssStyle="width:450px" cssClass="required"/>
 			</td>
 		</tr>
 		<tr>
