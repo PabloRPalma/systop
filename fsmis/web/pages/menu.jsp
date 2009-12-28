@@ -73,13 +73,13 @@
 	<div id="office">
 		<div style="padding-left:5px;">   
 			<div style="padding-top:2px">
-				<a href="${ctx}/office/doctype/index.do" target="main">
-					<img src="${ctx}/images/icons/add.gif" class="icon">栏目管理</a>
+				<img src="${ctx}/images/icons/add.gif" class="icon">
+				<a href="${ctx}/office/doctype/index.do" target="main">栏目管理</a>
 			</div>
 			<br>
 			<div style="padding-top:2px">
-				<a href="${ctx}/office/doc/index.do" target="main">
-					<img src="${ctx}/images/icons/add.gif" class="icon">文章管理</a>
+				<img src="${ctx}/images/icons/add.gif" class="icon">
+				<a href="${ctx}/office/doc/index.do" target="main">文章管理</a>
 			</div>
 		</div>
 	</div>
