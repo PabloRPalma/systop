@@ -7,6 +7,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.security.user.model.User;
@@ -35,7 +36,11 @@ public class TaskManager extends BaseGenericsManager<Task> {
 	 */
 	@Transactional
 	public void save(Task task, List<Integer> deptIds, List<TaskAtt> taskAtts) {
-
+		Assert.notNull(task);
+		Assert.notNull(task.getFsCase());
+		Assert.notNull(task.getFsCase().getId());
+		Assert.notEmpty(deptIds);
+		
 		// 得到任务关联事件实体
 		FsCase fsCase = getDao().get(FsCase.class, task.getFsCase().getId());
 		// 更新食品安全案件状态,正在处理,并保存

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 
 import com.opensymphony.xwork2.util.ArrayUtils;
 import com.systop.cms.utils.PageUtil;
@@ -61,6 +62,10 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 	 */
 	@Override
 	public String save() {
+		Assert.notNull(getModel().getFsCase());
+		Assert.notNull(getModel().getFsCase().getId());
+		Assert.notEmpty(deptIds);
+
 		// 设定派遣时间
 		getModel().setDispatchTime(new Date());
 
