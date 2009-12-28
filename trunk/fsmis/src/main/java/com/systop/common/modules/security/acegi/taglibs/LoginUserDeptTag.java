@@ -15,6 +15,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.security.user.LoginUserService;
 
+@SuppressWarnings("serial")
 public class LoginUserDeptTag extends BodyTagSupport {
   private boolean showPath = true;
   private boolean showTopDept = true;
