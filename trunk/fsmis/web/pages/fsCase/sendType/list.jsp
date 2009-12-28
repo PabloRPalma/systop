@@ -21,7 +21,8 @@
 <div class="x-panel-header">派遣环节管理</div>
 <div class="x-toolbar">
 	<div style="margin: 7 20 4 10;" align="right">
-      <a href="${ctx}/sendType/input.do">添加派遣环节</a>
+	  <img src="${ctx}/images/icons/add.gif"/>
+      <a href="${ctx}/sendType/input.do">添加环节</a>
 	</div>
 </div>
 	<div class="x-panel-body">
