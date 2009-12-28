@@ -41,15 +41,15 @@ public class CaseTypeAction extends
 	public String index() {
 		Page page = new Page(Page.start(getPageNo(), getPageSize()),
 				getPageSize());
-		String sql = "from CaseType ct where ct.caseType.id is null ";
+		StringBuffer sql = new StringBuffer("from CaseType ct where ct.caseType.id is null ");
 		List args = new ArrayList();
 		if (StringUtils.isNotBlank(getModel().getName())) {
-			sql = sql + "and ct.name like ? ";
+			sql.append("and ct.name like ? ");
 			args.add(MatchMode.ANYWHERE.toMatchString(getModel().getName()));
 			
 		}
 		
-		page = getManager().pageQuery(page, sql,args.toArray());
+		page = getManager().pageQuery(page, sql.toString(),args.toArray());
 		restorePageData(page);
 		return INDEX;
 	}	
@@ -60,11 +60,9 @@ public class CaseTypeAction extends
 	public String listchildType(){
 		Page page = new Page(Page.start(getPageNo(), getPageSize()),
 				getPageSize());
-		String sql = "from CaseType ct where ct.caseType.id = ? ";
-		List args = new ArrayList();
-		args.add(getModel().getId());
+		String sql = "from CaseType ct where ct.caseType.id = "+getModel().getId()+" ";
 		
-		page = getManager().pageQuery(page, sql,args.toArray());
+		page = getManager().pageQuery(page, sql);
 		restorePageData(page);
 		return "listchildType";
 	}

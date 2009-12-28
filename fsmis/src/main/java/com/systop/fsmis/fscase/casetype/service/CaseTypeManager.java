@@ -41,7 +41,7 @@ public class CaseTypeManager  extends
 	public void save(CaseType caseType) {
 		Assert.notNull(caseType);
 		// 处理父类别
-		if (caseType.getCaseType()!=null && 
+		if (caseType.getCaseType()!= null && 
 			caseType.getCaseType().getId() != null) { 
 			 CaseType parent = get(caseType.getCaseType().getId());
 			 parent.getCaseTypes().add(caseType);
@@ -75,14 +75,8 @@ public class CaseTypeManager  extends
 	public List getLevelOneList() {
 		List<CaseType> caseTypes = query(
 				"from CaseType where caseType.id is null");
-		List caseTypesList = new ArrayList();
-		for (CaseType caseType : caseTypes) {
-			Map caseTypemap = new HashMap();
-			caseTypemap.put("id", caseType.getId());
-			caseTypemap.put("name", caseType.getName());
-			caseTypesList.add(caseTypemap);
-		}
-		return caseTypesList;
+	
+		return caseTypes;
 	}
 	
 	/**

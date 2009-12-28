@@ -58,43 +58,45 @@ public class FsCaseAction extends
 	public String index() {
 		Page page = new Page(Page.start(getPageNo(), getPageSize()),
 				getPageSize());
-		String sql = "from FsCase gc where isSubmitSj=0 ";
+		StringBuffer sql = new StringBuffer("from FsCase gc where isSubmitSj=0 ");
 		List args = new ArrayList();
 		if (StringUtils.isNotBlank(getModel().getTitle())) {
-			sql = sql + "and gc.title like ? ";
+			sql.append("and gc.title like ? ");
 			args.add(MatchMode.ANYWHERE.toMatchString(getModel().getTitle()));
 			
 		}
 		if (StringUtils.isNotBlank(getModel().getStatus())) {
-			sql = sql + "and gc.status = ? ";
-			args.add("'" + getModel().getStatus() + "'");
+			sql.append("and gc.status = ? ");
+			args.add(getModel().getStatus());
 		}
 		if (StringUtils.isNotBlank(getModel().getCode())) {
-			sql = sql + "and gc.code = ? ";
-			args.add("'" + getModel().getCode() + "'");
+			sql.append("and gc.code = ? ");
+			args.add(getModel().getCode());
 		}
-		Date eventDate = new Date();
-		if(StringUtils.isNotBlank(getRequest().getParameter("caseTime"))){
+		//根据事发时间查询
+		Date eventBeginDate = new Date();
+		Date eventEndDate = new Date();
+		if(StringUtils.isNotBlank(getRequest().getParameter("caseBeginTime")) && 
+		   StringUtils.isNotBlank(getRequest().getParameter("caseEndTime"))){
 			try {
-				eventDate = DateUtils.parseDate(getRequest().getParameter("caseTime"),
+				eventBeginDate = DateUtils.parseDate(getRequest().getParameter("caseBeginTime"),
+						    new String[] { "yyyy-MM-dd HH:mm:ss" });
+				eventEndDate = DateUtils.parseDate(getRequest().getParameter("caseEndTime"),
 							new String[] { "yyyy-MM-dd HH:mm:ss" });
 	 
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
+			sql.append(" and gc.caseTime >= ? and gc.caseTime <= ?");
+			args.add(eventBeginDate);
+			args.add(eventEndDate);
 		}
-		//根据事发时间查询
-		if(StringUtils.isNotBlank(getRequest().getParameter("caseTime"))){
-			sql =  sql +  " and gc.caseTime <= ?";
-			args.add(eventDate);
-			
-		}
-		sql += " order by gc.caseTime desc,gc.status";
-		page = getManager().pageQuery(page, sql,args.toArray());
+		
+		sql.append( " order by gc.caseTime desc,gc.status");
+		page = getManager().pageQuery(page, sql.toString(),args.toArray());
 		restorePageData(page);
 		return INDEX;
 	}	
-	
 	
 	/**
 	 * 接收事件信息 事件的来源有 短信举报、外网网站的在线举报、管理员手工录入
