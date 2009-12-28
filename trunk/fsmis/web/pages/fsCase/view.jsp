@@ -152,30 +152,8 @@
 <table id="mytable" height="320">
 	<tr>
 		<td height="200" align="left" valign="top">
-		<div style="line-height: 20px; padding: 10px 10px 10px 10px;">
-		<table width="400" align="left" border="0" cellpadding="0"
-			cellspacing="0">
-			<tr>
-				<td>No.${currentModel }</td>
-				<td>任务标题</td>
-				<td>派遣时间</td>
-				<td>规定完成时间</td>
-				<td>任务描述</td>
-				<td>任务状态</td>
-
-			</tr>
-			<s:iterator value="model.taskses" var="task" status="status">
-				<tr>
-					<td>${status}</td>
-					<td>${task.title}</td>
-					<td>${task.dispatchTime}</td>
-					<td>${task.presetTime}</td>
-					<td>${task.descn }</td>
-				</tr>
-			</s:iterator>
-
-		</table>
-		</div>
+		<!-- include进来二级Tab以现实一个食品安全案件下的多个任务 -->
+		<%@include	file="viewTasks.jsp" %>
 		</td>
 	</tr>
 </table>
@@ -200,6 +178,5 @@
 </div>
 </div>
 </div>
-
 </body>
 </html>
