@@ -53,7 +53,7 @@
 	minHeight="460"
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	<ec:row>
-		<ec:column width="40" property="_s" title="No." value="${GLOBALROWCOUNT}" sortable="false" style="text-align: center" />
+		<ec:column width="30" property="_s" title="No." value="${GLOBALROWCOUNT}" sortable="false" style="text-align: center" />
 		<ec:column width="300" property="name" title="名称" />
 		<ec:column width="200" property="remark" title="备注" />
 		<ec:column width="150" property="_0" title="操作" style="text-align:center" sortable="false">
