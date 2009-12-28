@@ -1,5 +1,6 @@
 package com.systop.fsmis.sms;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -27,11 +28,22 @@ public class SmsSendManager extends BaseGenericsManager<SmsSend> {
 		String hql = "from SmsSend ss where ss.isNew = ? order by ss.createTime";
 		smsSends = query(hql, SmsConstants.SMS_SMS_SEND_IS_NEW);
 		// 如果得到的记录数大于系统所指定的一次发送记录数,则只取得指定的记录
-		if (smsSends != null && smsSends.size() > SmsConstants.SMS_SMS_SEND_COUNT) {
+		if (smsSends != null
+				&& smsSends.size() > SmsConstants.SMS_SMS_SEND_COUNT) {
 			return smsSends.subList(0, SmsConstants.SMS_SMS_SEND_COUNT - 1);
 		}
 
 		return smsSends;
+	}
+
+	public void addMessage(String mobileNum, String content) {
+		SmsSend smsSend = new SmsSend();
+		smsSend.setMobileNum(mobileNum);
+		smsSend.setContent(content);
+		smsSend.setCreateTime(new Date());
+		smsSend.setIsNew(SmsConstants.SMS_SMS_SEND_IS_NEW);
+		// 缺少统计发送数量逻辑
+		save(smsSend);
 	}
 
 }
