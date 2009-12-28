@@ -10,7 +10,6 @@ import com.systop.common.modules.dept.service.DeptManager;
 import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.common.modules.template.TemplateContext;
 import com.systop.common.modules.template.freemarker.BaseFreeMarkerTagSupport;
-import com.systop.core.ApplicationException;
 import com.systop.fsmis.fscase.sendtype.service.CountySendTypeManager;
 import com.systop.fsmis.model.CountySendType;
 
@@ -19,19 +18,13 @@ import com.systop.fsmis.model.CountySendType;
  * @author Lunch
  */
 public class SelectDeptTag extends BaseFreeMarkerTagSupport {
-	
+
 	private LoginUserService loginUserService;
 
 	private CountySendTypeManager cstManager;
 
 	private DeptManager deptManager;
 
-	private void initManager() {
-		loginUserService = (LoginUserService) getBean("loginUserService");
-		cstManager = (CountySendTypeManager) getBean("countySendTypeManager");
-		deptManager = (DeptManager) getBean("deptManager");
-	}
-	
 	/** 标签的name属性，用于表单提交 */
 	private String name;
 
@@ -53,64 +46,68 @@ public class SelectDeptTag extends BaseFreeMarkerTagSupport {
 	/** 默认模板名称 */
 	private String defaultTemplate = "selectDeptTag";
 
+	/**
+	 * 初始化Managers
+	 */
+	private void initManager() {
+		loginUserService = (LoginUserService) getBean("loginUserService");
+		cstManager = (CountySendTypeManager) getBean("countySendTypeManager");
+		deptManager = (DeptManager) getBean("deptManager");
+	}
+
+	/**
+	 * 初始化部分参数
+	 */
+	private void setDefaultParms() {
+		column = (column == null) ? 5 : column;
+		columnWidth = (columnWidth == null) ? 120 : columnWidth;
+	}
+
+	/**
+	 * @see com.systop.common.modules.template.freemarker.BaseFreeMarkerTagSupport#getDefaultTemplate()
+	 */
 	@Override
 	protected String getDefaultTemplate() {
 		return defaultTemplate;
 	}
 
+	/**
+	 * @see com.systop.common.modules.template.freemarker.BaseFreeMarkerTagSupport#setTemplateParameters(com.systop.common.modules.template.TemplateContext)
+	 */
 	@Override
 	@SuppressWarnings("unchecked")
 	protected void setTemplateParameters(TemplateContext ctx) {
 		initManager();
+		setDefaultParms();
 		deptManager = (DeptManager) getBean("deptManager");
 
-		List<Dept> depts = getDepts();
-		List<Map> deptMaps = Util.toMap(depts, getCountyStype()
-				.getGeneralDept());
-		
-		logger.debug("CountySendTypes select dept id:{}", getCountyStype()
-				.getGeneralDept());
+		// 获取当前登陆用户所属区县或者是市级
+		Dept county = loginUserService
+				.getLoginUserDept((HttpServletRequest) pageContext.getRequest());
+		// 定义返回的存储相关部门的list对象
+		List<Map> deptMaps = null;
+		if (county != null) {
+			logger.debug("当前所属区县:{},id:{}", new Object[] { county.getName(),
+					county.getId() });
+			List<Dept> depts = deptManager.getDeptsByCounty(county.getId());
+			
+			logger.debug("当前派遣环节ID:{}", sendTypeId);
+			CountySendType cst = cstManager.getBySendTypeAndCounty(sendTypeId,
+					county.getId());
+			deptMaps = Util.toMap(depts, cst.getGeneralDept());
+			logger.debug("CountySendTypes dept id:{}", cst.getGeneralDept());
+
+		} else {
+			ctx.addParameter("errorMsg", "当前用户所属部门无效，请重新登陆并检查所属部门类别。");
+		}
 		ctx.addParameter("depts", deptMaps);
+		ctx.addParameter("name", name);
 		ctx.addParameter("column", column);
 		ctx.addParameter("itemClass", itemClass);
 		ctx.addParameter("columnWidth", columnWidth);
 		ctx.addParameter("splitLineStyle", splitLineStyle);
-	}
 
-	/**
-	 * 获得当前登陆区县的执法部门
-	 * 
-	 * @return
-	 */
-	private List<Dept> getDepts() {
-		return deptManager.getDeptsByCounty(getCurrentCounty().getId());
 	}
-
-	/**
-	 * 获得当前登陆区县的CountySendType
-	 * 
-	 * @return
-	 */
-	private CountySendType getCountyStype() {
-		return cstManager.getBySendTypeAndCounty(sendTypeId, getCurrentCounty()
-				.getId());
-	}
-
-	/**
-	 * 获得当前登陆用户所属的部门(区县)
-	 * 
-	 * @return
-	 */
-	private Dept getCurrentCounty() {
-		Dept county = loginUserService
-				.getLoginUserDept((HttpServletRequest) pageContext.getRequest());
-		if (county == null) {
-			throw new ApplicationException("用户未登陆,或者无有效部门");
-		}
-		logger.debug("当前所属区县:{}", county.getName());
-		return county;
-	}
-	
 
 	public String getName() {
 		return name;

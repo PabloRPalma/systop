@@ -5,13 +5,16 @@
 <struts>
 	<package name="fsmis.sendType" extends="default"  namespace="/sendType">
 		<action name="*" class="sendTypeAction" method="{1}">
-			<result name="index">/pages/fsCase/sendType/list.jsp</result> 
-			<result name="verify">/pages/fsCase/sendType/verify.jsp</result> 
-			<result name="input">/pages/fsCase/sendType/edit.jsp</result> 
-			<result name="look">/pages/fsCase/sendType/look.jsp</result>
-			<result name="choose">/pages/fsCase/sendType/choosesendtype.jsp</result>
-			<result name="send">/pages/fsCase/task/task.jsp</result>
+			<result name="index">/pages/fsCase/sendType/sendTypeList.jsp</result> 
+			<result name="input">/pages/fsCase/sendType/sendTypeEdit.jsp</result> 
 			<result name="success" type="redirect">index.do</result> 
+		</action>
+	</package>
+	<package name="fsmis.countySendType" extends="default"  namespace="/countySendType">
+		<action name="*" class="countySendTypeAction" method="{1}">
+			<result name="input">/pages/fsCase/sendType/countySendTypeEdit.jsp</result>
+			<result name="error">/pages/fsCase/sendType/error.jsp</result> 
+			<result name="success" type="redirect">edit.do?model.sendType.id=${model.sendType.id}</result> 
 		</action>
 	</package>
 </struts>
