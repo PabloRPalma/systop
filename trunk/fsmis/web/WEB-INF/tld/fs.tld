@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+                        "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+<taglib>
+	<tlib-version>1.0</tlib-version>
+	<jsp-version>1.2</jsp-version>
+	<short-name>fs</short-name>
+	<uri>systop/fs</uri>
+	
+	<tag>
+    	<name>deptCheckbox</name>
+    	<tag-class>com.systop.fsmis.fscase.sendtype.taglibs.SelectDeptTag</tag-class>
+    	<body-content>JSP</body-content>
+    	<attribute>
+    		<name>name</name>
+    		<required>true</required>
+    		<type>java.lang.String</type>
+    		<description>复选框name属性，用于表单提交接受数据</description>
+    	</attribute>
+    	<attribute>
+    		<name>sendTypeId</name>
+    		<required>true</required>
+    		<rtexprvalue>true</rtexprvalue>
+    		<type>java.lang.Integer</type>
+    		<description>这一列是必须的，需要传递排序方式的 ID</description>		
+    	</attribute>
+    	<attribute>
+    		<name>column</name>
+    		<type>java.lang.Integer</type>
+    		<description>显示的列数量</description>
+    	</attribute>
+    	<attribute>
+    		<name>columnWidth</name>
+    		<type>java.lang.Integer</type>
+    		<description>列宽度 eg:columnWidth="100px"</description>
+    	</attribute>
+    	<attribute>
+    		<name>splitLineStyle</name>
+    		<type>java.lang.String</type>
+    		<description>每一行分割先的Style,直接编写border样式即可</description>
+    	</attribute>
+    	<attribute>
+    		<name>itemClass</name>
+    		<type>java.lang.String</type>
+    		<description>具体每一个元素的样式</description>
+    	</attribute>
+    </tag>
+</taglib>
