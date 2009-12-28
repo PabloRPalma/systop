@@ -8,6 +8,21 @@
 <%@include file="/common/extjs.jsp"%>
 <%@include file="/common/meta.jsp"%>
 <script type="text/javascript">
+	var tabItemsStr = "[{contentEl : 'basic',title : '事件信息'}";
+</script>
+<c:if test="${1==1}">
+	<script type="text/javascript">
+	tabItemsStr += ",{contentEl : 'descr',title : '任务信息'}";
+</script>
+</c:if>
+<c:if test="${1==1}">
+	<script type="text/javascript">
+	tabItemsStr += ",{contentEl : 'reward',title : '任务处理情况'}";
+	tabItemsStr +="{contentEl : 'punish',title : '短信收发情况'} ]";
+	//alert(tabItemsStr);
+</script>
+</c:if>
+<script type="text/javascript">
 	Ext.onReady(function() {
 		var tabs = new Ext.TabPanel( {
 			renderTo : 'tabs',
@@ -20,19 +35,33 @@
 			items : [ {
 				contentEl : 'basic',
 				title : '事件信息'
-			}, {
+			}
+			<c:if test="${not empty(model.taskses)}">			
+			,{
 				contentEl : 'descr',
 				title : '任务信息'
-			}, {
+			}
+			
+			</c:if>
+			
+			<s:if test="not empty (model.taskses[0].taskDetails)">
+			, {
 				contentEl : 'reward',
 				title : '任务处理情况'
-			}, {
+			}
+			</s:if>
+			<s:if test="1==1">
+			, {
 				contentEl : 'punish',
 				title : '短信收发情况'
-			} ]
+			} 
+			</s:if>
+			]
 		});
 	});
 </script>
+<s:if test="">
+</s:if>
 <style type="text/css">
 #mytable {
 	border: 0px solid #A6C9E2;
@@ -47,6 +76,9 @@
 	height: 26;
 }
 </style>
+<c:forEach items="model.taskses" var="task" begin="0" end="1">
+	<c:if test=""></c:if>
+</c:forEach>
 </head>
 <body>
 <div class="x-panel">
@@ -120,7 +152,30 @@
 <table id="mytable" height="320">
 	<tr>
 		<td height="200" align="left" valign="top">
-		<div style="line-height: 20px; padding: 10px 10px 10px 10px;"></div>
+		<div style="line-height: 20px; padding: 10px 10px 10px 10px;">
+		<table width="400" align="left" border="0" cellpadding="0"
+			cellspacing="0">
+			<tr>
+				<td>No.${currentModel }</td>
+				<td>任务标题</td>
+				<td>派遣时间</td>
+				<td>规定完成时间</td>
+				<td>任务描述</td>
+				<td>任务状态</td>
+
+			</tr>
+			<s:iterator value="model.taskses" var="task" status="status">
+				<tr>
+					<td>${status}</td>
+					<td>${task.title}</td>
+					<td>${task.dispatchTime}</td>
+					<td>${task.presetTime}</td>
+					<td>${task.descn }</td>
+				</tr>
+			</s:iterator>
+
+		</table>
+		</div>
 		</td>
 	</tr>
 </table>
