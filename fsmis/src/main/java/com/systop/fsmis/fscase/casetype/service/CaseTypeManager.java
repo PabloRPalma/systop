@@ -41,7 +41,8 @@ public class CaseTypeManager  extends
 	public void save(CaseType caseType) {
 		Assert.notNull(caseType);
 		// 处理父类别
-		if (caseType.getCaseType().getId() != null) { 
+		if (caseType.getCaseType()!=null && 
+			caseType.getCaseType().getId() != null) { 
 			 CaseType parent = get(caseType.getCaseType().getId());
 			 parent.getCaseTypes().add(caseType);
 			 caseType.setCaseType(parent); 
