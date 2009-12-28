@@ -8,7 +8,7 @@
 			<result name="index">/pages/office/doctype/list.jsp</result> 
 			<result name="input">/pages/office/doctype/edit.jsp</result> 
 			<result name="view">/pages/office/doctype/view.jsp</result>
-			<result name="success" type="redirect">index.do?parentId=${parentId}</result>
+			<result name="success" type="redirect">index.do</result>
 			<result name="error">/pages/office/doctype/error.jsp</result>
 			<result name="indexArticles">/pages/office/doctype/indexArticles.jsp</result>
 		</action>

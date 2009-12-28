@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -28,11 +30,17 @@ import com.systop.fsmis.office.doctype.service.DocumentTypeManager;
 public class DocumentTypeAction extends ExtJsCrudAction<DocumentType, DocumentTypeManager> {
 
 	/**
-	 * 父栏目ID
+	 * 查询栏目名称
 	 */
-	private Integer parentId;
+	private String typeName;
 	
-	
+	public String getTypeName() {
+		return typeName;
+	}
+
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
 
 	/**
 	 * 栏目查询列表
@@ -50,11 +58,14 @@ public class DocumentTypeAction extends ExtJsCrudAction<DocumentType, DocumentTy
 	 */
 	private DetachedCriteria setupDetachedCriteria() {
 		DetachedCriteria criteria = DetachedCriteria.forClass(DocumentType.class);
-		logger.debug("ID: " + getModel().getId());
-		if (getModel().getId() != null) {
+		logger.info("ID: " + getModel().getId());
+		if(getModel().getId() != null) {
 			criteria.add(Restrictions.eq("parentDocumentType.id", getModel().getId()));
 		} else {
 			criteria.add(Restrictions.isNull("parentDocumentType"));
+		}
+		if (StringUtils.isNotBlank(typeName)) {
+			criteria.add(Restrictions.like("name", typeName, MatchMode.ANYWHERE));			
 		}
 		return criteria;
 	}
@@ -64,17 +75,24 @@ public class DocumentTypeAction extends ExtJsCrudAction<DocumentType, DocumentTy
 	 */
 	@Override
 	public String save() {
-		if (getManager().getDao().exists(getModel(), "name")) {
-			addActionError("无法添加，添加的栏目名称已存在！");
+		try {
+			if (getManager().getDao().exists(getModel(), "name")) {
+				addActionError("无法添加，添加的栏目名称已存在！");
+				return INPUT;
+			}
+			if (getModel().getParentDocumentType() != null
+					&& getModel().getParentDocumentType().getId() != null) {
+				getModel().setParentDocumentType(
+						getManager().get(getModel().getParentDocumentType().getId()));
+			} else {
+				getModel().setParentDocumentType(null);
+			}
+			getManager().save(getModel());
+			return SUCCESS;
+		}catch (Exception e) {
+			addActionError(e.getMessage());
 			return INPUT;
 		}
-		if (getModel().getParentDocumentType() != null
-				&& getModel().getParentDocumentType().getId() != null) {
-			getModel().setParentDocumentType(
-					getManager().get(getModel().getParentDocumentType().getId()));
-		}
-		getManager().save(getModel());
-		return SUCCESS;
 	}
 	
 	public String view() {
@@ -125,11 +143,4 @@ public class DocumentTypeAction extends ExtJsCrudAction<DocumentType, DocumentTy
 		return "indexArticles";
 	}
 	
-	public Integer getParentId() {
-		return parentId;
-	}
-
-	public void setParentId(Integer parentId) {
-		this.parentId = parentId;
-	}
 }
