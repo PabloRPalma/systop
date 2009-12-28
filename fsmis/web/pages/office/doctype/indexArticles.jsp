@@ -31,7 +31,7 @@ function showArticle(aID){
 		<table>
 			<tr>
 				<td>
-					<a href="${ctx}/cm/article/edit.do">
+					<a href="${ctx}/office/doc/edit.do">
 						<img src="${ctx}/images/icons/add.gif" />添加
 					</a>
 				</td>
