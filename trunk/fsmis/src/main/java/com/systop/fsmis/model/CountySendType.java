@@ -18,7 +18,7 @@ import com.systop.core.model.BaseModel;
  * 区县具体的派遣类别与部门的对应关系
  */
 @Entity
-@Table(name = "COUNTY_SEND_SYPES", schema = "FSMIS")
+@Table(name = "COUNTY_SEND_TYPES", schema = "FSMIS")
 public class CountySendType extends BaseModel {
 
 	/** 主键 */
