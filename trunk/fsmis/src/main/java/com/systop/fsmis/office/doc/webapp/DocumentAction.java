@@ -74,7 +74,7 @@ public class DocumentAction extends ExtJsCrudAction<Document, DocumentManager> {
 	/** 获取栏目列表 */
 	@SuppressWarnings("unchecked")
 	public List<Map> getDocumentTypeMaps() {
-		documentTypeManager.getDocumentTypesList(null, 0);
+		documentTypeManager.getDocumentTypesList(0);
 		return documentTypeManager.getDocumentTypeList();
 	}
 
@@ -83,25 +83,16 @@ public class DocumentAction extends ExtJsCrudAction<Document, DocumentManager> {
 	 */
 	@Override
 	public String save() {
-		logger.debug("TYPE: " + getModel().getDocumentType().getId());
 		if (getModel().getDocumentType() != null
 				&& getModel().getDocumentType().getId() != null) {
 			getModel().setDocumentType(
 					getManager().getDao().get(DocumentType.class,
 							getModel().getDocumentType().getId()));
 		} else {
-			logger.debug("ASSSSS");
 			addActionError("无法添加，请选择栏目！");
 			return INPUT;
 		}
 		getManager().save(getModel());
 		return SUCCESS;
 	}
-
-	/**
-	 * 删除内部文章
-	 */
-	/*
-	 * public String remove() { return super.remove(); }
-	 */
 }
