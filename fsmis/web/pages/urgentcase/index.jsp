@@ -5,22 +5,25 @@
 <head>
 <title>应急事件管理</title>
 <%@include file="/common/ec.jsp"%>
+<%@include file="/common/extjs.jsp"%>
 <%@include file="/common/meta.jsp"%>
 <script type="text/javascript">
-/**
- * 删除应急事件
- */
-function remove(caseId){
-	if (confirm("确认要删除所选择的事件信息吗?")){
-		var url ="${ctx}/urgentcase/remove.do?model.id=" + caseId;
-		window.location = url;
-	}
-}
+  function remove(caseId) {
+    Ext.MessageBox.confirm('提示','确认要删除所选择的应急事件吗？删除后不能恢复！', function(btn){
+        if (btn == 'yes') {
+          window.location = "${ctx}/urgentcase/remove.do?model.id=" + caseId;
+        }
+    });
+  }
+  
+  function refresh() {
+    ECSideUtil.reload('ec');
+  }
 
-function print(id){
-	var url = "${ctx}/emergency/event/printEmgcApply.do?model.id=" + id;
-	window.open(url);
-}
+  function print(id){
+		var url = "${ctx}/emergency/event/printEmgcApply.do?model.id=" + id;
+		window.open(url);
+	}
 </script>
 </head>
 <body>
@@ -71,7 +74,9 @@ function print(id){
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	<ec:row>
 	    <ec:column width="40" property="_s" title="No." value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center"/>
-		<ec:column width="180" property="title" title="事件名称" />
+		<ec:column width="180" property="title" title="事件名称" >
+			<a href="${ctx}/urgentcase/view.do?model.id=${item.id}" title="查看应急事件"><font color="blue">${item.title}</font></a>
+		</ec:column>
 		<ec:column width="180" property="address" title="事发地点"/>
 		<ec:column width="110" property="caseTime" title="事发时间" style="text-align:center"  parse="yyyy-MM-dd HH:mm" format="yyyy-MM-dd HH:mm" cell="date"/>
 		<ec:column width="70" property="plansLevel" title="预案等级"/>
