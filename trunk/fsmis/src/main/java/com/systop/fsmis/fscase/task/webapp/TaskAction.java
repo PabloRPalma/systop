@@ -85,19 +85,18 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 			for (int i = 0; i < attachments.length; i++) {
 
 				TaskAtt taskAtt = new TaskAtt();
+				// 上传文件并且把文件信息保存在任务附件实体中
 				taskAtt.setPath(UpLoadUtil.doUpload(attachments[i],
 						attachmentsFileName[i], FsConstants.TASK_ATT_FOLDER,
-
 						getServletContext()));
 				taskAtt.setTitle(attachmentsFileName[i]);
 
+				// 将附件实例保存到附件实体集合中
 				taskAtts.add(taskAtt);
 			}
 		}
 
-		logger.info("@@@@@@@@@@@@save--100");
 		getManager().save(getModel(), deptIds, taskAtts);
-		logger.info("@@@@@@@@@@@@save--11");
 
 		return SUCCESS;
 	}
