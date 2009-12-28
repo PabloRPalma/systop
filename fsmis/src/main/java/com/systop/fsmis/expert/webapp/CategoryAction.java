@@ -3,6 +3,7 @@ package com.systop.fsmis.expert.webapp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.criterion.MatchMode;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -49,7 +50,7 @@ public class CategoryAction extends ExtJsCrudAction<ExpertCategory, CategoryMana
 	@Override
 	public String remove(){
 		ExpertCategory expertCategory = getManager().get(getModel().getId());
-		if(expertCategory.getExperts().size() > 0){
+		if(CollectionUtils.isNotEmpty(expertCategory.getExperts())){
 			addActionError("该专家类别【"+ expertCategory.getName() +"】存在专家信息！");
 			return "error";
 		}
