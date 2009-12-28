@@ -9,8 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.security.user.model.User;
-import com.systop.core.service.BaseGenericsManager;
-
 import com.systop.fsmis.fscase.FsCaseConstants;
 import com.systop.fsmis.fscase.base.service.FsCaseBaseManager;
 import com.systop.fsmis.model.FsCase;
