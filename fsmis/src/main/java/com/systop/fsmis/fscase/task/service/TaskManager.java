@@ -21,36 +21,63 @@ import com.systop.fsmis.sms.SmsSendManager;
 public class TaskManager extends BaseGenericsManager<Task> {
 	private SmsSendManager smsSendManager;
 
+	/**
+	 * 保存派遣任务方法
+	 * 
+	 * @param task
+	 *          任务实体实例
+	 * @param deptIds
+	 *          部门id集合
+	 * @param taskAtts
+	 *          任务附件实体集合
+	 */
 	@Transactional
 	public void save(Task task, List<Integer> deptIds, List<TaskAtt> taskAtts) {
-		logger.info("TaskManager.save()-->");
-		// 更新食品安全案件状态,正在处理
+
+		// 得到任务关联事件实体
 		FsCase fsCase = getDao().get(FsCase.class, task.getFsCase().getId());
+		// 更新食品安全案件状态,正在处理,并保存
 		fsCase.setStatus(FsCaseConstants.FSCASE_STATUS_RESOLVEING);
 		getDao().save(fsCase);
 
-		// 设置任务信息,正在处理
+		// 设置任务信息,正在处理,并保存
 		task.setStatus(FsCaseConstants.TASK_STATUS_RESOLVEING);
 		save(task);
 
-		// 如果部门id集合不为空
+		/**
+		 * 根据任务选择的部门集合,作任务明细信息操作<br>
+		 * 如果部门id集合不为空,遍历部门构建任务明细实例.
+		 */
 		if (CollectionUtils.isNotEmpty(deptIds)) {
 			for (Integer id : deptIds) {
 				TaskDetail taskDetail = new TaskDetail();
 				Dept dept = getDao().get(Dept.class, id);
 				taskDetail.setDept(dept);
-				// 任务明细,未接收
+				// 任务明细状态属性,未接收
 				taskDetail.setStatus(FsCaseConstants.TASK_DETAIL_UN_RECEIVE);
 				// 设定任务明细关联的任务
 				taskDetail.setTask(task);
+				task.getTaskDetails().add(taskDetail);
 
 				getDao().save(taskDetail);
-				save(task);
+				// save(task);
+
 				// 向该部门发送短信
 				sendTaskMessage(dept);
 			}
 		}
+		/**
+		 * 设置任务附件和任务的关联并保存任务附件
+		 */
+		if (CollectionUtils.isNotEmpty(taskAtts)) {
+			for (TaskAtt taskAtt : taskAtts) {
+				taskAtt.setTask(task);
+				task.getTaskAtts().add(taskAtt);
+				getDao().save(taskAtt);
+			}
+		}
 
+		save(task);
 		logger.info("TaskManager.save()--11>");
 	}
 
