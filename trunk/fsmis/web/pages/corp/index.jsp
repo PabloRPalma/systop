@@ -5,13 +5,16 @@
 <head>
 <title>企业信息管理</title>
 <%@include file="/common/ec.jsp"%>
+<%@include file="/common/extjs.jsp"%>
 <%@include file="/common/meta.jsp"%>
 <script type="text/javascript">
-function removeCompany(cID){
-	if(confirm("确实要删除该企业信息吗？")){
-		location.href="remove.do?model.id="+cID;
-	}
-}
+function removeCompany(corpId) {
+    Ext.MessageBox.confirm('提示','确实要删除该企业信息吗？删除后不能恢复！', function(btn){
+        if (btn == 'yes') {
+        	location.href="remove.do?model.id=" + corpId;
+        }
+    });
+  }
 </script>
 </head>
 <body>
