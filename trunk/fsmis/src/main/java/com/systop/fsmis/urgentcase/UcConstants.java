@@ -9,8 +9,8 @@ package com.systop.fsmis.urgentcase;
  */
 public final class UcConstants {
 	/**  类别常量：内部  */
-	public static final String IN = "1";
+	public static final String INNER = "1";
 
 	/** 类别常量：外部 */
-	public static final String OUT = "0";
+	public static final String OUTER = "0";
 }
