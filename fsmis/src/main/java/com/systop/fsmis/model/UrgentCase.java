@@ -145,6 +145,8 @@ public class UrgentCase extends BaseModel {
 	
 	private Set<UrgentCase> urgentCaseses = new HashSet<UrgentCase>(0);
 
+	private Set<CheckResult> checkResults = new HashSet<CheckResult>(0);
+	
 	public UrgentCase() {
 	}
 
@@ -418,5 +420,13 @@ public class UrgentCase extends BaseModel {
 	public void setUrgentCaseses(Set<UrgentCase> urgentCaseses) {
 		this.urgentCaseses = urgentCaseses;
 	}
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "urgentCase")
+	public Set<CheckResult> getCheckResults() {
+  	return checkResults;
+  }
 
+	public void setCheckResults(Set<CheckResult> checkResults) {
+  	this.checkResults = checkResults;
+  }
 }
