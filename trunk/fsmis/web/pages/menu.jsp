@@ -76,7 +76,6 @@
 				<img src="${ctx}/images/icons/add.gif" class="icon">
 				<a href="${ctx}/office/doctype/index.do" target="main">栏目管理</a>
 			</div>
-			<br>
 			<div style="padding-top:2px">
 				<img src="${ctx}/images/icons/add.gif" class="icon">
 				<a href="${ctx}/office/doc/index.do" target="main">文章管理</a>
