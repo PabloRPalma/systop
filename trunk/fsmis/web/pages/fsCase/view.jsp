@@ -27,7 +27,7 @@
 		var tabs = new Ext.TabPanel( {
 			renderTo : 'tabs',
 			anchor : '100% 100%',
-			activeTab : 0,
+			activeTab : ${param['modelId']},
 			frame : false,
 			defaults : {
 				autoHeight : false

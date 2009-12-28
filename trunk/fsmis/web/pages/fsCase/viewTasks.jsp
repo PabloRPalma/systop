@@ -19,37 +19,33 @@
 	height: 26;
 }
 </style>
+<script type="text/javascript"
+	src="${ctx}/scripts/fckeditor/fckeditor.js"></script>
 </head>
 <body>
 <div id="tabs2"><c:forEach items="${model.taskses}" var="task"
 	varStatus="varStatus">
 	<div id="taskDiv${varStatus.index+1}" class="x-hide-display">
-	<table id="mytable" height="320">
+	<table id="mytable" align="left">
 		<tr>
 			<td>
-			<div style="line-height: 20px; padding: 2px 2px 2px 2px;">
-			<div>
-			<fieldset style="width: 800px; padding: 2px 2px 2px 2px;">
+			<fieldset style="width: 800px; padding: 5px 10px 5px 10px;">
 			<legend>任务${varStatus.index+1}信息</legend>
 			<table width="800px" align="left">
 				<tr>
-					<td align="right" width="20%">任务标题：</td>
-					<td align="left" colspan="3">${task.title }</td>
-				</tr>
-
-				<tr>
-					<td align="right" width="10%">派遣时间：</td>
-					<td align="left" width="20%"><s:date name="task.dispatchTime"
-						format="yyyy-MM-dd HH:mm:ss" /></td>
-
-					<td align="right" width="10%">规定完成时间：</td>
-					<td align="left" width="20%"><s:date name="task.presetTime"
-						format="yyyy-MM-dd HH:mm:ss" /></td>
+					<td align="right" width="15%">任务标题：</td>
+					<td colspan="4" align="left">${task.title }</td>
 				</tr>
 				<tr>
-					<td align="right" width="10%">事件状态：</td>
-					<td align="left" colspan="3"><c:if
-						test="${task.status == '0'}">
+					<td align="right" width="12%">派遣时间：</td>
+					<td width="12%"><fmt:formatDate value="${task.dispatchTime}"
+						pattern="yyyy-mm-dd HH:MM:ss" /></td>
+
+					<td align="right" width="12%">规定完成时间：</td>
+					<td width="12%"><fmt:formatDate
+						value="${task.presetTime}" pattern="yyyy-mm-dd" /></td>
+					<td align="right" width="8%">事件状态：</td>
+					<td width="15%"><c:if test="${task.status == '0'}">
 						<font color="red">未派遣</font>
 					</c:if> <c:if test="${task.status == '1'}">
 						<font color="#FF9D07">已派遣</font>
@@ -62,54 +58,45 @@
 					</c:if></td>
 				</tr>
 				<tr>
-					<td align="right" width="10%">任务描述：</td>
-					<td align="left" colspan="3"><textarea id="descn"
-						disabled="disabled" name="task.descn" cols="60" rows="4">${task.descn}</textarea></td>
+					<td align="right" rowspan="4">任务描述：</td>
+					<td rowspan="4" colspan="5"><textarea id="taskDescn" style="border: 1px solid #D4D0C8;"
+						name="task.descn" cols="80" rows="3" readonly="readonly">${task.descn}</textarea></td>
 				</tr>
 			</table>
 			</fieldset>
-
-			</div>
-			</div>
-
-			<div>
-			<fieldset style="width: 800px; padding: 2px 2px 2px 2px;">
-			<legend>任务明细</legend>
-			<table width="800px" align="left">
-			<tr>
-				<td>No.</td>
-				<td>部门名称</td>
-				<td>派遣时间</td>
-				<td>完成时间</td>
-				<td>任务状态</td>
-			</tr>
-			<c:forEach items="${task.taskDetails}" var="detail" varStatus="varStatus">
-			<tr>
-			<td>${varStatus.index+1}</td>
-			<td>${detail.dept.name }</td>
-			<td>
-			${task.dispatchTime }
-			
-			</td>
-			<td>${detail.completionTime}</td>
-			<td>
-			<c:if test="${detail.status == '0'}">
-						<font color="red">未接收</font>
-					</c:if> <c:if test="${detail.status == '1'}">
-						<font color="#FF9D07">已查看</font>
-					</c:if> <c:if test="${detail.status == '2'}">
-						<font color="green">已接收</font>
-					</c:if> <c:if test="${detail.status == '3'}">
-						<font color="gray">已退回</font>
-					</c:if> <c:if test="${detail.status == '4'}">
-						<font color="blue">已处理</font>
-					</c:if>
-			</td> 
-			</tr>
-			</c:forEach>
+			<fieldset style="width: 800px; height:100px; padding: 5px 10px 5px 10px;">
+			<legend>任务${varStatus.index+1}明细</legend>
+			<table width="800px" align="left" >
+				<tr>
+					<td width="15%" align="center">No.</td>
+					<td width="15%" align="center">部门名称</td>
+					<td width="15%" align="center">派遣时间</td>
+					<td width="15%" align="center">完成时间</td>
+					<td width="15%" align="center">任务状态</td>
+				</tr>
+				<c:forEach items="${task.taskDetails}" var="detail"
+					varStatus="varStatus">
+					<tr>
+						<td width="15%" align="center">${varStatus.index+1}</td>
+						<td width="15%" align="center">${detail.dept.name }</td>
+						<td width="15%" align="center">${task.dispatchTime }</td>
+						<td width="15%" align="center">${detail.completionTime}</td>
+						<td width="15%" align="center"><c:if
+							test="${detail.status == '0'}">
+							<font color="red">未接收</font>
+						</c:if> <c:if test="${detail.status == '1'}">
+							<font color="#FF9D07">已查看</font>
+						</c:if> <c:if test="${detail.status == '2'}">
+							<font color="green">已接收</font>
+						</c:if> <c:if test="${detail.status == '3'}">
+							<font color="gray">已退回</font>
+						</c:if> <c:if test="${detail.status == '4'}">
+							<font color="blue">已处理</font>
+						</c:if></td>
+					</tr>
+				</c:forEach>
 			</table>
 			</fieldset>
-			</div>
 			</td>
 		</tr>
 	</table>
@@ -135,7 +122,17 @@
 					</c:forEach>					
 					]
 		});
-	});
+	});	
+</script>
+<script type="text/javascript">
+//文本编辑组件
+function preFckEditor(){
+	var fckEditor = new FCKeditor( 'taskDescn' ) ;
+  fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
+  fckEditor.ToolbarSet = 'BasicA';
+  fckEditor.Height = 360;
+  fckEditor.ReplaceTextarea();
+}
 </script>
 </body>
 </html>
