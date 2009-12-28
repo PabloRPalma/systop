@@ -141,6 +141,7 @@ public class DeptAction extends ExtJsCrudAction<Dept, DeptManager> {
 		}
 		// 得到子部门，区县用户直接返回，市级或admin用户查询24个区县
 		if (noLowerDept == null) {
+			System.out.println("aa" + parent.get("id"));
 			depts = this.getByParentId((Integer) parent.get("id"));
 		} else {
 			Dept dept = getManager().get((Integer) parent.get("id"));
@@ -245,9 +246,16 @@ public class DeptAction extends ExtJsCrudAction<Dept, DeptManager> {
 						DeptConstants.TOP_DEPT_ID)) {
 			getModel().setParentDept(null);
 		}
+		
 		if (getModel().getParentDept() == null
 				|| getModel().getParentDept().getId() == null) {
-			logger.debug("保存第一级部门.");
+			//限制添加两个根部门 2009-12-28
+			if (getManager().getDao().exists(getModel().getParentDept(), "parentDept")) {
+				addActionError("请选择上级部门！");
+				return INPUT;
+			}
+			
+			logger.debug("保存第一 级部门.");
 		}
 		return super.save();
 	}
