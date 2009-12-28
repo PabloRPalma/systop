@@ -38,28 +38,39 @@ function removeUcGroup(id){
 <div class="x-panel-body">
 <div style="margin-left: -3px;" align="center">
 <ec:table
-	items="items" var="item" retrieveRowsCallback="process" sortRowsCallback="process"
-	action="index.do" useAjax="false"
+	items="items" var="item" retrieveRowsCallback="limit" sortRowsCallback="limit"
+	action="index.do" 
+	useAjax="false"
 	doPreload="false" 
-	pageSizeList="20" 
+	pageSizeList="30,50,100,200" 
 	editable="false"
 	sortable="true" 
-	rowsDisplayed="20" 
+	rowsDisplayed="30" 
 	generateScript="true"
 	resizeColWidth="false" 
 	classic="false" 
-	width="100%" height="460px"
+	width="100%" 
+	height="460px"
 	minHeight="460"
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	<ec:row>
-		<ec:column width="20" property="_s" title="No." value="${GLOBALROWCOUNT}" sortable="false" style="text-align: center" />
-		<ec:column width="120" property="name" title="名称" />
-		<ec:column width="200" property="display" title="显示内容" />
-		<ec:column width="200" property="descn" title="描述" />
-		<ec:column width="150" property="_0" title="操作" style="text-align:center" sortable="false">
-			<a href="edit.do?model.id=${item.id}">编辑</a> |
+		<ec:column width="40" property="_no" value="${GLOBALROWCOUNT}" title="No." style="text-align:center"/>
+		<ec:column width="120" property="name" title="名称"/>
+		<ec:column width="30" property="descn" title="公用" style="text-align:center;">
+			<c:if test="${item.isPublic eq '1'}">是</c:if>
+			<c:if test="${item.isPublic eq '0'}">否</c:if>
+		</ec:column>
+		<ec:column width="30" property="display" title="类别" style="text-align:center">
+			<c:if test="${item.type eq '1'}">内部</c:if>
+			<c:if test="${item.type eq '0'}">外部</c:if>
+		</ec:column>
+		<ec:column width="80" property="displays" title="显示内容" style="text-align:center"/>
+		<ec:column width="200" property="describe" title="描述" style="text-align:center"/>
+		<ec:column width="100" property="_0" title="操作" style="text-align:center" sortable="false">
+			<a href="edit.do?model.id=${item.id}">编辑</a>|
 			<a href="#" onClick="removeUcGroup(${item.id})">删除</a>
 		</ec:column>
+		
 	</ec:row>
 </ec:table></div>
 </div>

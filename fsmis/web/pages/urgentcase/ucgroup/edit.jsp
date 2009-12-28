@@ -41,7 +41,7 @@
           	
 				<tr> <td align="right" width="80">模板路径:</td>
              		<td align="left" width="520">
-             			<s:textfield id="template" name="model.template" cssStyle="width:200px"/><font color="red">&nbsp;*</font>
+             			<s:textfield id="template" name="model.template" cssStyle="width:200px"/>
              		</td> 
 				</tr> 
 			</table> 
@@ -50,14 +50,14 @@
            <tr>
              <td align="right" width="80">显示内容：</td>
              <td align="left" width="520">
-             	<s:textarea id="display" name="model.display" cssStyle="width:200px;height:50px"/>
+             	<s:textarea id="displays" name="model.displays" cssStyle="width:200px;height:50px"/>
              </td>
           </tr>
           
           <tr>
              <td align="right" width="80">描述：</td>
              <td align="left" width="520">
-             	<s:textarea id="descn" name="model.descn" cssStyle="width:200px;height:50px"/>
+             	<s:textarea id="describe" name="model.describe" cssStyle="width:200px;height:50px"/>
              </td>
           </tr>
           </table>
