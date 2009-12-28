@@ -29,7 +29,7 @@ function view(aID){
 		<td>
 		<s:form action="index.do" method="post">
 		所属栏目：
-		<s:select name="model.documentType.id" listKey="id" listValue="name" list="DocumentTypeMaps" headerKey=""  headerValue="选择栏目..." cssStyle="width:200px"></s:select>
+		<s:select name="model.documentType.id" listKey="id" listValue="name" list="DocumentTypeMap" headerKey=""  headerValue="选择栏目..." cssStyle="width:200px"></s:select>
 		关键字：
 		<s:textfield name="model.title"/>
 		<input type="submit" value="查询" class="button"/>
