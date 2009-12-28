@@ -4,14 +4,18 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.systop.common.modules.security.user.model.User;
 import com.systop.core.model.BaseModel;
 
 /**
@@ -29,11 +33,11 @@ public class CheckResult extends BaseModel {
 	/**
 	 * 审核人
 	 */
-	private String checker;
+	private User checker;
 	/**
 	 * 是否同意
 	 */
-	private String is_agree;
+	private String isAgree;
 	/**
 	 * 审核意见
 	 */
@@ -41,12 +45,12 @@ public class CheckResult extends BaseModel {
 	/**
 	 * 审核时间
 	 */
-	private Date check_time;
+	private Date checkTime;
 	/**
-	 * 审核对象ID
+	 * 应急事件审核对象
 	 */
-	private String target_id;
-	
+	private UrgentCase urgentCase;
+
 	@Id
 	@GeneratedValue(generator = "hibseq")
 	@GenericGenerator(name = "hibseq", strategy = "hilo")
@@ -59,22 +63,23 @@ public class CheckResult extends BaseModel {
   	this.id = id;
   }
 	
-	@Column(name = "CHECKER", length = 255)
-	public String getChecker() {
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "CHECKER")
+	public User getChecker() {
   	return checker;
   }
 	
-	public void setChecker(String checker) {
+	public void setChecker(User checker) {
   	this.checker = checker;
   }
 	
 	@Column(name = "IS_AGREE", length = 255)
-	public String getIs_agree() {
-  	return is_agree;
+	public String getIsAgree() {
+  	return isAgree;
   }
 	
-	public void setIs_agree(String isAgree) {
-  	is_agree = isAgree;
+	public void setIsAgree(String isAgree) {
+  	this.isAgree = isAgree;
   }
 	
 	@Column(name = "RESULT", length = 4000)
@@ -88,20 +93,21 @@ public class CheckResult extends BaseModel {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CHECK_TIME", length = 11)
-	public Date getCheck_time() {
-  	return check_time;
+	public Date getCheckTime() {
+  	return checkTime;
   }
 	
-	public void setCheck_time(Date checkTime) {
-  	check_time = checkTime;
+	public void setCheckTime(Date checkTime) {
+  	this.checkTime = checkTime;
   }
 	
-	@Column(name = "TARGET_ID", length = 255)
-	public String getTarget_id() {
-  	return target_id;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "URGENT_CASE")
+	public UrgentCase getUrgentCase() {
+  	return urgentCase;
   }
-	
-	public void setTarget_id(String targetId) {
-  	target_id = targetId;
+
+	public void setUrgentCase(UrgentCase urgentCase) {
+  	this.urgentCase = urgentCase;
   }
 }
