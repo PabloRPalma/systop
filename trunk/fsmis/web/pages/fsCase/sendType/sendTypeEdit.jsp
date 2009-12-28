@@ -51,7 +51,7 @@
 			</div>
 		</form>
 	</div>
-	<fs:deptCheckbox sendTypeId="229379" splitLineStyle="1px dotted blue;" itemClass="checkbox" column="1" columnWidth="100" name="haha"></fs:deptCheckbox>
+	<fs:deptCheckbox sendTypeId="131072" splitLineStyle="1px dotted blue;" itemClass="checkbox" column="5" columnWidth="120" name="haha"></fs:deptCheckbox>
 </div>
 </body>
 </html>
