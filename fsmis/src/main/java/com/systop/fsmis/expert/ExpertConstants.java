@@ -9,14 +9,18 @@ import java.util.Map;
  */
 public final class ExpertConstants {
 
+	public static final String EXPERT_LEVEL_PROVINCIAL = "1";//省级
+	
+	public static final String EXPERT_LEVEL_MUNICIPAL = "2";//市级
+
   /**
    * 专家级别
    */
   public static final Map<String, String> EXPERT_LEVELS = 
     Collections.synchronizedMap(new LinkedHashMap<String, String>());
   static {
-  	EXPERT_LEVELS.put("省级", "省级");
-  	EXPERT_LEVELS.put("市级", "市级");
+  	EXPERT_LEVELS.put(EXPERT_LEVEL_PROVINCIAL, "省级");
+  	EXPERT_LEVELS.put(EXPERT_LEVEL_MUNICIPAL, "市级");
   }
 	
 }
