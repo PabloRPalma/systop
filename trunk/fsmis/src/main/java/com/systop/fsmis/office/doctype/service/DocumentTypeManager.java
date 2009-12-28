@@ -47,13 +47,12 @@ public class DocumentTypeManager extends BaseGenericsManager<DocumentType> {
 			for (DocumentType childC : parC2.getChildDocumentTypes()) {
 				Map childMap = new HashMap();
 				childMap.put("id", childC.getId());
-				
 				String sSpace = new String("　");
 				for(int i = 0; i < iSpaceNum; i++){
 					sSpace += sSpace;
 				}
 				
-				childMap.put("name",  sSpace + "> " + childC.getName());
+				childMap.put("name", sSpace + ">>" + childC.getName());
 				catalogList.add(childMap);
 				iSpaceNum++;
 				getDocumentTypesList(childC, iSpaceNum);
