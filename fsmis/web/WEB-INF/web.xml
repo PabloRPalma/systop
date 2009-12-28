@@ -223,12 +223,18 @@
 			<taglib-uri>/systop/common</taglib-uri>
 			<taglib-location>/WEB-INF/tld/common.tld</taglib-location>
 		</taglib>
+		
+		<taglib>
+			<taglib-uri>/systop/fs</taglib-uri>
+			<taglib-location>/WEB-INF/tld/fs.tld</taglib-location>
+		</taglib>
 	</jsp-config>
 	
 	<welcome-file-list>
 		<welcome-file>login.jsp</welcome-file>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
+	<!-- 
 	<error-page>
 		<error-code>403</error-code>
 		<location>/pages/error/403.jsp</location>
@@ -241,6 +247,7 @@
 		<error-code>500</error-code>
 		<location>/pages/error/500.jsp</location>
 	</error-page>
+	 -->
 	<!--
 	The security-constraint element is used to associate security
 	constraints with one or more web resource collections
