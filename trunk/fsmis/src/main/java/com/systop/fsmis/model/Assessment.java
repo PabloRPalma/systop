@@ -36,13 +36,12 @@ public class Assessment extends BaseModel {
 	 * 申请人
 	 */
 	private User proposer;
-
+	private Date askDate;
+	private String askCause;
 	/**
 	 * 审核人
 	 */
 	private User auditor;
-	private Date askDate;
-	private String askCause;
 	private Date auditDate;
 	/**
 	 * 是否通过
