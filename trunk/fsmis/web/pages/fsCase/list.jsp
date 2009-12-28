@@ -29,13 +29,18 @@ function remove(id){
 <table width="99%">
 	<tr>
 		<td><s:form action="index" method="post">
-						事件标题：
-			<s:textfield name="model.title"></s:textfield>	
-						事件编号：
-			<s:textfield name="model.code"></s:textfield>
-						事发时间:
-			<input type="text" name="caseTime" style="width: 160px"
-				value='<s:date name="caseTime" format="yyyy-MM-dd HH:mm:ss"/>'
+						事件标题:
+			<s:textfield name="model.title" cssStyle="width:100px"></s:textfield>	
+						事件编号:
+			<s:textfield name="model.code" cssStyle="width:70px"></s:textfield>
+						事发开始时间:
+			<input type="text" name="caseBeginTime" style="width: 140px"
+				value='<s:date name="caseBeginTime" format="yyyy-MM-dd HH:mm:ss"/>'
+				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})"
+				class="Wdate" />
+						事发结束时间:
+			<input type="text" name="caseEndTime" style="width: 140px"
+				value='<s:date name="caseEndTime" format="yyyy-MM-dd HH:mm:ss"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})"
 				class="Wdate" />
 			             事件状态:

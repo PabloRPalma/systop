@@ -39,7 +39,7 @@
 			}
 			
 			$.ajax({
-				url: '${ctx}/genericcase/getLevelTwo.do',
+				url: '${ctx}/fscase/getLevelTwo.do',
 				type: 'post',
 				dataType: 'json',
 				data: {typeId : subid},
