@@ -1,5 +1,6 @@
 package com.systop.fsmis.sms;
 
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -42,60 +43,49 @@ public class SmsManager {
 	 */
 	private SmsReceiveManager smsReceiveManager;
 
-	public void querySmsSendState() {
-	}
-
+	/**
+	 * 接收短信方法
+	 */
 	public void receiveMessages() {
 		try {
 			List<SmsReceive> smsReceiveList = smsProxy.receiveMessage();
 			for (SmsReceive smsReceive : smsReceiveList) {
-
 				getSmsReceiveManager().save(smsReceive);
 			}
 		} catch (ApplicationException ex) {
-
+			logger.error(ex.getMessage());
 		}
 	}
 
-	public void sendMessage() {
-
-	}
-
+	/**
+	 * 发送短信方法
+	 */
 	public void sendMessages() {
-		logger.info("##########SMSManager.sendMessages()-->");
-
 		// 得到数据库中需要发送的短信列表
 		List<SmsSend> smsSendList = getSmsSendManager().getNewSmsSends();
-		logger.info("##########本次共得到{}条发送短信", smsSendList.size());
-		int i = 0;
 		// 遍历列表
 		for (SmsSend smsSend : smsSendList) {
-			logger.info("**********{}", i++);
 			if (smsSend == null) {
-				continue;
-			}
-			if (!MobileNumChecker.checkMobilNumberDigit(smsSend.getMobileNum())) {
+				logger.error("查询得到为null的短信");
+			} else {
+				if (!MobileNumChecker.checkMobilNumberDigit(smsSend.getMobileNum())) {
+					logger.error("ID为:{}的短信,接收手机号[{}]有误,发送失败!", smsSend.getId(), smsSend
+							.getMobileNum());
+				} else {
+					try {
+						// 调用代理的发送功能,state变量在mas端用于标示是否发送成功,但在这里暂时没有用到
+						@SuppressWarnings("unused")
+						int state = getSmsProxy().sendMessage(smsSend);
 
-				logger.error("ID为:{}的短信,接收手机号[{}]有误,发送失败!", smsSend.getId(), smsSend
-						.getMobileNum());
-				continue;
-			}
-			try {
-				// 调用代理的发送功能
+						// 更新数据库中短信的状态,不为新短信,短信发送时间
+						smsSend.setIsNew(SmsConstants.SMS_SMS_SEND_IS_NOT_NEW);
+						smsSend.setSendTime(new Date());
+						getSmsSendManager().update(smsSend);
 
-				@SuppressWarnings("unused")
-				int state = getSmsProxy().sendMessage(smsSend);
-
-				// 更新数据库中短信的状态,不为新短信,短信发送时间
-				smsSend.setIsNew(SmsConstants.SMS_SMS_SEND_IS_NOT_NEW);
-				smsSend.setSendTime(new java.util.Date());
-				getSmsSendManager().update(smsSend);
-
-				logger.info("ID为:{}的短信,接收手机号为[{}],发送成功! ", smsSend.getId(), smsSend
-						.getMobileNum());
-
-			} catch (ApplicationException ex) {
-				logger.error(ex.getMessage());
+					} catch (ApplicationException ex) {
+						logger.error(ex.getMessage());
+					}
+				}
 			}
 		}
 		getSmsProxy().receiveMessage();
