@@ -14,6 +14,10 @@ import com.systop.fsmis.fscase.sendtype.service.SendTypeManager;
 import com.systop.fsmis.model.FsCase;
 import com.systop.fsmis.model.SendType;
 
+/**
+ * 针对SendType的操作和显示
+ * @author Lunch
+ */
 @SuppressWarnings("serial")
 @Controller
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
@@ -21,14 +25,15 @@ public class SendTypeAction extends
 		DefaultCrudAction<SendType, SendTypeManager> {
 	private FsCase fsCase;
 	private List<Dept> depts;
-	@SuppressWarnings("unused")
 	@Autowired
 	private LoginUserService loginUserService;
 
+	/**
+	 * 显示列表
+	 */
 	@Override
 	public String index() {
-		String hql = "from SendType s order by s.sortId";
-		items = getManager().query(hql);
+		items = getManager().orderSendType();
 		return INDEX;
 	}
 
