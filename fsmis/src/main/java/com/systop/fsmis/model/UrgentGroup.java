@@ -11,6 +11,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.systop.common.modules.dept.model.Dept;
 import com.systop.core.model.BaseModel;
 
 /**
@@ -40,7 +41,10 @@ public class UrgentGroup extends BaseModel {
 	private UrgentType urgentType;
 
 	private UrgentCase urgentCases;
-
+	/**
+	 * 所属区县
+	 */
+	private Dept county;
 	public UrgentGroup() {
 	}
 
@@ -127,5 +131,14 @@ public class UrgentGroup extends BaseModel {
 
 	public void setDescr(String descr) {
 		this.descr = descr;
+	}
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "COUNTY")
+	public Dept getCounty() {
+		return county;
+	}
+
+	public void setCounty(Dept county) {
+		this.county = county;
 	}
 }
