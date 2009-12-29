@@ -11,12 +11,12 @@
 function send(){
 	var id = document.getElementById('caseId').value;
 	url="${ctx}/task/edit.do?caseId=" + id;
-	window.open(url,'black'); 
+	window.open(url,'main'); 
 }
 function fastsend(sendtypeid){
 	var id = document.getElementById('caseId').value;
 	url="${ctx}/task/edit.do?sendTypeId=" + sendtypeid + "&caseId=" + id;
-	window.open(url,'black'); 
+	window.open(url,'main'); 
 }
 </script>
 </head>
