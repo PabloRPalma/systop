@@ -8,6 +8,7 @@ import org.apache.commons.lang.xwork.StringUtils;
 
 import com.systop.common.modules.dept.model.Dept;
 import com.systop.core.util.ReflectUtil;
+import com.systop.fsmis.model.CountySendType;
 
 public final class Util {
 
@@ -18,17 +19,17 @@ public final class Util {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static List<Map> toMap(List<Dept> depts, String deptIds) {
+	public static List<Map> toMap(List<Dept> depts, CountySendType cst) {
 		if (depts == null) {
 			return null;
 		}
 		List<Map> newDatas = new ArrayList();
 
 		String[] ids = null;
-		//是否需要判断ID
+		//是否需要判断ID,用于显示部门是否被选中
 		boolean isJudgeId = false;
-		if (StringUtils.isNotBlank(deptIds)) {
-			ids = deptIds.split(",");
+		if (cst != null && StringUtils.isNotBlank(cst.getGeneralDept())) {
+			ids = cst.getGeneralDept().split(",");
 			isJudgeId = true;
 		}
 
