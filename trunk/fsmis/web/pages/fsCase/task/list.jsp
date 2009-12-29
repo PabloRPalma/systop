@@ -64,6 +64,12 @@ function remove(id){
 			style="text-align:center" cell="date" format="yyyy-MM-dd" />
 		<ec:column width="80" property="presetTime" title="规定完成时间"
 			style="text-align:center" cell="date" format="yyyy-MM-dd" />
+		<ec:column width="80" property="completionTime" title="完成时间"
+		    style="text-align:center" cell="date" format="yyyy-MM-dd">
+		    <c:forEach var="dat" items="${item.taskDetails}">
+				 ${dat.completionTime}
+			</c:forEach>
+		</ec:column>
 		<ec:column width="220" property="_sto" title="执行部门" sortable="false">
 			<c:forEach var="std" items="${item.taskDetails}">
 				【${std.dept.name}】
