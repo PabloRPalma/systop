@@ -8,7 +8,7 @@
 	<uri>systop/fs</uri>
 	
 	<tag>
-    	<name>deptCheckbox</name>
+    	<name>selectDepts</name>
     	<tag-class>com.systop.fsmis.fscase.sendtype.taglibs.SelectDeptTag</tag-class>
     	<body-content>JSP</body-content>
     	<attribute>
@@ -19,10 +19,9 @@
     	</attribute>
     	<attribute>
     		<name>sendTypeId</name>
-    		<required>true</required>
     		<rtexprvalue>true</rtexprvalue>
     		<type>java.lang.Integer</type>
-    		<description>这一列是必须的，需要传递排序方式的 ID</description>		
+    		<description>需要传递派遣环节 ID,如果为空这不考虑派遣环节</description>		
     	</attribute>
     	<attribute>
     		<name>column</name>
@@ -43,6 +42,11 @@
     		<name>itemClass</name>
     		<type>java.lang.String</type>
     		<description>具体每一个元素的样式</description>
+    	</attribute>
+    	<attribute>
+    		<name>theme</name>
+    		<type>java.lang.String</type>
+    		<description>用于选中不同的样式</description>
     	</attribute>
     </tag>
 </taglib>
