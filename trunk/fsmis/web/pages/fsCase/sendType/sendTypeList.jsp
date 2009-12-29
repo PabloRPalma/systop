@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="/common/taglibs.jsp"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <%@include file="/common/meta.jsp"%>
@@ -93,19 +94,19 @@
 
 	// 确认排序
 	function confirmSort(){
-		inputs = getInputs();
-		var items = new Array();
-		for (i = 0; i < inputs.length; i++){
-			if(isNaN(inputs[i].value)){
-				alert("[" + inputs[i].value + "] 不是有效数字,请修改。");
-				inputs[i].select();
-				return;
+		if (confirm("确认重新排序吗?")){
+			inputs = getInputs();
+			var items = new Array();
+			for (i = 0; i < inputs.length; i++){
+				if(isNaN(inputs[i].value)){
+					alert("[" + inputs[i].value + "] 不是有效数字,请修改。");
+					inputs[i].select();
+					return;
+				}
+				var itemStr = inputs[i].id + ":" + inputs[i].value;
+				items[i] = itemStr;
 			}
-			var itemStr = inputs[i].id + ":" + inputs[i].value;
-			items[i] = itemStr;
-		}
-		if (confirm("确认重新排序吗？")){
-			//alert(items.length);
+			//dwr调用进行排序操作
 			SendTypeDwrAction.sort(items, function(str){
 				  if(str == "success"){
 					window.location.href = "${ctx}/sendType/index.do";		
