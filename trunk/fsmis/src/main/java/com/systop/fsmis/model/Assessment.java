@@ -174,11 +174,11 @@ public class Assessment extends BaseModel {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "assessment")
 	public Set<CheckResult> getCheckResults() {
-		return checkResults;
-	}
+  	return checkResults;
+  }
 
 	public void setCheckResults(Set<CheckResult> checkResults) {
-		this.checkResults = checkResults;
-	}
+  	this.checkResults = checkResults;
+  }
 
 }
