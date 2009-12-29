@@ -13,7 +13,7 @@ public class SMSManagerTest extends BaseTransactionalTestCase {
 	public void testWebService() {
 		SmsSend smsSend = new SmsSend();
 		smsSend.setContent("测试短信>>>>>>");
-		smsSend.setMobileNum("13932159399");
+		smsSend.setMobileNum("15100150783");
 		smsSend.setIsNew(SmsConstants.SMS_SMS_SEND_IS_NEW);
 
 		SmsSendManager sm = (SmsSendManager) applicationContext
@@ -28,11 +28,4 @@ public class SMSManagerTest extends BaseTransactionalTestCase {
 
 	}
 
-	public void testReceiveMessages() {
-
-		SmsManager service = (SmsManager) applicationContext.getBean("smsManager");
-
-		service.receiveMessages();
-
-	}
 }
