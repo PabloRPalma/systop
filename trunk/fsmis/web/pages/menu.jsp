@@ -83,6 +83,10 @@
 				<img src="${ctx}/images/icons/add.gif" class="icon">
 				<a href="${ctx}/office/doc/index.do" target="main">文章管理</a>
 			</div>
+			<div style="padding-top:2px">
+				<img src="${ctx}/images/icons/add.gif" class="icon">
+				<a href="${ctx}/office/notice/index.do" target="main">通知管理</a>
+			</div>
 		</div>
 	</div>
 	<div id="cms">
