@@ -19,7 +19,7 @@ import com.systop.core.model.BaseModel;
 
 /**
  * 部门接收纪录
- * @author zw
+ * @author ZW
  */
 @SuppressWarnings("serial")
 @Entity
