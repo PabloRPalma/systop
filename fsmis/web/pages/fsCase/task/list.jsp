@@ -9,8 +9,7 @@
 <script type="text/javascript">
 function remove(id){
 	if (confirm("确认要删除此任务吗?")){
-		url="${ctx}/task/remove.do?model.id=" + id;
-		window.open(url,'main');
+		window.location.href="${ctx}/task/remove.do?model.id=" + id;		
 	}
 }
 
