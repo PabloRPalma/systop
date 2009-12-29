@@ -67,7 +67,7 @@
 <div class="x-toolbar">&nbsp;</div>
 <div><%@ include file="/common/messages.jsp"%></div>
 <div align="center"><s:form action="/task/save.do" method="post"
-	theme="simple" enctype="multipart/form-data" validate="true">
+	theme="simple" enctype="multipart/form-data" validate="true" id="taskForm">
 	<input type="hidden" name="model.fsCase.id" value="${model.fsCase.id}"></input>
 	<fieldset style="width: 800px; padding: 10px 10px 10px 10px;" class="">
 	<legend> 派遣信息</legend>
@@ -129,5 +129,10 @@
 	</table>
 </s:form></div>
 </div>
+<script type="text/javascript">
+	$(document).ready(function() {
+	$("#taskForm").validate();
+});
+</script>
 </body>
 </html>
