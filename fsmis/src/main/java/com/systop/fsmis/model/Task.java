@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,6 +26,7 @@ import com.systop.core.model.BaseModel;
 
 /**
  * 任务表 The persistent class for the TASK database table.
+ * 
  * @author zw
  */
 @SuppressWarnings("serial")
@@ -152,7 +154,7 @@ public class Task extends BaseModel {
 		this.status = status;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "task")
+	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, mappedBy = "task")
 	public Set<TaskDetail> getTaskDetails() {
 		return this.taskDetails;
 	}
@@ -181,8 +183,7 @@ public class Task extends BaseModel {
 			return false;
 		}
 		Task task = (Task) other;
-		return new EqualsBuilder().append(this.getId(), task.getId())
-				.isEquals();
+		return new EqualsBuilder().append(this.getId(), task.getId()).isEquals();
 	}
 
 	/**
