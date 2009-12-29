@@ -103,13 +103,13 @@ public class UserAction extends ExtJsCrudAction<User, UserManager> {
   @Validations(requiredStrings = {
       @RequiredStringValidator(fieldName = "model.loginId", message = "登录名是必须的."),
       @RequiredStringValidator(fieldName = "model.password", message = "密码是必须的."),
-      @RequiredStringValidator(fieldName = "model.email", message = "电子邮件是必须的."),
       @RequiredStringValidator(fieldName = "model.confirmPwd", message = "请两次输入密码.") }, stringLengthFields = { @StringLengthFieldValidator(fieldName = "password", minLength = "3", maxLength = "32", message = "密码应多于3字符", trim = true) }, emails = { @EmailValidator(fieldName = "model.email", message = "请输入正确的e-Mail.") }, expressions = { @ExpressionValidator(message = "两次输入的密码必须相同.", expression = "model.password==model.confirmPwd") })
   @Override
   public String save() {
     Assert.notNull(getModel());
     if (getModel().getId() == null) {
-      getModel().setUserType(UserConstants.USER_TYPE_SYS);
+      //不区分内部用户和外部用户
+      //getModel().setUserType(UserConstants.USER_TYPE_SYS);
       getModel().setStatus(UserConstants.USER_STATUS_USABLE);
     }
     String result = super.save();
