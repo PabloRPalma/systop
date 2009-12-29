@@ -25,7 +25,7 @@ import com.systop.core.model.BaseModel;
 
 /**
  * 通知
- * @author zw
+ * @author ZW
  *
  */
 @SuppressWarnings("serial")
