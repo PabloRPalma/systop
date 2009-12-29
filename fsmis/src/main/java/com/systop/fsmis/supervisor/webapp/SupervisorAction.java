@@ -1,22 +1,20 @@
 package com.systop.fsmis.supervisor.webapp;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.lang.StringUtils;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.systop.cms.utils.PageUtil;
-import com.systop.common.modules.dept.DeptConstants;
 import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.core.dao.support.Page;
@@ -77,62 +75,49 @@ public class SupervisorAction extends DefaultCrudAction<Supervisor, SupervisorMa
 	public void indexSuperviosr(){
 		//创建分页查询的Page对象
 		Page page = PageUtil.getPage(getPageNo(), getPageSize());
-		HttpServletRequest request = (HttpServletRequest) getRequest();
-    Dept dept = loginUserService.getLoginUserDept(request);
-    //显示登录用户所属部门下的信息员
-		String hql = "";
-		if (dept != null) {
-			//顶级部门则查询全部
-			if (dept.getName().equals(DeptConstants.TOP_DEPT_NAME)) {
-				hql = hql + "from Supervisor s where 1=1";
-			} else if (dept.getChildDepts().size() > 0) {//非顶级部门则查询本部门和所有下属部门
-				hql = hql + "from Supervisor s where s.dept.id = "
-					+ Integer.toString(dept.getId());
-				for (Dept childen : dept.getChildDepts()) {
-					hql = hql + " or s.dept.id = " + Integer.toString(childen.getId());
-				}
-			} else {
-				hql = hql + "from Supervisor s where s.dept.id = "
-						+ Integer.toString(dept.getId());
-			}
-		} else {
-			hql = hql + "from Supervisor s where 1=1";
-		}
-		List args = new ArrayList();
-		//根据姓名查询
-		if (StringUtils.isNotBlank(getModel().getName())) {
-			hql = hql + " and s.name like ?";
-			args.add("%" + getModel().getName() + "%");
-		}
-		//根据监管区域查询
-		if (StringUtils.isNotBlank(getModel().getSuperviseRegion())){
-			hql = hql + " and s.superviseRegion like ?";
-			args.add("%" + getModel().getSuperviseRegion() + "%");
-		}
-		//根据部门查询
-		if(getModel().getDept() != null){
-			if (StringUtils.isNotBlank(getModel().getDept().getName())){
-				hql = hql + " and s.dept.name like ?";
-				args.add("%" + getModel().getDept().getName() + "%");
-			}
-		}
-		//根据手机号查询
-		if(getModel().getMobile() != null){
-			if (StringUtils.isNotBlank(getModel().getMobile())){
-				hql = hql + " and s.mobile like ?";
-				args.add("%" + getModel().getMobile() + "%");
-			}
-		}
-		//根据负责人查询
-		if(getModel().getIsLeader() != null){
-				hql = hql + " and s.isLeader = ?";
-				args.add(getModel().getIsLeader());
-		}
-		hql = hql + " order by s.code";
-		page = getManager().pageQuery(page, hql, args.toArray());
+		getManager().pageQuery(page, setupDetachedCriteria());
 		restorePageData(page);
 	}
 	
+  /**
+   * @return DetachedCriteria 查询条件
+   */
+  private DetachedCriteria setupDetachedCriteria() {
+    DetachedCriteria criteria = DetachedCriteria.forClass(Supervisor.class);
+    //设定用户所属部门及子部门作为查询条件
+    criteria.createAlias("dept", "dept");
+    Dept dept = loginUserService.getLoginUserDept(getRequest());
+		if (dept != null) {
+			if (dept.getChildDepts().size() > 0) {
+				criteria.add(Restrictions.like("dept.serialNo", MatchMode.START
+						.toMatchString(dept.getSerialNo())));
+			} else {
+				criteria.add(Restrictions.eq("dept.id", dept.getId()));
+			}
+		}
+		//选择不为null的属性作为查询条件
+		if (StringUtils.isNotBlank(getModel().getName())) {
+			criteria.add(Restrictions.like("name", MatchMode.ANYWHERE
+					.toMatchString(getModel().getName())));
+		}
+		if (StringUtils.isNotBlank(getModel().getSuperviseRegion())) {
+			criteria.add(Restrictions.like("superviseRegion", MatchMode.ANYWHERE
+					.toMatchString(getModel().getSuperviseRegion())));
+		}
+		if (StringUtils.isNotBlank(getModel().getMobile())) {
+			criteria.add(Restrictions.like("mobile", MatchMode.ANYWHERE
+					.toMatchString(getModel().getMobile())));
+		}
+		if (getModel().getDept() != null && StringUtils.isNotBlank(getModel().getDept().getName())) {
+			criteria.add(Restrictions.like("dept.name", MatchMode.ANYWHERE
+					.toMatchString(getModel().getDept().getName())));
+		}
+		if(StringUtils.isNotBlank(getModel().getIsLeader())){
+			criteria.add(Restrictions.eq("isLeader", getModel().getIsLeader()));
+		}
+		return setupSort(criteria);
+  }
+  
 	/**
 	 * 保存信息员信息
 	 */
