@@ -20,6 +20,8 @@ import com.systop.core.Constants;
 import com.systop.core.dao.support.Page;
 import com.systop.core.webapp.struts2.action.DefaultCrudAction;
 import com.systop.fsmis.CaseConstants;
+import com.systop.fsmis.FsConstants;
+import com.systop.fsmis.fscase.FsCaseConstants;
 import com.systop.fsmis.fscase.casetype.service.CaseTypeManager;
 import com.systop.fsmis.fscase.service.FsCaseManager;
 import com.systop.fsmis.model.CaseType;
@@ -54,7 +56,7 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 		Page page = new Page(Page.start(getPageNo(), getPageSize()),
 				getPageSize());
 		StringBuffer sql = new StringBuffer(
-				"from FsCase gc where isSubmitSj=0 ");
+				"from FsCase gc where isMultiple=0 and isSubmitSj=0 ");
 		List args = new ArrayList();
 		if (StringUtils.isNotBlank(getModel().getTitle())) {
 			sql.append("and gc.title like ? ");
@@ -134,7 +136,8 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 		}
 
 		getModel().setCaseType(cType);
-		getModel().setIsSubmitSj(String.valueOf(0));
+		getModel().setIsSubmitSj(CaseConstants.IS_NOSUBSJ);
+		getModel().setIsMultiple(FsConstants.N);
 		getManager().getDao().clear();
 		getManager().save(getModel());
 		return SUCCESS;
