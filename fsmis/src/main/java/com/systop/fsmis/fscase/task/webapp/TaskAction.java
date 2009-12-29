@@ -1,6 +1,7 @@
 package com.systop.fsmis.fscase.task.webapp;
 
 import java.io.File;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.hibernate.criterion.MatchMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -111,6 +113,26 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 		if (StringUtils.isNotBlank(getModel().getStatus())) {
 			buf.append("and t.status = ?");
 			args.add(getModel().getStatus());
+		}
+		// 根据任务派发时间查询
+		Date taskBeginDate = new Date();
+		Date taskEndDate = new Date();
+		if (StringUtils.isNotBlank(getRequest().getParameter("taskBeginTime"))
+				&& StringUtils.isNotBlank(getRequest().getParameter(
+						"taskEndTime"))) {
+			try {
+				taskBeginDate = DateUtils.parseDate(getRequest().getParameter(
+						"taskBeginTime"),
+						new String[] { "yyyy-MM-dd HH:mm:ss" });
+				taskEndDate = DateUtils.parseDate(getRequest().getParameter(
+						"taskEndTime"), new String[] { "yyyy-MM-dd HH:mm:ss" });
+
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			buf.append(" and t.dispatchTime >= ? and t.dispatchTime <= ?");
+			args.add(taskBeginDate);
+			args.add(taskEndDate);
 		}
 
 		// 查询属于当前区县的案件的任务,现阶段(20091226)项目组长说暂时不考虑,待以后加上此功能时,启用代码
