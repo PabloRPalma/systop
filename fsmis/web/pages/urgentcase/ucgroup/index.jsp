@@ -65,7 +65,7 @@ function removeUcGroup(id){
 			<c:if test="${item.type eq '0'}">外部</c:if>
 		</ec:column>
 		<ec:column width="80" property="displays" title="显示内容" style="text-align:center"/>
-		<ec:column width="200" property="describe" title="描述" style="text-align:center"/>
+		<ec:column width="200" property="descr" title="描述" style="text-align:center"/>
 		<ec:column width="100" property="_0" title="操作" style="text-align:center" sortable="false">
 			<a href="edit.do?model.id=${item.id}">编辑</a>|
 			<a href="#" onClick="removeUcGroup(${item.id})">删除</a>
