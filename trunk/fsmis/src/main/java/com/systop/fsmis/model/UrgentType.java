@@ -8,11 +8,14 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.systop.common.modules.dept.model.Dept;
 import com.systop.core.model.BaseModel;
 
 /**
@@ -36,6 +39,11 @@ public class UrgentType extends BaseModel {
 
 	/** 对应的组 ,其实只需要一个组(事故处理组)即可 */
 	private Set<UrgentGroup> urgentGroup = new HashSet<UrgentGroup>(0);
+	
+	/**
+	 * 所属区县
+	 */
+	private Dept county;
 
 	public UrgentType() {
 	}
@@ -77,6 +85,15 @@ public class UrgentType extends BaseModel {
 
 	public void setUrgentGroup(Set<UrgentGroup> urgentGroup) {
 		this.urgentGroup = urgentGroup;
+	}
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "COUNTY")
+	public Dept getCounty() {
+		return county;
+	}
+
+	public void setCounty(Dept county) {
+		this.county = county;
 	}
 
 }
