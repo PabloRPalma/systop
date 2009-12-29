@@ -24,7 +24,7 @@
     	  		  document.getElementById("photoOperSpan1").innerHTML=
     	            "<div align='left'><img alt='照片' align='center' width='106' height='142' id='imgphoto' src='${ctx}/images/noSupervisor.gif'/></div><input type='file' id='photo' name='photo' class='FileText' onchange='changeImg()'/>";
     	  	  	}else{
-    	  	  	  alert("删除企业照片失败，请与管理员联系！");
+    	  	  	  alert("删除信息员照片失败，请与管理员联系！");
     	  	  	}
     		}
     	  });
@@ -41,11 +41,11 @@
 </head>
 <body>
 <div class="x-panel">
-<div class="x-panel-header">监管员管理&nbsp;>&nbsp;监管员列表&nbsp;>&nbsp;监管员信息：</div>
+<div class="x-panel-header">信息员添加</div>
 <div align="center">
   <s:form id="supervisorForm" action="save.do" method="post" theme="simple" validate="true" enctype="multipart/form-data" onsubmit="return checkPhotoPath()" >
   <fieldset style="width: 600px; padding: 50px 10px 10px 10px;">
-	<legend>监管员信息</legend>
+	<legend>信息员信息</legend>
 		<s:hidden id="spId" name="model.id" />
 		<table width="532" align="center">
 		  <tr>
@@ -113,7 +113,12 @@
 	    <tr>
 			<td width="100" align="right">负责人：</td>
 			<td colspan="3" align="left">
-				<s:radio list="#{'1':'是', '0':'否'}" name="isLeader" id="model.isLeader" cssStyle="border:0;" value="0"></s:radio>
+			    <c:if test="${not empty model.isLeader}">
+			    	<s:radio list="#{'1':'是', '0':'否'}" name="model.isLeader" id="model.isLeader" cssStyle="border:0;"></s:radio>
+			    </c:if>
+			    <c:if test="${empty model.isLeader}">
+			    	<s:radio list="#{'1':'是', '0':'否'}" value="0" name="model.isLeader" id="model.isLeader" cssStyle="border:0;"></s:radio>
+			    </c:if>
 			</td>
 	    </tr>
 		<tr>
