@@ -32,25 +32,27 @@ function exportMobileNum(){
 
 <body>
 <div class="x-panel">
-<div class="x-panel-header">信息员管理&nbsp;>&nbsp;信息员列表</div>
+<div class="x-panel-header">信息员管理</div>
 <div class="x-toolbar">
 <table width="100%" border="0">
 	<tr>
 		<s:form id="superVisorForm" action="" method="post" target="">
-			<td width="60" align="right">姓名：</td>
+			<td width="40" align="left">姓名：</td>
 			<td width="80"><s:textfield name="model.name"
 				cssStyle="width:80px" /></td>
-			<td width="60" align="right">手机：</td>
+			<td width="40" align="right">手机：</td>
 			<td width="80"><s:textfield name="model.mobile"
 				cssStyle="width:80px" /></td>
-			<td width="60" align="right">所属街道：</td>
+			<td width="60" align="right">所属部门：</td>
 			<td width="80"><s:textfield name="model.dept.name"
 				cssStyle="width:80px" /></td>
 			<td width="60" align="right">监管区域：</td>
 			<td width="80"><s:textfield name="model.superviseRegion" 
 				cssStyle="width:80px" /></td>
 			<td width="60" align="right">负责人：</td>
-			<td width="80"><s:radio list="#{'1':'是', '0':'否'}" name="isLeader" id="model.isLeader" cssStyle="border:0;"></s:radio></td>
+			<td width="80" valign="top">是<input type="radio" value="1" name="isLeader" id="model.isLeader" style="border: 0"/>
+						                                           否<input type="radio" value="0" name="isLeader" id="model.isLeader" style="border: 0"/>
+			</td>
 		</s:form>
 		<td align="left">
 			<input type="button" value="查询" class="button" onclick="index()" style="width: 40px"/>
