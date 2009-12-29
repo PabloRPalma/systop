@@ -23,28 +23,28 @@ public class CorpManager extends BaseGenericsManager<Corp> {
 	 */
 	@Transactional
 	public void save(Corp corp) {
-		if (getDao().exists(corp, "name")) {
-			if (StringUtils.isNotEmpty(corp.getName())) {
+		if (StringUtils.isNotEmpty(corp.getName())) {
+			if (getDao().exists(corp, "name")) {
 				throw new ApplicationException("企业'" + corp.getName() + "'已存在。");
 			}
 		}
-		if (getDao().exists(corp, "businessLicense")) {
-			if (StringUtils.isNotEmpty(corp.getBusinessLicense())) {
+		if (StringUtils.isNotEmpty(corp.getBusinessLicense())) {
+			if (getDao().exists(corp, "businessLicense")) {
 				throw new ApplicationException("添加的营业执照号已存在。");
 			}
 		}
-		if (getDao().exists(corp, "produceLicense")) {
-			if (StringUtils.isNotEmpty(corp.getProduceLicense())) {
+		if (StringUtils.isNotEmpty(corp.getProduceLicense())) {
+			if (getDao().exists(corp, "produceLicense")) {
 				throw new ApplicationException("添加的生产许可证号已存在。");
 			}
 		}
-		if (getDao().exists(corp, "sanitationLicense")) {
-			if (StringUtils.isNotEmpty(corp.getSanitationLicense())) {
+		if (StringUtils.isNotEmpty(corp.getSanitationLicense())) {
+			if (getDao().exists(corp, "sanitationLicense")) {
 				throw new ApplicationException("添加的卫生许可证号已存在。");
 			}
 		}
-		if (getDao().exists(corp, "code")) {
-			if (StringUtils.isNotEmpty(corp.getCode())) {
+		if (StringUtils.isNotEmpty(corp.getCode())) {
+			if (getDao().exists(corp, "code")) {
 				throw new ApplicationException("添加的企业编号已存在。");
 			}
 		}
