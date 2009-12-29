@@ -22,7 +22,7 @@
           <tr>
              <td align="right" width="80">组名:</td>
              <td align="left" width="520">
-             	<s:textfield id="name" name="model.name" cssStyle="width:200px" cssClass="required"/><font color="red">&nbsp;*</font>
+             	<s:textfield id="name" name="model.name" cssStyle="width:300px" cssClass="required"/><font color="red">&nbsp;*</font>
              </td>
           </tr>
           <tr>
@@ -41,7 +41,7 @@
           	
 				<tr> <td align="right" width="80">模板路径:</td>
              		<td align="left" width="520">
-             			<s:textfield id="template" name="model.template" cssStyle="width:200px"/>
+             			<s:textfield id="template" name="model.template" cssStyle="width:300px"/>
              		</td> 
 				</tr> 
 			</table> 
@@ -50,18 +50,19 @@
            <tr>
              <td align="right" width="80">显示内容：</td>
              <td align="left" width="520">
-             	<s:textarea id="displays" name="model.displays" cssStyle="width:200px;height:50px"/>
+             	<s:textarea id="displays" name="model.displays" cssStyle="width:300px;height:50px"/>
              </td>
           </tr>
           
           <tr>
              <td align="right" width="80">描述：</td>
              <td align="left" width="520">
-             	<s:textarea id="describe" name="model.describe" cssStyle="width:200px;height:50px"/>
+             	<s:textarea id="descr" name="model.descr" cssStyle="width:300px;height:50px"/>
              </td>
           </tr>
-          </table>
-          <table width="600px" style="margin-bottom:10px;">
+          </table>  
+    </fieldset>
+     <table width="600px" style="margin-bottom:10px;">
 		<tr>
 			<td style="text-align:center;">
 				<s:submit value="保存" cssClass="button" />
@@ -69,8 +70,6 @@
 		   </td>
 		</tr>
 	</table>
-    </fieldset>
-    
 	</s:form>
 	</div>
 </div>
