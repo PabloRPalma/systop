@@ -15,6 +15,7 @@ import com.systop.fsmis.model.CountySendType;
 
 /**
  * 部门选中标签,为选中部门提供便捷
+ * 
  * @author Lunch
  */
 public class SelectDeptTag extends BaseFreeMarkerTagSupport {
@@ -43,9 +44,6 @@ public class SelectDeptTag extends BaseFreeMarkerTagSupport {
 	/** 派遣类别ID */
 	private Integer sendTypeId;
 
-	/** 默认模板名称 */
-	private String defaultTemplate = "selectDeptTag";
-
 	/**
 	 * 初始化Managers
 	 */
@@ -53,6 +51,7 @@ public class SelectDeptTag extends BaseFreeMarkerTagSupport {
 		loginUserService = (LoginUserService) getBean("loginUserService");
 		cstManager = (CountySendTypeManager) getBean("countySendTypeManager");
 		deptManager = (DeptManager) getBean("deptManager");
+		logger.debug("theme is {}", this.getTheme());
 	}
 
 	/**
@@ -68,7 +67,8 @@ public class SelectDeptTag extends BaseFreeMarkerTagSupport {
 	 */
 	@Override
 	protected String getDefaultTemplate() {
-		return defaultTemplate;
+		return TagConstants.THEME_SELECT.equals(getTheme()) ? TagConstants.SELECT_TEMPLATE_NAME
+				: TagConstants.SIMPLE_TEMPLATE_NAME;
 	}
 
 	/**
@@ -93,7 +93,8 @@ public class SelectDeptTag extends BaseFreeMarkerTagSupport {
 			CountySendType cst = cstManager.getCountySendType(sendTypeId,
 					county.getId());
 			deptMaps = Util.toMap(depts, cst);
-			logger.debug("CountySendTypes dept id:{}", cst.getGeneralDept());
+			logger.debug("CountySendTypes dept id:{}",
+					cst == null ? "CountySendType is null" : cst.getId());
 
 		} else {
 			ctx.addParameter("errorMsg", "当前用户所属部门无效，请重新登陆并检查所属部门类别。");
