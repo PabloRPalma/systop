@@ -19,7 +19,7 @@ import com.systop.fsmis.model.SendType;
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class SendTypeAction extends
 		DefaultCrudAction<SendType, SendTypeManager> {
-
+	/** 食品安全事件id */
 	private Integer caseId;
 
 	/**
@@ -31,10 +31,15 @@ public class SendTypeAction extends
 		return INDEX;
 	}
 
+	/**
+	 * 选择派遣类别方法
+	 * 
+	 * @return
+	 */
 	public String chooseSendType() {
-		FsCase fsCase = getManager().getDao().get(FsCase.class, caseId);
+		// 得到派遣类别集合,以在界面中列举展示
 		items = getManager().orderSendType();
-		return "send";
+		return "chooseSendType";
 	}
 
 	public Integer getCaseId() {
