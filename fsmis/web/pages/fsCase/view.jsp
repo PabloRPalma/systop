@@ -36,7 +36,7 @@
 				contentEl : 'basic',
 				title : '事件信息'
 			}
-			<c:if test="${not empty(model.taskses)}">			
+			<c:if test="${not empty model.taskses }">			
 			,{
 				contentEl : 'descr',
 				title : '任务信息'
@@ -44,7 +44,7 @@
 			
 			</c:if>
 			
-			<s:if test="not empty (model.taskses[0].taskDetails)">
+			<s:if test="not empty  model.taskses[0].taskDetails">
 			, {
 				contentEl : 'reward',
 				title : '任务处理情况'
