@@ -8,6 +8,7 @@
 			<result name="index">/pages/fsCase/sendType/sendTypeList.jsp</result> 
 			<result name="input">/pages/fsCase/sendType/sendTypeEdit.jsp</result> 
 			<result name="success" type="redirect">index.do</result> 
+			<result name="send">/pages/fsCase/sendtype/sendTask.jsp</result>
 		</action>
 	</package>
 	<package name="fsmis.countySendType" extends="default"  namespace="/countySendType">
