@@ -34,7 +34,7 @@
 	          <tr>
 	             <td align="right">执法部门：</td>
 	             <td align="left">
-	             	<fs:deptCheckbox name="deptIds" sendTypeId="${model.sendType.id}" splitLineStyle="1px dotted blue;" itemClass="checkbox"/>
+	             	<fs:selectDepts name="deptIds" sendTypeId="${model.sendType.id}" splitLineStyle="1px dotted blue;" itemClass="checkbox"/>
 	             </td>
 	          </tr>
 	        </table> 
