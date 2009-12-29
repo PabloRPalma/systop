@@ -21,7 +21,6 @@ import com.systop.core.dao.support.Page;
 import com.systop.core.webapp.struts2.action.DefaultCrudAction;
 import com.systop.fsmis.CaseConstants;
 import com.systop.fsmis.FsConstants;
-import com.systop.fsmis.fscase.FsCaseConstants;
 import com.systop.fsmis.fscase.casetype.service.CaseTypeManager;
 import com.systop.fsmis.fscase.service.FsCaseManager;
 import com.systop.fsmis.model.CaseType;
