@@ -104,6 +104,7 @@ public class DeptManager extends BaseGenericsManager<Dept> {
 	 * @return
 	 */
 	public List<Dept> getDeptsByCounty(Integer countyId){
+		// FIXME: 未添加判断执法部门的条件
 		String hql = "from Dept d where d.parentDept.id = ?";
 		List<Dept> depts = query(hql, countyId);
 		return depts;
