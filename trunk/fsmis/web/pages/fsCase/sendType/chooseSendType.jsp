@@ -10,13 +10,13 @@
 <script type="text/javascript">
 function send(){
 	var id = document.getElementById('caseId').value;
-	url="${ctx}/sendType/send.do?eventid=" + id;
-	window.open(url,'main'); 
+	url="${ctx}/task/edit.do?caseId=" + id;
+	window.open(url,'black'); 
 }
 function fastsend(sendtypeid){
 	var id = document.getElementById('caseId').value;
-	url="${ctx}/sendType/send.do?model.id=" + sendtypeid + "&caseId=" + id;
-	window.open(url,'main'); 
+	url="${ctx}/task/edit.do?sendTypeId=" + sendtypeid + "&caseId=" + id;
+	window.open(url,'black'); 
 }
 </script>
 </head>
