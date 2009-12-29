@@ -24,9 +24,10 @@ import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.core.dao.support.Page;
 import com.systop.core.webapp.struts2.action.DefaultCrudAction;
 import com.systop.core.webapp.upload.UpLoadUtil;
+import com.systop.fsmis.CaseConstants;
 import com.systop.fsmis.FsConstants;
-import com.systop.fsmis.fscase.FsCaseConstants;
 import com.systop.fsmis.fscase.task.service.TaskManager;
+import com.systop.fsmis.model.FsCase;
 import com.systop.fsmis.model.Task;
 import com.systop.fsmis.model.TaskAtt;
 
@@ -40,6 +41,13 @@ import com.systop.fsmis.model.TaskAtt;
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
+	private FsCase fsCase;
+
+	/** 食品安全事件id */
+	private Integer caseId;
+	/** 派遣方式id */
+	private Integer sendTypeId;
+
 	@SuppressWarnings("unused")
 	@Autowired
 	private LoginUserService loginUserService;
@@ -118,12 +126,10 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 		Date taskBeginDate = new Date();
 		Date taskEndDate = new Date();
 		if (StringUtils.isNotBlank(getRequest().getParameter("taskBeginTime"))
-				&& StringUtils.isNotBlank(getRequest().getParameter(
-						"taskEndTime"))) {
+				&& StringUtils.isNotBlank(getRequest().getParameter("taskEndTime"))) {
 			try {
 				taskBeginDate = DateUtils.parseDate(getRequest().getParameter(
-						"taskBeginTime"),
-						new String[] { "yyyy-MM-dd HH:mm:ss" });
+						"taskBeginTime"), new String[] { "yyyy-MM-dd HH:mm:ss" });
 				taskEndDate = DateUtils.parseDate(getRequest().getParameter(
 						"taskEndTime"), new String[] { "yyyy-MM-dd HH:mm:ss" });
 
@@ -150,17 +156,36 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 	}
 
 	/**
+	 * 编辑任务方法
+	 */
+	@Override
+	public String edit() {
+		fsCase = getManager().getDao().get(FsCase.class, caseId);
+		getModel().setFsCase(fsCase);
+
+		return INPUT;
+	}
+
+	/**
 	 * 单体任务状态列表返回页面
 	 */
 	public Map<String, String> getStateMap() {
 
 		Map<String, String> StateMap = new LinkedHashMap<String, String>();
-		StateMap.put(FsCaseConstants.TASK_STATUS_UN_RECEIVE, "未接收");
-		StateMap.put(FsCaseConstants.TASK_STATUS_RESOLVEING, "已派遣");
-		StateMap.put(FsCaseConstants.TASK_STATUS_RESOLVEED, "已处理");
-		StateMap.put(FsCaseConstants.TASK_STATUS_RETURNED, "已退回");
+		StateMap.put(CaseConstants.TASK_STATUS_UN_RECEIVE, "未接收");
+		StateMap.put(CaseConstants.TASK_STATUS_RESOLVEING, "已派遣");
+		StateMap.put(CaseConstants.TASK_STATUS_RESOLVEED, "已处理");
+		StateMap.put(CaseConstants.TASK_STATUS_RETURNED, "已退回");
 
 		return StateMap;
+	}
+
+	public FsCase getFsCase() {
+		return fsCase;
+	}
+
+	public void setFsCase(FsCase fsCase) {
+		this.fsCase = fsCase;
 	}
 
 	public File[] getAttachments() {
@@ -187,4 +212,19 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 		this.deptIds = deptIds;
 	}
 
+	public Integer getCaseId() {
+		return caseId;
+	}
+
+	public void setCaseId(Integer caseId) {
+		this.caseId = caseId;
+	}
+
+	public Integer getSendTypeId() {
+		return sendTypeId;
+	}
+
+	public void setSendTypeId(Integer sendTypeId) {
+		this.sendTypeId = sendTypeId;
+	}
 }
