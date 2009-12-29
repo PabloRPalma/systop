@@ -9,6 +9,10 @@ import com.systop.core.webapp.dwr.BaseDwrAjaxAction;
 import com.systop.fsmis.fscase.sendtype.service.SendTypeManager;
 import com.systop.fsmis.model.SendType;
 
+/**
+ * 用于
+ * @author Lunch
+ */
 @Component
 public class SendTypeDwrAction extends BaseDwrAjaxAction {
 
