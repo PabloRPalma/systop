@@ -6,59 +6,7 @@
 <head>
 <title></title>
 <%@include file="/common/meta.jsp"%>
-
-<script type="text/javascript">
-	function validate(bb) {
-		var alreadycheck = false;
-		for ( var i = 0; i < bb.deptsID.length; i++) {
-			if (bb.deptsID[i].checked) {
-				alreadycheck = true;
-				break;
-			}
-		}
-		/*去除主办部门
-		var hasdeptleader = false;
-		if(document.getElementById('deptleaderId').value !=''){
-			hasdeptleader = true;
-		}
-		
-		if(!(hasdeptleader || alreadycheck)){
-			alert('请选择部门或主办部门！');
-			return false;
-		}*/
-		if (!alreadycheck) {
-			alert('请选择执行部门！');
-			return false;
-		}
-		/*
-		for(var j=0;j<bb.deptsID.length;j++){
-			if(bb.deptsID[j].checked) {
-				if(bb.deptsID[j].value == document.getElementById('deptleaderId').value) {
-					
-					alert('主办部门与部门重复！');
-					return false;
-				}
-			}
-		}*/
-
-		var date = document.getElementById('date').value;
-		if (date == '') {
-			alert('请填写任务完成时间！');
-			return false;
-		}
-		var title = document.getElementById('title').value;
-		if (title == '') {
-			alert('请填写任务标题！');
-			return false;
-		}
-		var desc = document.getElementById('desc').value;
-		if (desc == '') {
-			alert('请填写任务描述！');
-			return false;
-		}
-		return true;
-	}
-</script>
+<%@include file="/common/validator.jsp"%>
 <script type="text/javascript">
 	//增加文件输入框 
 	function addFileInput() {
@@ -111,27 +59,16 @@
 </script>
 <script type="text/javascript" language="javascript"
 	src="${ctx}/scripts/fsecurity/single_multi_task_dept_oper.js"></script>
-<script language="javascript">
-	function init() {
-		var title = document.getElementById("title");
-		title.value = "${singleTitle}";
-		//初始化部门操作管理对象
-		deptsOperManager.init(document.getElementsByName("deptsID"));
-		document.getElementById("selectDepts").innerHTML = deptsOperManager
-				.getSelectedDepts();
-		document.getElementById("selectDeptNames").value = deptsOperManager
-				.getSelectedDepts();
-	}
-</script>
+
 </head>
-<body onload="init();">
+<body>
 <div class="x-panel">
 <div class="x-panel-header">协调指挥&nbsp;&gt;&nbsp;单体事件管理&nbsp;&gt;&nbsp;事件列表&nbsp;&gt;&nbsp;事件查看&nbsp;&gt;&nbsp;派遣任务</div>
 <div class="x-toolbar">&nbsp;</div>
 <div><%@ include file="/common/messages.jsp"%></div>
 <div align="center"><s:form action="/task/save.do" method="post"
-	theme="simple" enctype="multipart/form-data">
-	<input type="hidden" name="model.fsCase.id" value="${caseId}"></input>
+	theme="simple" enctype="multipart/form-data" validate="true">
+	<input type="hidden" name="model.fsCase.id" value="${model.fsCase.id}"></input>
 	<fieldset style="width: 800px; padding: 10px 10px 10px 10px;" class="">
 	<legend> 派遣信息</legend>
 	<table width="550px" align="center">
@@ -143,40 +80,38 @@
 			<s:hidden id="selectDeptNames" name="selectDeptNames"></s:hidden></td>
 		</tr>
 		<tr>
-			<td><input type="text" name="deptIds" value="2752513"></input></td>
-		</tr>
-		<tr>
 			<td align="right">请点选执行部门：</td>
 			<td align="left">
 			<div
 				style="border: 1px solid #099EBD; OVERFLOW-Y: scroll; width: 400px; SCROLLBAR-ARROW-COLOR: #e8e8e8; SCROLLBAR-BASE-COLOR: #e8e8e8; HEIGHT: 90px">
-			</div>
+			<fs:selectDepts name="deptIds" sendTypeId="${sendTypeId}"
+				splitLineStyle="1px dotted blue;" itemClass="checkbox" />
+				</div>
 			</td>
 		</tr>
 		<tr>
-			<td align="right">任务标题：${fsCase.title }</td>
-			<td align="left"><s:textfield id="title" name="title"
-				cssStyle="width:400px;" /><font color="red">&nbsp;*</font></td>
+			<td align="right">任务标题：</td>
+			<td align="left"><input type="text" name="model.title"
+				value="${model.fsCase.title }" style="width: 400px;" class="required"></input> <font
+				color="red">&nbsp;*</font></td>
 		</tr>
 		<tr>
 			<td align="right">任务完成时间：</td>
-			<td align="left"><input id="date" type="text"
-				name="fsCase.endTime"
-				value='<s:date name="model.endTime" format="yyyy-MM-dd HH:mm:ss"/>'
+			<td align="left"><input id="date" type="text" class="required"
+				name="model.presetTime"
+				value='<s:date name="model.presetTime" format="yyyy-MM-dd HH:mm:ss"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})"
 				class="Wdate" /><font color="red">&nbsp;*</font></td>
 		</tr>
 		<tr>
 			<td align="right">任务描述：</td>
-			<td align="left"><s:textarea id="desc" name="fsCase.desc"
-				cssStyle="width:400px; height:100px;" /><font color="red">&nbsp;*</font></td>
+			<td align="left"><s:textarea id="desc" name="model.desc"
+				cssStyle="width:400px; height:100px;" cssClass="required"/><font color="red">&nbsp;*</font></td>
 		</tr>
 		<tr>
 			<td align="right">附件：</td>
-			<td bgcolor="#EBEBEB" style="padding: 10 5 2 5;"><a href="#"
-				onclick=
-	javascript: addFileInput();;;
-> <img
+			<td bgcolor="#EBEBEB" style="padding: 10 5 2 5;">
+			<a href="#"	onclick="javascript:addFileInput()"> <img
 				src="${ctx}/images/icons/file_add.gif">增加附件&nbsp; </a>
 			<tbody id="fileUpload"></tbody>
 			<tr>
@@ -187,7 +122,7 @@
 	</fieldset>
 	<table width="600px" style="margin-bottom: 10px;">
 		<tr>
-			<td style="text-align: center;"><s:submit value="确认派遣任务"
+			<td style="text-align: center;"><s:submit value="派遣任务"
 				cssClass="button" onclick="return validate(this.form);" /> <s:reset
 				value="重置" cssClass="button" /></td>
 		</tr>
