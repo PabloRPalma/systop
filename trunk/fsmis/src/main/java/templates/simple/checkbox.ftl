@@ -9,5 +9,3 @@
 	</#list>  
 	<div style="color:red"><b>${data.errorMsg?if_exists}</b></div>
 </div>
-<script>
-</script>
