@@ -24,7 +24,7 @@
      
           <tr>
              <td align="right" width="90">名称：</td>
-             <td align="left" width="300">
+             <td align="left" width="400">
              	<s:textfield id="name" name="model.name" cssStyle="width:300px" cssClass="required"/><font color="red">&nbsp;*</font>
              </td>
           </tr>
