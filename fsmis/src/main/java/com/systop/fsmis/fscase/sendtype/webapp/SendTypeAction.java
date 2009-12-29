@@ -11,6 +11,7 @@ import com.systop.fsmis.model.SendType;
 
 /**
  * 针对SendType的操作和显示
+ * 
  * @author Lunch
  */
 @SuppressWarnings("serial")
@@ -18,9 +19,9 @@ import com.systop.fsmis.model.SendType;
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class SendTypeAction extends
 		DefaultCrudAction<SendType, SendTypeManager> {
-	
+
 	private Integer caseId;
-	
+
 	/**
 	 * 显示列表
 	 */
@@ -30,9 +31,17 @@ public class SendTypeAction extends
 		return INDEX;
 	}
 
-	public String send() {
+	public String chooseSendType() {
 		FsCase fsCase = getManager().getDao().get(FsCase.class, caseId);
 		items = getManager().orderSendType();
 		return "send";
+	}
+
+	public Integer getCaseId() {
+		return caseId;
+	}
+
+	public void setCaseId(Integer caseId) {
+		this.caseId = caseId;
 	}
 }
