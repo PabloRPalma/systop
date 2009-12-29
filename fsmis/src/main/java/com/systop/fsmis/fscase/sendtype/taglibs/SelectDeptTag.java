@@ -79,7 +79,6 @@ public class SelectDeptTag extends BaseFreeMarkerTagSupport {
 	protected void setTemplateParameters(TemplateContext ctx) {
 		initManager();
 		setDefaultParms();
-		deptManager = (DeptManager) getBean("deptManager");
 
 		// 获取当前登陆用户所属区县或者是市级
 		Dept county = loginUserService
@@ -87,14 +86,13 @@ public class SelectDeptTag extends BaseFreeMarkerTagSupport {
 		// 定义返回的存储相关部门的list对象
 		List<Map> deptMaps = null;
 		if (county != null) {
-			logger.debug("当前所属区县:{},id:{}", new Object[] { county.getName(),
-					county.getId() });
-			List<Dept> depts = deptManager.getDeptsByCounty(county.getId());
-			
+			logger.debug("当前区县:{}", county.getName());
+			List<Dept> depts = deptManager.getEnforcementByCounty(county
+					.getId());
 			logger.debug("当前派遣环节ID:{}", sendTypeId);
-			CountySendType cst = cstManager.getBySendTypeAndCounty(sendTypeId,
+			CountySendType cst = cstManager.getCountySendType(sendTypeId,
 					county.getId());
-			deptMaps = Util.toMap(depts, cst.getGeneralDept());
+			deptMaps = Util.toMap(depts, cst);
 			logger.debug("CountySendTypes dept id:{}", cst.getGeneralDept());
 
 		} else {
