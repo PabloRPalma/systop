@@ -9,7 +9,7 @@
 	
 	<tag>
     	<name>selectDepts</name>
-    	<tag-class>com.systop.fsmis.fscase.sendtype.taglibs.SelectDeptTag</tag-class>
+    	<tag-class>com.systop.common.modules.dept.webapp.tagligs.SelectDeptTag</tag-class>
     	<body-content>JSP</body-content>
     	<attribute>
     		<name>name</name>
@@ -46,7 +46,7 @@
     	<attribute>
     		<name>theme</name>
     		<type>java.lang.String</type>
-    		<description>用于选中不同的样式</description>
+    		<description>用于选择不同的样式eg:simple/select</description>
     	</attribute>
     </tag>
 </taglib>
