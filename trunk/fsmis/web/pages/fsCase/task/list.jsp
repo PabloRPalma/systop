@@ -24,8 +24,18 @@ function remove(id){
 <table width="99%">
 	<tr>
 		<td><s:form action="index" method="post">
-           		    任务关键字：
+           		        任务标题：
 			<s:textfield name="model.title"></s:textfield>
+			                   派发时间:开始
+			<input type="text" name="taskBeginTime" style="width: 140px"
+				value='<s:date name="taskBeginTime" format="yyyy-MM-dd HH:mm:ss"/>'
+				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})"
+				class="Wdate" />
+			                    结束:
+			<input type="text" name="taskEndTime" style="width: 140px"
+				value='<s:date name="taskEndTime" format="yyyy-MM-dd HH:mm:ss"/>'
+				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})"
+				class="Wdate" />
            			任务状态:
 			<s:select name="model.status" list="stateMap" headerKey="" headerValue="--请选择--" >
 			
@@ -50,9 +60,9 @@ function remove(id){
 		<ec:column width="40" property="_s" title="No."
 			value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center" />
 		<ec:column width="290" property="title" title="任务标题" sortable="false" />
-		<ec:column width="80" property="time" title="派发时间"
+		<ec:column width="80" property="dispatchTime" title="派发时间"
 			style="text-align:center" cell="date" format="yyyy-MM-dd" />
-		<ec:column width="80" property="endTime" title="规定完成时间"
+		<ec:column width="80" property="presetTime" title="规定完成时间"
 			style="text-align:center" cell="date" format="yyyy-MM-dd" />
 		<ec:column width="220" property="_sto" title="执行部门" sortable="false">
 			<c:forEach var="std" items="${item.taskDetails}">
