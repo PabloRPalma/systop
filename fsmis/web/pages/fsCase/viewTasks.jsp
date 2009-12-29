@@ -29,6 +29,7 @@
 	<table id="mytable" align="left">
 		<tr>
 			<td>
+
 			<fieldset style="width: 800px; padding: 5px 10px 5px 10px;">
 			<legend>任务${varStatus.index+1}信息</legend>
 			<table width="800px" align="left">
@@ -42,8 +43,8 @@
 						pattern="yyyy-mm-dd HH:MM:ss" /></td>
 
 					<td align="right" width="12%">规定完成时间：</td>
-					<td width="12%"><fmt:formatDate
-						value="${task.presetTime}" pattern="yyyy-mm-dd" /></td>
+					<td width="12%"><fmt:formatDate value="${task.presetTime}"
+						pattern="yyyy-mm-dd" /></td>
 					<td align="right" width="8%">事件状态：</td>
 					<td width="15%"><c:if test="${task.status == '0'}">
 						<font color="red">未派遣</font>
@@ -59,14 +60,20 @@
 				</tr>
 				<tr>
 					<td align="right" rowspan="4">任务描述：</td>
-					<td rowspan="4" colspan="5"><textarea id="taskDescn" style="border: 1px solid #D4D0C8;"
-						name="task.descn" cols="80" rows="3" readonly="readonly">${task.descn}</textarea></td>
+					<td rowspan="4" colspan="5"><textarea id="taskDescn"
+						style="border: 1px solid #D4D0C8;" name="task.descn" cols="80"
+						rows="3" readonly="readonly">${task.descn}</textarea></td>
 				</tr>
 			</table>
 			</fieldset>
-			<fieldset style="width: 800px; height:100px; padding: 5px 10px 5px 10px;">
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<fieldset
+				style="width: 800px; height: 100px; padding: 5px 10px 5px 10px;">
 			<legend>任务${varStatus.index+1}明细</legend>
-			<table width="800px" align="left" >
+			<table width="800px" align="left">
 				<tr>
 					<td width="15%" align="center">No.</td>
 					<td width="15%" align="center">部门名称</td>
