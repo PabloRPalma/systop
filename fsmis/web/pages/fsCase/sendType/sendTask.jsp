@@ -146,7 +146,7 @@ function init(){
 			<s:hidden id="selectDeptNames" name="selectDeptNames"></s:hidden></td>
 		</tr>
 		<tr>
-			<td><input type="text" name="deptIds" value="524289"></input></td>
+			<td><input type="text" name="deptIds" value="98305"></input></td>
 		</tr>
 		<tr>
 			<td align="right">请点选执行部门：</td>
@@ -170,8 +170,8 @@ function init(){
 		<tr>
 			<td align="right">任务完成时间：</td>
 			<td align="left"><input id="date" type="text"
-				name="model.endTime"
-				value='<s:date name="model.endTime" format="yyyy-MM-dd HH:mm:ss"/>'
+				name="model.presetTime"
+				value='<s:date name="model.presetTime" format="yyyy-MM-dd HH:mm:ss"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})"
 				class="Wdate" /><font color="red">&nbsp;*</font></td>
 		</tr>
