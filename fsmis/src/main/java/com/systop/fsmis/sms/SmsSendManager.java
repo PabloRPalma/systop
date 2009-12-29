@@ -28,8 +28,7 @@ public class SmsSendManager extends BaseGenericsManager<SmsSend> {
 		buf.append(SmsConstants.SMS_SMS_SEND_IS_NEW);
 		buf.append(" order by ss.createTime");
 
-		List<SmsSend> smsSends = query(buf.toString(),
-				SmsConstants.SMS_SMS_SEND_IS_NEW);
+		List<SmsSend> smsSends = query(buf.toString());
 		// 如果得到的记录数大于系统所指定的一次发送记录数,则只取得指定的记录
 		if (smsSends.size() > SmsConstants.SMS_SMS_SEND_COUNT) {
 			return smsSends.subList(0, SmsConstants.SMS_SMS_SEND_COUNT - 1);

@@ -88,7 +88,7 @@ public class SmsManager {
 				}
 			}
 		}
-		getSmsProxy().receiveMessage();
+		// getSmsProxy().receiveMessage();
 	}
 
 	public SmsSendManager getSmsSendManager() {
