@@ -33,7 +33,7 @@ public class TaskManagerTest extends BaseTransactionalTestCase {
 		taskManager.save(task, null, null);
 		
 		assertEquals("测试任务标题", taskManager.get(task.getId()).getTitle());
-		logger.info(taskManager.get(task.getId()).getTitle());
+	
 		
 		
 		
