@@ -78,18 +78,21 @@
 			<a href="${ctx}/urgentcase/view.do?model.id=${item.id}" title="查看应急事件"><font color="blue">${item.title}</font></a>
 		</ec:column>
 		<ec:column width="180" property="address" title="事发地点"/>
-		<ec:column width="110" property="caseTime" title="事发时间" style="text-align:center"  parse="yyyy-MM-dd HH:mm" format="yyyy-MM-dd HH:mm" cell="date"/>
-		<ec:column width="70" property="plansLevel" title="预案等级"/>
+		<ec:column width="110" property="caseTime" title="事发时间" style="text-align:center" format="yyyy-MM-dd HH:mm" cell="date"/>
 		<ec:column width="60" property="status" title="状态" style="text-align:center">
 		    <c:if test="${item.status == null}"><font color="#990099">未审核</font></c:if>
-		    <c:if test="${item.status == '0'}"> <font color="red">未派遣</font></c:if>
-			<c:if test="${item.status == '1'}"> <font color="#CED513">已派遣</font></c:if>
-			<c:if test="${item.status == '2'}"> <font color="blue">已处理</font></c:if>
+		    <c:if test="${item.status == '0'}"> <font color="red">未通过</font></c:if>
+			<c:if test="${item.status == '1'}"> <font color="blue">未派遣</font></c:if>
+			<c:if test="${item.status == '2'}"> <font color="green">已派遣</font></c:if>
+			<c:if test="${item.status == '3'}"> <font color="green">已处理</font></c:if>
 			<c:if test="${item.status == '4'}"> <font color="green">已核实</font></c:if>
 		</ec:column>
-		<ec:column width="60" property="status" title="查看" style="text-align:center">
+		<ec:column width="60" property="_v" title="查看" style="text-align:center">
+			<c:if test="${item.status != null}">
+				<a href="${ctx}/urgentcase/listCheckResult.do?model.id=${item.id}">审核记录</a>
+			</c:if>
 		</ec:column>
-		<ec:column width="130" property="_0" title="操作" style="text-align:center" sortable="false">
+		<ec:column width="170" property="_0" title="操作" style="text-align:center" sortable="false">
 			<a href="${ctx}/urgentcase/edit.do?model.id=${item.id}">编辑</a> | 
 			<a href="${ctx}/urgentcase/view.do?model.id=${item.id}">查看</a> |
 			<a href="#" onclick="remove(${item.id})">删除</a>
