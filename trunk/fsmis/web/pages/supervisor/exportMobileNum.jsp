@@ -4,9 +4,8 @@
 <%@include file="/common/taglibs.jsp"%>
 <html>
 <head>
-<title>监管员信息管理</title>
+<title>信息员手机号导出</title>
 <%@include file="/common/meta.jsp"%>
-<%@include file="/common/ec.jsp"%>
 <script type="text/javascript">
 function copymobile(){
 	var mobilenums = document.getElementById('mobilenum').innerText;
@@ -18,7 +17,7 @@ function copymobile(){
 <body>
 <div class="x-panel">
 <div class="x-toolbar" align="center">
-<h2>导出手机号:</h2>
+<h3>手机号码导出成功&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="button" name="copy" value="复制到剪切板" onclick="copymobile()"/></h3>
 </div>
 <div class="x-panel-body">
 <div style="margin-left: -3px;" align="left">
@@ -42,7 +41,6 @@ function copymobile(){
 						}
 					}
 				%>
-				<input type="button" class="button" name="copy" value="复制" onclick="copymobile()"/>
 			</td>
 		</tr>
 		<tr>
