@@ -37,7 +37,7 @@ public class FsCaseManagerTest extends BaseTransactionalTestCase {
 		fsCaseManager.save(fscase);
 		
 		assertEquals("测试事件",fsCaseManager.get(fscase.getId()).getTitle());
-		logger.info(fsCaseManager.get(fscase.getId()).getTitle());
+		
 		
 		
 	}
