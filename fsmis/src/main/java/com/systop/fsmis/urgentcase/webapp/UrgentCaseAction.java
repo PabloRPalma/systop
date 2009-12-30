@@ -22,6 +22,7 @@ import com.systop.core.dao.support.Page;
 import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
 import com.systop.fsmis.FsConstants;
 import com.systop.fsmis.model.UrgentCase;
+import com.systop.fsmis.model.UrgentResult;
 import com.systop.fsmis.urgentcase.service.UrgentCaseManager;
 
 /**
@@ -124,6 +125,42 @@ public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseMana
 		}
 				
 		return "jsonRst";
+	}
+	
+	/**
+	 * 任务派遣
+	 */
+	public String sendUrgentCase() {
+		checkResult = Collections.synchronizedMap(new HashMap<String, String>());
+		//根据页面选择的派遣方式查询该派遣方式对应的组
+		//应急事件ID
+		String caseId = getRequest().getParameter("caseId").toString();
+		//派遣环节ID
+		String typeId = getRequest().getParameter("typeId").toString();
+		logger.info("应急事件ID:{}, 派遣方式ID:{}", caseId, typeId);
+		Dept county = loginUserService.getLoginUserCounty(getRequest());
+		
+		getManager().sendUrgentCase(caseId, typeId, county);
+		
+		return "jsonRst";
+	}
+	
+	/**
+	 * 查询任务派遣情况
+	 */
+	public String queryGroupResult() {
+		Dept county = loginUserService.getLoginUserCounty(getRequest());
+		Map groupMap = new HashMap();
+		if (county != null) {
+			List<UrgentResult> urgentResults = getManager().queryGroupResult(
+					getModel().getId(), county.getId());
+			for(UrgentResult urgentRst : urgentResults){
+				groupMap.put(urgentRst.getUrgentGroup().getCategory(), urgentRst.getUrgentGroup());
+			}
+		}
+		getRequest().setAttribute("groupMap", groupMap);
+		
+		return "groupResult";
 	}
 	
 	/**
