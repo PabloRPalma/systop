@@ -1,6 +1,5 @@
 package com.systop.fsmis.model;
 
-import java.sql.Clob;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -56,7 +55,7 @@ public class Notice extends BaseModel {
 	/**
 	 * 内容
 	 */
-	private Clob content;
+	private String content;
 	
 	/**
 	 * 创建时间
@@ -121,11 +120,11 @@ public class Notice extends BaseModel {
 	}
 
 	@Column(name = "CONTENT")
-	public Clob getContent() {
+	public String getContent() {
 		return this.content;
 	}
 
-	public void setContent(Clob content) {
+	public void setContent(String content) {
 		this.content = content;
 	}
 
