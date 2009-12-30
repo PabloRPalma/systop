@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="fsmis.assessment" extends="json"  namespace="/assessment">
+		<action name="*" class="assessmentAction" method="{1}">
+			<result name="index">/pages/assessment/index.jsp</result> 
+			<result name="input">/pages/assessment/edit.jsp</result> 	
+			<result name="audit">/pages/assessment/audit.jsp</result> 
+			<result name="start">/pages/assessment/start.jsp</result> 			
+			<result name="print">/pages/assessment/printpage.jsp</result> 											
+			<result name="success" type="redirect">index.do</result>	
+			<result type="json" name="titles">
+		        <param name="ignoreHierarchy">false</param>
+		        <param name="root">jsonTitles</param>
+		    </result>			
+		</action>
+	</package>
+	<package name="fsmis.assessment.member" extends="json" namespace="/assessment/member">
+		<action name="*" class="membersSelectorAction" method="{1}">
+			 <result type="json" name="json">
+		        <param name="ignoreHierarchy">false</param>
+		        <param name="root">page</param>
+		    </result>
+		</action>		
+	</package>
+</struts>
+
