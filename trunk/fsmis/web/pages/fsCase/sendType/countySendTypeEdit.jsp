@@ -24,17 +24,18 @@
 		  <fieldset style="width:710px; padding:10px 10px 10px 10px;">
 		  <legend>执法部门配置</legend>
 			<s:hidden name="model.id"/>
-	        <table width="100%" align="center">
+	        <table width="100%" align="center" cellpadding="3" cellspacing="5">
 	          <tr>
 	             <td align="right" width="100">环节名称：</td>
 	             <td align="left" width="600">
-	             	<span style="font: 12px bold;">${model.sendType.name}</span>
+	             	<span style="font: 12px bold;"><b>${model.sendType.name}</b></span>
 	             </td>
 	            </tr>
 	          <tr>
-	             <td align="right">执法部门：</td>
+	             <td align="right" valign="top">执法部门：</td>
 	             <td align="left">
-	             	<fs:selectDepts name="deptIds" sendTypeId="${model.sendType.id}" splitLineStyle="1px dotted blue;" itemClass="checkbox"/>
+	             	<div id="showDiv" style="border-bottom: 1px dotted #97B7E7; padding: 2 7 2 7;">部门内容</div>
+	             	<fs:selectDepts name="deptIds" onclick="show()" sendTypeId="${model.sendType.id}" itemClass="checkbox"/>
 	             </td>
 	          </tr>
 	        </table> 
@@ -53,10 +54,16 @@
 		</form>
 	</div>
 </div>
+<script type="text/javascript" src="${ctx}/scripts/fsmis/ShowDeptName.js"></script>
 <script type="text/javascript">
 	function save(){
 		document.getElementById("countySendTypeSaveForm").submit();
 	}
+
+	function show(){
+		deptOperator.showDeptName("deptIds", "showDiv");
+	}
+	deptOperator.init("deptIds", "showDiv");
 </script>
 </body>
 </html>
