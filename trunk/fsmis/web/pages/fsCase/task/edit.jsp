@@ -52,10 +52,6 @@
 		document.getElementById('attachments' + attachmentId).removeNode();
 	}
 
-	function getDept(currProvince) {
-		document.getElementById("selDept").value = currProvince;
-
-	}
 </script>
 <script type="text/javascript" language="javascript"
 	src="${ctx}/scripts/fsecurity/single_multi_task_dept_oper.js"></script>
