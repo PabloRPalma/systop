@@ -80,7 +80,8 @@ public class UcGroupAction extends
 			sql.append(" and ug.county.id = ?");
 			args.add(dept.getId());
 			if (ucTypeId != null) {
-				sql.append(" and ug.urgentType.id = ? or ug.urgentType.id is null ");
+				sql
+						.append(" and ug.urgentType.id = ? or ug.urgentType.id is null ");
 				args.add(ucTypeId);
 				// 列表页面显示类别信息使用
 				getRequest().setAttribute("ucType", getUrgentType(ucTypeId));
@@ -114,6 +115,11 @@ public class UcGroupAction extends
 		SortMap.put(UcConstants.INNER, "内部");
 		SortMap.put(UcConstants.OUTER, "外部");
 		return SortMap;
+	}
+
+	@SuppressWarnings("unchecked")
+	public Map getCategoryMap() {
+		return UcConstants.GROUP_CATEGORY_MAP;
 	}
 
 	public Integer getUcTypeId() {
