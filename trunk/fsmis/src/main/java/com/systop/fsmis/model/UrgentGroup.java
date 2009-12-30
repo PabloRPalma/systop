@@ -39,14 +39,13 @@ public class UrgentGroup extends BaseModel {
 	private String isPublic;
 	/**派遣类别 */
 	private UrgentType urgentType;
-	/** 应急事件*/
-	private UrgentCase urgentCases;
 	/** 对应的结果对象名称 */
 	private String category;
 	/**
 	 * 所属区县
 	 */
 	private Dept county;
+	
 	public UrgentGroup() {
 	}
 
@@ -106,16 +105,6 @@ public class UrgentGroup extends BaseModel {
 
 	public void setUrgentType(UrgentType urgentType) {
 		this.urgentType = urgentType;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "URGENT_CASE")
-	public UrgentCase getUrgentCases() {
-		return this.urgentCases;
-	}
-
-	public void setUrgentCases(UrgentCase urgentCases) {
-		this.urgentCases = urgentCases;
 	}
 	
 	@Column(name = "DISPLAYS", length = 500)
