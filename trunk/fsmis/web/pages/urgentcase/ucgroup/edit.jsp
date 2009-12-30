@@ -26,6 +26,12 @@
              	<s:textfield id="name" name="model.name" cssStyle="width:300px" cssClass="required"/><font color="red">&nbsp;*</font>
              </td>
           </tr>
+            <tr>
+             <td align="right" width="80">组类型:</td>
+             <td align="left" width="520">
+             	<s:select id="model.category" name="model.category" list="categoryMap" headerKey="" headerValue="请选择"  cssClass="required"/><font color="red">&nbsp;*</font>
+             </td>
+          </tr>
           <!-- 外部组添加后，需要添加摩板
           <tr>
              <td align="right" width="80">类别:</td>
