@@ -16,11 +16,11 @@ public final class RemaindaysUtil {
 	}
 
 	/**
-	 * 根据传的开始时间和结束时间调用方法
+	 * 根据传的规定完成时间来计算天数的方法
 	 * 
 	 * @return返回计算出来的剩余天数
 	 */
-	public static double getRemainDays(Date beginDate, Date endDate) {
+	public static double getRemainDays(Date endDate) {
 		double lastTime;
 		if (endDate != null) {
 			lastTime = endDate.getTime() - new Date().getTime();
