@@ -46,7 +46,7 @@
 		</div>		
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
-			<a href="${ctx}/ucgroup/index.do" target="main">指挥组管理</a>
+			<a href="${ctx}/ucgroup/index.do" target="main">公用指挥组管理</a>
 		</div>
 	</div>
 	<div id="analyse">
