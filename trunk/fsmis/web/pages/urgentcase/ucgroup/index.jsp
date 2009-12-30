@@ -56,10 +56,12 @@ function removeUcGroup(id){
 	<ec:row>
 		<ec:column width="40" property="_no" value="${GLOBALROWCOUNT}" title="No." style="text-align:center"/>
 		<ec:column width="120" property="name" title="名称"/>
-		<ec:column width="30" property="descn" title="公用" style="text-align:center;">
-			<c:if test="${item.isPublic eq '1'}">是</c:if>
-			<c:if test="${item.isPublic eq '0'}">否</c:if>
-		</ec:column>
+		<s:if test="#attr.ucTypeId != null">	
+			<ec:column width="30" property="descn" title="公用" style="text-align:center;">
+				<c:if test="${item.isPublic eq '1'}">是</c:if>
+				<c:if test="${item.isPublic eq '0'}">否</c:if>
+			</ec:column>
+		</s:if>
 		<ec:column width="30" property="display" title="类别" style="text-align:center">
 			<c:if test="${item.type eq '1'}">内部</c:if>
 			<c:if test="${item.type eq '0'}">外部</c:if>
@@ -72,10 +74,10 @@ function removeUcGroup(id){
 				<a href="#" onClick="removeUcGroup(${item.id})">删除</a>
 			</s:if>
 			<s:if test="#attr.ucTypeId != null">
-				<c:if test="${item.isPublic eq '0'}">
+				<c:if test="${item.isPublic eq '0'}">	
 					<a href="edit.do?model.id=${item.id}">编辑</a>|
 					<a href="#" onClick="removeUcGroup(${item.id})">删除</a>
-				</c:if>	
+				</c:if>
 			</s:if>
 		</ec:column>
 		
