@@ -30,9 +30,6 @@
    	         <param name="beanName" value="linkCatasAction" ></param>
    	         <include method="dwrRemove"/>
    	    </create>
-   	    <create creator="spring" javascript="SupervisorDwrAction">
-			<param name="beanName" value="supervisorDwrAction"></param>
-		</create>
 		
 		<create creator="spring" javascript="SendTypeDwrAction">
 			<param name="beanName" value="sendTypeDwrAction"></param>
@@ -47,7 +44,6 @@
    	    <convert converter="bean"  match="com.systop.common.modules.dept.model.Dept"  />
    	    <convert converter="bean"  match="com.systop.common.modules.employee.model.Employee"  />
    	    <convert converter="map"   match="java.util.Map" />
-   	    <convert converter="bean"  match="com.systop.fsmis.model.Supervisor"/>
 	</allow>
 
 
