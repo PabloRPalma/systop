@@ -57,6 +57,7 @@ public class UcGroupAction extends
 			if (dept == null) {
 				addActionError("当前用户部门为空");
 			}
+			getModel().setIsOriginal(UcConstants.GROUP_ORIGINAL_YES);
 			getModel().setCounty(dept);
 			getManager().save(getModel());
 			return SUCCESS;
@@ -80,14 +81,14 @@ public class UcGroupAction extends
 			sql.append(" and ug.county.id = ?");
 			args.add(dept.getId());
 			if (ucTypeId != null) {
-				sql
-						.append(" and ug.urgentType.id = ? or ug.urgentType.id is null ");
+				sql.append(" and ug.urgentType.id = ? or ");
 				args.add(ucTypeId);
 				// 列表页面显示类别信息使用
 				getRequest().setAttribute("ucType", getUrgentType(ucTypeId));
 			} else {
-				sql.append(" and ug.urgentType.id is null ");
+				sql.append(" and ");
 			}
+			sql.append(" ug.urgentType.id is null and ug.isOriginal=1 ");
 			page = getManager().pageQuery(page, sql.toString(), args.toArray());
 			restorePageData(page);
 		}
