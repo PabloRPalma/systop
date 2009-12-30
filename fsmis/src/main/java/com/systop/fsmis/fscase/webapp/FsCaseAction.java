@@ -166,6 +166,23 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 		getRequest().setAttribute("levelone", getLevelOne());
 		return super.edit();
 	}
+	/**
+	 * 通用于整个FsCase功能模块的查看方法<br>
+	 * 由于需要在其他模块中被访问,<br>
+	 * 所以需要在本方法中getRequest().getParameter("fsCaseId");<br>
+	 * 而不是getModel().getId();来获得FsCase实例的id<br>
+	 * 本方法的跳转页面需要根据数据关联情况将FsCase/Task/TaskDetail等信息逐级显示
+	 */
+	@Override
+	public String view() {		
+		String id = getRequest().getParameter("fsCaseId");
+		if (StringUtils.isNotBlank(id)) {
+			Integer fsCaseId = Integer.parseInt(id);
+			setModel(getManager().get(fsCaseId));
+		}
+		
+		return VIEW;
+	}
 
 	/**
 	 * 单体事件状态列表返回页面
