@@ -68,15 +68,15 @@ public final class UcConstants {
 	public static final Map<String, String> GROUP_CATEGORY_MAP = Collections
 	    .synchronizedMap(new LinkedHashMap<String, String>());
 	static {
-		GROUP_CATEGORY_MAP.put(LEADERSHIP,"指挥部");
-		GROUP_CATEGORY_MAP.put(OFFICE,"办公室");
-		GROUP_CATEGORY_MAP.put(DEFEND,"警戒保卫");
-		GROUP_CATEGORY_MAP.put(MEDICAL_RESCUE,"医疗救护");
-		GROUP_CATEGORY_MAP.put(AFTER_HANDLE,"善后处理");
-		GROUP_CATEGORY_MAP.put(REAR_SERVICE,"后勤保障");
-		GROUP_CATEGORY_MAP.put(ACCIDENT_HANDLE,"事故调查处理");
-		GROUP_CATEGORY_MAP.put(NEWS_REPORT,"新闻报道");
-		GROUP_CATEGORY_MAP.put(EXPERT_TECHNOLOGY,"技术专家");
-		GROUP_CATEGORY_MAP.put(RECEIVE,"接待");
+		GROUP_CATEGORY_MAP.put(LEADERSHIP, "指挥部");
+		GROUP_CATEGORY_MAP.put(OFFICE, "办公室");
+		GROUP_CATEGORY_MAP.put(DEFEND, "警戒保卫");
+		GROUP_CATEGORY_MAP.put(MEDICAL_RESCUE, "医疗救护");
+		GROUP_CATEGORY_MAP.put(AFTER_HANDLE, "善后处理");
+		GROUP_CATEGORY_MAP.put(REAR_SERVICE, "后勤保障");
+		GROUP_CATEGORY_MAP.put(ACCIDENT_HANDLE, "事故调查处理");
+		GROUP_CATEGORY_MAP.put(NEWS_REPORT, "新闻报道");
+		GROUP_CATEGORY_MAP.put(EXPERT_TECHNOLOGY, "技术专家");
+		GROUP_CATEGORY_MAP.put(RECEIVE, "接待");
 	}
 }
