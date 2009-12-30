@@ -57,15 +57,11 @@ function removeUcGroup(id){
 		<ec:column width="40" property="_no" value="${GLOBALROWCOUNT}" title="No." style="text-align:center"/>
 		<ec:column width="120" property="name" title="名称"/>
 		<s:if test="#attr.ucTypeId != null">	
-			<ec:column width="30" property="descn" title="公用" style="text-align:center;">
+			<ec:column width="30" property="-0" title="公用" style="text-align:center;">
 				<c:if test="${item.isPublic eq '1'}">是</c:if>
 				<c:if test="${item.isPublic eq '0'}">否</c:if>
 			</ec:column>
 		</s:if>
-		<ec:column width="30" property="display" title="类别" style="text-align:center">
-			<c:if test="${item.type eq '1'}">内部</c:if>
-			<c:if test="${item.type eq '0'}">外部</c:if>
-		</ec:column>
 		<ec:column width="80" property="displays" title="显示内容" style="text-align:center"/>
 		<ec:column width="200" property="descr" title="描述" style="text-align:center"/>
 		<ec:column width="100" property="_0" title="操作" style="text-align:center" sortable="false">
