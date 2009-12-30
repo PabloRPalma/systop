@@ -57,21 +57,17 @@ public class SmsProxyCmccWebServiceImpl implements SmsProxy {
 	}
 
 	/**
-	 * @see{@link SmsProxy#sendMessage()}
 	 * 
-	 *            1.service.sendState()方法是必须要处理异常的,要么try-catch,要么throws
-	 *            2.如果throws,throws一个RemoteException?
-	 *            本来程序中的ApplicationException就是用来包装RuntimeException的
-	 *            ,如果在层间传递RemoteException,那么就会污染各个层面
-	 *            3.如果try-catch,那么在catch中必须有一个throw,
-	 *            ,否则就必须在catch中return一个Integer,这样一来,又把返回值和异常处理耦合到了一起...
+	 * 发送单个短信方法
 	 * 
-	 *            所以当时的做法是包装到ApplicationException中throw出去了.
-	 * 
-	 *            
+	 * @param smsSend 要发送的短信实体实例
+	 * @return 发送到短信系统中的短信id
+	 * @throws Exception 短信移动短信系统的WebService会抛出RemoteException.<br>
+	 *           这个异常无法指望本系统进行处理,也不应该由本系统进行处理<br>
+	 *           所以对于本方法的:throws Exception,只管在方法中继续throws Exception
 	 */
 	@Override
-	public Integer sendMessage(SmsSend smsSend) throws ApplicationException {
+	public Integer sendMessage(SmsSend smsSend) throws Exception {
 		IfSMSService service = new IfSMSServiceProxy();
 		String[] destAddreses = new String[] { smsSend.getMobileNum() };
 		try {
@@ -79,17 +75,20 @@ public class SmsProxyCmccWebServiceImpl implements SmsProxy {
 			// 如果提交成功会返回提交到Mas数据库中的主键
 			int[] states = service.sendState(SmsConstants.CONN_NAME,
 					SmsConstants.CONN_PASS, destAddreses, smsSend.getContent(), 1);
-			//移动Mas的WebService方法用返回的Integer是否大于0来表示是否发送成功(若失败返回-1)
+			// 移动Mas的WebService方法用返回的Integer是否大于0来表示是否发送成功(若失败返回-1)
 			if (!ArrayUtils.isEmpty(states) && states[0] > 0) {
 				return states[0];
-			} else {//如果发送失败(WebService方法返回小于0的Integer),封装为异常
-				throw new ApplicationException("ID为:" + smsSend.getId() + ",接收号码为"
-						+ smsSend.getMobileNum() + "的短信发送失败!" + "错误原因为:接收到id值" + states[0]);
+			} else {// 如果发送失败(WebService方法返回小于0的Integer),封装为异常
+				StringBuffer buf = new StringBuffer();
+				buf.append("ID为:").append(smsSend.getId()).append(",接收号码为").append(
+						smsSend.getMobileNum()).append("的短信发送失败!").append("错误原因为:接收到id值")
+						.append(states[0]);
+				logger.error(buf.toString());
+				throw new Exception(buf.toString());
 			}
 		} catch (RemoteException ex) {
 			logger.error(ex.getMessage());
-			return 0;
-			//throw new RuntimeException(ex);//最终怎样处理待沟通确认
+			throw new Exception(ex);
 		}
 
 	}

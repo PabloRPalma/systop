@@ -23,7 +23,7 @@ public interface SmsProxy {
 	 * @return
 	 * @throws ApplicationException
 	 */
-	Integer sendMessage(SmsSend smsSend) throws ApplicationException;
+	Integer sendMessage(SmsSend smsSend) throws Exception;
 
 	/**
 	 * 

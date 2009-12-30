@@ -60,7 +60,7 @@ public class SmsManager {
 	/**
 	 * 发送短信方法
 	 */
-	public void sendMessages() {
+	public void sendMessages() throws Exception {
 		// 得到数据库中需要发送的短信列表
 		List<SmsSend> smsSendList = getSmsSendManager().getNewSmsSends();
 		// 遍历列表
@@ -82,8 +82,9 @@ public class SmsManager {
 						smsSend.setSendTime(new Date());
 						getSmsSendManager().update(smsSend);
 
-					} catch (ApplicationException ex) {
+					} catch (Exception ex) {
 						logger.error(ex.getMessage());
+						throw ex;
 					}
 				}
 			}
