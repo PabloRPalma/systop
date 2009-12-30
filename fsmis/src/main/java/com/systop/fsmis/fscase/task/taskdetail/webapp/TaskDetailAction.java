@@ -132,7 +132,24 @@ public class TaskDetailAction extends
 		return SUCCESS;
 	}
 
-	public String returnTask() {
+	/**
+	 * 转发到填写退回人员/退回原因页面
+	 * 
+	 * @return
+	 */
+	public String toReturnTask() {
+
+		return "returnTask";
+	}
+
+	/**
+	 * 完成退回操作
+	 * 
+	 * @return
+	 */
+	public String doReturnTask() {
+
+		
 		// 退回状态
 		getModel().setStatus(CaseConstants.CASE_STATUS_RETURNED);
 		getManager().save(getModel());
