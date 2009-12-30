@@ -33,7 +33,7 @@
 <div class="x-panel-header">退回任务</div>
 <div class="x-toolbar">&nbsp;</div>
 <div align="center">
-<s:form action="doReturnTask.do" method="post" theme="simple"  onsubmit="return valileader()">
+<s:form action="doReturnTaskDetail.do" method="post" theme="simple"  onsubmit="return valileader()">
 	<s:hidden name="model.id" />
 	<fieldset style="width: 510px; padding: 10px 10px 10px 10px;">
 	<legend>退回信息</legend>
