@@ -76,8 +76,7 @@ public class UcTypeAction extends DefaultCrudAction<UrgentType, UcTypeManager> {
 	 * 删除，会级联删除该类别下的组
 	 */
 	public String remove() {
-		List<UrgentGroup> ugList = ucGroupManager.query(
-				"from UrgentGroup ug where ug.urgentType.id = ? ", getModel().getId());
+		List<UrgentGroup> ugList = ucGroupManager.query("from UrgentGroup ug where ug.urgentType.id = ? ", getModel().getId());
 
 		for (UrgentGroup ug : ugList) {
 			ucGroupManager.remove(ug);
