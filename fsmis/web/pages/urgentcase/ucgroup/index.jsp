@@ -20,15 +20,15 @@ function removeUcGroup(id){
 <div class="x-toolbar">
 <table width="99%">
 	<tr>
-		<td align="center" style="font-size: 15px">
-			<s:if test="#attr.emgcType != null">
-				<b>所属类别：${emgcType.name}</b>
+		<td align="left" style="font-size: 12px">
+			<s:if test="#attr.ucTypeId != null">
+				<b>所属类别：${ucType.name}</b>
 			</s:if>
 		</td>
 		<td align="right">
 		<table>
 			<tr>
-				<td><a href="${ctx}/ucgroup/edit.do"><img src="${ctx}/images/icons/add.gif" />添加</a></td>
+				<td><a href="${ctx}/ucgroup/edit.do?ucTypeId=${ucTypeId}"><img src="${ctx}/images/icons/add.gif" />添加</a></td>
 			</tr>
 		</table>
 		</td>
@@ -67,8 +67,16 @@ function removeUcGroup(id){
 		<ec:column width="80" property="displays" title="显示内容" style="text-align:center"/>
 		<ec:column width="200" property="descr" title="描述" style="text-align:center"/>
 		<ec:column width="100" property="_0" title="操作" style="text-align:center" sortable="false">
-			<a href="edit.do?model.id=${item.id}">编辑</a>|
-			<a href="#" onClick="removeUcGroup(${item.id})">删除</a>
+			<s:if test="#attr.ucTypeId == null">
+				<a href="edit.do?model.id=${item.id}">编辑</a>|
+				<a href="#" onClick="removeUcGroup(${item.id})">删除</a>
+			</s:if>
+			<s:if test="#attr.ucTypeId != null">
+				<c:if test="${item.isPublic eq '0'}">
+					<a href="edit.do?model.id=${item.id}">编辑</a>|
+					<a href="#" onClick="removeUcGroup(${item.id})">删除</a>
+				</c:if>	
+			</s:if>
 		</ec:column>
 		
 	</ec:row>

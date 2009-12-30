@@ -16,6 +16,7 @@
 	<div align="center">
 	<s:form id="ucGroupForm" action="save.do" method="post"  validate="true"  theme="simple">
 	<s:hidden name="model.id"/>
+	<s:hidden name="ucTypeId"/>
 	<fieldset style="width:610px; padding:10px 10px 10px 10px;">
     	<legend>编辑指挥组</legend>
         <table width="600px" align="center">
@@ -26,11 +27,6 @@
              </td>
           </tr>
           <tr>
-             <td align="right" width="80">公用:</td>
-             <td align="left" width="520">
-             	<s:radio id="model.isPublic" name="model.isPublic" list="isPublicList" cssStyle="border:0;" cssClass="required"/><font color="red">&nbsp;*</font>
-             </td>
-          </tr><tr>
              <td align="right" width="80">类别:</td>
              <td align="left" width="520">
              	<s:select id="type" name="model.type" list="sortMap" cssStyle="border:0;" cssClass="required" onchange="sortChange()" headerKey="" headerValue="请选择"/><font color="red">&nbsp;*</font>
