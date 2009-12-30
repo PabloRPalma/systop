@@ -1,6 +1,8 @@
 package com.systop.fsmis.urgentcase.service;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -8,6 +10,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.security.user.model.User;
 import com.systop.core.service.BaseGenericsManager;
 import com.systop.fsmis.model.CheckResult;
@@ -18,6 +21,7 @@ import com.systop.fsmis.model.UrgentCase;
  * @author DU
  *
  */
+@SuppressWarnings("unchecked")
 @Service
 public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
 
@@ -44,6 +48,18 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
 				getDao().save(checkResult);
 			}
 		}
+	}
+	
+	/**
+	 * 根据用户所在区县取得该区县下的所有派遣环节
+	 * @param county 所在区县
+	 */
+  public List getAllUcTypeByCounty(Dept county) {
+		List ucTypes = Collections.EMPTY_LIST;
+		if (county != null) {
+			ucTypes = query("from UrgentType ut where ut.county.id = ?", county.getId());
+		}
+		return ucTypes;
 	}
 	
 	/**
