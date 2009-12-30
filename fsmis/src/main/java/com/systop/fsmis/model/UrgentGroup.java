@@ -37,10 +37,12 @@ public class UrgentGroup extends BaseModel {
 	private String template;
 	/** 是否公用数据 Y/N */
 	private String isPublic;
-	/** 类别 */
+	/**派遣类别 */
 	private UrgentType urgentType;
-
+	/** 应急事件*/
 	private UrgentCase urgentCases;
+	/** 对应的结果对象名称 */
+	private String category;
 	/**
 	 * 所属区县
 	 */
@@ -140,5 +142,13 @@ public class UrgentGroup extends BaseModel {
 
 	public void setCounty(Dept county) {
 		this.county = county;
+	}
+	@Column(name = "CATEGORY", length = 500)
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 }
