@@ -26,6 +26,7 @@
              	<s:textfield id="name" name="model.name" cssStyle="width:300px" cssClass="required"/><font color="red">&nbsp;*</font>
              </td>
           </tr>
+          <!-- 外部组添加后，需要添加摩板
           <tr>
              <td align="right" width="80">类别:</td>
              <td align="left" width="520">
@@ -43,6 +44,7 @@
 			</table> 
 			</td>
 		</tr>
+		-->
            <tr>
              <td align="right" width="80">显示内容：</td>
              <td align="left" width="520">
@@ -73,6 +75,7 @@
 	$(document).ready(function() {
 	$("#ucGroupForm").validate();
 });
+	/**
 	function sortChange() { 
 		if(document.ucGroupForm.type.value=='0'){
 			document.all("tb_1").style.display="block"; 
@@ -81,6 +84,7 @@
 			}
 	} 
 	sortChange();
+	*/
 </script>
 </body>
 </html>
