@@ -55,8 +55,17 @@
 		<td align="right">
 		<table>
 			<tr>
-				<td align="right"><a href="#" onclick="CheckWindow.show()"><img
-					src="${ctx}/images/icons/house.gif" /> 审核</a></td>
+				<td align="right">
+					<c:if test="${model.isAgree eq '0' || model.isAgree == null}">
+						<a href="#" onclick="CheckWindow.show()"><img
+						src="${ctx}/images/icons/house.gif" /> 审核</a>
+					</c:if>
+					<c:if test="${model.isAgree eq '1'}">
+						<a href="#" onclick="DispatchWindow.show()"><img
+						src="${ctx}/images/icons/house.gif" /> 任务派遣</a>
+					</c:if>
+				</td>
+					
 				<td><span class="ytb-sep"></span></td>
 				<td align="right"><a href="${ctx}/urgentcase/index.do"><img
 					src="${ctx}/images/icons/house.gif" /> 应急事件列表</a></td>
@@ -67,7 +76,7 @@
 </table>
 </div>
 <div id="tabs">
-<div id="basic" class="x-hide-display"><s:hidden name="model.id" />
+<div id="basic" class="x-hide-display"><s:hidden name="model.id" id="caseId" />
 <table id="mytable" height="360" style="margin-top: 5px">
 	<tr>
 		<td align="right" width="215">事件名称：</td>
@@ -162,10 +171,22 @@
         text:'确定',
         handler:function(){
          if (CheckWindow.check()){
-        	 var isAgree = document.getElementById('isAgree').value;
+        	 var caseId = document.getElementById('caseId').value;
       	     var reason = document.getElementById('reason').value;
-
-      	     //此处用ajax方式提交审核信息
+      	     $.ajax({
+    			url: '${ctx}/urgentcase/saveCheckResult.do',
+    			type: 'post',
+    			dataType: 'json',
+    			data: {caseId : caseId, isAgree : agreeVal, reason: reason},
+    			success: function(rst, textStatus){
+    	  		  if(rst.result == "success"){
+        	  		window.location = '${ctx}/urgentcase/index.do';
+    	  	  	  }else{
+    	  	  		CheckWindow.hide();
+    	  	  		alert("审核失败，请重试...");
+    	  	  	  }
+    			}
+    	  	 });
       	     CheckWindow.hide();
              CheckWindow.clear();
           }
@@ -186,11 +207,21 @@
   // 检测
   CheckWindow.check = function() {
     var reason = document.getElementById('reason').value;
+    if (agreeVal == null || agreeVal == '') {
+        Ext.MessageBox.show({
+             title:'提示',
+             minWidth:200,
+             msg:'<div style=\'width:150\';><br/>请选择审核是否通过！</div>',
+             buttons:Ext.MessageBox.OK,
+             icon:Ext.MessageBox.INFO
+        });
+        return false;
+    }
     if (reason == null || reason == '') {
       Ext.MessageBox.show({
            title:'提示',
            minWidth:200,
-           msg:'<div style=\'width:150\';><br/>审核具体意见不能为空！</div>',
+           msg:'<div style=\'width:150\';><br/>请填写审核具体意见！</div>',
            buttons:Ext.MessageBox.OK,
            icon:Ext.MessageBox.INFO
       });
@@ -198,25 +229,91 @@
     }
     return true;
   }
+  var agreeVal = null;
+  function setAgreeValue(aValue) {
+	agreeVal = aValue;
+  }
 </script>
+<!-- 审核 -->
 <div id="checkWindow" class="x-hidden">
 <div class="x-window-header">审核意见</div>
 <div class="x-window-body">
 	<table align="center" cellspacing="6">
 	  <tr></tr>
 	  <tr>
-	    <td align="right">是否同意：</td>
-	    <td><input type="text" style="width:200px;" id="isAgree" />
+	    <td align="right">是否通过：</td>
+	    <td>
+	    	<s:radio list="isAgreeMap" id="isagree" name="isagree" onchange="setAgreeValue(this.value)" cssStyle="border:0px;"/> 
             <font color="red">*</font>
         </td>
 	  </tr>
 	  <tr>
 	    <td align="right">具体意见：</td>
 		<td align="left">
-		  <textarea rows="3" name="reason" style="width:200px;" id="reason"></textarea>
+		  <textarea rows="7" name="reason" style="width:280px;" id="reason"></textarea>
+		  <font color="red">*</font>
 	    </td>
 	  </tr>
 	</table>
+</div>
+</div>
+<!-- 任务派遣 -->
+<script type="text/javascript">
+  var DispatchWindow = new Ext.Window({
+      el: 'dispatchWindow',
+      width: 600,
+      height: 350,
+      layout : 'fit',
+      closeAction:'hide',
+      buttonAlign:'center',
+      modal:'true'
+  });
+  DispatchWindow.selectType = function(typeId) {
+	var caseId = document.getElementById('caseId').value;
+	Ext.MessageBox.confirm('提示','确定要选择该派遣环节吗？派遣后不能撤销！', function(btn){
+        if (btn == 'yes') {
+        	DispatchWindow.hide();
+          	window.location = "${ctx}/urgentcase/view.do?model.id=" + caseId;
+        }
+    });
+  }
+</script>
+<!-- 任务派遣 -->
+<div id="dispatchWindow" class="x-hidden">
+<div class="x-window-header">任务派遣</div>
+<div class="x-window-body">
+	<table align="center" width="567" border="0" cellspacing="0" cellpadding="0">
+   <tr>
+    <td align="left" style="padding: 20px 0px 5px 0px;">
+		<h4>事件名称：${model.title }</h4>
+	</td>
+  </tr>
+  <tr>
+    <td><img src="${ctx}/images/choosesendtype/table_top.gif" width="567" height="13" /></td>
+  </tr>
+</table>
+<table align="center" width="567" height="199" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td background="${ctx}/images/choosesendtype/table_bg.gif">
+    	<table align="center" width="567" height="35" border="0" cellpadding="0" cellspacing="0">
+        	<tr><td>&nbsp;</td></tr>
+        	<c:forEach items="${ucTypeList}" var="type">
+       		<tr>
+	       		<td>
+	       			<input onclick="DispatchWindow.selectType('${type.id }')" type="button" value="${type.name}" style="width:555px; height:35px; border: 0px; background-image: url(${ctx}/images/choosesendtype/01.gif);font-size:16px;color:#000"/>
+	       		</td>
+       		</tr>
+       		</c:forEach>
+       		<tr><td>&nbsp;</td></tr>
+    	</table>
+    </td>
+  </tr>
+</table>
+<table align="center" width="567" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><img src="${ctx}/images/choosesendtype/table_botom.gif" width="567" height="18" /></td>
+  </tr>
+</table>
 </div>
 </div>
 </body>
