@@ -100,7 +100,9 @@ public class TaskDetailAction extends
 
 	/**
 	 * 查看派遣给当前登录人员部门的任务明细方法<br>
-	 * 
+	 * 由于查看功能使用的是在FsCase模块中统一的Tab页方式,<br>
+	 * 各个子模块间就不能用"model.id"方式来传递当前实体id了,否则会引起冲突<br>
+	 * 所以在各个子模块中需要通过getParameter("taskDetailId")方式来获得当前实体实例id
 	 */
 	@Override
 	public String view() {
@@ -137,22 +139,39 @@ public class TaskDetailAction extends
 	 * 
 	 * @return
 	 */
-	public String toReturnTask() {
+	public String toReturnTaskDetail() {
 
-		return "returnTask";
+		return "returnTaskDetail";
 	}
 
 	/**
-	 * 完成退回操作
+	 * 完成退回操作方法
 	 * 
 	 * @return
 	 */
-	public String doReturnTask() {
+	public String doReturnTaskDetail() {
 
-		
-		// 退回状态
-		getModel().setStatus(CaseConstants.CASE_STATUS_RETURNED);
-		getManager().save(getModel());
+		getManager().doReturnTaskDetail(getModel());
+
+		return SUCCESS;
+	}
+
+	/**
+	 * 请求提交任务,转发到填写任务明细页面
+	 * 
+	 * @return
+	 */
+	public String toCommitTaskDetail() {
+		return "toCommitTaskDetail";
+	}
+
+	/**
+	 * 完成提交任务(处理完毕)方法
+	 * 
+	 * @return
+	 */
+	public String doCommitTaskDetail() {
+		getManager().doCommitTaskDetail(getModel());
 
 		return SUCCESS;
 	}
