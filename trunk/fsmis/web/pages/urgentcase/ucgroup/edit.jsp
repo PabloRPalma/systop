@@ -14,25 +14,25 @@
     <div class="x-panel-header">应急指挥指挥组维护</div>
 	<div><%@ include file="/common/messages.jsp"%></div> 
 	<div align="center">
-	<s:form id="ucGroupForm" action="save.do" method="post"  validate="true"  theme="simple">
+	<s:form id="ucGroupForm" action="save.do" method="post"  validate="true" >
 	<s:hidden name="model.id"/>
 	<s:hidden name="ucTypeId"/>
 	<fieldset style="width:610px; padding:10px 10px 10px 10px;">
     	<legend>编辑指挥组</legend>
         <table width="600px" align="center">
+        <tr>
+             <td align="right" width="80">组类型:</td>
+             <td align="left" width="520">
+             	<s:select id="category" name="model.category" list="categoryMap" headerKey="" headerValue="请选择"  cssClass="required" onchange="categoryChange()"/><font color="red">&nbsp;*</font>
+             </td>
+          </tr>
           <tr>
              <td align="right" width="80">组名:</td>
              <td align="left" width="520">
-             	<s:textfield id="name" name="model.name" cssStyle="width:300px" cssClass="required"/><font color="red">&nbsp;*</font>
+             	<s:textfield id="name" name="model.name" cssStyle="width:300px" readonly="true"/>
              </td>
           </tr>
-            <tr>
-             <td align="right" width="80">组类型:</td>
-             <td align="left" width="520">
-             	<s:select id="model.category" name="model.category" list="categoryMap" headerKey="" headerValue="请选择"  cssClass="required"/><font color="red">&nbsp;*</font>
-             </td>
-          </tr>
-          <!-- 外部组添加后，需要添加摩板
+          <!-- 外部组添加后，需要添加模板
           <tr>
              <td align="right" width="80">类别:</td>
              <td align="left" width="520">
@@ -91,6 +91,22 @@
 	} 
 	sortChange();
 	*/
+	function categoryChange() { 
+		newOptions= document.getElementById("category").options;
+		for(i = 0; i < newOptions.length; i++){
+			if (newOptions[i].selected ){
+
+				if(newOptions[i].text=="指挥部"||newOptions[i].text=="办公室"){
+					document.getElementById("name").value=newOptions[i].text;
+				}else{
+					document.getElementById("name").value=newOptions[i].text+"组";		
+					}
+				if(newOptions[i].value==""){
+					document.getElementById("name").value="";
+				}
+			}
+		}
+	} 
 </script>
 </body>
 </html>
