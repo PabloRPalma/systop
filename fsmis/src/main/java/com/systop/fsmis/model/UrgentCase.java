@@ -142,8 +142,6 @@ public class UrgentCase extends BaseModel {
 	/**
 	 * 对应的应急组
 	 */
-	private Set<UrgentGroup> urgentGroupses = new HashSet<UrgentGroup>(0);
-	
 	private Set<UrgentCase> urgentCaseses = new HashSet<UrgentCase>(0);
 
 	private Set<CheckResult> checkResults = new HashSet<CheckResult>(0);
@@ -404,15 +402,6 @@ public class UrgentCase extends BaseModel {
 
 	public void setSubmitTime(Date submitTime) {
 		this.submitTime = submitTime;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "urgentCases")
-	public Set<UrgentGroup> getUrgentGroupses() {
-		return this.urgentGroupses;
-	}
-
-	public void setUrgentGroupses(Set<UrgentGroup> urgentGroupses) {
-		this.urgentGroupses = urgentGroupses;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "urgentCases")
