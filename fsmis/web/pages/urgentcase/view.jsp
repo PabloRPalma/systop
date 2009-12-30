@@ -43,6 +43,9 @@
 			}, {
 				contentEl : 'traffic',
 				title : '周边交通'
+			}, {
+				contentEl : 'sendgroup',
+				title : '派遣结果'
 			} ]
 		});
 	});
@@ -60,7 +63,7 @@
 						<a href="#" onclick="CheckWindow.show()"><img
 						src="${ctx}/images/icons/house.gif" /> 审核</a>
 					</c:if>
-					<c:if test="${model.isAgree eq '1'}">
+					<c:if test="${model.isAgree eq '1'&& model.status eq '1'}">
 						<a href="#" onclick="DispatchWindow.show()"><img
 						src="${ctx}/images/icons/house.gif" /> 任务派遣</a>
 					</c:if>
@@ -152,6 +155,15 @@
 		<td align="left" style="vertical-align: top;" width="85%"><s:textarea
 			id="trafficInf" name="model.trafficInf"
 			cssStyle="width:600px; height:330px" /></td>
+	</tr>
+</table>
+</div>
+<div id="sendgroup" class="x-hide-display">
+<table id="mytable" height="380" style="margin-top: 5px">
+	<tr>
+		<td>
+			<iframe name="groups" src="${ctx}/urgentcase/queryGroupResult.do?model.id=${model.id}" width="100%" height="550" frameborder="1"></iframe>			
+		</td>
 	</tr>
 </table>
 </div>
@@ -268,10 +280,21 @@
       buttonAlign:'center',
       modal:'true'
   });
+  //选择派遣环节进行任务派遣
   DispatchWindow.selectType = function(typeId) {
 	var caseId = document.getElementById('caseId').value;
 	Ext.MessageBox.confirm('提示','确定要选择该派遣环节吗？派遣后不能撤销！', function(btn){
         if (btn == 'yes') {
+            alert("派遣环节ID:" + typeId);
+            $.ajax({
+    			url: '${ctx}/urgentcase/sendUrgentCase.do',
+    			type: 'post',
+    			dataType: 'json',
+    			data: {caseId : caseId, typeId : typeId},
+    			success: function(rst, textStatus){
+    	  		  
+    			}
+    	  	 });
         	DispatchWindow.hide();
           	window.location = "${ctx}/urgentcase/view.do?model.id=" + caseId;
         }
