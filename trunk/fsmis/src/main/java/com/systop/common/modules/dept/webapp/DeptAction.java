@@ -243,8 +243,8 @@ public class DeptAction extends ExtJsCrudAction<Dept, DeptManager> {
 				&& getModel().getParentDept().getId().equals(
 						DeptConstants.TOP_DEPT_ID)) {
 			getModel().setParentDept(null);
+			return super.save();
 		}
-		
 		if (getModel().getParentDept() == null
 				|| getModel().getParentDept().getId() == null) {
 			//限制添加两个根部门 2009-12-28
@@ -255,6 +255,7 @@ public class DeptAction extends ExtJsCrudAction<Dept, DeptManager> {
 			
 			logger.debug("保存第一 级部门.");
 		}
+		
 		return super.save();
 	}
 
