@@ -34,7 +34,7 @@ import com.systop.fsmis.urgentcase.service.UrgentCaseManager;
 @Controller
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseManager> {
-
+	
 	/**
 	 * json返回结果
 	 */
@@ -54,10 +54,10 @@ public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseMana
 		Page page = PageUtil.getPage(getPageNo(), getPageSize());
 		StringBuffer sql = new StringBuffer("from UrgentCase uc where 1=1 ");
 		List args = new ArrayList();
-		Dept dept = loginUserService.getLoginUserCounty(getRequest());
-		if (dept != null) {
+		Dept county = loginUserService.getLoginUserCounty(getRequest());
+		if (county != null) {
 			sql.append(" and uc.county.id = ?");
-			args.add(dept.getId());
+			args.add(county.getId());
 			if (StringUtils.isNotBlank(getModel().getTitle())) {
 				sql.append(" and uc.title like ?");
 				args.add(MatchMode.ANYWHERE.toMatchString(getModel().getTitle()));
@@ -79,11 +79,11 @@ public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseMana
 	@Override
 	public String save() {
 		try {
-			Dept dept = loginUserService.getLoginUserCounty(getRequest());
-			if (dept == null) {
+			Dept county = loginUserService.getLoginUserCounty(getRequest());
+			if (county == null) {
 				addActionError("您所在的区县为空...");
 			}
-			getModel().setCounty(dept);
+			getModel().setCounty(county);
 			getModel().setCreateTime(Calendar.getInstance().getTime());
 			getManager().save(getModel());
 			return SUCCESS;
@@ -94,16 +94,27 @@ public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseMana
 	}
 	
 	/**
+	 * 查看应急事件的详细信息
+	 */
+	@Override
+	public String view() {
+		Dept county = loginUserService.getLoginUserCounty(getRequest());
+		//取得该区县下的所有派遣环节
+		List ucTypes = getManager().getAllUcTypeByCounty(county);
+		logger.info("派遣环节数：{}", ucTypes.size());
+		getRequest().setAttribute("ucTypeList", ucTypes);
+		
+		return super.view();
+	}
+	
+	/**
 	 * 保存应急事件审核结果
 	 */
 	public String saveCheckResult() {
 		checkResult = Collections.synchronizedMap(new HashMap<String, String>());
 		String caseId = getRequest().getParameter("caseId").toString();
-		logger.info("应急事件ID：{}", caseId);
 		String isAgree = getRequest().getParameter("isAgree").toString();
-		logger.info("是否同意：{}", isAgree);
 		String reason = getRequest().getParameter("reason").toString();
-		logger.info("审核意见：{}", reason);
 		User checker = loginUserService.getLoginUser(getRequest());
 		if (checker != null) {
 			getManager().saveCheckResult(caseId, isAgree, reason, checker);
