@@ -44,6 +44,11 @@
     		<description>具体每一个元素的样式</description>
     	</attribute>
     	<attribute>
+    		<name>onclick</name>
+    		<type>java.lang.String</type>
+    		<description>具体每一个元素相应的onclick事件</description>
+    	</attribute>
+    	<attribute>
     		<name>theme</name>
     		<type>java.lang.String</type>
     		<description>用于选择不同的样式eg:simple/select</description>
