@@ -29,7 +29,7 @@
           <tr>
              <td align="right" width="80">类别:</td>
              <td align="left" width="520">
-             	<s:select id="type" name="model.type" list="sortMap" cssStyle="border:0;" cssClass="required" onchange="sortChange()" headerKey="" headerValue="请选择"/><font color="red">&nbsp;*</font>
+             	<s:select id="type" name="model.type" list="sortMap" cssStyle="border:0;" onchange="sortChange()"/><font color="red">&nbsp;*</font>
              </td>
           </tr>
           <tr><td colspan="2">
