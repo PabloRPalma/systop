@@ -139,9 +139,7 @@ public class UrgentCase extends BaseModel {
 	 * 上报时间
 	 */
 	private Date submitTime;
-	/**
-	 * 对应的应急组
-	 */
+
 	private Set<UrgentCase> urgentCaseses = new HashSet<UrgentCase>(0);
 
 	private Set<CheckResult> checkResults = new HashSet<CheckResult>(0);

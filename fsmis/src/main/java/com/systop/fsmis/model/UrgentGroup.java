@@ -45,7 +45,11 @@ public class UrgentGroup extends BaseModel {
 	 * 所属区县
 	 */
 	private Dept county;
-	
+	/**
+	 * 是否原始数据  0:否，1:是
+	 */
+	private String isOriginal;
+
 	public UrgentGroup() {
 	}
 
@@ -140,4 +144,12 @@ public class UrgentGroup extends BaseModel {
 	public void setCategory(String category) {
 		this.category = category;
 	}
+	@Column(name = "IS_ORIGINAL", length = 255)
+	public String getIsOriginal() {
+  	return isOriginal;
+  }
+
+	public void setIsOriginal(String isOriginal) {
+  	this.isOriginal = isOriginal;
+  }
 }
