@@ -10,7 +10,7 @@ import com.systop.fsmis.sms.SmsConstants;
 
 @ContextConfiguration(locations = { "classpath*:spring/applicationContext-*.xml" })
 public class SMSManagerTest extends BaseTransactionalTestCase {
-	public void testWebService() {
+	public void testWebService() throws Exception {
 		SmsSend smsSend = new SmsSend();
 		smsSend.setContent("测试短信>>>>>>");
 		smsSend.setMobileNum("15100150783");
