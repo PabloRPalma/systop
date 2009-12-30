@@ -43,6 +43,9 @@ public class SelectDeptTag extends BaseFreeMarkerTagSupport {
 
 	/** 派遣类别ID */
 	private Integer sendTypeId;
+	
+	/** 单击事件 */
+	private String onclick;
 
 	/**
 	 * 初始化Managers
@@ -101,6 +104,7 @@ public class SelectDeptTag extends BaseFreeMarkerTagSupport {
 		}
 		ctx.addParameter("depts", deptMaps);
 		ctx.addParameter("name", name);
+		ctx.addParameter("onclick", onclick);
 		ctx.addParameter("column", column);
 		ctx.addParameter("itemClass", itemClass);
 		ctx.addParameter("columnWidth", columnWidth);
@@ -154,6 +158,14 @@ public class SelectDeptTag extends BaseFreeMarkerTagSupport {
 
 	public void setSendTypeId(Integer sendTypeId) {
 		this.sendTypeId = sendTypeId;
+	}
+
+	public String getOnclick() {
+		return onclick;
+	}
+
+	public void setOnclick(String onclick) {
+		this.onclick = onclick;
 	}
 
 }
