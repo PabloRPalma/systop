@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="fsmis.office.receiveRecord" extends="json"  namespace="/office/receiverecord">
+		<action name="*" class="receiveRecordAction" method="{1}">
+			<result name="index">/pages/office/notice/deptIndex.jsp</result> 
+			<result name="view">/pages/office/notice/deptView.jsp</result>
+			<result name="listbyNoticeId">/pages/office/notice/recordsByNoticeId.jsp</result>
+			<result name="success" type="redirect">listbyNoticeId.do?noticeId=${noticeId}</result>
+		</action>
+	</package>
+</struts>
+
