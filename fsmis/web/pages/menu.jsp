@@ -89,7 +89,7 @@
 			</div>
 			<div style="padding-top:2px">
 				<img src="${ctx}/images/icons/add.gif" class="icon">
-				<a href="${ctx}/office/receiveRecord/index.do" target="main">通知部门记录</a>
+				<a href="${ctx}/office/receiverecord/index.do" target="main">通知部门记录</a>
 			</div>
 		</div>
 	</div>
