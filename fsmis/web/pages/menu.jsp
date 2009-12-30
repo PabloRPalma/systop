@@ -14,7 +14,11 @@
 		</div>
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
-			<a href="${ctx}/task/index.do" target="main">任务列表</a>
+			<a href="${ctx}/task/index.do" target="main">单体任务列表</a>
+		</div>
+		<div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/taskdetail/index.do" target="main">单体任务接收</a>
 		</div>
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
