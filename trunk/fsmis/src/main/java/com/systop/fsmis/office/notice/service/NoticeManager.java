@@ -1,5 +1,6 @@
 package com.systop.fsmis.office.notice.service;
 
+import java.io.File;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -37,5 +38,22 @@ public class NoticeManager extends BaseGenericsManager<Notice> {
 				getDao().save(receiveRecord);
 			}
 		}
+	}
+
+	/**
+	 * 删除通知信息，连同照片一起删除
+	 * @param notice
+	 * @param path
+	 */
+	@Transactional
+	public void remove(Notice notice, String path) {
+		if (notice != null) {
+			File file = new File(path);
+			if (file.exists()) {
+				file.delete();
+			}
+		}
+		super.remove(notice);
+		
 	}
 }
