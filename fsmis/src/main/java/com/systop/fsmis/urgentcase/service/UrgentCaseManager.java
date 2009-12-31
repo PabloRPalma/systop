@@ -2,9 +2,14 @@ package com.systop.fsmis.urgentcase.service;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -97,13 +102,13 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
   					utGroupNotOrg.setIsOriginal(UcConstants.GROUP_ORIGINAL_NO);
   					getDao().save(utGroupNotOrg);
   					UrgentResult urgentResult = new UrgentResult();
-  					urgentResult.setDisplays("要显示的数据，具体如何显示，有待完善....");
+  					urgentResult.setDisplays("显示内容...");
   					urgentResult.setUrgentCase(urgentCase);
   					//派遣结果关联‘非原始数据组’
   					urgentResult.setUrgentGroup(utGroupNotOrg);
   					urgentResult.setCounty(county);
-  					//组处理的具体内容,暂时设置为空数据，有待完善....
-  					urgentResult.setContent(null);
+  					//组处理的具体内容,暂时设置测试数据，有待完善....
+  					urgentResult.setContent("出警数量:5,疏散人数:6,处理时间:2009-12-31,处理过程:'生生世世是',处理结果:'打发打发打发'");
   					getDao().save(urgentResult);
   				}
   				//修改应急事件状态为‘已派遣’
@@ -123,7 +128,7 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
   	StringBuffer hql = new StringBuffer("from UrgentGroup ug where 1=1 ");
 		hql.append(" and ug.county.id = ?");
 		hql.append(" and ug.isOriginal = ?");
-		hql.append(" and ug.urgentType.id = ? or ug.urgentType.id is null");
+		hql.append(" and (ug.urgentType.id = ? or ug.urgentType.id is null)");
 		
 		return getDao().query(hql.toString(), 
 				countyId, UcConstants.GROUP_ORIGINAL_YES, typeId);
@@ -140,6 +145,49 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
 		hql.append(" and ur.urgentCase.id = ?");
 		
   	return getDao().query(hql.toString(), countyId, caseId);
+  }
+  
+  /**
+   * 根据应急事件ID、区县ID及指挥组ID取得该事件的派发结果
+   * @param caseId 事件ID
+   * @param countyId 区县ID
+   * @param groupId 指挥组ID
+   */
+  public Map getUrgentResultByIds(Integer caseId, Integer countyId, Integer groupId) {
+  	Map contentMap = Collections.EMPTY_MAP;
+  	StringBuffer hql = new StringBuffer("from UrgentResult ur where 1=1 ");
+		hql.append(" and ur.county.id = ?");
+		hql.append(" and ur.urgentCase.id = ?");
+		hql.append(" and ur.urgentGroup.id = ?");
+		UrgentResult urgentResult = (UrgentResult) getDao().findObject(
+				hql.toString(), countyId, caseId, groupId);
+		if (urgentResult != null) {
+			String contentJson = "{" + urgentResult.getContent() + "}";
+			logger.info("json字符串：{}", contentJson);
+			contentMap = convertJsonToMap(contentJson);
+		}
+		
+		return contentMap;
+  }
+  
+  /**
+   * 将大字段信息转换成Map
+   */
+  private Map convertJsonToMap(String content) {
+  	Map valueMap = new LinkedHashMap();
+		JSONObject jsonObject = JSONObject.fromObject(content);
+		Iterator keyIter = jsonObject.keys();
+		String key;
+		Object value;
+		while (keyIter.hasNext())
+		{
+			key = (String) keyIter.next();
+			value = jsonObject.get(key);
+			logger.info("JSON数据键值对：{}: {}", key, value);
+			valueMap.put(key, value);
+		}
+		
+		return valueMap;
   }
   
 	/**

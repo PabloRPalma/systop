@@ -37,16 +37,26 @@ import com.systop.fsmis.urgentcase.service.UrgentCaseManager;
 public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseManager> {
 	
 	/**
-	 * json返回结果
-	 */
-	private Map<String, String> checkResult;
-
-	/**
 	 * 登陆用户信息管理
 	 */
 	@Autowired
 	private LoginUserService loginUserService;
 	
+	/**
+	 * json返回结果
+	 */
+	private Map<String, String> checkResult;
+	
+	/**
+	 * 编辑指挥组处理结果时所用的事件ID
+	 */
+	private Integer caseId;
+	
+	/**
+	 * 编辑指挥组处理结果时所用的组ID
+	 */
+	private Integer groupId;
+
 	/**
 	 * 应急事件查询列表
 	 */
@@ -146,7 +156,7 @@ public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseMana
 	}
 	
 	/**
-	 * 查询任务派遣情况
+	 * 查看任务派遣情况
 	 */
 	public String queryGroupResult() {
 		Dept county = loginUserService.getLoginUserCounty(getRequest());
@@ -177,6 +187,42 @@ public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseMana
 		return "listCheckRst";
 	}
 	
+	/**
+	 * 编辑指挥组处理结果
+	 */
+	public String editGroupResult() {
+		Dept county = loginUserService.getLoginUserCounty(getRequest());
+		logger.info("编辑处理结果时取得事件ID:{}", getModel().getId());
+		if (county != null) {
+			caseId = getModel().getId();
+			//根据应急事件ID及处理组ID取得 处理结果的大字段信息
+			Map resultMap = getManager().getUrgentResultByIds(
+					getModel().getId(), county.getId(), groupId);
+			getRequest().setAttribute("resultMap", resultMap);
+		}
+		
+		return "editGroupResult";
+	}
+	
+	/**
+	 * 保存指挥组处理结果
+	 */
+	public String saveGroupResult() {
+		checkResult = Collections.synchronizedMap(new HashMap<String, String>());
+		//应急事件ID
+		String caseId = getRequest().getParameter("caseId").toString();
+		//应急事件ID
+		String groupId = getRequest().getParameter("groupId").toString();
+		//取得结果字符串
+		String rstValue = getRequest().getParameter("rstValue").toString();
+		logger.info("保存处理结果-->>事件ID:{}, 组ID:{}", caseId, groupId);
+		logger.info("结果集:{}", rstValue);
+		
+		//根据结果集添加处理组结果，继续下面处理......
+		
+		return "jsonRst";
+	}
+	
 	public Map<String, String> getIsAgreeMap() {
 		return FsConstants.YN_MAP;
 	}
@@ -187,5 +233,21 @@ public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseMana
 
 	public void setCheckResult(Map<String, String> checkResult) {
   	this.checkResult = checkResult;
+  }
+	
+	public Integer getCaseId() {
+  	return caseId;
+  }
+
+	public void setCaseId(Integer caseId) {
+  	this.caseId = caseId;
+  }
+	
+	public Integer getGroupId() {
+  	return groupId;
+  }
+
+	public void setGroupId(Integer groupId) {
+  	this.groupId = groupId;
   }
 }
