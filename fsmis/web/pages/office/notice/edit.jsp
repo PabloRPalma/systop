@@ -9,16 +9,17 @@
 <%@include file="/common/dwr.jsp" %>
 <%@include file="/common/validator.jsp"%>
 <script type="text/javascript" src="${ctx}/scripts/fckeditor/fckeditor.js"></script>
-<script type="text/javascript" src="${ctx}/dwr/interface/NoticeAction.js"></script>
+<script type="text/javascript" src="${ctx}/dwr/interface/NoticeDwrAction.js"></script>
 <script type="text/javascript">
-function deleAtt(path) {
+function deleAtt(id) {
 		if (confirm("确定要删除吗？")) {
-			//deleteDiv('att');
-			NoticeAction.removeAtt(path, function(msg) {
+			deleteDiv('att');
+			NoticeDwrAction.removeAtt(id, function(msg) {
 				if (msg == 'success') {
 					alert('删除成功！');
+					document.getElementById('model.att').value = "";
 				} else if (msg == 'error') {
-					alert('文章下存在附件不能删除。');
+					alert('附件删除不成功。');
 				}
 			});
 		}
@@ -26,7 +27,6 @@ function deleAtt(path) {
 	function deleteDiv(attachmentId) {
 		document.getElementById(attachmentId).style.display = 'none';
 		document.getElementById(attachmentId).innerHTML = "";
-		document.getElementById(attachmentId).removeNode();
 	}
 </script>
 </head>
@@ -77,7 +77,7 @@ function deleAtt(path) {
 			              <a href="${ctx}${model.att}" target="_blank">
 			                	查看附件
 			              </a>
-			              <a href="#" onclick="deleAtt(${model.att})">删除已有附件</a>
+			              <a href="#" onclick="deleAtt(${model.id})">删除已有附件</a>
 			              </div>
 			            </c:if>
 			</td>

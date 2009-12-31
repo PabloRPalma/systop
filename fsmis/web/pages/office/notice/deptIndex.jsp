@@ -54,7 +54,7 @@
 			<c:if test="${item.isNew != '1'}"><font color="green">已读</font></c:if>
 		</ec:column>
 		<ec:column width="100" property="_0" title="操作" style="text-align:center" sortable="false">
-			<a  href="view.do?model.id=${item.id}" target="_blank">查看</a>
+			<a  href="view.do?model.id=${item.id}">查看</a>
 		</ec:column>
 	</ec:row>
 </ec:table></div>
