@@ -1,5 +1,8 @@
 package com.systop.fsmis.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -41,6 +45,8 @@ public class UrgentGroup extends BaseModel {
 	private UrgentType urgentType;
 	/** 对应的结果对象名称 */
 	private String category;
+	/**事件*/
+	private Set<UrgentResult> urgentResults = new HashSet<UrgentResult>(0);
 	/**
 	 * 所属区县
 	 */
@@ -151,5 +157,13 @@ public class UrgentGroup extends BaseModel {
 
 	public void setIsOriginal(String isOriginal) {
   	this.isOriginal = isOriginal;
+  }
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "urgentGroup")
+	public Set<UrgentResult> getUrgentResults() {
+  	return urgentResults;
+  }
+
+	public void setUrgentResults(Set<UrgentResult> urgentResults) {
+  	this.urgentResults = urgentResults;
   }
 }
