@@ -63,6 +63,10 @@ public class Task extends BaseModel {
 	 * 规定完成时间
 	 */
 	private Date presetTime;
+	/**
+	 * 完成时间
+	 */
+	private Date closedTime;
 
 	/**
 	 * 任务状态
@@ -143,6 +147,16 @@ public class Task extends BaseModel {
 
 	public void setPresetTime(Date presetTime) {
 		this.presetTime = presetTime;
+	}
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CLOSED_TIME", length = 11)
+	public Date getClosedTime() {
+		return closedTime;
+	}
+
+	public void setClosedTime(Date closedTime) {
+		this.closedTime = closedTime;
 	}
 
 	@Column(name = "STATUS", length = 510)
