@@ -41,7 +41,7 @@ public class NoticeAction extends ExtJsCrudAction<Notice, NoticeManager> {
 
 	/** 附件存放路径 */
 	private static final String NOTICE_ATT_FOLDER = FsConstants.NOTICE_ATT_FOLDER;
-	
+
 	/** 附件 */
 	private File attachment;
 
@@ -49,16 +49,16 @@ public class NoticeAction extends ExtJsCrudAction<Notice, NoticeManager> {
 	private String attachmentFileName;
 
 	/** 所有部门ID集合 */
-	
+
 	private List<Integer> deptIds = new ArrayList<Integer>();
 
 	/** 用于操作各部门通知记录 */
 	@Autowired
 	private ReceiveRecordManager receiveRecordManager;
-	
+
 	@Autowired
 	private LoginUserService loginUserService;
-	
+
 	/**
 	 * 按通知名称查询通知
 	 */
@@ -85,7 +85,7 @@ public class NoticeAction extends ExtJsCrudAction<Notice, NoticeManager> {
 		}
 		return criteria;
 	}
-	
+
 	/**
 	 * 保存通知
 	 */
@@ -96,18 +96,18 @@ public class NoticeAction extends ExtJsCrudAction<Notice, NoticeManager> {
 		if (user == null) {
 			addActionError("未登录，请登录后访问本页面。");
 			return INPUT;
-		} 
+		}
 		if (dept == null) {
 			addActionError("未找到登录用户的所在部门，请使用正确用户访问本页面。");
 			return INPUT;
 		}
-		if (CollectionUtils.isEmpty(deptIds)) {
+		if (CollectionUtils.isEmpty(deptIds) && getModel().getId() == null)  {
 			addActionError("请选择接收部门。");
 			return INPUT;
 		}
 		getModel().setPublisher(user);
 		getModel().setPubDept(dept);
-		
+
 		if (attachment != null) {
 			getModel().setAtt(
 					UpLoadUtil.doUpload(attachment, attachmentFileName,
@@ -116,45 +116,38 @@ public class NoticeAction extends ExtJsCrudAction<Notice, NoticeManager> {
 		getModel().setCreateTime(DateUtil.getCurrentDate());
 		try {
 			getManager().saveDeptRecord(getModel(), deptIds);
-			
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			addActionError(e.getMessage());
 			return INPUT;
 		}
 		return SUCCESS;
 	}
-	
+
 	/**
 	 * 查看通知内容
 	 */
 	public String view() {
 		return "view";
 	}
-	
+
 	/**
 	 * 删除且级联删除发送各部门通知
 	 */
 	public String remove() {
-		Set<ReceiveRecord> receiveRecords = getModel().getRecRecordses();
+		Notice notice = getManager().get(getModel().getId());
+		Set<ReceiveRecord> receiveRecords = notice.getRecRecordses();
 		if (CollectionUtils.isNotEmpty(receiveRecords)) {
 			for (ReceiveRecord r : receiveRecords) {
 				receiveRecordManager.remove(r);
 			}
 		}
-		getManager().remove(getModel());
-		return SUCCESS;
-	}
-	
-	/**
-	 * 删除附件
-	 * @return
-	 */
-	public String removeAtt(String path) {
-		File att = new File(getRequest().getContextPath() + path);
-		if (att.exists()) {
-			att.delete();
+		String path = getRealPath(notice.getAtt());
+		if(StringUtils.isNotBlank(path)) {
+			getManager().remove(getModel(), path);
+			return SUCCESS;
 		}
-		return SUCCESS;
+		return super.remove();
 	}
 
 	public File getAttachment() {
