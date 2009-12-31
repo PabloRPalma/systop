@@ -80,7 +80,7 @@ public class UcGroupAction extends
 		args.add(UcConstants.GROUP_ORIGINAL_YES);
 		Dept dept = loginUserService.getLoginUserCounty(getRequest());
 		if (dept != null) {
-			sql.append(" and ug.county.id = ?");
+			sql.append(" and ug.county.id = ? and ( ");
 			args.add(dept.getId());
 			if (ucTypeId != null) {
 				sql.append(" and (ug.urgentType.id = ? or ");
@@ -89,8 +89,6 @@ public class UcGroupAction extends
 				getRequest().setAttribute("ucType", getUrgentType(ucTypeId));
 				getRequest().setAttribute("msg",
 						getManager().getUcGroupName(getUrgentType(ucTypeId)));
-			} else {
-				sql.append(" and (");
 			}
 			sql.append(" ug.urgentType.id is null) order by ug.isPublic desc");
 			page = getManager().pageQuery(page, sql.toString(), args.toArray());
