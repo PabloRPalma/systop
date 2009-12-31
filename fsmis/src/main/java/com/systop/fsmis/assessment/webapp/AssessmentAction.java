@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.criterion.MatchMode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,10 @@ import com.systop.common.modules.security.user.model.User;
 import com.systop.core.dao.support.Page;
 import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
 import com.systop.fsmis.assessment.AssessMentConstants;
+import com.systop.fsmis.assessment.service.AsseMemberManager;
 import com.systop.fsmis.assessment.service.AssessmentAttachManager;
 import com.systop.fsmis.assessment.service.AssessmentManager;
+import com.systop.fsmis.model.AsseMember;
 import com.systop.fsmis.model.Assessment;
 import com.systop.fsmis.model.AssessmentAttach;
 import com.systop.fsmis.model.CheckResult;
@@ -56,6 +59,22 @@ public class AssessmentAction extends
 	 * 评估Id
 	 */
 	private Integer assessmentId;
+	
+	/**
+	 * 专家成员
+	 */
+	private String jsonMembers;
+	
+	/**
+	 * 专家组长
+	 */
+	private String jsonLeaders;
+	
+	/**
+	 * 评估专家成员管理Manager
+	 */
+	@Autowired
+	private AsseMemberManager asseMemberManager;
 	
   /**
    * 返回所有事件标题
@@ -169,6 +188,60 @@ public class AssessmentAction extends
 	}
 	
 	/**
+	 * 保存风险评估启动记录
+	 */
+	public String startSave() {
+		if (getModel().getId() != null ){
+			Assessment assessment = getManager().get(getModel().getId());	
+			assessment.setState(AssessMentConstants.EVAL_IS_START_STATE);
+			getManager().save(assessment);
+		}
+		return SUCCESS;
+	}
+	/**
+	 * 获取该风险评估对象所选择的专家成员信息
+	 * @return
+	 */
+	
+  public String getMembers() {
+		StringBuffer members = new StringBuffer();
+		if (assessmentId != null ){
+			List<AsseMember> AsseMembers = asseMemberManager.getAsseMembers(assessmentId, AssessMentConstants.EXPERT_MEMBER);
+	  	if (CollectionUtils.isNotEmpty(AsseMembers)){
+		    for (AsseMember asseMember : AsseMembers) {
+		    	members.append(asseMember.getExpert().getName());
+		    	members.append(",");
+		    }
+		    if (StringUtils.isNotBlank(members.toString()) && members.toString().lastIndexOf(",") > 0){
+		    	jsonMembers = members.toString().substring(0, members.toString().length() -1 );
+		    }
+	  	}
+		}
+    return "members";
+  }
+  
+	/**
+	 * 获取该风险评估对象所选择的专家成员信息
+	 * @return
+	 */
+  public String getLeaders() {
+		StringBuffer leaders = new StringBuffer();
+		if (assessmentId != null ){
+			List<AsseMember> AsseMembers = asseMemberManager.getAsseMembers(assessmentId, AssessMentConstants.EXPERT_LEADER);
+	  	if (CollectionUtils.isNotEmpty(AsseMembers)){
+		    for (AsseMember asseMember : AsseMembers) {
+		    	leaders.append(asseMember.getExpert().getName());
+		    	leaders.append(",");
+		    }
+		    if (StringUtils.isNotBlank(leaders.toString()) && leaders.toString().lastIndexOf(",") > 0){
+		    	jsonLeaders = leaders.toString().substring(0, leaders.toString().length() -1 );
+		    }
+	  	}
+		}
+    return "leaders";
+  }
+  
+	/**
 	 * 打印风险评估申请表
 	 */
 	public String print() {
@@ -205,5 +278,20 @@ public class AssessmentAction extends
 	public void setAssessmentId(Integer assessmentId) {
 		this.assessmentId = assessmentId;
 	}
-	
+
+	public String getJsonMembers() {
+		return jsonMembers;
+	}
+
+	public void setJsonMembers(String jsonMembers) {
+		this.jsonMembers = jsonMembers;
+	}
+
+	public String getJsonLeaders() {
+		return jsonLeaders;
+	}
+
+	public void setJsonLeaders(String jsonLeaders) {
+		this.jsonLeaders = jsonLeaders;
+	}
 }
