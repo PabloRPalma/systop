@@ -34,7 +34,12 @@
              	<s:textfield id="remark" name="model.remark" cssStyle="width:300px;height:150px"/>
              </td>
           </tr>
-          
+           <tr>
+	             <td align="right">排列序号：</td>
+	             <td align="left">
+	             	<s:textfield id="sortId" name="model.sortId" cssStyle="width:30px;"></s:textfield>
+	             </td>
+	          </tr>
         </table> 
     </fieldset>
     <table width="510px" style="margin-bottom:10px;">
