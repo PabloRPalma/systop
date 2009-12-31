@@ -37,6 +37,7 @@ public class UrgentType extends BaseModel {
 
 	/** 备注 */
 	private String remark;
+	
 	/** 排列序号 */
 	private Integer sortId;
 
@@ -49,6 +50,15 @@ public class UrgentType extends BaseModel {
 	private Dept county;
 
 	public UrgentType() {
+	}
+	
+	/**
+	 * @param name 类别名称
+	 * @param sortId 排序ID
+	 */
+	public UrgentType(String name, Integer sortId){
+		this.name = name;
+		this.sortId = sortId;
 	}
 
 	@Id

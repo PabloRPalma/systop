@@ -23,41 +23,60 @@ import com.systop.core.model.BaseModel;
 @Entity
 @Table(name = "URGENT_GROUPS", schema = "FSMIS")
 public class UrgentGroup extends BaseModel {
-	
+
 	/** 主键 */
 	private Integer id;
-	
+
 	/** 组名 */
 	private String name;
-	
+
 	/** 描述 */
 	private String descr;
-	
+
 	/** 显示内容 */
 	private String displays;
-	
+
 	/** 类别 内部组还是外部组 */
 	private String type;
-	
+
 	/** 本组对应模板 */
 	private String template;
-	
+
 	/** 是否公用数据 Y/N */
 	private String isPublic;
-	
-	/**派遣类别 */
+
+	/** 派遣类别 */
 	private UrgentType urgentType;
-	
+
 	/** 对应的结果对象名称 */
 	private String category;
-	
+
 	/** 所属区县 */
 	private Dept county;
-	
-	/** 是否原始数据  0:否，1:是  */
+
+	/** 是否原始数据 0:否，1:是 */
 	private String isOriginal;
 
 	public UrgentGroup() {
+	}
+
+	/**
+	 * @param name
+	 *            组名称
+	 * @param category
+	 *            对应指挥组类别
+	 * @param isPublic
+	 *            是否公共
+	 * @param isOriginal
+	 *            是否原始数据
+	 */
+	public UrgentGroup(String name, String category, String isPublic,
+			String isOriginal) {
+		this.name = name;
+		this.category = category;
+		this.isPublic = isPublic;
+		this.isOriginal = isOriginal;
+
 	}
 
 	@Id
@@ -117,7 +136,7 @@ public class UrgentGroup extends BaseModel {
 	public void setUrgentType(UrgentType urgentType) {
 		this.urgentType = urgentType;
 	}
-	
+
 	@Column(name = "DISPLAYS", length = 500)
 	public String getDisplays() {
 		return displays;
@@ -126,6 +145,7 @@ public class UrgentGroup extends BaseModel {
 	public void setDisplays(String displays) {
 		this.displays = displays;
 	}
+
 	@Column(name = "DESCR", length = 500)
 	public String getDescr() {
 		return descr;
@@ -134,6 +154,7 @@ public class UrgentGroup extends BaseModel {
 	public void setDescr(String descr) {
 		this.descr = descr;
 	}
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "COUNTY")
 	public Dept getCounty() {
@@ -143,6 +164,7 @@ public class UrgentGroup extends BaseModel {
 	public void setCounty(Dept county) {
 		this.county = county;
 	}
+
 	@Column(name = "CATEGORY", length = 500)
 	public String getCategory() {
 		return category;
@@ -151,12 +173,13 @@ public class UrgentGroup extends BaseModel {
 	public void setCategory(String category) {
 		this.category = category;
 	}
+
 	@Column(name = "IS_ORIGINAL", length = 255)
 	public String getIsOriginal() {
-  	return isOriginal;
-  }
+		return isOriginal;
+	}
 
 	public void setIsOriginal(String isOriginal) {
-  	this.isOriginal = isOriginal;
-  }
+		this.isOriginal = isOriginal;
+	}
 }
