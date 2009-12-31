@@ -1,6 +1,5 @@
 package com.systop.common.modules.dept.model;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,16 +34,16 @@ import com.systop.fsmis.model.TaskDetail;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "depts", uniqueConstraints = {})
-public class Dept extends BaseModel implements Serializable {
+public class Dept extends BaseModel {
 
-	/**
-	 * id
-	 */
+	/** id */
 	private Integer id;
+
 	/**
 	 * 部门描述
 	 */
 	private String descn;
+
 	/**
 	 * 部门名称
 	 */
@@ -54,25 +53,30 @@ public class Dept extends BaseModel implements Serializable {
 	 * 部门类别
 	 */
 	private String type;
+
 	/**
 	 * 部门编号规则：两位数字，从1自动排；
 	 */
 	private String serialNo;
+
 	/**
 	 * 部门类别
 	 */
 	private String deptSort = "0";
+
 	/**
 	 * 部门的角色
 	 * 
 	 * private Set<Role> roles = new HashSet<Role>(0);
 	 */
+
 	/**
 	 * 上级部门
 	 */
 	private Dept parentDept;
+
 	/**
-	 * 部门记录
+	 * 下级部门
 	 */
 	private Set<Dept> childDepts = new HashSet<Dept>(0);
 
@@ -90,10 +94,12 @@ public class Dept extends BaseModel implements Serializable {
 	 * 部门下信息员
 	 */
 	private Set<Supervisor> supervisors = new HashSet<Supervisor>(0);
+
 	/**
 	 * 部门对应的一般事件
 	 */
 	private Set<FsCase> fsCases = new HashSet<FsCase>(0);
+
 	/**
 	 * 部门对应的任务详情
 	 */
@@ -103,6 +109,17 @@ public class Dept extends BaseModel implements Serializable {
 	 * 缺省构造
 	 */
 	public Dept() {
+	}
+
+	/**
+	 * @param name
+	 *            部门名称
+	 * @param type
+	 *            部门类别
+	 */
+	public Dept(String name, String type) {
+		this.name = name;
+		this.type = type;
 	}
 
 	@Id

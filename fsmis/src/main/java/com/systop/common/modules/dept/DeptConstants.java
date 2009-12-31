@@ -27,6 +27,7 @@ public final class DeptConstants {
    * 部门类别
    */
   public static final String TYPE_COUNTY = "1";
+  
   public static final String TYPE_DEPT = "0";
   /**
    * private constructor
