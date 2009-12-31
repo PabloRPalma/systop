@@ -7,7 +7,11 @@
 <title></title>
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/ec.jsp"%>
-
+<script type="text/javascript">
+  function goBack(){
+    window.location.href="index.do";
+  }
+</script>
 </head>
 <body>
 <br>
@@ -41,6 +45,9 @@
 			</td>
 		</tr>
 	</table>
+</div>
+<div align="center" style="padding-top: 10px;">
+	<input type="button" value="返回" cssClass="button" onclick="goBack()"/>
 </div>
 </body>
 </html>
