@@ -28,9 +28,10 @@ public class UcGroupManager extends BaseGenericsManager<UrgentGroup> {
 				throw new ApplicationException(ug.getName() + "已在"
 						+ ug.getUrgentType().getName() + "下添加！");
 			}
-		} 
-		if (getDao().exists(ug, "county", "category")) {
+		} else {
+			if (getDao().exists(ug, "county", "category")) {
 				throw new ApplicationException(ug.getName() + "已添加！");
+			}
 		}
 		super.save(ug);
 	}
@@ -53,7 +54,7 @@ public class UcGroupManager extends BaseGenericsManager<UrgentGroup> {
 		if (ugTemp == null) {
 			msg += " 善后处理组未添加";
 		}
-		logger.info("msg{}",msg);
+		logger.info("msg{}", msg);
 		return msg;
 	}
 }
