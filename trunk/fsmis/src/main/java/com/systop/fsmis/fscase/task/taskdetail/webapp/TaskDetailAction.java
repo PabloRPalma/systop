@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 
 import com.systop.cms.utils.PageUtil;
 import com.systop.common.modules.security.user.LoginUserService;
+import com.systop.common.modules.security.user.model.User;
 import com.systop.core.dao.support.Page;
 import com.systop.core.webapp.struts2.action.DefaultCrudAction;
 import com.systop.fsmis.CaseConstants;
@@ -60,6 +61,10 @@ public class TaskDetailAction extends
 		 * Dept dept = loginUserService.getLoginUserCounty(getRequest()); if(dept
 		 * !=null){ buf.append("and td.dept.id = ?"); args.add(dept.getId()); }
 		 */
+		User user = loginUserService.getLoginUser(getRequest());
+		getRequest().setAttribute("userId", user.getId());
+		getRequest().setAttribute("userName", user.getName());
+		
 		Page page = PageUtil.getPage(getPageNo(), getPageSize());
 		page = getManager().pageQuery(page, buf.toString(), args.toArray());
 		restorePageData(page);
@@ -186,8 +191,9 @@ public class TaskDetailAction extends
 	 * @return
 	 */
 	public String doCommitTaskDetail() {
+		getModel().getTask().getFsCase().setCorp(null);
 		getManager().doCommitTaskDetail(getModel());
-
+		
 		return SUCCESS;
 	}
 
