@@ -7,8 +7,13 @@
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/ec.jsp"%>
 <script type="text/javascript">
+function removeUcGroupTypeId(id,ucTypeId){
+	if (confirm("确认要删除该小组吗?")){	
+		 window.location.href="remove.do?model.id=" + id+"&ucTypeId="+ucTypeId;		   
+	}
+}
 function removeUcGroup(id){
-	if (confirm("确认要删除该小组吗?")){		  
+	if (confirm("确认要删除该小组吗?")){	
 		 window.location.href="remove.do?model.id=" + id;		   
 	}
 }
@@ -22,13 +27,17 @@ function removeUcGroup(id){
 	<tr>
 		<td align="left" style="font-size: 12px">
 			<s:if test="#attr.ucTypeId != null">
-				<b>所属类别：${ucType.name}</b>
+				<b>所属类别：${ucType.name}</b>&nbsp;&nbsp;&nbsp;<font color="red">${msg} </font>
 			</s:if>
 		</td>
 		<td align="right">
 		<table>
 			<tr>
-				<td><a href="${ctx}/ucgroup/edit.do?ucTypeId=${ucTypeId}"><img src="${ctx}/images/icons/add.gif" />添加</a></td>
+				<td>
+					<s:if test="#attr.msg!= ''">
+						<a href="${ctx}/ucgroup/edit.do?ucTypeId=${ucTypeId}"><img src="${ctx}/images/icons/add.gif" />添加</a>
+					</s:if>
+				</td>
 			</tr>
 		</table>
 		</td>
@@ -71,8 +80,8 @@ function removeUcGroup(id){
 			</s:if>
 			<s:if test="#attr.ucTypeId != null">
 				<c:if test="${item.isPublic eq '0'}">	
-					<a href="edit.do?model.id=${item.id}">编辑</a>|
-					<a href="#" onClick="removeUcGroup(${item.id})">删除</a>
+					<a href="edit.do?model.id=${item.id}&ucTypeId=${ucTypeId}">编辑</a>|
+					<a href="#" onClick="removeUcGroupTypeId(${item.id},${ucTypeId})">删除</a>
 				</c:if>
 			</s:if>
 		</ec:column>
