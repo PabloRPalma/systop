@@ -28,9 +28,8 @@ public class UrgentInitializer {
 	@PostConstruct
 	@Transactional
 	public void init() {
-		Session session = sessionFactory.openSession();
-		setupUrgentType(session);
-		setupUrgentGroup(session);
+		setupUrgentType(sessionFactory);
+		setupUrgentGroup(sessionFactory);
 	}
 
 	/**
@@ -38,7 +37,8 @@ public class UrgentInitializer {
 	 * 
 	 * @param session
 	 */
-	private void setupUrgentType(Session session) {
+	private void setupUrgentType(SessionFactory sessionFactory) {
+		Session session = sessionFactory.openSession();
 		try {
 			for (Dept d : getDepts()) {
 				for (UrgentType type : InitUtil.getUrgentType()) {
@@ -57,7 +57,8 @@ public class UrgentInitializer {
 	 * 
 	 * @param session
 	 */
-	private void setupUrgentGroup(Session session) {
+	private void setupUrgentGroup(SessionFactory sessionFactory) {
+		Session session = sessionFactory.openSession();
 		try {
 			for (Dept d : getDepts()) {
 				for (UrgentGroup group : InitUtil.getUrgentGroups()) {
