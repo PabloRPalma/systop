@@ -19,10 +19,6 @@
 	<s:hidden name="model.id"/>
 	<table width="800px" align="center" border="0" cellpadding="3" cellspacing="3">
 		<tr>
-			<td colspan="2"><%@ include file="/common/messages.jsp"%>
-			</td>
-		</tr>
-		<tr>
 			<td align="right" width="70">文章标题：</td>
 			<td align="left">
 				<s:textfield id="title" name="model.title" cssStyle="width:450px" cssClass="required"/>
