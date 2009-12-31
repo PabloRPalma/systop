@@ -6,14 +6,16 @@
 <title>应急指挥派遣类别维护</title>
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/ec.jsp"%>
+<%@include file="/common/extjs.jsp"%>
 <script type="text/javascript">
 
 /**
  * 删除提交
  */
- function removeUcType(ucID){
+ 
+ function removeUcType(utID){
  	if(confirm("确实要删除该类别吗？")){
- 		location.href="remove.do?model.id="+ucID;
+ 		location.href="remove.do?model.id="+utID;
  	}
  }
  </script>
