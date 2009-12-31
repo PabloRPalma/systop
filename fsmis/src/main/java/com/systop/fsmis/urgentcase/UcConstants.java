@@ -57,6 +57,10 @@ public final class UcConstants {
 	/** 接待 */
 	public static final String RECEIVE = "Receive";
 	
+	/** 应急指挥组是否是原始数据 1:是*/
+	public static final String GROUP_ORIGINAL_YES = "1";
+	/** 前台提交排序时使用*/
+	public static final int LENGTH = 2;
 	/**
 	 * 组类别
 	 */
