@@ -45,6 +45,10 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 	private Integer typeoneId;
 
 	private Integer typetwoId;
+	
+	private Integer oneId;
+	
+	private Integer twoId;
 
 	private List typeRst;
 
@@ -164,6 +168,17 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 	@Override
 	public String edit() {
 		getRequest().setAttribute("levelone", getLevelOne());
+		if(getModel().getId()!=null){
+			//为类别赋默认值，用于编辑时显示
+			if(getModel().getCaseType().getCaseType()!=null && 
+			   getModel().getCaseType().getCaseType().getId()!=null){
+				oneId= getModel().getCaseType().getCaseType().getId();
+				twoId= getModel().getCaseType().getId();
+			}else{
+				oneId=getModel().getCaseType().getId();
+				
+			}
+		}
 		return super.edit();
 	}
 	/**
@@ -226,5 +241,21 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 
 	public void setTypetwoId(Integer typetwoId) {
 		this.typetwoId = typetwoId;
+	}
+	
+	public Integer getOneId() {
+		return oneId;
+	}
+
+	public void setOneId(Integer oneId) {
+		this.oneId = oneId;
+	}
+	
+	public Integer getTwoId() {
+		return twoId;
+	}
+
+	public void setTwoId(Integer twoId) {
+		this.twoId = twoId;
 	}
 }
