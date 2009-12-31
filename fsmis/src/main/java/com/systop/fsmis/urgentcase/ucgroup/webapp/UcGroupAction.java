@@ -115,8 +115,6 @@ public class UcGroupAction extends
 	@SuppressWarnings("unchecked")
 	public Map getSortMap() {
 		Map SortMap = new LinkedHashMap();
-		SortMap.put(UcConstants.INNER, "内部");
-		SortMap.put(UcConstants.OUTER, "外部");
 		return SortMap;
 	}
 
