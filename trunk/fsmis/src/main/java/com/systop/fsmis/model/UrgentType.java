@@ -3,6 +3,7 @@ package com.systop.fsmis.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -78,7 +79,7 @@ public class UrgentType extends BaseModel {
 		this.remark = remark;
 	}
 
-	@OneToMany(cascade = {}, fetch = FetchType.LAZY, mappedBy = "urgentType")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "urgentType")
 	public Set<UrgentGroup> getUrgentGroup() {
 		return urgentGroup;
 	}
