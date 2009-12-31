@@ -69,7 +69,7 @@
 		  	<div align="center" id="JingjieBaowei" style="padding: 10px 5px 10px 5px;">
        	 	<%if (groupMap.get(UcConstants.DEFEND) != null){%>
               	<div align="center">
-              		<a href="${ctx}/emergency/defend/edit.do?model.id=<%=groupMap.get(UcConstants.DEFEND)%>" target="_blank">
+              		<a href="${ctx}/urgentcase/editGroupResult.do?groupId=<%=groupMap.get(UcConstants.DEFEND).getId()%>&model.id=${model.id}" target="main">
               			<b><%=groupMap.get(UcConstants.DEFEND).getName()%></b>
               		</a>
               	</div><br>
@@ -96,7 +96,7 @@
           	<div align="center" id="YiLiaoJiuHu" style="padding: 10px 5px 10px 5px;">
        	 	<%if (groupMap.get(UcConstants.MEDICAL_RESCUE) != null){%>
               	<div align="center">
-              		<a href="${ctx}/emergency/medicalRescue/edit.do?model.id=<%=groupMap.get(UcConstants.MEDICAL_RESCUE)%>" target="_blank">
+              		<a href="${ctx}/urgentcase/editGroupResult.do?groupId=<%=groupMap.get(UcConstants.MEDICAL_RESCUE).getId()%>&model.id=${model.id}" target="main">
               		<b><%=groupMap.get(UcConstants.MEDICAL_RESCUE).getName()%></b>
               		</a>
               	</div><br>
@@ -123,7 +123,7 @@
            <div align="center" id="HouQinBaoZhang" style="padding: 10px 5px 10px 5px;">
        	 	<%if (groupMap.get(UcConstants.REAR_SERVICE) != null){%>
               	<div align="center">
-              		<a href="${ctx}/emergency/rearService/edit.do?model.id=<%=groupMap.get(UcConstants.REAR_SERVICE)%>" target="_blank">
+              		<a href="${ctx}/urgentcase/editGroupResult.do?groupId=<%=groupMap.get(UcConstants.REAR_SERVICE).getId()%>&model.id=${model.id}" target="main">
               		<b><%=groupMap.get(UcConstants.REAR_SERVICE).getName()%></b>
               		</a>
               	</div><br>
@@ -150,7 +150,7 @@
           <div align="center" id="ShanHouChuLi" style="padding: 10px 5px 10px 5px;">
        	 	<%if (groupMap.get(UcConstants.AFTER_HANDLE) != null){%>
               	<div align="center">
-              		<a href="${ctx}/emergency/afterHandle/edit.do?model.id=<%=groupMap.get(UcConstants.AFTER_HANDLE)%>" target="_blank">
+              		<a href="${ctx}/urgentcase/editGroupResult.do?groupId=<%=groupMap.get(UcConstants.AFTER_HANDLE).getId()%>&model.id=${model.id}" target="main">
               		<b><%=groupMap.get(UcConstants.AFTER_HANDLE).getName()%></b>
               		</a>
               	</div><br>
@@ -177,7 +177,7 @@
            <div align="center" id="DiaoChaChuLi" style="padding: 10px 5px 10px 5px;">
        	 	<%if (groupMap.get(UcConstants.ACCIDENT_HANDLE) != null){%>
               	<div align="center">
-              		<a href="${ctx}/emergency/accidentHandle/edit.do?model.id=<%=groupMap.get(UcConstants.ACCIDENT_HANDLE)%>" target="_blank">
+              		<a href="${ctx}/urgentcase/editGroupResult.do?groupId=<%=groupMap.get(UcConstants.ACCIDENT_HANDLE).getId()%>&model.id=${model.id}" target="main">
               		<b><%=groupMap.get(UcConstants.ACCIDENT_HANDLE).getName()%></b>
               		</a>
               	</div><br>
@@ -204,7 +204,7 @@
            <div align="center" id="XinWenBaoDao" style="padding: 10px 5px 10px 5px;">
        	 	<%if (groupMap.get(UcConstants.NEWS_REPORT) != null){%>
               	<div align="center">
-              		<a href="${ctx}/emergency/newsReport/edit.do?model.id=<%=groupMap.get(UcConstants.NEWS_REPORT)%>" target="_blank">
+              		<a href="${ctx}/urgentcase/editGroupResult.do?groupId=<%=groupMap.get(UcConstants.NEWS_REPORT).getId()%>&model.id=${model.id}" target="main">
               		<b><%=groupMap.get(UcConstants.NEWS_REPORT).getName()%></b>
               		</a>
               	</div><br>
@@ -231,7 +231,7 @@
           <div align="center" id="ZhuanJiaJiShu" style="padding: 10px 5px 10px 5px;">
        	 	<%if (groupMap.get(UcConstants.EXPERT_TECHNOLOGY) != null){%>
               	<div align="center">
-              		<a href="${ctx}/emergency/expertTechnology/edit.do?model.id=<%=groupMap.get(UcConstants.EXPERT_TECHNOLOGY)%>" target="_blank">
+              		<a href="${ctx}/urgentcase/editGroupResult.do?groupId=<%=groupMap.get(UcConstants.EXPERT_TECHNOLOGY).getId()%>&model.id=${model.id}" target="main">
               		<b><%=groupMap.get(UcConstants.EXPERT_TECHNOLOGY).getName()%></b>
               		</a>
               	</div><br>
@@ -258,7 +258,7 @@
          	<div align="center" id="JieDai" style="padding: 10px 5px 10px 5px;">
        	 	<%if (groupMap.get(UcConstants.RECEIVE) != null){%>
               	<div align="center">
-              		<a href="${ctx}/emergency/receive/edit.do?model.id=<%=groupMap.get(UcConstants.RECEIVE)%>" target="_blank">
+              		<a href="${ctx}/urgentcase/editGroupResult.do?groupId=<%=groupMap.get(UcConstants.RECEIVE).getId()%>&model.id=${model.id}" target="main">
               		<b><%=groupMap.get(UcConstants.RECEIVE).getName()%></b>
               		</a>
               	</div><br>
