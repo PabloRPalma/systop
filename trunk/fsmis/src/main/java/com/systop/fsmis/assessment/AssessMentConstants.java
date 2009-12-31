@@ -22,8 +22,11 @@ public final class AssessMentConstants {
 	/** AUDITING_REJECT_STATE → "2" 审核未通过状态 */
 	public static final String AUDITING_REJECT_STATE = "2";
 
+	/** EVAL_IS_START_STATE → "3" 评估启动状态 */
+	public static final String EVAL_IS_START_STATE = "3";
+	
 	/** EVAL_IS_OVER_STATE → "3" 评估完毕状态 */
-	public static final String EVAL_IS_OVER_STATE = "3";
+	public static final String EVAL_IS_OVER_STATE = "4";
 
 	public static final Map<String, String> ASSESSMENT_STATE = Collections
 			.synchronizedMap(new LinkedHashMap<String, String>());
