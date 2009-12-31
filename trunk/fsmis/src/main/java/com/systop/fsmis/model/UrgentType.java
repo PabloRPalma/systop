@@ -37,6 +37,8 @@ public class UrgentType extends BaseModel {
 
 	/** 备注 */
 	private String remark;
+	/** 排列序号 */
+	private Integer sortId;
 
 	/** 对应的组 ,其实只需要一个组(事故处理组)即可 */
 	private Set<UrgentGroup> urgentGroup = new HashSet<UrgentGroup>(0);
@@ -95,6 +97,14 @@ public class UrgentType extends BaseModel {
 
 	public void setCounty(Dept county) {
 		this.county = county;
+	}
+	@Column(name = "SORT_ID", precision = 22)
+	public Integer getSortId() {
+		return sortId;
+	}
+
+	public void setSortId(Integer sortId) {
+		this.sortId = sortId;
 	}
 
 }
