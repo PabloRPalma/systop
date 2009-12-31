@@ -56,6 +56,33 @@
 	    });
   });
 
+ 
+  Ext.onReady(function(){
+
+			var subid = document.getElementById("oneId").value;
+			var twoid = document.getElementById("twoId").value;
+			if (subid != null && subid != '') {
+				$('#levelone').val(subid);
+			}
+	      $.ajax({
+			     url: '${ctx}/fscase/getLevelTwo.do',
+			     type: 'post',
+				 dataType: 'json',
+				 data: {typeId : subid},
+				 success: function(rows, textStatus){
+				 $('#itemId').empty();
+				 $('<option value=\'\'>请选择...</option>').appendTo('#itemId');
+				 for (var i = 0; i < rows.length; i ++) {
+					  var row = rows[i];
+					   $('<option value=' + row.id + '>' + row.name + '</option>').appendTo('#itemId');
+				 }
+				 if (twoid != null && twoid != '') {
+						$('#itemId').val(twoid);
+				 }
+			}
+	     }); 		    
+	
+  });
 
   //文本编辑组件
   function preFckEditor(){
@@ -85,7 +112,8 @@
 <s:form action="save.do" id="save" method="post" theme="simple" validate="true" onsubmit="return valileader()">
 	<s:hidden name="model.id" />
 	<s:hidden name="mesId"/>
-	<s:hidden name="eventInfoId"/>
+	<s:hidden id="oneId" name="oneId"/>
+	<s:hidden id="twoId" name="twoId"/>
 	<fieldset style="width: 800px; padding: 10px 10px 10px 10px;">
 	<legend>编辑事件</legend>
 	<table width="800px" align="left">
@@ -119,7 +147,7 @@
 				 <select id="levelone" name="typeoneId" style="width:120px;" class="required">
 					    <option value="">请选择...</option>
 						<c:forEach items="${levelone}" var="item">
-					       <option value="${item.id}">${item.name}</option>
+					       <option value="${item.id}" >${item.name}</option>
 					    </c:forEach>
 			      </select>
 			     <select id="itemId" name="typetwoId" style="width:120px;">
