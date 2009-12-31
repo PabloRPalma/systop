@@ -90,7 +90,6 @@ public class SmsProxyCmccWebServiceImpl implements SmsProxy {
 			logger.error(ex.getMessage());
 			throw new Exception(ex);
 		}
-
 	}
 
 	/**
