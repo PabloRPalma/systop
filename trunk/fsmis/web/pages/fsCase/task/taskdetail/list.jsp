@@ -58,10 +58,8 @@
 		<ec:column width="40" property="_n" title="No."
 			value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center" />
 		<ec:column width="300" property="task.title" title="任务标题" />
-		<ec:column width="200" property="_depts" title="执行部门">
-			<c:forEach var="detail" items="${item.task.taskDetails}">				
-				${detail.dept.name}
-			</c:forEach>
+		<ec:column width="200" property="task" title="执行部门" cell="com.systop.fsmis.fscase.webapp.ec.DeptsCell">
+			
 		</ec:column>
 		<ec:column width="80" property="task.dispatchTime" cell="date"
 			title="发布时间" format="yyyy-MM-dd" style="text-align:center" />
@@ -99,10 +97,11 @@
 			<a	href="${ctx}/taskdetail/view.do?taskDetailId=${item.id}&fsCaseId=${item.task.fsCase.id}&modelId=1">查看|</a>			
 			<c:if test="${item.status == '0' or item.status == '1'}">
 				<a href="${ctx}/taskdetail/receiveTask.do?model.id=${item.id}">接收|</a>
-				<a href="${ctx}/taskdetail/toReturnTaskDetail.do?model.id=${item.id}">退回|</a>
+				<a href="${ctx}/taskdetail/toReturnTaskDetail.do?model.id=${item.id}">退回1|</a>
+				<a href="#" onclick="javascript:returnTaskDetail(${item.id},${userId})">退回2|</a>
 			</c:if>
 			<c:if test="${item.status == '2'}">
-				<a href="${ctx}/taskdetail/returnTask.do?model.id=${item.id}">处理|</a>
+				<a href="${ctx}/taskdetail/toDealWithTaskDetail.do?model.id=${item.id}">处理|</a>
 			</c:if>
 			<a href="#">地图位置|</a>
 			<a href="#" target="_blank">打印</a>
@@ -111,5 +110,6 @@
 </ec:table></div>
 </div>
 </div>
+<jsp:include page="returnTaskDetail.jsp"></jsp:include>
 </body>
 </html>

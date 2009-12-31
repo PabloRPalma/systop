@@ -5,35 +5,22 @@
 <html>
 <head>
 <title></title>
+<%@include file="/common/ec.jsp"%>
+<%@include file="/common/extjs.jsp"%>
 <%@include file="/common/meta.jsp"%>
-<script type="text/javascript">
-
-	function valileader(){
-	
-     
-       var people = document.getElementById('people').value;
-		if(people == ''){
-			alert('请填写单位负责人！');
-			
-			return false;
-		}
-		var reason = document.getElementById('reason').value;
-		if(reason == ''){
-			alert('请填写任务退回原因！');
-			return false;
-		}
-	
-       	
-	}
-	
-</script>
+<%@include file="/common/validator.jsp"%>
 </head>
 <body>
-<div class="x-panel">
-<div class="x-panel-header">退回任务</div>
-<div class="x-toolbar">&nbsp;</div>
+<div id="winReturnTaskDetail" class="x-hidden">
+<div class="x-window-header">退回任务</div>
+<div id="returnTaskDetail">
 <div align="center">
-<s:form action="doReturnTask.do" method="post" theme="simple"  onsubmit="return valileader()">
+<script type="text/javascript">
+	$(document).ready(function() {
+	$("#teturnTaskDetailFrm").validate();
+});
+</script>
+<s:form action="doReturnTaskDetail.do" id="teturnTaskDetailFrm" method="post" theme="simple" validate="true" >
 	<s:hidden name="model.id" />
 	<fieldset style="width: 510px; padding: 10px 10px 10px 10px;">
 	<legend>退回信息</legend>
@@ -41,12 +28,12 @@
 	    <tr>
 			<td align="right" width="120">负责人：</td>
 			<td align="left" width="300">
-			  <s:textfield id="people" name="model.returnPeople" cols="50" /><font color="red">需单位主要负责同志确认</font>
+			  <s:textfield id="people" name="model.returnPeople" cols="50"  cssClass="required"/><font color="red">需单位主要负责同志确认</font>
 			</td>
 		</tr>
 		<tr>
 			<td align="right" width="120">退回原因：</td>
-			<td align="left" width="420"><s:textarea id="reason" name="model.returnReason" cols="50" rows="15"/><font color="red">*</font></td>
+			<td align="left" width="420"><s:textarea id="reason" cssClass="required" name="model.returnReason" cols="50" rows="15"/><font color="red">*</font></td>
 		</tr>
 		
 	</table>
@@ -59,5 +46,9 @@
 </table>
 </s:form></div>
 </div>
+</div>
+<script type="text/javascript"
+	src="${ctx}/pages/fsCase/task/taskdetail/returnTask.js">	
+</script>
 </body>
 </html>
