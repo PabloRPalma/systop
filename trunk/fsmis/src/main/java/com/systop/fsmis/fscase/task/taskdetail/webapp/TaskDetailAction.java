@@ -155,7 +155,22 @@ public class TaskDetailAction extends
 
 		return SUCCESS;
 	}
-
+	/**
+	 * 转到任务明细处理页面
+	 * @return
+	 */
+	public String toDealWithTaskDetail(){
+		
+		return "toDealWithTaskDetail";
+	}
+	/**
+	 * 完成事件明细处理方法
+	 * @return
+	 */
+	public String doDealWithTaskDetail(){
+		
+		return SUCCESS;
+	}
 	/**
 	 * 请求提交任务,转发到填写任务明细页面
 	 * 
