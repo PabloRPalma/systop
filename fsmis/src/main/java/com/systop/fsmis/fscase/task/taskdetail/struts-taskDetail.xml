@@ -8,6 +8,7 @@
 			<result name="index">/pages/fsCase/task/taskdetail/list.jsp</result>
 			<result name="input">/pages/fsCase/task/taskdetail/edit.jsp</result>
 			<result name="returnTaskDetail">/pages/fsCase/task/taskdetail/returnTaskDetail.jsp</result>
+			<result name="toDealWithTaskDetail">/pages/fsCase/task/taskdetail/dealWithTaskDetail.jsp</result>
 			<!--查看任务明细需要转发到FsCase模块中通用的查看功能-->
 			<result name="view" type="chain">
 				<param name="namespace">/fscase</param>
