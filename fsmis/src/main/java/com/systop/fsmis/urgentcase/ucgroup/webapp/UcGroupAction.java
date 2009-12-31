@@ -83,7 +83,7 @@ public class UcGroupAction extends
 			sql.append(" and ug.county.id = ? and ( ");
 			args.add(dept.getId());
 			if (ucTypeId != null) {
-				sql.append(" and (ug.urgentType.id = ? or ");
+				sql.append(" ug.urgentType.id = ? or ");
 				args.add(ucTypeId);
 				// 列表页面显示类别信息使用
 				getRequest().setAttribute("ucType", getUrgentType(ucTypeId));
