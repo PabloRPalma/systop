@@ -1,5 +1,6 @@
 package com.systop.fsmis.assessment.webapp;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -255,11 +256,17 @@ public class MembersSelectorAction extends
 
 		page = PageUtil.getPage(getPageNo(), getPageSize());
 		// 分页查询全部/根据姓名查询
+		String expertName = StringUtils.EMPTY;
+		try {
+			expertName = java.net.URLDecoder.decode(getModel().getName() , "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		if (getModel() == null || StringUtils.isBlank(getModel().getName())) {
 			page = getManager().pageQuery(page, ("from Expert e"));
 		} else {
 			page = getManager().pageQuery(page, ("from Expert e where e.name like ?"),
-					   MatchMode.ANYWHERE.toMatchString(getModel().getName()));
+					   MatchMode.ANYWHERE.toMatchString(expertName));
 		}
 		// 得到专家实体集合
 		List allExperts = page.getData();
@@ -290,22 +297,6 @@ public class MembersSelectorAction extends
 
 		return JSON;
 	}
-	
-	
-  /**
-   * 按名称执行的专家查询
-   */
-  @Override
-  public String index() {
-    if (StringUtils.isBlank(getModel().getName())) {
-      items = getManager().query("from Expert e ");
-    } else {
-      items = getManager().query("from Expert e where e.name like ? " , new Object[]{
-            MatchMode.ANYWHERE.toMatchString(getModel().getName())});
-            
-    }
-    return INDEX;
-  }
 	
 	/**
 	 * 
