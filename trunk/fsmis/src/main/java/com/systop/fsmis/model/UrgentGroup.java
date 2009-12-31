@@ -23,31 +23,38 @@ import com.systop.core.model.BaseModel;
 @Entity
 @Table(name = "URGENT_GROUPS", schema = "FSMIS")
 public class UrgentGroup extends BaseModel {
+	
 	/** 主键 */
 	private Integer id;
+	
 	/** 组名 */
 	private String name;
+	
 	/** 描述 */
 	private String descr;
+	
 	/** 显示内容 */
 	private String displays;
+	
 	/** 类别 内部组还是外部组 */
 	private String type;
+	
 	/** 本组对应模板 */
 	private String template;
+	
 	/** 是否公用数据 Y/N */
 	private String isPublic;
+	
 	/**派遣类别 */
 	private UrgentType urgentType;
+	
 	/** 对应的结果对象名称 */
 	private String category;
-	/**
-	 * 所属区县
-	 */
+	
+	/** 所属区县 */
 	private Dept county;
-	/**
-	 * 是否原始数据  0:否，1:是
-	 */
+	
+	/** 是否原始数据  0:否，1:是  */
 	private String isOriginal;
 
 	public UrgentGroup() {
