@@ -115,7 +115,8 @@ var win = new Ext.Window({
 								method : 'POST',
 								success : function() {
 									win.hide();
-									Ext.my().msg('', '您已经成功的为评估对象设置了成员.');
+									Ext.my().msg('', '您已经成功的为评估对象设置了专家成员.');
+									window.location.reload(true);
 									//ECSideUtil.reload('ec');
 								}
 							});
@@ -188,5 +189,5 @@ function url() {
 		urlStr = urlStr + '&model.name=' + Ext.get('role-name').getValue();
 	}
 	
-	return urlStr;
+	return encodeURI(encodeURI(urlStr));
 }
