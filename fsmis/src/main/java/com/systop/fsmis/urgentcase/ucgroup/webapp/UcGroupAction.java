@@ -74,21 +74,25 @@ public class UcGroupAction extends
 	@Override
 	public String index() {
 		Page page = PageUtil.getPage(getPageNo(), getPageSize());
-		StringBuffer sql = new StringBuffer("from UrgentGroup ug where 1=1 ");
+		StringBuffer sql = new StringBuffer(
+				"from UrgentGroup ug where ug.isOriginal = ? ");
 		List args = new ArrayList();
+		args.add(UcConstants.GROUP_ORIGINAL_YES);
 		Dept dept = loginUserService.getLoginUserCounty(getRequest());
 		if (dept != null) {
 			sql.append(" and ug.county.id = ?");
 			args.add(dept.getId());
 			if (ucTypeId != null) {
-				sql.append(" and ug.urgentType.id = ? or ");
+				sql.append(" and (ug.urgentType.id = ? or ");
 				args.add(ucTypeId);
 				// 列表页面显示类别信息使用
 				getRequest().setAttribute("ucType", getUrgentType(ucTypeId));
+				getRequest().setAttribute("msg",
+						getManager().getUcGroupName(getUrgentType(ucTypeId)));
 			} else {
-				sql.append(" and ");
+				sql.append(" and (");
 			}
-			sql.append(" ug.urgentType.id is null and ug.isOriginal=1 ");
+			sql.append(" ug.urgentType.id is null) order by ug.isPublic desc");
 			page = getManager().pageQuery(page, sql.toString(), args.toArray());
 			restorePageData(page);
 		}
@@ -120,7 +124,22 @@ public class UcGroupAction extends
 
 	@SuppressWarnings("unchecked")
 	public Map getCategoryMap() {
-		return UcConstants.GROUP_CATEGORY_MAP;
+		Map categoryMap = new LinkedHashMap();
+		if (ucTypeId != null) {
+			categoryMap.put(UcConstants.AFTER_HANDLE, "善后处理");
+			categoryMap.put(UcConstants.ACCIDENT_HANDLE, "事故调查处理");
+		} else {
+			categoryMap.put(UcConstants.LEADERSHIP, "指挥部");
+			categoryMap.put(UcConstants.OFFICE, "办公室");
+			categoryMap.put(UcConstants.DEFEND, "警戒保卫");
+			categoryMap.put(UcConstants.MEDICAL_RESCUE, "医疗救护");
+			categoryMap.put(UcConstants.REAR_SERVICE, "后勤保障");
+			categoryMap.put(UcConstants.NEWS_REPORT, "新闻报道");
+			categoryMap.put(UcConstants.EXPERT_TECHNOLOGY, "技术专家");
+			categoryMap.put(UcConstants.RECEIVE, "接待");
+		}
+
+		return categoryMap;
 	}
 
 	public Integer getUcTypeId() {
