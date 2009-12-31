@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.security.user.model.User;
 import com.systop.core.service.BaseGenericsManager;
+import com.systop.fsmis.FsConstants;
 import com.systop.fsmis.model.CheckResult;
 import com.systop.fsmis.model.UrgentCase;
 import com.systop.fsmis.model.UrgentGroup;
@@ -99,7 +100,7 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
   					UrgentGroup utGroupNotOrg = new UrgentGroup();
   					BeanUtils.copyProperties(urgentGroup, utGroupNotOrg, new String[]{"isOriginal"});
   					//将新的组设置为‘非原始数据’
-  					utGroupNotOrg.setIsOriginal(UcConstants.GROUP_ORIGINAL_NO);
+  					utGroupNotOrg.setIsOriginal(FsConstants.N);
   					getDao().save(utGroupNotOrg);
   					UrgentResult urgentResult = new UrgentResult();
   					urgentResult.setDisplays("显示内容...");
