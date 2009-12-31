@@ -35,8 +35,8 @@
 			<param name="beanName" value="sendTypeDwrAction"></param>
 		</create>
 		
-		<create javascript="NoticeAction" creator="spring">
-   	         <param name="beanName" value="noticeAction"></param>
+		<create javascript="NoticeDwrAction" creator="spring">
+   	         <param name="beanName" value="noticeDwrAction"></param>
    	         <include method="removeAtt"/>
    	    </create>  	  	    
    	    
