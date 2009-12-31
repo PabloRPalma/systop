@@ -40,8 +40,21 @@ window.onload = function(){
 		  }
 		}
 	});
-  };
+
+    $.ajax({
+		url: '${ctx}/assessment/getLeaders.do',
+		type: 'post',
+		dataType: 'json',
+		data: {assessmentId : enId},
+		success: function(leaders, textStatus){
+		  if(leaders != null){
+		    document.getElementById("leader").value = leaders;
+		  }
+		}
+    });	
+};
   
+	   
 Ext.onReady(function(){
     var tabs = new Ext.TabPanel({
         renderTo: 'tabs',
@@ -103,11 +116,20 @@ Ext.onReady(function(){
              <td align="right" width="90" style="height:20px"><span style="font-weight:bold">专家组成员：</span></td>
              <td><input class="text" type="text" id="member" name="member" size="50">
                  <a href="#"
-					onclick="javascript:membersOfAssessment(${model.id});"> <img
+					onclick="javascript:membersOfAssessment(${model.id}, 2);"> <img
 					src="${ctx}/images/icons/role.gif" border="0" title="设置专家组成员" />
 				         选择</a>				    
 			 </td>
-          </tr>        
+          </tr> 
+          <tr>
+             <td align="right" width="90" style="height:20px"><span style="font-weight:bold">专家组组长：</span></td>
+             <td><input class="text" type="text" id="leader" name="leader" size="50">
+                 <a href="#"
+					onclick="javascript:membersOfAssessment(${model.id}, 1);"> <img
+					src="${ctx}/images/icons/role.gif" border="0" title="设置专家组组长" />
+				         选择</a>				    
+			 </td>
+          </tr>                  
 	</table>
 </div>
 <div id="fsCase" class="x-hide-display">
@@ -180,6 +202,7 @@ Ext.onReady(function(){
 <div class="x-window-header">专家列表</div>
 <div id="role_grid"></div>
 </div>
+
 <script type="text/javascript"
 	src="${ctx}/pages/assessment/expertMembers.js">
 </script>
