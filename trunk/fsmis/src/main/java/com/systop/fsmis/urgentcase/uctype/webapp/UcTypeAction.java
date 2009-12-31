@@ -1,7 +1,5 @@
 package com.systop.fsmis.urgentcase.uctype.webapp;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -12,9 +10,7 @@ import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.core.dao.support.Page;
 import com.systop.core.webapp.struts2.action.DefaultCrudAction;
-import com.systop.fsmis.model.UrgentGroup;
 import com.systop.fsmis.model.UrgentType;
-import com.systop.fsmis.urgentcase.ucgroup.service.UcGroupManager;
 import com.systop.fsmis.urgentcase.uctype.service.UcTypeManager;
 
 /**
@@ -31,11 +27,6 @@ public class UcTypeAction extends DefaultCrudAction<UrgentType, UcTypeManager> {
 	 */
 	@Autowired
 	private LoginUserService loginUserService;
-	/**
-	 * 组管理
-	 */
-	@Autowired
-	private UcGroupManager ucGroupManager;
 
 	/**
 	 * 保存类别
@@ -70,18 +61,5 @@ public class UcTypeAction extends DefaultCrudAction<UrgentType, UcTypeManager> {
 			restorePageData(page);
 		}
 		return INDEX;
-	}
-
-	/**
-	 * 删除，会级联删除该类别下的组
-	 */
-	public String remove() {
-		List<UrgentGroup> ugList = ucGroupManager.query("from UrgentGroup ug where ug.urgentType.id = ? ", getModel().getId());
-
-		for (UrgentGroup ug : ugList) {
-			ucGroupManager.remove(ug);
-		}
-		getManager().remove(getModel());
-		return SUCCESS;
 	}
 }

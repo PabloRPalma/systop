@@ -6,7 +6,8 @@ import com.systop.core.service.BaseGenericsManager;
 import com.systop.fsmis.model.UrgentType;
 
 /**
- *  应急事件类别维护
+ * 应急事件类别维护
+ * 
  * @author yj
  */
 @Service
