@@ -97,7 +97,7 @@
 			</div>
 			<div style="padding-top:2px">
 				<img src="${ctx}/images/icons/add.gif" class="icon">
-				<a href="${ctx}/pages/office/message/index.jsp" target="main">内部消息</a>
+				<a href="${ctx}/office/message/index.do" target="main">内部消息</a>
 			</div>
 		</div>
 	</div>
