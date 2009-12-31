@@ -38,7 +38,11 @@
 		<create javascript="NoticeDwrAction" creator="spring">
    	         <param name="beanName" value="noticeDwrAction"></param>
    	         <include method="removeAtt"/>
-   	    </create>  	  	    
+   	    </create>  
+   	    
+   	    <create javascript="UcTypeDwrAction" creator="spring">
+   	         <param name="beanName" value="ucTypeDwrAction"></param>
+   	    </create>  	 	  	    
    	    
    	    <convert converter="bean"  match="com.systop.common.core.dao.support.Page"  />
    	    <convert converter="bean"  match="com.systop.common.core.webapp.ajax.RemoteQueryParams"></convert>
