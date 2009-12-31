@@ -71,8 +71,8 @@ window.onload = function(){
     <ec:column width="40" property="_num" title="No." value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center"/> 
     <ec:column width="60" property="proposer.name" title="申请人" style="text-align:center"/>
     <ec:column width="170" property="fsCase.title" title="事件标题"/>    
-    <ec:column width="100" property="_1" title="专家组组长"/>
-    <ec:column width="150" property="_2" title="专家组成员"/>
+    <ec:column width="100" property="_1" title="专家组组长" />
+    <ec:column width="150" property="asseMemberse" title="专家组成员" cell="com.systop.fsmis.assessment.converter.MembersConverter" />
     <ec:column width="70" property="askDate" title="申请日期"  style="text-align:center" cell="date" />     
     <ec:column width="100" property="state" title="评估状态" style="text-align:center">
        <c:choose>
@@ -86,10 +86,10 @@ window.onload = function(){
           <span style="color:#CC6600">审核未通过</span>
         </c:when>
         <c:when test="${item.state eq '3'}">
-          <span style="color:blue">评估完毕</span>
+          <span style="color:blue">评估已启动</span>
         </c:when>
         <c:when test="${item.state eq '4'}">
-          <span style="color:#0E8897">评估已启动</span>
+          <span style="color:#0E8897">评估完毕</span>
         </c:when>
       </c:choose>
     </ec:column>    
@@ -98,9 +98,12 @@ window.onload = function(){
  	      <a href="edit.do?model.id=${item.id}">编辑</a>|	   
 	      <a href="audit.do?model.id=${item.id}">审核</a>|       
        </c:if>   
-       <c:if test="${item.state eq '1'}">
+       <c:if test="${item.state eq '1' or item.state eq '3'}">
   	      <a href="start.do?model.id=${item.id}">启动</a>|	    
        </c:if>  
+       <c:if test="${item.state eq '3'}">
+  	      <a href="start.do?model.id=${item.id}">上报</a>|	    
+       </c:if>        
 	   <c:choose>
 	     <c:when test="${!empty item.checkResults}"> 
 	        <font color="#999999">删除|</font>
