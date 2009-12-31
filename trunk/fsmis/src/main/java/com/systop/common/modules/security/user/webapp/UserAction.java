@@ -1,8 +1,6 @@
 package com.systop.common.modules.security.user.webapp;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.ArrayUtils;
@@ -25,10 +23,8 @@ import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
 import com.systop.common.modules.security.user.UserConstants;
 import com.systop.common.modules.security.user.UserUtil;
-import com.systop.common.modules.security.user.model.Role;
 import com.systop.common.modules.security.user.model.User;
 import com.systop.common.modules.security.user.service.UserManager;
-import com.systop.common.modules.security.user.service.init.SysRolesProviderImpl;
 import com.systop.core.dao.support.Page;
 import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
 
@@ -211,13 +207,6 @@ public class UserAction extends ExtJsCrudAction<User, UserManager> {
   }
   
   /**
-   * 用户状态Map
-   */
-  public Map<String, String> getUserStatusMap() {
-    return UserConstants.USER_STATUS;
-  }
-  
-  /**
    * 返回性别Map
    */
   public Map<String, String> getSexMap() {
@@ -232,49 +221,10 @@ public class UserAction extends ExtJsCrudAction<User, UserManager> {
   }
   
   /**
-   * 返回用户单位Map
-   */
-  public Map<String, String> getUnitkindMap() {
-    return UserConstants.USER_UNITKIND_MAP;
-  }
-  
-  /**
-   * 返回用户所在省份Map
-   */
-  public Map<String, String> getProvinceMap() {
-    return UserConstants.PROVINCE_INFO_MAP;
-  }
-  
-  /**
-   * 返回用户级别Map
-   */
-  public Map<String, String> getUserLevelMap() {
-    return UserConstants.USER_LEVEL_MAP;
-  }
-  
-  public Map<String, String> getIndustryMap(){
-    return UserConstants.INDUSTRY_MAP;
-  }
-  
-  /**
    * 是否用户自己修改信息
    */
   private boolean isSelfEdit() {
     return StringUtils.isNotBlank(selfEdit);
-  }
-
-  
-  /**
-   * 返回“普通用户”，“高级用户”
-   * @return
-   */
-  public List<Role> getRoles() {
-    Role normal = (Role) getManager().getDao().findObject("from Role r where r.name=?", SysRolesProviderImpl.ROLE_NORMAL.getName());
-    Role senior = (Role) getManager().getDao().findObject("from Role r where r.name=?", SysRolesProviderImpl.ROLE_SENIOR.getName());
-    List<Role> roles = new ArrayList<Role>(2);
-    roles.add(normal);
-    roles.add(senior);
-    return roles;
   }
 
   /**

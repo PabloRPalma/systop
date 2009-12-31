@@ -33,27 +33,5 @@
 		    <result name="bingo">/pages/admin/security/user/regUserEdit.jsp</result>
 		</action>		
 	</package>
-	<package name="admin.regist.regMemo" extends="default"
-	         namespace="/regist/regMemo">
-		<action name="*" class="regMemoAction" method="{1}">
-			<result name="input">/pages/admin/regist/regMemo/edit.jsp</result>
-		    <result name="success" type="redirect">edit.do</result>
-		</action>		
-	</package>
-	<package name="admin.regist" extends="json" namespace="/regist">
-		<action name="*" class="registAction" method="{1}">
-			<result name="index">/pages/admin/regist/index.jsp</result>
-		    <result name="input">/pages/admin/regist/edit.jsp</result>
-		    <result name="confirm">/pages/admin/regist/confirm.jsp</result>
-			<result name="regist">/pages/admin/regist/regist.jsp</result>
-		    <result name="ok">/pages/admin/regist/ok.jsp</result>
-		    <result name="success" type="redirect">index.do</result>
-		    <result name="regMemo">/pages/admin/regist/regMemo.jsp</result>
-		    <result name="activate">/pages/admin/regist/activated.jsp</result>
-		    <result type="json" name="jsonRst">
-		   		<param name="root">checkResult</param>
-			</result>
-		</action>		
-	</package>
 </struts>
 
