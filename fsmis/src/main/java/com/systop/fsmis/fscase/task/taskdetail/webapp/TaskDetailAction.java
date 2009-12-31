@@ -31,7 +31,7 @@ public class TaskDetailAction extends
 		DefaultCrudAction<TaskDetail, TaskDetailManager> {
 	private Date taskBeginTime;
 	private Date taskEndTime;
-	@SuppressWarnings("unused")
+
 	@Autowired
 	private LoginUserService loginUserService;
 
@@ -64,7 +64,7 @@ public class TaskDetailAction extends
 		User user = loginUserService.getLoginUser(getRequest());
 		getRequest().setAttribute("userId", user.getId());
 		getRequest().setAttribute("userName", user.getName());
-		
+
 		Page page = PageUtil.getPage(getPageNo(), getPageSize());
 		page = getManager().pageQuery(page, buf.toString(), args.toArray());
 		restorePageData(page);
@@ -160,22 +160,27 @@ public class TaskDetailAction extends
 
 		return SUCCESS;
 	}
+
 	/**
 	 * 转到任务明细处理页面
+	 * 
 	 * @return
 	 */
-	public String toDealWithTaskDetail(){
-		
+	public String toDealWithTaskDetail() {
+
 		return "toDealWithTaskDetail";
 	}
+
 	/**
 	 * 完成事件明细处理方法
+	 * 
 	 * @return
 	 */
-	public String doDealWithTaskDetail(){
-		
+	public String doDealWithTaskDetail() {
+
 		return SUCCESS;
 	}
+
 	/**
 	 * 请求提交任务,转发到填写任务明细页面
 	 * 
@@ -193,7 +198,7 @@ public class TaskDetailAction extends
 	public String doCommitTaskDetail() {
 		getModel().getTask().getFsCase().setCorp(null);
 		getManager().doCommitTaskDetail(getModel());
-		
+
 		return SUCCESS;
 	}
 
