@@ -164,7 +164,7 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
 		if (urgentResult != null) {
 			String contentJson = "{" + urgentResult.getContent() + "}";
 			logger.info("json字符串：{}", contentJson);
-			contentMap = convertJsonToMap(contentJson);
+			//contentMap = convertJsonToMap(contentJson);
 		}
 		
 		return contentMap;
@@ -173,7 +173,7 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
   /**
    * 将大字段信息转换成Map
    */
-  private Map convertJsonToMap(String content) {
+  /*private Map convertJsonToMap(String content) {
   	Map valueMap = new LinkedHashMap();
 		JSONObject jsonObject = JSONObject.fromObject(content);
 		Iterator keyIter = jsonObject.keys();
@@ -188,7 +188,7 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
 		}
 		
 		return valueMap;
-  }
+  }*/
   
 	/**
 	 * 判断字符串是否由数字组成
