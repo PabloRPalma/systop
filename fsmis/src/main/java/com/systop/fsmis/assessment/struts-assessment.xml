@@ -14,7 +14,15 @@
 			<result type="json" name="titles">
 		        <param name="ignoreHierarchy">false</param>
 		        <param name="root">jsonTitles</param>
-		    </result>			
+		    </result>	
+			<result type="json" name="members">
+		        <param name="ignoreHierarchy">false</param>
+		        <param name="root">jsonMembers</param>
+		    </result>
+			<result type="json" name="leaders">
+		        <param name="ignoreHierarchy">false</param>
+		        <param name="root">jsonLeaders</param>
+		    </result>		    		    		
 		</action>
 	</package>
 	<package name="fsmis.assessment.member" extends="json" namespace="/assessment/member">
