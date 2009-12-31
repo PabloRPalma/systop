@@ -2,12 +2,25 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
 <beans default-lazy-init="false">
 	<description>配置各种常量,初始化系统等</description>
+	
+	<bean id="deptInitializer" class="com.systop.fsmis.init.DeptInitializer" />
+	
 	<!-- 初始化Admin账户、角色 -->
-	<bean id="adminInitializer" class="com.systop.common.modules.security.user.service.SysInitializer">
-	    <property name="adminEmail" value="eq_datashare@163.com"></property>  
-	    <property name="adminPwd" value="manager"></property>
-	    <property name="adminDesc" value="系统管理员角色"></property>
-	    <property name="adminName" value="Administrator"></property>
+	<bean id="userInitializer" class="com.systop.fsmis.init.UserInitializer">
+		<property name="adminName" value="Administrator"></property>
+		<property name="adminPwd" value="manager"></property>
+		<property name="adminDesc" value="系统管理员"></property>
 	</bean>
 	
+	<!-- 初始化数据库，将需要初始化的sql文件配置在此处，sql文件以表名命名 -->
+	<bean id="sqlInitializer" class="com.systop.fsmis.init.SqlInitializer">
+		<property name="sqlResources">
+			<list>
+				<value>classpath:com/systop/fsmis/init/sql/CASE_TYPES.sql</value>
+				<value>classpath:com/systop/fsmis/init/sql/SEND_TYPES.sql</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="urgentInitializer" class="com.systop.fsmis.init.UrgentInitializer" />
 </beans>
