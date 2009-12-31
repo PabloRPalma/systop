@@ -285,7 +285,7 @@
 	var caseId = document.getElementById('caseId').value;
 	Ext.MessageBox.confirm('提示','确定要选择该派遣环节吗？派遣后不能撤销！', function(btn){
         if (btn == 'yes') {
-            alert("派遣环节ID:" + typeId);
+            //alert("派遣环节ID:" + typeId);
             $.ajax({
     			url: '${ctx}/urgentcase/sendUrgentCase.do',
     			type: 'post',
