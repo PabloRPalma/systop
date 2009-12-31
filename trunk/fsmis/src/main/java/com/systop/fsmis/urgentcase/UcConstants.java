@@ -11,11 +11,6 @@ import java.util.Map;
  * 
  */
 public final class UcConstants {
-	/** 类别常量：内部 */
-	public static final String INNER = "1";
-
-	/** 类别常量：外部 */
-	public static final String OUTER = "0";
 
 	/** 事件状态：未通过 */
 	public static final String CASE_STATUS_PASSED = "0";
@@ -61,12 +56,6 @@ public final class UcConstants {
 
 	/** 接待 */
 	public static final String RECEIVE = "Receive";
-
-	/** 应急指挥组是否是原始数据 0:否*/
-	public static final String GROUP_ORIGINAL_NO = "0";
-	
-	/** 应急指挥组是否是原始数据 1:是*/
-	public static final String GROUP_ORIGINAL_YES = "1";
 	
 	/**
 	 * 组类别
