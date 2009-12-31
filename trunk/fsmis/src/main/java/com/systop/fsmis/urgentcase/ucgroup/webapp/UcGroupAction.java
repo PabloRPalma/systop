@@ -133,7 +133,7 @@ public class UcGroupAction extends
 			categoryMap.put(UcConstants.MEDICAL_RESCUE, "医疗救护");
 			categoryMap.put(UcConstants.REAR_SERVICE, "后勤保障");
 			categoryMap.put(UcConstants.NEWS_REPORT, "新闻报道");
-			categoryMap.put(UcConstants.EXPERT_TECHNOLOGY, "技术专家");
+			categoryMap.put(UcConstants.EXPERT_TECHNOLOGY, "专家技术");
 			categoryMap.put(UcConstants.RECEIVE, "接待");
 		}
 
