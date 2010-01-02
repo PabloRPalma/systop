@@ -17,10 +17,10 @@ public final class FsConstants {
   }
 
   /** 资源文件 */
-  public static final String BUNDLE_KEY = "application";
+  private static final String BUNDLE_KEY = "application";
 
   /** 资源绑定对象 */
-  public static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_KEY);
+  private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_KEY);
 
   /** 性别常量，M-男性 */
   public static final String GENT = "M";
