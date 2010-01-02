@@ -42,6 +42,7 @@ public class SqlInitializer {
 	@Transactional
 	public void init() {
 		if (sqlResources == null) {
+			//若需要执行sql文件进行初始化，请在sql目录下添加sql文件.
 			logger.debug("数据初始化(SqlInitializer)未指定sql文件.");
 			return;
 		}
