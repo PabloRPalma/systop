@@ -37,9 +37,10 @@ public class SendType extends BaseModel {
 
 	public SendType() {
 	}
-
-	public SendType(Integer id) {
-		this.id = id;
+	
+	public SendType(String name, Integer sortId){
+		this.name = name;
+		this.sortId = sortId;
 	}
 
 	@Id

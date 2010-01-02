@@ -37,6 +37,14 @@ public class CaseType extends BaseModel {
 	/** 类别记录 */
 	private Set<CaseType> caseTypes = new HashSet<CaseType>(0);
 
+	/** 默认构造 */
+	public CaseType() {
+	}
+	
+	public CaseType(String name){
+		this.name = name;
+	}
+
 	@Id
 	@GeneratedValue(generator = "hibseq")
 	@GenericGenerator(name = "hibseq", strategy = "hilo")
