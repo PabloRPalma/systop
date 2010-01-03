@@ -12,15 +12,16 @@
 		<property name="adminDesc" value="系统管理员"></property>
 	</bean>
 	
+	<bean id="caseInitializer" class="com.systop.fsmis.init.CaseInitializer" />
+	
+	<bean id="urgentInitializer" class="com.systop.fsmis.init.UrgentInitializer" />
+	
 	<!-- 初始化数据库，将需要初始化的sql文件配置在此处，sql文件以表名命名 -->
-	<bean id="sqlInitializer" class="com.systop.fsmis.init.SqlInitializer">
+	<bean id="sqlInitializer" class="com.systop.fsmis.init.sql.SqlInitializer">
 		<property name="sqlResources">
+			<!-- 如果需要使用sql文件初始化数据库，请为list复制，表明为sql文件名称 -->
 			<list>
-				<value>classpath:com/systop/fsmis/init/sql/CASE_TYPES.sql</value>
-				<value>classpath:com/systop/fsmis/init/sql/SEND_TYPES.sql</value>
 			</list>
 		</property>
 	</bean>
-	
-	<bean id="urgentInitializer" class="com.systop.fsmis.init.UrgentInitializer" />
 </beans>
