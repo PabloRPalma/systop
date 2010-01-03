@@ -19,7 +19,7 @@ import com.systop.cms.utils.PageUtil;
 import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.common.modules.security.user.model.User;
 import com.systop.core.dao.support.Page;
-import com.systop.core.webapp.struts2.action.DefaultCrudAction;
+import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
 import com.systop.fsmis.CaseConstants;
 import com.systop.fsmis.fscase.task.taskdetail.service.TaskDetailManager;
 import com.systop.fsmis.model.TaskDetail;
@@ -28,9 +28,14 @@ import com.systop.fsmis.model.TaskDetail;
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class TaskDetailAction extends
-		DefaultCrudAction<TaskDetail, TaskDetailManager> {
+		ExtJsCrudAction<TaskDetail, TaskDetailManager> {
+
+	// 查询起始时间
 	private Date taskBeginTime;
+	// 查询截至时间
 	private Date taskEndTime;
+	// 在页面中作为默认人员输入项
+	private User user;
 
 	@Autowired
 	private LoginUserService loginUserService;
@@ -47,8 +52,8 @@ public class TaskDetailAction extends
 		if (getModel() != null && getModel().getTask() != null
 				&& StringUtils.isNotBlank(getModel().getTask().getTitle())) {
 			buf.append("and detail.task.title like ? ");
-			args.add(MatchMode.ANYWHERE
-					.toMatchString(getModel().getTask().getTitle()));
+			args.add(MatchMode.ANYWHERE.toMatchString(getModel().getTask()
+					.getTitle()));
 		}
 
 		if (StringUtils.isNotBlank(getModel().getStatus())) {
@@ -57,9 +62,10 @@ public class TaskDetailAction extends
 		}
 		builddDispatchTimeCondition(buf, args);
 		/*
-		 * 带有部门的查询时,报错,可能的原因是数据库中部门信息和当前登录人员之间的关系不完善 项目组长要写初始化类来解决这个问题,待问题解决后,启用此段代码
-		 * Dept dept = loginUserService.getLoginUserCounty(getRequest()); if(dept
-		 * !=null){ buf.append("and td.dept.id = ?"); args.add(dept.getId()); }
+		 * 带有部门的查询时,报错,可能的原因是数据库中部门信息和当前登录人员之间的关系不完善
+		 * 项目组长要写初始化类来解决这个问题,待问题解决后,启用此段代码 Dept dept =
+		 * loginUserService.getLoginUserCounty(getRequest()); if(dept !=null){
+		 * buf.append("and td.dept.id = ?"); args.add(dept.getId()); }
 		 */
 		User user = loginUserService.getLoginUser(getRequest());
 		getRequest().setAttribute("userId", user.getId());
@@ -68,20 +74,26 @@ public class TaskDetailAction extends
 		Page page = PageUtil.getPage(getPageNo(), getPageSize());
 		page = getManager().pageQuery(page, buf.toString(), args.toArray());
 		restorePageData(page);
+
+		user = loginUserService.getLoginUser(getRequest());
+
 		return INDEX;
 	}
 
 	/**
 	 * 构建根据派发起至时间查询条件
 	 * 
-	 * @param buf hql的StringBuffer
-	 * @param args 参数数组
+	 * @param buf
+	 *            hql的StringBuffer
+	 * @param args
+	 *            参数数组
 	 */
 	private void builddDispatchTimeCondition(StringBuffer buf, List<Object> args) {
 		if (StringUtils.isNotBlank(getRequest().getParameter("taskBeginTime"))) {
 			try {
 				taskBeginTime = DateUtils.parseDate(getRequest().getParameter(
-						"taskBeginTime"), new String[] { "yyyy-MM-dd HH:mm:ss" });
+						"taskBeginTime"),
+						new String[] { "yyyy-MM-dd HH:mm:ss" });
 				buf.append("and detail.task.dispatchTime >=? ");
 				args.add(taskBeginTime);
 			} catch (ParseException e) {
@@ -111,12 +123,14 @@ public class TaskDetailAction extends
 	 */
 	@Override
 	public String view() {
+
 		String id = getRequest().getParameter("taskDetailId");
 		if (StringUtils.isNotBlank(id)) {
 			Integer taskDetailId = Integer.parseInt(id);
 			setModel(getManager().get(taskDetailId));
 			// 只有任务明细状态为"未接收"时,才涉及到改状态为"已查看"
-			if (getModel().getStatus().equals(CaseConstants.TASK_DETAIL_UN_RECEIVE)) {
+			if (getModel().getStatus().equals(
+					CaseConstants.TASK_DETAIL_UN_RECEIVE)) {
 				// 置任务明细状态为"已查看"
 				getModel().setStatus(CaseConstants.TASK_DETAIL_LOOK_OVERED);
 				getManager().save(getModel());
@@ -158,7 +172,7 @@ public class TaskDetailAction extends
 
 		getManager().doReturnTaskDetail(getModel());
 
-		return SUCCESS;
+		return JSON;
 	}
 
 	/**
@@ -231,5 +245,13 @@ public class TaskDetailAction extends
 
 	public void setTaskBeginTime(Date taskBeginTime) {
 		this.taskBeginTime = taskBeginTime;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 }
