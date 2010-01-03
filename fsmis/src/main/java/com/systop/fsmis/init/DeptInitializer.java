@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -14,7 +13,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.systop.common.modules.dept.DeptConstants;
 import com.systop.common.modules.dept.model.Dept;
+import com.systop.fsmis.init.utils.InitUtil;
 
+/**
+ * 部门数据初始化
+ * 
+ * @author Lunch
+ * 
+ */
 public class DeptInitializer {
 
 	/** 日志 */
@@ -23,45 +29,59 @@ public class DeptInitializer {
 	@Autowired(required = true)
 	private SessionFactory sessionFactory;
 
+	/**
+	 * spring自动调用方法,用于数据初始化
+	 */
 	@PostConstruct
 	@Transactional
 	public void init() {
-		logger.debug("Fsmis system init is begin");
 		Session session = sessionFactory.openSession();
-		setupDepts(session);
-		logger.debug("Fsmis system init is finish");
-	}
-
-	private void setupDepts(Session session) {
-		if (deptIsEmpty(session)) {
-			try {
-				List<Dept> countys = InitUtil.getCountys();
-				Dept top = new Dept(DeptConstants.TOP_DEPT_NAME,
-						DeptConstants.TYPE_COUNTY);
-				session.save(top);
-				for (Dept county : countys) {
-					county.setParentDept(top);
-					session.save(county);
-					for (Dept dept : InitUtil.getDepts()) {
-						dept.setParentDept(county);
-						session.save(dept);
-					}
-				}
-				for (Dept dept : InitUtil.getDepts()) {
-					dept.setParentDept(top);
-					session.save(dept);
-				}
-			} finally {
-				session.flush();
-				session.close();
+		try {
+			if (deptIsEmpty(session)) {
+				setupDepts(session);
+				logger.debug("Dept init is complete.");
 			}
-
-			logger.debug("setup depts");
+		} finally {
+			session.flush();
+			session.close();
 		}
 	}
 
+	/**
+	 * 导入区县及部门信息
+	 * 
+	 * @param session
+	 */
+	private void setupDepts(Session session) {
+		List<Dept> countys = InitUtil.getCountys();
+		Dept top = new Dept(DeptConstants.TOP_DEPT_NAME,
+				DeptConstants.TYPE_COUNTY);
+		session.save(top);
+		for (Dept county : countys) {
+			county.setParentDept(top);
+			session.save(county);
+			for (Dept dept : InitUtil.getDepts()) {
+				dept.setParentDept(county);
+				session.save(dept);
+			}
+		}
+		for (Dept dept : InitUtil.getDepts()) {
+			dept.setParentDept(top);
+			session.save(dept);
+		}
+	}
+
+	/**
+	 * 判断部门数据是否为空
+	 * 
+	 * @param session
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
 	private boolean deptIsEmpty(Session session) {
-		return CollectionUtils.isEmpty(session.createQuery("from Dept").list());
+		List<Long> list = session.createQuery(
+				"select count(t.id) as count from Dept t").list();
+		return list.get(0) == 0;
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.systop.fsmis.init;
+package com.systop.fsmis.init.sql;
 
 import java.io.BufferedReader;
 import java.io.File;

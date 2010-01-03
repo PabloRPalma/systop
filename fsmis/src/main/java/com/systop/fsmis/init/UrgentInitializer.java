@@ -15,9 +15,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.systop.common.modules.dept.DeptConstants;
 import com.systop.common.modules.dept.model.Dept;
+import com.systop.fsmis.init.utils.InitUtil;
 import com.systop.fsmis.model.UrgentGroup;
 import com.systop.fsmis.model.UrgentType;
 
+/**
+ * 应急模块数据初始化导入
+ * 
+ * @author Lunch
+ * 
+ */
 public class UrgentInitializer {
 
 	protected Logger logger = LoggerFactory.getLogger(getClass());
@@ -25,11 +32,26 @@ public class UrgentInitializer {
 	@Autowired(required = true)
 	private SessionFactory sessionFactory;
 
+	/**
+	 * spring自动调用方法,用于数据初始化
+	 */
 	@PostConstruct
 	@Transactional
 	public void init() {
-		setupUrgentType(sessionFactory);
-		setupUrgentGroup(sessionFactory);
+		Session session = sessionFactory.openSession();
+		try {
+			if (urgentTypeIsEmpty(session)) {// 应急案件类别为空,执行导入
+				setupUrgentType(session);
+				logger.debug("UrgentType init is complete.");
+			}
+			if (urgentGroupIsEmpty(session)) {// 应急指挥组为空,执行导入
+				setupUrgentGroup(session);
+				logger.debug("UrgentGroup init is complete.");
+			}
+		} finally {
+			session.flush();
+			session.close();
+		}
 	}
 
 	/**
@@ -37,18 +59,13 @@ public class UrgentInitializer {
 	 * 
 	 * @param session
 	 */
-	private void setupUrgentType(SessionFactory sessionFactory) {
-		Session session = sessionFactory.openSession();
-		try {
-			for (Dept d : getDepts()) {
-				for (UrgentType type : InitUtil.getUrgentType()) {
-					type.setCounty(d);
-					session.save(type);
-				}
+	private void setupUrgentType(Session session) {
+		for (Dept d : getDepts(session)) {
+			for (UrgentType type : InitUtil.getUrgentSendType()) {
+				// 为应急派遣类别设置区县
+				type.setCounty(d);
+				session.save(type);
 			}
-		} finally {
-			session.flush();
-			session.close();
 		}
 	}
 
@@ -57,29 +74,22 @@ public class UrgentInitializer {
 	 * 
 	 * @param session
 	 */
-	private void setupUrgentGroup(SessionFactory sessionFactory) {
-		Session session = sessionFactory.openSession();
-		try {
-			for (Dept d : getDepts()) {
-				for (UrgentGroup group : InitUtil.getUrgentGroups()) {
-					group.setCounty(d);
-					session.save(group);
-				}
+	private void setupUrgentGroup(Session session) {
+		for (Dept d : getDepts(session)) {
+			for (UrgentGroup group : InitUtil.getUrgentGroups()) {
+				group.setCounty(d);
+				session.save(group);
 			}
-		} finally {
-			session.flush();
-			session.close();
 		}
 	}
 
 	/**
-	 * 得到系统初始化的有效单位部门
+	 * 得到系统初始化的有效单位部门,首先是单位类型,其次必须有下级部门
 	 * 
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	private List<Dept> getDepts() {
-		Session session = sessionFactory.openSession();
+	private List<Dept> getDepts(Session session) {
 		List<Dept> list = session.createQuery("from Dept d where d.type = ?")
 				.setString(0, DeptConstants.TYPE_COUNTY).list();
 		List<Dept> depts = new ArrayList();
@@ -90,8 +100,33 @@ public class UrgentInitializer {
 				}
 			}
 		}
-		session.close();
 		return depts;
+	}
+
+	/**
+	 * 判断应急类别是否为空
+	 * 
+	 * @param session
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	private boolean urgentTypeIsEmpty(Session session) {
+		List<Long> list = session.createQuery(
+				"select count(t.id) as count from UrgentType t").list();
+		return list.get(0) == 0;
+	}
+
+	/**
+	 * 应急指挥组是否为空
+	 * 
+	 * @param session
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	private boolean urgentGroupIsEmpty(Session session) {
+		List<Long> list = session.createQuery(
+				"select count(t.id) as count from UrgentGroup t").list();
+		return list.get(0) == 0;
 	}
 
 }
