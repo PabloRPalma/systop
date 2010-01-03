@@ -8,6 +8,9 @@
 <%@include file="/common/ec.jsp"%>
 <%@include file="/common/extjs.jsp"%>
 <%@include file="/common/meta.jsp"%>
+<script type="text/javascript" src="${ctx}/scripts/jquery/autocomplete/jquery.autocomplete.js"></script>
+<script type="text/javascript" language="JavaScript" src="${ctx}/dwr/interface/CorpDwrAction.js"></script>
+<script type="text/javascript" language="JavaScript" src="${ctx}/dwr/engine.js"></script>
 </head>
 <body>
 <div id="winDealWithTaskDetail" >
@@ -127,6 +130,44 @@
 	</s:form>
 </div>
 </div>
+<script type="text/javascript">
+$().ready(function() {	  	  
+
+	  //查询所有企业信息为GoogleSuggest所用
+	   CorpDwrAction.getCorps(function(companies){
+	   			    
+	    var companiesArr = eval(companies);
+	    alert(companiesArr);
+	    if(companiesArr.length > 0){
+	
+	      $("#companyName").autocomplete(companiesArr,{
+        	  	matchContains: true,
+           	minChars: 0
+         });
+	    }
+	  });
+	  $("#companyName").result(function(event,data,formatter){
+		queryCompanyByCode();
+	  });       		  
+	});	
+	
+	//根据企业编号查询企业信息
+	function queryCompanyByCode(){
+	    var companyInfo = $("#companyName").val();
+      var code = companyInfo.substring(0,companyInfo.indexOf(":"));
+      CorpDwrAction.getCorpById(code,function(company){
+         if(company){            
+           $("#companyName").val(company.name);              
+           $("#companyCode").val(company.code);
+           $("#companyAddress").val(company.address);
+           $("#legalPerson").val(company.legalPerson?company.legalPerson:'');       
+           $("#produceLicenseCode").val(company.produceLicense?company.produceLicense:'');
+           $("#businessLicenseCode").val(company.businessLicenseIndate?company.businessLicenseIndate:'');
+           $("#sanitationLicenseCode").val(company.sanitationLicense?company.sanitationLicense:'');           
+          }  
+      });		
+	}
+</script>
 <!-- script type="text/javascript"
 	src="${ctx}/pages/fsCase/task/taskdetail/dealWithTaskDetail.js">	
 </script-->
