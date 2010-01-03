@@ -20,8 +20,7 @@ import com.systop.common.modules.security.user.model.User;
 import com.systop.core.Constants;
 
 /**
- * 初始化工具类，Spring在启动后会自动执行init方法
- * 
+ * 用户及角色信息的数据初始化
  */
 @SuppressWarnings("unchecked")
 public class UserInitializer {
@@ -51,10 +50,12 @@ public class UserInitializer {
 
 	private String adminDesc;
 
+	/**
+	 * spring自动调用方法,用于数据初始化
+	 */
 	@PostConstruct
 	@Transactional
 	public void init() {
-		logger.info("系统正在初始化...");
 		Session session = sessionFactory.openSession();
 		try {
 
@@ -79,6 +80,7 @@ public class UserInitializer {
 					}
 				}
 				session.save(admin);
+				logger.debug("User and Role init is complete.");
 			}
 		} finally {
 			session.flush();
