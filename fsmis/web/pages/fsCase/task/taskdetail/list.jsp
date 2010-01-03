@@ -97,11 +97,12 @@
 			<a	href="${ctx}/taskdetail/view.do?taskDetailId=${item.id}&fsCaseId=${item.task.fsCase.id}&modelId=1">查看|</a>			
 			<c:if test="${item.status == '0' or item.status == '1'}">
 				<a href="${ctx}/taskdetail/receiveTask.do?model.id=${item.id}">接收|</a>
-				<a href="${ctx}/taskdetail/toReturnTaskDetail.do?model.id=${item.id}">退回1|</a>
-				<a href="#" onclick="javascript:returnTaskDetail(${item.id},${userId})">退回2|</a>
+				<%--<a href="${ctx}/taskdetail/toReturnTaskDetail.do?model.id=${item.id}">退回1|</a> --%>
+				<a href="#" onclick="javascript:returnTaskDetail(${item.id},'${userName}')">退回|</a>
 			</c:if>
 			<c:if test="${item.status == '2'}">
 				<a href="${ctx}/taskdetail/toDealWithTaskDetail.do?model.id=${item.id}">处理|</a>
+				<a href="#" onclick="dealWithTaskDetail(${item.id})">处理2|</a>
 			</c:if>
 			<a href="#">地图位置|</a>
 			<a href="#" target="_blank">打印</a>

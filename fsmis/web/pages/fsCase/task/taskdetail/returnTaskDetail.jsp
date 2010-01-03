@@ -5,23 +5,39 @@
 <html>
 <head>
 <title></title>
-<%@include file="/common/meta.jsp"%>
+
 <%@include file="/common/validator.jsp"%>
 <%@include file="/common/extjs.jsp"%>
 </head>
 <body>
 <script type="text/javascript">
-	$(document).ready(function() {
+	/*$(document).ready(function() {
 		$("#teturnTaskDetailFrm").validate();
-	});
+	});*/
 </script>
 <script type="text/javascript"
-	src="${ctx}/pages/fsCase/task/taskdetail/returnTaskDetail.js">	
+	src="${ctx}/pages/fsCase/task/taskdetail/returnTaskDetailJs.js">
+	
 </script>
-<div id="winReturnTaskDetail">
+<div id="winReturnTaskDetail" class="x-hidden">
 <div class="x-window-header">退回任务</div>
 <div id="returnTaskDetail">
-<div align="center"><s:form action="doReturnTaskDetail.do"
+
+<%--
+
+<fieldset style="width: 510px; padding: 10px 10px 10px 10px;"
+	id="fieldSet"><legend>退回信息</legend>
+<table width="500px" align="center">
+	<tr>
+		<td>
+		<div id="divFrm">
+		</div>
+		</td>
+	</tr>
+</table>
+</fieldset>
+
+<s:form action="doReturnTaskDetail.do"
 	id="teturnTaskDetailFrm" method="post" theme="simple" validate="true">
 	<s:hidden name="model.id" />
 	<fieldset style="width: 510px; padding: 10px 10px 10px 10px;">
@@ -48,8 +64,7 @@
 				cssClass="button" /> <s:reset value="重置" cssClass="button" /></td>
 		</tr>
 	</table>
-</s:form></div>
-</div>
+</s:form> --%></div>
 </div>
 </body>
 </html>
