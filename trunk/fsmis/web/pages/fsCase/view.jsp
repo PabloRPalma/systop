@@ -36,6 +36,13 @@
 				contentEl : 'basic',
 				title : '事件信息'
 			}
+			<c:if test="${model.isMultiple eq '1'}">			
+			,{
+				contentEl : 'general',
+				title : '相关一般案件'
+			}
+			
+			</c:if>
 			<c:if test="${not empty model.taskses }">			
 			,{
 				contentEl : 'descr',
@@ -144,6 +151,16 @@
 				<td width="149" align="left">${model.descn}</td>
 			</tr>
 		</table>
+		</td>
+	</tr>
+</table>
+</div>
+<div id="general" class="x-hide-display">
+<table id="mytable" height="320">
+	<tr>
+		<td height="200" align="left" valign="top">
+		<!-- include进来二级Tab以现实一个食品安全案件下的多个任务 -->
+		<%@include	file="viewGenericCases.jsp" %>
 		</td>
 	</tr>
 </table>
