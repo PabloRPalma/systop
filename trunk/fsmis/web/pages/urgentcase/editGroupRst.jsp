@@ -12,7 +12,12 @@
 		var num = document.getElementsByName('jsonValue').length;
 		var val = document.getElementsByName('jsonValue')[0].value;
 		for(i=1; i<num; i++) {
-			val = val + ":" + document.getElementsByName('jsonValue')[i].value;
+			var rval = document.getElementsByName('jsonValue')[i].value;
+			if(rval == "" || rval == null) {
+				val = val + ":" + null;
+			} else {
+				val = val + ":" + rval;
+			}
 		}
 		//alert(val);
 		var caseId = document.getElementById('caseId').value;
@@ -65,10 +70,8 @@
 	<div id="basic">
 	<s:hidden id="caseId" name="caseId" />
 	<s:hidden id="groupId" name="groupId" />
-	<table id="mytable" height="360" style="margin-top: 5px">
-
-		<c:forEach var="entry" items="${resultMap}" begin="0" end="4"
-			step="1" varStatus="status">
+	<table id="mytable" style="margin-top: 5px">
+		<c:forEach var="entry" items="${resultMap}" varStatus="status">
 			<!--  
 			<font size=5 color=red>
 				ID:${entry.key }<br>
@@ -79,14 +82,12 @@
 				<td align="right" width="215">${entry.key }：</td>
 				<td align="left" colspan="3">
 					<s:textfield name="jsonValue" cssStyle="width:500px" />
-					<!--  
 					<c:if test="${entry.value == null}">
-						<s:textfield id="title" cssStyle="width:500px" />
+						<s:textfield name="jsonValue" cssStyle="width:500px" />
 					</c:if>
 					<c:if test="${entry.value != null}">
 						${entry.value }
 					</c:if>
-					-->
 				</td>
 			</tr>
 		</c:forEach>
