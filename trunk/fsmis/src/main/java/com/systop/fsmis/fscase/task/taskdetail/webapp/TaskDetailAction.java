@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.systop.cms.utils.PageUtil;
+import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.common.modules.security.user.model.User;
 import com.systop.core.dao.support.Page;
@@ -29,6 +30,8 @@ import com.systop.fsmis.model.TaskDetail;
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class TaskDetailAction extends
 		ExtJsCrudAction<TaskDetail, TaskDetailManager> {
+	// 是否为综合案件
+	private String isMultiple;
 
 	// 查询起始时间
 	private Date taskBeginTime;
@@ -73,6 +76,15 @@ public class TaskDetailAction extends
 			addActionError("请先登录!");
 			return INDEX;
 		}
+
+		Dept dept = loginUserService.getLoginUserDept(getRequest());
+		if (dept != null) {
+			buf.append("and detail.dept.id = ? ");
+			args.add(dept.getId());
+		}
+		//区分一般案件和综合案件
+		buf.append("and detail.task.fsCase.isMultiple = ? ");
+		args.add(isMultiple);
 		getRequest().setAttribute("userId", user.getId());
 		getRequest().setAttribute("userName", user.getName());
 
@@ -213,7 +225,12 @@ public class TaskDetailAction extends
 	 * @return
 	 */
 	public String doCommitTaskDetail() {
-		getModel().getTask().getFsCase().setCorp(null);
+
+		// 如果没有指定企业,则不设定企业关联---需要沟通确定
+		if (getModel().getTask().getFsCase().getCorp().getId() == null) {
+			getModel().getTask().getFsCase().setCorp(null);
+		}
+
 		getManager().doCommitTaskDetail(getModel());
 
 		return SUCCESS;
@@ -256,5 +273,13 @@ public class TaskDetailAction extends
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getIsMultiple() {
+		return isMultiple;
+	}
+
+	public void setIsMultiple(String isMultiple) {
+		this.isMultiple = isMultiple;
 	}
 }
