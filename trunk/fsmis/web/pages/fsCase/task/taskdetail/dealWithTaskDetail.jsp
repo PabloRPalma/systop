@@ -8,9 +8,24 @@
 <%@include file="/common/ec.jsp"%>
 <%@include file="/common/extjs.jsp"%>
 <%@include file="/common/meta.jsp"%>
+<%
+  pageContext.setAttribute("jquery_autocomplete","scripts/jquery/autocomplete");
+%>
+
+<script type="text/javascript" src="${ctx}/scripts/jquery/jquery-1.3.2.js"></script>
+<script type="text/javascript" src="${ctx}/scripts/jquery/autocomplete/jquery.bgiframe.min.js"></script>
+<script type="text/javascript" src="${ctx}/scripts/jquery/autocomplete/jquery.dimensions.js"></script>
+<script type="text/javascript" src="${ctx}/scripts/jquery/autocomplete/jquery.ajaxQueue.js"></script>
+<script type="text/javascript" src="${ctx}/scripts/jquery/autocomplete/thickbox-compressed.js"></script>
 <script type="text/javascript" src="${ctx}/scripts/jquery/autocomplete/jquery.autocomplete.js"></script>
+
+<link rel="stylesheet" type="text/css" href="${ctx}/scripts/jquery/autocomplete/jquery.autocomplete.css"/>
+<link rel="stylesheet" type="text/css" href="${ctx}/scripts/jquery/autocomplete/thickbox.css"/>
+<link rel="stylesheet" href="${ctx}/scripts/jquery/jquery.autocomplete.css" />
+
 <script type="text/javascript" language="JavaScript" src="${ctx}/dwr/interface/CorpDwrAction.js"></script>
 <script type="text/javascript" language="JavaScript" src="${ctx}/dwr/engine.js"></script>
+
 </head>
 <body>
 <div id="winDealWithTaskDetail" >
@@ -94,19 +109,20 @@
           <tr>
             <td align="right">生产许可证：</td>
             <td align="left">
-            	<s:textfield id="produceLicenseCode" name="model.task.fsCase.corp.produceLicense" cssStyle="width:350px"/>
+            	<s:textfield id="produceLicense" name="model.task.fsCase.corp.produceLicense" cssStyle="width:350px"/>
             </td>
           </tr>         
           <tr>
             <td align="right">卫生许可证：</td>
             <td align="left">
-            	<s:textfield id="sanitationLicenseCode" name="model.task.fsCase.corp.sanitationLicense" cssStyle="width:350px"/>
+            	<s:textfield id="sanitationLicense" name="model.task.fsCase.corp.sanitationLicense" cssStyle="width:350px"/>
             </td>
           </tr>
           <tr>
             <td align="right">经营范围：</td>
             <td align="left">
             	<s:textarea id="operateDetails" name="model.task.fsCase.corp.operateDetails" cols="48" rows="2"></s:textarea>
+            	<input type="text" id="autoText"></input>
             </td>
           </tr>        
         </table> 
@@ -130,18 +146,27 @@
 	</s:form>
 </div>
 </div>
+
 <script type="text/javascript">
 $().ready(function() {	  	  
-
-	  //查询所有企业信息为GoogleSuggest所用
-	   CorpDwrAction.getCorps(function(companies){
-	   			    
+	  //查询所有企业信息
+	   CorpDwrAction.getCorps(function(companies){	  		    
 	    var companiesArr = eval(companies);
-	    alert(companiesArr);
+	    /*
+	    var jsonStr ="";
+	    for(var i =0;i<companiesArr.length;i++){
+		    jsonStr+="{'name':'"+companiesArr[i].name+"','id':'"+companiesArr[i].id+"'}";
+		    if(i<companiesArr.length-1){
+			    jsonStr+=",";
+		    }
+	    }
+	    alert(jsonStr);
+	    jsonStr = [jsonStr];
+	    var str = {"name":"zhangsan","age":20};
+	    alert(jsonStr);*/
 	    if(companiesArr.length > 0){
-	
 	      $("#companyName").autocomplete(companiesArr,{
-        	  	matchContains: true,
+        	matchContains: true,
            	minChars: 0
          });
 	    }
@@ -155,19 +180,20 @@ $().ready(function() {
 	function queryCompanyByCode(){
 	    var companyInfo = $("#companyName").val();
       var code = companyInfo.substring(0,companyInfo.indexOf(":"));
-      CorpDwrAction.getCorpById(code,function(company){
-         if(company){            
-           $("#companyName").val(company.name);              
-           $("#companyCode").val(company.code);
-           $("#companyAddress").val(company.address);
-           $("#legalPerson").val(company.legalPerson?company.legalPerson:'');       
-           $("#produceLicenseCode").val(company.produceLicense?company.produceLicense:'');
-           $("#businessLicenseCode").val(company.businessLicenseIndate?company.businessLicenseIndate:'');
-           $("#sanitationLicenseCode").val(company.sanitationLicense?company.sanitationLicense:'');           
+      
+      CorpDwrAction.getCorpByCode(code,function(corp){
+         if(corp){            
+           $("#companyName").val(corp.name);              
+           $("#companyCode").val(corp.code);
+           $("#companyAddress").val(corp.address);
+           $("#legalPerson").val(corp.legalPerson);
+           $("#produceLicense").val(corp.produceLicense);
+           $("#sanitationLicense").val(corp.sanitationLicense);
           }  
       });		
 	}
 </script>
+
 <!-- script type="text/javascript"
 	src="${ctx}/pages/fsCase/task/taskdetail/dealWithTaskDetail.js">	
 </script-->
