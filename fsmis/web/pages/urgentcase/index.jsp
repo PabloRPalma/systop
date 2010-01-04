@@ -94,7 +94,7 @@
 		</ec:column>
 		<ec:column width="170" property="_0" title="操作" style="text-align:center" sortable="false">
 			<a href="${ctx}/urgentcase/edit.do?model.id=${item.id}">编辑</a> | 
-			<a href="${ctx}/urgentcase/view.do?model.id=${item.id}">查看</a> |
+			<a href="${ctx}/urgentcase/view.do?model.id=${item.id}&actId=0">查看</a> |
 			<a href="#" onclick="remove(${item.id})">删除</a>
 		</ec:column>
 	</ec:row>

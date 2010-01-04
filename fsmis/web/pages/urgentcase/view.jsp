@@ -29,7 +29,7 @@
 			renderTo : 'tabs',
 			anchor : '100% 100%',
 			height : 380,
-			activeTab : 0,
+			activeTab : ${param['actId']},
 			frame : false,
 			defaults : {
 				autoHeight : false
@@ -43,10 +43,13 @@
 			}, {
 				contentEl : 'traffic',
 				title : '周边交通'
-			}, {
+			}
+			<c:if test="${model.status eq '2'|| model.status eq '3'|| model.status eq '4'}">
+			, {
 				contentEl : 'sendgroup',
 				title : '派遣结果'
-			} ]
+			}
+			</c:if> ]
 		});
 	});
 </script>
@@ -292,11 +295,11 @@
     			dataType: 'json',
     			data: {caseId : caseId, typeId : typeId},
     			success: function(rst, textStatus){
-    	  		  
+    				//window.location = "${ctx}/urgentcase/view.do?model.id=" + caseId;
+    				window.location = '${ctx}/urgentcase/index.do';
     			}
     	  	 });
         	DispatchWindow.hide();
-          	window.location = "${ctx}/urgentcase/view.do?model.id=" + caseId;
         }
     });
   }

@@ -28,7 +28,8 @@
 			dataType: 'json',
 			data: {rstValue : val, caseId : caseId, groupId : groupId},
 			success: function(rst, textStatus){
-				window.location = '${ctx}/urgentcase/index.do';
+				window.location = '${ctx}/urgentcase/view.do?model.id='+ caseId +'&actId=3';
+				//window.location = '${ctx}/urgentcase/index.do';
 			}
 	  	 });
 	}
@@ -57,8 +58,8 @@
 		<td align="right">
 		<table>
 			<tr>
-				<td align="right"><a href="${ctx}/urgentcase/index.do"><img
-					src="${ctx}/images/icons/house.gif" /> 返回应急事件</a></td>
+				<td align="right"><a href="${ctx}/urgentcase/view.do?model.id=${caseId}&actId=3"><img
+					src="${ctx}/images/icons/house.gif" /> 返回</a></td>
 			</tr>
 		</table>
 		</td>
