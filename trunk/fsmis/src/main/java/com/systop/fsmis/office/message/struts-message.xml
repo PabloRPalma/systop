@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="fsmis.office.message" extends="json"  namespace="/office/message">
+		<action name="*" class="messageAction" method="{1}">
+			<result name="index">/pages/office/message/received.jsp</result>
+			<result name="sended">/pages/office/message/sended.jsp</result>
+			<result name="input">/pages/office/message/edit.jsp</result> 
+			<result name="reply">/pages/office/message/reply.jsp</result>
+			<result name="view">/pages/office/message/view.jsp</result>
+			<result name="success" type="redirect">received.do</result> 
+		</action>
+	</package>
+</struts>
+
