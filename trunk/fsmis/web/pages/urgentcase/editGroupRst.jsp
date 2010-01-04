@@ -99,7 +99,7 @@
 		</tr>
 		<tr>
 			<td style="text-align: center;"> 
-				<a href="#" onclick="jsonFormValue()">取输入框的值</a></td>
+				<a href="#" onclick="jsonFormValue()">保存</a></td>
 		</tr>
 	</table>
 </div>
