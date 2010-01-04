@@ -29,33 +29,44 @@ public final class UcConstants {
 
 	/** 指挥部 */
 	public static final String LEADERSHIP = "Leadership";
-
+	
 	/** 办公室 */
 	public static final String OFFICE = "Office";
 
 	/** 事故调查处理 */
 	public static final String ACCIDENT_HANDLE = "AccidentHandle";
+	public static final String[] AccidentHandleResult = {"出动人数", "调查报告"};
 
 	/** 善后处理 */
 	public static final String AFTER_HANDLE = "AfterHandle";
+	public static final String[] AfterHandleResult = {"涉及人员", "安抚进展"};
 
 	/** 警戒保卫 */
 	public static final String DEFEND = "Defend";
+	public static final String[] DefendResult = {"出警数量", "疏散人数"};
 
 	/** 技术专家 */
 	public static final String EXPERT_TECHNOLOGY = "ExpertTechnology";
+	public static final String[] ExpertTechnologyResult = {"专家小组", "分析报告"};
 
 	/** 医疗救护 */
 	public static final String MEDICAL_RESCUE = "MedicalRescue";
+	public static final String[] MedicalRescueResult = {"出动人数", "救护人数","死亡人数", "涉及人数"};
 
 	/** 新闻报道 */
 	public static final String NEWS_REPORT = "NewsReport";
+	public static final String[] NewsReportResult = {"信息发布数量", "新闻媒体"};
 
 	/** 后勤保障 */
 	public static final String REAR_SERVICE = "RearService";
+	public static final String[] RearServiceResult = {"出动人数", "划拨物资"};
 
 	/** 接待 */
 	public static final String RECEIVE = "Receive";
+	public static final String[] ReceiveResult = {"接待事宜", "联络详情"};
+	
+	public static final String[] PublicResult = {"处理时间", "处理过程", "处理结果"};
+	
 	
 	/** 应急指挥组是否是原始数据 1:是*/
 	public static final String GROUP_ORIGINAL_YES = "1";

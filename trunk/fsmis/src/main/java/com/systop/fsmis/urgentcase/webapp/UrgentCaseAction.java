@@ -208,17 +208,19 @@ public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseMana
 	 * 保存指挥组处理结果
 	 */
 	public String saveGroupResult() {
+		Dept county = loginUserService.getLoginUserCounty(getRequest());
 		checkResult = Collections.synchronizedMap(new HashMap<String, String>());
 		//应急事件ID
 		String caseId = getRequest().getParameter("caseId").toString();
-		//应急事件ID
+		//指挥组ID
 		String groupId = getRequest().getParameter("groupId").toString();
 		//取得结果字符串
 		String rstValue = getRequest().getParameter("rstValue").toString();
 		logger.info("保存处理结果-->>事件ID:{}, 组ID:{}", caseId, groupId);
 		logger.info("结果集:{}", rstValue);
 		
-		//根据结果集添加处理组结果，继续下面处理......
+		//根据结果集添加处理组结果
+		getManager().saveGroupResult(caseId, county, groupId, rstValue);
 		
 		return "jsonRst";
 	}

@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 
 import net.sf.json.JSONObject;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -67,8 +68,10 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
 	 */
   public List getAllUcTypeByCounty(Dept county) {
 		List ucTypes = Collections.EMPTY_LIST;
+		StringBuffer hql = new StringBuffer("from UrgentType ut where ut.county.id = ?");
+		hql.append(" order by ut.sortId asc");
 		if (county != null) {
-			ucTypes = query("from UrgentType ut where ut.county.id = ?", county.getId());
+			ucTypes = query(hql.toString(), county.getId());
 		}
 		return ucTypes;
 	}
@@ -108,8 +111,8 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
   					//派遣结果关联‘非原始数据组’
   					urgentResult.setUrgentGroup(utGroupNotOrg);
   					urgentResult.setCounty(county);
-  					//组处理的具体内容,暂时设置测试数据，有待完善....
-  					urgentResult.setContent("出警数量:5,疏散人数:6,处理时间:2009-12-31,处理过程:'生生世世是',处理结果:'打发打发打发'");
+  					//组结果的具体内容
+  					urgentResult.setContent(generateUrgentResult(urgentGroup));
   					getDao().save(urgentResult);
   				}
   				//修改应急事件状态为‘已派遣’
@@ -121,7 +124,32 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
   }
   
   /**
-   * 根据ID取得所属区县下派遣环节所对应的原始数据组
+   * 根据指挥组生成该指挥组的处理结果数据
+   * @param urgentGroup
+   * @return
+   */
+  private String generateUrgentResult(UrgentGroup urgentGroup) {
+  	StringBuffer contentRest = new StringBuffer();
+  	if (urgentGroup != null) {
+  		logger.info("取得组的类型：{}", urgentGroup.getCategory());
+  		String[] typeRst = getUrgentTypeRst(urgentGroup.getCategory());
+  		String[] pubRst = UcConstants.PublicResult;
+  		if (!ArrayUtils.isEmpty(typeRst)) {
+  			for(int i = 0; i < typeRst.length; i++) {
+    			contentRest.append(typeRst[i]).append(":").append("null").append(",");
+    		}
+  			for(int j = 0; j < pubRst.length-1; j++) {
+    			contentRest.append(pubRst[j]).append(":").append("null").append(",");
+    		}
+    		contentRest.append(pubRst[pubRst.length-1]).append(":").append("null").append("");
+  		}
+  	}
+  	logger.info("生成该指挥组的处理结果数据:{}", contentRest.toString());
+  	return contentRest.toString();
+  }
+  
+  /**
+   * 根据派遣环节ID及区县ID,取得所属区县下派遣环节所对应的原始数据组
    * @param typeId 派遣环节ID
    * @param countyId 区县ID
    */
@@ -150,18 +178,14 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
   
   /**
    * 根据应急事件ID、区县ID及指挥组ID取得该事件的派发结果
+   * 将派发结果内容转换为Map数据格式
    * @param caseId 事件ID
    * @param countyId 区县ID
    * @param groupId 指挥组ID
    */
   public Map getUrgentResultByIds(Integer caseId, Integer countyId, Integer groupId) {
   	Map contentMap = Collections.EMPTY_MAP;
-  	StringBuffer hql = new StringBuffer("from UrgentResult ur where 1=1 ");
-		hql.append(" and ur.county.id = ?");
-		hql.append(" and ur.urgentCase.id = ?");
-		hql.append(" and ur.urgentGroup.id = ?");
-		UrgentResult urgentResult = (UrgentResult) getDao().findObject(
-				hql.toString(), countyId, caseId, groupId);
+		UrgentResult urgentResult = getUrgentResult(caseId, countyId, groupId);
 		if (urgentResult != null) {
 			String contentJson = "{" + urgentResult.getContent() + "}";
 			logger.info("json字符串：{}", contentJson);
@@ -169,6 +193,58 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
 		}
 		
 		return contentMap;
+  }
+  
+  /**
+   * 根据应急事件ID、区县ID及指挥组ID取得该事件的派发结果
+   * @param caseId 事件ID
+   * @param countyId 区县ID
+   * @param groupId 指挥组ID
+   */
+  private UrgentResult getUrgentResult(Integer caseId, Integer countyId, Integer groupId) {
+  	StringBuffer hql = new StringBuffer("from UrgentResult ur where 1=1 ");
+		hql.append(" and ur.county.id = ?");
+		hql.append(" and ur.urgentCase.id = ?");
+		hql.append(" and ur.urgentGroup.id = ?");
+		return (UrgentResult) getDao().findObject(
+				hql.toString(), countyId, caseId, groupId);
+  }
+  
+  /**
+   * 保存应急事件各个指挥组的处理结果
+   * @param caseId 事件ID
+   * @param countyId 区县ID
+   * @param groupId 指挥组ID
+   */
+  @Transactional
+  public void saveGroupResult(String caseId, Dept county, String groupId, String result) {
+  	UrgentResult urgentResult = null;
+  	if (StringUtils.isNotEmpty(caseId) && StringUtils.isNotEmpty(groupId)) {
+  		if (isNumeric(caseId) && isNumeric(groupId)) {
+  			if (county != null) {
+  				urgentResult = getUrgentResult(Integer.valueOf(caseId), county.getId(), Integer.valueOf(groupId));
+  			}
+  		}
+  	}
+  	if (urgentResult != null) {
+  		String[] rst = result.split(":");
+  		String[] oldRst = null;
+  		StringBuffer newRst = new StringBuffer();
+  		if (StringUtils.isNotEmpty(urgentResult.getContent())) {
+  			oldRst = urgentResult.getContent().split(",");
+  			for (int i = 0; i < oldRst.length-1; i++) {
+    			newRst.append(oldRst[i].substring(0, oldRst[i].indexOf(":")))
+    			.append(":").append("'").append(rst[i]).append("'").append(",");
+    		}
+    		newRst.append(oldRst[oldRst.length-1].substring(0, oldRst[oldRst.length-1].indexOf(":")))
+  			.append(":").append("'").append(rst[oldRst.length-1]).append("'");
+    		logger.info("编辑后要保存的处理结果：{}", newRst.toString());
+    		
+    		urgentResult.setContent(newRst.toString());
+    		//修改应急事件中指挥组的处理结果
+    		getDao().save(urgentResult);
+  		}
+		}
   }
   
   /**
@@ -203,4 +279,38 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
 		}
 		return true;
 	} 
+	
+	/**
+	 * 取得组类型对应的结果集字段
+	 * @param rst
+	 */
+	private String[] getUrgentTypeRst(String rst) {
+		String[] typeRst = null;
+		
+		if(rst.equals(UcConstants.DEFEND)) {
+			typeRst = UcConstants.DefendResult;
+		}
+		if(rst.equals(UcConstants.ACCIDENT_HANDLE)) {
+			typeRst = UcConstants.AccidentHandleResult;
+		}
+		if(rst.equals(UcConstants.AFTER_HANDLE)) {
+			typeRst = UcConstants.AfterHandleResult;
+		}
+		if(rst.equals(UcConstants.EXPERT_TECHNOLOGY)) {
+			typeRst = UcConstants.ExpertTechnologyResult;
+		}
+		if(rst.equals(UcConstants.MEDICAL_RESCUE)) {
+			typeRst = UcConstants.MedicalRescueResult;
+		}
+		if(rst.equals(UcConstants.NEWS_REPORT)) {
+			typeRst = UcConstants.NewsReportResult;
+		}
+		if(rst.equals(UcConstants.REAR_SERVICE)) {
+			typeRst = UcConstants.RearServiceResult;
+		}
+		if(rst.equals(UcConstants.RECEIVE)) {
+			typeRst = UcConstants.ReceiveResult;
+		}
+		return typeRst;
+	}
 }
