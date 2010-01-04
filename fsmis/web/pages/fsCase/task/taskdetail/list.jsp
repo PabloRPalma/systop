@@ -8,6 +8,7 @@
 <title>任务列表</title>
 </head>
 <body>
+<div><%@ include file="/common/messages.jsp"%></div>
 <div class="x-panel">
 <div class="x-panel-header">协调指挥&nbsp;&gt;&nbsp;单体任务接收&nbsp;&gt;&nbsp;任务列表</div>
 <div class="x-toolbar">
@@ -92,9 +93,13 @@
 				<font color="green">处理完毕</font>
 			</c:if>
 		</ec:column>
-		<ec:column width="150" property="_0" title="操作"
+		<ec:column width="150" property="_0" title="查看"
 			style="text-align:center" sortable="false">
-			<a	href="${ctx}/taskdetail/view.do?taskDetailId=${item.id}&fsCaseId=${item.task.fsCase.id}&modelId=1">查看|</a>			
+			<a	href="${ctx}/taskdetail/view.do?taskDetailId=${item.id}&fsCaseId=${item.task.fsCase.id}&modelId=1">查看|</a>		
+				<a href="#">地图位置</a>	
+		</ec:column>
+				<ec:column width="150" property="_0" title="操作"
+			style="text-align:center" sortable="false">
 			<c:if test="${item.status == '0' or item.status == '1'}">
 				<a href="${ctx}/taskdetail/receiveTask.do?model.id=${item.id}">接收|</a>
 				<%--<a href="${ctx}/taskdetail/toReturnTaskDetail.do?model.id=${item.id}">退回1|</a> --%>
@@ -104,7 +109,7 @@
 				<a href="${ctx}/taskdetail/toDealWithTaskDetail.do?model.id=${item.id}">处理|</a>
 				<a href="#" onclick="dealWithTaskDetail(${item.id})">处理2|</a>
 			</c:if>
-			<a href="#">地图位置|</a>
+		
 			<a href="#" target="_blank">打印</a>
 		</ec:column>
 	</ec:row>
