@@ -56,7 +56,7 @@ public class UcTypeAction extends DefaultCrudAction<UrgentType, UcTypeManager> {
 		StringBuffer sql = new StringBuffer("from UrgentType ut where ");
 		Dept dept = loginUserService.getLoginUserCounty(getRequest());
 		if (dept != null) {
-			sql.append(" ut.county.id = ?");
+			sql.append(" ut.county.id = ? order by ut.sortId");
 			page = getManager().pageQuery(page, sql.toString(), dept.getId());
 			restorePageData(page);
 		}
