@@ -31,7 +31,7 @@
 <div id="winDealWithTaskDetail" >
 <div class="x-window-header">处理任务</div>
 <div id="dealWithTaskDetail">
-	<s:form  action="doCommitTaskDetail.do" method="post" theme="simple" enctype="multipart/form-data" onsubmit="return onCheckForm()">
+	<s:form  id="frmDealWithTaskDetail" action="doCommitTaskDetail.do" method="post" theme="simple" enctype="multipart/form-data" onsubmit="return onCheckForm()">
 	<s:hidden name="model.id"/>
 	
 	<table align="left" width="700px">	
@@ -85,6 +85,7 @@
           <tr>
              <td align="right" width="120">名称：</td>        
              <td align="left" width="420">
+             	<s:hidden name="model.task.fsCase.corp.id" id="corpId"></s:hidden>
              	<s:textfield id="companyName" name="model.task.fsCase.corp.name" onblur="queryCompanyByCode()" cssStyle="width:350px"/>
              </td>
           </tr>
@@ -121,8 +122,7 @@
           <tr>
             <td align="right">经营范围：</td>
             <td align="left">
-            	<s:textarea id="operateDetails" name="model.task.fsCase.corp.operateDetails" cols="48" rows="2"></s:textarea>
-            	<input type="text" id="autoText"></input>
+            	<s:textarea id="operateDetails" name="model.task.fsCase.corp.operateDetails" cols="48" rows="2"></s:textarea>            	
             </td>
           </tr>        
         </table> 
@@ -134,7 +134,7 @@
 	<table width="600px" style="margin-bottom:10px;">
 		<tr>
 			<td style="text-align:center;">
-				<s:submit value="处理完毕" cssClass="button"/>
+				<input type="button" id="btnSubmit" class="button" value="处理完毕"></input>
 				<s:reset value="重置" cssClass="button"/>
 		   </td>
 		</tr>
@@ -146,24 +146,19 @@
 	</s:form>
 </div>
 </div>
-
+<script type="text/javascript">
+$(function() {
+	   $('#btnSubmit').click(function() {
+	       $('#frmDealWithTaskDetail').submit();
+	   });
+	});
+	   
+</script>
 <script type="text/javascript">
 $().ready(function() {	  	  
 	  //查询所有企业信息
 	   CorpDwrAction.getCorps(function(companies){	  		    
-	    var companiesArr = eval(companies);
-	    /*
-	    var jsonStr ="";
-	    for(var i =0;i<companiesArr.length;i++){
-		    jsonStr+="{'name':'"+companiesArr[i].name+"','id':'"+companiesArr[i].id+"'}";
-		    if(i<companiesArr.length-1){
-			    jsonStr+=",";
-		    }
-	    }
-	    alert(jsonStr);
-	    jsonStr = [jsonStr];
-	    var str = {"name":"zhangsan","age":20};
-	    alert(jsonStr);*/
+	    var companiesArr = eval(companies);	    
 	    if(companiesArr.length > 0){
 	      $("#companyName").autocomplete(companiesArr,{
         	matchContains: true,
@@ -189,6 +184,7 @@ $().ready(function() {
            $("#legalPerson").val(corp.legalPerson);
            $("#produceLicense").val(corp.produceLicense);
            $("#sanitationLicense").val(corp.sanitationLicense);
+           $("#corpId").val(corp.id);
           }  
       });		
 	}
