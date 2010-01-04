@@ -16,7 +16,7 @@ function remove(id){
 </script>
 </head>
 <body>
-
+<div><%@ include file="/common/messages.jsp"%></div>
 <div class="x-panel">
 <div class="x-panel-header">协调指挥&nbsp;&gt;&nbsp;任务列表</div>
 <div class="x-toolbar">
@@ -94,9 +94,9 @@ function remove(id){
 		<ec:column width="80" property="_o" title="操作" sortable="false"
 			style="text-align: center">
 			<a href="${ctx}/fscase/view.do?fsCaseId=${item.fsCase.id}&modelId=1">
-			查看</a> |
+			查看</a>
 			<c:if test="${item.status != '2'}">
-				<a href="#" onclick="remove(${item.id})"> 删除 </a>
+				<a href="#" onclick="remove(${item.id})">  | 删除 </a>
 			</c:if>
 		</ec:column>
 	</ec:row>
