@@ -295,8 +295,8 @@
     			dataType: 'json',
     			data: {caseId : caseId, typeId : typeId},
     			success: function(rst, textStatus){
-    				//window.location = "${ctx}/urgentcase/view.do?model.id=" + caseId;
-    				window.location = '${ctx}/urgentcase/index.do';
+    				window.location = '${ctx}/urgentcase/view.do?model.id='+ caseId +'&actId=3';
+    				//window.location = '${ctx}/urgentcase/index.do';
     			}
     	  	 });
         	DispatchWindow.hide();
