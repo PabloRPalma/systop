@@ -95,7 +95,7 @@
 		</ec:column>
 		<ec:column width="150" property="_0" title="查看"
 			style="text-align:center" sortable="false">
-			<a	href="${ctx}/taskdetail/view.do?taskDetailId=${item.id}&fsCaseId=${item.task.fsCase.id}&modelId=1">查看|</a>		
+			<a	href="${ctx}/taskdetail/view.do?taskDetailId=${item.id}&fsCaseId=${item.task.fsCase.id}&modelId=${param['modelId']}">查看|</a>		
 				<a href="#">地图位置</a>	
 		</ec:column>
 				<ec:column width="150" property="_0" title="操作"
