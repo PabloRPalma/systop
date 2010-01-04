@@ -16,8 +16,7 @@
 			</result>	
 			<result name="success" type="redirect">index.do</result>
 			<result type="json" name="json">
-				<param name="ignoreHierarchy">false</param>
-				<param name="root">page</param>				
+				<param name="ignoreHierarchy">false</param>			
 			</result>
 		</action>
 	</package>
