@@ -67,15 +67,18 @@ public class TaskDetailAction extends
 		 * loginUserService.getLoginUserCounty(getRequest()); if(dept !=null){
 		 * buf.append("and td.dept.id = ?"); args.add(dept.getId()); }
 		 */
+
 		User user = loginUserService.getLoginUser(getRequest());
+		if (user == null) {
+			addActionError("请先登录!");
+			return INDEX;
+		}
 		getRequest().setAttribute("userId", user.getId());
 		getRequest().setAttribute("userName", user.getName());
 
 		Page page = PageUtil.getPage(getPageNo(), getPageSize());
 		page = getManager().pageQuery(page, buf.toString(), args.toArray());
 		restorePageData(page);
-
-		user = loginUserService.getLoginUser(getRequest());
 
 		return INDEX;
 	}
