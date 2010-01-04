@@ -66,6 +66,10 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 	@SuppressWarnings("unused")
 	@Autowired
 	private DeptManager deptManager;
+	// 查询起始时间
+	private Date taskBeginTime;
+	// 查询截至时间
+	private Date taskEndTime;
 
 	/**
 	 * 保存派遣的任务方法
@@ -91,8 +95,8 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 					TaskAtt taskAtt = new TaskAtt();
 					// 上传文件并且把文件信息保存在任务附件实体中
 					taskAtt.setPath(UpLoadUtil.doUpload(attachments[i],
-							attachmentsFileName[i], FsConstants.TASK_ATT_FOLDER,
-							getServletContext()));
+							attachmentsFileName[i],
+							FsConstants.TASK_ATT_FOLDER, getServletContext()));
 					taskAtt.setTitle(attachmentsFileName[i]);
 
 					// 将附件实例保存到附件实体集合中
@@ -123,22 +127,11 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 			args.add(getModel().getStatus());
 		}
 		// 根据任务派发时间查询
-		Date taskBeginDate = new Date();
-		Date taskEndDate = new Date();
-		if (StringUtils.isNotBlank(getRequest().getParameter("taskBeginTime"))
-				&& StringUtils.isNotBlank(getRequest().getParameter("taskEndTime"))) {
-			try {
-				taskBeginDate = DateUtils.parseDate(getRequest().getParameter(
-						"taskBeginTime"), new String[] { "yyyy-MM-dd HH:mm:ss" });
-				taskEndDate = DateUtils.parseDate(getRequest().getParameter(
-						"taskEndTime"), new String[] { "yyyy-MM-dd HH:mm:ss" });
+		if (taskBeginTime != null && taskEndTime != null) {
 
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
 			buf.append(" and t.dispatchTime >= ? and t.dispatchTime <= ?");
-			args.add(taskBeginDate);
-			args.add(taskEndDate);
+			args.add(taskBeginTime);
+			args.add(taskEndTime);
 		}
 
 		// 查询属于当前区县的案件的任务,现阶段(20091226)项目组长说暂时不考虑,待以后加上此功能时,启用代码
@@ -147,6 +140,7 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 		 * page = getManager().pageQuery(page, buf.toString(),
 		 * loginUserService.getLoginUserDept(getRequest()).getId());
 		 */
+
 		Page page = PageUtil.getPage(getPageNo(), getPageSize());
 		page = getManager().pageQuery(page, buf.toString(), args.toArray());
 
@@ -227,4 +221,21 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 	public void setSendTypeId(Integer sendTypeId) {
 		this.sendTypeId = sendTypeId;
 	}
+
+	public Date getTaskBeginTime() {
+		return taskBeginTime;
+	}
+
+	public void setTaskBeginTime(Date taskBeginTime) {
+		this.taskBeginTime = taskBeginTime;
+	}
+
+	public Date getTaskEndTime() {
+		return taskEndTime;
+	}
+
+	public void setTaskEndTime(Date taskEndTime) {
+		this.taskEndTime = taskEndTime;
+	}
+
 }
