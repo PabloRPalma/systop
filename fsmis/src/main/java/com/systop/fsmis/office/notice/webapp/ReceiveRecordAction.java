@@ -15,7 +15,6 @@ import com.systop.cms.utils.PageUtil;
 import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.core.dao.support.Page;
-import com.systop.core.util.DateUtil;
 import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
 import com.systop.fsmis.FsConstants;
 import com.systop.fsmis.model.ReceiveRecord;
@@ -79,7 +78,7 @@ public class ReceiveRecordAction extends
 	public String view() {
 		getModel().setIsNew(FsConstants.N);
 		if (getModel().getReceiveDate() == null) {
-			getModel().setReceiveDate(DateUtil.getCurrentDate());
+			getModel().setReceiveDate(new Date());
 		}
 		getManager().save(getModel());
 		return VIEW;
