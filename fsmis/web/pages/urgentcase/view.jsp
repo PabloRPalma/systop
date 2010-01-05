@@ -88,7 +88,7 @@
 	<tr>
 		<td align="right" width="215">事件名称：</td>
 		<td align="left" colspan="3"><s:textfield id="title"
-			name="model.title" cssStyle="width:500px" cssClass="required" /><font color="red">&nbsp;*</font>
+			name="model.title" cssStyle="width:500px" disabled="true" />
 		</td>
 	</tr>
 	<tr>
@@ -96,49 +96,47 @@
 		<td width="287" align="left"><input type="text" name="model.caseTime" style="width: 148px"
 			value='<s:property value="model.caseTime"/>'
 			onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
-			class="Wdate" /><font color="red">&nbsp;*</font></td>
+			class="Wdate" /></td>
 		<td width="88" align="right">预案等级：</td>
         <td width="348" align="left">        </td>
 	</tr>
 	<tr>
 		<td align="right">事发地点：</td>
 		<td align="left" colspan="3"><s:textfield id="address"
-			name="model.address" cssStyle="width:500px" cssClass="required" /><font color="red">&nbsp;*</font>
+			name="model.address" cssStyle="width:500px" disabled="true" />
 		</td>
 	</tr>
 	<tr>
 		<td align="right">波及范围：</td>
 		<td align="left" colspan="3"><s:textfield id="caseRange"
-			name="model.caseRange" cssStyle="width:500px" /></td>
+			name="model.caseRange" cssStyle="width:500px" disabled="true"/></td>
 	</tr>
 	<tr>
 		<td align="right">受害人数：</td>
 		<td align="left"><s:textfield id="harmNum"
-			name="model.harmNum" cssStyle="width:148px" /></td>
+			name="model.harmNum" cssStyle="width:148px" disabled="true"/></td>
 		<td align="right">死亡人数：</td>
 		<td align="left"><s:textfield id="deathNum"
-			name="model.deathNum" cssStyle="width:148px" /></td>
+			name="model.deathNum" cssStyle="width:148px" disabled="true"/></td>
 	</tr>
 	<tr>
 		<td align="right">事件报告人：</td>
 		<td align="left"><s:textfield id="reporter"
-			name="model.reporter" cssStyle="width:148px" cssClass="required" /><font
-			color="red">&nbsp;*</font></td>
+			name="model.reporter" cssStyle="width:148px" disabled="true"/></td>
 		<td align="right">报告人电话：</td>
 		<td align="left"><s:textfield id="reporterPhone"
-			name="model.reporterPhone" cssStyle="width:148px" cssClass="required" /><font
-			color="red">&nbsp;*</font></td>
+			name="model.reporterPhone" cssStyle="width:148px" disabled="true" /></td>
 	</tr>
 	<tr>
 		<td align="right">报告人单位：</td>
 		<td align="left" colspan="3"><s:textfield id="reporterUnits"
-			name="model.reporterUnits" cssStyle="width:500px" /></td>
+			name="model.reporterUnits" cssStyle="width:500px" disabled="true"/></td>
 	</tr>
 	<tr>
 		<td align="right">事件描述：</td>
 		<td align="left" colspan="3" style="vertical-align: top"><s:textarea id="descn"
-			name="model.descn" cssStyle="width:500px; height:170px" cssClass="required" />
-			<font color="red">&nbsp;*</font></td>
+			name="model.descn" cssStyle="width:500px; height:170px" disabled="true" />
+		</td>
 	</tr>
 </table>
 </div>
@@ -148,7 +146,7 @@
 		<td width="15%" align="right">周边医院情况：</td>
 		<td align="left" style="vertical-align: top;" width="85%"><s:textarea
 			id="hospitalInf" name="model.hospitalInf"
-			cssStyle="width:600px; height:330px" /></td>
+			cssStyle="width:600px; height:330px" disabled="true"/></td>
 	</tr>
 </table>
 </div>
@@ -158,7 +156,7 @@
 		<td width="15%" align="right">周边交通情况：</td>
 		<td align="left" style="vertical-align: top;" width="85%"><s:textarea
 			id="trafficInf" name="model.trafficInf"
-			cssStyle="width:600px; height:330px" /></td>
+			cssStyle="width:600px; height:330px" disabled="true"/></td>
 	</tr>
 </table>
 </div>
