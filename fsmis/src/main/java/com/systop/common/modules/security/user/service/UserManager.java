@@ -2,9 +2,12 @@ package com.systop.common.modules.security.user.service;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.acegisecurity.providers.encoding.PasswordEncoder;
 import org.apache.commons.lang.StringUtils;
@@ -327,6 +330,54 @@ public class UserManager extends BaseGenericsManager<User> {
     }
     
     return admin;
+  }
+  
+  /**
+   * 返回部门以及子部门下的员工信息
+   * @param dept 部门树形列表
+   */
+  public Map getUserTree(Map dept, String roleName) {
+    if (dept.isEmpty()) {
+      return dept;
+    }
+    // 设置部门类型
+    dept.put("type", dept.get("type"));
+    // 得到部门ID
+    Integer deptId = (Integer) dept.get("id");
+    List<User> list;
+    if(StringUtils.isBlank(roleName)) {
+      list = query("from User u where u.dept.id=?", deptId);
+    } else {
+      list = query("select u from User u inner join u.roles r where u.dept.id=? and r.name=?", deptId, roleName);
+    }
+    // 添加本部门员工
+    List children = new ArrayList();
+    for (User user : list) {
+      Map map = new HashMap();
+      map.put("id", user.getId());
+      map.put("text", user.getName());
+      map.put("type", "user");
+      map.put("sex", user.getSex());
+      map.put("leaf", true);
+      children.add(map);
+    }
+
+    // 得到此部门下的所有子部门
+    List<Map> childNodes = (List) dept.get("childNodes");
+    if (childNodes != null) {
+      for (Map map : childNodes) {
+        map = getUserTree(map, roleName);
+        children.add(map);
+      }
+    }
+    if (!children.isEmpty()) {
+      dept.put("children", children);
+      dept.put("childNodes", children);
+      dept.put("leaf", false);
+    } else {
+      dept.put("leaf", true);
+    }
+    return dept;
   }
   
   /**

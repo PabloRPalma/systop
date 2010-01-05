@@ -24,6 +24,10 @@
 				    .*\.dept		    
 				</param>
 		    </result>
+		    <result type="json" name="tree">
+		        <param name="ignoreHierarchy">false</param>
+		        <param name="root">userTree</param>				
+		    </result>
 		</action>		
 	</package>
 	<package name="admin.user" extends="default"
