@@ -75,7 +75,12 @@
 	<ec:row>
 	    <ec:column width="40" property="_s" title="No." value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center"/>
 		<ec:column width="180" property="title" title="事件名称" >
-			<a href="${ctx}/urgentcase/view.do?model.id=${item.id}" title="查看应急事件"><font color="blue">${item.title}</font></a>
+		  <c:if test="${item.status == null || item.status eq '0' || item.status eq '1'}">
+			<a href="${ctx}/urgentcase/view.do?model.id=${item.id}&actId=0" title="查看应急事件"><font color="blue">${item.title}</font></a>
+		  </c:if>
+		  <c:if test="${item.status eq '2' || item.status eq '3' || item.status eq '4'}">
+			<a href="${ctx}/urgentcase/view.do?model.id=${item.id}&actId=3" title="查看应急事件"><font color="blue">${item.title}</font></a>
+		  </c:if>
 		</ec:column>
 		<ec:column width="180" property="address" title="事发地点"/>
 		<ec:column width="110" property="caseTime" title="事发时间" style="text-align:center" format="yyyy-MM-dd HH:mm" cell="date"/>
@@ -108,7 +113,12 @@
 		  	<font color="silver">审</font> | 
 			<font color="silver">派</font> | 
 		  </c:if>
-			<a href="${ctx}/urgentcase/view.do?model.id=${item.id}&actId=0">看</a> |
+		  <c:if test="${item.status == null || item.status eq '0' || item.status eq '1'}">
+			<a href="${ctx}/urgentcase/view.do?model.id=${item.id}&actId=0">看</a> | 
+		  </c:if>
+		  <c:if test="${item.status == '2' || item.status eq '3' || item.status eq '4'}">
+			<a href="${ctx}/urgentcase/view.do?model.id=${item.id}&actId=3">看</a> | 
+		  </c:if>
 			<a href="#" onclick="remove(${item.id})">删</a>
 		</ec:column>
 	</ec:row>
