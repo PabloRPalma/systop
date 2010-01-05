@@ -19,6 +19,7 @@ import com.systop.core.taglibs.BaseSpringAwareBodyTagSupport;
  * @author Sam Lee
  * 
  */
+@SuppressWarnings("serial")
 public abstract class BaseFreeMarkerTagSupport extends
     BaseSpringAwareBodyTagSupport {
 

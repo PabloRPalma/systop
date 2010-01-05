@@ -38,6 +38,7 @@ import freemarker.template.utility.StringUtil;
  * 参考自freemarker.ext.servlet.FreemarkerServlet
  *  支持自定义标签的使用，支持自定义扩展名拦截．
  */
+@SuppressWarnings("serial")
 public class FreeMarkerStringTemplateViewServlet extends
 		javax.servlet.http.HttpServlet {
 

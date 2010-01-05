@@ -11,6 +11,7 @@ import com.systop.common.modules.security.user.model.User;
  * @author sam
  *
  */
+@SuppressWarnings("serial")
 public class IfNotLoginTag extends BodyTagSupport {
   @Override
   public int doStartTag() throws JspException {

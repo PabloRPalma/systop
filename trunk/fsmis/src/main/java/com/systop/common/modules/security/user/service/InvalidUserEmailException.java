@@ -7,6 +7,7 @@ import com.systop.core.ApplicationException;
  * @author Sam
  *
  */
+@SuppressWarnings("serial")
 public class InvalidUserEmailException extends ApplicationException {
 
   public InvalidUserEmailException(String msg) {
