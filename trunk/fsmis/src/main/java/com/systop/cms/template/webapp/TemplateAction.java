@@ -31,6 +31,7 @@ import com.systop.core.webapp.upload.UpLoadUtil;
  * 
  * @author Bin
  */
+@SuppressWarnings("serial")
 @Controller
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class TemplateAction extends DefaultCrudAction<Templates, TemplateManager> {
