@@ -7,32 +7,7 @@
 <title></title>
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/validator.jsp"%>
-<script type="text/javascript">
-	//增加文件输入框 
-	function addFileInput() {
-		var oFileInputTable = document.getElementById("fileUpload");
-		var fileIndex = oFileInputTable.childNodes.length + 1;
-		var oTR = document.createElement("TR");
-		var oTD1 = document.createElement("TD");
-		var oTD2 = document.createElement("TD");
-
-		oTR.setAttribute("id", "file_" + fileIndex);
-		oTD1.setAttribute("style", "text-align:right;");
-		oTD2.innerHTML = '<input type="file" name="attachments" cssClass="FileText" style="width:200px"/>&nbsp;<A href="javascript:deleteFileInput(' + fileIndex + ');"><img src="${ctx}/images/icons/delete.gif"></A>';
-
-		oTR.appendChild(oTD1);
-		oTR.appendChild(oTD2);
-		oFileInputTable.appendChild(oTR);
-	}
-
-	//删除文件输入框
-	function deleteFileInput(childId) {
-		var oTR = document.getElementById("file_" + childId);
-		var oFileInputTable = document.getElementById("fileUpload");
-		;
-		oFileInputTable.removeChild(oTR);
-	}
-</script>
+<script type="text/javascript" language="javascript" src="${ctx}/scripts/fsmis/attachments.js"></script>
 <script type="text/javascript">
 	function deleteAttachment(attachmentId) {
 		if (confirm("确定要删除吗？")) {
@@ -52,9 +27,11 @@
 		document.getElementById('attachments' + attachmentId).removeNode();
 	}
 
+	//附件操作初始化
+	util = new fileUtil();
+	util.style = "width:300px;";
+	util.deleteIcon = "${ctx}/images/exticons/cross.gif";
 </script>
-<script type="text/javascript" language="javascript"
-	src="${ctx}/scripts/fsecurity/single_multi_task_dept_oper.js"></script>
 
 </head>
 <body>
@@ -106,13 +83,17 @@
 		</tr>
 		<tr>
 			<td align="right">附件：</td>
-			<td bgcolor="#EBEBEB" style="padding: 10 5 2 5;">
-			<a href="#"	onclick="javascript:addFileInput()"> <img
-				src="${ctx}/images/icons/file_add.gif">增加附件&nbsp; </a>
-			<tbody id="fileUpload"></tbody>
+			<td style="padding: 10 5 2 5;">
+				<a href="#"	onclick='util.add("fileUpload")'> <img src="${ctx}/images/icons/file_add.gif">增加附件</a>
+					
+				</td>
+			</tr>
 			<tr>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
+				<td colspan="2">
+					<table>
+						<tbody id="fileUpload"></tbody>
+					</table>
+				</td>
 			</tr>
 	</table>
 	</fieldset>
@@ -129,6 +110,7 @@
 	$(document).ready(function() {
 	$("#taskForm").validate();
 });
+
 </script>
 </body>
 </html>
