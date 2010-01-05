@@ -80,6 +80,11 @@ public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseMana
 			sql.append(" order by uc.status,uc.caseTime desc");
 			page = getManager().pageQuery(page, sql.toString(), args.toArray());
 			restorePageData(page);
+			
+			//取得该区县下的所有派遣环节
+			List ucTypes = getManager().getAllUcTypeByCounty(county);
+			logger.info("派遣环节数：{}", ucTypes.size());
+			getRequest().setAttribute("ucTypeList", ucTypes);
 		}
 		return INDEX;
 	}
