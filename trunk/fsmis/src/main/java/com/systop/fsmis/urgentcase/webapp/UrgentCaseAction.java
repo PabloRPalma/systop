@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -228,6 +229,22 @@ public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseMana
 		getManager().saveGroupResult(caseId, county, groupId, rstValue);
 		
 		return "jsonRst";
+	}
+	
+	/**
+	 * 取得预案等级
+	 */
+	public Map<String, String> getPlansLevelMap() {
+		Map categoryMap = new LinkedHashMap();
+		Dept county = loginUserService.getLoginUserCounty(getRequest());
+		if (county != null) {
+			if (county.getParentDept() != null) {
+				categoryMap.put("IV 级预案", "IV 级预案");
+			} else {
+				categoryMap.put("III级预案", "III级预案");
+			}
+		}
+		return categoryMap;
 	}
 	
 	public Map<String, String> getIsAgreeMap() {
