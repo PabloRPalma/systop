@@ -1,8 +1,9 @@
-package com.systop.fsmis.fscase.task.taskdetail.service;
+package com.systop.fsmis.fscase.task.taskdetail;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import com.systop.core.test.BaseTransactionalTestCase;
+import com.systop.fsmis.fscase.task.taskdetail.service.TaskDetailManager;
 import com.systop.fsmis.model.TaskDetail;
 
 

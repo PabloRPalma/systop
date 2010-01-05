@@ -1,8 +1,9 @@
-package com.systop.fsmis.fscase.sendtype.service;
+package com.systop.fsmis.fscase.sendtype;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import com.systop.core.test.BaseTransactionalTestCase;
+import com.systop.fsmis.fscase.sendtype.service.SendTypeManager;
 
 
 @ContextConfiguration(locations = { "classpath*:spring/applicationContext-*.xml" })
