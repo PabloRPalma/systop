@@ -76,10 +76,10 @@
 	    <ec:column width="40" property="_s" title="No." value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center"/>
 		<ec:column width="180" property="title" title="事件名称" >
 		  <c:if test="${item.status == null || item.status eq '0' || item.status eq '1'}">
-			<a href="${ctx}/urgentcase/view.do?model.id=${item.id}&actId=0" title="查看应急事件"><font color="blue">${item.title}</font></a>
+			<a href="${ctx}/urgentcase/view.do?model.id=${item.id}&actId=0" title="查看事件"><font color="blue">${item.title}</font></a>
 		  </c:if>
 		  <c:if test="${item.status eq '2' || item.status eq '3' || item.status eq '4'}">
-			<a href="${ctx}/urgentcase/view.do?model.id=${item.id}&actId=3" title="查看应急事件"><font color="blue">${item.title}</font></a>
+			<a href="${ctx}/urgentcase/view.do?model.id=${item.id}&actId=3" title="查看事件"><font color="blue">${item.title}</font></a>
 		  </c:if>
 		</ec:column>
 		<ec:column width="180" property="address" title="事发地点"/>
@@ -99,14 +99,14 @@
 		</ec:column>
 		<ec:column width="170" property="_0" title="操作" style="text-align:center" sortable="false">
 		  <c:if test="${item.status == null || item.status eq '0'}">
-			<a href="${ctx}/urgentcase/edit.do?model.id=${item.id}">改</a> | 
-			<a href="#" onclick="showCheckWindow('${item.id}')">审</a> | 
+			<a href="${ctx}/urgentcase/edit.do?model.id=${item.id}" title="修改事件">改</a> | 
+			<a href="#" onclick="showCheckWindow('${item.id}')" title="审核事件">审</a> | 
 			<font color="silver">派</font> |
 		  </c:if>
 		  <c:if test="${item.status eq '1'}">
 		  	<font color="silver">改</font> | 
 		  	<font color="silver">审</font> | 
-			<a href="#" onclick="showDispatchWindow('${item.id}')">派</a> | 
+			<a href="#" onclick="showDispatchWindow('${item.id}')" title="任务派遣">派</a> | 
 		  </c:if>
 		  <c:if test="${item.status eq '2' || item.status eq '3' || item.status eq '4'}">
 		  	<font color="silver">改</font> | 
@@ -114,12 +114,12 @@
 			<font color="silver">派</font> | 
 		  </c:if>
 		  <c:if test="${item.status == null || item.status eq '0' || item.status eq '1'}">
-			<a href="${ctx}/urgentcase/view.do?model.id=${item.id}&actId=0">看</a> | 
+			<a href="${ctx}/urgentcase/view.do?model.id=${item.id}&actId=0" title="查看事件">看</a> | 
 		  </c:if>
 		  <c:if test="${item.status == '2' || item.status eq '3' || item.status eq '4'}">
-			<a href="${ctx}/urgentcase/view.do?model.id=${item.id}&actId=3">看</a> | 
+			<a href="${ctx}/urgentcase/view.do?model.id=${item.id}&actId=3" title="查看事件">看</a> | 
 		  </c:if>
-			<a href="#" onclick="remove(${item.id})">删</a>
+			<a href="#" onclick="remove(${item.id})" title="删除事件">删</a>
 		</ec:column>
 	</ec:row>
 </ec:table>
