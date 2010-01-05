@@ -98,7 +98,7 @@
 			onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
 			class="Wdate" /></td>
 		<td width="88" align="right">预案等级：</td>
-        <td width="348" align="left">        </td>
+        <td width="348" align="left">${model.plansLevel}</td>
 	</tr>
 	<tr>
 		<td align="right">事发地点：</td>

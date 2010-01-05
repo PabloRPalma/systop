@@ -82,7 +82,9 @@
 			onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
 			class="Wdate" /><font color="red">&nbsp;*</font></td>
 		<td width="88" align="right">预案等级：</td>
-        <td width="348" align="left">        </td>
+        <td width="348" align="left">
+        	<s:select id="plansLevel" list="plansLevelMap"  name="model.plansLevel" cssStyle="width:148px"></s:select>
+       	</td>
 	</tr>
 	<tr>
 		<td align="right">事发地点：</td>
@@ -98,10 +100,10 @@
 	<tr>
 		<td align="right">受害人数：</td>
 		<td align="left"><s:textfield id="harmNum"
-			name="model.harmNum" cssStyle="width:148px" /></td>
+			name="model.harmNum" cssStyle="width:148px" cssClass="digits"/></td>
 		<td align="right">死亡人数：</td>
 		<td align="left"><s:textfield id="deathNum"
-			name="model.deathNum" cssStyle="width:148px" /></td>
+			name="model.deathNum" cssStyle="width:148px" cssClass="digits"/></td>
 	</tr>
 	<tr>
 		<td align="right">事件报告人：</td>
