@@ -21,10 +21,13 @@ import com.systop.fsmis.model.CountySendType;
 @SuppressWarnings("serial")
 public class SelectDeptTag extends BaseFreeMarkerTagSupport {
 
+	//用于获得登录用户的相关信息
 	private LoginUserService loginUserService;
 
+	//区县派遣类别配置管理类
 	private CountySendTypeManager cstManager;
 
+	//用于查询操作dept数据
 	private DeptManager deptManager;
 
 	/** 标签的name属性，用于表单提交 */
