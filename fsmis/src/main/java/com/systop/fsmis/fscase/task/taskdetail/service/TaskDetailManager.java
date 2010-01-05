@@ -22,7 +22,8 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
 	/**
 	 * 完成任务明细退回操作
 	 * 
-	 * @param taskDetail 要退回的任务明细实体实例
+	 * @param taskDetail
+	 *            要退回的任务明细实体实例
 	 */
 	@Transactional
 	public void doReturnTaskDetail(TaskDetail taskDetail) {
@@ -45,7 +46,8 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
 	/**
 	 * 完成提交任务明细(处理完毕)方法
 	 * 
-	 * @param taskDetail 要提交的任务明细
+	 * @param taskDetail
+	 *            要提交的任务明细
 	 */
 	@Transactional
 	public void doCommitTaskDetail(TaskDetail taskDetail) {
@@ -86,6 +88,11 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
 	 * @return 是否所有任务明细已经退回
 	 */
 	private boolean checkIsAllTaskDetailReturned(TaskDetail taskDetail) {
+		// 如果任务明细对应的任务为null或者其id为null,则表明本任务明细没有对应的任务,直接返回false(不修改对应任务状态)
+		if (taskDetail.getTask() == null
+				|| taskDetail.getTask().getId() == null) {
+			return false;
+		}
 		// 遍历当前任务明细实体实例关联的任务实体的任务明细
 		for (TaskDetail detail : taskDetail.getTask().getTaskDetails()) {
 			// 只要遍历到的任一个任务明细的状态不为退回,则直接返回false(未全部退回)
