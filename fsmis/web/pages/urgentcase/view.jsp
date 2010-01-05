@@ -59,31 +59,40 @@
 <table width="99%">
 	<tr>
 		<td align="right">
-		<table>
-			<tr>
-				<td align="right">
+			<table>
+				<tr>
 					<c:if test="${model.isAgree eq '0' || model.isAgree == null}">
+					  <td align="right">
 						<a href="#" onclick="CheckWindow.show()"><img
 							src="${ctx}/images/icons/house.gif" /> 审核</a>
+					  </td>
+					  <td><span class="ytb-sep"></span></td>
 					</c:if>
 					<c:if test="${model.isAgree eq '1'&& model.status eq '1'}">
+					  <td align="right">
 						<a href="#" onclick="DispatchWindow.show()"><img
 							src="${ctx}/images/icons/house.gif" /> 任务派遣</a>
+					  </td>
+					  <td><span class="ytb-sep"></span></td>
 					</c:if>
 					<c:if test="${model.status eq '2'}">
+					  <td align="right">
 						<a href="#" onclick="finished()"><img
 							src="${ctx}/images/icons/house.gif" /> 处理完毕</a>
+					  </td>
+					  <td><span class="ytb-sep"></span></td>
 					</c:if>
-					<a href="${ctx}/urgentcase/viewResultReports.do?model.id=${model.id}" target="_blank"><img
+					<c:if test="${model.status eq '2' || model.status eq '3' || model.status eq '4'}">
+					  <td align="right">
+						<a href="${ctx}/urgentcase/viewResultReports.do?model.id=${model.id}" target="_blank"><img
 							src="${ctx}/images/icons/house.gif" /> 查看报告</a>
-				</td>
-				<c:if test="${model.isAgree eq '0' || model.isAgree == null || model.status eq '1' || model.status eq '2'}">	
-					<td><span class="ytb-sep"></span></td>
-				</c:if>
-				<td align="right"><a href="${ctx}/urgentcase/index.do"><img
-					src="${ctx}/images/icons/house.gif" /> 应急事件列表</a></td>
-			</tr>
-		</table>
+					  </td>
+					  <td><span class="ytb-sep"></span></td>
+					</c:if>
+					<td align="right"><a href="${ctx}/urgentcase/index.do"><img
+						src="${ctx}/images/icons/house.gif" /> 应急事件列表</a></td>
+				</tr>
+			</table>
 		</td>
 	</tr>
 </table>
