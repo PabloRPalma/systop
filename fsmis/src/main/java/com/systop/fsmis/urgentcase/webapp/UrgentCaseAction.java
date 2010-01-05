@@ -24,6 +24,7 @@ import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
 import com.systop.fsmis.FsConstants;
 import com.systop.fsmis.model.UrgentCase;
 import com.systop.fsmis.model.UrgentResult;
+import com.systop.fsmis.urgentcase.UcConstants;
 import com.systop.fsmis.urgentcase.service.UrgentCaseManager;
 
 /**
@@ -229,6 +230,36 @@ public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseMana
 		getManager().saveGroupResult(caseId, county, groupId, rstValue);
 		
 		return "jsonRst";
+	}
+	
+	/**
+	 * 查看指挥组处理报告
+	 */
+	public String viewResultReports() {
+		Dept county = loginUserService.getLoginUserCounty(getRequest());
+		Map reportsMap = new HashMap();
+		if (county != null) {
+			reportsMap = getManager().viewResultReports(getModel().getId(), county.getId());
+		}
+		getRequest().setAttribute("reportsMap", reportsMap);
+		
+		return "resultReports";
+	}
+	
+	/**
+	 * 应急事件处理完毕
+	 */
+	public String endUrgentCase() {
+		getModel().setStatus(UcConstants.CASE_STATUS_RESOLVEED);
+		getManager().save(getModel());
+		return SUCCESS;
+	}
+	
+	/**
+	 * 打印应急预案申请单
+	 */
+	public String printAppForm() {
+		return "print";
 	}
 	
 	/**

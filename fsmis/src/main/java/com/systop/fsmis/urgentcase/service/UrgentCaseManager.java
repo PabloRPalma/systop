@@ -177,6 +177,25 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
   }
   
   /**
+   * 根据应急事件ID及区县ID取得该事件指挥组的处理结果集
+   * @param caseId 应急事件ID
+   * @param countyId 区县ID
+   */
+  public Map viewResultReports(Integer caseId, Integer countyId) {
+  	Map<String, Map> resultMap = new LinkedHashMap();
+  	List<UrgentResult> resultList = queryGroupResult(caseId, countyId);
+  	for (UrgentResult urgentResult : resultList) {
+  		if (StringUtils.isNotBlank(urgentResult.getContent())) {
+  			String contentJson = "{" + urgentResult.getContent() + "}";
+  			//logger.info("处理结果json字符串：{}", contentJson);
+  			Map contentMap = convertJsonToMap(contentJson);
+  			resultMap.put(urgentResult.getUrgentGroup().getName(), contentMap);
+  		}
+  	}
+  	return resultMap;
+  }
+  
+  /**
    * 根据应急事件ID、区县ID及指挥组ID取得该事件的派发结果
    * 将派发结果内容转换为Map数据格式
    * @param caseId 事件ID
@@ -188,7 +207,7 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
 		UrgentResult urgentResult = getUrgentResult(caseId, countyId, groupId);
 		if (urgentResult != null) {
 			String contentJson = "{" + urgentResult.getContent() + "}";
-			logger.info("json字符串：{}", contentJson);
+			//logger.info("json字符串：{}", contentJson);
 			contentMap = convertJsonToMap(contentJson);
 		}
 		
@@ -260,7 +279,7 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
 		{
 			key = (String) keyIter.next();
 			value = jsonObject.get(key);
-			logger.info("JSON数据键值对：{}: {}", key, value);
+			//logger.info("JSON数据键值对：{}: {}", key, value);
 			valueMap.put(key, value);
 		}
 		
