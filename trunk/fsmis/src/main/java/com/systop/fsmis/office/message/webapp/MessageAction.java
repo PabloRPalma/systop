@@ -46,6 +46,11 @@ public class MessageAction extends ExtJsCrudAction<Message, MessageManager> {
 	 * 起始时间
 	 */
 	private String createTimeEnd;
+	
+	/**
+	 * 用户ID
+	 */
+	private Integer [] userId;
 
 	@Autowired
 	private LoginUserService loginUserService;
@@ -147,15 +152,12 @@ public class MessageAction extends ExtJsCrudAction<Message, MessageManager> {
 			addActionError("无法发送，请先登录！");
 			return INPUT;
 		}
-		if (getModel().getReceiver() != null
-				&& getModel().getReceiver().getId() != null) {
-			getModel().setReceiver(
-					getManager().getDao().get(User.class,
-							getModel().getReceiver().getId()));
-		} else {
+		
+		if(userId == null) {
 			addActionError("无法发送，请选择收信人！");
 			return INPUT;
 		}
+		
 		getModel().setCreateTime(new Date());
 		getModel().setIsNew(FsConstants.Y);
 		getManager().save(getModel());
@@ -206,5 +208,13 @@ public class MessageAction extends ExtJsCrudAction<Message, MessageManager> {
 
 	public void setCreateTimeEnd(String createTimeEnd) {
 		this.createTimeEnd = createTimeEnd;
+	}
+
+	public Integer[] getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer[] userId) {
+		this.userId = userId;
 	}
 }
