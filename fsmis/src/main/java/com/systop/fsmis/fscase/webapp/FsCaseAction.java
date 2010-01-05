@@ -1,6 +1,5 @@
 package com.systop.fsmis.fscase.webapp;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -9,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.time.DateUtils;
 import org.hibernate.criterion.MatchMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -36,7 +34,8 @@ import com.systop.fsmis.model.FsCase;
 @Controller
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
-
+	// 是否综合(多体)案件
+	private String isMultiple;
 	@Autowired
 	private CaseTypeManager caseTypeManager;
 
@@ -45,12 +44,16 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 	private Integer typeoneId;
 
 	private Integer typetwoId;
-	
+
 	private Integer oneId;
-	
+
 	private Integer twoId;
 
 	private List typeRst;
+	// 查询起始事件
+	private Date caseBeginTime;
+	// 查询截至事件
+	private Date caseEndTime;
 
 	/**
 	 * 查询获得一般事件信息列表，分页查询
@@ -59,7 +62,7 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 		Page page = new Page(Page.start(getPageNo(), getPageSize()),
 				getPageSize());
 		StringBuffer sql = new StringBuffer(
-				"from FsCase gc where isMultiple=0 and isSubmitSj=0 ");
+				"from FsCase gc where isSubmitSj=0 ");
 		List args = new ArrayList();
 		if (StringUtils.isNotBlank(getModel().getTitle())) {
 			sql.append("and gc.title like ? ");
@@ -74,30 +77,22 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 			sql.append("and gc.code = ? ");
 			args.add(getModel().getCode());
 		}
-		// 根据事发时间查询
-		Date eventBeginDate = new Date();
-		Date eventEndDate = new Date();
-		if (StringUtils.isNotBlank(getRequest().getParameter("caseBeginTime"))
-				&& StringUtils.isNotBlank(getRequest().getParameter(
-						"caseEndTime"))) {
-			try {
-				eventBeginDate = DateUtils.parseDate(getRequest().getParameter(
-						"caseBeginTime"),
-						new String[] { "yyyy-MM-dd HH:mm:ss" });
-				eventEndDate = DateUtils.parseDate(getRequest().getParameter(
-						"caseEndTime"), new String[] { "yyyy-MM-dd HH:mm:ss" });
-
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-			sql.append(" and gc.caseTime >= ? and gc.caseTime <= ?");
-			args.add(eventBeginDate);
-			args.add(eventEndDate);
+		// 区分一般/综合(单体/多体)案件
+		if (StringUtils.isNotBlank(isMultiple)) {
+			sql.append("and gc.isMultiple=? ");
+			args.add(isMultiple);
+		}
+		// 根据事发时间区间查询
+		if (caseBeginTime != null && caseEndTime != null) {
+			sql.append("and gc.caseTime >= ? and gc.caseTime <= ? ");
+			args.add(caseBeginTime);
+			args.add(caseEndTime);
 		}
 
-		sql.append(" order by gc.caseTime desc,gc.status");
+		sql.append("order by gc.caseTime desc,gc.status");
 		page = getManager().pageQuery(page, sql.toString(), args.toArray());
 		restorePageData(page);
+
 		return INDEX;
 	}
 
@@ -120,6 +115,7 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 				|| getModel().getCounty().getId() == null) {
 			addActionError("请选择事件所属区县.");
 			getRequest().setAttribute("levelone", getLevelOne());
+
 			return INPUT;
 		}
 
@@ -143,6 +139,7 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 		getModel().setIsMultiple(FsConstants.N);
 		getManager().getDao().clear();
 		getManager().save(getModel());
+
 		return SUCCESS;
 	}
 
@@ -159,6 +156,7 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 	public String getLevelTwo() {
 		typeRst = Collections.EMPTY_LIST;
 		typeRst = caseTypeManager.getLevelTwoList(Integer.valueOf(typeId));
+
 		return "jsonRst";
 	}
 
@@ -168,19 +166,21 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 	@Override
 	public String edit() {
 		getRequest().setAttribute("levelone", getLevelOne());
-		if(getModel().getId()!=null){
-			//为类别赋默认值，用于编辑时显示
-			if(getModel().getCaseType().getCaseType()!=null && 
-			   getModel().getCaseType().getCaseType().getId()!=null){
-				oneId= getModel().getCaseType().getCaseType().getId();
-				twoId= getModel().getCaseType().getId();
-			}else{
-				oneId=getModel().getCaseType().getId();
-				
+		if (getModel().getId() != null) {
+			// 为类别赋默认值，用于编辑时显示
+			if (getModel().getCaseType().getCaseType() != null
+					&& getModel().getCaseType().getCaseType().getId() != null) {
+				oneId = getModel().getCaseType().getCaseType().getId();
+				twoId = getModel().getCaseType().getId();
+			} else {
+				oneId = getModel().getCaseType().getId();
+
 			}
 		}
+
 		return super.edit();
 	}
+
 	/**
 	 * 通用于整个FsCase功能模块的查看方法<br>
 	 * 由于需要在其他模块中被访问,<br>
@@ -189,13 +189,13 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 	 * 本方法的跳转页面需要根据数据关联情况将FsCase/Task/TaskDetail等信息逐级显示
 	 */
 	@Override
-	public String view() {		
+	public String view() {
 		String id = getRequest().getParameter("fsCaseId");
 		if (StringUtils.isNotBlank(id)) {
 			Integer fsCaseId = Integer.parseInt(id);
 			setModel(getManager().get(fsCaseId));
 		}
-		
+
 		return VIEW;
 	}
 
@@ -208,6 +208,7 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 		StateMap.put(CaseConstants.CASE_STATUS_RESOLVEING, "已派遣");
 		StateMap.put(CaseConstants.CASE_STATUS_VERIFYED, "已核实");
 		StateMap.put(CaseConstants.CASE_STATUS_RESOLVEED, "已处理");
+
 		return StateMap;
 	}
 
@@ -242,7 +243,7 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 	public void setTypetwoId(Integer typetwoId) {
 		this.typetwoId = typetwoId;
 	}
-	
+
 	public Integer getOneId() {
 		return oneId;
 	}
@@ -250,12 +251,36 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 	public void setOneId(Integer oneId) {
 		this.oneId = oneId;
 	}
-	
+
 	public Integer getTwoId() {
 		return twoId;
 	}
 
 	public void setTwoId(Integer twoId) {
 		this.twoId = twoId;
+	}
+
+	public String getIsMultiple() {
+		return isMultiple;
+	}
+
+	public void setIsMultiple(String isMultiple) {
+		this.isMultiple = isMultiple;
+	}
+
+	public Date getCaseBeginTime() {
+		return caseBeginTime;
+	}
+
+	public void setCaseBeginTime(Date caseBeginTime) {
+		this.caseBeginTime = caseBeginTime;
+	}
+
+	public Date getCaseEndTime() {
+		return caseEndTime;
+	}
+
+	public void setCaseEndTime(Date caseEndTime) {
+		this.caseEndTime = caseEndTime;
 	}
 }
