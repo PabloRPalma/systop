@@ -3,9 +3,10 @@
 <script type="text/javascript">
   util = new fileUtil();<br>
   util.style = "width:300px;";<br>   
-  util.deleteIcon = "${ctx}/images/exticons/cross.gif";<br>
+  util.deleteIcon = "${ctx}/images/exticons/cross.gif";
 </script>
-&lta href="#" onclick='util.add("fileUpload")'&dt增加附件</a>"
+
+&lt;a href="#" onclick='util.add("fileUpload")'&dt;增加附件&lt;/a&gt;
 "<table>
   <tbody id="fileUpload"></tbody>
 </table>"
