@@ -96,6 +96,9 @@
 			<c:if test="${item.status != null}">
 				<a href="${ctx}/urgentcase/listCheckResult.do?model.id=${item.id}">审核记录</a>
 			</c:if>
+			<c:if test="${item.status == null}">
+				<font color="silver">无记录</font>
+			</c:if>
 		</ec:column>
 		<ec:column width="170" property="_0" title="操作" style="text-align:center" sortable="false">
 		  <c:if test="${item.status == null || item.status eq '0'}">
