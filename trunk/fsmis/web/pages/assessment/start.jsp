@@ -111,22 +111,22 @@ Ext.onReady(function(){
 	            <pre>${model.askCause}</pre>
 	          </td>
           </tr> 
-	      <tr><td>&nbsp;</td></tr>                    
-          <tr>
-             <td align="right" width="90" style="height:20px"><span style="font-weight:bold">专家组成员：</span></td>
-             <td><input class="text" type="text" id="member" name="member" size="50">
-                 <a href="#"
-					onclick="javascript:membersOfAssessment(${model.id}, 2);"> <img
-					src="${ctx}/images/icons/role.gif" border="0" title="设置专家组成员" />
-				         选择</a>				    
-			 </td>
-          </tr> 
+	      <tr><td>&nbsp;</td></tr>     
           <tr>
              <td align="right" width="90" style="height:20px"><span style="font-weight:bold">专家组组长：</span></td>
              <td><input class="text" type="text" id="leader" name="leader" size="50">
                  <a href="#"
 					onclick="javascript:membersOfAssessment(${model.id}, 1);"> <img
 					src="${ctx}/images/icons/role.gif" border="0" title="设置专家组组长" />
+				         选择</a>				    
+			 </td>
+          </tr> 	                     
+          <tr>
+             <td align="right" width="90" style="height:20px"><span style="font-weight:bold">专家组成员：</span></td>
+             <td><input class="text" type="text" id="member" name="member" size="50">
+                 <a href="#"
+					onclick="javascript:membersOfAssessment(${model.id}, 2);"> <img
+					src="${ctx}/images/icons/role.gif" border="0" title="设置专家组成员" />
 				         选择</a>				    
 			 </td>
           </tr>                  
