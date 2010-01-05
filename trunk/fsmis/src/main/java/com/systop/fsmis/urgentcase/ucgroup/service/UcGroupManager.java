@@ -19,6 +19,7 @@ public class UcGroupManager extends BaseGenericsManager<UrgentGroup> {
 
 	/**
 	 * 保存组，类别下已经添加的事故处理组，善后处理组，禁止添加
+	 * @param ug 应急组
 	 */
 	@Transactional
 	public void save(UrgentGroup ug) {
@@ -38,6 +39,7 @@ public class UcGroupManager extends BaseGenericsManager<UrgentGroup> {
 
 	/**
 	 *类别列表页面提示使用
+	 *@param ut 应急类别
 	 */
 	public String getUcGroupName(UrgentType ut) {
 		UrgentGroup ugTemp;
