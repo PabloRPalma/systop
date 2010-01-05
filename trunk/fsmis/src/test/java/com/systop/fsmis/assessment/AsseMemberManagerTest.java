@@ -19,56 +19,50 @@ public class AsseMemberManagerTest extends BaseTransactionalTestCase {
 	
 	@Autowired
 	private ExpertManager expertManager;
-	
+
 	@Autowired
 	private AssessmentManager assessmentManager;
-	public void testgetAsseMember(){
+
+	public void testgetAsseMember() {
 		Expert expert = new Expert();
 		expert.setName("专家");
 		expertManager.save(expert);
-		String hql = "from Expert where name = '专家'";
-		Expert et = expertManager.findObject(hql);
-		
+
 		Assessment assessment = new Assessment();
 		assessment.setState("0");
 		assessmentManager.save(assessment);
-		hql = "from Assessment where state = '0'";
-		Assessment asm = assessmentManager.findObject(hql);
-		
+
 		AsseMember asseMember = new AsseMember();
 		asseMember.setDescn("描述");
 		asseMember.setType("1");
-		asseMember.setExpert(et);
-		asseMember.setAssessment(asm);
+		asseMember.setExpert(expert);
+		asseMember.setAssessment(assessment);
 		assseMemberManager.save(asseMember);
-		hql = "from AsseMember am where am.descn = '描述' and am.type = '1' and am.expert.name = '专家'";
-		AsseMember aM = assseMemberManager.findObject(hql);
-		
-		if(aM != null && et != null && asm != null){
-			@SuppressWarnings("unused")
-			AsseMember aMRet = assseMemberManager.getAsseMember(aM.getAssessment().getId(), aM.getExpert().getId(), "1");
-		}
+
+		AsseMember aM = assseMemberManager.get(asseMember.getId());
+		AsseMember aMRet = assseMemberManager.getAsseMember(aM.getAssessment()
+				.getId(), aM.getExpert().getId(), "1");
+
+		assertEquals("专家", aMRet.getExpert().getName());
+		assertEquals("0", aMRet.getAssessment().getState());
+		assertEquals("描述", aMRet.getDescn());
+		assertEquals("1", aMRet.getType());
 	}
-	
-	public void testgetAsseMembers(){
+
+	public void testgetAsseMembers() {
 		Assessment assessment = new Assessment();
 		assessment.setState("1");
 		assessmentManager.save(assessment);
-		String hql = "from Assessment where state = '1'";
-		Assessment asm = assessmentManager.findObject(hql);
-		
+
 		AsseMember asseMember = new AsseMember();
 		asseMember.setDescn("新描述");
 		asseMember.setType("0");
-		asseMember.setAssessment(asm);
+		asseMember.setAssessment(assessment);
 		assseMemberManager.save(asseMember);
-		hql = "from AsseMember am where am.descn = '新描述' and am.type = '0'";
-		AsseMember aM = assseMemberManager.findObject(hql);
+
+		List<AsseMember> asseMembers = assseMemberManager.getAsseMembers(asseMember
+				.getAssessment().getId(), "0");
 		
-		if(aM != null && asm != null){
-			@SuppressWarnings("unused")
-			List<AsseMember> asseMembers = assseMemberManager.getAsseMembers(aM.getAssessment().getId(), "0");
-			System.out.println(asseMembers.get(0).getDescn());
-		}
+		assertTrue(asseMembers.contains(assseMemberManager.get(asseMember.getId())));
 	}
 }
