@@ -38,13 +38,17 @@ public class ExpertManagerTest extends BaseTestCase {
 		expert.setOfficePhone("13275896253");
 		expert.setMobile("12334321");
 		expertManager.save(expert);
+		
+		assertEquals("张三", (expertManager.get(expert.getId())).getName());
+		assertEquals("testExpert@sina.com", (expertManager.get(expert.getId())).getEmail());
 	}
 	
 	@SuppressWarnings("unchecked")
 	public void testGetExpertCategory(){
 		List list = Collections.EMPTY_LIST;
 		list = expertManager.getExpertCategory();
-		logger.debug("专家类别List大小为：" + Integer.toString(list.size()));
+		
+		assertTrue(list.size() > 0);
 	}
 	
 	public void testRemove(){
