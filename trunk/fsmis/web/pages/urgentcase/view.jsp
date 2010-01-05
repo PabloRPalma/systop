@@ -64,14 +64,20 @@
 				<td align="right">
 					<c:if test="${model.isAgree eq '0' || model.isAgree == null}">
 						<a href="#" onclick="CheckWindow.show()"><img
-						src="${ctx}/images/icons/house.gif" /> 审核</a>
+							src="${ctx}/images/icons/house.gif" /> 审核</a>
 					</c:if>
 					<c:if test="${model.isAgree eq '1'&& model.status eq '1'}">
 						<a href="#" onclick="DispatchWindow.show()"><img
-						src="${ctx}/images/icons/house.gif" /> 任务派遣</a>
+							src="${ctx}/images/icons/house.gif" /> 任务派遣</a>
 					</c:if>
+					<c:if test="${model.status eq '2'}">
+						<a href="#" onclick="finished()"><img
+							src="${ctx}/images/icons/house.gif" /> 处理完毕</a>
+					</c:if>
+					<a href="${ctx}/urgentcase/viewResultReports.do?model.id=${model.id}" target="_blank"><img
+							src="${ctx}/images/icons/house.gif" /> 查看报告</a>
 				</td>
-				<c:if test="${model.isAgree eq '0' || model.isAgree == null || model.status eq '1'}">	
+				<c:if test="${model.isAgree eq '0' || model.isAgree == null || model.status eq '1' || model.status eq '2'}">	
 					<td><span class="ytb-sep"></span></td>
 				</c:if>
 				<td align="right"><a href="${ctx}/urgentcase/index.do"><img
@@ -347,5 +353,15 @@
 </table>
 </div>
 </div>
+<script type="text/javascript">
+  function finished() {
+	  var caseId = document.getElementById('caseId').value;
+	  Ext.MessageBox.confirm('提示','确定该应急事件已经处理完毕吗？', function(btn){
+	        if (btn == 'yes') {
+	        	window.location = '${ctx}/urgentcase/endUrgentCase.do?model.id='+ caseId;
+	        }
+	    });
+  }
+</script>
 </body>
 </html>
