@@ -2,7 +2,6 @@ package com.systop.fsmis.office.message.webapp;
 
 import java.text.ParseException;
 import java.util.Date;
-import java.util.List;
 
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.commons.lang.xwork.StringUtils;
@@ -24,29 +23,30 @@ import com.systop.fsmis.office.message.service.MessageManager;
 
 /**
  * 内部消息管理Action
+ * 
  * @author ZW
- *
+ * 
  */
 @SuppressWarnings("serial")
 @Controller
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class MessageAction extends ExtJsCrudAction<Message, MessageManager> {
-	
+
 	/**
 	 * 发信人ID
 	 */
 	private Integer senderId;
-	
+
 	/**
 	 * 起始时间
 	 */
 	private String createTimeBegin;
-	
+
 	/**
 	 * 起始时间
 	 */
 	private String createTimeEnd;
-	
+
 	@Autowired
 	private LoginUserService loginUserService;
 
@@ -73,9 +73,10 @@ public class MessageAction extends ExtJsCrudAction<Message, MessageManager> {
 
 		return "sended";
 	}
-	
+
 	/**
 	 * 设置接收查询条件
+	 * 
 	 * @return
 	 */
 	private DetachedCriteria setupDetachedCriteriaReceived() {
@@ -85,25 +86,28 @@ public class MessageAction extends ExtJsCrudAction<Message, MessageManager> {
 		if (user != null) {
 			criteria.add(Restrictions.eq("receiver.id", user.getId()));
 		}
-		if(StringUtils.isNotBlank(createTimeBegin) 
+		if (StringUtils.isNotBlank(createTimeBegin)
 				&& StringUtils.isNotBlank(createTimeEnd)) {
 			try {
-				criteria.add(Restrictions.between("createTime", 
-						DateUtils.parseDate(createTimeBegin, new String[] { "yyyy-MM-dd HH:mm:ss" }),
-						DateUtils.parseDate(createTimeEnd, new String[] { "yyyy-MM-dd HH:mm:ss" })));
+				criteria.add(Restrictions.between("createTime", DateUtils
+						.parseDate(createTimeBegin,
+								new String[] { "yyyy-MM-dd HH:mm:ss" }),
+						DateUtils.parseDate(createTimeEnd,
+								new String[] { "yyyy-MM-dd HH:mm:ss" })));
 			} catch (ParseException e) {
 				logger.debug(e.getMessage());
 			}
 		}
-		
-		if(senderId != null) {
+
+		if (senderId != null) {
 			criteria.add(Restrictions.eq("sender.id", senderId));
 		}
 		return criteria;
 	}
-	
+
 	/**
 	 * 设置接收查询条件
+	 * 
 	 * @return
 	 */
 	private DetachedCriteria setupDetachedCriteriaSended() {
@@ -113,45 +117,37 @@ public class MessageAction extends ExtJsCrudAction<Message, MessageManager> {
 		if (user != null) {
 			criteria.add(Restrictions.eq("sender.id", user.getId()));
 		}
-		if(StringUtils.isNotBlank(createTimeBegin) 
+		if (StringUtils.isNotBlank(createTimeBegin)
 				&& StringUtils.isNotBlank(createTimeEnd)) {
 			try {
-				criteria.add(Restrictions.between("receiveTime", 
-						DateUtils.parseDate(createTimeBegin, new String[] { "yyyy-MM-dd HH:mm:ss" }),
-						DateUtils.parseDate(createTimeEnd, new String[] { "yyyy-MM-dd HH:mm:ss" })));
+				criteria.add(Restrictions.between("receiveTime", DateUtils
+						.parseDate(createTimeBegin,
+								new String[] { "yyyy-MM-dd HH:mm:ss" }),
+						DateUtils.parseDate(createTimeEnd,
+								new String[] { "yyyy-MM-dd HH:mm:ss" })));
 			} catch (ParseException e) {
 				logger.debug(e.getMessage());
 			}
 		}
-		
-		if(senderId != null) {
+
+		if (senderId != null) {
 			criteria.add(Restrictions.eq("receiver.id", senderId));
 		}
 		return criteria;
 	}
-	
-	/**
-	 * 得到人员
-	 * @return
-	 */
-	@SuppressWarnings("unchecked")
-	public List getReceiverList() {
-		List userList = getManager().getAllUser();
-		return userList;
-	}
-	
+
 	/**
 	 * 保存内部 信息
 	 */
 	public String save() {
 		User user = loginUserService.getLoginUser(getRequest());
-		if(user != null) {
+		if (user != null) {
 			getModel().setSender(user);
 		} else {
 			addActionError("无法发送，请先登录！");
 			return INPUT;
 		}
-		if(getModel().getReceiver() != null
+		if (getModel().getReceiver() != null
 				&& getModel().getReceiver().getId() != null) {
 			getModel().setReceiver(
 					getManager().getDao().get(User.class,
@@ -165,7 +161,7 @@ public class MessageAction extends ExtJsCrudAction<Message, MessageManager> {
 		getManager().save(getModel());
 		return SUCCESS;
 	}
-	
+
 	/**
 	 * 查看内部消息
 	 */
@@ -175,7 +171,7 @@ public class MessageAction extends ExtJsCrudAction<Message, MessageManager> {
 		getManager().save(getModel());
 		return VIEW;
 	}
-	
+
 	/**
 	 * 回复内部消息
 	 */
