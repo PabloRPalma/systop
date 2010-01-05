@@ -27,7 +27,7 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
 	 */
 	@Transactional
 	public void doReturnTaskDetail(TaskDetail taskDetail) {
-		// 退回状态
+		// 设定当前任务明细的状态为退回状态
 		taskDetail.setStatus(CaseConstants.TASK_DETAIL_RETURNED);
 		save(taskDetail);
 		// 如果所有任务明细已经退回,则把任务和案件状态都置为"退回"
