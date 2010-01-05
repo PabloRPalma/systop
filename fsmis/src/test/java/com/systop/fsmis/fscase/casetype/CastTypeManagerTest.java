@@ -25,6 +25,7 @@ public class CastTypeManagerTest extends BaseTransactionalTestCase {
 		casetype.setDescn("测试类别描述");
 		
 		caseTypeManager.save(casetype);
+		assertEquals("测试类别",caseTypeManager.get(casetype.getId()).getName());
 	}
 
 	
