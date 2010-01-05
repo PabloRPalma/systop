@@ -1,6 +1,5 @@
 package com.systop.fsmis.fscase.task.taskdetail.webapp;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -8,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.time.DateUtils;
 import org.hibernate.criterion.MatchMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -82,7 +80,7 @@ public class TaskDetailAction extends
 			buf.append("and detail.dept.id = ? ");
 			args.add(dept.getId());
 		}
-		//区分一般案件和综合案件
+		// 区分一般案件和综合案件
 		buf.append("and detail.task.fsCase.isMultiple = ? ");
 		args.add(isMultiple);
 		getRequest().setAttribute("userId", user.getId());
@@ -104,28 +102,11 @@ public class TaskDetailAction extends
 	 *            参数数组
 	 */
 	private void builddDispatchTimeCondition(StringBuffer buf, List<Object> args) {
-		if (StringUtils.isNotBlank(getRequest().getParameter("taskBeginTime"))) {
-			try {
-				taskBeginTime = DateUtils.parseDate(getRequest().getParameter(
-						"taskBeginTime"),
-						new String[] { "yyyy-MM-dd HH:mm:ss" });
-				buf.append("and detail.task.dispatchTime >=? ");
-				args.add(taskBeginTime);
-			} catch (ParseException e) {
-				addActionError("查询的派发开始时间错误!");
-				logger.error(e.getMessage());
-			}
-		}
-		if (StringUtils.isNotBlank(getRequest().getParameter("taskEndTime"))) {
-			try {
-				taskEndTime = DateUtils.parseDate(getRequest().getParameter(
-						"taskEndTime"), new String[] { "yyyy-MM-dd HH:mm:ss" });
-				buf.append("and detail.task.dispatchTime <=? ");
-				args.add(taskEndTime);
-			} catch (ParseException e) {
-				addActionError("查询的派发开始时间错误!");
-				logger.error(e.getMessage());
-			}
+		if (taskBeginTime != null && taskEndTime != null) {
+			buf
+					.append("and detail.task.dispatchTime >=? and detail.task.dispatchTime <=? ");
+			args.add(taskBeginTime);
+			args.add(taskEndTime);
 		}
 
 	}
@@ -187,7 +168,7 @@ public class TaskDetailAction extends
 
 		getManager().doReturnTaskDetail(getModel());
 
-		return JSON;
+		return SUCCESS;
 	}
 
 	/**
@@ -196,7 +177,8 @@ public class TaskDetailAction extends
 	 * @return
 	 */
 	public String toDealWithTaskDetail() {
-
+		//设定默认的任务处理结果填写人为当前登录人员
+		getModel().setInputer(loginUserService.getLoginUser(getRequest()).getName());
 		return "toDealWithTaskDetail";
 	}
 

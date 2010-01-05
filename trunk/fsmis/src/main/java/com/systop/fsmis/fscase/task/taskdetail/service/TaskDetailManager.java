@@ -30,17 +30,20 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
 		// 设定当前任务明细的状态为退回状态
 		taskDetail.setStatus(CaseConstants.TASK_DETAIL_RETURNED);
 		save(taskDetail);
-		// 如果所有任务明细已经退回,则把任务和案件状态都置为"退回"
+		// 如果所有任务明细已经退回,则把任务和案件状态都置为"退回",
 		if (checkIsAllTaskDetailReturned(taskDetail)) {
 			Task task = taskDetail.getTask();
 			task.setStatus(CaseConstants.TASK_STATUS_RETURNED);
 			getDao().save(task);
-
+			// 系统限定:如果一个案件的一个任务未处理或者未退回(全部任务明细未全部处理或者退回),则不会再次派遣任务,
+			// 所以不会出现一个案件的多个任务并行状态,也就不会引起案件状态的冲突.
+			// 作为当前案件的有效任务,当前任务已退回(对应所有任务明细都已退回),则修改案件的状态为"退回"
 			FsCase fsCase = task.getFsCase();
-			fsCase.setStatus(CaseConstants.CASE_STATUS_RETURNED);
-			getDao().save(fsCase);
+			if (fsCase != null && fsCase.getId() != null) {
+				fsCase.setStatus(CaseConstants.CASE_STATUS_RETURNED);
+				getDao().save(fsCase);
+			}
 		}
-
 	}
 
 	/**
@@ -57,11 +60,17 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
 		taskDetail.setCompletionTime(new Date());
 		save(taskDetail);
 		// 如果所有任务明细已经处理,则把任务状态置为"已处理",
-		// 由于一个案件允许多次任务处理,所以在这里不改变案件状态
 		if (checkIsAllTaskDetailResolved(taskDetail)) {
 			Task task = taskDetail.getTask();
 			task.setStatus(CaseConstants.TASK_STATUS_RESOLVEED);
 			getDao().save(task);
+
+			// 作为当前案件的唯一有效任务,当前任务已处理(对应所有任务明细都已处理),则修改案件的状态为"已处理"
+			FsCase fsCase = task.getFsCase();
+			if (fsCase != null && fsCase.getId() != null) {
+				fsCase.setStatus(CaseConstants.CASE_STATUS_RESOLVEED);
+				getDao().save(fsCase);
+			}
 		}
 	}
 
