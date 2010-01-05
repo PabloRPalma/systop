@@ -33,6 +33,7 @@ import com.systop.core.util.StringUtil;
  * @author Sam Lee
  * 
  */
+@SuppressWarnings("serial")
 public class ParametersTag extends BodyTagSupport {
 	private static Logger logger = LoggerFactory.getLogger(ParametersTag.class);
 	/**
