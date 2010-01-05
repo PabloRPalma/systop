@@ -117,7 +117,7 @@ Ext.onReady(function(){
              <td><input class="text" type="text" id="leader" name="leader" size="50">
                  <a href="#"
 					onclick="javascript:membersOfAssessment(${model.id}, 1);"> <img
-					src="${ctx}/images/icons/role.gif" border="0" title="设置专家组组长" />
+					src="${ctx}/images/icons/user.gif" border="0" title="设置专家组组长" />
 				         选择</a>				    
 			 </td>
           </tr> 	                     
@@ -126,7 +126,7 @@ Ext.onReady(function(){
              <td><input class="text" type="text" id="member" name="member" size="50">
                  <a href="#"
 					onclick="javascript:membersOfAssessment(${model.id}, 2);"> <img
-					src="${ctx}/images/icons/role.gif" border="0" title="设置专家组成员" />
+					src="${ctx}/images/icons/user.gif" border="0" title="设置专家组成员" />
 				         选择</a>				    
 			 </td>
           </tr>                  
