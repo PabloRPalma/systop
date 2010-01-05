@@ -28,12 +28,13 @@
 
 </head>
 <body>
-<div id="winDealWithTaskDetail" >
-<div class="x-window-header">处理任务</div>
-<div id="dealWithTaskDetail">
+<div id="winDealWithTaskDetail" class="x-panel">
+<div class="x-panel-header">协调指挥&nbsp;&gt;&nbsp;任务处理</div>
+<div id="dealWithTaskDetail" class="x-toolbar">
 	<s:form  id="frmDealWithTaskDetail" action="doCommitTaskDetail.do" method="post" theme="simple" enctype="multipart/form-data" onsubmit="return onCheckForm()">
 	<s:hidden name="model.id"/>
-	
+	<s:hidden name="isMultiple"/>
+	<s:hidden name="modelId" />
 	<table align="left" width="700px">	
 	<tr>
 	<td>
