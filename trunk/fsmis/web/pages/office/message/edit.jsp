@@ -31,7 +31,7 @@ var emp;
    emp = new UserSelector({
        url: '${ctx}/security/user/userTree.do',
        el: 'emp_sel_container',
-       idsEl:'person_id',
+       idsEl:'userId',
        textEl:'person',
        width : 250,
 	   height : 450,
@@ -45,17 +45,18 @@ function showWin() {
 </script>
 <div class="x-panel">
 <div class="x-panel-header">发送内部消息</div>
-<div class="center"><s:form action="save.do" id="save" method="post" theme="simple" validate="true">
-<fieldset style="width: 500px; padding-top: 2px">
+<div class="center">
+<s:form action="save.do" id="save" method="post" theme="simple" validate="true">
+<fieldset style="width: 500px; padding-top: 2px ;">
   <legend>编辑内部消息</legend>
 	<s:hidden name="model.id"/>
-	<table width="800px" align="center" border="0" cellpadding="3" cellspacing="3">
+	<table width="500px" align="center" border="0" cellpadding="3" cellspacing="3">
 		<tr>
 			<td align="right" width="70">收信人：</td>
 			<td align="left">
 				
 				<s:textfield id="person" name="person" cssStyle="width:450px" />
-				<s:hidden name="person_id"></s:hidden>
+				<s:hidden name="userId"></s:hidden>
 				<input onclick="showWin()" value="添加人员" type="button">
 			</td>
 		</tr>
@@ -77,7 +78,6 @@ function showWin() {
 </s:form>
 </div>
 </div>
-</script>
 <script type="text/javascript">
 	$(document).ready(function() {
 	$("#save").validate();

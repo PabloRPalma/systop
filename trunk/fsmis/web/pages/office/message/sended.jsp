@@ -23,9 +23,7 @@ function remove(aID){
 	<tr>
 	<td>
 			<s:form action="sended.do" method="post">
-				 收信人:
-				 <s:select name="senderId" listKey="id" listValue="name" list="ReceiverList" headerKey=""  headerValue="选择发信人..." cssStyle="width:100px"></s:select>
-			 	  起始时间：
+				 起始时间：
 			 	 <input type="text" name="createTimeBegin" style="width: 140px"
 					value='<s:date name="createTimeBegin" format="yyyy-MM-dd HH:mm:ss"/>'
 					onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})"
