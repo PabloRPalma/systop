@@ -102,7 +102,7 @@
 		<td><span class="ytb-sep"></span></td>
 		<c:if test="${model.status ne '1'}">
 			<td align="right"><a
-				href="${ctx}/sendType/chooseSendType.do?caseId=${model.id}"> 任务派遣</a></td>
+				href="${ctx}/sendType/chooseSendType.do?caseId=${model.id}&modelId=${param['modelId']}"> 任务派遣</a></td>
 			<td><span class="ytb-sep"></span></td>
 		</c:if>
 		<td align="right"><a href="#"> 联合整治</a></td>

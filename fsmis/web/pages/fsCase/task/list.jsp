@@ -18,11 +18,12 @@ function remove(id){
 <body>
 <div><%@ include file="/common/messages.jsp"%></div>
 <div class="x-panel">
-<div class="x-panel-header">协调指挥&nbsp;&gt;&nbsp;任务列表</div>
+<div class="x-panel-header">协调指挥&nbsp;&gt;&nbsp;${param['isMultiple'] eq 0?'一般任务':'综合任务'}管理&nbsp;&gt;&nbsp;${param['isMultiple'] eq 0?'一般任务':'综合任务'}列表</div>
 <div class="x-toolbar">
 <table width="99%">
 	<tr>
 		<td><s:form action="index" method="post">
+		<s:hidden name="isMultiple"></s:hidden>
            		        任务标题：
 			<s:textfield name="model.title"></s:textfield>
 			                   派发时间:开始
@@ -93,7 +94,7 @@ function remove(id){
 		</ec:column>
 		<ec:column width="80" property="_o" title="操作" sortable="false"
 			style="text-align: center">
-			<a href="${ctx}/fscase/view.do?fsCaseId=${item.fsCase.id}&modelId=1">
+			<a href="${ctx}/fscase/view.do?fsCaseId=${item.fsCase.id}&modelId=${param['modelId']}">
 			查看</a>
 			<c:if test="${item.status != '2'}">
 				<a href="#" onclick="remove(${item.id})">  | 删除 </a>
