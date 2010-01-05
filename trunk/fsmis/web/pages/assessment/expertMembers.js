@@ -1,5 +1,5 @@
 var currentAssessmentId; // The current user that we are assigning roles for.
-
+var currentExpertType;
 var store = new Ext.data.Store({
 			proxy : new Ext.data.HttpProxy({
 						url : ''// URL will defined dynamicly.
@@ -82,7 +82,7 @@ function toolbarItmes() {
 	div.style.margin = "2px;";
 	txt.type = "text";
 	txt.name = "model.name";
-	txt.id = "role-name";
+	txt.id = "expert-name";
 	var msg = document.createTextNode("专家名称:");
 	div.appendChild(msg);
 	div.appendChild(txt);
@@ -167,9 +167,9 @@ function onSelectExpert(cb) {
 			});
 }
 
-function membersOfAssessment(assessmentId) {
+function membersOfAssessment(assessmentId, expertType) {
 	currentAssessmentId = assessmentId;
-
+	currentExpertType = expertType;
 	if (win) {
 		win.show();
 		store.proxy.conn.url = url();
@@ -184,9 +184,9 @@ function membersOfAssessment(assessmentId) {
 
 function url() {
 	var urlStr = '/assessment/member/membersOfAssessment.do?assessment.id='
-			+ currentAssessmentId;
-	if (Ext.get('role-name')) {
-		urlStr = urlStr + '&model.name=' + Ext.get('role-name').getValue();
+			+ currentAssessmentId + "&expertType=" + currentExpertType;
+	if (Ext.get('expert-name')) {
+		urlStr = urlStr + '&model.name=' + Ext.get('expert-name').getValue();
 	}
 	
 	return encodeURI(encodeURI(urlStr));
