@@ -24,6 +24,7 @@ import com.systop.fsmis.FsConstants;
 import com.systop.fsmis.model.Supervisor;
 import com.systop.fsmis.supervisor.service.SupervisorManager;
 
+@SuppressWarnings("serial")
 @Controller
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class SupervisorAction extends DefaultCrudAction<Supervisor, SupervisorManager> {
