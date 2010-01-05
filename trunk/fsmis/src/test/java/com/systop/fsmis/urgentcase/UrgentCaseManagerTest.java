@@ -58,7 +58,7 @@ public class UrgentCaseManagerTest extends BaseTransactionalTestCase {
 	private UrgentType ut;
 	// 应急事件
 	private UrgentCase uc;
-
+	//准备数据
 	protected void setUp() throws Exception {
 		UrgentCase urgentCase = new UrgentCase();
 		urgentCase.setCode("2010");
@@ -90,7 +90,8 @@ public class UrgentCaseManagerTest extends BaseTransactionalTestCase {
 
 		urgentCaseManager.save(urgentCase);
 		urgentCaseManager.getDao().save(checkResult);
-
+		
+		//测试应急事件标识位
 		assertEquals("1", urgentCaseManager.get(urgentCase.getId()).getStatus());
 		assertEquals("1", urgentCaseManager.get(urgentCase.getId())
 				.getIsAgree());
@@ -121,6 +122,7 @@ public class UrgentCaseManagerTest extends BaseTransactionalTestCase {
 	public void testSendUrgentCase() {
 		urgentCaseManager.sendUrgentCase(String.valueOf(uc.getId()), String
 				.valueOf(ut.getId()), county);
+		//测试应急事件生成各小组结果
 		List<UrgentResult> urList = urgentCaseManager.getDao().query(
 						"from UrgentResult  ur where ur.county.id=? and ur.urgentCase.id=? ",
 						county.getId(), uc.getId());
@@ -129,6 +131,7 @@ public class UrgentCaseManagerTest extends BaseTransactionalTestCase {
 			System.out.println(ur.getUrgentGroup().getName() + ":"
 					+ ur.getContent());
 		}
+		//测试应急事件重新生成组
 		List<UrgentGroup> ugList = ucGroupManager.getDao().query(
 				"from UrgentGroup ug where ug.isOriginal=? and ug.county.id=?",
 				FsConstants.N, county.getId());
@@ -136,14 +139,17 @@ public class UrgentCaseManagerTest extends BaseTransactionalTestCase {
 			UrgentGroup ug = itr.next();
 			System.out.println(ug.getName());
 		}
+		//测试应急事件标识位
 		assertEquals(UcConstants.CASE_STATUS_SENDDED, urgentCaseManager.get(
 				uc.getId()).getStatus());
 	}
+
 	/**
 	 * 测试根据应急事件ID及区县ID取得该事件的派发情况
 	 */
 	@SuppressWarnings("unchecked")
 	public void testQueryGroupResult() {
+		//派遣应急事件
 		urgentCaseManager.sendUrgentCase(String.valueOf(uc.getId()), String
 				.valueOf(ut.getId()), county);
 		List<UrgentResult> urList = ucGroupManager.getDao().query(
@@ -161,19 +167,51 @@ public class UrgentCaseManagerTest extends BaseTransactionalTestCase {
 	 */
 	@SuppressWarnings("unchecked")
 	public void testGetUrgentResultByIds() {
+		//派遣应急事件
 		urgentCaseManager.sendUrgentCase(String.valueOf(uc.getId()), String
 				.valueOf(ut.getId()), county);
 
 		Map contentMap = Collections.EMPTY_MAP;
 
-		UrgentGroup ug = ucGroupManager.findObject(
-						"from UrgentGroup ug where ug.isOriginal=? and ug.county.id=? and ug.name like ?",
-						FsConstants.N, county.getId(), MatchMode.ANYWHERE
-								.toMatchString("接待"));
-		contentMap = urgentCaseManager.getUrgentResultByIds(uc.getId(), county
-				.getId(), ug.getId());
-		System.out.println("map长度" + contentMap.size());
+		List<UrgentResult> urgentResults = urgentCaseManager.queryGroupResult(
+				uc.getId(), county.getId());
+		for (UrgentResult urgentRst : urgentResults) {
+			contentMap = urgentCaseManager.getUrgentResultByIds(uc.getId(),
+					county.getId(), urgentRst.getUrgentGroup().getId());
+			System.out.println(contentMap.toString());
+		}
+	}
 
+	/**
+	 * 测试保存应急事件各个指挥组的处理结果
+	 * 
+	 */
+	@SuppressWarnings("unchecked")
+	public void testSaveGroupResult() {
+		//派遣应急事件
+		urgentCaseManager.sendUrgentCase(String.valueOf(uc.getId()), String
+				.valueOf(ut.getId()), county);
+		//应急事件各小组结果
+		List<UrgentResult> urgentResults = urgentCaseManager.queryGroupResult(
+				uc.getId(), county.getId());
+		for (UrgentResult urgentRst : urgentResults) {
+			if(urgentRst.getUrgentGroup().getCategory().equals("Receive")){
+				//未修改的结果
+				System.out.println(urgentRst.getContent());
+				//修改
+				urgentCaseManager.saveGroupResult(String.valueOf(uc.getId()),
+						county, String.valueOf(urgentRst.getUrgentGroup().getId()),
+						"a:b:c:d:e");	
+			}
+			
+		}
+
+		List<UrgentResult> urList = urgentCaseManager.queryGroupResult(uc
+				.getId(), county.getId());
+		for (UrgentResult urgentRst : urList) {
+			//修改后结果
+			System.out.println(urgentRst.getContent());
+		}
 	}
 
 }
