@@ -71,8 +71,9 @@
 						src="${ctx}/images/icons/house.gif" /> 任务派遣</a>
 					</c:if>
 				</td>
-					
-				<td><span class="ytb-sep"></span></td>
+				<c:if test="${model.isAgree eq '0' || model.isAgree == null || model.status eq '1'}">	
+					<td><span class="ytb-sep"></span></td>
+				</c:if>
 				<td align="right"><a href="${ctx}/urgentcase/index.do"><img
 					src="${ctx}/images/icons/house.gif" /> 应急事件列表</a></td>
 			</tr>
