@@ -71,10 +71,10 @@ window.onload = function(){
     <ec:column width="40" property="_num" title="No." value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center"/> 
     <ec:column width="60" property="proposer.name" title="申请人" style="text-align:center"/>
     <ec:column width="170" property="fsCase.title" title="事件标题"/>    
-    <ec:column width="100" property="_1" title="专家组组长" />
-    <ec:column width="150" property="asseMemberse" title="专家组成员" cell="com.systop.fsmis.assessment.converter.MembersConverter" />
+    <ec:column width="120" property="asseMemberse" alias="leaders" title="专家组组长" cell="com.systop.fsmis.assessment.converter.ExpertsConverter"/>
+    <ec:column width="160" property="asseMemberse" alias="members" title="专家组成员" cell="com.systop.fsmis.assessment.converter.ExpertsConverter"/>
     <ec:column width="70" property="askDate" title="申请日期"  style="text-align:center" cell="date" />     
-    <ec:column width="100" property="state" title="评估状态" style="text-align:center">
+    <ec:column width="70" property="state" title="评估状态" style="text-align:center">
        <c:choose>
         <c:when test="${item.state eq '0'}">
           <span style="color:red">待审核</span>
