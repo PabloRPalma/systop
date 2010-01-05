@@ -17,6 +17,7 @@ import com.systop.core.dao.hibernate.BaseHibernateDao;
  * 
  * @author Bin
  */
+@SuppressWarnings("serial")
 public class LinkListTag extends BaseFreeMarkerTagSupport {
 
   /**
