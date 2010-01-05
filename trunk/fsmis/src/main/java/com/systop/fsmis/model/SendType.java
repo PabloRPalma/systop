@@ -15,6 +15,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import com.systop.core.model.BaseModel;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "SEND_TYPES", schema = "FSMIS")
 public class SendType extends BaseModel {
