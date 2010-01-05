@@ -17,7 +17,7 @@ import freemarker.template.TemplateModelException;
  * @author Sam
  *
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings({ "unchecked", "serial" })
 public class WebParametersHashModel extends SimpleHash {
   private final ObjectWrapper wrapper;
   private final ServletContext context;

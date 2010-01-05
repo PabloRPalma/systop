@@ -18,6 +18,7 @@ import com.systop.fsmis.model.CountySendType;
  * 
  * @author Lunch
  */
+@SuppressWarnings("serial")
 public class SelectDeptTag extends BaseFreeMarkerTagSupport {
 
 	private LoginUserService loginUserService;
