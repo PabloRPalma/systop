@@ -8,7 +8,9 @@
 			<result name="index">/pages/fsCase/list.jsp</result> 
 			<result name="input">/pages/fsCase/edit.jsp</result> 
 			<result name="view">/pages/fsCase/view.jsp</result>
-			<result name="success" type="redirect">index.do</result> 
+			<result name="success" type="redirect">
+				index.do?isMultiple=${isMultiple}&amp;modelId=${modelId}
+			</result>
 			<result type="json" name="jsonRst">
 		   		<param name="root">typeRst</param>
 			</result>
