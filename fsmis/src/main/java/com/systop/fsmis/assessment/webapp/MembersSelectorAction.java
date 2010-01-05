@@ -24,7 +24,6 @@ import com.systop.cms.utils.PageUtil;
 import com.systop.core.ApplicationException;
 import com.systop.core.util.ReflectUtil;
 import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
-import com.systop.fsmis.assessment.AssessMentConstants;
 import com.systop.fsmis.assessment.service.AsseMemberManager;
 import com.systop.fsmis.assessment.service.ExpertMembersManager;
 import com.systop.fsmis.model.AsseMember;
@@ -47,6 +46,8 @@ public class MembersSelectorAction extends
 	private static final String TEMPLATE_REMOVED_MEMBERS = "TEMPLATE_REMOVED_MEMBERS";
 	
 	private static final String TEMPLATE_ADDED_MEMBERS = "TEMPLATE_ADDED_MEMBERS";
+	
+	private String expertType;
 	
 	/**
 	 * 评估专家成员管理Manager
@@ -144,7 +145,8 @@ public class MembersSelectorAction extends
     //临时删除（反分配）的专家
     Set<Integer> members = getTemporaryMembers(assessment, TEMPLATE_REMOVED_MEMBERS);
     for (Integer expertId : members) {
-    	AsseMember asseMember = asseMemberManager.getAsseMember(assessment.getId(), expertId, AssessMentConstants.EXPERT_MEMBER);
+  		//根据评估Id、专家Id和Session中存在的专家类别获取中间表中已存在的专家信息
+    	AsseMember asseMember = asseMemberManager.getAsseMember(assessment.getId(), expertId, getExpertType());
       if (asseMember != null) {
       	asseMemberManager.remove(asseMember);
       }
@@ -158,7 +160,8 @@ public class MembersSelectorAction extends
   			AsseMember asseMember = new AsseMember();
   			asseMember.setExpert(expert);
   			asseMember.setAssessment(assessment);
-  			asseMember.setType(AssessMentConstants.EXPERT_MEMBER);
+  			//根据Session设置中间表中的
+  			asseMember.setType(getExpertType());
   			asseMemberManager.save(asseMember);
       }
     }
@@ -183,16 +186,19 @@ public class MembersSelectorAction extends
 	    if (map.containsKey(assessment.getId())) {
 	      map.remove(assessment.getId());
 	    }
+	    //清除专家类型Session
+	    getRequest().getSession().removeAttribute("expertType");
 	}
 	
 	/**
-	 * 根据评估分配专家成员情况，在Session中暂存一个已分配的User Id
+	 * 根据评估分配专家成员情况，在Session中暂存一个已分配的Expert Id
 	 * @param assessment 指定的风险评估实体
 	 * @param expert 将从项目中删除的用户
 	 */
 	private void temporaryAddMember(Assessment assessment, Expert expert) {
 		Set membersAdded = getTemporaryMembers(assessment, TEMPLATE_ADDED_MEMBERS);
-		AsseMember asseMember = asseMemberManager.getAsseMember(assessment.getId(), expert.getId(), AssessMentConstants.EXPERT_MEMBER);
+		//根据评估Id、专家Id和Session中存在的专家类别获取中间表中已存在的专家信息
+		AsseMember asseMember = asseMemberManager.getAsseMember(assessment.getId(), expert.getId(), getExpertType());
 		if (asseMember == null) {
 			membersAdded.add(expert.getId());
 		}
@@ -210,7 +216,8 @@ public class MembersSelectorAction extends
 		setAssessment(getManager().getAssessmentById(assessment.getId()));
 
 		Set membersRemoved = getTemporaryMembers(assessment, TEMPLATE_REMOVED_MEMBERS);
-		AsseMember asseMember = asseMemberManager.getAsseMember(assessment.getId(), expert.getId(), AssessMentConstants.EXPERT_MEMBER);	
+		//根据评估Id、专家Id和Session中存在的专家类别获取中间表中已存在的专家信息
+		AsseMember asseMember = asseMemberManager.getAsseMember(assessment.getId(), expert.getId(), getExpertType());		
 		if (asseMember.getExpert() != null) {
 			membersRemoved.add(expert.getId());
 		}
@@ -249,18 +256,23 @@ public class MembersSelectorAction extends
 	 */
 	public String membersOfAssessment() {
 		initAssessment();
-		
 		// 得到当前专家组成员集合		
-    List<AsseMember> members = asseMemberManager.getAsseMembers(assessment.getId(), AssessMentConstants.EXPERT_MEMBER);
+    List<AsseMember> members = asseMemberManager.getAsseMembers(assessment.getId(), expertType);
+   
+		// 得到其它类型的专家组成员集合		  
+    List<AsseMember> otherMembers = asseMemberManager.getAsseOtherMembers(assessment.getId(), expertType);
+    
+    //将页面选择的专家类型放到Session中便于操作。
+    getRequest().getSession().setAttribute("expertType", expertType);
+    
    	List mapMembers = new ArrayList(members.size());
-
 		page = PageUtil.getPage(getPageNo(), getPageSize());
 		// 分页查询全部/根据姓名查询
 		String expertName = StringUtils.EMPTY;
 		try {
-			expertName = java.net.URLDecoder.decode(getModel().getName() , "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+			  expertName = java.net.URLDecoder.decode(getModel().getName() , "UTF-8");
+		    } catch (UnsupportedEncodingException e) {
+			   e.printStackTrace();
 		}
 		if (getModel() == null || StringUtils.isBlank(getModel().getName())) {
 			page = getManager().pageQuery(page, ("from Expert e"));
@@ -269,12 +281,27 @@ public class MembersSelectorAction extends
 					   MatchMode.ANYWHERE.toMatchString(expertName));
 		}
 		// 得到专家实体集合
-		List allExperts = page.getData();
+		List<Expert> allExperts = page.getData();
+    // 存放已选择的其他类别的专家信息
+		List<Expert> experts = new ArrayList();	
+		for (Iterator otherItr = allExperts.iterator(); otherItr.hasNext();) {
+			Expert expert = (Expert) otherItr.next();
+			if (CollectionUtils.isNotEmpty(otherMembers)) {			
+		    for (AsseMember otherAsseMember : otherMembers) {
+					if (otherAsseMember.getExpert().equals(expert)) {
+						experts.add(expert);
+					} 
+		    }
+			}
+		}
+		//如果存在已选择的其他类别的专家集合，则从总的专家集合中将其剔除。
+		if (CollectionUtils.isNotEmpty(experts)) {
+			allExperts.removeAll(experts);	
+		}
 		
 		/**
 		 * 在所有专家实体集合中遍历，如果已经包含在当前评估对象专家成员的专家实体集合中，则让其成为选中状态
-		 */
-		
+		 */	
 		for (Iterator itr = allExperts.iterator(); itr.hasNext();) {
 			Expert expert = (Expert) itr.next();
 			expert.setChanged(false);
@@ -308,6 +335,15 @@ public class MembersSelectorAction extends
 
 	public void setAssessment(Assessment assessment) {
 		this.assessment = assessment;
+	}
+
+	public String getExpertType() {
+		expertType = String.valueOf(getRequest().getSession().getAttribute("expertType"));
+		return expertType;
+	}
+
+	public void setExpertType(String expertType) {
+		this.expertType = expertType;
 	}
 	
 }
