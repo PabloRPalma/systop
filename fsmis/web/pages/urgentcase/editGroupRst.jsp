@@ -5,7 +5,6 @@
 <html>
 <head>
 <title>应急事件处理结果</title>
-<%@include file="/common/extjs.jsp"%>
 <%@include file="/common/meta.jsp"%>
 <script type="text/javascript">
 	function jsonFormValue() {
@@ -32,6 +31,10 @@
 				//window.location = '${ctx}/urgentcase/index.do';
 			}
 	  	 });
+	}
+	function goBack(){
+		var caseId = document.getElementById('caseId').value;
+		window.location = '${ctx}/urgentcase/view.do?model.id='+ caseId +'&actId=3';
 	}
 </script>
 <style type="text/css">
@@ -67,11 +70,12 @@
 </table>
 </div>
 <div><%@ include file="/common/messages.jsp"%></div>
-	<div id="tabs">
-	<div id="basic">
+<div align="center">
+	<fieldset style="width: 650px; padding: 10px 10px 10px 10px;">
+	<legend>处理结果</legend>
 	<s:hidden id="caseId" name="caseId" />
 	<s:hidden id="groupId" name="groupId" />
-	<table id="mytable" style="margin-top: 5px">
+	<table id="mytable" align="left" style="margin-top: 5px">
 		<c:forEach var="entry" items="${resultMap}" varStatus="status">
 			<!--  
 			<font size=5 color=red>
@@ -80,11 +84,11 @@
 			</font>
 			-->
 			<tr>
-				<td align="right" width="215">${entry.key }：</td>
+				<td align="right" width="100">${entry.key }：</td>
 				<td align="left" colspan="3">
-					<s:textfield name="jsonValue" cssStyle="width:500px" />
+					<s:textfield name="jsonValue" cssStyle="width:400px" />
 					<c:if test="${entry.value == null}">
-						<s:textfield name="jsonValue" cssStyle="width:500px" />
+						<s:textfield name="jsonValue" cssStyle="width:400px" />
 					</c:if>
 					<c:if test="${entry.value != null}">
 						${entry.value }
@@ -93,7 +97,7 @@
 			</tr>
 		</c:forEach>
 	</table>
-	</div>
+	</fieldset>
 	</div>
 	<table width="100%" style="margin-bottom: 0px;">
 		<tr>
@@ -101,7 +105,9 @@
 		</tr>
 		<tr>
 			<td style="text-align: center;"> 
-				<a href="#" onclick="jsonFormValue()">保存</a></td>
+				<input value="保存" onclick="jsonFormValue()" size="9" style="text-align: center;cursor: auto;" type="button" class="button"/>&nbsp;
+				<input value="返回" onclick="goBack()" size="9" style="text-align: center;cursor: auto;" type="button" class="button"/>		
+			</td>
 		</tr>
 	</table>
 </div>
