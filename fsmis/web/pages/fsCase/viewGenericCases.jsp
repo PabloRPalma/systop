@@ -21,6 +21,7 @@
 </style>
 <script type="text/javascript"
 	src="${ctx}/scripts/fckeditor/fckeditor.js"></script>
+<script type="text/javascript" src="${ctx}/scripts/fckeditor/fckconfig.js"></script>
 </head>
 <body>
 <div id="tabs3"><c:forEach items="${model.genericCases}"
@@ -58,10 +59,11 @@
 					<td colspan="4" align="left">${genericCase.informerPhone }</td>
 				</tr>
 				<tr>
-					<td align="right" width="15%">案件描述：</td>
-					<td colspan="4" align="left"><textarea id="taskDescn"
+					<td align="right" width="15%">案件描述11：</td>
+					<td colspan="4" align="left"><textarea id="caseDescn${varStatus.index+1}"
 						style="border: 1px solid #D4D0C8;" name="task.descn" cols="80"
-						rows="3" readonly="readonly">${genericCase.descn}</textarea></td>
+						rows="3" readonly="readonly">${genericCase.descn}</textarea>						
+						</td>
 				</tr>
 				
 			</table>
@@ -70,6 +72,13 @@
 		</tr>
 		
 	</table>
+	<script type="text/javascript">
+	var fckEditor${varStatus.index+1} = new FCKeditor( 'caseDescn${varStatus.index+1}' ) ;
+	  fckEditor${varStatus.index+1}.BasePath = "${ctx}/scripts/fckeditor/";
+	  fckEditor${varStatus.index+1}.ToolbarSet = 'noToolbarSet';
+	  fckEditor${varStatus.index+1}.Height = 200;
+	  fckEditor${varStatus.index+1}.ReplaceTextarea();
+	</script>
 	</div>
 </c:forEach></div>
 <script type="text/javascript">
@@ -93,16 +102,6 @@
 					]
 		});
 	});	
-</script>
-<script type="text/javascript">
-//文本编辑组件
-function preFckEditor(){
-	var fckEditor = new FCKeditor( 'taskDescn' ) ;
-  fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
-  fckEditor.ToolbarSet = 'BasicA';
-  fckEditor.Height = 360;
-  fckEditor.ReplaceTextarea();
-}
 </script>
 </body>
 </html>

@@ -40,11 +40,11 @@
 				<tr>
 					<td align="right" width="12%">派遣时间：</td>
 					<td width="12%"><fmt:formatDate value="${task.dispatchTime}"
-						pattern="yyyy-mm-dd HH:MM:ss" /></td>
+						pattern="yyyy-MM-dd HH:mm" /></td>
 
 					<td align="right" width="12%">规定完成时间：</td>
 					<td width="12%"><fmt:formatDate value="${task.presetTime}"
-						pattern="yyyy-mm-dd" /></td>
+						pattern="yyyy-MM-dd HH:mm" /></td>
 					<td align="right" width="8%">事件状态：</td>
 					<td width="15%"><c:if test="${task.status == '0'}">
 						<font color="red">未派遣</font>
@@ -86,8 +86,10 @@
 					<tr>
 						<td width="15%" align="center">${varStatus.index+1}</td>
 						<td width="15%" align="center">${detail.dept.name }</td>
-						<td width="15%" align="center">${task.dispatchTime }</td>
-						<td width="15%" align="center">${detail.completionTime}</td>
+						<td width="15%" align="center"><fmt:formatDate value="${task.dispatchTime }"
+						pattern="yyyy-MM-dd HH:mm" /></td>
+						<td width="15%" align="center"><fmt:formatDate value="${detail.completionTime}"
+						pattern="yyyy-MM-dd HH:mm" /></td>
 						<td width="15%" align="center"><c:if
 							test="${detail.status == '0'}">
 							<font color="red">未接收</font>
@@ -133,7 +135,7 @@
 </script>
 <script type="text/javascript">
 //文本编辑组件
-function preFckEditor(){
+function preFckEditor1(){
 	var fckEditor = new FCKeditor( 'taskDescn' ) ;
   fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
   fckEditor.ToolbarSet = 'BasicA';
