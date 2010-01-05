@@ -19,6 +19,7 @@ import com.systop.fsmis.model.SendType;
  * 
  * @author Lunch
  */
+@SuppressWarnings("serial")
 @Controller
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class CountySendTypeAction extends
