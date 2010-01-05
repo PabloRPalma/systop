@@ -13,8 +13,12 @@
 			<result name="view" type="chain">
 				<param name="namespace">/fscase</param>
 				<param name="actionName">view</param>
-			</result>	
-			<result name="success" type="redirect">index.do</result>
+			</result>
+			<!--处理操作完成后需要重定向到index-->
+			<result name="success" type="redirect">
+				index.do?isMultiple=${isMultiple}&amp;modelId=${modelId}
+			</result>
+				
 			<result type="json" name="json">
 				<param name="ignoreHierarchy">false</param>			
 			</result>

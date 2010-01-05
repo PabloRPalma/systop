@@ -8,7 +8,9 @@
 			<result name="index">/pages/fsCase/task/list.jsp</result>
 			<result name="input">/pages/fsCase/task/edit.jsp</result>
 			<result name="view">/pages/fsCase/task/view.jsp</result>	
-			<result name="success" type="redirect">index.do</result>
+			<result name="success" type="redirect">
+				index.do?isMultiple=${isMultiple}&amp;modelId=${modelId}
+			</result>
 
 		</action>
 	</package>
