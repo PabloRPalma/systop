@@ -1,7 +1,6 @@
 package com.systop.fsmis.fscase.task.webapp;
 
 import java.io.File;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -9,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.time.DateUtils;
 import org.hibernate.criterion.MatchMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -41,6 +39,9 @@ import com.systop.fsmis.model.TaskAtt;
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
+	// 是否为综合案件
+	private String isMultiple;
+
 	private FsCase fsCase;
 
 	/** 食品安全事件id */
@@ -116,6 +117,11 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 	public String index() {
 		StringBuffer buf = new StringBuffer("from Task t where 1=1 ");
 		List<Object> args = new ArrayList<Object>();
+		// 区分是否综合(单体/多体)案件
+		if (StringUtils.isNotBlank(isMultiple)) {
+			buf.append("and t.fsCase.isMultiple = ? ");
+			args.add(isMultiple);
+		}
 		// 根据title查询
 		if (StringUtils.isNotBlank(getModel().getTitle())) {
 			buf.append("and t.title like ?");
@@ -236,6 +242,14 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 
 	public void setTaskEndTime(Date taskEndTime) {
 		this.taskEndTime = taskEndTime;
+	}
+
+	public String getIsMultiple() {
+		return isMultiple;
+	}
+
+	public void setIsMultiple(String isMultiple) {
+		this.isMultiple = isMultiple;
 	}
 
 }
