@@ -30,6 +30,7 @@ import com.systop.core.webapp.upload.UpLoadUtil;
  * @author Lunch
  * 
  */
+@SuppressWarnings("serial")
 @Controller
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class SoftwareAction extends DefaultCrudAction<Software, SoftwareManager> {

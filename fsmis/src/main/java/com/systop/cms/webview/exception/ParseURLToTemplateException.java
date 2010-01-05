@@ -4,6 +4,7 @@ package com.systop.cms.webview.exception;
  * 通过URL解析获得模板信息错误时所抛出的异常
  * @author lunch
  */
+@SuppressWarnings("serial")
 public class ParseURLToTemplateException extends Exception {
 
 	/**

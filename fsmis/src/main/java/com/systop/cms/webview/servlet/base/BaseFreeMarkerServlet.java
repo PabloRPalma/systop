@@ -13,6 +13,7 @@ import com.systop.core.webapp.context.ApplicationContextAwareObject;
  * 
  * @author lunch
  */
+@SuppressWarnings("serial")
 public class BaseFreeMarkerServlet extends FreeMarkerStringTemplateViewServlet implements
     ApplicationContextAwareObject {
 

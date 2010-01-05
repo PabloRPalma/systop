@@ -24,6 +24,7 @@ import freemarker.cache.StringTemplateLoader;
  * 
  * @author lunch
  */
+@SuppressWarnings("serial")
 public class CmsWebViewServlet extends BaseFreeMarkerServlet {
 
   /**
