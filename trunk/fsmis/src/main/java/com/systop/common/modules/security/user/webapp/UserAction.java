@@ -1,6 +1,9 @@
 package com.systop.common.modules.security.user.webapp;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.ArrayUtils;
@@ -11,6 +14,7 @@ import org.hibernate.criterion.Example;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Example.PropertySelector;
 import org.hibernate.type.Type;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -21,18 +25,21 @@ import com.opensymphony.xwork2.validator.annotations.ExpressionValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
+import com.systop.common.modules.dept.model.Dept;
+import com.systop.common.modules.dept.webapp.DeptAction;
 import com.systop.common.modules.security.user.UserConstants;
 import com.systop.common.modules.security.user.UserUtil;
 import com.systop.common.modules.security.user.model.User;
 import com.systop.common.modules.security.user.service.UserManager;
 import com.systop.core.dao.support.Page;
+import com.systop.core.util.RequestUtil;
 import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
 
 /**
  * <code>User</code>对象的struts2 action。
  * @author Sam Lee
  */
-@SuppressWarnings("serial")
+@SuppressWarnings({"serial", "unchecked"})
 @Controller
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class UserAction extends ExtJsCrudAction<User, UserManager> {
@@ -56,6 +63,23 @@ public class UserAction extends ExtJsCrudAction<User, UserManager> {
    * 当前登录用户
    */
   private User user;
+  
+  @Autowired
+  private DeptAction deptAction;
+  
+  /**
+   * 保存用户树形列表
+   */
+  private List<Map> userTree;
+  /**
+   * 上级部门ID，用于列出树形列表
+   */
+  private Integer parentDeptId;
+  
+  /**
+   * 角色名称，用于员工选择器
+   */
+  private String roleName;
 
   /**
    * 对应上传图片的原始文件名，新文件名在getModel().getPhoto()
@@ -197,6 +221,36 @@ public class UserAction extends ExtJsCrudAction<User, UserManager> {
     return "bingo";
   }
   
+  /**
+   * Build a tree as json format.
+   */
+  @SkipValidation
+  public String userTree() {
+    if (RequestUtil.isJsonRequest(getRequest())) {
+      Dept parent = null;
+      if (parentDeptId != null) {
+        parent = getManager().getDao().get(Dept.class, parentDeptId);
+      } else {
+        parent = (Dept) getManager().getDao().findObject("from Dept d where d.parentDept is null");
+      }
+      Map<String, Object> parentMap = null;
+      if (parent != null) {
+        parentMap = new HashMap<String, Object>();
+        parentMap.put("id", parent.getId());
+        parentMap.put("text", parent.getName());
+        parentMap.put("type", parent.getType());
+      }
+      Map deptTree = deptAction.getDeptTree(parentMap, true);
+      Map tree = getManager().getUserTree(deptTree, roleName);
+      if (!tree.isEmpty()) {
+        userTree = new ArrayList<Map>();
+        userTree.add(tree);
+      }
+      return "tree";
+    }
+    return INDEX;
+  }
+  
   
   /**
    * 取得用户登陆后的信息
@@ -281,5 +335,29 @@ public class UserAction extends ExtJsCrudAction<User, UserManager> {
    */
   public void setUser(User user) {
     this.user = user;
+  }
+
+  public List<Map> getUserTree() {
+    return userTree;
+  }
+
+  public void setUserTree(List<Map> userTree) {
+    this.userTree = userTree;
+  }
+
+  public Integer getParentDeptId() {
+    return parentDeptId;
+  }
+
+  public void setParentDeptId(Integer parentDeptId) {
+    this.parentDeptId = parentDeptId;
+  }
+
+  public String getRoleName() {
+    return roleName;
+  }
+
+  public void setRoleName(String roleName) {
+    this.roleName = roleName;
   }
 }
