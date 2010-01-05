@@ -54,7 +54,7 @@ function remove(id){
 			<tr>
 				<td><span class="ytb-sep"></span></td>
 				<td>
-					<c:if test="${param['isMultiple'] eq 0}"><a href="${ctx}/fscase/edit.do"> 添加一般案件信息</a></c:if>			
+					<c:if test="${param['isMultiple'] eq 0}"><a href="${ctx}/fscase/edit.do?isMultiple=${param['isMultiple'] }&modelId=${param['modelId']}"> 添加一般案件信息</a></c:if>			
 				</td>
 			</tr>
 		</table>
