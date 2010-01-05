@@ -50,7 +50,7 @@ public class MessageAction extends ExtJsCrudAction<Message, MessageManager> {
 	/**
 	 * 用户ID
 	 */
-	private Integer [] userId;
+	private String userId;
 
 	@Autowired
 	private LoginUserService loginUserService;
@@ -146,21 +146,25 @@ public class MessageAction extends ExtJsCrudAction<Message, MessageManager> {
 	 */
 	public String save() {
 		User user = loginUserService.getLoginUser(getRequest());
-		if (user != null) {
-			getModel().setSender(user);
-		} else {
+		if (user == null) {
 			addActionError("无法发送，请先登录！");
 			return INPUT;
-		}
-		
+		} 
 		if(userId == null) {
 			addActionError("无法发送，请选择收信人！");
 			return INPUT;
 		}
-		
-		getModel().setCreateTime(new Date());
-		getModel().setIsNew(FsConstants.Y);
-		getManager().save(getModel());
+		logger.info("UserId: {} ",  userId);
+		String [] personId = userId.split(",");
+		for (int i = 0; i < personId.length; i++) {
+			logger.info("PersonId: {} ",  personId[i]);
+			getModel().setSender(user);
+			User receiver = getManager().getDao().get(User.class, Integer.valueOf(personId[i]));
+			getModel().setReceiver(receiver);
+			getModel().setCreateTime(new Date());
+			getModel().setIsNew(FsConstants.Y);
+			getManager().save(getModel());
+		}
 		return SUCCESS;
 	}
 
@@ -210,11 +214,11 @@ public class MessageAction extends ExtJsCrudAction<Message, MessageManager> {
 		this.createTimeEnd = createTimeEnd;
 	}
 
-	public Integer[] getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Integer[] userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 }
