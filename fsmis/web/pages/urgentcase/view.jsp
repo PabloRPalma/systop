@@ -280,7 +280,13 @@
       layout : 'fit',
       closeAction:'hide',
       buttonAlign:'center',
-      modal:'true'
+      modal:'true',
+      buttons:[
+        {text:'关闭',
+            handler:function(){
+            DispatchWindow.hide();
+        }
+     }]
   });
   //选择派遣环节进行任务派遣
   DispatchWindow.selectType = function(typeId) {

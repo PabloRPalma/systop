@@ -100,7 +100,7 @@
 				<font color="silver">无记录</font>
 			</c:if>
 		</ec:column>
-		<ec:column width="170" property="_0" title="操作" style="text-align:center" sortable="false">
+		<ec:column width="210" property="_0" title="操作" style="text-align:center" sortable="false">
 		  <c:if test="${item.status == null || item.status eq '0'}">
 			<a href="${ctx}/urgentcase/edit.do?model.id=${item.id}" title="修改事件">改</a> | 
 			<a href="#" onclick="showCheckWindow('${item.id}')" title="审核事件">审</a> | 
@@ -109,7 +109,7 @@
 		  <c:if test="${item.status eq '1'}">
 		  	<font color="silver">改</font> | 
 		  	<font color="silver">审</font> | 
-			<a href="#" onclick="showDispatchWindow('${item.id}')" title="任务派遣">派</a> | 
+			<a href="#" onclick="showDispatchWindow('${item.id}','${item.title}')" title="任务派遣">派</a> | 
 		  </c:if>
 		  <c:if test="${item.status eq '2' || item.status eq '3' || item.status eq '4'}">
 		  	<font color="silver">改</font> | 
@@ -122,6 +122,7 @@
 		  <c:if test="${item.status == '2' || item.status eq '3' || item.status eq '4'}">
 			<a href="${ctx}/urgentcase/view.do?model.id=${item.id}&actId=3" title="查看事件">看</a> | 
 		  </c:if>
+		  	<a href="${ctx}/urgentcase/printAppForm.do?model.id=${item.id}" title="打印应急预案申请单" target="_blank">打</a> | 
 			<a href="#" onclick="remove(${item.id})" title="删除事件">删</a>
 		</ec:column>
 	</ec:row>
@@ -244,7 +245,13 @@
       layout : 'fit',
       closeAction:'hide',
       buttonAlign:'center',
-      modal:'true'
+      modal:'true',
+      buttons:[
+       {text:'关闭',
+           handler:function(){
+    	   	DispatchWindow.hide();
+           }
+       }]
   });
   //选择派遣环节进行任务派遣
   DispatchWindow.selectType = function(typeId) {
@@ -267,8 +274,9 @@
     });
   }
   var ccId = null;
-  function showDispatchWindow(csId) {
+  function showDispatchWindow(csId,csName) {
 	this.ccId = csId;
+	document.getElementById('caseName').innerText = csName;
 	DispatchWindow.show();
   }
 </script>
@@ -279,7 +287,7 @@
 	<table align="center" width="567" border="0" cellspacing="0" cellpadding="0">
    <tr>
     <td align="left" style="padding: 20px 0px 5px 0px;">
-		<h4>事件名称：${model.title }</h4>
+		<h4>事件名称：<s:label id="caseName"></s:label></h4>
 	</td>
   </tr>
   <tr>
