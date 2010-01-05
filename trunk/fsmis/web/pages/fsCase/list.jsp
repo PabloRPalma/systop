@@ -24,11 +24,12 @@ function remove(id){
 </head>
 <body>
 <div class="x-panel">
-<div class="x-panel-header"></div>
+<div class="x-panel-header">协调指挥&nbsp;&gt;&nbsp;${param['isMultiple'] eq 0?'一般案件':'综合案件'}列表</div>
 <div class="x-toolbar">
 <table width="99%">
 	<tr>
 		<td><s:form action="index" method="post">
+			<s:hidden name="isMultiple"></s:hidden>
 						事件标题:
 			<s:textfield name="model.title" cssStyle="width:100px"></s:textfield>	
 						事件编号:
@@ -52,7 +53,9 @@ function remove(id){
 		<table>
 			<tr>
 				<td><span class="ytb-sep"></span></td>
-				<td><a href="${ctx}/fscase/edit.do"> 添加事件信息</a></td>
+				<td>
+					<c:if test="${param['isMultiple'] eq 0}"><a href="${ctx}/fscase/edit.do"> 添加一般案件信息</a></c:if>			
+				</td>
 			</tr>
 		</table>
 		</stc:role>

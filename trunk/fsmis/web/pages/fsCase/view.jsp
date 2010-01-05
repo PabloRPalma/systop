@@ -89,7 +89,7 @@
 </head>
 <body>
 <div class="x-panel">
-<div class="x-panel-header">事件信息</div>
+<div class="x-panel-header">案件信息</div>
 <div class="x-toolbar">
 <table width="100%">
 	<tr>
@@ -111,46 +111,49 @@
 </div>
 <div id="tabs">
 <div id="basic" class="x-hide-display">
-<table id="mytable" height="320">
+<table id="mytable">
 	<tr>
-		<td width="800">
+		<td width="800" align="left">
+		<fieldset style="width: 800px; padding: 5px 10px 5px 10px;">
+			<legend>案件信息</legend>
 		<table width="400" align="left" border="0" cellpadding="0"
 			cellspacing="0">
 			<tr>
-				<td class="simple" width="300" align="right">事件标题：</td>
+				<td class="simple" width="100" align="right">案件标题：</td>
 				<td class="simple" align="left" width="149"><s:property
 					value="model.title" /></td>
 			</tr>
 			<tr>
-				<td width="300" align="right">事件类别：</td>
+				<td width="100" align="right">案件类别：</td>
 				<td align="left" width="149"><s:property
 					value="model.caseType.name" /></td>
 			</tr>
 			<tr>
-				<td width="300" align="right">事发地点：</td>
+				<td width="100" align="right">案件地点：</td>
 				<td align="left" width="149"><s:property value="model.address" />
 				</td>
 			</tr>
 			<tr>
-				<td width="300" align="right">事发时间：</td>
+				<td width="100" align="right">事发时间：</td>
 				<td align="left" width="149"><s:date name="model.caseTime"
 					format="yyyy-MM-dd" /></td>
 			</tr>
 			<tr>
-				<td width="300" align="right">事件报告人：</td>
+				<td width="100" align="right">案件报告人：</td>
 				<td width="149" align="left"><s:property value="model.informer" />
 				</td>
 			</tr>
 			<tr>
-				<td width="300" align="right">报告人电话：</td>
+				<td width="100" align="right">报告人电话：</td>
 				<td width="149" align="left"><s:property
 					value="model.informerPhone" /></td>
 			</tr>
 			<tr>
-				<td width="300" align="right">事件描述：</td>
+				<td width="100" align="right">案件描述：</td>
 				<td width="149" align="left">${model.descn}</td>
 			</tr>
 		</table>
+		</fieldset>
 		</td>
 	</tr>
 </table>
