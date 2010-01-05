@@ -1,8 +1,9 @@
-package com.systop.fsmis.fscase.casetype.service;
+package com.systop.fsmis.fscase.casetype;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import com.systop.core.test.BaseTransactionalTestCase;
+import com.systop.fsmis.fscase.casetype.service.CaseTypeManager;
 import com.systop.fsmis.model.CaseType;
 
 
@@ -15,6 +16,7 @@ public class CastTypeManagerTest extends BaseTransactionalTestCase {
 	
 	public void testGetLevelOneMap() {
 		caseTypeManager.getLevelOneMap();
+		
 	}
 
 	public void testSaveCaseType() {

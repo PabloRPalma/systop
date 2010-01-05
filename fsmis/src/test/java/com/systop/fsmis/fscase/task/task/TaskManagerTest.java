@@ -1,10 +1,11 @@
-package com.systop.fsmis.fscase.task.service;
+package com.systop.fsmis.fscase.task.task;
 
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import com.systop.core.test.BaseTransactionalTestCase;
+import com.systop.fsmis.fscase.task.service.TaskManager;
 import com.systop.fsmis.model.FsCase;
 import com.systop.fsmis.model.Task;
 
