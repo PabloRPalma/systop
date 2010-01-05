@@ -12,6 +12,8 @@
 			<result name="listCheckRst">/pages/urgentcase/listCheckRst.jsp</result>
 			<result name="groupResult">/pages/urgentcase/viewUrgentGroup.jsp</result>
 			<result name="editGroupResult">/pages/urgentcase/editGroupRst.jsp</result>
+			<result name="print">/pages/urgentcase/printAppForm.jsp</result>
+			<result name="resultReports">/pages/urgentcase/viewReports.jsp</result>
 			<result type="json" name="jsonRst">
 		   		<param name="root">checkResult</param>
 			</result>		
