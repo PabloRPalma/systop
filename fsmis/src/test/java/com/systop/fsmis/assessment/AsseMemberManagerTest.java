@@ -12,17 +12,23 @@ import com.systop.fsmis.expert.service.ExpertManager;
 import com.systop.fsmis.model.AsseMember;
 import com.systop.fsmis.model.Assessment;
 import com.systop.fsmis.model.Expert;
+/**
+ * 评估成员管理测试类
+ * @author zzg
+ *
+ */
 @ContextConfiguration(locations = { "classpath*:spring/applicationContext-*.xml" })
 public class AsseMemberManagerTest extends BaseTransactionalTestCase {
+	//注入评估成员管理类
 	@Autowired
 	private AsseMemberManager assseMemberManager;
-	
+	//注入专家管理类
 	@Autowired
 	private ExpertManager expertManager;
-
+	//注入评估表管理类
 	@Autowired
 	private AssessmentManager assessmentManager;
-
+	//测试根据Id、评估类型得到AsseMember实体方法
 	public void testgetAsseMember() {
 		Expert expert = new Expert();
 		expert.setName("专家");
@@ -48,7 +54,8 @@ public class AsseMemberManagerTest extends BaseTransactionalTestCase {
 		assertEquals("描述", aMRet.getDescn());
 		assertEquals("1", aMRet.getType());
 	}
-
+	
+	//测试获取评估成员List方法
 	public void testgetAsseMembers() {
 		Assessment assessment = new Assessment();
 		assessment.setState("1");
