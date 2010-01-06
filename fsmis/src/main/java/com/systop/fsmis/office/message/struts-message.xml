@@ -11,10 +11,6 @@
 			<result name="reply">/pages/office/message/reply.jsp</result>
 			<result name="view">/pages/office/message/view.jsp</result>
 			<result name="success" type="redirect">received.do</result>
-			<result type="json" name="messageCount">
-				<param name="ignoreHierarchy">false</param>
-		   		<param name="root">mesCount</param>
-			</result>
 		</action>
 	</package>
 </struts>
