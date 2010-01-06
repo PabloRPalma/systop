@@ -48,11 +48,7 @@
    	         <param name="beanName" value="corpDwrAction"></param>
    	    </create> 
    	    
-   	     <create javascript="MessageDwrAction" creator="spring">
-   	         <param name="beanName" value="messageDwrAction"></param>
-   	    </create> 
-   	    
-   	    <convert converter="bean"  match="com.systop.common.core.dao.support.Page"  />
+  	    <convert converter="bean"  match="com.systop.common.core.dao.support.Page"  />
    	    <convert converter="bean"  match="com.systop.common.core.webapp.ajax.RemoteQueryParams"></convert>
    	    <convert converter="bean"  match="com.systop.common.modules.security.user.model.Role"  />
    	    <convert converter="bean"  match="com.systop.common.modules.security.user.model.User"  />
