@@ -97,7 +97,7 @@ function remove(id){
 		<stc:role ifNotGranted="ROLE_DEPT_OPER">
 		<ec:column width="150" property="_0" title="操作" style="text-align:left" sortable="false">
 			 &nbsp;&nbsp;
-			 <a href="${ctx}/fscase/view.do?fsCaseId=${item.id}&modelId=0">
+			 <a href="${ctx}/fscase/view.do?fsCaseId=${item.id}&modelId=${param['modelId']}&isMultiple=${param['isMultiple']}">
 			                查看
 			 </a>  
 			 <stc:role ifAnyGranted="ROLE_ADMIN">
