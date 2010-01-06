@@ -9,6 +9,11 @@ import com.systop.core.webapp.dwr.BaseDwrAjaxAction;
 import com.systop.fsmis.model.Notice;
 import com.systop.fsmis.office.notice.service.NoticeManager;
 
+/**
+ * 通知附件删除DWRAction
+ * @author ZW
+ *
+ */
 @Component
 public class NoticeDwrAction extends BaseDwrAjaxAction {
 	
