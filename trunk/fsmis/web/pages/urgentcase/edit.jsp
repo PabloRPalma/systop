@@ -80,7 +80,7 @@
 		<td width="287" align="left"><input type="text" name="model.caseTime" style="width: 148px"
 			value='<s:property value="model.caseTime"/>'
 			onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
-			class="Wdate" /><font color="red">&nbsp;*</font></td>
+			class="Wdate required" /><font color="red">&nbsp;*</font></td>
 		<td width="88" align="right">预案等级：</td>
         <td width="348" align="left">
         	<s:select id="plansLevel" list="plansLevelMap"  name="model.plansLevel" cssStyle="width:148px"></s:select>
