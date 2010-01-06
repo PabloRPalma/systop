@@ -94,7 +94,7 @@ function remove(id){
 		</ec:column>
 		<ec:column width="80" property="_o" title="操作" sortable="false"
 			style="text-align: center">
-			<a href="${ctx}/fscase/view.do?fsCaseId=${item.fsCase.id}&modelId=${param['modelId']}">
+			<a href="${ctx}/fscase/view.do?fsCaseId=${item.fsCase.id}&modelId=1">
 			查看</a>
 			<c:if test="${item.status != '2'}">
 				<a href="#" onclick="remove(${item.id})">  | 删除 </a>
