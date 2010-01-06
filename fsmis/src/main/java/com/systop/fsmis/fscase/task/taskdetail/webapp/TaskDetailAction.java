@@ -48,7 +48,11 @@ public class TaskDetailAction extends
 	 */
 	@Override
 	public String index() {
-
+		User user = loginUserService.getLoginUser(getRequest());
+		if (user == null) {
+			addActionError("请先登录!");
+			return INDEX;
+		}
 		StringBuffer buf = new StringBuffer("from TaskDetail detail where 1=1 ");
 		List<Object> args = new ArrayList<Object>();
 		// 根据任务title查询
@@ -71,11 +75,7 @@ public class TaskDetailAction extends
 		 * buf.append("and td.dept.id = ?"); args.add(dept.getId()); }
 		 */
 
-		User user = loginUserService.getLoginUser(getRequest());
-		if (user == null) {
-			addActionError("请先登录!");
-			return INDEX;
-		}
+		
 
 		Dept dept = loginUserService.getLoginUserDept(getRequest());
 		if (dept != null) {
