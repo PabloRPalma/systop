@@ -33,7 +33,12 @@
           <c:forEach var="rst" items="${entry.value}" varStatus="status">
             <tr>
 				<td align="left" colspan="3">
-					&nbsp;&nbsp;&nbsp;&nbsp;${rst.key }：${rst.value }
+					&nbsp;&nbsp;&nbsp;&nbsp;${rst.key }：
+					<c:if test="${rst.value == 'null'}">
+					</c:if>
+					<c:if test="${rst.value != 'null'}">
+						${rst.value }
+					</c:if>
 				</td>
 			</tr>
 			<tr><td colspan="4" class="tdBottom1">&nbsp;</td></tr>
