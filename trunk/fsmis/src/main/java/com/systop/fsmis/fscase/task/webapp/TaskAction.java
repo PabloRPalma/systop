@@ -117,12 +117,23 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 	 */
 	@Override
 	public String index() {
+		if (loginUserService == null
+				|| loginUserService.getLoginUser(getRequest()) == null) {
+			addActionError("请先登录!");
+			return INDEX;
+		}
+
 		StringBuffer buf = new StringBuffer("from Task t where 1=1 ");
 		List<Object> args = new ArrayList<Object>();
 		// 区分是否综合(单体/多体)案件
 		if (StringUtils.isNotBlank(isMultiple)) {
 			buf.append("and t.fsCase.isMultiple = ? ");
 			args.add(isMultiple);
+		}
+		//判断是否是市级人员登录,如果不是,则需要添加根据本区县查询案件的查询条件,本逻辑需要确认
+		if (loginUserService.getLoginUserCounty(getRequest()).getParentDept() != null) {
+			buf.append("and t.fsCase.county.id = ? ");
+			args.add(loginUserService.getLoginUserCounty(getRequest()).getId());
 		}
 		// 根据title查询
 		if (StringUtils.isNotBlank(getModel().getTitle())) {

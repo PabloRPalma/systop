@@ -1,5 +1,8 @@
 package com.systop.fsmis.fscase.webapp;
-
+/**
+ * 问题:
+ * 判断是否是市级人员登录,本逻辑需要确认
+ */
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -14,6 +17,8 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import com.systop.common.modules.security.user.LoginUserService;
+import com.systop.common.modules.security.user.model.User;
 import com.systop.core.Constants;
 import com.systop.core.dao.support.Page;
 import com.systop.core.webapp.struts2.action.DefaultCrudAction;
@@ -38,6 +43,8 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 	private String isMultiple;
 	@Autowired
 	private CaseTypeManager caseTypeManager;
+	@Autowired
+	private LoginUserService loginUserService;
 
 	private String typeId;
 
@@ -59,11 +66,24 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 	 * 查询获得一般事件信息列表，分页查询
 	 */
 	public String index() {
+		if (loginUserService == null
+				|| loginUserService.getLoginUser(getRequest()) == null) {
+			addActionError("请先登录!");
+			return INDEX;
+		}
+
 		Page page = new Page(Page.start(getPageNo(), getPageSize()),
 				getPageSize());
 		StringBuffer sql = new StringBuffer(
 				"from FsCase gc where isSubmitSj=0 ");
 		List args = new ArrayList();
+		//判断是否是市级人员登录,如果不是,则需要添加根据本区县查询案件的查询条件,本逻辑需要确认
+		if (loginUserService.getLoginUserCounty(getRequest()).getParentDept() != null) {
+			sql.append("and gc.county.id = ? ");
+			args.add(loginUserService.getLoginUserCounty(getRequest()).getId());
+		}
+		
+
 		if (StringUtils.isNotBlank(getModel().getTitle())) {
 			sql.append("and gc.title like ? ");
 			args.add(MatchMode.ANYWHERE.toMatchString(getModel().getTitle()));
@@ -282,5 +302,13 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 
 	public void setCaseEndTime(Date caseEndTime) {
 		this.caseEndTime = caseEndTime;
+	}
+
+	public LoginUserService getLoginUserService() {
+		return loginUserService;
+	}
+
+	public void setLoginUserService(LoginUserService loginUserService) {
+		this.loginUserService = loginUserService;
 	}
 }
