@@ -6,12 +6,19 @@ import org.springframework.test.context.ContextConfiguration;
 import com.systop.core.test.BaseTransactionalTestCase;
 import com.systop.fsmis.expert.service.CategoryManager;
 import com.systop.fsmis.model.ExpertCategory;
+/**
+ * 专家类别管理类
+ * @author zzg
+ *
+ */
 @ContextConfiguration(locations = { "classpath*:spring/applicationContext-*.xml" })
 public class CategoryManagerTest extends BaseTransactionalTestCase {
-
+	//注入类别管理类
 	@Autowired
 	private CategoryManager categoryManager;
+	
 	private ExpertCategory expertCategory;
+	//测试保存方法
 	public void testSave(){
 		expertCategory = new ExpertCategory();
 		expertCategory.setName("计算机");

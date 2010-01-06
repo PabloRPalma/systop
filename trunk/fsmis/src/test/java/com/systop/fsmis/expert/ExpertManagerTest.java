@@ -1,5 +1,7 @@
 package com.systop.fsmis.expert;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -11,14 +13,21 @@ import com.systop.core.test.BaseTestCase;
 import com.systop.fsmis.expert.service.ExpertManager;
 import com.systop.fsmis.model.Expert;
 import com.systop.fsmis.model.ExpertCategory;
+/**
+ * 专家管理测试类
+ * @author zzg
+ * 测试了sava 和 remove方法，继承BaseTestCase不使用回滚
+ */
 @ContextConfiguration(locations = { "classpath*:spring/applicationContext-*.xml" })
 public class ExpertManagerTest extends BaseTestCase {
-
+	//专家
 	private Expert expert;
+	//专家类别
 	private ExpertCategory expertCategory;
+	//注入专家管理类
 	@Autowired
 	private ExpertManager expertManager;
-	
+	//测试保存方法
 	public void testSave(){
 		expert = new Expert();
 		expert.setName("张三");
@@ -36,13 +45,13 @@ public class ExpertManagerTest extends BaseTestCase {
 		expert.setRemark("无");
 		expert.setPosition("石家庄职业技术学院");
 		expert.setOfficePhone("13275896253");
-		expert.setMobile("12334321");
 		expertManager.save(expert);
 		
 		assertEquals("张三", (expertManager.get(expert.getId())).getName());
 		assertEquals("testExpert@sina.com", (expertManager.get(expert.getId())).getEmail());
 	}
 	
+	//测试获取专家类别方法
 	@SuppressWarnings("unchecked")
 	public void testGetExpertCategory(){
 		List list = Collections.EMPTY_LIST;
@@ -51,8 +60,13 @@ public class ExpertManagerTest extends BaseTestCase {
 		assertTrue(list.size() > 0);
 	}
 	
-	public void testRemove(){
+	//测试删除方法
+	public void testRemove() throws IOException{
 		expert = expertManager.findObject("from Expert where name = ?", "张三");
-		expertManager.remove(expert, "path");
+		
+		File file = new File("c:/test.jpg");
+		file.createNewFile();
+		
+		expertManager.remove(expert, "c:/test.jpg");
 	}
 }
