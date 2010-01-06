@@ -100,7 +100,7 @@
 		<td><span class="ytb-sep"></span></td>
 		<td align="right"><a href="#"> 上报市级</a></td>
 		<td><span class="ytb-sep"></span></td>
-		<c:if test="${model.status ne '1'}">
+		<c:if test="${model.status eq '0'}">
 			<td align="right"><a
 				href="${ctx}/sendType/chooseSendType.do?caseId=${model.id}&modelId=${param['modelId']}&isMultiple=${param['isMultiple']}"> 任务派遣</a></td>
 			<td><span class="ytb-sep"></span></td>
