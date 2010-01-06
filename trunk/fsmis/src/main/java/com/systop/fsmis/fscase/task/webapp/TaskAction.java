@@ -39,8 +39,10 @@ import com.systop.fsmis.model.TaskAtt;
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
-	// 是否为综合案件
+	// 是否为综合案件,用于在页面跳转间传递是一般案件操作还是综合案件操作
 	private String isMultiple;
+	//默认显示的Tab序号,用于在view页面默认显示哪个Tab
+	private String modelId;
 
 	private FsCase fsCase;
 
@@ -250,6 +252,14 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 
 	public void setIsMultiple(String isMultiple) {
 		this.isMultiple = isMultiple;
+	}
+
+	public String getModelId() {
+		return modelId;
+	}
+
+	public void setModelId(String modelId) {
+		this.modelId = modelId;
 	}
 
 }
