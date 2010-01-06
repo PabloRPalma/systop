@@ -45,25 +45,26 @@ function showWin() {
 </script>
 <div class="x-panel">
 <div class="x-panel-header">发送内部消息</div>
-<div class="center">
+<div><%@include file="/common/messages.jsp"%></div>
+<div align="center">
 <s:form action="save.do" id="save" method="post" theme="simple" validate="true">
-<fieldset style="width: 500px; padding-top: 2px ;">
+<fieldset style="width: 700px; padding-top: 2px ;">
   <legend>编辑内部消息</legend>
 	<s:hidden name="model.id"/>
-	<table width="500px" align="center" border="0" cellpadding="3" cellspacing="3">
+	<table width="550px" align="center" border="0" cellpadding="3" cellspacing="3">
 		<tr>
 			<td align="right" width="70">收信人：</td>
 			<td align="left">
-				
-				<s:textfield id="person" name="person" cssStyle="width:450px" />
-				<s:hidden name="userId"></s:hidden>
-				<input onclick="showWin()" value="添加人员" type="button">
+					<s:textfield id="person" name="person" cssStyle="width:450px" />
+					<s:hidden name="userId"></s:hidden>
+					<input onclick="showWin()" value="添加人员" type="button">
 			</td>
 		</tr>
 		<tr>
 			<td align="right">内容：</td>
 			<td align="left">
 			<s:textarea id="content" name="model.content" cssStyle="width:450px; height:50px" cssClass="required"/>
+			<font color="red">&nbsp;*</font>
 		</tr>
 	</table>
 </fieldset>

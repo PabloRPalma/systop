@@ -44,9 +44,9 @@ function view(aID){
 		<table>
 			<tr>
 				<td align="right"><a href="${ctx}/office/message/sended.do"><img
-					src="${ctx}/images/icons/house.gif" /> 已发送的内部消息</a></td>
+					src="${ctx}/images/icons/mail_3.gif" /> 已发送的内部消息</a></td>
 				<td align="right"><a href="${ctx}/office/message/edit.do"><img
-					src="${ctx}/images/icons/house.gif" /> 发送内部消息</a></td>					
+					src="${ctx}/images/icons/send.gif" /> 发送内部消息</a></td>					
 			</tr>
 		</table>
 		</td>

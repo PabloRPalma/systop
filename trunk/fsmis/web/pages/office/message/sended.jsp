@@ -40,9 +40,9 @@ function remove(aID){
 		<table>
 			<tr>
 				<td align="right"><a href="${ctx}/office/message/received.do"><img
-					src="${ctx}/images/icons/house.gif" /> 已接收的内部消息</a></td>
+					src="${ctx}/images/icons/receive.gif" /> 已接收的内部消息</a></td>
 				<td align="right"><a href="${ctx}/office/message/edit.do"><img
-					src="${ctx}/images/icons/house.gif" /> 发送内部消息</a></td>					
+					src="${ctx}/images/icons/send.gif" /> 发送内部消息</a></td>					
 			</tr>
 		</table>
 		</td>
@@ -75,8 +75,7 @@ function remove(aID){
 			 <c:if test="${item.isNew == '0'}"> <font color="red">已读</font></c:if>
 			<c:if test="${item.isNew == '1'}"> <font color="blue">未读</font></c:if>
 		</ec:column>
-		<ec:column width="120" property="_0" title="操作" style="text-align:center" sortable="false">
-			<a href="edit.do?model.id=${item.id}">重发</a>|
+		<ec:column width="100" property="_0" title="操作" style="text-align:center" sortable="false">
 			<a href="#" onclick="remove(${item.id})">删除</a>
 		</ec:column>
 	</ec:row>
