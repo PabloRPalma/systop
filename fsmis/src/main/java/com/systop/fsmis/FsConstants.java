@@ -90,8 +90,8 @@ public final class FsConstants {
       "corp_photos_file_path", "/uploadFiles/corp/");
   
   /** 专家照片上传路径 */
-  public static final String SPECIALIST_PHOTOS_FOLDER = ResourceBundleUtil.getString(RESOURCE_BUNDLE,
-	  "specailist_photos_file_path", "/uploadFiles/specialist/");
+  public static final String EXPERT_PHOTOS_FOLDER = ResourceBundleUtil.getString(RESOURCE_BUNDLE,
+	  "expert_photos_file_path", "/uploadFiles/expert/");
   
   /** 专家照片上传路径 */
   public static final String REGION_DEPT_IDS = ResourceBundleUtil.getString(RESOURCE_BUNDLE,
