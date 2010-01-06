@@ -8,6 +8,8 @@
 <title>石家庄市食品安全信息管理系统</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <%@include file="/common/extjs.jsp"%>
+<%@include file="/common/dwr.jsp" %>
+<script type="text/javascript" src="${ctx}/dwr/interface/MessageDwrAction.js"></script>
 <LINK href="${ctx}/styles/style.css" type='text/css' rel='stylesheet'>
 <LINK href="${ctx}/pages/layout.css" type='text/css' rel='stylesheet'>
 <style type="text/css">
@@ -142,5 +144,22 @@
 		style="width: 100%; height: 100%; border: 0px;" frameborder="0">
 	</iframe>
 </div>
+	<script type="text/javascript">
+		function checkNewMsg(){
+			Ext.Ajax.request({
+				url : '/office/message/hasNewMes.do',
+				method : 'POST',
+				success : function(mesCount, textStatus) {
+					if (mesCount != null){
+						var message = "您有新的短消息，请注意<a href='${ctx}/office/message/received.do' target='main'><font color='red'>查收</font></a>";
+						Ext.my().msg('', message);
+					}
+				}
+			});
+			setTimeout("checkNewMsg()", 20000);
+		}
+		
+		checkNewMsg();
+	</script>
 </body>
 </html>
