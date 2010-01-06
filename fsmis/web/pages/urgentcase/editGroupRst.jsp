@@ -10,22 +10,28 @@
 	function jsonFormValue() {
 		var num = document.getElementsByName('jsonValue').length;
 		var val = document.getElementsByName('jsonValue')[0].value;
+		
 		for(i=1; i<num; i++) {
 			var rval = document.getElementsByName('jsonValue')[i].value;
+			
 			if(rval == "" || rval == null) {
 				val = val + ":" + null;
 			} else {
 				val = val + ":" + rval;
 			}
 		}
-		//alert(val);
+		//将回车换行替换为分号加空格
+		var reg = new RegExp(/\r\n/ig);
+		var valRst = val.replace(reg,"; ");
+		valRst = valRst.replace(/\n/ig,"; ");
+		//alert(valRst);
 		var caseId = document.getElementById('caseId').value;
 		var groupId = document.getElementById('groupId').value;
 		$.ajax({
 			url: '${ctx}/urgentcase/saveGroupResult.do',
 			type: 'post',
 			dataType: 'json',
-			data: {rstValue : val, caseId : caseId, groupId : groupId},
+			data: {rstValue : valRst, caseId : caseId, groupId : groupId},
 			success: function(rst, textStatus){
 				window.location = '${ctx}/urgentcase/view.do?model.id='+ caseId +'&actId=3';
 				//window.location = '${ctx}/urgentcase/index.do';
@@ -82,18 +88,65 @@
 				ID:${entry.key }<br>
 				Name:${entry.value }<br>
 			</font>
-			-->
+			
 			<tr>
 				<td align="right" width="100">${entry.key }：</td>
 				<td align="left" colspan="3">
-					<s:textfield name="jsonValue" cssStyle="width:400px" />
-					<c:if test="${entry.value == null}">
-						<s:textfield name="jsonValue" cssStyle="width:400px" />
+					<c:if test="${entry.value == 'null'}">
+						<input name="jsonValue" style="width: 400px" />
 					</c:if>
-					<c:if test="${entry.value != null}">
-						${entry.value }
+					<c:if test="${entry.value != 'null'}">
+						<input name="jsonValue" style="width: 400px" value="${entry.value }" />
 					</c:if>
 				</td>
+			</tr>-->
+			<tr>
+				<td align="right" width="100">${entry.key }：</td>
+				<c:if test="${entry.key eq '处理时间'}">
+				  <td align="left" colspan="3">
+					<c:if test="${entry.value == 'null'}">
+						<input type="text" name="jsonValue" style="width: 148px"
+						onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"
+						class="Wdate" />
+					</c:if>
+					<c:if test="${entry.value != 'null'}">
+						<input type="text" name="jsonValue" style="width: 148px"
+						value='${entry.value }'
+						onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"
+						class="Wdate" />
+					</c:if>
+				  </td>
+				</c:if>
+				<c:if test="${entry.key eq '处理过程'}">
+				  <td align="left" colspan="3">
+					<c:if test="${entry.value == 'null'}">
+						<textarea name="jsonValue" rows="6" style="width: 400px"></textarea>
+					</c:if>
+					<c:if test="${entry.value != 'null'}">
+						<textarea name="jsonValue" rows="6" style="width: 400px">${entry.value }</textarea>
+					</c:if>
+				  </td>
+				</c:if>
+				<c:if test="${entry.key eq '处理结果'}">
+				  <td align="left" colspan="3">
+					<c:if test="${entry.value == 'null'}">
+						<textarea name="jsonValue" rows="6" style="width: 400px"></textarea>
+					</c:if>
+					<c:if test="${entry.value != 'null'}">
+						<textarea name="jsonValue" rows="6" style="width: 400px">${entry.value }</textarea>
+					</c:if>
+				  </td>
+				</c:if>
+				<c:if test="${entry.key ne '处理时间' && entry.key ne '处理过程' && entry.key ne '处理结果'}">
+				  <td align="left" colspan="3">
+					<c:if test="${entry.value == 'null'}">
+						<input name="jsonValue" style="width: 400px" />
+					</c:if>
+					<c:if test="${entry.value != 'null'}">
+						<input name="jsonValue" style="width: 400px" value="${entry.value }" />
+					</c:if>
+				  </td>
+				</c:if>
 			</tr>
 		</c:forEach>
 	</table>
