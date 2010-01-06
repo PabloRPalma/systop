@@ -70,8 +70,8 @@ public final class FsConstants {
       "al_detail_file_path", "/uploadFiles/al_detail/");
   
   /** 风险评估上传路径 */
-  public static final String RISKVE_FOLDER = ResourceBundleUtil.getString(RESOURCE_BUNDLE,
-      "riskve_file_path", "/uploadFiles/risk_ev/");
+  public static final String ASSESSMENT_ATT_FOLDER = ResourceBundleUtil.getString(RESOURCE_BUNDLE,
+      "assessment_att_path", "/uploadFiles/assessment/att/");
   
   /** 任务附件路径 */
   public static final String TASK_ATT_FOLDER = ResourceBundleUtil.getString(RESOURCE_BUNDLE,
