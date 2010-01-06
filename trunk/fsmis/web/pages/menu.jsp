@@ -3,22 +3,34 @@
 <%request.setAttribute("ctx", request.getContextPath()); %>
 <%@ taglib prefix="stc" uri="/systop/common" %>
 <div id="menu" style="display:none">
-	<div id="command">
-		<div style="padding-top:2px">
-			<img src="${ctx}/images/icons/add.gif" class="icon">
-			<a href="${ctx}/fscase/index.do" target="main">案件管理</a>
-		</div>
+	<div id="command">		
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/casetype/index.do" target="main">案件类别</a>
 		</div>
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
-			<a href="${ctx}/task/index.do" target="main">单体任务列表</a>
+			<a href="${ctx}/fscase/index.do?isMultiple=0&modelId=0" target="main">一般案件管理</a>
 		</div>
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
-			<a href="${ctx}/taskdetail/index.do" target="main">单体任务接收</a>
+			<a href="${ctx}/task/index.do?isMultiple=0&modelId=1" target="main">一般任务管理</a>
+		</div>
+		<div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/taskdetail/index.do?isMultiple=0&modelId=1" target="main">一般任务接收</a>
+		</div>
+		<div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/fscase/index.do?isMultiple=1&modelId=0" target="main">综合案件管理</a>
+		</div>
+		<div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/task/index.do?isMultiple=1&modelId=2" target="main">综合任务管理</a>
+		</div>
+		<div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/taskdetail/index.do?isMultiple=1&modelId=2" target="main">综合任务接收</a>
 		</div>
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
