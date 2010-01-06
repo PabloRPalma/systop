@@ -238,8 +238,8 @@
     if (agreeVal == null || agreeVal == '') {
         Ext.MessageBox.show({
              title:'提示',
-             minWidth:200,
-             msg:'<div style=\'width:150\';><br/>请选择审核是否通过！</div>',
+             minWidth:220,
+             msg:'<div style=\'width:180\';><br/>请选择审核是否通过！</div>',
              buttons:Ext.MessageBox.OK,
              icon:Ext.MessageBox.INFO
         });
@@ -248,8 +248,8 @@
     if (reason == null || reason == '') {
       Ext.MessageBox.show({
            title:'提示',
-           minWidth:200,
-           msg:'<div style=\'width:150\';><br/>请填写审核具体意见！</div>',
+           minWidth:220,
+           msg:'<div style=\'width:180\';><br/>请填写审核具体意见！</div>',
            buttons:Ext.MessageBox.OK,
            icon:Ext.MessageBox.INFO
       });
