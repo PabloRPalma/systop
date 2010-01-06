@@ -104,7 +104,7 @@ public class MembersSelectorAction extends
 		}
 		if (selected) {
 			temporaryAddMember(assessment, getModel());
-		} else {
+		} else {		
 			temporaryRemoveMember(assessment, getModel());
 		}
 	}
@@ -193,7 +193,7 @@ public class MembersSelectorAction extends
 	/**
 	 * 根据评估分配专家成员情况，在Session中暂存一个已分配的Expert Id
 	 * @param assessment 指定的风险评估实体
-	 * @param expert 将从项目中删除的用户
+	 * @param expert 将从风险评估中添加的专家
 	 */
 	private void temporaryAddMember(Assessment assessment, Expert expert) {
 		Set membersAdded = getTemporaryMembers(assessment, TEMPLATE_ADDED_MEMBERS);
@@ -202,7 +202,6 @@ public class MembersSelectorAction extends
 		if (asseMember == null) {
 			membersAdded.add(expert.getId());
 		}
-
 		Set memberRemoved = getTemporaryMembers(assessment, TEMPLATE_REMOVED_MEMBERS);
 		memberRemoved.remove(expert.getId());
 	}
@@ -214,14 +213,8 @@ public class MembersSelectorAction extends
 	 */
 	public void temporaryRemoveMember(Assessment assessment, Expert expert) {
 		setAssessment(getManager().getAssessmentById(assessment.getId()));
-
 		Set membersRemoved = getTemporaryMembers(assessment, TEMPLATE_REMOVED_MEMBERS);
-		//根据评估Id、专家Id和Session中存在的专家类别获取中间表中已存在的专家信息
-		AsseMember asseMember = asseMemberManager.getAsseMember(assessment.getId(), expert.getId(), getExpertType());		
-		if (asseMember.getExpert() != null) {
-			membersRemoved.add(expert.getId());
-		}
-
+		membersRemoved.add(expert.getId());
 		Set memberIdsAdded = getTemporaryMembers(assessment, TEMPLATE_ADDED_MEMBERS);
 		memberIdsAdded.remove(expert.getId());
 	}
