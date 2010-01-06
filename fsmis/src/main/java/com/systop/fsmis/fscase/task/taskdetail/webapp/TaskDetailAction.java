@@ -30,6 +30,8 @@ public class TaskDetailAction extends
 		ExtJsCrudAction<TaskDetail, TaskDetailManager> {
 	// 是否为综合案件
 	private String isMultiple;
+	// 默认显示的Tab序号,用于在view页面默认显示哪个Tab
+	private String modelId;
 
 	// 查询起始时间
 	private Date taskBeginTime;
@@ -142,6 +144,7 @@ public class TaskDetailAction extends
 	 * @return
 	 */
 	public String receiveTask() {
+		logger.info(modelId);
 		// 接收状态
 		getModel().setStatus(CaseConstants.TASK_DETAIL_RECEIVEED);
 		getManager().save(getModel());
@@ -177,8 +180,9 @@ public class TaskDetailAction extends
 	 * @return
 	 */
 	public String toDealWithTaskDetail() {
-		//设定默认的任务处理结果填写人为当前登录人员
-		getModel().setInputer(loginUserService.getLoginUser(getRequest()).getName());
+		// 设定默认的任务处理结果填写人为当前登录人员
+		getModel().setInputer(
+				loginUserService.getLoginUser(getRequest()).getName());
 		return "toDealWithTaskDetail";
 	}
 
@@ -263,5 +267,13 @@ public class TaskDetailAction extends
 
 	public void setIsMultiple(String isMultiple) {
 		this.isMultiple = isMultiple;
+	}
+
+	public String getModelId() {
+		return modelId;
+	}
+
+	public void setModelId(String modelId) {
+		this.modelId = modelId;
 	}
 }
