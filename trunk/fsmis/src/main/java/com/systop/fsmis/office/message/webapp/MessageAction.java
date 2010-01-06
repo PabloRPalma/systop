@@ -6,6 +6,7 @@ import java.util.Date;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.commons.lang.xwork.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -33,11 +34,6 @@ import com.systop.fsmis.office.message.service.MessageManager;
 public class MessageAction extends ExtJsCrudAction<Message, MessageManager> {
 
 	/**
-	 * 发信人ID
-	 */
-	private Integer senderId;
-
-	/**
 	 * 起始时间
 	 */
 	private String createTimeBegin;
@@ -51,10 +47,30 @@ public class MessageAction extends ExtJsCrudAction<Message, MessageManager> {
 	 * 用户ID
 	 */
 	private String userId;
+	
+	/**
+	 * 登录用户的新消息个数
+	 */
+	private Integer mesCount;
 
 	@Autowired
 	private LoginUserService loginUserService;
 
+	/**
+	 * 返回新收内部信息的条数
+	 * @return
+	 */
+	public String hasNewMes(){
+		User user = loginUserService.getLoginUser(getRequest());
+		if(user != null) {
+			int count = getManager().getNewMes(user).size();
+			mesCount = count > 0 ? count : null;
+		} else {
+			mesCount = null;
+		}
+		return "messageCount";
+	}
+	
 	/**
 	 * 查询已接收的消息
 	 */
@@ -103,10 +119,8 @@ public class MessageAction extends ExtJsCrudAction<Message, MessageManager> {
 				logger.debug(e.getMessage());
 			}
 		}
-
-		if (senderId != null) {
-			criteria.add(Restrictions.eq("sender.id", senderId));
-		}
+		criteria.addOrder(Order.desc("isNew"));
+		criteria.addOrder(Order.desc("createTime"));
 		return criteria;
 	}
 
@@ -134,10 +148,8 @@ public class MessageAction extends ExtJsCrudAction<Message, MessageManager> {
 				logger.debug(e.getMessage());
 			}
 		}
-
-		if (senderId != null) {
-			criteria.add(Restrictions.eq("receiver.id", senderId));
-		}
+		criteria.addOrder(Order.desc("isNew"));
+		criteria.addOrder(Order.desc("createTime"));
 		return criteria;
 	}
 
@@ -157,7 +169,6 @@ public class MessageAction extends ExtJsCrudAction<Message, MessageManager> {
 		
 		String [] personId = userId.split(",");
 		for (int i = 0; i < personId.length; i++) {
-			logger.info("PersonId: {} ",  personId[i]);
 			Message message = new Message();
 			message.setSender(user);
 			User receiver = getManager().getDao().get(User.class, Integer.valueOf(personId[i]));
@@ -216,14 +227,6 @@ public class MessageAction extends ExtJsCrudAction<Message, MessageManager> {
 		return SUCCESS;
 	}
 
-	public Integer getSenderId() {
-		return senderId;
-	}
-
-	public void setSenderId(Integer senderId) {
-		this.senderId = senderId;
-	}
-
 	public String getCreateTimeBegin() {
 		return createTimeBegin;
 	}
@@ -246,5 +249,13 @@ public class MessageAction extends ExtJsCrudAction<Message, MessageManager> {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public Integer getMesCount() {
+		return mesCount;
+	}
+
+	public void setMesCount(Integer mesCount) {
+		this.mesCount = mesCount;
 	}
 }
