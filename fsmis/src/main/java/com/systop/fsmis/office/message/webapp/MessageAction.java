@@ -150,20 +150,22 @@ public class MessageAction extends ExtJsCrudAction<Message, MessageManager> {
 			addActionError("无法发送，请先登录！");
 			return INPUT;
 		} 
-		if(userId == null) {
+		if(StringUtils.isBlank(userId)) {
 			addActionError("无法发送，请选择收信人！");
 			return INPUT;
 		}
-		logger.info("UserId: {} ",  userId);
+		
 		String [] personId = userId.split(",");
 		for (int i = 0; i < personId.length; i++) {
 			logger.info("PersonId: {} ",  personId[i]);
-			getModel().setSender(user);
+			Message message = new Message();
+			message.setSender(user);
 			User receiver = getManager().getDao().get(User.class, Integer.valueOf(personId[i]));
-			getModel().setReceiver(receiver);
-			getModel().setCreateTime(new Date());
-			getModel().setIsNew(FsConstants.Y);
-			getManager().save(getModel());
+			message.setReceiver(receiver);
+			message.setCreateTime(new Date());
+			message.setIsNew(FsConstants.Y);
+			message.setContent(getModel().getContent());
+			getManager().save(message);
 		}
 		return SUCCESS;
 	}
@@ -188,6 +190,30 @@ public class MessageAction extends ExtJsCrudAction<Message, MessageManager> {
 		getModel().setReceiver(getModel().getSender());
 		getModel().setContent("");
 		return "reply";
+	}
+	
+	/**
+	 * 保存回复信息
+	 * @return
+	 */
+	public String savereply() {
+		User user = loginUserService.getLoginUser(getRequest());
+		if (user == null) {
+			addActionError("无法发送，请先登录！");
+			return INPUT;
+		} 
+		
+		if(getModel().getReceiver() != null
+				&& getModel().getReceiver().getId() != null) {
+			getModel().setReceiver(
+					getManager().getDao().get(User.class,
+							getModel().getReceiver().getId()));
+		}
+		getModel().setCreateTime(new Date());
+		getModel().setIsNew(FsConstants.Y);
+		getModel().setSender(user);
+		getManager().save(getModel());
+		return SUCCESS;
 	}
 
 	public Integer getSenderId() {
