@@ -144,7 +144,6 @@ public class TaskDetailAction extends
 	 * @return
 	 */
 	public String receiveTask() {
-		logger.info(modelId);
 		// 接收状态
 		getModel().setStatus(CaseConstants.TASK_DETAIL_RECEIVEED);
 		getManager().save(getModel());
