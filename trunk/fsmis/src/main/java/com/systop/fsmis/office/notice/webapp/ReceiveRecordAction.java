@@ -40,10 +40,28 @@ public class ReceiveRecordAction extends
 
 	/** 通知ID */
 	private Integer noticeId;
-
+	
+	/**登录用户的通知个数 */
+	private String noticeCount;
+	
 	@Autowired
 	private LoginUserService loginUserService;
 
+	/**
+	 * 返回新收内部信息的条数
+	 * @return
+	 */
+	public String hasNewNotices(){
+		logger.info("通知");
+		Dept dept = loginUserService.getLoginUserDept(getRequest());
+		if(dept != null) {
+			int count = getManager().getNewNotices(dept).size();
+			noticeCount = String.valueOf(count);
+		}
+		this.renderJson(getResponse(), noticeCount);
+		return null;
+	}
+	
 	/**
 	 * 部门登录后查看的通知纪录列表
 	 */
@@ -131,5 +149,13 @@ public class ReceiveRecordAction extends
 
 	public void setNoticeId(Integer noticeId) {
 		this.noticeId = noticeId;
+	}
+
+	public String getNoticeCount() {
+		return noticeCount;
+	}
+
+	public void setNoticeCount(String noticeCount) {
+		this.noticeCount = noticeCount;
 	}
 }

@@ -49,9 +49,9 @@ public class MessageAction extends ExtJsCrudAction<Message, MessageManager> {
 	private String userId;
 	
 	/**
-	 * 登录用户的新消息个数
+	 * 登录用户的新消息数
 	 */
-	private Integer mesCount;
+	private String mesCount;
 
 	@Autowired
 	private LoginUserService loginUserService;
@@ -64,11 +64,10 @@ public class MessageAction extends ExtJsCrudAction<Message, MessageManager> {
 		User user = loginUserService.getLoginUser(getRequest());
 		if(user != null) {
 			int count = getManager().getNewMes(user).size();
-			mesCount = count > 0 ? count : null;
-		} else {
-			mesCount = null;
-		}
-		return "messageCount";
+			mesCount = String.valueOf(count);
+		} 
+		this.renderJson(getResponse(), mesCount);
+		return null;
 	}
 	
 	/**
@@ -251,11 +250,5 @@ public class MessageAction extends ExtJsCrudAction<Message, MessageManager> {
 		this.userId = userId;
 	}
 
-	public Integer getMesCount() {
-		return mesCount;
-	}
 
-	public void setMesCount(Integer mesCount) {
-		this.mesCount = mesCount;
-	}
 }
