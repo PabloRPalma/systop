@@ -2,8 +2,6 @@ package com.systop.fsmis.fscase.task.taskdetail.webapp;
 
 import java.util.List;
 
-import net.sf.json.JSONArray;
-
 import org.apache.struts2.json.annotations.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
