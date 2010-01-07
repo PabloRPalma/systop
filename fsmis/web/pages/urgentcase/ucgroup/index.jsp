@@ -64,7 +64,7 @@ function removeUcGroup(id){
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	<ec:row>
 		<ec:column width="40" property="_no" value="${GLOBALROWCOUNT}" title="No." style="text-align:center"/>
-		<ec:column width="120" property="name" title="名称"/>
+		<ec:column width="80" property="name" title="名称"/>
 		<s:if test="#attr.ucTypeId != null">	
 			<ec:column width="30" property="-0" title="公用" style="text-align:center;">
 				<c:if test="${item.isPublic eq '1'}">是</c:if>
@@ -72,7 +72,7 @@ function removeUcGroup(id){
 			</ec:column>
 		</s:if>
 		<ec:column width="80" property="principal" title="负责人" style="text-align:center"/>
-		<ec:column width="120" property="_per" title="操作人" sortable="false">
+		<ec:column width="160" property="_per" title="操作人" sortable="false">
 			<c:forEach var="per" items="${item.users}">
 				${per.name}&nbsp;
 			</c:forEach>
