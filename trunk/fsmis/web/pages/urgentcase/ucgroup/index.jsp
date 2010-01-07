@@ -71,7 +71,14 @@ function removeUcGroup(id){
 				<c:if test="${item.isPublic eq '0'}">否</c:if>
 			</ec:column>
 		</s:if>
-		<ec:column width="80" property="displays" title="显示内容" style="text-align:center"/>
+		<ec:column width="80" property="principal" title="负责人" style="text-align:center"/>
+		<ec:column width="120" property="_per" title="操作人" sortable="false">
+			<c:forEach var="per" items="${item.users}">
+				${per.name}&nbsp;
+			</c:forEach>
+		</ec:column>
+		<ec:column width="80" property="phone" title="固话" style="text-align:center"/>
+		<ec:column width="80" property="mobel" title="手机号" style="text-align:center"/>
 		<ec:column width="200" property="descr" title="描述" style="text-align:center"/>
 		<ec:column width="100" property="_0" title="操作" style="text-align:center" sortable="false">
 			<s:if test="#attr.ucTypeId == null">
