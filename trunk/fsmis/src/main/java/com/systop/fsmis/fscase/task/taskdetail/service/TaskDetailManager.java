@@ -80,6 +80,10 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
 	 * @return 是否所有任务明细已经处理
 	 */
 	private boolean checkIsAllTaskDetailResolved(TaskDetail taskDetail) {
+		if (taskDetail.getTask() == null
+				|| taskDetail.getTask().getId() == null) {
+			return false;
+		}
 		// 遍历当前任务明细实体实例关联的任务实体的任务明细
 		for (TaskDetail detail : taskDetail.getTask().getTaskDetails()) {
 			// 只要有一个任务明细的状态不为"已处理",则返回false(未全部完成)
