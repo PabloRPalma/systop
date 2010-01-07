@@ -18,6 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.security.user.model.User;
@@ -181,7 +182,7 @@ public class UrgentCase extends BaseModel {
 		this.county = dept;
 	}
 
-	@Column(name = "TITLE", length = 510)
+	@Column(name = "TITLE", length = 255)
 	public String getTitle() {
 		return this.title;
 	}
@@ -209,7 +210,7 @@ public class UrgentCase extends BaseModel {
 		this.code = code;
 	}
 
-	@Column(name = "ADDRESS", length = 510)
+	@Column(name = "ADDRESS", length = 255)
 	public String getAddress() {
 		return this.address;
 	}
@@ -218,7 +219,7 @@ public class UrgentCase extends BaseModel {
 		this.address = address;
 	}
 
-	@Column(name = "COORDINATE", length = 510)
+	@Column(name = "COORDINATE", length = 255)
 	public String getCoordinate() {
 		return this.coordinate;
 	}
@@ -227,7 +228,7 @@ public class UrgentCase extends BaseModel {
 		this.coordinate = coordinate;
 	}
 
-	@Column(name = "CAUSE", length = 510)
+	@Column(name = "CAUSE", length = 255)
 	public String getCause() {
 		return this.cause;
 	}
@@ -236,7 +237,8 @@ public class UrgentCase extends BaseModel {
 		this.cause = cause;
 	}
 
-	@Column(name = "DESCN", length = 4000)
+	@Type(type = "text")
+	@Column(name = "DESCN")
 	public String getDescn() {
 		return this.descn;
 	}
@@ -245,7 +247,7 @@ public class UrgentCase extends BaseModel {
 		this.descn = descn;
 	}
 
-	@Column(name = "HARM_NUM", length = 110)
+	@Column(name = "HARM_NUM", length = 255)
 	public String getHarmNum() {
 		return this.harmNum;
 	}
@@ -254,7 +256,7 @@ public class UrgentCase extends BaseModel {
 		this.harmNum = harmNum;
 	}
 
-	@Column(name = "DEATH_NUM", length = 110)
+	@Column(name = "DEATH_NUM", length = 255)
 	public String getDeathNum() {
 		return this.deathNum;
 	}
@@ -263,7 +265,7 @@ public class UrgentCase extends BaseModel {
 		this.deathNum = deathNum;
 	}
 
-	@Column(name = "CASE_RANGE", length = 510)
+	@Column(name = "CASE_RANGE", length = 255)
 	public String getCaseRange() {
 		return this.caseRange;
 	}
@@ -272,7 +274,7 @@ public class UrgentCase extends BaseModel {
 		this.caseRange = caseRange;
 	}
 
-	@Column(name = "PLANS_LEVEL", length = 110)
+	@Column(name = "PLANS_LEVEL", length = 255)
 	public String getPlansLevel() {
 		return this.plansLevel;
 	}
@@ -281,7 +283,7 @@ public class UrgentCase extends BaseModel {
 		this.plansLevel = plansLevel;
 	}
 
-	@Column(name = "HOSPITAL_INF", length = 510)
+	@Column(name = "HOSPITAL_INF", length = 255)
 	public String getHospitalInf() {
 		return this.hospitalInf;
 	}
@@ -290,7 +292,7 @@ public class UrgentCase extends BaseModel {
 		this.hospitalInf = hospitalInf;
 	}
 
-	@Column(name = "TRAFFIC_INF", length = 510)
+	@Column(name = "TRAFFIC_INF", length = 255)
 	public String getTrafficInf() {
 		return this.trafficInf;
 	}
@@ -299,7 +301,7 @@ public class UrgentCase extends BaseModel {
 		this.trafficInf = trafficInf;
 	}
 
-	@Column(name = "REPORTER", length = 510)
+	@Column(name = "REPORTER", length = 255)
 	public String getReporter() {
 		return this.reporter;
 	}
@@ -308,7 +310,7 @@ public class UrgentCase extends BaseModel {
 		this.reporter = reporter;
 	}
 
-	@Column(name = "REPORTER_UNITS", length = 510)
+	@Column(name = "REPORTER_UNITS", length = 255)
 	public String getReporterUnits() {
 		return this.reporterUnits;
 	}
@@ -317,7 +319,7 @@ public class UrgentCase extends BaseModel {
 		this.reporterUnits = reporterUnits;
 	}
 
-	@Column(name = "REPORTER_PHONE", length = 110)
+	@Column(name = "REPORTER_PHONE", length = 255)
 	public String getReporterPhone() {
 		return this.reporterPhone;
 	}
@@ -326,7 +328,7 @@ public class UrgentCase extends BaseModel {
 		this.reporterPhone = reporterPhone;
 	}
 
-	@Column(name = "STATUS", length = 110)
+	@Column(name = "STATUS", length = 1)
 	public String getStatus() {
 		return this.status;
 	}

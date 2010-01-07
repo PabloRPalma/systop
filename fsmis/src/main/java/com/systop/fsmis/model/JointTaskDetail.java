@@ -92,7 +92,7 @@ public class JointTaskDetail extends BaseModel {
 		this.jointTask = jointTask;
 	}
 
-	@Column(name = "PROCESSOR", length = 510)
+	@Column(name = "PROCESSOR", length = 255)
 	public String getProcessor() {
 		return this.processor;
 	}
@@ -110,7 +110,7 @@ public class JointTaskDetail extends BaseModel {
 		this.process = process;
 	}
 
-	@Column(name = "RESULT", length = 510)
+	@Column(name = "RESULT", length = 255)
 	public String getResult() {
 		return this.result;
 	}
@@ -119,7 +119,7 @@ public class JointTaskDetail extends BaseModel {
 		this.result = result;
 	}
 
-	@Column(name = "BASIS", length = 510)
+	@Column(name = "BASIS", length = 255)
 	public String getBasis() {
 		return this.basis;
 	}

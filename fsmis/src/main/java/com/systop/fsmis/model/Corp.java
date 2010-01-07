@@ -147,7 +147,7 @@ public class Corp extends BaseModel {
 		this.dept = dept;
 	}
 
-	@Column(name = "NAME", length = 510)
+	@Column(name = "NAME", length = 255)
 	public String getName() {
 		return this.name;
 	}
@@ -228,7 +228,7 @@ public class Corp extends BaseModel {
 		this.phone = phone;
 	}
 
-	@Column(name = "ADDRESS", length = 510)
+	@Column(name = "ADDRESS", length = 255)
 	public String getAddress() {
 		return this.address;
 	}
@@ -237,7 +237,7 @@ public class Corp extends BaseModel {
 		this.address = address;
 	}
 
-	@Column(name = "COORDINATE", length = 510)
+	@Column(name = "COORDINATE", length = 255)
 	public String getCoordinate() {
 		return this.coordinate;
 	}
@@ -255,7 +255,7 @@ public class Corp extends BaseModel {
 		this.zip = zip;
 	}
 
-	@Column(name = "OPERATE_DETAILS", length = 510)
+	@Column(name = "OPERATE_DETAILS", length = 255)
 	public String getOperateDetails() {
 		return this.operateDetails;
 	}
@@ -264,7 +264,7 @@ public class Corp extends BaseModel {
 		this.operateDetails = operateDetails;
 	}
 
-	@Column(name = "PHOTO_URL", length = 510)
+	@Column(name = "PHOTO_URL", length = 255)
 	public String getPhotoUrl() {
 		return this.photoUrl;
 	}
@@ -273,7 +273,7 @@ public class Corp extends BaseModel {
 		this.photoUrl = photoUrl;
 	}
 
-	@Column(name = "REMARK", length = 510)
+	@Column(name = "REMARK", length = 255)
 	public String getRemark() {
 		return this.remark;
 	}
@@ -282,7 +282,7 @@ public class Corp extends BaseModel {
 		this.remark = remark;
 	}
 
-	@Column(name = "BUSINESS_LICENSE", length = 510)
+	@Column(name = "BUSINESS_LICENSE", length = 255)
 	public String getBusinessLicense() {
 		return this.businessLicense;
 	}
@@ -301,7 +301,7 @@ public class Corp extends BaseModel {
 		this.businessLicenseIndate = businessLicenseIndate;
 	}
 
-	@Column(name = "PRODUCE_LICENSE", length = 510)
+	@Column(name = "PRODUCE_LICENSE", length = 255)
 	public String getProduceLicense() {
 		return this.produceLicense;
 	}
@@ -320,7 +320,7 @@ public class Corp extends BaseModel {
 		this.produceLicenseIndate = produceLicenseIndate;
 	}
 
-	@Column(name = "SANITATION_LICENSE", length = 510)
+	@Column(name = "SANITATION_LICENSE", length = 255)
 	public String getSanitationLicense() {
 		return this.sanitationLicense;
 	}

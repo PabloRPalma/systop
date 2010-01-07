@@ -194,7 +194,7 @@ public class FsCase extends BaseModel {
 		this.corp = corp;
 	}
 
-	@Column(name = "TITLE", length = 510)
+	@Column(name = "TITLE", length = 255)
 	public String getTitle() {
 		return this.title;
 	}
@@ -213,7 +213,7 @@ public class FsCase extends BaseModel {
 		this.caseTime = caseTime;
 	}
 
-	@Column(name = "ADDRESS", length = 510)
+	@Column(name = "ADDRESS", length = 255)
 	public String getAddress() {
 		return this.address;
 	}
@@ -222,7 +222,7 @@ public class FsCase extends BaseModel {
 		this.address = address;
 	}
 
-	@Column(name = "CODE", length = 510)
+	@Column(name = "CODE", length = 255)
 	public String getCode() {
 		return this.code;
 	}
@@ -231,7 +231,7 @@ public class FsCase extends BaseModel {
 		this.code = code;
 	}
 
-	@Column(name = "DESCN", length = 510)
+	@Column(name = "DESCN", length = 255)
 	public String getDescn() {
 		return this.descn;
 	}
@@ -240,7 +240,7 @@ public class FsCase extends BaseModel {
 		this.descn = descn;
 	}
 
-	@Column(name = "COORDINATE", length = 510)
+	@Column(name = "COORDINATE", length = 255)
 	public String getCoordinate() {
 		return this.coordinate;
 	}
@@ -249,7 +249,7 @@ public class FsCase extends BaseModel {
 		this.coordinate = coordinate;
 	}
 
-	@Column(name = "INFORMER", length = 510)
+	@Column(name = "INFORMER", length = 255)
 	public String getInformer() {
 		return this.informer;
 	}
@@ -258,7 +258,7 @@ public class FsCase extends BaseModel {
 		this.informer = informer;
 	}
 
-	@Column(name = "INFORMER_PHONE", length = 510)
+	@Column(name = "INFORMER_PHONE", length = 255)
 	public String getInformerPhone() {
 		return this.informerPhone;
 	}
@@ -277,7 +277,7 @@ public class FsCase extends BaseModel {
 		this.closedTime = closedTime;
 	}
 
-	@Column(name = "STATUS", length = 510)
+	@Column(name = "STATUS", length = 1)
 	public String getStatus() {
 		return this.status;
 	}

@@ -155,7 +155,7 @@ public class TaskDetail extends BaseModel {
 		this.process = process;
 	}
 
-	@Column(name = "BASIS", length = 510)
+	@Column(name = "BASIS", length = 255)
 	public String getBasis() {
 		return this.basis;
 	}
@@ -164,7 +164,7 @@ public class TaskDetail extends BaseModel {
 		this.basis = basis;
 	}
 
-	@Column(name = "RESULT", length = 510)
+	@Column(name = "RESULT", length = 255)
 	public String getResult() {
 		return this.result;
 	}
@@ -192,7 +192,7 @@ public class TaskDetail extends BaseModel {
 		this.status = status;
 	}
 
-	@Column(name = "RETURN_PEOPLE", length = 110)
+	@Column(name = "RETURN_PEOPLE", length = 255)
 	public String getReturnPeople() {
 		return this.returnPeople;
 	}
@@ -201,7 +201,7 @@ public class TaskDetail extends BaseModel {
 		this.returnPeople = returnPeople;
 	}
 
-	@Column(name = "RETURN_REASON", length = 510)
+	@Column(name = "RETURN_REASON", length = 255)
 	public String getReturnReason() {
 		return this.returnReason;
 	}

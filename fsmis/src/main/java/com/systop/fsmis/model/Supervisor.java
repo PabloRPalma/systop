@@ -137,7 +137,7 @@ public class Supervisor extends BaseModel {
 		this.duty = duty;
 	}
 
-	@Column(name = "MOBILE", length = 510)
+	@Column(name = "MOBILE", length = 255)
 	public String getMobile() {
 		return this.mobile;
 	}
@@ -146,7 +146,7 @@ public class Supervisor extends BaseModel {
 		this.mobile = mobile;
 	}
 
-	@Column(name = "PHONE", length = 510)
+	@Column(name = "PHONE", length = 255)
 	public String getPhone() {
 		return this.phone;
 	}
@@ -155,7 +155,7 @@ public class Supervisor extends BaseModel {
 		this.phone = phone;
 	}
 
-	@Column(name = "SUPERVISE_REGION", length = 510)
+	@Column(name = "SUPERVISE_REGION", length = 255)
 	public String getSuperviseRegion() {
 		return this.superviseRegion;
 	}
@@ -164,7 +164,7 @@ public class Supervisor extends BaseModel {
 		this.superviseRegion = superviseRegion;
 	}
 
-	@Column(name = "COORDINATE", length = 510)
+	@Column(name = "COORDINATE", length = 255)
 	public String getCoordinate() {
 		return this.coordinate;
 	}
@@ -173,7 +173,7 @@ public class Supervisor extends BaseModel {
 		this.coordinate = coordinate;
 	}
 
-	@Column(name = "PHOTO_URL", length = 510)
+	@Column(name = "PHOTO_URL", length = 255)
 	public String getPhotoUrl() {
 		return this.photoUrl;
 	}
@@ -200,7 +200,7 @@ public class Supervisor extends BaseModel {
 		this.fsCase = fsCase;
 	}
 
-	@Column(name = "ID_NUMBER", length = 510)
+	@Column(name = "ID_NUMBER", length = 255)
 	public String getIdNumber() {
 		return idNumber;
 	}

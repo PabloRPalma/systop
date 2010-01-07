@@ -77,7 +77,7 @@ public class TaskAtt extends BaseModel {
 		this.task = task;
 	}
 
-	@Column(name = "PATH", length = 510)
+	@Column(name = "PATH", length = 255)
 	public String getPath() {
 		return this.path;
 	}
@@ -86,7 +86,7 @@ public class TaskAtt extends BaseModel {
 		this.path = path;
 	}
 
-	@Column(name = "TITLE", length = 510)
+	@Column(name = "TITLE", length = 255)
 	public String getTitle() {
 		return this.title;
 	}
@@ -95,7 +95,7 @@ public class TaskAtt extends BaseModel {
 		this.title = title;
 	}
 
-	@Column(name = "REMARK", length = 510)
+	@Column(name = "REMARK", length = 255)
 	public String getRemark() {
 		return this.remark;
 	}
