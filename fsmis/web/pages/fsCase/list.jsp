@@ -15,7 +15,7 @@ function examine(id){
 
 function remove(id){
 	if (confirm("确认要删除事件信息吗?")){
-		window.location.href="${ctx}/fscase/remove.do?model.id=" + id;
+		window.location.href="${ctx}/fscase/remove.do?model.id=" + id+"&modelId=0&isMultipleCase="+${isMultipleCase};
 		
 	}
 }
@@ -24,12 +24,12 @@ function remove(id){
 </head>
 <body>
 <div class="x-panel">
-<div class="x-panel-header">协调指挥&nbsp;&gt;&nbsp;${param['isMultiple'] eq 0?'一般案件':'综合案件'}列表</div>
+<div class="x-panel-header">协调指挥&nbsp;&gt;&nbsp;${param['isMultipleCase'] eq 0?'一般案件':'综合案件'}列表</div>
 <div class="x-toolbar">
 <table width="99%">
 	<tr>
 		<td><s:form action="index" method="post">
-			<s:hidden name="isMultiple"></s:hidden>
+			<s:hidden name="isMultipleCase"></s:hidden>
 						事件标题:
 			<s:textfield name="model.title" cssStyle="width:100px"></s:textfield>	
 						事件编号:
@@ -54,7 +54,7 @@ function remove(id){
 			<tr>
 				<td><span class="ytb-sep"></span></td>
 				<td>
-					<c:if test="${param['isMultiple'] eq 0}"><a href="${ctx}/fscase/edit.do?isMultiple=${param['isMultiple'] }&modelId=${param['modelId']}"> 添加一般案件信息</a></c:if>			
+					<c:if test="${param['isMultipleCase'] eq 0}"><a href="${ctx}/fscase/edit.do?isMultipleCase=${param['isMultipleCase'] }&modelId=${param['modelId']}"> 添加一般案件信息</a></c:if>			
 				</td>
 			</tr>
 		</table>
@@ -97,11 +97,11 @@ function remove(id){
 		<stc:role ifNotGranted="ROLE_DEPT_OPER">
 		<ec:column width="150" property="_0" title="操作" style="text-align:left" sortable="false">
 			 &nbsp;&nbsp;
-			 <a href="${ctx}/fscase/view.do?fsCaseId=${item.id}&modelId=0&isMultiple=${param['isMultiple']}">
+			 <a href="${ctx}/fscase/view.do?fsCaseId=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">
 			                查看
 			 </a>  
 			 <stc:role ifAnyGranted="ROLE_ADMIN">
-			    <a href="${ctx}/fscase/edit.do?model.id=${item.id}">
+			    <a href="${ctx}/fscase/edit.do?model.id=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">
                                                  编辑
                </a>
              </stc:role>
@@ -112,7 +112,7 @@ function remove(id){
              </a>
             </c:if>
 			<c:if test="${item.status == '0' || item.status == '1'}">
-			   <a href="${ctx}/fscase/edit.do?model.id=${item.id}">
+			   <a href="${ctx}/fscase/edit.do?model.id=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">
                                                编辑
              </a>	
             </c:if>
