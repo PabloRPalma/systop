@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.systop.core.ApplicationException;
 import com.systop.fsmis.model.SmsReceive;
 import com.systop.fsmis.model.SmsSend;
 import com.systop.fsmis.sms.smproxy.SmsProxy;
@@ -46,14 +45,13 @@ public class SmsManager {
 	/**
 	 * 接收短信方法
 	 */
-	public void receiveMessages() {
+	public void receiveMessages() throws Exception {
 		try {
-			List<SmsReceive> smsReceiveList = smsProxy.receiveMessage();
-			for (SmsReceive smsReceive : smsReceiveList) {
-				getSmsReceiveManager().save(smsReceive);
-			}
-		} catch (ApplicationException ex) {
+			SmsReceive smsReceive = smsProxy.receiveMessage();
+			getSmsReceiveManager().save(smsReceive);
+		} catch (Exception ex) {
 			logger.error(ex.getMessage());
+			throw ex;
 		}
 	}
 
@@ -68,9 +66,10 @@ public class SmsManager {
 			if (smsSend == null) {
 				logger.error("查询得到为null的短信");
 			} else {
-				if (!MobileNumChecker.checkMobilNumberDigit(smsSend.getMobileNum())) {
-					logger.error("ID为:{}的短信,接收手机号[{}]有误,发送失败!", smsSend.getId(), smsSend
-							.getMobileNum());
+				if (!MobileNumChecker.checkMobilNumberDigit(smsSend
+						.getMobileNum())) {
+					logger.error("ID为:{}的短信,接收手机号[{}]有误,发送失败!",
+							smsSend.getId(), smsSend.getMobileNum());
 				} else {
 					try {
 						// 调用代理的发送功能,state变量在mas端用于标示是否发送成功,但在这里暂时没有用到
