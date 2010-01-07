@@ -142,6 +142,21 @@ public class AsseAttachAction extends
 	}
 
 	/**
+	 * 显示风险评估附件列表
+	 */
+	@Override
+	public String view() {
+		if (assessmentId != null) {
+			Page page = PageUtil.getPage(getPageNo(), getPageSize());
+			String hql = "from AssessmentAttach attach where attach.assessment.id = ?";
+			getManager().pageQuery(page, hql, assessmentId);
+			items = page.getData();
+			restorePageData(page);
+		}
+		return VIEW;
+	}
+	
+	/**
 	 * 返回已选择专家集合
 	 * 
 	 * @return list
