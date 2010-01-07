@@ -92,7 +92,7 @@ public class AsseAttachAction extends
 				}
 				// 检查文件类型是否符合
 				String extension = attachmentFileName.substring(attachmentFileName
-						.indexOf(".") + 1);
+						.lastIndexOf(".") + 1);
 				boolean flag = false;
 				for (String extAllowed : AssessMentConstants.UPLOAD_ALLOWED_FILE_TYPES) {
 					if (StringUtils.equalsIgnoreCase(extension, extAllowed)) {
