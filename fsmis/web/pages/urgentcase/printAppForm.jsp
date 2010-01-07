@@ -23,7 +23,7 @@
 <body>
 <object ID='WebBrowser' WIDTH="0" HEIGHT="0"
 	CLASSID='CLSID:8856F961-340A-11D0-A96B-00C04FD705A2'></object>
-<table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">
+<table width="750" border="0" align="center" cellpadding="0" cellspacing="0">
 <tr><td align="right">
 <input type=button value=打印
 	onClick="document.all.WebBrowser.ExecWB(6,6)" class="button noprint">
@@ -36,7 +36,7 @@
 	</td></tr>
 </table>
 <br>
-<table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">
+<table width="750" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
     <td colspan="4" align="center"><h2>应急预案申请单</h2></td>
   </tr>
