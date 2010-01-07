@@ -18,15 +18,18 @@ public class CategoryManagerTest extends BaseTransactionalTestCase {
 	private CategoryManager categoryManager;
 	
 	private ExpertCategory expertCategory;
-	//测试保存方法
+	/**
+	 * 测试保存类别方法
+	 * 设置描述属性后保存
+	 * 验证是否成功保存
+	 */
 	public void testSave(){
+		//新增一条专家类别记录
 		expertCategory = new ExpertCategory();
-		expertCategory.setName("计算机");
 		expertCategory.setDescn("计算机专家");
-		expertCategory.setExperts(null);
 		categoryManager.save(expertCategory);
 		
-		assertEquals("计算机", (categoryManager.get(expertCategory.getId())).getName());
+		//验证是否成功保存
 		assertEquals("计算机专家", (categoryManager.get(expertCategory.getId())).getDescn());
 	}
 }
