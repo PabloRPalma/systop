@@ -119,7 +119,7 @@ public class Assessment extends BaseModel {
 		this.state = state;
 	}
 
-	@Column(name = "LEVEL", length = 1)
+	@Column(name = "LEVEL", length = 50)
 	public String getLevel() {
 		return level;
 	}
