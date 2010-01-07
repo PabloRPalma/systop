@@ -18,7 +18,7 @@ public final class MessagePraseUtil {
 	private static Logger logger = LoggerFactory
 			.getLogger(MessagePraseUtil.class);
 
-	public SmsReceive praseContent(SmsReceive smsReceive) {
+	public static SmsReceive praseContent(SmsReceive smsReceive) {
 		// 分析后有结果的短信 IsParse字段为1，无结果的短信 IsParse字段为0 ，IsNew为1代表管理者没有读
 		// 分析后的举报短信IsReport为1，反馈的短信为IsReport为2，是反馈的短信但是没有事件号码的IsReport为3
 		HashMap<String, String> hm = stringArithmetic(smsReceive.getContent());
@@ -56,7 +56,7 @@ public final class MessagePraseUtil {
 	 * @param content
 	 * @return
 	 */
-	public static HashMap<String, String> stringArithmetic(String content) {
+	private static HashMap<String, String> stringArithmetic(String content) {
 		// 举报专用
 		String[] quoteString = SmsConstants.QUOTE_STRING.split(",");
 
@@ -81,7 +81,6 @@ public final class MessagePraseUtil {
 						if (index > 0) {
 							String eventId = content.trim().substring(0, index);
 							hm.put("eventId", eventId);
-							logger.info("反馈核实短信，EventId:" + eventId);
 						}
 					} else {
 						hm.put("event", null);
