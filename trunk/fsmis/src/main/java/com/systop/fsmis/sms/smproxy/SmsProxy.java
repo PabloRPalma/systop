@@ -30,11 +30,20 @@ public interface SmsProxy {
 	 * 群发短信方法
 	 * 
 	 * @param smsSendList
-	 *          要发送的短信实体集合
+	 *            要发送的短信实体集合
 	 * @return 返回短信在短信服务端的id
 	 * @throws ApplicationException
 	 */
-	Integer sendMessage(List<SmsSend> smsSendList) throws ApplicationException;
+	Integer sendMessage(List<SmsSend> smsSendList) throws Exception;
+
+	/**
+	 * 接收短信方法
+	 * 
+	 * @return 得到的短信实体List集合
+	 * @throws ApplicationException
+	 */
+
+	List<SmsReceive> receiveMessages() throws Exception;
 
 	/**
 	 * 接收短信方法
@@ -42,8 +51,7 @@ public interface SmsProxy {
 	 * @return 得到的短信实体
 	 * @throws ApplicationException
 	 */
-
-	List<SmsReceive> receiveMessage() throws ApplicationException;
+	SmsReceive receiveMessage() throws Exception;
 
 	/**
 	 * 
@@ -52,6 +60,6 @@ public interface SmsProxy {
 	 * @return
 	 * @throws ApplicationException
 	 */
-	List<String> querySmsSendState() throws ApplicationException;
+	List<String> querySmsSendState() throws Exception;
 
 }
