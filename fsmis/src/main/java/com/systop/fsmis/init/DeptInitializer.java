@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.systop.common.modules.dept.DeptConstants;
 import com.systop.common.modules.dept.model.Dept;
+import com.systop.common.modules.dept.service.DeptSerialNoManager;
 import com.systop.fsmis.init.utils.InitUtil;
 
 /**
@@ -26,8 +27,11 @@ public class DeptInitializer {
 	/** 日志 */
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
-	@Autowired(required = true)
+	@Autowired
 	private SessionFactory sessionFactory;
+	
+	@Autowired
+	private DeptSerialNoManager deptSerialNoManager;
 
 	/**
 	 * spring自动调用方法,用于数据初始化
@@ -42,6 +46,7 @@ public class DeptInitializer {
 				logger.debug("Dept init is complete.");
 			}
 		} finally {
+			deptSerialNoManager.updateAllSerialNo();
 			session.flush();
 			session.close();
 		}
