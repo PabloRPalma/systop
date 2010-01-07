@@ -13,7 +13,7 @@
 <div class="x-toolbar">
 <table width="99%">
 	<tr>
-		<td> 事件名称：${model.title}</td>
+		<td>&nbsp;事件名称：${model.title}</td>
 		<td align="right">
 		  <table>
 			<tr>

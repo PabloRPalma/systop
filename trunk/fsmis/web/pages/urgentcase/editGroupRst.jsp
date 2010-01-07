@@ -42,6 +42,18 @@
 		var caseId = document.getElementById('caseId').value;
 		window.location = '${ctx}/urgentcase/view.do?model.id='+ caseId +'&actId=3';
 	}
+    /**
+     * 字段验证
+	function checkFiled(filedVal) {
+	  if (filedVal != null && filedVal != '') {
+		document.getElementById('errorinfo').innerHTML = "";
+		return true;
+	  } else {
+		document.getElementById('errorinfo').innerHTML = "必填字段";
+		return false;
+	  }
+	}
+	*/
 </script>
 <style type="text/css">
 #mytable {
@@ -83,23 +95,6 @@
 	<s:hidden id="groupId" name="groupId" />
 	<table id="mytable" align="left" style="margin-top: 5px">
 		<c:forEach var="entry" items="${resultMap}" varStatus="status">
-			<!--  
-			<font size=5 color=red>
-				ID:${entry.key }<br>
-				Name:${entry.value }<br>
-			</font>
-			
-			<tr>
-				<td align="right" width="100">${entry.key }：</td>
-				<td align="left" colspan="3">
-					<c:if test="${entry.value == 'null'}">
-						<input name="jsonValue" style="width: 400px" />
-					</c:if>
-					<c:if test="${entry.value != 'null'}">
-						<input name="jsonValue" style="width: 400px" value="${entry.value }" />
-					</c:if>
-				</td>
-			</tr>-->
 			<tr>
 				<td align="right" width="100">${entry.key }：</td>
 				<c:if test="${entry.key eq '处理时间'}">
@@ -130,11 +125,12 @@
 				<c:if test="${entry.key eq '处理结果'}">
 				  <td align="left" colspan="3">
 					<c:if test="${entry.value == 'null'}">
-						<textarea name="jsonValue" rows="6" style="width: 400px"></textarea>
+						<textarea name="jsonValue" rows="6" style="width: 400px" onblur="checkFiled(this.value)"></textarea>
 					</c:if>
 					<c:if test="${entry.value != 'null'}">
 						<textarea name="jsonValue" rows="6" style="width: 400px">${entry.value }</textarea>
 					</c:if>
+					<!--<s:label id="errorinfo"></s:label>-->
 				  </td>
 				</c:if>
 				<c:if test="${entry.key ne '处理时间' && entry.key ne '处理过程' && entry.key ne '处理结果'}">
