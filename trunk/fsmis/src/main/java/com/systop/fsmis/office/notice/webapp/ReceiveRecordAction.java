@@ -52,7 +52,6 @@ public class ReceiveRecordAction extends
 	 * @return
 	 */
 	public String hasNewNotices(){
-		logger.info("通知");
 		Dept dept = loginUserService.getLoginUserDept(getRequest());
 		if(dept != null) {
 			int count = getManager().getNewNotices(dept).size();
