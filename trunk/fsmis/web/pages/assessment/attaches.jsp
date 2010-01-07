@@ -81,8 +81,8 @@ String.prototype.trim = function(){
   resizeColWidth="false" 
   classic="false" 
   width="100%" 
-  height="162px"
-  minHeight="162"
+  height="160px"
+  minHeight="160"
   toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
  <ec:row>
     <ec:column width="30" property="_num" title="No." value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center"/>
@@ -90,7 +90,7 @@ String.prototype.trim = function(){
       <a href="${ctx}${item.path}"><font color="blue">${item.title}</font></a>
     </ec:column>
     <ec:column width="150" property="creator" title="完成人" style="text-align:center"/>    
-    <ec:column width="75" property="_0" title="操作"
+    <ec:column width="70" property="_0" title="操作"
       style="text-align:center" sortable="false">
       <a href="#" onclick="removeAttach(${item.id})">删除
       </a>
