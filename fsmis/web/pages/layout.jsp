@@ -154,7 +154,7 @@
 					}
 				}
 			});
-			setTimeout("checkNewMsg()", 15000);
+			setTimeout("checkNewMsg()", 150000);
 		}
 		
 		checkNewMsg();
@@ -170,7 +170,7 @@
 					}
 				}
 			});
-			setTimeout("checkNewNotice()", 20000);
+			setTimeout("checkNewNotice()", 200000);
 		}
 		
 		checkNewNotice();
