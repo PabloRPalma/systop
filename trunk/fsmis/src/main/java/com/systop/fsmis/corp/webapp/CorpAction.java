@@ -110,9 +110,9 @@ public class CorpAction extends ExtJsCrudAction<Corp, CorpManager> {
 	 */
 	private DetachedCriteria setupDetachedCriteria() {
 		DetachedCriteria criteria = DetachedCriteria.forClass(Corp.class);
-		criteria.createAlias("dept", "dept");
 		Dept dept = loginUserService.getLoginUserDept(getRequest());
 		if (dept != null) {
+			criteria.createAlias("dept", "dept");
 			if (dept.getChildDepts().size() > 0) {
 				criteria.add(Restrictions.like("dept.serialNo", MatchMode.START
 						.toMatchString(dept.getSerialNo())));
