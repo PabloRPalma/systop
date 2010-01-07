@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import com.systop.core.model.BaseModel;
 
@@ -79,7 +80,7 @@ public class Document extends BaseModel {
 		this.documentType = documentType;
 	}
 
-	@Column(name = "TITLE", length = 510)
+	@Column(name = "TITLE")
 	public String getTitle() {
 		return this.title;
 	}
@@ -97,6 +98,7 @@ public class Document extends BaseModel {
 		this.author = author;
 	}
 
+	@Type(type = "text")
 	@Column(name = "CONTENT")
 	public String getContent() {
 		return this.content;
