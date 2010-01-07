@@ -14,8 +14,8 @@
 </script>
 </head>
 <body>
-<br>
 <div class="x-panel">
+<div class="x-panel-header">通知内容</div>
 	<table width="700px" align="center" cellpadding="3" cellspacing="4">
 		<tr>
 			<td align="center" style="border-bottom: solid 1px black; font-size:25px; font-weight: bold;">
@@ -25,7 +25,7 @@
 		<tr>
 			<td align="center" style=" font-size:15px; font-weight: bold;">
 				发布人：${model.notice.publisher.name }&nbsp;&nbsp;
-				发布时间：<s:date name="model.notice.sendTime" format="yyyy-MM-dd HH:mm:ss" />
+				发布时间：<s:date name="model.notice.createTime" format="yyyy-MM-dd HH:mm:ss" />
 			</td>
 		</tr>
 		<tr>
@@ -40,7 +40,9 @@
 			<td align="left" style="border-bottom: solid 1px black; ">
 				<div style="padding: 15 30 15 30;font-size:15px; font-weight: bold;">
 				相关附件文档：
-				<a href="${ctx}${model.notice.att}" target="_blank">点击下载</a>
+				<c:if test="${!empty model.notice.att}">
+					<a href="${ctx}${model.notice.att}" target="_blank">点击下载</a>
+				</c:if>
 				</div>
 			</td>
 		</tr>
