@@ -32,10 +32,10 @@ public class ExpertMembersManagerTest extends BaseTransactionalTestCase {
 	//测试根据Id得到Assessment实体
 	public void testGetAssessmentById(){
 		Assessment sssessment = new Assessment();
-		sssessment.setOpinion("opinion");
+		sssessment.setResult("result");
 		assessmentManager.save(sssessment);
 		Assessment am = expertMembersManager.getAssessmentById(sssessment.getId());
-		assertEquals("opinion", am.getOpinion()); 
+		assertEquals("result", am.getResult()); 
 	}
 	
 	//测试添加专家成员方法
@@ -45,7 +45,7 @@ public class ExpertMembersManagerTest extends BaseTransactionalTestCase {
 		expertManager.save(expert);
 		
 		Assessment sssessment = new Assessment();
-		sssessment.setOpinion("opinion");
+		sssessment.setResult("result");
 		assessmentManager.save(sssessment);
 		
 		Set<Integer> idSet = new HashSet<Integer>();
@@ -66,7 +66,7 @@ public class ExpertMembersManagerTest extends BaseTransactionalTestCase {
 		expertManager.save(expert);
 		
 		Assessment sssessment = new Assessment();
-		sssessment.setOpinion("opinion");
+		sssessment.setResult("result");
 		assessmentManager.save(sssessment);
 		
 		Set<Integer> idSet = new HashSet<Integer>();
