@@ -21,12 +21,14 @@
           <div align="center" id="ZhiHuiBu" style="padding: 10px 5px 10px 5px;">
             <%if (groupMap.get(UcConstants.LEADERSHIP) != null){%>
             <div align="center"><b><%=groupMap.get(UcConstants.LEADERSHIP).getName()%></b></div><br>
-            
+            	<%=groupMap.get(UcConstants.LEADERSHIP).getPrincipal()%><br>
+				<%=groupMap.get(UcConstants.LEADERSHIP).getPhone()%><br>
+				<%=groupMap.get(UcConstants.LEADERSHIP).getMobel()%><br>
             <stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CENT_OPER">
-              <div align="center"><a target="_blank" href="${ctx}/emergency/person/index.do?groupId=<%=groupMap.get(UcConstants.LEADERSHIP).getId()%>">修改组成员</a></div>
+              <div align="center"><a target="_blank" href="#">修改组成员</a></div>
 			    </stc:role>
             <%}%>
-          </div>        </td>
+          </div></td>
         </tr>
     </table></td>
   </tr>
@@ -49,7 +51,7 @@
               	<div align="center"><b><%=groupMap.get(UcConstants.OFFICE).getName()%></b></div><br>
 				
 				<stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CENT_OPER">
-					<div align="center"><a target="_black" href="${ctx}/emergency/person/index.do?groupId=<%=groupMap.get(UcConstants.OFFICE).getId()%>">修改组成员</a></div>
+					<div align="center"><a target="_black" href="#">修改组成员</a></div>
 				</stc:role>
 			<%}%>
 		  </div>
@@ -73,9 +75,11 @@
               			<b><%=groupMap.get(UcConstants.DEFEND).getName()%></b>
               		</a>
               	</div><br>
-				
+				<%=groupMap.get(UcConstants.DEFEND).getPrincipal()%><br>
+				<%=groupMap.get(UcConstants.DEFEND).getPhone()%><br>
+				<%=groupMap.get(UcConstants.DEFEND).getMobel()%><br>
 				<stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CENT_OPER">
-					<div align="center"><a target="_black" href="${ctx}/emergency/person/index.do?groupId=<%=groupMap.get(UcConstants.DEFEND).getId()%>">修改组成员</a></div>
+					<div align="center"><a target="_black" href="#">修改组成员</a></div>
 				</stc:role>
 			<%}%>
 		  </div>
@@ -102,7 +106,7 @@
               	</div><br>
 				
 				<stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CENT_OPER">
-					<div align="center"><a target="_black" href="${ctx}/emergency/person/index.do?groupId=<%=groupMap.get(UcConstants.MEDICAL_RESCUE).getId()%>">修改组成员</a></div>
+					<div align="center"><a target="_black" href="#">修改组成员</a></div>
 				</stc:role>
 			<%}%>
 			</div>
@@ -129,7 +133,7 @@
               	</div><br>
 				
 				<stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CENT_OPER">
-					<div align="center"><a target="_black" href="${ctx}/emergency/person/index.do?groupId=<%=groupMap.get(UcConstants.REAR_SERVICE).getId()%>">修改组成员</a></div>
+					<div align="center"><a target="_black" href="#">修改组成员</a></div>
 				</stc:role>
 			<%}%>
 			</div>
@@ -156,7 +160,7 @@
               	</div><br>
 				
 				<stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CENT_OPER">
-					<div align="center"><a target="_black" href="${ctx}/emergency/person/index.do?groupId=<%=groupMap.get(UcConstants.AFTER_HANDLE).getId()%>">修改组成员</a></div>
+					<div align="center"><a target="_black" href="#">修改组成员</a></div>
 				</stc:role>
 			<%}%>
 			</div>
@@ -183,7 +187,7 @@
               	</div><br>
 				
 				<stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CENT_OPER">
-					<div align="center"><a target="_black" href="${ctx}/emergency/person/index.do?groupId=<%=groupMap.get(UcConstants.ACCIDENT_HANDLE).getId()%>">修改组成员</a></div>
+					<div align="center"><a target="_black" href="#">修改组成员</a></div>
 				</stc:role>
 			<%}%>
 			</div>
@@ -210,7 +214,7 @@
               	</div><br>
 				
 				<stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CENT_OPER">
-					<div align="center"><a target="_black" href="${ctx}/emergency/person/index.do?groupId=<%=groupMap.get(UcConstants.NEWS_REPORT).getId()%>">修改组成员</a></div>
+					<div align="center"><a target="_black" href="#">修改组成员</a></div>
 				</stc:role>
 			<%}%>
 			</div>
@@ -237,7 +241,7 @@
               	</div><br>
 				
 				<stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CENT_OPER">
-					<div align="center"><a target="_black" href="${ctx}/emergency/person/index.do?groupId=<%=groupMap.get(UcConstants.EXPERT_TECHNOLOGY).getId()%>">修改组成员</a></div>
+					<div align="center"><a target="_black" href="#">修改组成员</a></div>
 				</stc:role>
 			<%}%>
 			</div>
@@ -264,7 +268,7 @@
               	</div><br>
 				
 				<stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CENT_OPER">
-					<div align="center"><a target="_black" href="${ctx}/emergency/person/index.do?groupId=<%=groupMap.get(UcConstants.RECEIVE).getId()%>">修改组成员</a></div>
+					<div align="center"><a target="_black" href="#">修改组成员</a></div>
 				</stc:role>
 			<%}%>
 			</div>

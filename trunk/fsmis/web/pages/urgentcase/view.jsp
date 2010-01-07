@@ -28,7 +28,7 @@
 		var tabs = new Ext.TabPanel( {
 			renderTo : 'tabs',
 			anchor : '100% 100%',
-			height : 380,
+			height : 450,
 			activeTab : ${param['actId']},
 			frame : false,
 			defaults : {
@@ -99,7 +99,7 @@
 </div>
 <div id="tabs">
 <div id="basic" class="x-hide-display"><s:hidden name="model.id" id="caseId" />
-<table id="mytable" height="360" style="margin-top: 5px">
+<table id="mytable" height="360" style="margin-top: 8px">
 	<tr>
 		<td align="right" width="215">事件名称：</td>
 		<td align="left" colspan="3"><s:textfield id="title"
@@ -155,7 +155,7 @@
 </table>
 </div>
 <div id="hospital" class="x-hide-display">
-<table id="mytable" height="380" style="margin-top: 5px">
+<table id="mytable" height="380" style="margin-top: 8px">
 	<tr>
 		<td width="15%" align="right">周边医院情况：</td>
 		<td align="left" style="vertical-align: top;" width="85%"><s:textarea
@@ -165,7 +165,7 @@
 </table>
 </div>
 <div id="traffic" class="x-hide-display">
-<table id="mytable" height="380" style="margin-top: 5px">
+<table id="mytable" height="380" style="margin-top: 8px">
 	<tr>
 		<td width="15%" align="right">周边交通情况：</td>
 		<td align="left" style="vertical-align: top;" width="85%"><s:textarea
@@ -175,10 +175,10 @@
 </table>
 </div>
 <div id="sendgroup" class="x-hide-display">
-<table id="mytable" height="380" style="margin-top: 5px">
+<table id="mytable" height="380" style="margin-top: 8px">
 	<tr>
 		<td>
-			<iframe name="groups" src="${ctx}/urgentcase/queryGroupResult.do?model.id=${model.id}" width="100%" height="550" frameborder="1"></iframe>			
+			<iframe name="groups" src="${ctx}/urgentcase/queryGroupResult.do?model.id=${model.id}" width="100%" height="550" frameborder="0"></iframe>			
 		</td>
 	</tr>
 </table>
