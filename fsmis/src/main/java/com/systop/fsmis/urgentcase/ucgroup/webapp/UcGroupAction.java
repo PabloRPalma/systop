@@ -1,13 +1,11 @@
 package com.systop.fsmis.urgentcase.ucgroup.webapp;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang.xwork.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -44,11 +42,10 @@ public class UcGroupAction extends
 
 	/** 应急指挥类别ID */
 	private Integer ucTypeId;
-
 	/**
 	 * 用户ID
 	 */
-	private String userId;
+	private String userIds;
 	/**
 	 * 页面前台使用
 	 */
@@ -71,33 +68,16 @@ public class UcGroupAction extends
 			if (dept == null) {
 				addActionError("当前用户部门为空");
 			}
-			logger.info("用户：{}", userId);
-			if (StringUtils.isNotBlank(userId)) {
-				Set<User> userSet = getModel().getUsers();
-				Iterator<User> it = userSet.iterator();
-				while (it.hasNext()) {
-					User u = (User) it.next();
-					u.getUrgentGroups().remove(getModel());
-					getModel().getUsers().remove(u);
-				}
-
-				String[] personId = userId.split(",");
-				for (int i = 0; i < personId.length; i++) {
-					User user = getManager().getDao().get(User.class,
-							Integer.valueOf(personId[i]));
-					user.getUrgentGroups().add(getModel());
-					getModel().getUsers().add(user);
-				}
-			}
 			getModel().setIsOriginal(UcConstants.GROUP_ORIGINAL_YES);
 			getModel().setCounty(dept);
 			getManager().save(getModel());
-			return SUCCESS;
+			// 设置组和用户多对多关系
+			getManager().setUserUrgentGroup(userIds, getModel());
 		} catch (Exception e) {
 			addActionError(e.getMessage());
-			logger.info("错误信息{}", e.getMessage());
 			return INPUT;
 		}
+		return SUCCESS;
 	}
 
 	/**
@@ -145,6 +125,12 @@ public class UcGroupAction extends
 			length++;
 		}
 		return INPUT;
+	}
+
+	public String remove() {
+		getManager().setUserUrgentGroup(null, getModel());
+		getManager().remove(getModel());
+		return SUCCESS;
 	}
 
 	/**
@@ -196,12 +182,12 @@ public class UcGroupAction extends
 		this.ucTypeId = ucTypeId;
 	}
 
-	public String getUserId() {
-		return userId;
+	public String getUserIds() {
+		return userIds;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUserIds(String userIds) {
+		this.userIds = userIds;
 	}
 
 	public String getPerson() {
