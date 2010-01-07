@@ -37,14 +37,14 @@
 </head>
 <body onload="preFckEditor()">
 <div class="x-panel" style="overflow: visible;height: 100%">
-<div class="x-panel-header">协调指挥&nbsp;&gt;&nbsp;单体事件管理&nbsp;&gt;&nbsp;事件列表&nbsp;&gt;&nbsp;事件查看&nbsp;&gt;&nbsp;派遣任务</div>
+<div class="x-panel-header">协调指挥&nbsp;&gt;&nbsp;${isMultipleCase eq '0' ? '一般':'综合' }案件管理&nbsp;&gt;&nbsp;事件列表&nbsp;&gt;&nbsp;事件查看&nbsp;&gt;&nbsp;派遣任务</div>
 <div class="x-toolbar">&nbsp;</div>
 <div><%@ include file="/common/messages.jsp"%></div>
 <div style="padding-left: 10px;"><s:form action="/task/save.do" method="post"
 	theme="simple" enctype="multipart/form-data" validate="true" id="taskForm">
 	<input type="hidden" name="model.fsCase.id" value="${model.fsCase.id}"></input>
 	<input type="hidden" name="modelId" value="${param['modelId'] }"></input>
-	<input type="hidden" name="isMultipleCase" value="${param['isMultipleCase'] }"></input>
+	<input type="hidden" name="isMultipleCase" value="${isMultipleCase}"></input>
 	<s:hidden name="isMultiple"></s:hidden>
 	<fieldset style="width: 800px; padding: 10px 10px 10px 10px;" class="">
 	<legend> 派遣信息</legend>
@@ -65,9 +65,9 @@
 		<tr>			
 			<td align="left">
 			<div
-				style="border: 1px solid #D4D0C8; OVERFLOW:visible ; width: 400px; height: 70px; border-bottom:1px solid #D4D0C8;  ">
+				style="border: 1px solid #D4D0C8; OVERFLOW:visible ; width: 400px; overflow:auto; border-bottom:1px solid #D4D0C8;  ">
 			<fs:selectDepts name="deptIds" sendTypeId="${sendTypeId}"
-				splitLineStyle="1px dotted blue;" itemClass="checkbox" />
+				splitLineStyle="1px dotted blue;" itemClass="checkbox" column="5" />
 				</div>
 			</td>
 		</tr>
