@@ -26,6 +26,7 @@ import com.systop.core.webapp.upload.UpLoadUtil;
 import com.systop.fsmis.FsConstants;
 import com.systop.fsmis.model.Notice;
 import com.systop.fsmis.model.ReceiveRecord;
+import com.systop.fsmis.office.notice.NoticeConstants;
 import com.systop.fsmis.office.notice.service.NoticeManager;
 import com.systop.fsmis.office.notice.service.ReceiveRecordManager;
 
@@ -116,14 +117,32 @@ public class NoticeAction extends ExtJsCrudAction<Notice, NoticeManager> {
 		}
 		getModel().setPublisher(user);
 		getModel().setPubDept(dept);
-
-		if (attachment != null) {
-			getModel().setAtt(
-					UpLoadUtil.doUpload(attachment, attachmentFileName,
-							NOTICE_ATT_FOLDER, getServletContext()));
-		}
 		getModel().setCreateTime(new Date());
 		try {
+			if (attachment != null) {
+				// 检查文件大小是否符合
+				if (attachment.length() > NoticeConstants.UPLOAD_ALLOWED_FILE_SIZE) {
+					addActionError("上传文件太大！");
+					return INPUT;
+				}
+				// 检查文件类型是否符合
+				String extension = attachmentFileName.substring(attachmentFileName
+						.lastIndexOf(".") + 1);
+				boolean flag = false;
+				for (String extAllowed : NoticeConstants.UPLOAD_ALLOWED_FILE_TYPES) {
+					if (StringUtils.equalsIgnoreCase(extension, extAllowed)) {
+						flag = true;
+						break;
+					}
+				}
+				if (!flag) {
+					addActionError("未正确选择上传文件类型，请重新选择！");
+					return INPUT;
+				}
+				getModel().setAtt(
+						UpLoadUtil.doUpload(attachment, attachmentFileName,
+								NOTICE_ATT_FOLDER, getServletContext()));
+			}
 			getManager().saveDeptRecord(getModel(), deptIds);
 
 		} catch (Exception e) {
