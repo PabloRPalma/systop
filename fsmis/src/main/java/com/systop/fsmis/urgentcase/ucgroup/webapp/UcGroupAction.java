@@ -54,7 +54,6 @@ public class UcGroupAction extends
 	/**
 	 * 保存组
 	 */
-	@SuppressWarnings("null")
 	@Override
 	public String save() {
 		if (ucTypeId != null) {
