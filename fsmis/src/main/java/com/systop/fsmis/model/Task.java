@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -219,7 +220,9 @@ public class Task extends BaseModel {
 	/**
 	 * 得到任务逾期天数方法
 	 */
+	@Transient
 	public double getRemainDays() {
 		return RemaindaysUtil.getRemainDays(getPresetTime());
 	}
+
 }
