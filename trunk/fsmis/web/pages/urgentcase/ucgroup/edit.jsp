@@ -29,7 +29,7 @@ var emp;
    emp = new UserSelector({
        url: '${ctx}/security/user/userTree.do',
        el: 'emp_sel_container',
-       idsEl:'userId',
+       idsEl:'userIds',
        textEl:'person',
        width : 250,
 	   height : 450,
@@ -66,14 +66,14 @@ function showWin() {
            <tr>
              <td align="right" width="80">负责人:</td>
              <td align="left" width="520">
-             	<s:textfield id="principal" name="model.principal" cssStyle="width:300px"/>
+             	<s:textfield id="principal" name="model.principal" cssStyle="width:300px" cssClass="required"/><font color="red">&nbsp;*</font>
              </td>
           </tr>
           <tr>
 			<td align="right" width="80">操作人:</td>
 			<td align="left">
 					<s:textfield id="person" name="person" cssStyle="width:300px" />
-					<s:hidden name="userId"></s:hidden>
+					<s:hidden name="userIds"/>
 			</td>
 		</tr> 
 		<tr>
@@ -85,13 +85,13 @@ function showWin() {
            <tr>
              <td align="right" width="80">手机号:</td>
              <td align="left" width="520">
-             	<s:textfield id="mobel" name="model.mobel" cssStyle="width:300px"/>
+             	<s:textfield id="mobel" name="model.mobel" cssStyle="width:300px" cssClass="digits"/><font color="red">&nbsp;*</font>
              </td>
           </tr>
            <tr>
              <td align="right" width="80">固话:</td>
              <td align="left" width="520">
-             	<s:textfield id="phone" name="model.phone" cssStyle="width:300px"/>
+             	<s:textfield id="phone" name="model.phone" cssStyle="width:300px" cssClass="digits"/><font color="red">&nbsp;*</font>
              </td>
           </tr>
           <tr>
