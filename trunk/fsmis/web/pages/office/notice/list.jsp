@@ -35,9 +35,10 @@ function remove(id){
 		<td align="right">
 		<table>
 			<tr>
-				
-				<td><a href="${ctx}/office/notice/edit.do"><img
-					src="${ctx}/images/icons/add.gif" />添加</a></td>
+				<td>
+					<img src="${ctx}/images/icons/add.gif" />
+					<a href="${ctx}/office/notice/edit.do">添加</a>
+				</td>
 			</tr>
 		</table>
 		</td>
