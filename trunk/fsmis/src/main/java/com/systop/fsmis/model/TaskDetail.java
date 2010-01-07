@@ -20,6 +20,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import com.systop.common.modules.dept.model.Dept;
 import com.systop.core.model.BaseModel;
+import com.systop.core.util.RemaindaysUtil;
 
 /**
  * 任务明细表
@@ -88,10 +89,6 @@ public class TaskDetail extends BaseModel {
 	 * 退回原因
 	 */
 	private String returnReason;
-	/**
-	 * 任务逾期天数,仅仅为了在界面显示逾期天数,不作数据库映射
-	 */
-	private double remainDays;
 
 	/**
 	 * 缺省构造方法
@@ -242,11 +239,14 @@ public class TaskDetail extends BaseModel {
 		return new ToStringBuilder(this).append("id", getId()).toString();
 	}
 
+	/**
+	 * 得到任务明细逾期天数方法
+	 */
 	public double getRemainDays() {
-		return remainDays;
+		if (getTask() == null) {
+			return 0.0d;
+		}
+		return RemaindaysUtil.getRemainDays(getTask().getPresetTime());
 	}
 
-	public void setRemainDays(double remainDays) {
-		this.remainDays = remainDays;
-	}
 }
