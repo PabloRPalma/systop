@@ -1,6 +1,8 @@
 package com.systop.fsmis.fscase.task.task;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -29,7 +31,8 @@ public class TaskManagerTest extends BaseTransactionalTestCase {
 		FsCase fsCase = new FsCase();
 		fsCase.setCode("11111");
 		fsCase.setTitle("test");
-		
+		List<Integer> deptIds = new ArrayList<Integer>();
+		deptIds.add(50);
 		Task task= new Task();
 		task.setTitle("测试任务标题");
 		task.setDescn("测试任务描述");
@@ -39,7 +42,7 @@ public class TaskManagerTest extends BaseTransactionalTestCase {
 		taskManager.getDao().save(fsCase);
 		task.setFsCase(fsCase);
 		
-		taskManager.save(task, null, null);
+		taskManager.save(task,deptIds, null);
 		
 		assertEquals("测试任务标题", taskManager.get(task.getId()).getTitle());	
 		
