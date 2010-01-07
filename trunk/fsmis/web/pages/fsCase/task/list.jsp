@@ -75,7 +75,7 @@ eq 0?'一般任务':'综合任务'}管理&nbsp;&gt;&nbsp;${param['isMultipleCase
 				<c:otherwise>
 					<c:choose>
 						<c:when test="${item.remainDays >= 0}">剩余天数${item.remainDays}</c:when>
-						<c:otherwise>逾期天数${item.remainDays}</c:otherwise>
+						<c:otherwise>逾期天数${-item.remainDays}</c:otherwise>
 					</c:choose>
 				</c:otherwise>
 			</c:choose>
