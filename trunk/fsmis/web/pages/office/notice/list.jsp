@@ -71,8 +71,8 @@ function remove(id){
 				【${rr.dept.name}】
 			</c:forEach>
 		</ec:column>
-		<ec:column width="100" property="_0" title="操作" style="text-align:center" sortable="false">
-			<a href="${ctx}/office/notice/view.do?model.id=${item.id}" target="_blank">查看</a>|
+		<ec:column width="120" property="_0" title="操作" style="text-align:center" sortable="false">
+			<a href="view.do?model.id=${item.id}" target="_blank">查看</a>|
 			<a href="edit.do?model.id=${item.id}">编辑</a>|
 			 <a href="#" onclick="remove(${item.id})">删除 </a>
 		</ec:column>
