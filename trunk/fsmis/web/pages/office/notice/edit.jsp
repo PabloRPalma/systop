@@ -4,10 +4,11 @@
 <%@include file="/common/taglibs.jsp"%>
 <html>
 <head>
-<title></title>
+<title>编辑通知</title>
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/dwr.jsp" %>
 <%@include file="/common/validator.jsp"%>
+<script type="text/javascript" src="${ctx}/scripts/fsmis/ShowDeptName.js"></script>
 <script type="text/javascript" src="${ctx}/scripts/fckeditor/fckeditor.js"></script>
 <script type="text/javascript" src="${ctx}/dwr/interface/NoticeDwrAction.js"></script>
 <script type="text/javascript">
@@ -55,17 +56,16 @@ function deleAtt(id) {
 				</c:forEach>
 			</c:if>
 			<c:if test="${empty model.recRecordses}">
-			<div
-				style="border: 1px solid #099EBD; OVERFLOW-Y: scroll; width: 400px; SCROLLBAR-ARROW-COLOR: #e8e8e8; SCROLLBAR-BASE-COLOR: #e8e8e8; HEIGHT: 90px">
-			<fs:selectDepts name="deptIds" splitLineStyle="1px dotted blue;" itemClass="checkbox"/>
-			</div>
+			<div id="showDiv" style="border-bottom: 1px dotted #97B7E7; padding: 2 7 2 7;">部门内容</div>
+			<fs:selectDepts name="deptIds" column="3" onclick="show()" itemClass="checkbox"/>
+			
 			</c:if>
 			</td>
 		</tr>
 		<tr>
 			<td align="right">内容：</td>
 			<td align="left"><s:textarea id="content"  name="model.content"
-				cssStyle="width:400px; height:100px;" /></td>
+				cssStyle="width:300px; height:100px;" /></td>
 		</tr>
 		<tr>
 			<td align="right">附件：</td>
@@ -94,6 +94,13 @@ function deleAtt(id) {
 	</table>
 </s:form></div>
 </div>
+
+<script type="text/javascript">
+	function show(){
+		deptOperator.showDeptName("deptIds", "showDiv");
+	}
+	deptOperator.init("deptIds", "showDiv");
+</script>
 <script type="text/javascript">
 	$(document).ready(function() {
 	$("#save").validate();
@@ -103,8 +110,8 @@ function deleAtt(id) {
 function preFckEditor(){
 	var fckEditor = new FCKeditor( 'content' ) ;
     fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
-    fckEditor.ToolbarSet = 'Default';
-    fckEditor.Height = 350;
+    fckEditor.ToolbarSet = 'Basic';
+    fckEditor.Height = 300;
     fckEditor.ReplaceTextarea();
 }
 </script>
