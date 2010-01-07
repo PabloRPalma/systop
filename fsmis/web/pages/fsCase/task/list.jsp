@@ -69,16 +69,21 @@ eq 0?'一般任务':'综合任务'}管理&nbsp;&gt;&nbsp;${param['isMultipleCase
 			style="text-align:center" cell="date" format="yyyy-MM-dd" />
 		<ec:column width="80" property="completionTime" title="完成时间"
 			style="text-align:center" cell="date" format="yyyy-MM-dd">
-			<c:choose>
-				<c:when test="${item.status == '2'}"><fmt:formatDate value="${item.completionTime}"
-						pattern="yyyy-MM-dd HH:mm:ss" /></c:when>
+			<%--<c:choose>
+				<c:when test="${item.status == '2'}">
+					<c:choose>
+						<c:when test="${not empty item.completionTime}">bb</c:when>
+						<c:otherwise>aa&nbsp;</c:otherwise>
+					</c:choose>
+				</c:when>
 				<c:otherwise>
 					<c:choose>
 						<c:when test="${item.remainDays >= 0}">剩余天数${item.remainDays}</c:when>
 						<c:otherwise>逾期天数${-item.remainDays}</c:otherwise>
 					</c:choose>
 				</c:otherwise>
-			</c:choose>
+			</c:choose> --%>
+			
 		</ec:column>
 		<ec:column width="200" property="taskDetails" title="执行部门"
 			cell="com.systop.fsmis.fscase.webapp.ec.DeptsCell">
