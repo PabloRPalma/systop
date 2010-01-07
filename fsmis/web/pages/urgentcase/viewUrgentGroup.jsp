@@ -21,9 +21,15 @@
           <div align="center" id="ZhiHuiBu" style="padding: 10px 5px 10px 5px;">
             <%if (groupMap.get(UcConstants.LEADERSHIP) != null){%>
             <div align="center"><b><%=groupMap.get(UcConstants.LEADERSHIP).getName()%></b></div><br>
-            	<%=groupMap.get(UcConstants.LEADERSHIP).getPrincipal()%><br>
-				<%=groupMap.get(UcConstants.LEADERSHIP).getPhone()%><br>
-				<%=groupMap.get(UcConstants.LEADERSHIP).getMobel()%><br>
+            	<%if (groupMap.get(UcConstants.LEADERSHIP).getPrincipal() != null){%>
+					<%=groupMap.get(UcConstants.LEADERSHIP).getPrincipal()%><br>
+				<%}%>
+				<%if (groupMap.get(UcConstants.LEADERSHIP).getPhone() != null){%>
+					<%=groupMap.get(UcConstants.LEADERSHIP).getPhone()%><br>
+				<%}%>
+				<%if (groupMap.get(UcConstants.LEADERSHIP).getMobel() != null){%>
+					<%=groupMap.get(UcConstants.LEADERSHIP).getMobel()%><br>
+				<%}%>
             <stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CENT_OPER">
               <div align="center"><a target="_blank" href="#">修改组成员</a></div>
 			    </stc:role>
@@ -49,9 +55,16 @@
        	 <div align="center" id="Office" style="padding: 10px 5px 10px 5px;">
        	 	<%if (groupMap.get(UcConstants.OFFICE) != null){%>
               	<div align="center"><b><%=groupMap.get(UcConstants.OFFICE).getName()%></b></div><br>
-				<%=groupMap.get(UcConstants.OFFICE).getPrincipal()%><br>
-				<%=groupMap.get(UcConstants.OFFICE).getPhone()%><br>
-				<%=groupMap.get(UcConstants.OFFICE).getMobel()%><br>
+              	<%if (groupMap.get(UcConstants.OFFICE).getPrincipal() != null){%>
+					<%=groupMap.get(UcConstants.OFFICE).getPrincipal()%><br>
+				<%}%>
+				<%if (groupMap.get(UcConstants.OFFICE).getPhone() != null){%>
+					<%=groupMap.get(UcConstants.OFFICE).getPhone()%><br>
+				<%}%>
+				<%if (groupMap.get(UcConstants.OFFICE).getMobel() != null){%>
+					<%=groupMap.get(UcConstants.OFFICE).getMobel()%><br>
+				<%}%>
+				<br><br>
 				<stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CENT_OPER">
 					<div align="center"><a target="_black" href="#">修改组成员</a></div>
 				</stc:role>
@@ -77,9 +90,16 @@
               			<b><%=groupMap.get(UcConstants.DEFEND).getName()%></b>
               		</a>
               	</div><br>
-				<%=groupMap.get(UcConstants.DEFEND).getPrincipal()%><br>
-				<%=groupMap.get(UcConstants.DEFEND).getPhone()%><br>
-				<%=groupMap.get(UcConstants.DEFEND).getMobel()%><br>
+              	<%if (groupMap.get(UcConstants.DEFEND).getPrincipal() != null){%>
+					<%=groupMap.get(UcConstants.DEFEND).getPrincipal()%><br>
+				<%}%>
+				<%if (groupMap.get(UcConstants.DEFEND).getPhone() != null){%>
+					<%=groupMap.get(UcConstants.DEFEND).getPhone()%><br>
+				<%}%>
+				<%if (groupMap.get(UcConstants.DEFEND).getMobel() != null){%>
+					<%=groupMap.get(UcConstants.DEFEND).getMobel()%><br>
+				<%}%>
+				<br><br>
 				<stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CENT_OPER">
 					<div align="center"><a target="_black" href="#">修改组成员</a></div>
 				</stc:role>
@@ -106,9 +126,16 @@
               		<b><%=groupMap.get(UcConstants.MEDICAL_RESCUE).getName()%></b>
               		</a>
               	</div><br>
-				<%=groupMap.get(UcConstants.MEDICAL_RESCUE).getPrincipal()%><br>
-				<%=groupMap.get(UcConstants.MEDICAL_RESCUE).getPhone()%><br>
-				<%=groupMap.get(UcConstants.MEDICAL_RESCUE).getMobel()%><br>
+				<%if (groupMap.get(UcConstants.MEDICAL_RESCUE).getPrincipal() != null){%>
+					<%=groupMap.get(UcConstants.MEDICAL_RESCUE).getPrincipal()%><br>
+				<%}%>
+				<%if (groupMap.get(UcConstants.MEDICAL_RESCUE).getPhone() != null){%>
+					<%=groupMap.get(UcConstants.MEDICAL_RESCUE).getPhone()%><br>
+				<%}%>
+				<%if (groupMap.get(UcConstants.MEDICAL_RESCUE).getMobel() != null){%>
+					<%=groupMap.get(UcConstants.MEDICAL_RESCUE).getMobel()%><br>
+				<%}%>
+				<br><br>
 				<stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CENT_OPER">
 					<div align="center"><a target="_black" href="#">修改组成员</a></div>
 				</stc:role>
@@ -135,9 +162,16 @@
               		<b><%=groupMap.get(UcConstants.REAR_SERVICE).getName()%></b>
               		</a>
               	</div><br>
-				<%=groupMap.get(UcConstants.REAR_SERVICE).getPrincipal()%><br>
-				<%=groupMap.get(UcConstants.REAR_SERVICE).getPhone()%><br>
-				<%=groupMap.get(UcConstants.REAR_SERVICE).getMobel()%><br>
+				<%if (groupMap.get(UcConstants.REAR_SERVICE).getPrincipal() != null){%>
+					<%=groupMap.get(UcConstants.REAR_SERVICE).getPrincipal()%><br>
+				<%}%>
+				<%if (groupMap.get(UcConstants.REAR_SERVICE).getPhone() != null){%>
+					<%=groupMap.get(UcConstants.REAR_SERVICE).getPhone()%><br>
+				<%}%>
+				<%if (groupMap.get(UcConstants.REAR_SERVICE).getMobel() != null){%>
+					<%=groupMap.get(UcConstants.REAR_SERVICE).getMobel()%><br>
+				<%}%>
+				<br><br>
 				<stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CENT_OPER">
 					<div align="center"><a target="_black" href="#">修改组成员</a></div>
 				</stc:role>
@@ -164,9 +198,16 @@
               		<b><%=groupMap.get(UcConstants.AFTER_HANDLE).getName()%></b>
               		</a>
               	</div><br>
-				<%=groupMap.get(UcConstants.AFTER_HANDLE).getPrincipal()%><br>
-				<%=groupMap.get(UcConstants.AFTER_HANDLE).getPhone()%><br>
-				<%=groupMap.get(UcConstants.AFTER_HANDLE).getMobel()%><br>
+				<%if (groupMap.get(UcConstants.AFTER_HANDLE).getPrincipal() != null){%>
+					<%=groupMap.get(UcConstants.AFTER_HANDLE).getPrincipal()%><br>
+				<%}%>
+				<%if (groupMap.get(UcConstants.AFTER_HANDLE).getPhone() != null){%>
+					<%=groupMap.get(UcConstants.AFTER_HANDLE).getPhone()%><br>
+				<%}%>
+				<%if (groupMap.get(UcConstants.AFTER_HANDLE).getMobel() != null){%>
+					<%=groupMap.get(UcConstants.AFTER_HANDLE).getMobel()%><br>
+				<%}%>
+				<br><br>
 				<stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CENT_OPER">
 					<div align="center"><a target="_black" href="#">修改组成员</a></div>
 				</stc:role>
@@ -193,9 +234,16 @@
               		<b><%=groupMap.get(UcConstants.ACCIDENT_HANDLE).getName()%></b>
               		</a>
               	</div><br>
-				<%=groupMap.get(UcConstants.ACCIDENT_HANDLE).getPrincipal()%><br>
-				<%=groupMap.get(UcConstants.ACCIDENT_HANDLE).getPhone()%><br>
-				<%=groupMap.get(UcConstants.ACCIDENT_HANDLE).getMobel()%><br>
+				<%if (groupMap.get(UcConstants.ACCIDENT_HANDLE).getPrincipal() != null){%>
+					<%=groupMap.get(UcConstants.ACCIDENT_HANDLE).getPrincipal()%><br>
+				<%}%>
+				<%if (groupMap.get(UcConstants.ACCIDENT_HANDLE).getPhone() != null){%>
+					<%=groupMap.get(UcConstants.ACCIDENT_HANDLE).getPhone()%><br>
+				<%}%>
+				<%if (groupMap.get(UcConstants.ACCIDENT_HANDLE).getMobel() != null){%>
+					<%=groupMap.get(UcConstants.ACCIDENT_HANDLE).getMobel()%><br>
+				<%}%>
+				<br><br>
 				<stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CENT_OPER">
 					<div align="center"><a target="_black" href="#">修改组成员</a></div>
 				</stc:role>
@@ -222,9 +270,16 @@
               		<b><%=groupMap.get(UcConstants.NEWS_REPORT).getName()%></b>
               		</a>
               	</div><br>
-				<%=groupMap.get(UcConstants.NEWS_REPORT).getPrincipal()%><br>
-				<%=groupMap.get(UcConstants.NEWS_REPORT).getPhone()%><br>
-				<%=groupMap.get(UcConstants.NEWS_REPORT).getMobel()%><br>
+				<%if (groupMap.get(UcConstants.NEWS_REPORT).getPrincipal() != null){%>
+					<%=groupMap.get(UcConstants.NEWS_REPORT).getPrincipal()%><br>
+				<%}%>
+				<%if (groupMap.get(UcConstants.NEWS_REPORT).getPhone() != null){%>
+					<%=groupMap.get(UcConstants.NEWS_REPORT).getPhone()%><br>
+				<%}%>
+				<%if (groupMap.get(UcConstants.NEWS_REPORT).getMobel() != null){%>
+					<%=groupMap.get(UcConstants.NEWS_REPORT).getMobel()%><br>
+				<%}%>
+				<br><br>
 				<stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CENT_OPER">
 					<div align="center"><a target="_black" href="#">修改组成员</a></div>
 				</stc:role>
@@ -251,9 +306,16 @@
               		<b><%=groupMap.get(UcConstants.EXPERT_TECHNOLOGY).getName()%></b>
               		</a>
               	</div><br>
-				<%=groupMap.get(UcConstants.EXPERT_TECHNOLOGY).getPrincipal()%><br>
-				<%=groupMap.get(UcConstants.EXPERT_TECHNOLOGY).getPhone()%><br>
-				<%=groupMap.get(UcConstants.EXPERT_TECHNOLOGY).getMobel()%><br>
+				<%if (groupMap.get(UcConstants.EXPERT_TECHNOLOGY).getPrincipal() != null){%>
+					<%=groupMap.get(UcConstants.EXPERT_TECHNOLOGY).getPrincipal()%><br>
+				<%}%>
+				<%if (groupMap.get(UcConstants.EXPERT_TECHNOLOGY).getPhone() != null){%>
+					<%=groupMap.get(UcConstants.EXPERT_TECHNOLOGY).getPhone()%><br>
+				<%}%>
+				<%if (groupMap.get(UcConstants.EXPERT_TECHNOLOGY).getMobel() != null){%>
+					<%=groupMap.get(UcConstants.EXPERT_TECHNOLOGY).getMobel()%><br>
+				<%}%>
+				<br><br>
 				<stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CENT_OPER">
 					<div align="center"><a target="_black" href="#">修改组成员</a></div>
 				</stc:role>
@@ -280,9 +342,16 @@
               		<b><%=groupMap.get(UcConstants.RECEIVE).getName()%></b>
               		</a>
               	</div><br>
-				<%=groupMap.get(UcConstants.RECEIVE).getPrincipal()%><br>
-				<%=groupMap.get(UcConstants.RECEIVE).getPhone()%><br>
-				<%=groupMap.get(UcConstants.RECEIVE).getMobel()%><br>
+				<%if (groupMap.get(UcConstants.RECEIVE).getPrincipal() != null){%>
+					<%=groupMap.get(UcConstants.RECEIVE).getPrincipal()%><br>
+				<%}%>
+				<%if (groupMap.get(UcConstants.RECEIVE).getPhone() != null){%>
+					<%=groupMap.get(UcConstants.RECEIVE).getPhone()%><br>
+				<%}%>
+				<%if (groupMap.get(UcConstants.RECEIVE).getMobel() != null){%>
+					<%=groupMap.get(UcConstants.RECEIVE).getMobel()%><br>
+				<%}%>
+				<br><br>
 				<stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CENT_OPER">
 					<div align="center"><a target="_black" href="#">修改组成员</a></div>
 				</stc:role>
