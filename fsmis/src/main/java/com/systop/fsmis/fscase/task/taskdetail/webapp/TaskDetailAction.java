@@ -53,9 +53,7 @@ public class TaskDetailAction extends
 	 */
 	@Override
 	public String index() {
-		User user = loginUserService.getLoginUser(getRequest());
-		if (user == null) {
-			addActionError("请先登录!");
+		if (!checkLogin()) {
 			return INDEX;
 		}
 		StringBuffer buf = new StringBuffer("from TaskDetail detail where 1=1 ");
@@ -67,18 +65,11 @@ public class TaskDetailAction extends
 			args.add(MatchMode.ANYWHERE.toMatchString(getModel().getTask()
 					.getTitle()));
 		}
-
 		if (StringUtils.isNotBlank(getModel().getStatus())) {
 			buf.append("and detail.status = ? ");
 			args.add(getModel().getStatus());
 		}
 		builddDispatchTimeCondition(buf, args);
-		/*
-		 * 带有部门的查询时,报错,可能的原因是数据库中部门信息和当前登录人员之间的关系不完善
-		 * 项目组长要写初始化类来解决这个问题,待问题解决后,启用此段代码 Dept dept =
-		 * loginUserService.getLoginUserCounty(getRequest()); if(dept !=null){
-		 * buf.append("and td.dept.id = ?"); args.add(dept.getId()); }
-		 */
 
 		Dept dept = loginUserService.getLoginUserDept(getRequest());
 		if (dept != null) {
@@ -101,10 +92,8 @@ public class TaskDetailAction extends
 	/**
 	 * 构建根据派发起至时间查询条件
 	 * 
-	 * @param buf
-	 *            hql的StringBuffer
-	 * @param args
-	 *            参数数组
+	 * @param buf hql的StringBuffer
+	 * @param args 参数数组
 	 */
 	private void builddDispatchTimeCondition(StringBuffer buf, List<Object> args) {
 		if (taskBeginTime != null && taskEndTime != null) {
@@ -124,7 +113,6 @@ public class TaskDetailAction extends
 	 */
 	@Override
 	public String view() {
-
 		String id = getRequest().getParameter("taskDetailId");
 		if (StringUtils.isNotBlank(id)) {
 			Integer taskDetailId = Integer.parseInt(id);
@@ -214,10 +202,12 @@ public class TaskDetailAction extends
 	 */
 	public String doCommitTaskDetail() {
 
-		// 如果没有指定企业,则不设定企业关联---需要沟通确定
-		if (getModel().getTask().getFsCase().getCorp().getId() == null) {
-			getModel().getTask().getFsCase().setCorp(null);
-		}
+		// 如果没有指定企业,则不设定企业关联---待修改后 的getManager().doCommitTaskDetail
+		// 测试通过后删除此注释
+		/*
+		 * if (getModel().getTask().getFsCase().getCorp().getId() == null) {
+		 * getModel().getTask().getFsCase().setCorp(null); }
+		 */
 
 		getManager().doCommitTaskDetail(getModel());
 
@@ -277,6 +267,16 @@ public class TaskDetailAction extends
 	public String printTaskDetail() {
 
 		return "printTaskDetail";
+	}
+
+	private boolean checkLogin() {
+		user = loginUserService.getLoginUser(getRequest());
+		if (user == null) {
+			addActionError("请先登录!");
+			return false;
+		}
+
+		return true;
 	}
 
 	public Date getTaskEndTime() {

@@ -2,11 +2,13 @@ package com.systop.fsmis.fscase.task.taskdetail.service;
 
 import java.util.Date;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.systop.core.service.BaseGenericsManager;
 import com.systop.fsmis.CaseConstants;
+import com.systop.fsmis.model.Corp;
 import com.systop.fsmis.model.FsCase;
 import com.systop.fsmis.model.Task;
 import com.systop.fsmis.model.TaskDetail;
@@ -22,8 +24,7 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
 	/**
 	 * 完成任务明细退回操作
 	 * 
-	 * @param taskDetail
-	 *            要退回的任务明细实体实例
+	 * @param taskDetail 要退回的任务明细实体实例
 	 */
 	@Transactional
 	public void doReturnTaskDetail(TaskDetail taskDetail) {
@@ -49,8 +50,7 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
 	/**
 	 * 完成提交任务明细(处理完毕)方法
 	 * 
-	 * @param taskDetail
-	 *            要提交的任务明细
+	 * @param taskDetail 要提交的任务明细
 	 */
 	@Transactional
 	public void doCommitTaskDetail(TaskDetail taskDetail) {
@@ -67,6 +67,14 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
 
 			// 作为当前案件的唯一有效任务,当前任务已处理(对应所有任务明细都已处理),则修改案件的状态为"已处理"
 			FsCase fsCase = task.getFsCase();
+			//如果案件没有关联企业,而在完成任务中为案件指定了企业(创建新企业),则需要保存企业信息
+			if (taskDetail.getTask().getFsCase().getCorp() != null
+					&& taskDetail.getTask().getFsCase().getCorp().getId() == null) {
+				Corp corp = new Corp();
+				BeanUtils.copyProperties(taskDetail.getTask().getFsCase().getCorp(), corp);
+				getDao().save(corp);
+				fsCase.setCorp(corp);
+			}
 			if (fsCase != null && fsCase.getId() != null) {
 				fsCase.setStatus(CaseConstants.CASE_STATUS_RESOLVEED);
 				getDao().save(fsCase);
