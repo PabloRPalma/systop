@@ -69,8 +69,10 @@ window.onload = function(){
   toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
   <ec:row>
     <ec:column width="40" property="_num" title="No." value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center"/> 
-    <ec:column width="60" property="proposer.name" title="申请人" style="text-align:center"/>
-    <ec:column width="170" property="fsCase.title" title="事件标题"/>    
+    <ec:column width="170" property="_title" title="事件标题"> 
+  	   <a href="view.do?model.id=${item.id}"><font color="blue">${item.fsCase.title}</font></a> 
+    </ec:column> 
+    <ec:column width="60" property="proposer.name" title="申请人" style="text-align:center"/>  
     <ec:column width="120" property="asseMemberse" alias="leaders" title="专家组组长" cell="com.systop.fsmis.assessment.converter.ExpertsConverter"/>
     <ec:column width="160" property="asseMemberse" alias="members" title="专家组成员" cell="com.systop.fsmis.assessment.converter.ExpertsConverter"/>
     <ec:column width="70" property="askDate" title="申请日期"  style="text-align:center" cell="date" />     
@@ -107,10 +109,15 @@ window.onload = function(){
        </c:if>   
        <c:if test="${item.state eq '1'}">
   	      <a href="start.do?model.id=${item.id}">启动</a>|	    
-       </c:if>  
-       <c:if test="${item.state eq '3'}">
-  	      <a href="result.do?model.id=${item.id}">上报</a>|	    
-       </c:if>        
+       </c:if>
+       <c:choose>
+	     <c:when test="${item.state eq '3'}"> 
+  	      <a href="result.do?model.id=${item.id}">上报</a>|	         
+	     </c:when>
+	     <c:otherwise>
+           <font color="#999999">上报</font>| 	       
+	     </c:otherwise>
+	   </c:choose>                
 	   <c:choose>
 	     <c:when test="${!empty item.checkResults}"> 
 	        <font color="#999999">删除</font>|
