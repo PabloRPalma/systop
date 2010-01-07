@@ -2,6 +2,7 @@ package com.systop.fsmis.office.notice.webapp;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -20,7 +21,6 @@ import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.common.modules.security.user.model.User;
 import com.systop.core.dao.support.Page;
-import com.systop.core.util.DateUtil;
 import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
 import com.systop.core.webapp.upload.UpLoadUtil;
 import com.systop.fsmis.FsConstants;
@@ -79,9 +79,14 @@ public class NoticeAction extends ExtJsCrudAction<Notice, NoticeManager> {
 	 */
 	private DetachedCriteria setupDetachedCriteria() {
 		DetachedCriteria criteria = DetachedCriteria.forClass(Notice.class);
+		criteria.createAlias("pubDept", "dept");
 		if (StringUtils.isNotBlank(getModel().getTitle())) {
 			criteria.add(Restrictions.like("title", MatchMode.ANYWHERE
 					.toMatchString(getModel().getTitle())));
+		}
+		Dept dept = loginUserService.getLoginUserDept(getRequest());
+		if(dept != null) {
+			criteria.add(Restrictions.eq("pubDept.id", dept.getId()));
 		}
 		return criteria;
 	}
@@ -105,6 +110,10 @@ public class NoticeAction extends ExtJsCrudAction<Notice, NoticeManager> {
 			addActionError("请选择接收部门。");
 			return INPUT;
 		}
+		if (StringUtils.isBlank(getModel().getTitle())) {
+			addActionError("请输入标题。");
+			return INPUT;
+		}
 		getModel().setPublisher(user);
 		getModel().setPubDept(dept);
 
@@ -113,7 +122,7 @@ public class NoticeAction extends ExtJsCrudAction<Notice, NoticeManager> {
 					UpLoadUtil.doUpload(attachment, attachmentFileName,
 							NOTICE_ATT_FOLDER, getServletContext()));
 		}
-		getModel().setCreateTime(DateUtil.getCurrentDate());
+		getModel().setCreateTime(new Date());
 		try {
 			getManager().saveDeptRecord(getModel(), deptIds);
 
