@@ -9,9 +9,9 @@ import java.util.Map;
  */
 public final class ExpertConstants {
 
-	public static final String EXPERT_LEVEL_PROVINCIAL = "1";//省级
+	public static final String EXPERT_LEVEL_PROVINCIAL = "省级";
 	
-	public static final String EXPERT_LEVEL_MUNICIPAL = "2";//市级
+	public static final String EXPERT_LEVEL_MUNICIPAL = "市级";
 
   /**
    * 专家级别
