@@ -30,6 +30,10 @@ public final class SmsConstants {
 
 	/** 服务启动异常原因 */
 	public static String EXCEPTION_MSG = null;
+	/** 是举报短信 */
+	public final static String SMS_IS_REPORT_Y = "1";
+	/** 不是举报短信 */
+	public final static String SMS_IS_REPORT_N = "1";
 
 	public final static String Y = "1";
 
