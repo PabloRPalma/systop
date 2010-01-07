@@ -9,17 +9,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
-import com.systop.core.test.BaseTestCase;
+import com.systop.core.test.BaseTransactionalTestCase;
 import com.systop.fsmis.expert.service.ExpertManager;
 import com.systop.fsmis.model.Expert;
 import com.systop.fsmis.model.ExpertCategory;
 /**
  * 专家管理测试类
  * @author zzg
- * 测试了sava 和 remove等方法，继承BaseTestCase不使用回滚
+ * 
  */
 @ContextConfiguration(locations = { "classpath*:spring/applicationContext-*.xml" })
-public class ExpertManagerTest extends BaseTestCase {
+public class ExpertManagerTest extends BaseTransactionalTestCase {
 	//专家
 	private Expert expert;
 	
@@ -65,6 +65,11 @@ public class ExpertManagerTest extends BaseTestCase {
 	 */
 	@SuppressWarnings("unchecked")
 	public void testGetExpertCategory(){
+		//新增一条专家类别记录
+		expertCategory = new ExpertCategory();
+		expertCategory.setDescn("计算机");
+		expertManager.getDao().save(expertCategory);
+		
 		//获取专家类别List
 		List list = Collections.EMPTY_LIST;
 		list = expertManager.getExpertCategory();
@@ -78,6 +83,11 @@ public class ExpertManagerTest extends BaseTestCase {
 	 * 
 	 */
 	public void testRemove() throws IOException{
+		//新增一条专家记录
+		expert = new Expert();
+		expert.setName("张三");
+		expertManager.save(expert);
+		
 		//获取一条专家记录
 		expert = expertManager.findObject("from Expert where name = ?", "张三");
 		
