@@ -18,7 +18,11 @@ import com.systop.fsmis.model.Task;
 import com.systop.fsmis.model.TaskAtt;
 import com.systop.fsmis.model.TaskDetail;
 import com.systop.fsmis.sms.SmsSendManager;
-
+/**
+ * 任务service层类
+ * @author WorkShopers
+ *
+ */
 @Service
 public class TaskManager extends BaseGenericsManager<Task> {
 	@Autowired
@@ -27,12 +31,9 @@ public class TaskManager extends BaseGenericsManager<Task> {
 	/**
 	 * 保存派遣任务方法
 	 * 
-	 * @param task
-	 *            任务实体实例
-	 * @param deptIds
-	 *            部门id集合
-	 * @param taskAtts
-	 *            任务附件实体集合
+	 * @param task 任务实体实例
+	 * @param deptIds 部门id集合
+	 * @param taskAtts 任务附件实体集合
 	 */
 	@Transactional
 	public void save(Task task, List<Integer> deptIds, List<TaskAtt> taskAtts) {
@@ -83,8 +84,7 @@ public class TaskManager extends BaseGenericsManager<Task> {
 	/**
 	 * 发送短信方法
 	 * 
-	 * @param dept
-	 *            任务明细关联的部门,短信的发送依据就是部门
+	 * @param dept 任务明细关联的部门,短信的发送依据就是部门
 	 */
 	private void sendTaskMessage(Dept dept) {
 		Set<User> users = dept.getUsers();
