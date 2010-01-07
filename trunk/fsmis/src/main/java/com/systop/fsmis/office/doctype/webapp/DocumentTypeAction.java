@@ -1,6 +1,5 @@
 package com.systop.fsmis.office.doctype.webapp;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -33,14 +32,6 @@ public class DocumentTypeAction extends ExtJsCrudAction<DocumentType, DocumentTy
 	 */
 	private String typeName;
 	
-	public String getTypeName() {
-		return typeName;
-	}
-
-	public void setTypeName(String typeName) {
-		this.typeName = typeName;
-	}
-
 	/**
 	 * 栏目查询列表
 	 */
@@ -132,12 +123,18 @@ public class DocumentTypeAction extends ExtJsCrudAction<DocumentType, DocumentTy
 		// 创建分页查询的Page对象
 		Page page = PageUtil.getPage(getPageNo(), getPageSize());
 		String hql = "from Document d where d.documentType.id=?";
-		List args = new ArrayList();
-		args.add(getModel().getId());
-		page = getManager().pageQuery(page, hql, args.toArray());
+		page = getManager().pageQuery(page, hql, getModel().getId());
 		items = page.getData();
 		restorePageData(page);
 		return "indexArticles";
 	}
 	
+	public String getTypeName() {
+		return typeName;
+	}
+
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
+
 }
