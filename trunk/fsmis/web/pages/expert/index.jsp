@@ -70,7 +70,7 @@ function removeExpert(eID){
     <ec:column width="100" property="mobile" title="手机" style="text-align:left"/>     
     <ec:column width="100" property="officePhone" title="办公电话" style="text-align:left"/> 
     <ec:column width="100" property="homePhone" title="家庭电话" style="text-align:left"/>                                   
-    <ec:column width="100" property="_0" title="操作" style="text-align:center">
+    <ec:column width="100" property="_0" title="操作" style="text-align:center" sortable="false">
 	   <a href="edit.do?model.id=${item.id}">编辑</a> |
 	   <a href="#" onClick="removeExpert(${item.id})">删除</a> 
 	   
