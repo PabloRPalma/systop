@@ -28,8 +28,7 @@ import com.systop.fsmis.model.AssessmentAttach;
 import com.systop.fsmis.model.CheckResult;
 
 /**
- * 风险评估信息管理的struts2 Action。
- * 
+ * 风险评估信息管理
  * @author ShangHua
  * 
  */
