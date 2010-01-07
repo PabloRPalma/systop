@@ -17,6 +17,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import com.systop.core.model.BaseModel;
 
@@ -208,7 +209,7 @@ public class Expert extends BaseModel {
 		this.officePhone = officePhone;
 	}
 
-	@Column(name = "EMAIL", length = 510)
+	@Column(name = "EMAIL", length = 255)
 	public String getEmail() {
 		return this.email;
 	}
@@ -217,7 +218,7 @@ public class Expert extends BaseModel {
 		this.email = email;
 	}
 
-	@Column(name = "PHOTO_PATH", length = 510)
+	@Column(name = "PHOTO_PATH", length = 255)
 	public String getPhotoPath() {
 		return this.photoPath;
 	}
@@ -226,7 +227,7 @@ public class Expert extends BaseModel {
 		this.photoPath = photoPath;
 	}
 
-	@Column(name = "UNITS", length = 510)
+	@Column(name = "UNITS", length = 255)
 	public String getUnits() {
 		return this.units;
 	}
@@ -253,7 +254,8 @@ public class Expert extends BaseModel {
 		this.title = title;
 	}
 
-	@Column(name = "RESEARCH", length = 510)
+	@Column(name = "RESEARCH")
+	@Type(type = "text")
 	public String getResearch() {
 		return this.research;
 	}
@@ -262,7 +264,8 @@ public class Expert extends BaseModel {
 		this.research = research;
 	}
 
-	@Column(name = "SUMMERY", length = 510)
+	@Column(name = "SUMMERY")
+	@Type(type = "text")
 	public String getSummery() {
 		return this.summery;
 	}
@@ -271,7 +274,8 @@ public class Expert extends BaseModel {
 		this.summery = summery;
 	}
 
-	@Column(name = "REMARK", length = 510)
+	@Column(name = "REMARK")
+	@Type(type = "text")
 	public String getRemark() {
 		return this.remark;
 	}
