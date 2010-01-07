@@ -32,9 +32,14 @@ import com.systop.fsmis.model.AssessmentAttach;
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class AsseAttachAction extends ExtJsCrudAction<AssessmentAttach,AssessmentAttachManager> {
 
-	/** 风险评估Id */
+	/** 
+	 * 风险评估Id 
+	 */
 	private Integer assessmentId;
 	
+	/**
+	 * 风险评估Manager
+	 */
 	@Autowired
 	private AssessmentManager assessmentManager;
 	
@@ -48,7 +53,9 @@ public class AsseAttachAction extends ExtJsCrudAction<AssessmentAttach,Assessmen
 	  */
 	private String evalRiskFileName;
 	
-	
+	/**
+	 * 错误提示信息
+	 */
 	private String errorMsg;	
 
 
