@@ -5,7 +5,6 @@
 <head>
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/ec.jsp"%>
-<%@include file="/common/dwr.jsp" %>
 <script type="text/javascript">
 /**
  * 删除提交
@@ -38,21 +37,20 @@ function remove(id){
 	   minHeight="200"
 	   toolbarContent="navigation|pagejump|extend|status">
 	   <ec:row>
-	   <ec:column width="30" property="_num" title="No." value="${GLOBALROWCOUNT}" style="text-align:center" />
-		<ec:column width="200" property="dept.name" title="部门名称"/>
-		<ec:column width="120" property="receiveDate" title="接收时间" style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm" />
-		<ec:column width="100" property="status" style="text-align:center" title="状态" >
-		<c:if test="${item.isNew == '1'}"><font color="#C0C0C0">未读</font></c:if>
-		<c:if test="${item.isNew != '1'}"><font color="green">已读</font></c:if>
-		</ec:column>
-		<ec:column width="100" property="_0" title="操作" style="text-align:center" sortable="false">
-			<a href="#" onclick="remove(${item.id})">删除 </a>
-		</ec:column>
-	  </ec:row>
+		   <ec:column width="30" property="_num" title="No." value="${GLOBALROWCOUNT}" style="text-align:center" />
+			<ec:column width="200" property="dept.name" title="部门名称"/>
+			<ec:column width="120" property="receiveDate" title="接收时间" style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm" />
+			<ec:column width="100" property="status" style="text-align:center" title="状态" >
+			<c:if test="${item.isNew == '1'}"><font color="#C0C0C0">未读</font></c:if>
+			<c:if test="${item.isNew != '1'}"><font color="green">已读</font></c:if>
+			</ec:column>
+			<ec:column width="100" property="_0" title="操作" style="text-align:center" sortable="false">
+				<a href="#" onclick="remove(${item.id})">删除 </a>
+			</ec:column>
+		</ec:row>
     </ec:table>
     </div>
   </div>
 </div>
-<%@include file="/common/dwrLoadingMessage.jsp" %>
 </body>
 </html>

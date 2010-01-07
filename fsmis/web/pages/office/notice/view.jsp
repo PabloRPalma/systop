@@ -1,23 +1,38 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@include file="/common/taglibs.jsp"%>
 <html>
 <head>
 <title>${model.title} 的详细内容 </title>
 <%@include file="/common/meta.jsp"%>
+<%@include file="/common/extjs.jsp" %>
 <%@include file="/common/ec.jsp"%>
 <script type="text/javascript">
   //关闭当前页面
-  function exit(){
-    if(confirm("确定关闭本页面吗？")){
-      window.close();
-    }
+  function goBack(){
+	  window.location.href="index.do";
   }
+</script>
+<script type="text/javascript">
+Ext.onReady(function(){
+    var tabs = new Ext.TabPanel({
+        renderTo: 'tabs',
+        anchor : '100% 100%',
+        height : 270,
+        activeTab: 0,
+        frame:false,
+        defaults:{autoHeight: false},
+        items:[
+            {contentEl:'basic', title: '通知内部'},
+            {contentEl:'received', title: '部门回执'}
+        ]
+    });
+});
 </script>
 </head>
 <body>
-<br>
+<div id="tabs">
+<div id="basic" class="x-hide-display">
 <div align="center">
 	<table width="700px" align="center" cellpadding="3" cellspacing="4">
 		<tr>
@@ -43,17 +58,21 @@
 			<td align="left" style="border-bottom: solid 1px black; ">
 				<div style="padding: 15 30 15 30;font-size:15px; font-weight: bold;">
 				相关附件文档：
-				<a href="${ctx}${model.att}" target="_blank">点击下载</a>
+					<c:if test="${!empty model.att}">
+						<a href="${ctx}${model.att}" target="_blank">点击下载</a>
+					</c:if>
 				</div>
 			</td>
 		</tr>
 	</table>
 </div>
-<br>
-<iframe height="300" align="center" id="iFrame1" name="iFrame1" width="700" onload="this.height=iFrame1.document.body.scrollHeight" frameborder="0" src="${ctx }/office/receiverecord/listbyNoticeId.do?noticeId=${model.id}"></iframe>
-
+</div>
+<div id="received" class="x-hide-display">
+<iframe height="300" id="iFrame1" name="iFrame1" width="100%" frameborder="0" src="${ctx }/office/receiverecord/listbyNoticeId.do?noticeId=${model.id}"></iframe>
+</div>
+</div>
 <div align="center" style="padding-top: 10px;">
-	<input type="button" value="关闭当前页" cssClass="button" onclick="exit();"/>
+	<input type="button" value="返回" cssClass="button" onclick="goBack();"/>
 </div>
 </body>
 </html>

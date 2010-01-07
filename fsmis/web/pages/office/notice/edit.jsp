@@ -1,16 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@include file="/common/taglibs.jsp"%>
 <html>
 <head>
 <title>编辑通知</title>
 <%@include file="/common/meta.jsp"%>
-<%@include file="/common/dwr.jsp" %>
 <%@include file="/common/validator.jsp"%>
-<script type="text/javascript" src="${ctx}/scripts/fsmis/ShowDeptName.js"></script>
+<%@include file="/common/dwr.jsp" %>
 <script type="text/javascript" src="${ctx}/scripts/fckeditor/fckeditor.js"></script>
 <script type="text/javascript" src="${ctx}/dwr/interface/NoticeDwrAction.js"></script>
+<script type="text/javascript" src="${ctx}/scripts/fsmis/ShowDeptName.js"></script>
 <script type="text/javascript">
 function deleAtt(id) {
 		if (confirm("确定要删除吗？")) {
@@ -33,22 +32,21 @@ function deleAtt(id) {
 </head>
 <body onload="preFckEditor()">
 <div class="x-panel">
-<div class="x-panel-header">通知</div>
-<div class="x-toolbar">&nbsp;</div>
+<div class="x-panel-header">编辑通知</div>
 <div><%@ include file="/common/messages.jsp"%></div>
 <div align="center">
-  <s:form action="save.do" id="save" method="post" theme="simple" enctype="multipart/form-data">
+  <s:form action="save.do" id="saveNotice" method="post" theme="simple" validate="true" enctype="multipart/form-data">
 	<s:hidden name="model.id"/>
-	<fieldset style="width: 650px; padding: 10px 10px 10px 10px;" class="">
+	<fieldset style="width: 700px; padding: 10px 10px 10px 10px;">
 	<legend>通知信息</legend>
 	<table width="650px" align="center">
 		<tr>
 			<td align="right">标题：</td>
-			<td align="left"><s:textfield id="title" name="model.title"
-				cssStyle="width:400px;" cssClass="required"/><font color="red">&nbsp;*</font></td>
+			<td align="left">
+			<s:textfield id="title" name="model.title"	cssStyle="width:400px;" cssClass="required"/><font color="red">&nbsp;*</font></td>
 		</tr>
 		<tr>
-			<td align="right">请点选发送部门：</td>
+			<td align="right">发送部门：</td>
 			<td align="left">
 			<c:if test="${!empty model.recRecordses}">
 				<c:forEach items="${model.recRecordses}" var="rr">
@@ -56,9 +54,8 @@ function deleAtt(id) {
 				</c:forEach>
 			</c:if>
 			<c:if test="${empty model.recRecordses}">
-			<div id="showDiv" style="border-bottom: 1px dotted #97B7E7; padding: 2 7 2 7;">部门内容</div>
-			<fs:selectDepts name="deptIds" column="3" onclick="show()" itemClass="checkbox"/>
-			
+				<div id="showDiv" style="border-bottom: 1px dotted #97B7E7; padding: 2 7 2 7;">部门内容</div>
+				<fs:selectDepts name="deptIds" column="4" onclick="show()" itemClass="checkbox"/>
 			</c:if>
 			</td>
 		</tr>
@@ -84,7 +81,7 @@ function deleAtt(id) {
 		</tr>
 	</table>
 	</fieldset>
-	<table width="600px" style="margin-bottom: 10px;">
+	<table width="650px" style="margin-bottom: 10px;">
 		<tr>
 			<td style="text-align: center;">
 			<s:submit value="保存" cssClass="button" /> 
@@ -94,26 +91,24 @@ function deleAtt(id) {
 	</table>
 </s:form></div>
 </div>
-
 <script type="text/javascript">
+	$(document).ready(function() {
+	$("#saveNotice").validate();
+});
+	
+	deptOperator.init("deptIds", "showDiv");
+
 	function show(){
 		deptOperator.showDeptName("deptIds", "showDiv");
 	}
-	deptOperator.init("deptIds", "showDiv");
-</script>
-<script type="text/javascript">
-	$(document).ready(function() {
-	$("#save").validate();
-});
-</script>
-<script type="text/javascript">
-function preFckEditor(){
-	var fckEditor = new FCKeditor( 'content' ) ;
-    fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
-    fckEditor.ToolbarSet = 'Basic';
-    fckEditor.Height = 300;
-    fckEditor.ReplaceTextarea();
-}
+	
+	function preFckEditor(){
+		var fckEditor = new FCKeditor( 'content' ) ;
+	    fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
+	    fckEditor.ToolbarSet = 'Basic';
+	    fckEditor.Height = 280;
+	    fckEditor.ReplaceTextarea();
+	}
 </script>
 </body>
 </html>
