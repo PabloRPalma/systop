@@ -15,6 +15,7 @@ import net.sf.json.JSONObject;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +28,8 @@ import com.systop.fsmis.model.UrgentCase;
 import com.systop.fsmis.model.UrgentGroup;
 import com.systop.fsmis.model.UrgentResult;
 import com.systop.fsmis.model.UrgentType;
+import com.systop.fsmis.sms.SmsSendManager;
+import com.systop.fsmis.sms.util.MobileNumChecker;
 import com.systop.fsmis.urgentcase.UcConstants;
 
 /**
@@ -38,6 +41,12 @@ import com.systop.fsmis.urgentcase.UcConstants;
 @Service
 public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
 
+	/**
+	 * 短信发送管理类
+	 */
+	@Autowired
+	private SmsSendManager smsSendManager;
+	
 	/**
 	 * 保存应急事件审核结果
 	 * @param caseId 应急事件ID
@@ -107,7 +116,7 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
   					utGroupNotOrg.setUrgentType(urgentGroup.getUrgentType());
   					utGroupNotOrg.setCategory(urgentGroup.getCategory());
   					utGroupNotOrg.setCounty(urgentGroup.getCounty());
-  					//设置用户集合
+  					//设置用户集合,依赖于组模块的完成，有待修改.....
   					utGroupNotOrg.setUsers(null);
   					utGroupNotOrg.setPhone(urgentGroup.getPhone());
   					utGroupNotOrg.setMobel(urgentGroup.getMobel());
@@ -311,6 +320,47 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
   			}
   		}
   	}
+  }
+  
+  /**
+   * 向事件派遣的相关组的负责人发送短信
+   * @param caseId 事件ID
+   * @param countyId 区县ID
+   */
+  @Transactional
+  public void sendSms(String mobelNum, String content) {
+  	String[] nums = new String[]{};
+  	if (StringUtils.isNotBlank(mobelNum)) {
+  		nums = mobelNum.split(";");
+  		for (int i = 0; i < nums.length; i++ ) {
+  			String num = nums[i];
+  			if(MobileNumChecker.checkMobilNumberDigit(num)) {
+  				logger.info("发送到手机号码：{}, 内容：{}", num, content);
+  				smsSendManager.addMessage(num, content);
+  			}
+  		}
+  	}
+  }
+  
+  /**
+   * 取得事件派发结果中指挥组的负责人员手机号码
+   * 以分号分隔的手机号码字符串
+   */
+  public String getOperatorOfGroupForCase(Integer caseId, Integer countyId) {
+  	StringBuffer mobelNum = new StringBuffer();
+  	List<UrgentResult> resultList = queryGroupResult(caseId, countyId);
+		if (CollectionUtils.isNotEmpty(resultList)) {
+			for (UrgentResult urgentResult : resultList) {
+				if (urgentResult.getUrgentGroup() != null) {
+					UrgentGroup urgentGroup = urgentResult.getUrgentGroup();
+					if (StringUtils.isNotBlank(urgentGroup.getMobel())) {
+						mobelNum.append(urgentGroup.getMobel()).append(";");
+					}
+				}
+			}
+		}
+		
+		return mobelNum.toString();
   }
   
   /**
