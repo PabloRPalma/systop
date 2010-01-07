@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.systop.cms.utils.PageUtil;
+import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.common.modules.security.user.model.User;
 import com.systop.core.dao.support.Page;
@@ -52,6 +53,11 @@ public class MessageAction extends ExtJsCrudAction<Message, MessageManager> {
 	 * 登录用户的新消息数
 	 */
 	private String mesCount;
+	
+	/**
+	 * 当前登录用户的区县Id
+	 */
+	private Integer countryId;
 
 	@Autowired
 	private LoginUserService loginUserService;
@@ -151,6 +157,17 @@ public class MessageAction extends ExtJsCrudAction<Message, MessageManager> {
 		criteria.addOrder(Order.desc("createTime"));
 		return criteria;
 	}
+	
+	/**
+	 * 编辑页面
+	 */
+	public String edit() {
+		Dept dept = loginUserService.getLoginUserCounty(getRequest());
+		if (dept != null) {
+			countryId = dept.getId();
+		}
+		return INPUT;
+	}
 
 	/**
 	 * 保存内部 信息
@@ -248,6 +265,14 @@ public class MessageAction extends ExtJsCrudAction<Message, MessageManager> {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public Integer getCountryId() {
+		return countryId;
+	}
+
+	public void setCountryId(Integer countryId) {
+		this.countryId = countryId;
 	}
 
 
