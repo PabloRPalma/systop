@@ -1,10 +1,13 @@
 package com.systop.fsmis.urgentcase.ucgroup.webapp;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import org.apache.commons.lang.xwork.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import com.systop.cms.utils.PageUtil;
 import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.security.user.LoginUserService;
+import com.systop.common.modules.security.user.model.User;
 import com.systop.core.dao.support.Page;
 import com.systop.core.webapp.struts2.action.DefaultCrudAction;
 import com.systop.fsmis.FsConstants;
@@ -42,8 +46,18 @@ public class UcGroupAction extends
 	private Integer ucTypeId;
 
 	/**
+	 * 用户ID
+	 */
+	private String userId;
+	/**
+	 * 页面前台使用
+	 */
+	private String person = "";
+
+	/**
 	 * 保存组
 	 */
+	@SuppressWarnings("null")
 	@Override
 	public String save() {
 		if (ucTypeId != null) {
@@ -57,12 +71,31 @@ public class UcGroupAction extends
 			if (dept == null) {
 				addActionError("当前用户部门为空");
 			}
+			logger.info("用户：{}", userId);
+			if (StringUtils.isNotBlank(userId)) {
+				Set<User> userSet = getModel().getUsers();
+				Iterator<User> it = userSet.iterator();
+				while (it.hasNext()) {
+					User u = (User) it.next();
+					u.getUrgentGroups().remove(getModel());
+					getModel().getUsers().remove(u);
+				}
+
+				String[] personId = userId.split(",");
+				for (int i = 0; i < personId.length; i++) {
+					User user = getManager().getDao().get(User.class,
+							Integer.valueOf(personId[i]));
+					user.getUrgentGroups().add(getModel());
+					getModel().getUsers().add(user);
+				}
+			}
 			getModel().setIsOriginal(UcConstants.GROUP_ORIGINAL_YES);
 			getModel().setCounty(dept);
 			getManager().save(getModel());
 			return SUCCESS;
 		} catch (Exception e) {
 			addActionError(e.getMessage());
+			logger.info("错误信息{}", e.getMessage());
 			return INPUT;
 		}
 	}
@@ -95,6 +128,23 @@ public class UcGroupAction extends
 			restorePageData(page);
 		}
 		return INDEX;
+	}
+
+	/**
+	 * 编辑页面显示操作人员
+	 */
+	public String edit() {
+		Set<User> userSet = getModel().getUsers();
+		int length = 0;
+		for (User u : userSet) {
+			if (length == userSet.size() - 1) {
+				person += u.getName();
+				break;
+			}
+			person += u.getName() + ",";
+			length++;
+		}
+		return INPUT;
 	}
 
 	/**
@@ -144,5 +194,21 @@ public class UcGroupAction extends
 
 	public void setUcTypeId(Integer ucTypeId) {
 		this.ucTypeId = ucTypeId;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getPerson() {
+		return person;
+	}
+
+	public void setPerson(String person) {
+		this.person = person;
 	}
 }
