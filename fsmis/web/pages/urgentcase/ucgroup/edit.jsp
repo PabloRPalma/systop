@@ -8,8 +8,39 @@
 <%@include file="/common/meta.jsp" %>
 <%@include file="/common/extjs.jsp" %>
 <%@include file="/common/validator.jsp"%>
+<script type="text/javascript" src="${ctx}/scripts/extjs/diy/TreeCheckNodeUI.js"></script>
+<script type="text/javascript" src="${ctx}/pages/admin/security/user/selector.js"></script>
+<style type="text/css">
+.dept-tree-node-icon {
+background-image:url(${ctx}/images/icons/dept.gif);
+}
+.emp-M-tree-node-icon,.emp-F-tree-node-icon {
+background-image:url(${ctx}/images/icons/users_1.gif);
+}
+</style>
 </head>
 <body>
+<div id="emp_sel_container" class="x-hidden">
+    <div class="x-window-header">员工列表</div>
+    <div id="emp_grid"></div>
+</div>
+<script>
+var emp;
+   emp = new UserSelector({
+       url: '${ctx}/security/user/userTree.do',
+       el: 'emp_sel_container',
+       idsEl:'userId',
+       textEl:'person',
+       width : 250,
+	   height : 450,
+	   multiSel : true
+   });
+   
+function showWin() { 
+   emp.show(true);
+}
+
+</script>
 <div class="x-panel">
     <div class="x-panel-header">应急指挥指挥组维护</div>
 	<div><%@ include file="/common/messages.jsp"%></div> 
@@ -32,32 +63,37 @@
              	<s:textfield id="name" name="model.name" cssStyle="width:300px" readonly="true"/>
              </td>
           </tr>
-          <!-- 外部组添加后，需要添加模板
-          <tr>
-             <td align="right" width="80">类别:</td>
-             <td align="left" width="520">
-             	<s:select id="type" name="model.type" list="sortMap" cssStyle="border:0;" onchange="sortChange()"/><font color="red">&nbsp;*</font>
-             </td>
-          </tr>
-          <tr><td colspan="2">
-          	<table id="tb_1"> 
-          	
-				<tr> <td align="right" width="80">模板路径:</td>
-             		<td align="left" width="520">
-             			<s:textfield id="template" name="model.template" cssStyle="width:300px"/>
-             		</td> 
-				</tr> 
-			</table> 
-			</td>
-		</tr>
-		-->
            <tr>
-             <td align="right" width="80">显示内容：</td>
+             <td align="right" width="80">负责人:</td>
              <td align="left" width="520">
-             	<s:textarea id="displays" name="model.displays" cssStyle="width:300px;height:50px"/>
+             	<s:textfield id="principal" name="model.principal" cssStyle="width:300px"/>
              </td>
           </tr>
-          
+          <tr>
+			<td align="right" width="80">操作人:</td>
+			<td align="left">
+					<s:textfield id="person" name="person" cssStyle="width:300px" />
+					<s:hidden name="userId"></s:hidden>
+			</td>
+		</tr> 
+		<tr>
+			<td align="right" width="80"></td>
+			<td align="left">
+					<input onclick="showWin()" value="添加人员" type="button">
+			</td>
+		</tr> 
+           <tr>
+             <td align="right" width="80">手机号:</td>
+             <td align="left" width="520">
+             	<s:textfield id="mobel" name="model.mobel" cssStyle="width:300px"/>
+             </td>
+          </tr>
+           <tr>
+             <td align="right" width="80">固话:</td>
+             <td align="left" width="520">
+             	<s:textfield id="phone" name="model.phone" cssStyle="width:300px"/>
+             </td>
+          </tr>
           <tr>
              <td align="right" width="80">描述：</td>
              <td align="left" width="520">
@@ -81,16 +117,6 @@
 	$(document).ready(function() {
 	$("#ucGroupForm").validate();
 });
-	/**
-	function sortChange() { 
-		if(document.ucGroupForm.type.value=='0'){
-			document.all("tb_1").style.display="block"; 
-		}else{
-			document.all("tb_1").style.display="none"; 
-			}
-	} 
-	sortChange();
-	*/
 	function categoryChange() { 
 		newOptions= document.getElementById("category").options;
 		for(i = 0; i < newOptions.length; i++){
