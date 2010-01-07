@@ -17,6 +17,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import com.systop.common.modules.security.user.model.User;
 import com.systop.core.model.BaseModel;
@@ -99,7 +100,8 @@ public class Assessment extends BaseModel {
 		this.askDate = askDate;
 	}
 
-	@Column(name = "ASK_CAUSE", length = 1000)
+	@Column(name = "ASK_CAUSE")
+	@Type(type = "text")
 	public String getAskCause() {
 		return this.askCause;
 	}
@@ -136,7 +138,8 @@ public class Assessment extends BaseModel {
 		this.resultDate = resultDate;
 	}
 
-	@Column(name = "RESULT", length = 1000)
+	@Column(name = "RESULT")
+	@Type(type = "text")
 	public String getResult() {
 		return this.result;
 	}

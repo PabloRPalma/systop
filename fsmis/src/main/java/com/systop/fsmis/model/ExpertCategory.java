@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import com.systop.core.model.BaseModel;
 
@@ -66,7 +67,8 @@ public class ExpertCategory extends BaseModel {
 		this.name = name;
 	}
 
-	@Column(name = "DESCN", length = 500)
+	@Column(name = "DESCN")
+	@Type(type = "text")
 	public String getDescn() {
 		return this.descn;
 	}

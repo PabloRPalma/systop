@@ -67,7 +67,7 @@ public class AssessmentAttach extends BaseModel {
 		this.assessment = assessment;
 	}
 
-	@Column(name = "TITLE", length = 510)
+	@Column(name = "TITLE",length = 255)
 	public String getTitle() {
 		return this.title;
 	}
@@ -76,7 +76,7 @@ public class AssessmentAttach extends BaseModel {
 		this.title = title;
 	}
 
-	@Column(name = "CREATOR", length = 510)
+	@Column(name = "CREATOR", length = 255)
 	public String getCreator() {
 		return this.creator;
 	}
@@ -84,8 +84,8 @@ public class AssessmentAttach extends BaseModel {
 	public void setCreator(String creator) {
 		this.creator = creator;
 	}
-
-	@Column(name = "PATH", length = 510)
+	
+	@Column(name = "PATH", length = 255)
 	public String getPath() {
 		return this.path;
 	}
