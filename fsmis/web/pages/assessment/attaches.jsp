@@ -18,7 +18,7 @@ function removeAttach(attachId){
 
 //上传表单检查
 function checkUpload(){
-  if(document.getElementById("evalRisk").value.trim().length == 0){
+  if(document.getElementById("attachment").value.trim().length == 0){
     alert("上传附件不能为空！");
     return false;
   }
@@ -50,11 +50,14 @@ String.prototype.trim = function(){
   <tr>
       <td align="left" width="2%">上传文件：</td>
       <td align="left" width="20%">
-        <s:file id="evalRisk" name="evalRisk" cssClass="FileText" cssStyle="width:300px"/>
+        <s:file id="attachment" name="attachment" cssClass="FileText" cssStyle="width:300px"/>
       </td>
-      <td align="left">
-                 完成人：<s:textfield id="creator" name="model.creator" cssStyle="width:100"></s:textfield>
-      </td>  
+      <td align="left" width="2%">
+                 完成人：
+      </td>
+      <td width="8%" style="vertical-align: middle"><s:select id="creator"
+		  name="model.creator" list="expertList" listKey="expertName" listValue="expertName"
+		  headerKey="" headerValue="--请选择--" cssStyle="width:120px" /></td>	     
       <td align="right">
         <s:submit value="上传附件" cssClass="button" />
       </td>      
@@ -83,7 +86,7 @@ String.prototype.trim = function(){
  <ec:row>
     <ec:column width="30" property="_num" title="No." value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center"/>
     <ec:column width="600" property="title" title="标题">
-      <a href="${ctx}${item.path}">${item.title}</a>
+      <a href="${ctx}${item.path}"><font color="blue">${item.title}</font></a>
     </ec:column>
     <ec:column width="150" property="creator" title="完成人" style="text-align:center"/>    
     <ec:column width="75" property="_0" title="操作"
