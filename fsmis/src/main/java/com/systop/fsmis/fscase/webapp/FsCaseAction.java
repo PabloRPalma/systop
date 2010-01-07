@@ -28,6 +28,8 @@ import com.systop.fsmis.fscase.casetype.service.CaseTypeManager;
 import com.systop.fsmis.fscase.service.FsCaseManager;
 import com.systop.fsmis.model.CaseType;
 import com.systop.fsmis.model.FsCase;
+import com.systop.fsmis.model.SmsReceive;
+import com.systop.fsmis.supervisor.service.SupervisorManager;
 
 /**
  * 一般事件处理
@@ -45,6 +47,9 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 	private CaseTypeManager caseTypeManager;
 	@Autowired
 	private LoginUserService loginUserService;
+	/** 监管员信息Manager */
+	@Autowired
+	private SupervisorManager supervisorManager;
 
 	private String typeId;
 
@@ -57,10 +62,12 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 	private Integer twoId;
 
 	private List typeRst;
-	// 查询起始事件
+	// 查询起始时间
 	private Date caseBeginTime;
-	// 查询截至事件
+	// 查询截至时间
 	private Date caseEndTime;
+
+	private Integer smsReceiveId;
 
 	/**
 	 * 查询获得一般事件信息列表，分页查询
@@ -221,6 +228,37 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 	}
 
 	/**
+	 * 根据收到的举报短信编辑案件信息
+	 * 
+	 * @return
+	 */
+	public String editFsCaseBySmsReceive() {
+		// 根据短信id得到短信实体实例
+		SmsReceive smsReceive = getReceiveById(smsReceiveId);
+		getModel().setDescn(smsReceive.getContent());// 案件描述
+		getModel().setInformerPhone(smsReceive.getMobileNum());// 举报人电话
+		// 根据举报人电话得到举报人姓名,并赋值给案件举报人属性
+		if (supervisorManager.getSupervisorByMobile(smsReceive.getMobileNum()) != null) {
+			getModel().setInformer(
+					supervisorManager.getSupervisorByMobile(
+							smsReceive.getMobileNum()).getName());
+		}
+
+		return INPUT;
+	}
+
+	/**
+	 * 根据id得到短信实体实例
+	 * 
+	 * @param smsReceiveId
+	 *            短信id
+	 * @return
+	 */
+	private SmsReceive getReceiveById(Integer smsReceiveId) {
+		return getManager().getDao().get(SmsReceive.class, smsReceiveId);
+	}
+
+	/**
 	 * 单体事件状态列表返回页面
 	 */
 	public Map getStateMap() {
@@ -311,6 +349,14 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 
 	public void setIsMultipleCase(String isMultipleCase) {
 		this.isMultipleCase = isMultipleCase;
+	}
+
+	public Integer getSmsReceiveId() {
+		return smsReceiveId;
+	}
+
+	public void setSmsReceiveId(Integer smsReceiveId) {
+		this.smsReceiveId = smsReceiveId;
 	}
 
 }
