@@ -1,7 +1,6 @@
 package com.systop.fsmis.fscase.fscase;
 
 import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import com.systop.core.test.BaseTransactionalTestCase;
@@ -9,13 +8,22 @@ import com.systop.fsmis.fscase.service.FsCaseManager;
 import com.systop.fsmis.model.CaseType;
 import com.systop.fsmis.model.FsCase;
 
+/**
+ * 事件管理测试类
+ * @author shaozhiyuan
+ *
+ */
+
 @ContextConfiguration(locations = { "classpath*:spring/applicationContext-*.xml" })
 public class FsCaseManagerTest extends BaseTransactionalTestCase {
 
+	//注入事件manager
 	@Autowired
 	private FsCaseManager fsCaseManager;
 	
-	
+	/**
+	 * 测试保存事件方法
+	 */
 	public void testSaveFsCase() {
 		FsCase fscase = new FsCase();
 		CaseType casetype = new CaseType();

@@ -5,14 +5,23 @@ import org.springframework.test.context.ContextConfiguration;
 import com.systop.core.test.BaseTransactionalTestCase;
 import com.systop.fsmis.fscase.task.taskdetail.service.TaskDetailManager;
 import com.systop.fsmis.model.TaskDetail;
-
+/**
+ * 任务详细管理测试类
+ * @author shaozhiyuan
+ *
+ */
 
 @ContextConfiguration(locations = { "classpath*:spring/applicationContext-*.xml" })
 public class TaskDetailManagerTest extends BaseTransactionalTestCase {
 
+	//注入任务详细manager
 	@Autowired
 	private TaskDetailManager taskDetailManager;
 	
+	
+	/**
+	 * 测试任务详细退回方法
+	 */
 	public void testDoReturnTaskDetail() {
 		TaskDetail taskDetail = new TaskDetail();
 		taskDetail.setStatus("1");
@@ -20,6 +29,10 @@ public class TaskDetailManagerTest extends BaseTransactionalTestCase {
 		
 	}
 
+	
+	/**
+	 * 测试任务详细提交方法
+	 */
 	public void testDoCommitTaskDetail() {
 		TaskDetail taskDetail = new TaskDetail();
 		taskDetail.setStatus("1");
