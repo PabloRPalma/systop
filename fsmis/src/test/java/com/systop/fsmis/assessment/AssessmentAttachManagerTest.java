@@ -16,20 +16,27 @@ import com.systop.fsmis.model.AssessmentAttach;
  */
 @ContextConfiguration(locations = { "classpath*:spring/applicationContext-*.xml" })
 public class AssessmentAttachManagerTest extends BaseTransactionalTestCase {
+	
 	//注入评估附件管理类
 	@Autowired
 	private AssessmentAttachManager assessmentAttachManager;
-	//测试移除附件方法
+	
+	/**
+	 * 测试移除附件方法
+	 * 新增附件后保存
+	 * 验证是否可成功删除新增实体和文件
+	 */
 	public void testremoveAttach() throws IOException{
+		//新增一条附件记录
 		AssessmentAttach assessmentAttach = new AssessmentAttach();
 		assessmentAttach.setTitle("title");
 		assessmentAttachManager.save(assessmentAttach);
 		
+		//创建一磁盘文件，作为测试附件
 		File file = new File("c:/test.jpg");
 		file.createNewFile();
 		
-		assertEquals("title", (assessmentAttachManager.get(assessmentAttach.getId()).getTitle()));
-		
+		//移除附件
 		assessmentAttachManager.removeAttach(assessmentAttach, "c:/test.jpg");
 	}
 }
