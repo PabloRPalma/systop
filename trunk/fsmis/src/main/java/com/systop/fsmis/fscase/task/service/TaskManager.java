@@ -1,6 +1,5 @@
 package com.systop.fsmis.fscase.task.service;
 
-import java.io.File;
 import java.util.List;
 import java.util.Set;
 
@@ -122,7 +121,7 @@ public class TaskManager extends BaseGenericsManager<Task> {
 			for (TaskDetail td : task.getTaskDetails()) {
 				getDao().delete(td);
 			}
-			for(TaskAtt taskAtt  : task.getTaskAtts()){
+			for (TaskAtt taskAtt : task.getTaskAtts()) {
 				getDao().delete(taskAtt);
 			}
 			FsCase fsCase = task.getFsCase();
@@ -135,5 +134,4 @@ public class TaskManager extends BaseGenericsManager<Task> {
 		}
 	}
 
-	
 }
