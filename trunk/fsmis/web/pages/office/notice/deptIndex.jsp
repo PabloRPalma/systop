@@ -46,14 +46,14 @@
 		<ec:column width="40" property="_s" title="No." value="${GLOBALROWCOUNT}" sortable="false" style="text-align: center" />
 		<ec:column width="150" property="notice.title" title="标题" />
 		<ec:column width="80" property="notice.publisher.name" title="发布人" style="text-align:center"/>
-		<ec:column width="80" property="notice.pubDept.name" title="发布部门" style="text-align:center"/>
-		<ec:column width="120" property="notice.createTime" title="发布时间" style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm"/>
-		<ec:column width="120" property="receiveDate" title="接收时间" style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm" />
+		<ec:column width="140" property="notice.pubDept.name" title="发布部门" style="text-align:center"/>
+		<ec:column width="140" property="notice.createTime" title="发布时间" style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm:ss"/>
+		<ec:column width="140" property="receiveDate" title="接收时间" style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm:ss" />
 		<ec:column width="80" property="_7" title="状态" style="text-align:center">
 			<c:if test="${item.isNew == '1'}"><font color="#C0C0C0">未读</font></c:if>
 			<c:if test="${item.isNew != '1'}"><font color="green">已读</font></c:if>
 		</ec:column>
-		<ec:column width="100" property="_0" title="操作" style="text-align:center" sortable="false">
+		<ec:column width="80" property="_0" title="操作" style="text-align:center" sortable="false">
 			<a  href="view.do?model.id=${item.id}">查看</a>
 		</ec:column>
 	</ec:row>

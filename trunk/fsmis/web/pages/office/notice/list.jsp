@@ -64,7 +64,7 @@ function remove(id){
 	<ec:row>
 		<ec:column width="40" property="_s" title="No." value="${GLOBALROWCOUNT}" sortable="false" style="text-align: center" />
 		<ec:column width="150" property="title" title="标题" />
-		<ec:column width="120" property="createTime" title="发布时间" style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm" />
+		<ec:column width="120" property="createTime" title="发布时间" style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm:ss" />
 		<ec:column width="70" property="publisher.name" title="发布人" style="text-align:center"  />
 		<ec:column width="250" property="_8" title="接收部门" >
 			<c:forEach var="rr" items="${item.recRecordses}">
@@ -72,7 +72,7 @@ function remove(id){
 			</c:forEach>
 		</ec:column>
 		<ec:column width="120" property="_0" title="操作" style="text-align:center" sortable="false">
-			<a href="view.do?model.id=${item.id}" target="_blank">查看</a>|
+			<a href="view.do?model.id=${item.id}">查看</a>|
 			<a href="edit.do?model.id=${item.id}">编辑</a>|
 			 <a href="#" onclick="remove(${item.id})">删除 </a>
 		</ec:column>
