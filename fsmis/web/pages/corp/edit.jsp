@@ -31,11 +31,10 @@ Ext.onReady(function(){
     var tabs = new Ext.TabPanel({
         renderTo: 'tabs',
         anchor : '100% 100%',
-        height : 380,
         activeTab: 0,
         baseCls : '',
         frame:false,
-        defaults:{autoHeight: false},
+        defaults:{autoHeight: true},
         items:[
             {contentEl:'basic', title: '基本信息'},
             {contentEl:'reward', title: '企业诚信'}
