@@ -85,7 +85,7 @@ public class ExpertAction extends ExtJsCrudAction<Expert, ExpertManager> {
 			if (photo != null) {
 				String fileRelativePath = null;
 				fileRelativePath = UpLoadUtil.doUpload(photo, photoFileName,
-						FsConstants.COMPANY_PHOTOS_FOLDER, getServletContext(), true);
+						FsConstants.EXPERT_PHOTOS_FOLDER, getServletContext(), true);
 				logger.info("photo path:{}", fileRelativePath);
 				getModel().setPhotoPath(fileRelativePath);	
 			}
