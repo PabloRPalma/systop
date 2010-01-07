@@ -4,6 +4,9 @@ package com.systop.fsmis.assessment.webapp;
  * 
  */
 import java.io.File;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,12 +49,12 @@ public class AsseAttachAction extends ExtJsCrudAction<AssessmentAttach,Assessmen
 	/**
 	 * 上传的风险评估文件
 	 */
-	private File evalRisk;
+	private File attachment;
 
 	/**
 	  * 上传的风险评估文件名称
 	  */
-	private String evalRiskFileName;
+	private String attachmentFileName;
 	
 	/**
 	 * 错误提示信息
@@ -80,14 +83,14 @@ public class AsseAttachAction extends ExtJsCrudAction<AssessmentAttach,Assessmen
 	 */	
 	public String upload(){
 		try {
-	      if (evalRisk != null) {
+	      if (attachment != null) {
 	    	//检查文件大小是否符合
-	    	if(evalRisk.length() > AssessMentConstants.UPLOAD_ALLOWED_FILE_SIZE){
+	    	if(attachment.length() > AssessMentConstants.UPLOAD_ALLOWED_FILE_SIZE){
 	    		errorMsg = "上传文件太大！";
 	    		return INPUT;
 	    	}
 	    	//检查文件类型是否符合
-	    	String extension = evalRiskFileName.substring(evalRiskFileName.indexOf(".") + 1);
+	    	String extension = attachmentFileName.substring(attachmentFileName.indexOf(".") + 1);
 	    	boolean flag = false;
 	    	for(String extAllowed:AssessMentConstants.UPLOAD_ALLOWED_FILE_TYPES){
 	    		if(StringUtils.equalsIgnoreCase(extension, extAllowed)){	    			
@@ -101,14 +104,14 @@ public class AsseAttachAction extends ExtJsCrudAction<AssessmentAttach,Assessmen
 	    	}	    		    	
 	        String fileRelativePath = null;
 	        //保存文件不重命名
-	        fileRelativePath = UpLoadUtil.doUpload(evalRisk, evalRiskFileName, FsConstants.ASSESSMENT_ATT_FOLDER,
+	        fileRelativePath = UpLoadUtil.doUpload(attachment, attachmentFileName, FsConstants.ASSESSMENT_ATT_FOLDER,
 	            getServletContext(), true);	      
 	        // 相对路径，可用于下载地址
 	        AssessmentAttach asseAttach = new AssessmentAttach();
 	        Assessment assessment = assessmentManager.get(assessmentId);
 	        asseAttach.setCreator(getModel().getCreator());
 	        asseAttach.setPath(fileRelativePath);
-	        asseAttach.setTitle(evalRiskFileName);
+	        asseAttach.setTitle(attachmentFileName);
 	        asseAttach.setAssessment(assessment);
 	        getManager().save(asseAttach);
 	      }	      
@@ -136,6 +139,22 @@ public class AsseAttachAction extends ExtJsCrudAction<AssessmentAttach,Assessmen
 		return super.remove();
 	}
 
+  /**
+   * 返回已选择专家集合
+   * @return list
+   */
+  public List<Map> getExpertList() {
+    List list = Collections.EMPTY_LIST;
+    if (assessmentId != null) {
+    	list = getManager().getExperts(assessmentId);	
+    }
+    return list;
+  }
+  
+  /**
+   * 
+   * @return
+   */
 	public Integer getAssessmentId() {
 		return assessmentId;
 	}
@@ -152,31 +171,19 @@ public class AsseAttachAction extends ExtJsCrudAction<AssessmentAttach,Assessmen
 		this.errorMsg = errorMsg;
 	}
 	
-	/**
-	 * @return the evalRisk
-	 */
-	public File getEvalRisk() {
-		return evalRisk;
+	public File getAttachment() {
+		return attachment;
 	}
 
-	/**
-	 * @param evalRisk the evalRisk to set
-	 */
-	public void setEvalRisk(File evalRisk) {
-		this.evalRisk = evalRisk;
+	public void setAttachment(File attachment) {
+		this.attachment = attachment;
 	}
 
-	/**
-	 * @return the evalRiskFileName
-	 */
-	public String getEvalRiskFileName() {
-		return evalRiskFileName;
+	public String getAttachmentFileName() {
+		return attachmentFileName;
 	}
 
-	/**
-	 * @param evalRiskFileName the evalRiskFileName to set
-	 */
-	public void setEvalRiskFileName(String evalRiskFileName) {
-		this.evalRiskFileName = evalRiskFileName;
+	public void setAttachmentFileName(String attachmentFileName) {
+		this.attachmentFileName = attachmentFileName;
 	}	
 }
