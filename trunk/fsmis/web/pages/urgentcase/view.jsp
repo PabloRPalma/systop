@@ -99,83 +99,83 @@
 </div>
 <div id="tabs">
 <div id="basic" class="x-hide-display"><s:hidden name="model.id" id="caseId" />
-<table id="mytable" height="360" style="margin-top: 8px">
+<table id="mytable" height="360" style="margin-top: 8px;width: 800px" align="center">
 	<tr>
-		<td align="right" width="215">事件名称：</td>
+		<td align="right" width="163">事件名称：</td>
 		<td align="left" colspan="3"><s:textfield id="title"
-			name="model.title" cssStyle="width:500px" readonly="true" />
+			name="model.title" cssStyle="width:550px" readonly="true" />
 		</td>
 	</tr>
 	<tr>
 		<td align="right">事发时间：</td>
-		<td width="287" align="left">
+		<td width="263" align="left">
 			${model.caseTime}
 		</td>
-		<td width="88" align="right">预案等级：</td>
-        <td width="348" align="left">${model.plansLevel}</td>
+		<td width="102" align="right">预案等级：</td>
+        <td width="252" align="left">${model.plansLevel}</td>
 	</tr>
 	<tr>
 		<td align="right">事发地点：</td>
 		<td align="left" colspan="3"><s:textfield id="address"
-			name="model.address" cssStyle="width:500px" readonly="true" />
+			name="model.address" cssStyle="width:550px" readonly="true" />
 		</td>
 	</tr>
 	<tr>
 		<td align="right">波及范围：</td>
 		<td align="left" colspan="3"><s:textfield id="caseRange"
-			name="model.caseRange" cssStyle="width:500px" readonly="true"/></td>
+			name="model.caseRange" cssStyle="width:550px" readonly="true"/></td>
 	</tr>
 	<tr>
 		<td align="right">受害人数：</td>
 		<td align="left"><s:textfield id="harmNum"
-			name="model.harmNum" cssStyle="width:148px" readonly="true"/></td>
+			name="model.harmNum" cssStyle="width:175px" readonly="true"/></td>
 		<td align="right">死亡人数：</td>
 		<td align="left"><s:textfield id="deathNum"
-			name="model.deathNum" cssStyle="width:148px" readonly="true"/></td>
+			name="model.deathNum" cssStyle="width:175px" readonly="true"/></td>
 	</tr>
 	<tr>
 		<td align="right">事件报告人：</td>
 		<td align="left"><s:textfield id="reporter"
-			name="model.reporter" cssStyle="width:148px" readonly="true"/></td>
+			name="model.reporter" cssStyle="width:175px" readonly="true"/></td>
 		<td align="right">报告人电话：</td>
 		<td align="left"><s:textfield id="reporterPhone"
-			name="model.reporterPhone" cssStyle="width:148px" readonly="true" /></td>
+			name="model.reporterPhone" cssStyle="width:175px" readonly="true" /></td>
 	</tr>
 	<tr>
 		<td align="right">报告人单位：</td>
 		<td align="left" colspan="3"><s:textfield id="reporterUnits"
-			name="model.reporterUnits" cssStyle="width:500px" readonly="true"/></td>
+			name="model.reporterUnits" cssStyle="width:550px" readonly="true"/></td>
 	</tr>
 	<tr>
 		<td align="right">事件描述：</td>
 		<td align="left" colspan="3" style="vertical-align: top"><s:textarea id="descn"
-			name="model.descn" cssStyle="width:500px; height:170px" readonly="true" />
+			name="model.descn" cssStyle="width:550px; height:170px" readonly="true" />
 		</td>
 	</tr>
 </table>
 </div>
 <div id="hospital" class="x-hide-display">
-<table id="mytable" height="380" style="margin-top: 8px">
+<table id="mytable" height="380" style="margin-top: 8px;width: 800px" align="center">
 	<tr>
 		<td width="15%" align="right">周边医院情况：</td>
 		<td align="left" style="vertical-align: top;" width="85%"><s:textarea
 			id="hospitalInf" name="model.hospitalInf"
-			cssStyle="width:600px; height:330px" readonly="true"/></td>
+			cssStyle="width:650px; height:330px" readonly="true"/></td>
 	</tr>
 </table>
 </div>
 <div id="traffic" class="x-hide-display">
-<table id="mytable" height="380" style="margin-top: 8px">
+<table id="mytable" height="380" style="margin-top: 8px;width: 800px" align="center">
 	<tr>
 		<td width="15%" align="right">周边交通情况：</td>
 		<td align="left" style="vertical-align: top;" width="85%"><s:textarea
 			id="trafficInf" name="model.trafficInf"
-			cssStyle="width:600px; height:330px" readonly="true"/></td>
+			cssStyle="width:650px; height:330px" readonly="true"/></td>
 	</tr>
 </table>
 </div>
 <div id="sendgroup" class="x-hide-display">
-<table id="mytable" height="380" style="margin-top: 8px">
+<table id="mytable" height="380" style="margin-top: 8px;width: 800px" align="center">
 	<tr>
 		<td>
 			<iframe name="groups" src="${ctx}/urgentcase/queryGroupResult.do?model.id=${model.id}" width="100%" height="550" frameborder="0"></iframe>			
