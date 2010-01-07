@@ -93,7 +93,7 @@ window.onload = function(){
         </c:when>
       </c:choose>
     </ec:column>    
-    <ec:column width="150" property="_0" title="操作" style="text-align:center">
+    <ec:column width="150" property="_0" title="操作" style="text-align:center" sortable="false">
        <c:choose>
 	     <c:when test="${item.state eq '0' or item.state eq '2'}"> 
  	       <a href="edit.do?model.id=${item.id}">编辑</a>|		        
