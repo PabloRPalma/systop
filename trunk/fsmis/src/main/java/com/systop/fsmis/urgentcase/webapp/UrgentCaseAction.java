@@ -70,6 +70,10 @@ public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseMana
 	 */
 	private Date caseEndTime;
 	
+	private String mobelNums;
+	
+	private String smsContent;
+	
 	/**
 	 * 应急事件查询列表
 	 */
@@ -287,6 +291,31 @@ public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseMana
 	}
 	
 	/**
+	 * 短信发送编辑页面
+	 */
+	public String editSendSms() {
+		Dept county = loginUserService.getLoginUserCounty(getRequest());
+		if (county != null) {
+			mobelNums = getManager().getOperatorOfGroupForCase(
+					getModel().getId(), county.getId());
+		}
+		return "editSendSms";
+	}
+	
+	/**
+	 * 向事件派遣的相关组的负责人发送短信
+	 */
+	public String sendSms() {
+		Dept county = loginUserService.getLoginUserCounty(getRequest());
+		if (county != null) {
+			logger.info("手机号码字符串：{}，内容：{}", mobelNums, smsContent);
+			getManager().sendSms(mobelNums, smsContent);
+		}
+		
+		return SUCCESS;
+	}
+	
+	/**
 	 * 打印应急预案申请单
 	 */
 	public String printAppForm() {
@@ -351,5 +380,21 @@ public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseMana
 
 	public void setCaseEndTime(Date caseEndTime) {
   	this.caseEndTime = caseEndTime;
+  }
+	
+	public String getMobelNums() {
+  	return mobelNums;
+  }
+
+	public void setMobelNums(String mobelNums) {
+  	this.mobelNums = mobelNums;
+  }
+	
+	public String getSmsContent() {
+  	return smsContent;
+  }
+
+	public void setSmsContent(String smsContent) {
+  	this.smsContent = smsContent;
   }
 }
