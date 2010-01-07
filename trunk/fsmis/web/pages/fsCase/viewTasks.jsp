@@ -86,10 +86,22 @@
 					<tr>
 						<td width="15%" align="center">${varStatus.index+1}</td>
 						<td width="15%" align="center">${detail.dept.name }</td>
-						<td width="15%" align="center"><fmt:formatDate value="${task.dispatchTime }"
-						pattern="yyyy-MM-dd HH:mm" /></td>
-						<td width="15%" align="center"><fmt:formatDate value="${detail.completionTime}"
-						pattern="yyyy-MM-dd HH:mm" /></td>
+						<td width="15%" align="center"><fmt:formatDate
+							value="${task.dispatchTime }" pattern="yyyy-MM-dd HH:mm" /></td>
+						<td width="15%" align="center">
+						<c:choose>
+							<c:when test="${detail.status == '3' or detail.status == '4'}">
+								<fmt:formatDate value="${detail.completionTime}"
+									pattern="yyyy-MM-dd HH:mm:ss" />
+							</c:when>
+							<c:otherwise>
+								<c:choose>
+									<c:when test="${detail.remainDays >= 0}">剩余天数</c:when>
+									<c:otherwise>逾期天数</c:otherwise>
+								</c:choose>
+								${detail.remainDays}
+							</c:otherwise>
+						</c:choose></td>
 						<td width="15%" align="center"><c:if
 							test="${detail.status == '0'}">
 							<font color="red">未接收</font>

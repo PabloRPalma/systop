@@ -18,12 +18,14 @@ function remove(id){
 <body>
 <div><%@ include file="/common/messages.jsp"%></div>
 <div class="x-panel">
-<div class="x-panel-header">协调指挥&nbsp;&gt;&nbsp;${param['isMultiple'] eq 0?'一般任务':'综合任务'}管理&nbsp;&gt;&nbsp;${param['isMultiple'] eq 0?'一般任务':'综合任务'}列表</div>
+<div class="x-panel-header">协调指挥&nbsp;&gt;&nbsp;${param['isMultiple']
+eq 0?'一般任务':'综合任务'}管理&nbsp;&gt;&nbsp;${param['isMultiple'] eq
+0?'一般任务':'综合任务'}列表</div>
 <div class="x-toolbar">
 <table width="99%">
 	<tr>
 		<td><s:form action="index" method="post">
-		<s:hidden name="isMultiple"></s:hidden>
+			<s:hidden name="isMultiple"></s:hidden>
            		        任务标题：
 			<s:textfield name="model.title"></s:textfield>
 			                   派发时间:开始
@@ -37,8 +39,9 @@ function remove(id){
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})"
 				class="Wdate" />
            			任务状态:
-			<s:select name="model.status" list="stateMap" headerKey="" headerValue="--请选择--" >
-			
+			<s:select name="model.status" list="stateMap" headerKey=""
+				headerValue="--请选择--">
+
 			</s:select>
 			<s:submit value="查询" cssClass="button"></s:submit>
 		</s:form></td>
@@ -65,15 +68,20 @@ function remove(id){
 		<ec:column width="80" property="presetTime" title="规定完成时间"
 			style="text-align:center" cell="date" format="yyyy-MM-dd" />
 		<ec:column width="80" property="completionTime" title="完成时间"
-		    style="text-align:center" cell="date" format="yyyy-MM-dd">
-		    <c:forEach var="dat" items="${item.taskDetails}">
-				 ${dat.completionTime}
-			</c:forEach>
+			style="text-align:center" cell="date" format="yyyy-MM-dd">
+			<c:choose>
+				<c:when test="${item.status == '2'}"><fmt:formatDate value="${item.completionTime}"
+						pattern="yyyy-MM-dd HH:mm:ss" /></c:when>
+				<c:otherwise>
+					<c:choose>
+						<c:when test="${item.remainDays >= 0}">剩余天数${item.remainDays}</c:when>
+						<c:otherwise>逾期天数${item.remainDays}</c:otherwise>
+					</c:choose>
+				</c:otherwise>
+			</c:choose>
 		</ec:column>
-		<ec:column width="220" property="_sto" title="执行部门" sortable="false">
-			<c:forEach var="std" items="${item.taskDetails}">
-				【${std.dept.name}】
-			</c:forEach>
+		<ec:column width="200" property="taskDetails" title="执行部门"
+			cell="com.systop.fsmis.fscase.webapp.ec.DeptsCell">
 		</ec:column>
 		<ec:column width="130" property="_status" title="任务状态"
 			style="text-align: center" sortable="false">
@@ -96,9 +104,7 @@ function remove(id){
 			style="text-align: center">
 			<a href="${ctx}/fscase/view.do?fsCaseId=${item.fsCase.id}&modelId=1">
 			查看</a>
-			<c:if test="${item.status != '2'}">
-				<a href="#" onclick="remove(${item.id})">  | 删除 </a>
-			</c:if>
+			<a href="#" onclick="remove(${item.id})"> | 删除 </a>
 		</ec:column>
 	</ec:row>
 </ec:table></div>

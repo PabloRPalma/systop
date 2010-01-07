@@ -72,7 +72,7 @@
 		</tr>
 		
 		<tr>
-			<td align="right"width="180">任务完成时间：</td>
+			<td align="right"width="180">规定完成时间：</td>
 			<td align="left" width="500"><input id="date" type="text" class="required"
 				name="model.presetTime"
 				value='<s:date name="model.presetTime" format="yyyy-MM-dd HH:mm:ss"/>'
