@@ -166,7 +166,13 @@ UserSelector.prototype = {
 						});
 			}
 		});
-
+		tbar.push({// 查询按钮
+			text : '关闭',
+			handler : function() {
+				_this.win.hide();
+			}
+		});
+		
 		_this.win = new Ext.Window({
 					id : _this.id,
 					el : _this.el,
