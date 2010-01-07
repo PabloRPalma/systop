@@ -207,7 +207,7 @@ public class User extends BaseModel implements UserDetails, Serializable {
 	/**
 	 * 对应应急组
 	 */
-	private UrgentGroup urgentGroup;
+	private Set<UrgentGroup> urgentGroups = new HashSet<UrgentGroup>(0);
 	
 	/**
 	 * 评估申请人
@@ -658,15 +658,6 @@ public class User extends BaseModel implements UserDetails, Serializable {
 		this.dept = dept;
 	}
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "URGENT_GROUP")
-	public UrgentGroup getUrgentGroup() {
-		return this.urgentGroup;
-	}
-
-	public void setUrgentGroup(UrgentGroup urgentGroup) {
-		this.urgentGroup = urgentGroup;
-	}
 
 	/**
 	 * @return the registTime
@@ -732,5 +723,14 @@ public class User extends BaseModel implements UserDetails, Serializable {
 
 	public void setAsseForProposer(Set<Assessment> asseForProposer) {
 		this.asseForProposer = asseForProposer;
+	}
+	@ManyToMany(targetEntity = UrgentGroup.class, cascade = {}, fetch = FetchType.LAZY)
+	@JoinTable(name = "user_urgentGroup", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "urgentGroup_id") })
+	public Set<UrgentGroup> getUrgentGroups() {
+		return urgentGroups;
+	}
+
+	public void setUrgentGroups(Set<UrgentGroup> urgentGroups) {
+		this.urgentGroups = urgentGroups;
 	}
 }
