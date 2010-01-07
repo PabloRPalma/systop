@@ -15,7 +15,6 @@ import net.sf.json.JSONObject;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -103,10 +102,20 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
   				for(UrgentGroup urgentGroup : groups) {
   					//拷贝原始组里面的数据生成新的实例
   					UrgentGroup utGroupNotOrg = new UrgentGroup();
-  					BeanUtils.copyProperties(urgentGroup, utGroupNotOrg, new String[]{"isOriginal"});
+  					utGroupNotOrg.setName(urgentGroup.getName());
+  					utGroupNotOrg.setDescr(urgentGroup.getDescr());
+  					utGroupNotOrg.setUrgentType(urgentGroup.getUrgentType());
+  					utGroupNotOrg.setCategory(urgentGroup.getCategory());
+  					utGroupNotOrg.setCounty(urgentGroup.getCounty());
+  					//设置用户集合
+  					utGroupNotOrg.setUsers(null);
+  					utGroupNotOrg.setPhone(urgentGroup.getPhone());
+  					utGroupNotOrg.setMobel(urgentGroup.getMobel());
+  					utGroupNotOrg.setPrincipal(urgentGroup.getPrincipal());
   					//将新的组设置为‘非原始数据’
   					utGroupNotOrg.setIsOriginal(FsConstants.N);
   					getDao().save(utGroupNotOrg);
+  					
   					UrgentResult urgentResult = new UrgentResult();
   					urgentResult.setDisplays("显示内容...");
   					urgentResult.setUrgentCase(urgentCase);
