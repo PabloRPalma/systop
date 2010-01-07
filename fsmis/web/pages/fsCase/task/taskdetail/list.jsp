@@ -10,14 +10,14 @@
 <body>
 <div><%@ include file="/common/messages.jsp"%></div>
 <div class="x-panel">
-<div class="x-panel-header">协调指挥&nbsp;&gt;&nbsp;${param['isMultiple']
-eq 0?'一般任务':'综合任务'}接收&nbsp;&gt;&nbsp;${param['isMultiple'] eq
+<div class="x-panel-header">协调指挥&nbsp;&gt;&nbsp;${param['isMultipleCase']
+eq 0?'一般任务':'综合任务'}接收&nbsp;&gt;&nbsp;${param['isMultipleCase'] eq
 0?'一般任务':'综合任务'}任务列表</div>
 <div class="x-toolbar">
 <table width="99%">
 	<tr>
 		<td><s:form action="index" method="post">
-			<s:hidden name="isMultiple"></s:hidden>
+			<s:hidden name="isMultipleCase"></s:hidden>
            		        任务标题：
 			<s:textfield name="model.task.title"></s:textfield>
 			                   派发时间:开始
@@ -112,18 +112,18 @@ eq 0?'一般任务':'综合任务'}接收&nbsp;&gt;&nbsp;${param['isMultiple'] e
 			style="text-align:center" sortable="false">
 			<c:if test="${item.status == '0' or item.status == '1'}">
 				<a
-					href="${ctx}/taskdetail/receiveTask.do?model.id=${item.id}&isMultiple=${param['isMultiple']}&modelId=${param['modelId']}">接收|</a>
+					href="${ctx}/taskdetail/receiveTask.do?model.id=${item.id}&isMultipleCase=${param['isMultipleCase']}&modelId=${param['modelId']}">接收|</a>
 				<%--<a href="${ctx}/taskdetail/toReturnTaskDetail.do?model.id=${item.id}">退回1|</a> --%>
 				<a href="#"
 					onclick="javascript:returnTaskDetail(${item.id},'${userName}')">退回|</a>
 			</c:if>
 			<c:if test="${item.status == '2'}">
 				<a
-					href="${ctx}/taskdetail/toDealWithTaskDetail.do?model.id=${item.id}&isMultiple=${param['isMultiple']}&modelId=${param['modelId']}">处理|</a>
+					href="${ctx}/taskdetail/toDealWithTaskDetail.do?model.id=${item.id}&isMultipleCase=${param['isMultipleCase']}&modelId=${param['modelId']}">处理|</a>
 			</c:if>
 
 			<a
-				href="${ctx}/taskdetail/printTaskDetail.do?model.id=${item.id}&isMultiple=${param['isMultiple']}&modelId=${param['modelId']}"
+				href="${ctx}/taskdetail/printTaskDetail.do?model.id=${item.id}&isMultipleCase=${param['isMultipleCase']}&modelId=${param['modelId']}"
 				target="_blank">打印</a>
 		</ec:column>
 	</ec:row>
