@@ -5,10 +5,8 @@
 <html>
 <head>
 <title>栏目信息管理</title>
-<%@include file="/common/extjs.jsp" %>
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/validator.jsp"%>
-<script type="text/javascript" src="${ctx}/scripts/fckeditor/fckeditor.js"></script>
 <link href="${ctx}/styles/treeSelect.css" type='text/css' rel='stylesheet'>
 </head>
 <body>
@@ -18,8 +16,8 @@
  <table width="100%">
      <tr>
         <td  align="right">
-               <a href="${ctx}/office/doctype/index.do"><img
-					src="${ctx}/images/icons/house.gif" />首页</a>
+               <img	src="${ctx}/images/icons/house.gif" />
+               <a href="${ctx}/office/doctype/index.do">栏目管理首页</a>
         </td>
      </tr>
  </table>

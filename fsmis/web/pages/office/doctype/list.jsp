@@ -40,7 +40,6 @@ function showArticles(cID){
 		<td align="right">
 		<table>
 			<tr>
-				<td><span class="ytb-sep"></span></td>
 				<td>
 					<img src="${ctx}/images/icons/add.gif" />
 					<a href="edit.do">添加栏目信息</a>
