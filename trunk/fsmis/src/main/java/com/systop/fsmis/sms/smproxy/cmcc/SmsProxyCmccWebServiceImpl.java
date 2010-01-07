@@ -9,7 +9,6 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
-import com.systop.core.ApplicationException;
 import com.systop.core.util.DateUtil;
 import com.systop.fsmis.model.SmsReceive;
 import com.systop.fsmis.model.SmsSend;
@@ -35,7 +34,7 @@ public class SmsProxyCmccWebServiceImpl implements SmsProxy {
 	 * @see{@link SmsProxy#querySmsSendState}
 	 */
 	@Override
-	public List<String> querySmsSendState() throws Exception  {
+	public List<String> querySmsSendState() throws Exception {
 		return null;
 	}
 
@@ -108,8 +107,7 @@ public class SmsProxyCmccWebServiceImpl implements SmsProxy {
 	 * @see{@link SmsProxy#sendMessage()}
 	 */
 	@Override
-	public Integer sendMessage(List<SmsSend> smsSendList)
-			  throws Exception  {
+	public Integer sendMessage(List<SmsSend> smsSendList) throws Exception {
 		throw new Exception("方法尚未实现,移动Mas没有提供发送多条短信方法");
 	}
 
