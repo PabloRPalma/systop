@@ -88,6 +88,11 @@
 							src="${ctx}/images/icons/house.gif" /> 查看报告</a>
 					  </td>
 					  <td><span class="ytb-sep"></span></td>
+					  <td align="right">
+						<a href="${ctx}/urgentcase/editSendSms.do?model.id=${model.id}"><img
+							src="${ctx}/images/icons/house.gif" /> 短信通知</a>
+					  </td>
+					  <td><span class="ytb-sep"></span></td>
 					</c:if>
 					<td align="right"><a href="${ctx}/urgentcase/index.do"><img
 						src="${ctx}/images/icons/house.gif" /> 应急事件列表</a></td>
