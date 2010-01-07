@@ -278,6 +278,13 @@ public class AssessmentAction extends
 	}
 	
 	/**
+	 * 风险评估查看
+	 */
+	public String view() {
+		return "view";
+	}
+	
+	/**
 	 * 
 	 * @return
 	 */
