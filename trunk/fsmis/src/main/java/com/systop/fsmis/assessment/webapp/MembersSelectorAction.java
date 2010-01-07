@@ -54,9 +54,6 @@ public class MembersSelectorAction extends
 	 */
 	@Autowired
 	private AsseMemberManager asseMemberManager;
-	
-	// 查看的评估申请所参与的专家
-	//private List<Assessment> memberedList = new ArrayList<Assessment>();
 
 	/**
 	 * 初始化Assessment实例
