@@ -51,7 +51,6 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 	/** 派遣方式id */
 	private Integer sendTypeId;
 
-	@SuppressWarnings("unused")
 	@Autowired
 	private LoginUserService loginUserService;
 
@@ -184,7 +183,7 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 	 */
 	public String remove() {
 		if (getModel() != null && getModel().getId() != null) {
-			for(TaskAtt taskAtt : getModel().getTaskAtts()){
+			for (TaskAtt taskAtt : getModel().getTaskAtts()) {
 				removeTaskAtt(taskAtt);
 			}
 		}
@@ -192,6 +191,7 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 
 		return SUCCESS;
 	}
+
 	/**
 	 * 删除任务附件文件
 	 * 
@@ -199,10 +199,11 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 	 */
 	private void removeTaskAtt(TaskAtt taskAtt) {
 		File file = new File(getRealPath(taskAtt.getPath()));
-		if(file.exists()){
+		if (file.exists()) {
 			file.delete();
-		}			
+		}
 	}
+
 	/**
 	 * 单体任务状态列表返回页面
 	 */
