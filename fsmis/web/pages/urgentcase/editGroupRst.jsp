@@ -10,10 +10,10 @@
 	function jsonFormValue() {
 		var num = document.getElementsByName('jsonValue').length;
 		var val = document.getElementsByName('jsonValue')[0].value;
-		
+		val = val.replace(/:/ig," ");
 		for(i=1; i<num; i++) {
 			var rval = document.getElementsByName('jsonValue')[i].value;
-			
+			rval = rval.replace(/:/ig," ");
 			if(rval == "" || rval == null) {
 				val = val + ":" + null;
 			} else {
