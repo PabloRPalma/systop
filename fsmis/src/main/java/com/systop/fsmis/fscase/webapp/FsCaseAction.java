@@ -155,7 +155,6 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 
 		getModel().setCaseType(cType);
 		getModel().setIsSubmitSj(CaseConstants.IS_NOSUBSJ);
-		getModel().setIsMultiple(FsConstants.N);
 		getManager().getDao().clear();
 		getManager().save(getModel());
 
