@@ -23,6 +23,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.systop.core.model.BaseModel;
+import com.systop.core.util.RemaindaysUtil;
 
 /**
  * 任务表 The persistent class for the TASK database table.
@@ -148,7 +149,7 @@ public class Task extends BaseModel {
 	public void setPresetTime(Date presetTime) {
 		this.presetTime = presetTime;
 	}
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CLOSED_TIME", length = 11)
 	public Date getClosedTime() {
@@ -197,7 +198,8 @@ public class Task extends BaseModel {
 			return false;
 		}
 		Task task = (Task) other;
-		return new EqualsBuilder().append(this.getId(), task.getId()).isEquals();
+		return new EqualsBuilder().append(this.getId(), task.getId())
+				.isEquals();
 	}
 
 	/**
@@ -214,4 +216,10 @@ public class Task extends BaseModel {
 		return new ToStringBuilder(this).append("id", getId()).toString();
 	}
 
+	/**
+	 * 得到任务逾期天数方法
+	 */
+	public double getRemainDays() {
+		return RemaindaysUtil.getRemainDays(getPresetTime());
+	}
 }
