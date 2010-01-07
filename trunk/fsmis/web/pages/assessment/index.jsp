@@ -96,6 +96,7 @@ window.onload = function(){
       </c:choose>
     </ec:column>    
     <ec:column width="150" property="_0" title="操作" style="text-align:center" sortable="false">
+       <c:if test="${item.state ne '4'}">
        <c:choose>
 	     <c:when test="${item.state eq '0' or item.state eq '2'}"> 
  	       <a href="edit.do?model.id=${item.id}">编辑</a>|		        
@@ -110,14 +111,9 @@ window.onload = function(){
        <c:if test="${item.state eq '1'}">
   	      <a href="start.do?model.id=${item.id}">启动</a>|	    
        </c:if>
-       <c:choose>
-	     <c:when test="${item.state eq '3'}"> 
-  	      <a href="result.do?model.id=${item.id}">上报</a>|	         
-	     </c:when>
-	     <c:otherwise>
-           <font color="#999999">上报</font>| 	       
-	     </c:otherwise>
-	   </c:choose>                
+       <c:if test="${item.state eq '3'}">
+  	      <a href="result.do?model.id=${item.id}">上报</a>|	  
+       </c:if>                      
 	   <c:choose>
 	     <c:when test="${!empty item.checkResults}"> 
 	        <font color="#999999">删除</font>|
@@ -125,7 +121,8 @@ window.onload = function(){
 	     <c:otherwise>
 	        <a href="#" onClick="removeAssessment(${item.id})">删除|</a>  
 	     </c:otherwise>
-	   </c:choose>   
+	   </c:choose> 
+	   </c:if>  
        <a href="print.do?model.id=${item.id}" target="_blank">打印</a>	   
 	</ec:column>    
   </ec:row>
