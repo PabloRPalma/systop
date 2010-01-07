@@ -23,7 +23,8 @@ public class DocumentTypeManager extends BaseGenericsManager<DocumentType> {
 	/**
 	 * 返回栏目列表,有层次标识.
 	 * 
-	 * @param parC2   父级，如果为空为获取顶级栏目
+	 * @param parC2
+	 *            父级，如果为空为获取顶级栏目
 	 * 
 	 */
 	@SuppressWarnings( { "unchecked" })
@@ -43,8 +44,10 @@ public class DocumentTypeManager extends BaseGenericsManager<DocumentType> {
 	/**
 	 * 得到子栏目,每一个栏目用一个<code>java.util.Map</code>表示。本方法是一个递归函数
 	 * 
-	 * @param parent  父栏目
-	 * @param signNumber  符号的个数,用于区别栏目的级别.
+	 * @param parent
+	 *            父栏目
+	 * @param signNumber
+	 *            符号的个数,用于区别栏目的级别.
 	 */
 	@SuppressWarnings("unchecked")
 	public void getChildCatalog(ArrayList list, Map parent, int signNumber) {
