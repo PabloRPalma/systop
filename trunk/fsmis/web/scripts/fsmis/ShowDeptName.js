@@ -19,7 +19,7 @@ function DeptOperator() {
 			}
 		}
 		showNameDiv.innerHTML = "&nbsp;";
-		var selectedDeptNameStr = "";
+		var selectedDeptNameStr = "&nbsp;";
 		for (i in selectedDeptNames) {
 			selectedDeptNameStr += "<b>" + selectedDeptNames[i] + "</b>&nbsp;&nbsp;";
 		}
