@@ -33,7 +33,7 @@
     <ec:column width="600" property="title" title="标题">
       <a href="${ctx}${item.path}"><font color="blue">${item.title}</font></a>
     </ec:column>
-    <ec:column width="225" property="creator" title="完成人" style="text-align:center"/>          
+    <ec:column width="220" property="creator" title="完成人" style="text-align:center"/>          
   </ec:row>
 </ec:table>
 </div>
