@@ -1,4 +1,5 @@
 package com.systop.fsmis.fscase.webapp;
+
 /**
  * 问题:
  * 判断是否是市级人员登录,本逻辑需要确认
@@ -18,7 +19,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.systop.common.modules.security.user.LoginUserService;
-import com.systop.common.modules.security.user.model.User;
 import com.systop.core.Constants;
 import com.systop.core.dao.support.Page;
 import com.systop.core.webapp.struts2.action.DefaultCrudAction;
@@ -77,12 +77,11 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 		StringBuffer sql = new StringBuffer(
 				"from FsCase gc where isSubmitSj=0 ");
 		List args = new ArrayList();
-		//判断是否是市级人员登录,如果不是,则需要添加根据本区县查询案件的查询条件,本逻辑需要确认
+		// 判断是否是市级人员登录,如果不是,则需要添加根据本区县查询案件的查询条件,本逻辑需要确认
 		if (loginUserService.getLoginUserCounty(getRequest()).getParentDept() != null) {
 			sql.append("and gc.county.id = ? ");
 			args.add(loginUserService.getLoginUserCounty(getRequest()).getId());
 		}
-		
 
 		if (StringUtils.isNotBlank(getModel().getTitle())) {
 			sql.append("and gc.title like ? ");
