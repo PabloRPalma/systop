@@ -8,7 +8,8 @@
 			<result name="index">/pages/assessment/index.jsp</result> 
 			<result name="input">/pages/assessment/edit.jsp</result> 	
 			<result name="audit">/pages/assessment/audit.jsp</result> 
-			<result name="start">/pages/assessment/start.jsp</result> 			
+			<result name="start">/pages/assessment/start.jsp</result> 
+			<result name="result">/pages/assessment/result.jsp</result> 						
 			<result name="print">/pages/assessment/printpage.jsp</result> 											
 			<result name="success" type="redirect">index.do</result>	
 			<result type="json" name="titles">
@@ -33,5 +34,13 @@
 		    </result>
 		</action>		
 	</package>
+	<!-- 风险评估附件请求处理 -->
+	 <package name="fsmis.assessment.attaches" extends="json"  namespace="/assessment/attaches">    
+	   <action name="*" class="asseAttachAction" method="{1}">
+	     <result name="index">/pages/assessment/attaches.jsp</result> 
+	     <result name="success" type="redirect">index.do?assessmentId=${assessmentId}</result>    
+	     <result name="input">/pages/assessment/error.jsp</result>           
+	   </action>
+	 </package>  	
 </struts>
 
