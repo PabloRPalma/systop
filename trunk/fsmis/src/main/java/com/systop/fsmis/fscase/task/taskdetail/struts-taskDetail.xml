@@ -21,7 +21,7 @@
 			<result name="printTaskDetail">/pages/fsCase/task/taskdetail/printTaskDetail.jsp</result>
 			<!--处理操作完成后需要重定向到index-->
 			<result name="success" type="redirect">
-				index.do?isMultiple=${isMultiple}&amp;modelId=${modelId}
+				index.do?isMultipleCase=${isMultipleCase}&amp;modelId=${modelId}
 			</result>
 						
 		</action>

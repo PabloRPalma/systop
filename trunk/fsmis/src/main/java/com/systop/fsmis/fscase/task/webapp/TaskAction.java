@@ -40,7 +40,7 @@ import com.systop.fsmis.model.TaskAtt;
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 	// 是否为综合案件,用于在页面跳转间传递是一般案件操作还是综合案件操作
-	private String isMultiple;
+	private String isMultipleCase;
 	// 默认显示的Tab序号,用于在view页面默认显示哪个Tab
 	private String modelId;
 
@@ -125,9 +125,9 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 		StringBuffer buf = new StringBuffer("from Task t where 1=1 ");
 		List<Object> args = new ArrayList<Object>();
 		// 区分是否综合(单体/多体)案件
-		if (StringUtils.isNotBlank(isMultiple)) {
+		if (StringUtils.isNotBlank(isMultipleCase)) {
 			buf.append("and t.fsCase.isMultiple = ? ");
-			args.add(isMultiple);
+			args.add(isMultipleCase);
 		}
 		// 判断是否是市级人员登录,如果不是,则需要添加根据本区县查询案件的查询条件,本逻辑需要确认
 		if (loginUserService.getLoginUserCounty(getRequest()).getParentDept() != null) {
@@ -282,20 +282,20 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 		this.taskEndTime = taskEndTime;
 	}
 
-	public String getIsMultiple() {
-		return isMultiple;
-	}
-
-	public void setIsMultiple(String isMultiple) {
-		this.isMultiple = isMultiple;
-	}
-
 	public String getModelId() {
 		return modelId;
 	}
 
 	public void setModelId(String modelId) {
 		this.modelId = modelId;
+	}
+
+	public String getIsMultipleCase() {
+		return isMultipleCase;
+	}
+
+	public void setIsMultipleCase(String isMultipleCase) {
+		this.isMultipleCase = isMultipleCase;
 	}
 
 }
