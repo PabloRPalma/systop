@@ -40,11 +40,9 @@ function view(aID){
 		<table>
 			<tr>
 				<td>
-					<a href="edit.do">
-						<img src="${ctx}/images/icons/add.gif" />添加
-					</a>
+					<img src="${ctx}/images/icons/add.gif" />
+					<a href="edit.do">添加文章</a>
 				</td>
-				<td><span class="ytb-sep"></span></td>
 			</tr>
 		</table>
 		</td>
@@ -73,7 +71,7 @@ function view(aID){
 		<ec:column width="400" property="title" title="文章标题" onclick="view(${item.id})" style="cursor:hand" sortable="false"/>
 		<ec:column width="100" property="author" title="作者" sortable="false"/>
 		<ec:column width="120" property="documentType.name" title="所属栏目" sortable="false"/>
-		<ec:column width="100" property="_0" title="操作" style="text-align:center" sortable="false">
+		<ec:column width="120" property="_0" title="操作" style="text-align:center" sortable="false">
 			<a href="edit.do?model.id=${item.id}">编辑</a>|
 			<a href="view.do?model.id=${item.id}" target="_blank">查看</a>|
 			<a href="#" onclick="removeArticle(${item.id})">删除	</a>

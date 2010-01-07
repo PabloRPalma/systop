@@ -12,6 +12,7 @@
 <body onload="preFckEditor()">
 <div class="x-panel">
 <div class="x-panel-header">添加文章信息</div>
+<div><%@ include file="/common/messages.jsp"%></div>
 <div align="center">
 <s:form action="save.do" id="save" method="post" theme="simple" validate="true">
 <fieldset style="width: 800px; padding-top: 2px">
