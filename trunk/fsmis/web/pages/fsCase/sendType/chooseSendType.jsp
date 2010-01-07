@@ -15,7 +15,7 @@ function send(){
 }
 function fastsend(sendtypeid){
 	var id = document.getElementById('caseId').value;
-	url="${ctx}/task/edit.do?sendTypeId=" + sendtypeid + "&caseId=" + id+"&isMultiple=${param['isMultiple']}&modelId=${param['modelId']}";
+	url="${ctx}/task/edit.do?sendTypeId=" + sendtypeid + "&caseId=" + id+"&isMultipleCase=${param['isMultipleCase']}&modelId=${param['modelId']}";
 	window.open(url,'main'); 
 }
 </script>
