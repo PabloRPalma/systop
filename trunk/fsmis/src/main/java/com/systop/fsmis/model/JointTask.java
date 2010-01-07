@@ -86,7 +86,7 @@ public class JointTask extends BaseModel {
 		this.proposer = proposer;
 	}
 
-	@Column(name = "TITLE", length = 510)
+	@Column(name = "TITLE", length = 255)
 	public String getTitle() {
 		return this.title;
 	}
@@ -142,7 +142,7 @@ public class JointTask extends BaseModel {
 		this.isAgree = isAgree;
 	}
 
-	@Column(name = "OPINION", length = 510)
+	@Column(name = "OPINION", length = 255)
 	public String getOpinion() {
 		return this.opinion;
 	}

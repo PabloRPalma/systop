@@ -138,7 +138,7 @@ public class Notice extends BaseModel {
 		this.createTime = createTime;
 	}
 
-	@Column(name = "ATT", length = 510)
+	@Column(name = "ATT", length = 255)
 	public String getAtt() {
 		return this.att;
 	}

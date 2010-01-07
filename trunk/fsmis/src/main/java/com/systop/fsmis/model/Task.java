@@ -112,7 +112,7 @@ public class Task extends BaseModel {
 		this.fsCase = fsCase;
 	}
 
-	@Column(name = "TITLE", length = 510)
+	@Column(name = "TITLE", length = 255)
 	public String getTitle() {
 		return this.title;
 	}
@@ -121,7 +121,7 @@ public class Task extends BaseModel {
 		this.title = title;
 	}
 
-	@Column(name = "DESCN", length = 510)
+	@Column(name = "DESCN", length = 255)
 	public String getDescn() {
 		return this.descn;
 	}
@@ -160,7 +160,7 @@ public class Task extends BaseModel {
 		this.closedTime = closedTime;
 	}
 
-	@Column(name = "STATUS", length = 510)
+	@Column(name = "STATUS", length = 255)
 	public String getStatus() {
 		return this.status;
 	}

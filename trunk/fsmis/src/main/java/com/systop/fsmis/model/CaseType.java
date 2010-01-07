@@ -67,7 +67,7 @@ public class CaseType extends BaseModel {
 		this.caseType = caseType;
 	}
 
-	@Column(name = "NAME", length = 510)
+	@Column(name = "NAME", length = 255)
 	public String getName() {
 		return this.name;
 	}

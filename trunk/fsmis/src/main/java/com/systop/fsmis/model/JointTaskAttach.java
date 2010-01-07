@@ -77,7 +77,7 @@ public class JointTaskAttach extends BaseModel {
 		this.jointTask = jointTask;
 	}
 
-	@Column(name = "TITLE", length = 510)
+	@Column(name = "TITLE", length = 255)
 	public String getTitle() {
 		return this.title;
 	}
@@ -86,7 +86,7 @@ public class JointTaskAttach extends BaseModel {
 		this.title = title;
 	}
 
-	@Column(name = "PATH", length = 510)
+	@Column(name = "PATH", length = 255)
 	public String getPath() {
 		return this.path;
 	}
@@ -95,7 +95,7 @@ public class JointTaskAttach extends BaseModel {
 		this.path = path;
 	}
 
-	@Column(name = "REMARK", length = 510)
+	@Column(name = "REMARK", length = 255)
 	public String getRemark() {
 		return this.remark;
 	}
