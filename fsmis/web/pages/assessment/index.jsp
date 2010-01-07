@@ -86,10 +86,10 @@ window.onload = function(){
           <span style="color:#CC6600">审核未通过</span>
         </c:when>
         <c:when test="${item.state eq '3'}">
-          <span style="color:blue">评估已启动</span>
+          <span style="color:#0E8897">评估已启动</span>
         </c:when>
         <c:when test="${item.state eq '4'}">
-          <span style="color:#0E8897">评估完毕</span>
+          <span style="color:blue">评估完毕</span>
         </c:when>
       </c:choose>
     </ec:column>    
@@ -98,15 +98,15 @@ window.onload = function(){
  	      <a href="edit.do?model.id=${item.id}">编辑</a>|	   
 	      <a href="audit.do?model.id=${item.id}">审核</a>|       
        </c:if>   
-       <c:if test="${item.state eq '1' or item.state eq '3'}">
+       <c:if test="${item.state eq '1'}">
   	      <a href="start.do?model.id=${item.id}">启动</a>|	    
        </c:if>  
        <c:if test="${item.state eq '3'}">
-  	      <a href="start.do?model.id=${item.id}">上报</a>|	    
+  	      <a href="result.do?model.id=${item.id}">上报</a>|	    
        </c:if>        
 	   <c:choose>
 	     <c:when test="${!empty item.checkResults}"> 
-	        <font color="#999999">删除|</font>
+	        <font color="#999999">删除</font>|
 	     </c:when>
 	     <c:otherwise>
 	        <a href="#" onClick="removeAssessment(${item.id})">删除|</a>  
