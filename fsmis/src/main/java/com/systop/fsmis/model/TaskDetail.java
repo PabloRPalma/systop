@@ -33,61 +33,65 @@ public class TaskDetail extends BaseModel {
 	 * 主键
 	 */
 	private Integer id;
-	
+
 	/**
 	 * 对应任务
 	 */
 	private Task task;
-	
+
 	/**
 	 * 对应部门
 	 */
 	private Dept dept;
-	
+
 	/**
 	 * 填写人
 	 */
 	private String inputer;
-	
+
 	/**
 	 * 处理人
 	 */
 	private String processor;
-	
+
 	/**
 	 * 处理过程
 	 */
 	private String process;
-	
+
 	/**
 	 * 处理依据
 	 */
 	private String basis;
-	
+
 	/**
 	 * 处理结果
 	 */
 	private String result;
-	
+
 	/**
 	 * 任务完成时间
 	 */
 	private Date completionTime;
-	
+
 	/**
 	 * 任务状态
 	 */
 	private String status;
-	
+
 	/**
 	 * 退回负责人
 	 */
 	private String returnPeople;
-	
+
 	/**
 	 * 退回原因
 	 */
 	private String returnReason;
+	/**
+	 * 任务逾期天数,仅仅为了在界面显示逾期天数,不作数据库映射
+	 */
+	private double remainDays;
 
 	/**
 	 * 缺省构造方法
@@ -236,5 +240,13 @@ public class TaskDetail extends BaseModel {
 	 */
 	public String toString() {
 		return new ToStringBuilder(this).append("id", getId()).toString();
+	}
+
+	public double getRemainDays() {
+		return remainDays;
+	}
+
+	public void setRemainDays(double remainDays) {
+		this.remainDays = remainDays;
 	}
 }
