@@ -1,17 +1,22 @@
 package com.systop.fsmis.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
 import com.systop.common.modules.dept.model.Dept;
+import com.systop.common.modules.security.user.model.User;
 import com.systop.core.model.BaseModel;
 
 /**
@@ -36,12 +41,6 @@ public class UrgentGroup extends BaseModel {
 	/** 显示内容 */
 	private String displays;
 
-	/** 类别 内部组还是外部组 */
-	private String type;
-
-	/** 本组对应模板 */
-	private String template;
-
 	/** 是否公用数据 Y/N */
 	private String isPublic;
 
@@ -57,18 +56,32 @@ public class UrgentGroup extends BaseModel {
 	/** 是否原始数据 0:否，1:是 */
 	private String isOriginal;
 
+	/**
+	 * 此组的用户
+	 */
+	private Set<User> users = new HashSet<User>(0);
+	
+	/** 固话 */
+	private String phone;
+
+	/** 手机号 */
+	private String mobel;
+	
+	/** 负责人 */
+	private String principal;
+
 	public UrgentGroup() {
 	}
 
 	/**
 	 * @param name
-	 *            组名称
+	 *          组名称
 	 * @param category
-	 *            对应指挥组类别
+	 *          对应指挥组类别
 	 * @param isPublic
-	 *            是否公共
+	 *          是否公共
 	 * @param isOriginal
-	 *            是否原始数据
+	 *          是否原始数据
 	 */
 	public UrgentGroup(String name, String category, String isPublic,
 			String isOriginal) {
@@ -98,24 +111,6 @@ public class UrgentGroup extends BaseModel {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	@Column(name = "TYPE")
-	public String getType() {
-		return this.type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	@Column(name = "TEMPLATE")
-	public String getTemplate() {
-		return this.template;
-	}
-
-	public void setTemplate(String template) {
-		this.template = template;
 	}
 
 	@Column(name = "IS_PUBLIC")
@@ -181,5 +176,38 @@ public class UrgentGroup extends BaseModel {
 
 	public void setIsOriginal(String isOriginal) {
 		this.isOriginal = isOriginal;
+	}
+
+	@ManyToMany(cascade = {}, fetch = FetchType.LAZY, mappedBy = "urgentGroups", targetEntity = User.class)
+	public Set<User> getUsers() {
+		return this.users;
+	}
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
+	}
+	@Column(name = "PHONE")
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	@Column(name = "MOBEL")
+	public String getMobel() {
+		return mobel;
+	}
+
+	public void setMobel(String mobel) {
+		this.mobel = mobel;
+	}
+	@Column(name = "PRINCIPAL")
+	public String getPrincipal() {
+		return principal;
+	}
+
+	public void setPrincipal(String principal) {
+		this.principal = principal;
 	}
 }
