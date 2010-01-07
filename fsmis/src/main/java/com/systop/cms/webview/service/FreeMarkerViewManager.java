@@ -18,6 +18,7 @@ import com.systop.cms.template.TemConstants;
 import com.systop.cms.webview.URLUtil;
 import com.systop.cms.webview.exception.ParseURLToTemplateException;
 import com.systop.common.modules.template.freemarker.servlet.StringTemplateContext;
+import com.systop.core.ApplicationException;
 import com.systop.core.service.BaseGenericsManager;
 
 import freemarker.cache.StringTemplateLoader;
@@ -60,8 +61,7 @@ public class FreeMarkerViewManager extends BaseGenericsManager<Templates> {
    * @throws ParseURLToTemplateException
    */
   @SuppressWarnings("unchecked")
-  protected StringTemplateContext parseIndexFile(String urlRoot, StringTemplateLoader tmLder)
-      throws ParseURLToTemplateException {
+  protected StringTemplateContext parseIndexFile(String urlRoot, StringTemplateLoader tmLder) {
 
     String templateName = null; // 模板名称
     String templateContent = null; // 模板内容
@@ -79,9 +79,8 @@ public class FreeMarkerViewManager extends BaseGenericsManager<Templates> {
         if (t != null) {
           templateContent = t.getContent();
         } else {
-          throw new ParseURLToTemplateException("未找到合适的网站主页模板");
+          throw new ApplicationException("没有网站默认主页模板，请添加默认主页模板。");
         }
-
       } else {
         logger.debug("网站主页模板" + CmsConstants.INDEX + "已经存在，不再添加．");
       }
@@ -105,7 +104,7 @@ public class FreeMarkerViewManager extends BaseGenericsManager<Templates> {
         }
 
       } else {
-        throw new ParseURLToTemplateException("未找到与栏目路径" + urlRoot + "对应的栏目");
+        throw new ApplicationException("未找到与栏目路径" + urlRoot + "对应的栏目,请检查起始网站路径。");
       }
     }
     // 解析模板
@@ -235,7 +234,6 @@ public class FreeMarkerViewManager extends BaseGenericsManager<Templates> {
     if (matcher.find()) {
       String tmptName = matcher.group(1);
       String fmTmpt = tmptContent.substring(matcher.start(), matcher.end());
-      logger.debug("加载模板：" + tmptName);
       // 得到模板内容
       String tmptCont = getTmptCont(tmptName);
       // 模板内容替换模板表达示

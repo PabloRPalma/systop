@@ -10,14 +10,12 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.queryParser.ParseException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.systop.cms.CmsConstants;
 import com.systop.cms.article.service.ArticleFullTextManager;
 import com.systop.cms.model.Articles;
 import com.systop.cms.model.Attachments;
-import com.systop.cms.model.Catalogs;
 import com.systop.core.dao.support.Page;
 import com.systop.core.service.BaseGenericsManager;
 
@@ -30,9 +28,6 @@ import com.systop.core.service.BaseGenericsManager;
 public class ArticleFreeMarkerManager extends BaseGenericsManager<Articles> {
 
   private ArticleFullTextManager atlFullTextManager;
-  
-  @Autowired(required=true)
-  private CatalogFreeMarkerManager catalogFreeMarkerManager;
 
   /**
    * @param name 栏目名
@@ -58,59 +53,6 @@ public class ArticleFreeMarkerManager extends BaseGenericsManager<Articles> {
     return list.isEmpty() ? null : list.get(0);
   }
 
-  /**
-   * 获取栏目下 所有文章
-   * @param name
-   * @param size
-   * @return
-   */
-  @SuppressWarnings("unchecked")
-  public List<Articles> getDyniwork(String name, int size) {
-    List<Catalogs> catas = new ArrayList<Catalogs>(0); //设置需要查找的根栏目
-    Catalogs catalogs = catalogFreeMarkerManager.getCatByName(name);//根据栏目名称取得该栏目
-    catas.add(catalogs);
-    List<Catalogs> cataList = new ArrayList<Catalogs>(0);//设置此栏目及其所有子级栏目
-    getAllCatas(catas, cataList);
-    Integer[] ids = new Integer[cataList.size()];//取得所有栏目名称
-    for(int i = 0;i < cataList.size();i++) {
-      ids[i] = cataList.get(i).getId();
-    }
-    
-    StringBuffer hql = new StringBuffer("from Articles a where a.catalog.id in (");
-    
-    for (Integer id : ids) {//拼接查询用hql
-      hql.append(id).append(",");
-    }
-    hql.replace(hql.lastIndexOf(","), hql.length(), ")").append(" and a.audited = ? "
-      + "order by a.onTop DESC ,serialNo ,createTime DESC");
-    
-
-    Page page = new Page(Page.start(1, size), size);
-    page = pageQuery(page, hql.toString(), new Object[] { CmsConstants.Y });
-   
-    return page.getData();
-  }
-  
-  /**
-   * 递归获取某栏目下所有子级栏目
-   * @param subCatas 指定查找的栏目
-   * @param newCatas 返回的所有栏目集合
-   * @return
-   */
-  private List<Catalogs> getAllCatas(List<Catalogs> subCatas, List<Catalogs> newCatas){
-
-    for (Catalogs catalogs : subCatas) {
-      List<Catalogs> list = catalogFreeMarkerManager.getSubCatsByName(catalogs.getName());
-      newCatas.add(catalogs);
-      if(list == null) {
-        return newCatas;
-      }else {
-        getAllCatas(list, newCatas);
-      }
-    }
-    return newCatas;
-  }
- 
   /**
    * @param name 栏目名
    * @param size 个数
