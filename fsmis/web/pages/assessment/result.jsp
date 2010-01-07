@@ -99,7 +99,7 @@ Ext.onReady(function(){
             <td colspan="1"></td>
           </tr>
           <tr>
-             <td align="right" width="90">申&nbsp;请&nbsp;人：</td>
+             <td align="right" width="90">申&nbsp;&nbsp;请&nbsp;&nbsp;人：</td>
              <td align="left" >
              	<stc:username></stc:username>
              </td>
@@ -119,13 +119,13 @@ Ext.onReady(function(){
           <tr>
              <td align="right" width="90" >专家组长：</td>
              <td>
-             <s:textfield id="leader" name="leader" size="67" readonly="true" cssStyle="border:0"/>		    
+             <s:textfield id="leader" name="leader" size="120" readonly="true" cssStyle="border:0"/>		    
 			 </td>
           </tr> 	                                  
           <tr>
              <td align="right" width="90" >专家成员：</td>
              <td>
-             <s:textfield id="member" name="member" size="67" readonly="true" cssStyle="border:0"/>			    
+             <s:textfield id="member" name="member" size="120" readonly="true" cssStyle="border:0"/>			    
 			 </td>
           </tr> 
           <tr>
