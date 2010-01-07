@@ -31,12 +31,12 @@ public class UcGroupManager extends BaseGenericsManager<UrgentGroup> {
 	public void save(UrgentGroup ug) {
 		logger.info("组对应的类别{}", ug.getUrgentType());
 		if (ug.getUrgentType() != null) {
-			if (getDao().exists(ug, "county", "urgentType", "category")) {
+			if (getDao().exists(ug, "county", "urgentType", "category","isOriginal")) {
 				throw new ApplicationException(ug.getName() + "已在"
 						+ ug.getUrgentType().getName() + "下添加！");
 			}
 		} else {
-			if (getDao().exists(ug, "county", "category")) {
+			if (getDao().exists(ug, "county", "category","isOriginal")) {
 				throw new ApplicationException(ug.getName() + "已添加！");
 			}
 		}
@@ -53,14 +53,14 @@ public class UcGroupManager extends BaseGenericsManager<UrgentGroup> {
 		UrgentGroup ugTemp;
 		String msg = "";
 		ugTemp = findObject(
-				"from UrgentGroup ug where ug.urgentType.id=? and ug.category=?", ut
-						.getId(), UcConstants.ACCIDENT_HANDLE);
+				"from UrgentGroup ug where ug.urgentType.id=? and ug.category=? and ug.isOriginal=?", ut
+						.getId(), UcConstants.ACCIDENT_HANDLE,UcConstants.GROUP_ORIGINAL_YES);
 		if (ugTemp == null) {
 			msg = "事故调查处理组未添加 ";
 		}
 		ugTemp = findObject(
-				"from UrgentGroup ug where ug.urgentType.id=? and ug.category=?", ut
-						.getId(), UcConstants.AFTER_HANDLE);
+				"from UrgentGroup ug where ug.urgentType.id=? and ug.category=? and ug.isOriginal=?", ut
+						.getId(), UcConstants.AFTER_HANDLE,UcConstants.GROUP_ORIGINAL_YES);
 		if (ugTemp == null) {
 			msg += " 善后处理组未添加";
 		}
