@@ -46,6 +46,7 @@ public class DeptInitializer {
 				logger.debug("Dept init is complete.");
 			}
 		} finally {
+			//整体更新初始化部门的serialNo
 			deptSerialNoManager.updateAllSerialNo();
 			session.flush();
 			session.close();
