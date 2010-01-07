@@ -19,7 +19,6 @@ import org.springframework.util.Assert;
 
 import com.opensymphony.xwork2.util.ArrayUtils;
 import com.systop.cms.utils.PageUtil;
-import com.systop.common.modules.dept.service.DeptManager;
 import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.core.dao.support.Page;
 import com.systop.core.webapp.struts2.action.DefaultCrudAction;
@@ -42,6 +41,7 @@ import com.systop.fsmis.model.TaskAtt;
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
+
 	// 是否为综合案件,用于在页面跳转间传递是一般案件操作还是综合案件操作
 	private String isMultipleCase;
 	// 默认显示的Tab序号,用于在view页面默认显示哪个Tab
@@ -67,10 +67,6 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 
 	private List<Integer> deptIds = new ArrayList<Integer>();
 
-	/** 依赖部门管理类 */
-	@SuppressWarnings("unused")
-	@Autowired
-	private DeptManager deptManager;
 	// 查询起始时间
 	private Date taskBeginTime;
 	// 查询截至时间
@@ -87,14 +83,9 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 		}
 		Assert.notNull(getModel().getFsCase());
 		Assert.notNull(getModel().getFsCase().getId());
-		Assert.notEmpty(deptIds);
-
-		// 设定派遣时间
-		getModel().setDispatchTime(new Date());
-
-		// 将附件信息集合保存到任务附件实体集合中
-		// 1.完成文件的上传
-		// 2.将上传文件路径信息保存到任务附件实体中
+		Assert.notEmpty(deptIds);		
+		getModel().setDispatchTime(new Date());// 设定派遣时间
+		// 将附件信息集合保存到任务附件实体集合中1.完成文件的上传 2.将上传文件路径信息保存到任务附件实体中
 		List<TaskAtt> taskAtts = new ArrayList<TaskAtt>(); // 任务附件实体集合
 		// 遍历文件数组,完成各个文件的上传并将文件路径信息保存到任务附件实体中
 		if (ArrayUtils.isNotEmpty(attachments)
@@ -105,32 +96,39 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 						addActionError("上传文件太大");
 						return INPUT;
 					}
-					// 检查文件类型是否符合既定文件类型条件
-					String extension = attachmentsFileName[i]
-							.substring(attachmentsFileName[i].lastIndexOf(".") + 1);
-					Collection<String> types = new ArrayList<String>();
-					CollectionUtils.addAll(types,
-							TaskConstants.TASK_UPLOAD_ALLOWED_FILE_TYPES);
-					if (!types.contains(extension)) {
+					if (!checkFileType(attachmentsFileName[i])) {
 						addActionError("未正确选择上传文件类型，请重新选择！");
 						return INPUT;
 					}
-
 					TaskAtt taskAtt = new TaskAtt();
 					// 上传文件并且把文件信息保存在任务附件实体中
 					taskAtt.setPath(UpLoadUtil.doUpload(attachments[i],
 							attachmentsFileName[i],
 							FsConstants.TASK_ATT_FOLDER, getServletContext()));
 					taskAtt.setTitle(attachmentsFileName[i]);
-
-					// 将附件实例保存到附件实体集合中
-					taskAtts.add(taskAtt);
+					taskAtts.add(taskAtt);// 将附件实例保存到附件实体集合中
 				}
 			}
 		}
 		getManager().save(getModel(), deptIds, taskAtts);
-
 		return SUCCESS;
+	}
+
+	/**
+	 * 检查文件类型是否符合既定文件类型条件
+	 * 
+	 * @param fileName
+	 * @return
+	 */
+	private boolean checkFileType(String fileName) {
+		String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
+		Collection<String> types = new ArrayList<String>();
+		CollectionUtils.addAll(types,
+				TaskConstants.TASK_UPLOAD_ALLOWED_FILE_TYPES);
+		if (!types.contains(extension)) {
+			return false;
+		}
+		return true;
 	}
 
 	/**
