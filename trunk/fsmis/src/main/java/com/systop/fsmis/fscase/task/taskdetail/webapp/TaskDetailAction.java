@@ -21,10 +21,11 @@ import com.systop.core.dao.support.Page;
 import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
 import com.systop.fsmis.CaseConstants;
 import com.systop.fsmis.fscase.task.taskdetail.service.TaskDetailManager;
+import com.systop.fsmis.model.Corp;
 import com.systop.fsmis.model.TaskDetail;
 
 @Controller
-@SuppressWarnings("serial")
+@SuppressWarnings( { "serial", "unchecked" })
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class TaskDetailAction extends
 		ExtJsCrudAction<TaskDetail, TaskDetailManager> {
@@ -39,12 +40,16 @@ public class TaskDetailAction extends
 	private Date taskEndTime;
 	// 在页面中作为默认人员输入项
 	private User user;
+	// 当前区县下所有企业集合
+	private Map<String, String> corps;
+	// 用户选择的企业
+	private Corp corp;
 
 	@Autowired
 	private LoginUserService loginUserService;
 
 	/**
-	 * 
+	 * 根据当前登录人员所在的区县和部门列出任务明细
 	 */
 	@Override
 	public String index() {
@@ -74,8 +79,6 @@ public class TaskDetailAction extends
 		 * loginUserService.getLoginUserCounty(getRequest()); if(dept !=null){
 		 * buf.append("and td.dept.id = ?"); args.add(dept.getId()); }
 		 */
-
-		
 
 		Dept dept = loginUserService.getLoginUserDept(getRequest());
 		if (dept != null) {
@@ -236,6 +239,46 @@ public class TaskDetailAction extends
 		return StateMap;
 	}
 
+	/**
+	 * 查询所有当前登录人员所在区县辖区的企业,以在页面选择
+	 * 
+	 * @return
+	 */
+	public String getCurrentCuntyCorps() {
+
+		@SuppressWarnings("unused")
+		List<Corp> corpList = getManager().getDao().query(
+				"from Corp c where c.dept.id = ?",
+				loginUserService.getLoginUserCounty(getRequest()).getId());
+		//待本阶段结束后,将企业信息自动补全功能改为JQuery来实现,再启用本段代码
+		// ReflectUtil.toMap(bean, propertyNames, containsNull)
+
+		return JSON;
+	}
+
+	/**
+	 * 根据企业编号得到企业信息
+	 * 
+	 * @param code
+	 * @return
+	 */
+	public String getCorpByCode(String code) {
+		corp = (Corp) getManager().getDao().findObject(
+				"from Corp c where c.code = ?", code);
+
+		return "jsonResult";
+	}
+
+	/**
+	 * 打印任务明细
+	 * 
+	 * @return
+	 */
+	public String printTaskDetail() {
+
+		return "printTaskDetail";
+	}
+
 	public Date getTaskEndTime() {
 		return taskEndTime;
 	}
@@ -275,4 +318,21 @@ public class TaskDetailAction extends
 	public void setModelId(String modelId) {
 		this.modelId = modelId;
 	}
+
+	public Corp getCorp() {
+		return corp;
+	}
+
+	public void setCorp(Corp corp) {
+		this.corp = corp;
+	}
+
+	public Map<String, String> getCorps() {
+		return corps;
+	}
+
+	public void setCorps(Map<String, String> corps) {
+		this.corps = corps;
+	}
+
 }

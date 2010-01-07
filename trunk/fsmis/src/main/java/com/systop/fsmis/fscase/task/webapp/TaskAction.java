@@ -41,7 +41,7 @@ import com.systop.fsmis.model.TaskAtt;
 public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 	// 是否为综合案件,用于在页面跳转间传递是一般案件操作还是综合案件操作
 	private String isMultiple;
-	//默认显示的Tab序号,用于在view页面默认显示哪个Tab
+	// 默认显示的Tab序号,用于在view页面默认显示哪个Tab
 	private String modelId;
 
 	private FsCase fsCase;
@@ -130,7 +130,7 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 			buf.append("and t.fsCase.isMultiple = ? ");
 			args.add(isMultiple);
 		}
-		//判断是否是市级人员登录,如果不是,则需要添加根据本区县查询案件的查询条件,本逻辑需要确认
+		// 判断是否是市级人员登录,如果不是,则需要添加根据本区县查询案件的查询条件,本逻辑需要确认
 		if (loginUserService.getLoginUserCounty(getRequest()).getParentDept() != null) {
 			buf.append("and t.fsCase.county.id = ? ");
 			args.add(loginUserService.getLoginUserCounty(getRequest()).getId());
@@ -179,6 +179,30 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 		return INPUT;
 	}
 
+	/**
+	 * 删除任务方法
+	 */
+	public String remove() {
+		if (getModel() != null && getModel().getId() != null) {
+			for(TaskAtt taskAtt : getModel().getTaskAtts()){
+				removeTaskAtt(taskAtt);
+			}
+		}
+		getManager().remove(getModel());
+
+		return SUCCESS;
+	}
+	/**
+	 * 删除任务附件文件
+	 * 
+	 * @param taskAtt
+	 */
+	private void removeTaskAtt(TaskAtt taskAtt) {
+		File file = new File(getRealPath(taskAtt.getPath()));
+		if(file.exists()){
+			file.delete();
+		}			
+	}
 	/**
 	 * 单体任务状态列表返回页面
 	 */
