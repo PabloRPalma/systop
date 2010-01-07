@@ -243,7 +243,7 @@ public class TaskDetail extends BaseModel {
 	 * 得到任务明细逾期天数方法
 	 */
 	public double getRemainDays() {
-		if (getTask() == null) {
+		if (getTask() == null || getTask().getPresetTime() == null) {
 			return 0.0d;
 		}
 		return RemaindaysUtil.getRemainDays(getTask().getPresetTime());
