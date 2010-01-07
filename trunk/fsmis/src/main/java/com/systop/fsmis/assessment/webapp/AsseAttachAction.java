@@ -26,7 +26,7 @@ import com.systop.fsmis.model.Assessment;
 import com.systop.fsmis.model.AssessmentAttach;
 
 /**
- * 
+ * 风险评估附件信息管理
  * @author ShangHua
  *
  */
