@@ -3,6 +3,7 @@ package com.systop.fsmis.urgentcase.webapp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -60,6 +61,16 @@ public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseMana
 	private Integer groupId;
 
 	/**
+	 * 查询起始事件
+	 */
+	private Date caseBeginTime;
+	
+	/**
+	 * 查询截至事件
+	 */
+	private Date caseEndTime;
+	
+	/**
 	 * 应急事件查询列表
 	 */
 	@Override
@@ -78,6 +89,11 @@ public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseMana
 			if (StringUtils.isNotBlank(getModel().getIsAgree())) {
 				sql.append(" and uc.isAgree = ?");
 				args.add(getModel().getIsAgree());
+			}
+			if (caseBeginTime != null && caseEndTime != null) {
+				sql.append("and uc.caseTime >= ? and uc.caseTime <= ? ");
+				args.add(caseBeginTime);
+				args.add(caseEndTime);
 			}
 			sql.append(" order by uc.status,uc.caseTime desc");
 			page = getManager().pageQuery(page, sql.toString(), args.toArray());
@@ -304,5 +320,21 @@ public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseMana
 
 	public void setGroupId(Integer groupId) {
   	this.groupId = groupId;
+  }
+
+	public Date getCaseBeginTime() {
+  	return caseBeginTime;
+  }
+
+	public void setCaseBeginTime(Date caseBeginTime) {
+  	this.caseBeginTime = caseBeginTime;
+  }
+
+	public Date getCaseEndTime() {
+  	return caseEndTime;
+  }
+
+	public void setCaseEndTime(Date caseEndTime) {
+  	this.caseEndTime = caseEndTime;
   }
 }
