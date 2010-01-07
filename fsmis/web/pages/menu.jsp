@@ -87,7 +87,10 @@
 		</div>
 	</div>
 	<div id="sms">
-	
+		<div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/smsreceive/index.do" target="main">接收短信列表</a>
+		</div>
 	</div>
 	<div id="office">
 		<div style="padding-left:5px;">   
