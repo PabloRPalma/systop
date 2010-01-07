@@ -8,7 +8,6 @@
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/extjs.jsp" %>
 <%@include file="/common/validator.jsp"%>
-<script type="text/javascript" src="${ctx}/scripts/fckeditor/fckeditor.js"></script>
 <link href="${ctx}/styles/treeSelect.css" type='text/css' rel='stylesheet'>
 <style type="text/css">
 #mytable {
@@ -25,7 +24,7 @@
 }
 </style>
 </head>
-<body onLoad="preFckEditor()">
+<body >
 <script type="text/javascript">
 Ext.onReady(function(){
     var tabs = new Ext.TabPanel({
