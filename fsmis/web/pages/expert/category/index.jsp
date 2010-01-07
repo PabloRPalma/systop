@@ -54,7 +54,7 @@ function removeCategory(cID){
     <ec:column width="40" property="_num" title="No." value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center"/> 
     <ec:column width="220" property="name" title="类别名称" style="text-align:center"/>    
     <ec:column width="480" property="descn" title="类别描述" style="text-align:left"/>      
-    <ec:column width="100" property="_0" title="操作" style="text-align:center">
+    <ec:column width="100" property="_0" title="操作" style="text-align:center" sortable="false">
 	   <a href="edit.do?model.id=${item.id}">编辑</a> |
 	   <c:choose>
 	     <c:when test="${!empty item.experts}"> 
