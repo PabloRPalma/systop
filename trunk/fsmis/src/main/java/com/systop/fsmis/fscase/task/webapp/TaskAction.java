@@ -2,6 +2,7 @@ package com.systop.fsmis.fscase.task.webapp;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -25,10 +26,13 @@ import com.systop.core.webapp.struts2.action.DefaultCrudAction;
 import com.systop.core.webapp.upload.UpLoadUtil;
 import com.systop.fsmis.CaseConstants;
 import com.systop.fsmis.FsConstants;
+import com.systop.fsmis.fscase.task.TaskConstants;
 import com.systop.fsmis.fscase.task.service.TaskManager;
 import com.systop.fsmis.model.FsCase;
 import com.systop.fsmis.model.Task;
 import com.systop.fsmis.model.TaskAtt;
+
+import edu.emory.mathcs.backport.java.util.Collections;
 
 /**
  * 任务Action
@@ -79,7 +83,7 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 	 */
 	@Override
 	public String save() {
-		if(CollectionUtils.isEmpty(deptIds)){
+		if (CollectionUtils.isEmpty(deptIds)) {
 			addActionError("请至少选择一个部门!");
 			return INPUT;
 		}
@@ -99,6 +103,21 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 				&& ArrayUtils.isNotEmpty(attachmentsFileName)) {
 			for (int i = 0; i < attachments.length; i++) {
 				if (attachments[i] != null && attachmentsFileName[i] != null) {
+					if (attachments[i].length() > TaskConstants.TASK_UPLOAD_ALLOWED_FILE_SIZE) {
+						addActionError("上传文件太大");
+						return INPUT;
+					}
+					// 检查文件类型是否符合既定文件类型条件
+					String extension = attachmentsFileName[i]
+							.substring(attachmentsFileName[i].lastIndexOf(".") + 1);
+					Collection<String> types = new ArrayList<String>();
+					CollectionUtils.addAll(types,
+							TaskConstants.TASK_UPLOAD_ALLOWED_FILE_TYPES);
+					if (!types.contains(extension)) {
+						addActionError("未正确选择上传文件类型，请重新选择！");
+						return INPUT;
+					}
+
 					TaskAtt taskAtt = new TaskAtt();
 					// 上传文件并且把文件信息保存在任务附件实体中
 					taskAtt.setPath(UpLoadUtil.doUpload(attachments[i],
