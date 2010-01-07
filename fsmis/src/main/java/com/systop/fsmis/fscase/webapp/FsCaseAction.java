@@ -40,7 +40,7 @@ import com.systop.fsmis.model.FsCase;
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 	// 是否综合(多体)案件
-	private String isMultiple;
+	private String isMultipleCase;
 	@Autowired
 	private CaseTypeManager caseTypeManager;
 	@Autowired
@@ -97,9 +97,9 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 			args.add(getModel().getCode());
 		}
 		// 区分一般/综合(单体/多体)案件
-		if (StringUtils.isNotBlank(isMultiple)) {
+		if (StringUtils.isNotBlank(isMultipleCase)) {
 			sql.append("and gc.isMultiple=? ");
-			args.add(isMultiple);
+			args.add(isMultipleCase);
 		}
 		// 根据事发时间区间查询
 		if (caseBeginTime != null && caseEndTime != null) {
@@ -155,9 +155,9 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 
 		getModel().setCaseType(cType);
 		getModel().setIsSubmitSj(CaseConstants.IS_NOSUBSJ);
-		if(StringUtils.isBlank(getModel().getIsMultiple())){
+		if (StringUtils.isBlank(getModel().getIsMultiple())) {
 			getModel().setIsMultiple(FsConstants.N);
-		}		
+		}
 		getManager().getDao().clear();
 		getManager().save(getModel());
 
@@ -281,14 +281,6 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 		this.twoId = twoId;
 	}
 
-	public String getIsMultiple() {
-		return isMultiple;
-	}
-
-	public void setIsMultiple(String isMultiple) {
-		this.isMultiple = isMultiple;
-	}
-
 	public Date getCaseBeginTime() {
 		return caseBeginTime;
 	}
@@ -312,4 +304,13 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 	public void setLoginUserService(LoginUserService loginUserService) {
 		this.loginUserService = loginUserService;
 	}
+
+	public String getIsMultipleCase() {
+		return isMultipleCase;
+	}
+
+	public void setIsMultipleCase(String isMultipleCase) {
+		this.isMultipleCase = isMultipleCase;
+	}
+
 }
