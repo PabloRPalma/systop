@@ -23,7 +23,7 @@ Ext.onReady(function(){
         frame:false,
         defaults:{autoHeight: false},
         items:[
-            {contentEl:'basic', title: '通知内部'},
+            {contentEl:'basic', title: '通知内容'},
             {contentEl:'received', title: '部门回执'}
         ]
     });
