@@ -1,5 +1,6 @@
 package com.systop.fsmis.fscase.task.service;
 
+import java.io.File;
 import java.util.List;
 import java.util.Set;
 
@@ -27,9 +28,12 @@ public class TaskManager extends BaseGenericsManager<Task> {
 	/**
 	 * 保存派遣任务方法
 	 * 
-	 * @param task 任务实体实例
-	 * @param deptIds 部门id集合
-	 * @param taskAtts 任务附件实体集合
+	 * @param task
+	 *            任务实体实例
+	 * @param deptIds
+	 *            部门id集合
+	 * @param taskAtts
+	 *            任务附件实体集合
 	 */
 	@Transactional
 	public void save(Task task, List<Integer> deptIds, List<TaskAtt> taskAtts) {
@@ -80,7 +84,8 @@ public class TaskManager extends BaseGenericsManager<Task> {
 	/**
 	 * 发送短信方法
 	 * 
-	 * @param dept 任务明细关联的部门,短信的发送依据就是部门
+	 * @param dept
+	 *            任务明细关联的部门,短信的发送依据就是部门
 	 */
 	private void sendTaskMessage(Dept dept) {
 		Set<User> users = dept.getUsers();
@@ -100,19 +105,35 @@ public class TaskManager extends BaseGenericsManager<Task> {
 	 * 本方法必须完成以下几项操作<br>
 	 * 
 	 * <pre>
-	 * 1.删除各个任务明细实体关联的附件问价(任务处理附件)
-	 * 2.删除各个任务明细实体关联的附件实体
-	 * 3.任务实体关联的多个任务明细实体
-	 * 4.删除任务对应的各个附件文件
-	 * 5.删除任务对应的附件实体
-	 * 6.删除任务实体
-	 * 7.修改任务对应的食品安全案件的状态
+	 * 1.任务实体关联的多个任务明细实体
+	 * 2.删除任务对应的各个附件文件
+	 * 3.删除任务对应的附件实体
+	 * 4.删除任务实体
+	 * 5.修改任务对应的食品安全案件的状态
 	 * </pre>
 	 * 
 	 * @param task
 	 */
 	@Override
+	@Transactional
 	public void remove(Task task) {
-
+		if (task != null && task.getId() != null) {
+			// 删除本任务关联的任务明细实体
+			for (TaskDetail td : task.getTaskDetails()) {
+				getDao().delete(td);
+			}
+			for(TaskAtt taskAtt  : task.getTaskAtts()){
+				getDao().delete(taskAtt);
+			}
+			FsCase fsCase = task.getFsCase();
+			// 置相关联的案件状态为"未派遣"
+			fsCase.setStatus(CaseConstants.CASE_STATUS_RESOLVEUN);
+			// 保存案件实例
+			getDao().save(fsCase);
+			// 删除任务
+			super.remove(task);
+		}
 	}
+
+	
 }

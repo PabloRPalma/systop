@@ -5,6 +5,10 @@
 <struts>
 	<package name="fsmis.fscase.task.taskdetail" extends="json" namespace="/taskdetail">
 		<action name="*" class="taskDetailAction" method="{1}">
+			<result type="json" name="json">
+				<param name="ignoreHierarchy">false</param>
+		   		<param name="root">corps</param>
+			</result>
 			<result name="index">/pages/fsCase/task/taskdetail/list.jsp</result>
 			<result name="input">/pages/fsCase/task/taskdetail/edit.jsp</result>
 			<result name="returnTaskDetail">/pages/fsCase/task/taskdetail/returnTaskDetail.jsp</result>
@@ -14,14 +18,12 @@
 				<param name="namespace">/fscase</param>
 				<param name="actionName">view</param>
 			</result>
+			<result name="printTaskDetail">/pages/fsCase/task/taskdetail/printTaskDetail.jsp</result>
 			<!--处理操作完成后需要重定向到index-->
 			<result name="success" type="redirect">
 				index.do?isMultiple=${isMultiple}&amp;modelId=${modelId}
 			</result>
-				
-			<result type="json" name="json">
-				<param name="ignoreHierarchy">false</param>			
-			</result>
+						
 		</action>
 	</package>
 </struts>
