@@ -20,7 +20,7 @@
 <div class="x-panel">
 <div><%@ include file="/common/messages.jsp"%></div>
 <div align="center">
-	<table width="600px" align="center">
+	<table width="750px" align="center">
         <tr>
           	<td colspan="4" align="center" style="padding-top: 20px;font-size: 20pt"><b>应急指挥报告</b></td>
   		</tr>
