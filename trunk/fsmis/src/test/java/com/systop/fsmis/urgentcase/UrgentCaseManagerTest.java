@@ -255,4 +255,18 @@ public class UrgentCaseManagerTest extends BaseTransactionalTestCase {
 		}
 	}
 
+	/**
+	 * 测试删除应急事件的派遣情况对应的数据组
+	 * 
+	 */
+	@SuppressWarnings("unchecked")
+	public void testDelRroupOfCase() {
+		List gourpIds = urgentCaseManager.getGroupIdsOfCase(uc.getId(), county
+				.getId());
+		Integer ucId = uc.getId();
+		urgentCaseManager.remove(uc);
+		urgentCaseManager.delRroupOfCase(gourpIds);
+		assertEquals(0, urgentCaseManager.getGroupIdsOfCase(ucId, county.getId())
+				.size());
+	}
 }
