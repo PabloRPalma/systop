@@ -43,10 +43,10 @@ public final class AssessMentConstants {
 	public static final Map<String, String> ASSESSMENT_LEVEL = Collections
 			.synchronizedMap(new LinkedHashMap<String, String>());
 	static {
-		ASSESSMENT_LEVEL.put("1", "特大");
-		ASSESSMENT_LEVEL.put("2", "重大");
-		ASSESSMENT_LEVEL.put("3", "较大");
-		ASSESSMENT_LEVEL.put("4", "一般");
+		ASSESSMENT_LEVEL.put("特大", "特大");
+		ASSESSMENT_LEVEL.put("重大", "重大");
+		ASSESSMENT_LEVEL.put("较大", "较大");
+		ASSESSMENT_LEVEL.put("一般", "一般");
 	}
 
 	/** UPLOAD_ALLOWED_FILE_TYPES:允许上传的文件类型 **/
@@ -56,9 +56,8 @@ public final class AssessMentConstants {
 	public static final long UPLOAD_ALLOWED_FILE_SIZE = getAllowedFileSize();
 	
 	/**
-	 * getAllowedFileSize方法获得风险评估结果附件允许上传的最大文件大小，默认10MB
-	 * 
-	 * @return		允许上传的风险评估附件的大小	long
+	 * 获得风险评估结果附件允许上传的最大文件大小,默认10MB
+	 * @return 允许上传的风险评估附件的大小	long
 	 */
 	private static final long getAllowedFileSize() {
 		String sizeStr = ResourceBundleUtil.getString(ResourceBundle.getBundle("application"),
