@@ -30,7 +30,7 @@ import com.systop.fsmis.model.TaskDetail;
 public class TaskDetailAction extends
 		ExtJsCrudAction<TaskDetail, TaskDetailManager> {
 	// 是否为综合案件
-	private String isMultiple;
+	private String isMultipleCase;
 	// 默认显示的Tab序号,用于在view页面默认显示哪个Tab
 	private String modelId;
 
@@ -87,7 +87,7 @@ public class TaskDetailAction extends
 		}
 		// 区分一般案件和综合案件
 		buf.append("and detail.task.fsCase.isMultiple = ? ");
-		args.add(isMultiple);
+		args.add(isMultipleCase);
 		getRequest().setAttribute("userId", user.getId());
 		getRequest().setAttribute("userName", user.getName());
 
@@ -250,7 +250,7 @@ public class TaskDetailAction extends
 		List<Corp> corpList = getManager().getDao().query(
 				"from Corp c where c.dept.id = ?",
 				loginUserService.getLoginUserCounty(getRequest()).getId());
-		//待本阶段结束后,将企业信息自动补全功能改为JQuery来实现,再启用本段代码
+		// 待本阶段结束后,将企业信息自动补全功能改为JQuery来实现,再启用本段代码
 		// ReflectUtil.toMap(bean, propertyNames, containsNull)
 
 		return JSON;
@@ -303,14 +303,6 @@ public class TaskDetailAction extends
 		this.user = user;
 	}
 
-	public String getIsMultiple() {
-		return isMultiple;
-	}
-
-	public void setIsMultiple(String isMultiple) {
-		this.isMultiple = isMultiple;
-	}
-
 	public String getModelId() {
 		return modelId;
 	}
@@ -333,6 +325,14 @@ public class TaskDetailAction extends
 
 	public void setCorps(Map<String, String> corps) {
 		this.corps = corps;
+	}
+
+	public String getIsMultipleCase() {
+		return isMultipleCase;
+	}
+
+	public void setIsMultipleCase(String isMultipleCase) {
+		this.isMultipleCase = isMultipleCase;
 	}
 
 }
