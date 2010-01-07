@@ -1,6 +1,5 @@
 package com.systop.fsmis.model;
 
-import java.sql.Clob;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -39,16 +38,18 @@ public class Assessment extends BaseModel {
 	private Date askDate;
 	private String askCause;
 
-	private Date auditDate;
 	/**
-	 * 风险评估状态 "0" → 待审核; "1" → 审核通过; "2" → 审核未通过;  "3" → 评估完毕
+	 * 风险评估状态 "0" → 待审核; "1" → 审核通过; "2" → 审核未通过;  "3" → 评估启动;  "4" → 评估完毕
 	 */
 	private String state;
-	private String opinion;
+	
+	/** 评估等级 */
+	private String level;
 	private Date resultDate;
-	private Clob result;
+	private String result;
 
 	private Set<AsseMember> asseMemberse = new HashSet<AsseMember>(0);
+	
 	private Set<AssessmentAttach> asseAtts = new HashSet<AssessmentAttach>(0);
 
 	private Set<CheckResult> checkResults = new HashSet<CheckResult>(0);
@@ -107,16 +108,6 @@ public class Assessment extends BaseModel {
 		this.askCause = askCause;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "AUDIT_DATE", length = 11)
-	public Date getAuditDate() {
-		return this.auditDate;
-	}
-
-	public void setAuditDate(Date auditDate) {
-		this.auditDate = auditDate;
-	}
-
 	@Column(name = "STATE", length = 1)
 	public String getState() {
 		return state;
@@ -126,13 +117,13 @@ public class Assessment extends BaseModel {
 		this.state = state;
 	}
 
-	@Column(name = "OPINION", length = 500)
-	public String getOpinion() {
-		return this.opinion;
+	@Column(name = "LEVEL", length = 1)
+	public String getLevel() {
+		return level;
 	}
 
-	public void setOpinion(String opinion) {
-		this.opinion = opinion;
+	public void setLevel(String level) {
+		this.level = level;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -145,12 +136,12 @@ public class Assessment extends BaseModel {
 		this.resultDate = resultDate;
 	}
 
-	@Column(name = "RESULT")
-	public Clob getResult() {
+	@Column(name = "RESULT", length = 1000)
+	public String getResult() {
 		return this.result;
 	}
 
-	public void setResult(Clob result) {
+	public void setResult(String result) {
 		this.result = result;
 	}
 
