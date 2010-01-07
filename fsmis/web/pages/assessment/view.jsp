@@ -136,8 +136,10 @@ Ext.onReady(function(){
           <tr>
              <td align="right" width="90" style="height:20px">处理意见：</td>
              <td align="left" colspan="3">
-                <s:textarea id="result" name="model.result" cols="50" rows="6" readonly="true"></s:textarea> 
-             </td>
+	          	<div style="width:700px;word-break:break-all;">
+		          	${model.result}
+	          	</div>
+	          </td>             
           </tr>  
           </table></td></tr>                                    
 	</table>
@@ -147,7 +149,6 @@ Ext.onReady(function(){
 </div>
 <div id="fsCase" class="x-hide-display">
 <table id="mytable" >
-	      <tr><td>&nbsp;</td></tr>
           <tr>
              <td align="right" style="height:20px"><span style="font-weight:bold">事件标题：</span></td>
              <td align="left" >
@@ -192,7 +193,9 @@ Ext.onReady(function(){
           <tr>
 	          <td align="right" style="height:20px"><span style="font-weight:bold">事件描述：</span></td>
 	          <td align="left" colspan="3">
-	            <pre>${model.fsCase.descn}</pre>
+	          	<div style="width:700px;word-break:break-all;">
+		          	${model.fsCase.descn}
+	          	</div>
 	          </td>
           </tr>     
 </table>
