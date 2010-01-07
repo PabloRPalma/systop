@@ -10,7 +10,8 @@
 			<result name="audit">/pages/assessment/audit.jsp</result> 
 			<result name="start">/pages/assessment/start.jsp</result> 
 			<result name="result">/pages/assessment/result.jsp</result> 						
-			<result name="print">/pages/assessment/printpage.jsp</result> 											
+			<result name="print">/pages/assessment/printpage.jsp</result> 
+			<result name="view">/pages/assessment/view.jsp</result> 														
 			<result name="success" type="redirect">index.do</result>	
 			<result type="json" name="titles">
 		        <param name="ignoreHierarchy">false</param>
@@ -39,7 +40,8 @@
 	   <action name="*" class="asseAttachAction" method="{1}">
 	     <result name="index">/pages/assessment/attaches.jsp</result> 
 	     <result name="success" type="redirect">index.do?assessmentId=${assessmentId}</result>    
-	     <result name="input">/pages/assessment/error.jsp</result>           
+	     <result name="input">/pages/assessment/error.jsp</result> 
+	     <result name="view">/pages/assessment/attachesView.jsp</result> 	               
 	   </action>
 	 </package>  	
 </struts>
