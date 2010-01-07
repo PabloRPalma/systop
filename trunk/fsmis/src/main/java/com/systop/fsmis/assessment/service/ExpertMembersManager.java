@@ -65,7 +65,9 @@ public class ExpertMembersManager extends BaseGenericsManager<Expert> {
 	public void removeMembers(Integer assessmentId, Set<Integer> idSet) {
 		for (Integer id : idSet) {
 			AsseMember asseMember = asseMemberManager.getAsseMember(assessmentId, id, AssessMentConstants.EXPERT_MEMBER);
-			asseMemberManager.remove(asseMember);
+			if (asseMember != null ){
+				asseMemberManager.remove(asseMember);	
+			}
 		}
 	}
 	
