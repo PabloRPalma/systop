@@ -18,7 +18,7 @@ function DeptOperator() {
 				selectedDeptNames.push(inputs[i].deptName);
 			}
 		}
-		showNameDiv.innerHTML = "";
+		showNameDiv.innerHTML = "&nbsp;";
 		var selectedDeptNameStr = "";
 		for (i in selectedDeptNames) {
 			selectedDeptNameStr += "<b>" + selectedDeptNames[i] + "</b>&nbsp;&nbsp;";
