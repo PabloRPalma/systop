@@ -244,7 +244,7 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 							smsReceive.getMobileNum()).getName());
 		}
 
-		return INPUT;
+		return edit();
 	}
 
 	/**
