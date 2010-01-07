@@ -68,83 +68,83 @@
 <s:form id="save" action="save.do" method="post" theme="simple" validate="true">
 <div id="tabs">
 <div id="basic" class="x-hide-display"><s:hidden name="model.id" />
-<table id="mytable" height="360" style="margin-top: 5px">
+<table id="mytable" height="360" style="margin-top: 5px;width: 800px" align="center">
 	<tr>
-		<td align="right" width="215">事件名称：</td>
+		<td width="163" align="right">事件名称：</td>
 		<td align="left" colspan="3"><s:textfield id="title"
-			name="model.title" cssStyle="width:500px" cssClass="required" /><font color="red">&nbsp;*</font>
+			name="model.title" cssStyle="width:550px" cssClass="required" /><font color="red">&nbsp;*</font>
 		</td>
 	</tr>
 	<tr>
 		<td align="right">事发时间：</td>
-		<td width="287" align="left"><input type="text" name="model.caseTime" style="width: 148px"
+		<td width="263" align="left"><input type="text" name="model.caseTime" style="width: 175px"
 			value='<s:property value="model.caseTime"/>'
 			onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
 			class="Wdate required" /><font color="red">&nbsp;*</font></td>
-		<td width="88" align="right">预案等级：</td>
-        <td width="348" align="left">
-        	<s:select id="plansLevel" list="plansLevelMap"  name="model.plansLevel" cssStyle="width:148px"></s:select>
+		<td width="102" align="right">预案等级：</td>
+        <td width="252" align="left">
+        	<s:select id="plansLevel" list="plansLevelMap"  name="model.plansLevel" cssStyle="width:175px"></s:select>
        	</td>
 	</tr>
 	<tr>
 		<td align="right">事发地点：</td>
 		<td align="left" colspan="3"><s:textfield id="address"
-			name="model.address" cssStyle="width:500px" cssClass="required" /><font color="red">&nbsp;*</font>
+			name="model.address" cssStyle="width:550px" cssClass="required" /><font color="red">&nbsp;*</font>
 		</td>
 	</tr>
 	<tr>
 		<td align="right">波及范围：</td>
 		<td align="left" colspan="3"><s:textfield id="caseRange"
-			name="model.caseRange" cssStyle="width:500px" /></td>
+			name="model.caseRange" cssStyle="width:550px" /></td>
 	</tr>
 	<tr>
 		<td align="right">受害人数：</td>
 		<td align="left"><s:textfield id="harmNum"
-			name="model.harmNum" cssStyle="width:148px" cssClass="digits"/></td>
+			name="model.harmNum" cssStyle="width:175px" cssClass="digits"/></td>
 		<td align="right">死亡人数：</td>
 		<td align="left"><s:textfield id="deathNum"
-			name="model.deathNum" cssStyle="width:148px" cssClass="digits"/></td>
+			name="model.deathNum" cssStyle="width:175px" cssClass="digits"/></td>
 	</tr>
 	<tr>
 		<td align="right">事件报告人：</td>
 		<td align="left"><s:textfield id="reporter"
-			name="model.reporter" cssStyle="width:148px" cssClass="required" /><font
+			name="model.reporter" cssStyle="width:175px" cssClass="required" /><font
 			color="red">&nbsp;*</font></td>
 		<td align="right">报告人电话：</td>
 		<td align="left"><s:textfield id="reporterPhone"
-			name="model.reporterPhone" cssStyle="width:148px" cssClass="required" /><font
+			name="model.reporterPhone" cssStyle="width:175px" cssClass="required" /><font
 			color="red">&nbsp;*</font></td>
 	</tr>
 	<tr>
 		<td align="right">报告人单位：</td>
 		<td align="left" colspan="3"><s:textfield id="reporterUnits"
-			name="model.reporterUnits" cssStyle="width:500px" /></td>
+			name="model.reporterUnits" cssStyle="width:550px" /></td>
 	</tr>
 	<tr>
 		<td align="right">事件描述：</td>
 		<td align="left" colspan="3" style="vertical-align: top"><s:textarea id="descn"
-			name="model.descn" cssStyle="width:500px; height:170px" cssClass="required" />
+			name="model.descn" cssStyle="width:550px; height:170px" cssClass="required" />
 			<font color="red">&nbsp;*</font></td>
 	</tr>
 </table>
 </div>
 <div id="hospital" class="x-hide-display">
-<table id="mytable" height="380" style="margin-top: 5px">
+<table id="mytable" height="380" style="margin-top: 5px;width: 800px" align="center">
 	<tr>
 		<td width="15%" align="right">周边医院情况：</td>
 		<td align="left" style="vertical-align: top;" width="85%"><s:textarea
 			id="hospitalInf" name="model.hospitalInf"
-			cssStyle="width:600px; height:330px" /></td>
+			cssStyle="width:650px; height:330px" /></td>
 	</tr>
 </table>
 </div>
 <div id="traffic" class="x-hide-display">
-<table id="mytable" height="380" style="margin-top: 5px">
+<table id="mytable" height="380" style="margin-top: 5px;width: 800px" align="center">
 	<tr>
 		<td width="15%" align="right">周边交通情况：</td>
 		<td align="left" style="vertical-align: top;" width="85%"><s:textarea
 			id="trafficInf" name="model.trafficInf"
-			cssStyle="width:600px; height:330px" /></td>
+			cssStyle="width:650px; height:330px" /></td>
 	</tr>
 </table>
 </div>
