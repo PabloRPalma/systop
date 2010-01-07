@@ -7,16 +7,20 @@
 <title>内部消息管理</title>
 <%@include file="/common/extjs.jsp"%>
 <%@include file="/common/meta.jsp"%>
-<%@include file="/common/validator.jsp"%>
+<script type="text/javascript">
+  function goBack(){
+    window.location.href="received.do";
+  }
+</script>
 </head>
 <body>
 <div class="x-panel">
 <div class="x-panel-header">内部消息</div>
-<div class="center">
-<fieldset style="width: 800px; padding-top: 2px">
+<div align="center">
+<fieldset style="width: 600px; padding-top: 2px">
   <legend>内部消息</legend>
 	<s:hidden name="model.id"/>
-	<table width="800px" align="center" border="0" cellpadding="3" cellspacing="3">
+	<table width="600px" align="center" border="0" cellpadding="3" cellspacing="3">
 		<tr>
 			<td align="right" width="70">发信人：</td>
 			<td align="left">
@@ -44,18 +48,15 @@
 		<tr>
 			<td align="right" width="70">收信人：</td>
 			<td align="left">
-				<s:textarea id="content" name="model.receiver.name" cssStyle="width:500px;" readonly="true"/>
+				<s:textarea id="content" name="model.receiver.name" cssStyle="width:500px;height:50px" readonly="true"/>
 			</td>
 		</tr>
 	</table>
 </fieldset>
 </div>
 </div>
-<script type="text/javascript">
-	$(document).ready(function() {
-	$("#save").validate();
-});
-</script>
-</body>
+<div align="center" style="padding-top: 10px;">
+	<input type="button" value="返回" cssClass="button" onclick="goBack()"/>
+</div>
 </body>
 </html>
