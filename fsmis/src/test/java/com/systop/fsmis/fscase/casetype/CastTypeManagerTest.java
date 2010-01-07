@@ -5,20 +5,30 @@ import org.springframework.test.context.ContextConfiguration;
 import com.systop.core.test.BaseTransactionalTestCase;
 import com.systop.fsmis.fscase.casetype.service.CaseTypeManager;
 import com.systop.fsmis.model.CaseType;
-
+/**
+ * 事件类别管理测试类
+ * @author shaozhiyuan
+ *
+ */
 
 @ContextConfiguration(locations = { "classpath*:spring/applicationContext-*.xml" })
 public class CastTypeManagerTest extends BaseTransactionalTestCase {
 
+	//注入事件类别manager
 	@Autowired
 	private CaseTypeManager caseTypeManager;
 	
-	
+	/**
+	 * 测试得到一级类别map列表方法
+	 */
 	public void testGetLevelOneMap() {
 		caseTypeManager.getLevelOneMap();
 		
 	}
 
+	/**
+	 * 测试保存类别方法
+	 */
 	public void testSaveCaseType() {
 		CaseType casetype = new CaseType();
 		casetype.setName("测试类别");
@@ -29,7 +39,9 @@ public class CastTypeManagerTest extends BaseTransactionalTestCase {
 	}
 
 	
-
+	/**
+	 * 测试得到一级类别list列表方法
+	 */
 	public void testGetLevelOneList() {
 		caseTypeManager.getLevelOneList();
 	}
