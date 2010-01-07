@@ -17,6 +17,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.security.user.model.User;
@@ -119,6 +120,7 @@ public class Notice extends BaseModel {
 		this.title = title;
 	}
 
+	@Type (type = "text")
 	@Column(name = "CONTENT")
 	public String getContent() {
 		return this.content;
