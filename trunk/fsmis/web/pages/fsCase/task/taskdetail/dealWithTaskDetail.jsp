@@ -33,7 +33,7 @@
 <div id="dealWithTaskDetail" class="x-toolbar">
 	<s:form  id="frmDealWithTaskDetail" action="doCommitTaskDetail.do" method="post" theme="simple" enctype="multipart/form-data" onsubmit="return onCheckForm()">
 	<s:hidden name="model.id"/>
-	<s:hidden name="isMultiple"/>
+	<s:hidden name="isMultipleCase"/>
 	<s:hidden name="modelId" />
 	<table align="left" width="700px">	
 	<tr>
