@@ -33,6 +33,7 @@ Ext.onReady(function(){
         anchor : '100% 100%',
         height : 380,
         activeTab: 0,
+        baseCls : '',
         frame:false,
         defaults:{autoHeight: false},
         items:[
