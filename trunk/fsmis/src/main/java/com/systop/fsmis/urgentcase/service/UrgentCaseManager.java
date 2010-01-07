@@ -1,5 +1,6 @@
 package com.systop.fsmis.urgentcase.service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
@@ -11,6 +12,7 @@ import java.util.regex.Pattern;
 
 import net.sf.json.JSONObject;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -264,6 +266,42 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
     		getDao().save(urgentResult);
   		}
 		}
+  }
+  
+  /**
+   * 取得应急事件的派遣情况对应的数据组
+   * @param caseId 事件ID
+   * @param county 区县
+   */
+  public List getGroupIdsOfCase(Integer caseId, Integer countyId) {
+  	List<Integer> gourpIdList = new ArrayList();
+  	List<UrgentResult> resultList = queryGroupResult(caseId, countyId);
+		if (CollectionUtils.isNotEmpty(resultList)) {
+			for (UrgentResult urgentResult : resultList) {
+				if (urgentResult.getUrgentGroup() != null) {
+					Integer groupId = urgentResult.getUrgentGroup().getId();
+					gourpIdList.add(groupId);
+				}
+  		}
+		}
+		return gourpIdList;
+  }
+  
+  /**
+   * 删除应急事件的派遣情况对应的数据组
+   * @param gourpIds 组ID集合
+   */
+  @Transactional
+  public void delRroupOfCase(List<Integer> gourpIds) {
+  	if (CollectionUtils.isNotEmpty(gourpIds)) {
+  		for (Integer groupId : gourpIds) {
+  			UrgentGroup urgentGroup = getDao().get(UrgentGroup.class, groupId);
+  			if (urgentGroup != null) {
+  				getDao().evict(urgentGroup);
+  				getDao().delete(UrgentGroup.class, groupId);
+  			}
+  		}
+  	}
   }
   
   /**

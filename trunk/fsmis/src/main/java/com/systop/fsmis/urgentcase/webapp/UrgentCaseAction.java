@@ -128,6 +128,21 @@ public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseMana
 	}
 	
 	/**
+	 * 删除应急事件及所对应的派遣结果数据组
+	 */
+	@Override
+	public String remove() {
+		Dept county = loginUserService.getLoginUserCounty(getRequest());
+		if (county != null) {
+			List gourpIds = getManager().getGroupIdsOfCase(getModel().getId(), county.getId());
+			super.remove();
+			getManager().delRroupOfCase(gourpIds);
+		}
+		
+		return SUCCESS;
+	}
+	
+	/**
 	 * 查看应急事件的详细信息
 	 */
 	@Override
