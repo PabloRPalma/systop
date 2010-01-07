@@ -57,7 +57,8 @@ String.prototype.trim = function(){
       </td>
       <td width="8%" style="vertical-align: middle"><s:select id="creator"
 		  name="model.creator" list="expertList" listKey="expertName" listValue="expertName"
-		  headerKey="" headerValue="--请选择--" cssStyle="width:120px" /></td>	     
+		  headerKey="" headerValue="--请选择--" cssStyle="width:120px" /></td>	
+	  <td align="center"><span style="color:red;font-weight:bold">【只能上传小于10MB的文件】</span></td>     
       <td align="right">
         <s:submit value="上传附件" cssClass="button" />
       </td>      
