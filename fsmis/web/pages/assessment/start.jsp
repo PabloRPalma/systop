@@ -28,12 +28,12 @@
 <body onLoad="preFckEditor()">
 <script type="text/javascript">
 window.onload = function(){
-	var enId = $("#assessmentId")[0].value;
+	var enId = $("#id")[0].value;
     $.ajax({
 		url: '${ctx}/assessment/getMembers.do',
 		type: 'post',
 		dataType: 'json',
-		data: {assessmentId : enId},
+		data: {id : enId},
 		success: function(members, textStatus){
 		  if(members != null){
 		    document.getElementById("member").value = members;
@@ -45,7 +45,7 @@ window.onload = function(){
 		url: '${ctx}/assessment/getLeaders.do',
 		type: 'post',
 		dataType: 'json',
-		data: {assessmentId : enId},
+		data: {id : enId},
 		success: function(leaders, textStatus){
 		  if(leaders != null){
 		    document.getElementById("leader").value = leaders;
@@ -87,7 +87,7 @@ Ext.onReady(function(){
 <s:form  action="startSave.do" id="startForm" method="post" theme="simple" validate="true" enctype="multipart/form-data">
 <div id="tabs">
 <div id="basic" class="x-hide-display">
-	<s:hidden id="assessmentId" name="model.id" />
+	<s:hidden id="id" name="model.id" />
 	<s:hidden id="fsCaseId" name="model.fsCase.id" />	
 	<table id="mytable" >
 	      <tr><td>&nbsp;</td></tr>
@@ -114,7 +114,7 @@ Ext.onReady(function(){
 	      <tr><td>&nbsp;</td></tr>     
           <tr>
              <td align="right" width="90" style="height:20px"><span style="font-weight:bold">专家组组长：</span></td>
-             <td><input class="text" type="text" id="leader" name="leader" size="50">
+             <td><input class="text" type="text" id="leader" name="leader" size="50" readonly="readonly">
                  <a href="#"
 					onclick="javascript:membersOfAssessment(${model.id}, 1);"> <img
 					src="${ctx}/images/icons/user.gif" border="0" title="设置专家组组长" />
@@ -123,7 +123,7 @@ Ext.onReady(function(){
           </tr> 	                     
           <tr>
              <td align="right" width="90" style="height:20px"><span style="font-weight:bold">专家组成员：</span></td>
-             <td><input class="text" type="text" id="member" name="member" size="50">
+             <td><input class="text" type="text" id="member" name="member" size="50" readonly="readonly">
                  <a href="#"
 					onclick="javascript:membersOfAssessment(${model.id}, 2);"> <img
 					src="${ctx}/images/icons/user.gif" border="0" title="设置专家组成员" />
