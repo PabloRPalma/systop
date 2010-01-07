@@ -29,7 +29,7 @@ background-image:url(${ctx}/images/icons/users_1.gif);
 <script>
 var emp;
    emp = new UserSelector({
-       url: '${ctx}/security/user/userTree.do',
+       url: '${ctx}/security/user/userTree.do?parentDeptId=${countryId}',
        el: 'emp_sel_container',
        idsEl:'userId',
        textEl:'person',
