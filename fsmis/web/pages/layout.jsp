@@ -173,7 +173,7 @@
 			setTimeout("checkNewNotice()", 20000);
 		}
 		
-		//checkNewNotice();
+		checkNewNotice();
 	</script>
 </body>
 </html>
