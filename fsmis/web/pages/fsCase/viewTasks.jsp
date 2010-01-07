@@ -96,10 +96,9 @@
 							</c:when>
 							<c:otherwise>
 								<c:choose>
-									<c:when test="${detail.remainDays >= 0}">剩余天数</c:when>
-									<c:otherwise>逾期天数</c:otherwise>
+									<c:when test="${detail.remainDays >= 0}">剩余天数${detail.remainDays}</c:when>
+									<c:otherwise>逾期天数${-detail.remainDays}</c:otherwise>
 								</c:choose>
-								${detail.remainDays}
 							</c:otherwise>
 						</c:choose></td>
 						<td width="15%" align="center"><c:if
