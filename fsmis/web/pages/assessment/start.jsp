@@ -30,28 +30,28 @@
 window.onload = function(){
 	var enId = $("#id")[0].value;
     $.ajax({
-		url: '${ctx}/assessment/getMembers.do',
-		type: 'post',
-		dataType: 'json',
-		data: {id : enId},
-		success: function(members, textStatus){
-		  if(members != null){
-		    document.getElementById("member").value = members;
-		  }
-		}
-	});
-
-    $.ajax({
 		url: '${ctx}/assessment/getLeaders.do',
 		type: 'post',
 		dataType: 'json',
 		data: {id : enId},
 		success: function(leaders, textStatus){
 		  if(leaders != null){
-		    document.getElementById("leader").value = leaders;
+			$("#leader")[0].value = leaders;
 		  }
 		}
     });	
+    	
+    $.ajax({
+		url: '${ctx}/assessment/getMembers.do',
+		type: 'post',
+		dataType: 'json',
+		data: {id : enId},
+		success: function(members, textStatus){
+		  if(members != null){
+			$("#member")[0].value = members;
+		  }
+		}
+	});
 };
   
 	   
@@ -90,46 +90,53 @@ Ext.onReady(function(){
 	<s:hidden id="id" name="model.id" />
 	<s:hidden id="fsCaseId" name="model.fsCase.id" />	
 	<table id="mytable" >
-	      <tr><td>&nbsp;</td></tr>
+	    <tr>
+		<td width="520">
+		  <table width="562" align="left" border="0" cellspacing="2">
+		  <tr>
+            <td colspan="1"></td>
+          </tr>
           <tr>
              <td align="right" width="90">申&nbsp;&nbsp;请&nbsp;&nbsp;人：</td>
              <td align="left" >
              	<stc:username></stc:username>
              </td>
-          </tr>
-	      <tr><td>&nbsp;</td></tr>          
+          </tr>       
           <tr>
              <td align="right" width="90">申请日期：</td>
              <td align="left">
                 <s:date name="model.askDate" format="yyyy-MM-dd" />
              </td>    
-          </tr>
-	      <tr><td>&nbsp;</td></tr>          
+          </tr>     
           <tr>
 	          <td align="right" width="90">申请原因：</td>
 	          <td align="left" colspan="3">
 	            <pre>${model.askCause}</pre>
 	          </td>
-          </tr> 
-	      <tr><td>&nbsp;</td></tr>     
+          </tr>  
           <tr>
              <td align="right" width="90" style="height:20px"><span style="font-weight:bold">专家组组长：</span></td>
-             <td><input class="text" type="text" id="leader" name="leader" size="50" readonly="readonly">
-                 <a href="#"
-					onclick="javascript:membersOfAssessment(${model.id}, 1);"> <img
-					src="${ctx}/images/icons/user.gif" border="0" title="设置专家组组长" />
-				         选择</a>				    
+             <td>
+             <s:textarea id="leader" name="leader" cssStyle="width:360px; height:70px" cssClass="required"/>
+             <font color="red">*</font>    
 			 </td>
+			 <td align="left" width="90" style="height:20px"><span style="font-weight:bold">
+             <a href="#" onclick="javascript:membersOfAssessment(${model.id}, 1);"> <img
+				src="${ctx}/images/icons/user.gif" border="0" title="设置专家组组长" /> 选择</a>	
+			 </span></td>
           </tr> 	                     
           <tr>
              <td align="right" width="90" style="height:20px"><span style="font-weight:bold">专家组成员：</span></td>
-             <td><input class="text" type="text" id="member" name="member" size="50" readonly="readonly">
-                 <a href="#"
-					onclick="javascript:membersOfAssessment(${model.id}, 2);"> <img
-					src="${ctx}/images/icons/user.gif" border="0" title="设置专家组成员" />
-				         选择</a>				    
+             <td>
+             <s:textarea id="member" name="member" cssStyle="width:360px; height:70px" cssClass="required"/>
+             <font color="red">*</font>	    
 			 </td>
-          </tr>                  
+			 <td align="left" width="90" style="height:20px"><span style="font-weight:bold">
+             <a href="#" onclick="javascript:membersOfAssessment(${model.id}, 2);"> <img
+				src="${ctx}/images/icons/user.gif" border="0" title="设置专家组成员" /> 选择</a>	
+			 </span></td>			 
+          </tr>  
+          </table></td></tr>                    
 	</table>
 </div>
 <div id="fsCase" class="x-hide-display">
