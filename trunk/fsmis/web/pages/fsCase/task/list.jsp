@@ -9,7 +9,7 @@
 <script type="text/javascript">
 function remove(id){
 	if (confirm("确认要删除此任务吗?")){
-		window.location.href="${ctx}/task/remove.do?model.id=" + id;		
+		window.location.href="${ctx}/task/remove.do?model.id=" + id+"&modelId=1&isMultipleCase="+${isMultipleCase};	
 	}
 }
 
