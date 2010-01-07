@@ -44,7 +44,8 @@
 	theme="simple" enctype="multipart/form-data" validate="true" id="taskForm">
 	<input type="hidden" name="model.fsCase.id" value="${model.fsCase.id}"></input>
 	<input type="hidden" name="modelId" value="${param['modelId'] }"></input>
-	<input type="hidden" name="isMultiple" value="${param['isMultiple'] }"></input>
+	<input type="hidden" name="isMultipleCase" value="${param['isMultipleCase'] }"></input>
+	<s:hidden name="isMultiple"></s:hidden>
 	<fieldset style="width: 800px; padding: 10px 10px 10px 10px;" class="">
 	<legend> 派遣信息</legend>
 	<table width="680px">
