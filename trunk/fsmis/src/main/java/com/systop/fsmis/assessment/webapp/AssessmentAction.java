@@ -205,14 +205,14 @@ public class AssessmentAction extends
 	
   public String getMembers() {
 		StringBuffer members = new StringBuffer();
-		if (assessmentId != null ){
-			List<AsseMember> AsseMembers = asseMemberManager.getAsseMembers(assessmentId, AssessMentConstants.EXPERT_MEMBER);
+		if (getModel().getId() != null ){
+			List<AsseMember> AsseMembers = asseMemberManager.getAsseMembers(getModel().getId(), AssessMentConstants.EXPERT_MEMBER);
 	  	if (CollectionUtils.isNotEmpty(AsseMembers)){
 		    for (AsseMember asseMember : AsseMembers) {
 		    	members.append(asseMember.getExpert().getName());
 		    	members.append(",");
 		    }
-		    if (StringUtils.isNotBlank(members.toString()) && members.toString().lastIndexOf(",") > 0){
+		    if (members.length() > 0 && members.toString().lastIndexOf(",") > 0){
 		    	jsonMembers = members.toString().substring(0, members.toString().length() -1 );
 		    }
 	  	}
@@ -226,19 +226,46 @@ public class AssessmentAction extends
 	 */
   public String getLeaders() {
 		StringBuffer leaders = new StringBuffer();
-		if (assessmentId != null ){
-			List<AsseMember> AsseMembers = asseMemberManager.getAsseMembers(assessmentId, AssessMentConstants.EXPERT_LEADER);
+		if (getModel().getId() != null ){
+			List<AsseMember> AsseMembers = asseMemberManager.getAsseMembers(getModel().getId(), AssessMentConstants.EXPERT_LEADER);
 	  	if (CollectionUtils.isNotEmpty(AsseMembers)){
 		    for (AsseMember asseMember : AsseMembers) {
 		    	leaders.append(asseMember.getExpert().getName());
 		    	leaders.append(",");
 		    }
-		    if (StringUtils.isNotBlank(leaders.toString()) && leaders.toString().lastIndexOf(",") > 0){
+		    if (leaders.length() > 0 && leaders.toString().lastIndexOf(",") > 0){
 		    	jsonLeaders = leaders.toString().substring(0, leaders.toString().length() -1 );
 		    }
 	  	}
 		}
     return "leaders";
+  }
+  
+	/**
+	 * 风险评估上报
+	 */
+	public String result() {
+		return "result";
+	}
+	
+	/**
+	 * 保存风险评估上报结果信息
+	 */
+	public String resultSave() {
+		if (getModel().getId() != null ){
+			Assessment assessment = getManager().get(getModel().getId());
+			assessment.setState(AssessMentConstants.EVAL_IS_OVER_STATE);
+			getManager().save(assessment);
+		}
+		return SUCCESS;
+	}
+	
+  /**
+   * 返回评估风险等级集合
+   * @return list
+   */
+  public Map<String, String> getAssessmentLevels() {
+    return AssessMentConstants.ASSESSMENT_LEVEL;
   }
   
 	/**
