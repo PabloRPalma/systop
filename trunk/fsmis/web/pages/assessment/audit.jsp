@@ -93,7 +93,6 @@ Ext.onReady(function(){
 </div>
 <div id="fsCase" class="x-hide-display">
 <table id="mytable" >
-	      <tr><td>&nbsp;</td></tr>
           <tr>
              <td align="right" style="height:20px"><span style="font-weight:bold">事件标题：</span></td>
              <td align="left" >
@@ -144,7 +143,9 @@ Ext.onReady(function(){
           <tr>
 	          <td align="right" style="height:20px"><span style="font-weight:bold">事件描述：</span></td>
 	          <td align="left" colspan="3">
-	            <pre>${model.fsCase.descn}</pre>
+	          	<div style="width:700px;word-break:break-all;">
+		          	${model.fsCase.descn}
+	          	</div>
 	          </td>
           </tr>     
 </table>
