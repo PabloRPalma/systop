@@ -50,9 +50,9 @@ public class TaskManagerTest extends BaseTransactionalTestCase {
 		//新增任务附件
 		TaskAtt taskatt = new TaskAtt();
 		taskatt.setTitle("任务附件");
-		taskatt.setPath("c:/test.jpg");
+		taskatt.setPath("c:/test.doc");
 		//创建一磁盘文件，作为测试附件
-		File file = new File("c:/test.jpg");
+		File file = new File("c:/test.doc");
 		file.createNewFile();
 		List<TaskAtt> taskAtts = new ArrayList<TaskAtt>();
 		taskAtts.add(taskatt);
