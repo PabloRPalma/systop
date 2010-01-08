@@ -283,7 +283,7 @@ public class UrgentCase extends BaseModel {
 		this.plansLevel = plansLevel;
 	}
 
-	@Column(name = "HOSPITAL_INF", length = 255)
+	@Column(name = "HOSPITAL_INF", length = 4000)
 	public String getHospitalInf() {
 		return this.hospitalInf;
 	}
@@ -292,7 +292,7 @@ public class UrgentCase extends BaseModel {
 		this.hospitalInf = hospitalInf;
 	}
 
-	@Column(name = "TRAFFIC_INF", length = 255)
+	@Column(name = "TRAFFIC_INF", length = 4000)
 	public String getTrafficInf() {
 		return this.trafficInf;
 	}
@@ -367,7 +367,7 @@ public class UrgentCase extends BaseModel {
 		this.auditDate = auditDate;
 	}
 
-	@Column(name = "AUDIT_OPINION", length = 510)
+	@Column(name = "AUDIT_OPINION", length = 4000)
 	public String getAuditOpinion() {
 		return this.auditOpinion;
 	}

@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -178,7 +179,8 @@ public class UrgentGroup extends BaseModel {
 		this.isOriginal = isOriginal;
 	}
 
-	@ManyToMany(cascade = {}, fetch = FetchType.LAZY, mappedBy = "urgentGroups", targetEntity = User.class)
+	@ManyToMany(targetEntity = User.class, cascade = {}, fetch = FetchType.LAZY)
+	@JoinTable(name = "user_urgentGroup", joinColumns = { @JoinColumn(name = "urgentGroup_id") }, inverseJoinColumns = { @JoinColumn(name = "user_id") })
 	public Set<User> getUsers() {
 		return this.users;
 	}
