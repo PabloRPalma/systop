@@ -45,7 +45,7 @@ public class UcGroupAction extends
 	/**
 	 * 用户ID
 	 */
-	private String userIds;
+	private String userIds = "";
 	/**
 	 * 页面前台使用
 	 */
@@ -118,9 +118,11 @@ public class UcGroupAction extends
 		for (User u : userSet) {
 			if (length == userSet.size() - 1) {
 				person += u.getName();
+				userIds += u.getId();
 				break;
 			}
 			person += u.getName() + ",";
+			userIds += u.getId() + ",";
 			length++;
 		}
 		return INPUT;
