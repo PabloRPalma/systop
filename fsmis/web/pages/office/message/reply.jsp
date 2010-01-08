@@ -26,7 +26,7 @@
 		<tr>
 			<td align="right">内容：</td>
 			<td align="left">
-			<s:textarea id="content" name="model.content" cssStyle="width:450px; height:50px" cssClass="required"/><font color="red">&nbsp;*</font>
+			<s:textarea id="content" name="model.content" cssStyle="width:450px; height:100px" cssClass="required"/><font color="red">&nbsp;*</font>
 		</tr>
 	</table>
 </fieldset>
