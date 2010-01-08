@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -116,8 +117,12 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
   					utGroupNotOrg.setUrgentType(urgentGroup.getUrgentType());
   					utGroupNotOrg.setCategory(urgentGroup.getCategory());
   					utGroupNotOrg.setCounty(urgentGroup.getCounty());
-  					//设置用户集合,依赖于组模块的完成，有待修改.....
-  					utGroupNotOrg.setUsers(null);
+  					//设置指挥组登录人员
+  					Set<User> users = urgentGroup.getUsers();
+  					for (User user : users) {
+  						user.getUrgentGroups().add(utGroupNotOrg);
+  						utGroupNotOrg.getUsers().add(user);
+  					}
   					utGroupNotOrg.setPhone(urgentGroup.getPhone());
   					utGroupNotOrg.setMobel(urgentGroup.getMobel());
   					utGroupNotOrg.setPrincipal(urgentGroup.getPrincipal());
@@ -297,8 +302,7 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
 		if (CollectionUtils.isNotEmpty(resultList)) {
 			for (UrgentResult urgentResult : resultList) {
 				if (urgentResult.getUrgentGroup() != null) {
-					Integer groupId = urgentResult.getUrgentGroup().getId();
-					gourpIdList.add(groupId);
+					gourpIdList.add(urgentResult.getUrgentGroup().getId());
 				}
   		}
 		}
@@ -333,17 +337,16 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
   	if (StringUtils.isNotBlank(mobelNum)) {
   		nums = mobelNum.split(";");
   		for (int i = 0; i < nums.length; i++ ) {
-  			String num = nums[i];
-  			if(MobileNumChecker.checkMobilNumberDigit(num)) {
-  				logger.info("发送到手机号码：{}, 内容：{}", num, content);
-  				smsSendManager.addMessage(num, content);
+  			if(MobileNumChecker.checkMobilNumberDigit(nums[i])) {
+  				logger.info("发送到手机号码：{}, 内容：{}", nums[i], content);
+  				smsSendManager.addMessage(nums[i], content);
   			}
   		}
   	}
   }
   
   /**
-   * 取得事件派发结果中指挥组的负责人员手机号码
+   * 取得事件派发结果中指挥组的负责人与操作人的手机号码
    * 以分号分隔的手机号码字符串
    */
   public String getOperatorOfGroupForCase(Integer caseId, Integer countyId) {
@@ -351,10 +354,14 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
   	List<UrgentResult> resultList = queryGroupResult(caseId, countyId);
 		if (CollectionUtils.isNotEmpty(resultList)) {
 			for (UrgentResult urgentResult : resultList) {
-				if (urgentResult.getUrgentGroup() != null) {
-					UrgentGroup urgentGroup = urgentResult.getUrgentGroup();
+				UrgentGroup urgentGroup = urgentResult.getUrgentGroup();
+				if (urgentGroup != null) {
 					if (StringUtils.isNotBlank(urgentGroup.getMobel())) {
 						mobelNum.append(urgentGroup.getMobel()).append(";");
+					}
+					Set<User> users = urgentGroup.getUsers();
+					for (User user : users) {
+						mobelNum.append(user.getMobile()).append(";");
 					}
 				}
 			}
