@@ -215,7 +215,11 @@ public class MessageAction extends ExtJsCrudAction<Message, MessageManager> {
 		getModel().setIsNew(FsConstants.N);
 		getManager().save(getModel());
 		getModel().setReceiver(getModel().getSender());
-		getModel().setContent("");
+		StringBuffer content = new StringBuffer("在  ");  
+		content.append(getModel().getCreateTime().toString().substring(0, 19)).append(" ,");
+		content.append("'").append(getModel().getReceiver().getName()).append("'").append("写道：\n");
+		content.append(getModel().getContent()).append("\n-------------------").append("\n");
+		getModel().setContent(content.toString());
 		return "reply";
 	}
 	
