@@ -4,7 +4,7 @@
 
 <html>
 <head>
-<title>事件采集管理</title>
+<title>案件采集管理</title>
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/ec.jsp"%>
 <script type="text/javascript">
@@ -30,11 +30,11 @@ function remove(id){
 	<tr>
 		<td><s:form action="index" method="post">
 			<s:hidden name="isMultipleCase"></s:hidden>
-						事件标题:
+						案件标题:
 			<s:textfield name="model.title" cssStyle="width:100px"></s:textfield>	
-						事件编号:
+						案件编号:
 			<s:textfield name="model.code" cssStyle="width:70px"></s:textfield>
-						事发时间:开始
+						案发时间:开始
 			<input type="text" name="caseBeginTime" style="width: 140px"
 				value='<s:date name="caseBeginTime" format="yyyy-MM-dd HH:mm:ss"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})"
@@ -44,7 +44,7 @@ function remove(id){
 				value='<s:date name="caseEndTime" format="yyyy-MM-dd HH:mm:ss"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})"
 				class="Wdate" />
-			                              事件状态:
+			                              案件状态:
 			<s:select name="model.status" list="stateMap" headerKey="" headerValue="请选择"/>		
 			<s:submit value="查询" cssClass="button"></s:submit>
 		</s:form></td>
@@ -82,10 +82,10 @@ function remove(id){
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	<ec:row>
 		<ec:column width="30" property="_s" title="No." value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center"/>	
-		<ec:column width="350" property="title" title="事件标题" sortable="false"/>
-		<ec:column width="70" property="code" title="事件编号" sortable="false"/>
-		<ec:column width="100" property="caseType.name" title="事件类别" sortable="false"/>
-		<ec:column width="110" property="caseTime" title="事发时间"
+		<ec:column width="350" property="title" title="案件标题" sortable="false"/>
+		<ec:column width="70" property="code" title="案件编号" sortable="false"/>
+		<ec:column width="100" property="caseType.name" title="案件类别" sortable="false"/>
+		<ec:column width="110" property="caseTime" title="案发时间"
 			style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm" sortable="false"/>
 		<ec:column width="120" property="_2" title="状态" style="text-align:center" sortable="false">
 			<c:if test="${item.status == '0'}"><font color="red">未派遣</font></c:if>
@@ -118,7 +118,7 @@ function remove(id){
             </c:if>
             </stc:role>
 			<c:if test="${item.status != '0'}">
-			     <font color="#999999" title="已派遣事件不能删除">删除</font>
+			     <font color="#999999" title="已派遣案件不能删除">删除</font>
 			</c:if>
 			<c:if test="${item.status == '0'}">
 			 <a href="#" onclick="remove(${item.id})" >
