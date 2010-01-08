@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.core.Constants;
@@ -125,6 +126,7 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 	/**
 	 * 接收事件信息 事件的来源有 短信举报、外网网站的在线举报、管理员手工录入
 	 */
+	@Transactional
 	public String save() {
 
 		if (getModel().getId() == null) {
@@ -167,7 +169,13 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 		}
 		getManager().getDao().clear();
 		getManager().save(getModel());
-
+		
+		//如果是通过短信添加的案件,则为短信添加案件关联
+		if (smsReceiveId != null && smsReceiveId.intValue() != 0) {
+			SmsReceive smsReceive = (SmsReceive) getManager().getDao().findObject("from SmsReceive sr where sr.id = ?", smsReceiveId);
+			smsReceive.setFsCase(getModel());
+			getManager().getDao().save(smsReceive);
+		}
 		return SUCCESS;
 	}
 
@@ -250,8 +258,7 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 	/**
 	 * 根据id得到短信实体实例
 	 * 
-	 * @param smsReceiveId
-	 *            短信id
+	 * @param smsReceiveId 短信id
 	 * @return
 	 */
 	private SmsReceive getReceiveById(Integer smsReceiveId) {
