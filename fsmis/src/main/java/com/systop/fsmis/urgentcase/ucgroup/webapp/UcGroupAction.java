@@ -128,6 +128,9 @@ public class UcGroupAction extends
 		return INPUT;
 	}
 
+	/**
+	 * 删除
+	 */
 	public String remove() {
 		getManager().setUserUrgentGroup(null, getModel());
 		getManager().remove(getModel());
