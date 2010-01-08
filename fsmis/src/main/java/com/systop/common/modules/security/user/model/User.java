@@ -724,8 +724,8 @@ public class User extends BaseModel implements UserDetails, Serializable {
 	public void setAsseForProposer(Set<Assessment> asseForProposer) {
 		this.asseForProposer = asseForProposer;
 	}
-	@ManyToMany(targetEntity = UrgentGroup.class, cascade = {}, fetch = FetchType.LAZY)
-	@JoinTable(name = "user_urgentGroup", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "urgentGroup_id") })
+	
+	@ManyToMany(cascade = {}, fetch = FetchType.LAZY, mappedBy = "users", targetEntity = UrgentGroup.class)
 	public Set<UrgentGroup> getUrgentGroups() {
 		return urgentGroups;
 	}
