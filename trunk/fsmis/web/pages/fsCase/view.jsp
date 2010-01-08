@@ -191,7 +191,26 @@
 <table id="mytable" height="320">
 	<tr>
 		<td height="200" align="left" valign="top">
-		<div style="line-height: 20px; padding: 10px 10px 10px 10px;"></div>
+		<div style="line-height: 20px; padding: 10px 10px 10px 10px;">
+		<table>
+		<tr>
+		<td>No.</td>
+		<td>电话号码</td>
+		<td>短信内容</td>
+		<td>类别</td>
+		<td>状态</td>
+		</tr>
+		<c:forEach items="${model.smsReceiveses}" var="smsReceive" varStatus="varStatus">
+		<tr>
+		<td>${varStatus.index+1}</td>
+		<td>${smsReceive.mobileNum }</td>
+		<td>${smsReceive.content}</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		</tr>
+		</c:forEach>
+		</table>
+		</div>
 		</td>
 	</tr>
 </table>
