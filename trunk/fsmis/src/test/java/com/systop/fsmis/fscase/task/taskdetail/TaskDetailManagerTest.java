@@ -23,6 +23,7 @@ public class TaskDetailManagerTest extends BaseTransactionalTestCase {
 	 * 测试任务详细退回方法
 	 */
 	public void testDoReturnTaskDetail() {
+		//新增任务详细记录
 		TaskDetail taskDetail = new TaskDetail();
 		taskDetail.setStatus("1");
 		taskDetailManager.doReturnTaskDetail(taskDetail);
@@ -34,6 +35,7 @@ public class TaskDetailManagerTest extends BaseTransactionalTestCase {
 	 * 测试任务详细提交方法
 	 */
 	public void testDoCommitTaskDetail() {
+		//新增任务详细记录
 		TaskDetail taskDetail = new TaskDetail();
 		taskDetail.setStatus("1");
 		taskDetailManager.doCommitTaskDetail(taskDetail);
