@@ -15,8 +15,7 @@
 <div class="x-toolbar">
  <table width="100%">
      <tr>
-        <td  align="right">
-               <img	src="${ctx}/images/icons/house.gif" />
+        <td  align="right">               
                <a href="${ctx}/office/doctype/index.do">栏目管理首页</a>
         </td>
      </tr>
