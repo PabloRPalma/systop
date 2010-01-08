@@ -28,11 +28,14 @@ public class TaskManagerTest extends BaseTransactionalTestCase {
 	 * 测试保存任务方法
 	 */
 	public void testSaveTaskListOfIntegerListOfTaskAtt() {
+		//新增事件记录
 		FsCase fsCase = new FsCase();
 		fsCase.setCode("11111");
 		fsCase.setTitle("test");
+		//新增部门记录
 		List<Integer> deptIds = new ArrayList<Integer>();
 		deptIds.add(50);
+		//新增任务记录
 		Task task= new Task();
 		task.setTitle("测试任务标题");
 		task.setDescn("测试任务描述");
