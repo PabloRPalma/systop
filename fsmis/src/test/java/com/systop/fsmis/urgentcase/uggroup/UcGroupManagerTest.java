@@ -32,7 +32,10 @@ public class UcGroupManagerTest extends BaseTransactionalTestCase {
 	 */
 	@Autowired
 	private UserManager userManager;
-
+	/**
+	 *测试 保存应急组和人员之间的关系
+	 * 
+	 */
 	public void testSetUserUrgentGroup() {
 		UrgentGroup ug = ucGroupManager.findObject(
 				"from UrgentGroup ug where ug.name like ? ", MatchMode.ANYWHERE
