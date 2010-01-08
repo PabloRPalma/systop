@@ -1,5 +1,7 @@
 package com.systop.fsmis.fscase.task.task;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +12,7 @@ import com.systop.core.test.BaseTransactionalTestCase;
 import com.systop.fsmis.fscase.task.service.TaskManager;
 import com.systop.fsmis.model.FsCase;
 import com.systop.fsmis.model.Task;
+import com.systop.fsmis.model.TaskAtt;
 /**
  * 任务管理测试类
  * @author shaozhiyuan
@@ -27,7 +30,7 @@ public class TaskManagerTest extends BaseTransactionalTestCase {
 	/**
 	 * 测试保存任务方法
 	 */
-	public void testSaveTaskListOfIntegerListOfTaskAtt() {
+	public void testSaveTaskListOfIntegerListOfTaskAtt() throws IOException{
 		//新增事件记录
 		FsCase fsCase = new FsCase();
 		fsCase.setCode("11111");
@@ -44,8 +47,17 @@ public class TaskManagerTest extends BaseTransactionalTestCase {
 		task.setPresetTime(new Date());
 		taskManager.getDao().save(fsCase);
 		task.setFsCase(fsCase);
+		//新增任务附件
+		TaskAtt taskatt = new TaskAtt();
+		taskatt.setTitle("任务附件");
+		taskatt.setPath("c:/test.jpg");
+		//创建一磁盘文件，作为测试附件
+		File file = new File("c:/test.jpg");
+		file.createNewFile();
+		List<TaskAtt> taskAtts = new ArrayList<TaskAtt>();
+		taskAtts.add(taskatt);
 		
-		taskManager.save(task,deptIds, null);
+		taskManager.save(task,deptIds, taskAtts);
 		
 		assertEquals("测试任务标题", taskManager.get(task.getId()).getTitle());	
 		
