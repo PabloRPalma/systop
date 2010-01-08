@@ -22,10 +22,12 @@ import com.systop.fsmis.assessment.AssessMentConstants;
 import com.systop.fsmis.assessment.service.AsseMemberManager;
 import com.systop.fsmis.assessment.service.AssessmentAttachManager;
 import com.systop.fsmis.assessment.service.AssessmentManager;
+import com.systop.fsmis.fscase.service.FsCaseManager;
 import com.systop.fsmis.model.AsseMember;
 import com.systop.fsmis.model.Assessment;
 import com.systop.fsmis.model.AssessmentAttach;
 import com.systop.fsmis.model.CheckResult;
+import com.systop.fsmis.model.FsCase;
 
 /**
  * 风险评估信息管理
@@ -75,6 +77,12 @@ public class AssessmentAction extends
 	@Autowired
 	private AsseMemberManager asseMemberManager;
 	
+	/**
+	 * 事件管理Manager
+	 */
+	@Autowired
+	private FsCaseManager fsCaseManager;
+	
   /**
    * 返回所有事件标题
    * @return 返回所有事件标题
@@ -123,6 +131,10 @@ public class AssessmentAction extends
 			if (user != null) {				
 				getModel().setProposer(user);	
 			}	
+			if (getModel().getFsCase() != null) {
+				FsCase fsCase = fsCaseManager.get(getModel().getFsCase().getId());
+				getModel().setFsCase(fsCase);
+			}
 			getModel().setState(AssessMentConstants.AUDITING_WAITING);
 			getManager().save(getModel());
 			return SUCCESS;
@@ -327,4 +339,5 @@ public class AssessmentAction extends
 	public void setJsonLeaders(String jsonLeaders) {
 		this.jsonLeaders = jsonLeaders;
 	}
+
 }
