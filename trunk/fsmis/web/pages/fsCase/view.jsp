@@ -105,6 +105,8 @@
 				href="${ctx}/sendType/chooseSendType.do?caseId=${model.id}&modelId=${param['modelId']}&isMultipleCase=${param['isMultipleCase']}"> 任务派遣</a></td>
 			<td><span class="ytb-sep"></span></td>
 		</c:if>
+		
+		<td></td>
 		<td align="right"><a href="#"> 联合整治</a></td>
 	</tr>
 </table>
