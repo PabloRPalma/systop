@@ -8,7 +8,7 @@
 <%@include file="/common/extjs.jsp"%>
 <%@include file="/common/meta.jsp"%>
 <script type="text/javascript">
-	var tabItemsStr = "[{contentEl : 'basic',title : '事件信息'}";
+	var tabItemsStr = "[{contentEl : 'basic',title : '案件信息'}";
 </script>
 <c:if test="${1==1}">
 	<script type="text/javascript">
@@ -34,7 +34,7 @@
 			},
 			items : [ {
 				contentEl : 'basic',
-				title : '事件信息'
+				title : '案件信息'
 			}
 			<c:if test="${model.isMultiple eq '1'}">			
 			,{
