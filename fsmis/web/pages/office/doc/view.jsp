@@ -9,7 +9,6 @@
 </head>
 <body>
 <div class="x-panel">
-<div class="x-panel-header">文章详细信息</div>
 <div align="center">
 	<table width="800px" align="center" cellpadding="3" cellspacing="5">
 		<tr>
