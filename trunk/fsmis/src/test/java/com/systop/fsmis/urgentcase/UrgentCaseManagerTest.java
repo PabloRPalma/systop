@@ -2,7 +2,6 @@ package com.systop.fsmis.urgentcase;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -117,10 +116,7 @@ public class UrgentCaseManagerTest extends BaseTransactionalTestCase {
 	public void testGetAllUcTypeByCounty() {
 		List<UrgentType> ucTypes = Collections.EMPTY_LIST;
 		ucTypes = urgentCaseManager.getAllUcTypeByCounty(county);
-		for (Iterator<UrgentType> itr = ucTypes.iterator(); itr.hasNext();) {
-			UrgentType ut = itr.next();
-			System.out.println(ut.getName());
-		}
+		assertTrue(ucTypes.size() > 0);
 	}
 
 	/**
@@ -134,18 +130,12 @@ public class UrgentCaseManagerTest extends BaseTransactionalTestCase {
 		List<UrgentResult> urList = urgentCaseManager.getDao().query(
 				"from UrgentResult  ur where ur.county.id=? and ur.urgentCase.id=? ",
 				county.getId(), uc.getId());
-		for (Iterator<UrgentResult> itr = urList.iterator(); itr.hasNext();) {
-			UrgentResult ur = itr.next();
-			System.out.println(ur.getUrgentGroup().getName() + ":" + ur.getContent());
-		}
+		assertTrue(urList.size() > 0);
 		// 测试应急事件重新生成组
 		List<UrgentGroup> ugList = ucGroupManager.getDao().query(
 				"from UrgentGroup ug where ug.isOriginal=? and ug.county.id=?",
 				FsConstants.N, county.getId());
-		for (Iterator<UrgentGroup> itr = ugList.iterator(); itr.hasNext();) {
-			UrgentGroup ug = itr.next();
-			System.out.println(ug.getName());
-		}
+		assertTrue(ugList.size() > 0);
 		// 测试应急事件标识位
 		assertEquals(UcConstants.CASE_STATUS_SENDDED, urgentCaseManager.get(
 				uc.getId()).getStatus());
@@ -162,10 +152,7 @@ public class UrgentCaseManagerTest extends BaseTransactionalTestCase {
 		List<UrgentResult> urList = ucGroupManager.getDao().query(
 				"from UrgentResult ur where ur.county.id=?  and ur.urgentCase.id = ? ",
 				county.getId(), uc.getId());
-		for (Iterator<UrgentResult> itr = urList.iterator(); itr.hasNext();) {
-			UrgentResult ur = itr.next();
-			System.out.println(ur.getUrgentGroup().getName() + ":" + ur.getContent());
-		}
+		assertTrue(urList.size() > 0);
 	}
 
 	/**
@@ -250,9 +237,7 @@ public class UrgentCaseManagerTest extends BaseTransactionalTestCase {
 				.valueOf(ut.getId()), county);
 		List<Integer> ugs = urgentCaseManager.getGroupIdsOfCase(uc.getId(), county
 				.getId());
-		for (Integer ug : ugs) {
-			System.out.println(ug);
-		}
+		assertTrue(ugs.size() > 0);
 	}
 
 	/**
