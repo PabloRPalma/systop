@@ -1,6 +1,8 @@
 package com.systop.fsmis.fscase.casetype;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import com.systop.core.test.BaseTransactionalTestCase;
@@ -22,8 +24,17 @@ public class CastTypeManagerTest extends BaseTransactionalTestCase {
 	/**
 	 * 测试得到一级类别map列表方法
 	 */
+	@SuppressWarnings("unchecked")
 	public void testGetLevelOneMap() {
-		caseTypeManager.getLevelOneMap();
+		//新增类别记录
+		CaseType casetype = new CaseType();
+		casetype.setName("测试类别");
+		casetype.setDescn("测试类别描述");
+		caseTypeManager.save(casetype);
+		Map levelOne = new HashMap();
+		//得到一级类别map
+		levelOne = caseTypeManager.getLevelOneMap();
+		assertTrue(levelOne.size()>0);
 		
 	}
 
