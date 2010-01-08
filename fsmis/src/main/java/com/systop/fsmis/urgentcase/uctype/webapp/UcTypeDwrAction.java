@@ -28,14 +28,13 @@ public class UcTypeDwrAction extends BaseDwrAjaxAction {
 		if (items != null && !items.isEmpty()) {
 			UrgentType ut = null;
 			for (String item : items) {
-				String[] id_sort = item.split(":");
-				if (id_sort.length == UcConstants.LENGTH) {
-					ut = ucTypeManager.get(Integer.valueOf(id_sort[0]));
-					ut.setSortId(Integer.valueOf(id_sort[1]));
+				String[] id = item.split(":");
+				if (id.length == UcConstants.LENGTH) {
+					ut = ucTypeManager.get(Integer.valueOf(id[0]));
+					ut.setSortId(Integer.valueOf(id[1]));
 				} else {
-					ut = ucTypeManager.get(Integer.valueOf(id_sort[0]));
+					ut = ucTypeManager.get(Integer.valueOf(id[0]));
 					ut.setSortId(null);
-					logger.warn(item + ",缺少排序号码.");
 				}
 				ucTypeManager.save(ut);
 			}
