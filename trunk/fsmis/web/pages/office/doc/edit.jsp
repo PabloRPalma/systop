@@ -22,7 +22,7 @@
 		<tr>
 			<td align="right" width="70">文章标题：</td>
 			<td align="left">
-				<s:textfield id="title" name="model.title" cssStyle="width:450px" cssClass="required"/>
+				<s:textfield id="title" name="model.title" cssStyle="width:700px" cssClass="required"/>
 			</td>
 		</tr>
 		<tr>
