@@ -14,7 +14,7 @@ function goback(){
 </head>
 <body>
 <div class="x-panel">
-<div class="x-panel-header">帮助中心&nbsp;>&nbsp;出错信息</div>
+<div class="x-panel-header">错识信息</div>
 <div class="x-toolbar">&nbsp;</div>
 <div align="center"><s:form action="#" method="post"
 	theme="simple">
