@@ -46,9 +46,9 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="right" width="70">收信人：</td>
+			<td align="right" width="70">内容：</td>
 			<td align="left">
-				<s:textarea id="content" name="model.receiver.name" cssStyle="width:500px;height:50px" readonly="true"/>
+				<s:textarea id="content" name="model.content" cssStyle="width:500px;height:50px" readonly="true"/>
 			</td>
 		</tr>
 	</table>
