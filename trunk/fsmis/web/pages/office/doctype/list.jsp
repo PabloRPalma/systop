@@ -41,7 +41,6 @@ function showArticles(cID){
 		<table>
 			<tr>
 				<td>
-					<img src="${ctx}/images/icons/add.gif" />
 					<a href="edit.do">添加栏目信息</a>
 				</td>
 			</tr>
