@@ -68,19 +68,28 @@ function showArticles(cID){
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	<ec:row>
 		<ec:column width="35" property="_No" title="No." style="text-align:center" sortable="false" value="${GLOBALROWCOUNT}"/>
-		<ec:column width="200" property="name" title="栏目名称" style="cursor:hand" onclick="showArticles('${item.id}')"/>
+		<ec:column width="200" property="_1" title="栏目名称" style="cursor:hand" onclick="showArticles('${item.id}')">
+			<font color="blue">${item.name }</font>
+		</ec:column>
 		<ec:column width="400" property="descn" title="描述"/>
 		<ec:column width="150" property="_0" title="操作" style="text-align:center" sortable="false">
 			<a href="edit.do?model.id=${item.id}">编辑</a>|
 		<c:choose>
-	     <c:when test="${!empty item.childDocumentTypes || !empty item.documents}"> 
-	        <font color="#999999">删除</font>|
-	     </c:when>
-	     <c:otherwise>
-	        <a href="#" onClick="removeDocType(${item.id })"">删除</a>|  
-	     </c:otherwise>
-	    </c:choose>  
-			<a href="index.do?model.id=${item.id}">查看下级栏目</a>
+		     <c:when test="${!empty item.childDocumentTypes || !empty item.documents}"> 
+		        <font color="#999999">删除</font>|
+		     </c:when>
+		     <c:otherwise>
+		        <a href="#" onClick="removeDocType(${item.id })"">删除</a>|  
+		     </c:otherwise>
+		</c:choose>  
+	    <c:choose>
+		    <c:when test="${!empty item.childDocumentTypes}"> 
+		       		<a href="index.do?model.id=${item.id}">查看下级栏目</a>
+		    </c:when>
+		    <c:otherwise>
+		    		<font color="#999999">查看下级栏目</font>
+		    </c:otherwise>
+		</c:choose>
 		</ec:column>
 	</ec:row>
 </ec:table>
