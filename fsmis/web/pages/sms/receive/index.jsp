@@ -59,7 +59,9 @@ function removeCompany(corpId) {
 		<ec:column width="100" property="content" title="短信内容" />
 		<ec:column width="80" property="receiveTime" title="系统接收时间"
 			style="text-align:center" cell="date" format="yyyy-MM-dd"/>
-		<ec:column width="220" property="isReport" title="类别"/>
+		<ec:column width="220" property="isReport" title="类别">
+		&nbsp;
+		</ec:column>
 		<ec:column width="220" property="isTreated" title="状态"/>
 		<ec:column width="140" property="_0" title="操作" style="text-align:center" sortable="false">
 			<a href="${ctx}/fscase/editFsCaseBySmsReceive.do?smsReceiveId=${item.id}">
