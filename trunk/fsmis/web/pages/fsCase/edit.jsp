@@ -112,6 +112,7 @@
 <s:form action="save.do" id="save" method="post" theme="simple" validate="true" onsubmit="return valileader()">
     <input type="hidden" name="isMultipleCase" value="${isMultipleCase}"></input>
     <input type="hidden" name="modelId" value="${param['modelId'] }"></input>
+    <input type="hidden" name="smsReceiveId" value="${smsReceiveId}"></input>
     <s:hidden name="isMultiple"></s:hidden>
 	<s:hidden name="model.id" />
 	<s:hidden name="mesId"/>
