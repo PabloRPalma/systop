@@ -32,6 +32,7 @@ public class UcGroupManagerTest extends BaseTransactionalTestCase {
 	 */
 	@Autowired
 	private UserManager userManager;
+
 	/**
 	 *测试 保存应急组和人员之间的关系
 	 * 
@@ -52,11 +53,9 @@ public class UcGroupManagerTest extends BaseTransactionalTestCase {
 			length++;
 		}
 		ucGroupManager.setUserUrgentGroup(userIds, ug);
-		Set<User> us=ug.getUsers();
-		for(User u: us){
-			System.out.println(u.getName());
-		}
-		
+		Set<User> us = ug.getUsers();
+		assertTrue(us.size() > 0);
+
 	}
 
 }
