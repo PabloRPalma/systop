@@ -28,15 +28,15 @@ eq 0?'一般任务':'综合任务'}管理&nbsp;&gt;&nbsp;${param['isMultipleCase
 			<s:hidden name="isMultipleCase"></s:hidden>
            		        任务标题：
 			<s:textfield name="model.title"></s:textfield>
-			                   派发时间:开始
-			<input type="text" name="taskBeginTime" style="width: 140px"
+			                   派发时间:
+			<input type="text" name="taskBeginTime" style="width: 120px"
 				value='<s:date name="taskBeginTime" format="yyyy-MM-dd HH:mm:ss"/>'
-				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})"
+				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
 				class="Wdate" />
-			                    结束:
-			<input type="text" name="taskEndTime" style="width: 140px"
+			                    至:
+			<input type="text" name="taskEndTime" style="width: 120px"
 				value='<s:date name="taskEndTime" format="yyyy-MM-dd HH:mm:ss"/>'
-				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})"
+				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
 				class="Wdate" />
            			任务状态:
 			<s:select name="model.status" list="stateMap" headerKey=""
@@ -45,8 +45,6 @@ eq 0?'一般任务':'综合任务'}管理&nbsp;&gt;&nbsp;${param['isMultipleCase
 			</s:select>
 			<s:submit value="查询" cssClass="button"></s:submit>
 		</s:form></td>
-		<td align="right"><a href="${ctx}/task/index.do"><img
-			src="${ctx}/images/icons/house.gif" />返回事件列表</a></td>
 	</tr>
 </table>
 </div>
@@ -62,13 +60,13 @@ eq 0?'一般任务':'综合任务'}管理&nbsp;&gt;&nbsp;${param['isMultipleCase
 	<ec:row>
 		<ec:column width="40" property="_s" title="No."
 			value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center" />
-		<ec:column width="290" property="title" title="任务标题" sortable="false" />
-		<ec:column width="80" property="dispatchTime" title="派发时间"
-			style="text-align:center" cell="date" format="yyyy-MM-dd" />
-		<ec:column width="80" property="presetTime" title="规定完成时间"
-			style="text-align:center" cell="date" format="yyyy-MM-dd" />
-		<ec:column width="80" property="completionTime" title="完成时间"
-			style="text-align:center" cell="date" format="yyyy-MM-dd">
+		<ec:column width="230" property="title" tipTitle="${item.title}" title="任务标题" sortable="false" />
+		<ec:column width="100" property="dispatchTime" title="派发时间"
+			style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm" />
+		<ec:column width="100" property="presetTime" title="规定完成时间"
+			style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm" />
+		<ec:column width="100" property="completionTime" title="完成时间"
+			style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm">
 			<%--<c:choose>
 				<c:when test="${item.status == '2'}">
 					<c:choose>
@@ -85,10 +83,10 @@ eq 0?'一般任务':'综合任务'}管理&nbsp;&gt;&nbsp;${param['isMultipleCase
 			</c:choose> --%>
 			
 		</ec:column>
-		<ec:column width="200" property="taskDetails" title="执行部门"
+		<ec:column width="140" property="taskDetails" title="执行部门"
 			cell="com.systop.fsmis.fscase.webapp.ec.DeptsCell">
 		</ec:column>
-		<ec:column width="130" property="_status" title="任务状态"
+		<ec:column width="60" property="_status" title="任务状态"
 			style="text-align: center" sortable="false">
 			<c:if test="${item.status == '0'}">
 				<font color="red">未接收</font>
@@ -105,11 +103,13 @@ eq 0?'一般任务':'综合任务'}管理&nbsp;&gt;&nbsp;${param['isMultipleCase
 		   &nbsp;
 		  
 		</ec:column>
-		<ec:column width="80" property="_o" title="操作" sortable="false"
+		<ec:column width="85" property="_o" title="操作" sortable="false"
 			style="text-align: center">
-			<a href="${ctx}/fscase/view.do?fsCaseId=${item.fsCase.id}&modelId=${modelId}">
-			查看</a>
-			<a href="#" onclick="remove(${item.id})"> | 删除 </a>
+			<a title="查看任务信息" href="${ctx}/fscase/view.do?fsCaseId=${item.fsCase.id}&modelId=${modelId}">
+			看</a>
+			<a title="修改任务信息" href="#">
+			| 改</a>
+			<a href="#" title="删除任务信息" onclick="remove(${item.id})"> | 删 </a>
 		</ec:column>
 	</ec:row>
 </ec:table></div>

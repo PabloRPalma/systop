@@ -161,38 +161,38 @@
 </table>
 </div>
 <div id="general" class="x-hide-display">
-<table id="mytable" height="320">
+<table id="mytable" height="520">
 	<tr>
-		<td height="200" align="left" valign="top">
-		<!-- include进来二级Tab以现实一个食品安全案件下的多个任务 -->
-		<%@include	file="viewGenericCases.jsp" %>
+		<td height="500" align="left" valign="top">
+		<!-- include进来二级Tab以现实一个食品安全综合案件关联的多个一般案件 -->
+		<%--@include	file="viewGenericCases.jsp" --%>
 		</td>
 	</tr>
 </table>
 </div>
 <div id="descr" class="x-hide-display">
-<table id="mytable" height="320">
+<table id="mytable" height="400">
 	<tr>
-		<td height="200" align="left" valign="top">
+		<td height="400" align="left" valign="top">
 		<!-- include进来二级Tab以现实一个食品安全案件下的多个任务 -->
-		<%@include	file="viewTasks.jsp" %>
+		<%@include	file="viewTasks.jsp"%>
 		</td>
 	</tr>
 </table>
 </div>
 <div id="reward" class="x-hide-display">
-<table id="mytable" height="320">
+<table id="mytable" height="520">
 	<tr>
-		<td height="200" align="left" valign="top">
+		<td height="500" align="left" valign="top">
 		<div style="line-height: 20px; padding: 10px 10px 10px 10px;"></div>
 		</td>
 	</tr>
 </table>
 </div>
 <div id="punish" class="x-hide-display">
-<table id="mytable" height="320">
+<table id="mytable" height="520">
 	<tr>
-		<td height="200" align="left" valign="top">
+		<td height="500" align="left" valign="top">
 		<div style="line-height: 20px; padding: 10px 10px 10px 10px;">
 		<table>
 		<tr>

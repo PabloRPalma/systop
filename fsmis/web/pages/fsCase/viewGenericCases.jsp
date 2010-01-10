@@ -19,9 +19,6 @@
 	height: 26;
 }
 </style>
-<script type="text/javascript"
-	src="${ctx}/scripts/fckeditor/fckeditor.js"></script>
-<script type="text/javascript" src="${ctx}/scripts/fckeditor/fckconfig.js"></script>
 </head>
 <body>
 <div id="tabs3"><c:forEach items="${model.genericCases}"
