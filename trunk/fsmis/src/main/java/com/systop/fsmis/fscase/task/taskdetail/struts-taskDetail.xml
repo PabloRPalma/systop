@@ -5,6 +5,10 @@
 <struts>
 	<package name="fsmis.fscase.task.taskdetail" extends="json" namespace="/taskdetail">
 		<action name="*" class="taskDetailAction" method="{1}">
+			<result type="json" name="returnResult">
+				<param name="ignoreHierarchy">false</param>
+		   		<param name="root">jsonResult</param>
+			</result>
 			<result type="json" name="json">
 				<param name="ignoreHierarchy">false</param>
 		   		<param name="root">corps</param>
@@ -23,7 +27,7 @@
 			<result name="success" type="redirect">
 				index.do?isMultipleCase=${isMultipleCase}&amp;modelId=${modelId}
 			</result>
-						
+			<result name="listTaskDetailsByTaskId">/pages/fsCase/taskDetailList.jsp</result>			
 		</action>
 	</package>
 </struts>
