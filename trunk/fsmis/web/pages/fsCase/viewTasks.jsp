@@ -3,6 +3,7 @@
 <%@include file="/common/taglibs.jsp"%>
 <html>
 <head>
+
 <%@include file="/common/extjs.jsp"%>
 <%@include file="/common/meta.jsp"%>
 <style type="text/css">
@@ -19,18 +20,15 @@
 	height: 26;
 }
 </style>
-<script type="text/javascript"
-	src="${ctx}/scripts/fckeditor/fckeditor.js"></script>
 </head>
 <body>
 <div id="tabs2"><c:forEach items="${model.taskses}" var="task"
 	varStatus="varStatus">
 	<div id="taskDiv${varStatus.index+1}" class="x-hide-display">
-	<table id="mytable" align="left">
+	<table id="mytable" align="left" style="border-bottom: 0">
 		<tr>
 			<td>
-
-			<fieldset style="width: 800px; padding: 5px 10px 5px 10px;">
+			<fieldset style="width: 800px; padding: 0px 0px 0px 0px;">
 			<legend>任务${varStatus.index+1}信息</legend>
 			<table width="800px" align="left">
 				<tr>
@@ -69,53 +67,13 @@
 			</td>
 		</tr>
 		<tr>
-			<td>
+			<td>		
 			<fieldset
-				style="width: 800px; height: 100px; padding: 5px 10px 5px 10px;">
+				style="width: 800px; height: 160px; padding: 0px 0px 0px 0px;">
 			<legend>任务${varStatus.index+1}明细</legend>
-			<table width="800px" align="left">
-				<tr>
-					<td width="15%" align="center">No.</td>
-					<td width="15%" align="center">部门名称</td>
-					<td width="15%" align="center">派遣时间</td>
-					<td width="15%" align="center">完成时间</td>
-					<td width="15%" align="center">任务状态</td>
-				</tr>
-				<c:forEach items="${task.taskDetails}" var="detail"
-					varStatus="varStatus">
-					<tr>
-						<td width="15%" align="center">${varStatus.index+1}</td>
-						<td width="15%" align="center">${detail.dept.name }</td>
-						<td width="15%" align="center"><fmt:formatDate
-							value="${task.dispatchTime }" pattern="yyyy-MM-dd HH:mm" /></td>
-						<td width="15%" align="center">
-						<c:choose>
-							<c:when test="${detail.status == '3' or detail.status == '4'}">
-								<fmt:formatDate value="${detail.completionTime}"
-									pattern="yyyy-MM-dd HH:mm:ss" />
-							</c:when>
-							<c:otherwise>
-								<c:choose>
-									<c:when test="${detail.remainDays >= 0}">剩余天数${detail.remainDays}</c:when>
-									<c:otherwise>逾期天数${-detail.remainDays}</c:otherwise>
-								</c:choose>
-							</c:otherwise>
-						</c:choose></td>
-						<td width="15%" align="center"><c:if
-							test="${detail.status == '0'}">
-							<font color="red">未接收</font>
-						</c:if> <c:if test="${detail.status == '1'}">
-							<font color="#FF9D07">已查看</font>
-						</c:if> <c:if test="${detail.status == '2'}">
-							<font color="green">已接收</font>
-						</c:if> <c:if test="${detail.status == '3'}">
-							<font color="gray">已退回</font>
-						</c:if> <c:if test="${detail.status == '4'}">
-							<font color="blue">已处理</font>
-						</c:if></td>
-					</tr>
-				</c:forEach>
-			</table>
+			<s:action name="getTaskDetailsByTaskId" namespace="/taskdetail"  executeResult="true" >
+				<s:param name="taskId">${task.id}</s:param>
+			</s:action>			
 			</fieldset>
 			</td>
 		</tr>
@@ -143,16 +101,6 @@
 					]
 		});
 	});	
-</script>
-<script type="text/javascript">
-//文本编辑组件
-function preFckEditor1(){
-	var fckEditor = new FCKeditor( 'taskDescn' ) ;
-  fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
-  fckEditor.ToolbarSet = 'BasicA';
-  fckEditor.Height = 360;
-  fckEditor.ReplaceTextarea();
-}
 </script>
 </body>
 </html>
