@@ -87,7 +87,7 @@ String.prototype.trim = function(){
  <ec:row>
     <ec:column width="30" property="_num" title="No." value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center"/>
     <ec:column width="600" property="title" title="标题">
-      <a href="${ctx}${item.path}"><font color="blue">${item.title}</font></a>
+      <a href="${ctx}${item.path}" target="_blank"><font color="blue">${item.title}</font></a>
     </ec:column>
     <ec:column width="150" property="creator" title="完成人" style="text-align:center"/>    
     <ec:column width="70" property="_0" title="操作"
