@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.criterion.MatchMode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,6 @@ import com.systop.fsmis.assessment.service.AsseMemberManager;
 import com.systop.fsmis.assessment.service.AssessmentAttachManager;
 import com.systop.fsmis.assessment.service.AssessmentManager;
 import com.systop.fsmis.fscase.service.FsCaseManager;
-import com.systop.fsmis.model.AsseMember;
 import com.systop.fsmis.model.Assessment;
 import com.systop.fsmis.model.AssessmentAttach;
 import com.systop.fsmis.model.CheckResult;
@@ -215,18 +213,8 @@ public class AssessmentAction extends
 	 */
 	
   public String getMembers() {
-		StringBuffer members = new StringBuffer();
 		if (getModel().getId() != null ){
-			List<AsseMember> AsseMembers = asseMemberManager.getAsseMembers(getModel().getId(), AssessMentConstants.EXPERT_MEMBER);
-	  	if (CollectionUtils.isNotEmpty(AsseMembers)){
-		    for (AsseMember asseMember : AsseMembers) {
-		    	members.append(asseMember.getExpert().getName());
-		    	members.append(",");
-		    }
-		    if (members.length() > 0 && members.toString().lastIndexOf(",") > 0){
-		    	jsonMembers = members.toString().substring(0, members.toString().length() -1 );
-		    }
-	  	}
+			jsonMembers = asseMemberManager.getMembers(getModel().getId());
 		}
     return "members";
   }
@@ -236,18 +224,8 @@ public class AssessmentAction extends
 	 * @return
 	 */
   public String getLeaders() {
-		StringBuffer leaders = new StringBuffer();
 		if (getModel().getId() != null ){
-			List<AsseMember> AsseMembers = asseMemberManager.getAsseMembers(getModel().getId(), AssessMentConstants.EXPERT_LEADER);
-	  	if (CollectionUtils.isNotEmpty(AsseMembers)){
-		    for (AsseMember asseMember : AsseMembers) {
-		    	leaders.append(asseMember.getExpert().getName());
-		    	leaders.append(",");
-		    }
-		    if (leaders.length() > 0 && leaders.toString().lastIndexOf(",") > 0){
-		    	jsonLeaders = leaders.toString().substring(0, leaders.toString().length() -1 );
-		    }
-	  	}
+			jsonLeaders = asseMemberManager.getLeaders(getModel().getId());
 		}
     return "leaders";
   }
