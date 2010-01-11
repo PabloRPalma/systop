@@ -50,7 +50,7 @@
 		<ec:column width="140" property="notice.createTime" title="发布时间" style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm:ss"/>
 		<ec:column width="140" property="receiveDate" title="接收时间" style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm:ss" />
 		<ec:column width="80" property="_7" title="状态" style="text-align:center">
-			<c:if test="${item.isNew == '1'}"><font color="#C0C0C0">未读</font></c:if>
+			<c:if test="${item.isNew == '1'}"><font color="red">未读</font></c:if>
 			<c:if test="${item.isNew != '1'}"><font color="green">已读</font></c:if>
 		</ec:column>
 		<ec:column width="80" property="_0" title="操作" style="text-align:center" sortable="false">
