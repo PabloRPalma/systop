@@ -84,7 +84,7 @@ function deleAtt(id) {
 		<tr>
 			<td align="right" width="180">附件：</td>
 			<td style="padding: 10 5 2 5;" width="500"><a href="#"
-				onclick=util.add("fileUpload");> <img
+				onclick='util.add("fileUpload");'> <img
 				src="${ctx}/images/icons/file_add.gif">增加附件</a></td>
 		</tr>
 		<tr>
