@@ -5,13 +5,13 @@
 <struts>
 	<package name="fsmis.fscase.task.taskdetail" extends="json" namespace="/taskdetail">
 		<action name="*" class="taskDetailAction" method="{1}">
-			<result type="json" name="returnResult">
+			<result type="json" name="jsonResult">
 				<param name="ignoreHierarchy">false</param>
 		   		<param name="root">jsonResult</param>
 			</result>
 			<result type="json" name="json">
 				<param name="ignoreHierarchy">false</param>
-		   		<param name="root">corps</param>
+		   		<param name="root">corpNames</param>
 			</result>
 			<result name="index">/pages/fsCase/task/taskdetail/index.jsp</result>
 			<result name="input">/pages/fsCase/task/taskdetail/edit.jsp</result>

@@ -20,6 +20,7 @@ import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.common.modules.security.user.model.User;
 import com.systop.core.dao.support.Page;
+import com.systop.core.util.ReflectUtil;
 import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
 import com.systop.fsmis.CaseConstants;
 import com.systop.fsmis.fscase.task.taskdetail.service.TaskDetailManager;
@@ -44,14 +45,17 @@ public class TaskDetailAction extends
   private Date taskEndTime;
   // 在页面中作为默认人员输入项
   private User user;
-  // 当前区县下所有企业集合
-  private Map<String, String> corps;
+
   // 用户选择的企业
-  private Corp corp;
-  
+  private Integer corpId;
+
   private String taskId;
-  
-  private Map<String,String> jsonResult;
+
+  private Map<String, String> jsonResult;
+
+  private String[] corpNames;
+
+  private String[] corpArry;
 
   @Autowired
   private LoginUserService loginUserService;
@@ -105,7 +109,7 @@ public class TaskDetailAction extends
    */
   public String getTaskDetailsByTaskId() {
 
-    Object taskIdStr = getRequest().getAttribute("taskId");    
+    Object taskIdStr = getRequest().getAttribute("taskId");
     Assert.notNull(taskIdStr);
     if (StringUtils.isNumeric(taskIdStr.toString())) {
       Page page = PageUtil.getPage(getPageNo(), getPageSize());
@@ -189,10 +193,10 @@ public class TaskDetailAction extends
   public String doReturnTaskDetail() {
 
     getManager().doReturnTaskDetail(getModel());
-    jsonResult = Collections.synchronizedMap(new HashMap<String,String>());
-    jsonResult.put("result","success");
-    
-    return "returnResult";
+    jsonResult = Collections.synchronizedMap(new HashMap<String, String>());
+    jsonResult.put("result", "success");
+
+    return "jsonResult";
   }
 
   /**
@@ -213,26 +217,6 @@ public class TaskDetailAction extends
    * @return
    */
   public String doDealWithTaskDetail() {
-
-    return SUCCESS;
-  }
-
-  /**
-   * 请求提交任务,转发到填写任务明细页面
-   * 
-   * @return
-   */
-  public String toCommitTaskDetail() {
-    return "toCommitTaskDetail";
-  }
-
-  /**
-   * 完成提交任务(处理完毕)方法
-   * 
-   * @return
-   */
-  public String doCommitTaskDetail() {
-
     // 如果没有指定企业,则不设定企业关联---待修改后 的getManager().doCommitTaskDetail
     // 测试通过后删除此注释
     /*
@@ -243,7 +227,43 @@ public class TaskDetailAction extends
     getManager().doCommitTaskDetail(getModel());
 
     return SUCCESS;
+
   }
+
+  /**
+   * 得到当前登录用户所在区县下的所有企业,以在页面中自动补全
+   * 
+   * @return
+   */
+  public String getCorps() {
+    List<Corp> list = getManager().getDao().query(
+        "from Corp c where c.dept.id = ?",
+        loginUserService.getLoginUserCounty(getRequest()).getId());
+    jsonResult = Collections.synchronizedMap(new HashMap<String, String>());
+
+    corpNames = new String[list.size()];
+
+    /*
+     * 由于数据特殊,map类型在JQuery端不好实现,找到好的解决办法后修改本段注释并启用 for (Corp corp : list) { if
+     * (corp.getId() != null && StringUtils.isNotBlank(corp.getName())) { Map
+     * map = ReflectUtil.toMap(corp, new String[] { "code", "name" }, false); if
+     * (MapUtils.isNotEmpty(map)) { if (map.get("code") != null &&
+     * map.get("name") != null) { jsonResult.put(map.get("code").toString(),
+     * map.get("name") .toString());
+     * corpNameList.add(map.get("name").toString()); } } }
+     * 
+     * }
+     */
+
+    for (int i = 0; i < list.size(); i++) {
+      StringBuffer buf = new StringBuffer(list.get(i).getCode()).append(":")
+          .append(list.get(i).getName());
+      corpNames[i] = buf.toString();
+    }
+    logger.info(corpNames.toString());
+    return "json";
+  }
+
 
   /**
    * 单体任务状态列表返回页面
@@ -283,10 +303,17 @@ public class TaskDetailAction extends
    * @param code
    * @return
    */
-  public String getCorpByCode(String code) {
-    corp = (Corp) getManager().getDao().findObject(
-        "from Corp c where c.code = ?", code);
-
+  public String getCorpByCode() {
+    jsonResult = Collections.synchronizedMap(new HashMap<String, String>());
+    Corp corp = (Corp) getManager().getDao().findObject(
+        "from Corp c where c.code = ?", String.valueOf(corpId));
+    logger.info("1");
+    if (corp != null) {
+      jsonResult = ReflectUtil.toMap(corp, new String[] { "id", "name", "code",
+          "address", "legalPerson", "produceLicense", "sanitationLicense" },
+          false);
+    }
+        
     return "jsonResult";
   }
 
@@ -342,22 +369,6 @@ public class TaskDetailAction extends
     this.modelId = modelId;
   }
 
-  public Corp getCorp() {
-    return corp;
-  }
-
-  public void setCorp(Corp corp) {
-    this.corp = corp;
-  }
-
-  public Map<String, String> getCorps() {
-    return corps;
-  }
-
-  public void setCorps(Map<String, String> corps) {
-    this.corps = corps;
-  }
-
   public String getIsMultipleCase() {
     return isMultipleCase;
   }
@@ -380,6 +391,30 @@ public class TaskDetailAction extends
 
   public void setJsonResult(Map<String, String> jsonResult) {
     this.jsonResult = jsonResult;
+  }
+
+  public String[] getCorpArry() {
+    return corpArry;
+  }
+
+  public void setCorpArry(String[] corpArry) {
+    this.corpArry = corpArry;
+  }
+
+  public String[] getCorpNames() {
+    return corpNames;
+  }
+
+  public void setCorpNames(String[] corpNames) {
+    this.corpNames = corpNames;
+  }
+
+  public Integer getCorpId() {
+    return corpId;
+  }
+
+  public void setCorpId(Integer corpId) {
+    this.corpId = corpId;
   }
 
 }
