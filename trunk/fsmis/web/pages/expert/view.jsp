@@ -69,86 +69,88 @@ Ext.onReady(function(){
           <tr>
             <td width="112" align="right">专家名称：</td>
             <td width="139" align="left">
-            	<s:textfield id="name" name="model.name" cssClass="inputBorder" readonly="true"/>
+            	<s:textfield id="name" name="model.name" cssStyle="border:0" readonly="true"/>
             </td>
             <td align="right" width="90">手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;机：</td>
             <td width="213" align="left">
-            	<s:textfield id="mobile" name="model.mobile" cssClass="inputBorder" readonly="true"/>
+            	<s:textfield id="mobile" name="model.mobile" cssStyle="border:0" readonly="true"/>
             </td>
           </tr>
           <tr>
+            <td width="112" align="right">专家级别：</td>
+            <td width="139" align="left">
+                <s:textfield name="model.level" cssStyle="border:0" readonly="true" />
+            </td>
+            <td align="right" width="90">专家类别：</td>
+            <td width="213" align="left">
+                <s:textfield name="model.expertCategory.name" cssStyle="border:0" readonly="true" />	
+            </td>
+          </tr>          
+          <tr>
             <td width="112" align="right">办公电话：</td>
             <td width="139" align="left">
-            	<s:textfield id="officePhone" name="model.officePhone" cssClass="inputBorder" readonly="true"/>
+            	<s:textfield id="officePhone" name="model.officePhone" cssStyle="border:0" readonly="true"/>
             </td>
             <td align="right" width="90">家庭电话：</td>
             <td width="213" align="left">
-             	<s:textfield id="homePhone" name="model.homePhone" cssClass="inputBorder" readonly="true"/>
+             	<s:textfield id="homePhone" name="model.homePhone" cssStyle="border:0" readonly="true"/>
             </td>
           </tr> 
           <tr>
             <td width="112" align="right">电子邮件：</td>
             <td width="139" align="left">
-            	<s:textfield id="email" name="model.email" cssClass="inputBorder" readonly="true"/>
+            	<s:textfield id="email" name="model.email" cssStyle="border:0" readonly="true"/>
             </td>
             <td align="right" width="90">出生日期：</td>
-            <td width="213" align="left">
-            	<input type="text" name="model.birthDate" value='<s:date name="model.birthDate" format="yyyy-MM-dd"/>'
-				  onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})" class="Wdate" style="width:127px;height:16px" readonly="readonly"/>
+            <td width="213" align="left" style="vertical-align: middle">
+            	<s:textfield id="birthDate" name="model.birthDate" cssStyle="border:0" readonly="true"/>            
             </td>            
           </tr> 
           <tr>
             <td width="112" align="right">毕业院校：</td>
             <td align="left" colspan="3">
-            	<s:textfield id="graduateSchool" name="model.graduateSchool"  cssStyle="width:360px" readonly="true"/>
+            	<s:textfield id="graduateSchool" name="model.graduateSchool"  cssStyle="border:0" readonly="true"/>
              </td>
-          </tr> 
-          <tr>
-            <td width="112" align="right">专家级别：</td>
-            <td width="139" align="left">
-                <s:textfield name="model.level" cssClass="inputBorder" readonly="true" />
-            </td>
-            <td align="right" width="90">专家类别：</td>
-            <td width="213" align="left">
-                <s:textfield name="model.expertCategory.name" cssClass="inputBorder" readonly="true" />	
-            </td>
-          </tr>  
+          </tr>   
           <tr>
             <td width="112" align="right">学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历：</td>
             <td width="139" align="left">
-            	<s:textfield id="degree" name="model.degree" cssClass="inputBorder" readonly="true"/>
+            	<s:textfield id="degree" name="model.degree" cssStyle="border:0" readonly="true"/>
             </td>
             <td align="right" width="90">职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</td>
             <td width="213" align="left">
-             	<s:textfield id="title" name="model.title" cssClass="inputBorder" readonly="true"/>
+             	<s:textfield id="title" name="model.title" cssStyle="border:0" readonly="true"/>
             </td>
           </tr> 
           <tr>
             <td width="112" align="right">单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位：</td>
             <td width="139" align="left">
-            	<s:textfield id="units" name="model.units" cssClass="inputBorder" readonly="true" />
+            	<s:textfield id="units" name="model.units" cssStyle="border:0" readonly="true" />
             </td>
             <td align="right" width="90">职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;务：</td>
             <td width="213" align="left">
-             	<s:textfield id="position" name="model.position" cssClass="inputBorder" readonly="true" />
+             	<s:textfield id="position" name="model.position" cssStyle="border:0" readonly="true" />
             </td>
           </tr> 
           <tr>
             <td width="112" align="right">研究方向：</td>
             <td align="left" colspan="3">
-            	<s:textfield id="research" name="model.research"  cssStyle="width:360px" cssClass="inputBorder" readonly="true" />
+            	<s:textfield id="research" name="model.research"  cssStyle="border:0" cssClass="inputBorder" readonly="true" />
              </td>
           </tr>  
           <tr>
             <td width="112" align="right">备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</td>
             <td align="left" colspan="3">
-            	<s:textfield id="remark" name="model.remark"  cssStyle="width:360px" cssClass="inputBorder" readonly="true" />
+            	<s:textfield id="remark" name="model.remark"  cssStyle="border:0" cssClass="inputBorder" readonly="true" />
              </td>
           </tr>  
           <tr>
             <td width="112" align="right">专家简介：</td>
             <td align="left" colspan="3">
-            	<s:textarea id="summery" name="model.summery" cssStyle="width:360px; height:90px" cssClass="inputBorder" readonly="true"/>
+	          	<div style="width:360px;height:90px;word-break:break-all;">
+		          	${model.summery}
+	          	</div>            
+            
             </td>
           </tr>                                                                                      
         </table></td>
