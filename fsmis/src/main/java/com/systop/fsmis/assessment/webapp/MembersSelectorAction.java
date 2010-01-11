@@ -49,6 +49,8 @@ public class MembersSelectorAction extends
 	
 	private String expertType;
 	
+	private String jsonMembers;
+	
 	/**
 	 * 评估专家成员管理Manager
 	 */
@@ -164,8 +166,19 @@ public class MembersSelectorAction extends
     }
 
     clearSession(assessment);
-
-		return JSON;
+    
+    jsonMembers = StringUtils.EMPTY;
+    if (assessment.getId() != null && expertType.equals("1")){
+    	jsonMembers = asseMemberManager.getLeaders(assessment.getId());
+    }
+    if (assessment.getId() != null && expertType.equals("2")){
+    	jsonMembers = asseMemberManager.getMembers(assessment.getId());    	
+    }
+    if (StringUtils.isNotBlank(jsonMembers)){
+    	this.renderJson(getResponse(), jsonMembers);	
+    }
+    return null;
+		//return JSON;
 	}
 	
 	/**
@@ -335,5 +348,14 @@ public class MembersSelectorAction extends
 	public void setExpertType(String expertType) {
 		this.expertType = expertType;
 	}
+
+	public String getJsonMembers() {
+		return jsonMembers;
+	}
+
+	public void setJsonMembers(String jsonMembers) {
+		this.jsonMembers = jsonMembers;
+	}
+	
 	
 }
