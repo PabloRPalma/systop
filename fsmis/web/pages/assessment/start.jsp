@@ -127,7 +127,7 @@ Ext.onReady(function(){
           <tr>
              <td align="right" width="90" style="height:20px"><span style="font-weight:bold">专家组成员：</span></td>
              <td>
-             <s:textarea id="member" name="member" cssStyle="width:360px; height:70px" cssClass="required" readonly="true"/>
+             	<s:textarea id="member" name="member" cssStyle="width:360px; height:70px;" cssClass="required" readonly="true"/>
              <font color="red">*</font>	    
 			 </td>
 			 <td align="left" width="90" style="height:20px"><span style="font-weight:bold">
