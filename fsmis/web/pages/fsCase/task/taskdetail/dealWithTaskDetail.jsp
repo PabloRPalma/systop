@@ -12,27 +12,18 @@
   pageContext.setAttribute("jquery_autocomplete","scripts/jquery/autocomplete");
 %>
 
-<script type="text/javascript" src="${ctx}/scripts/jquery/jquery-1.3.2.js"></script>
-<script type="text/javascript" src="${ctx}/scripts/jquery/autocomplete/jquery.bgiframe.min.js"></script>
-<script type="text/javascript" src="${ctx}/scripts/jquery/autocomplete/jquery.dimensions.js"></script>
-<script type="text/javascript" src="${ctx}/scripts/jquery/autocomplete/jquery.ajaxQueue.js"></script>
-<script type="text/javascript" src="${ctx}/scripts/jquery/autocomplete/thickbox-compressed.js"></script>
-<script type="text/javascript" src="${ctx}/scripts/jquery/autocomplete/jquery.autocomplete.js"></script>
-
-<link rel="stylesheet" type="text/css" href="${ctx}/scripts/jquery/autocomplete/jquery.autocomplete.css"/>
-<link rel="stylesheet" type="text/css" href="${ctx}/scripts/jquery/autocomplete/thickbox.css"/>
-<link rel="stylesheet" href="${ctx}/scripts/jquery/jquery.autocomplete.css" />
-
+<%@include file="/common/meta.jsp"%>
+<%@include file="/common/ec.jsp" %>
+<%@include file="/common/autocomplete.jsp"%>
 <script type="text/javascript" language="JavaScript" src="${ctx}/dwr/interface/CorpDwrAction.js"></script>
 <script type="text/javascript" language="JavaScript" src="${ctx}/dwr/engine.js"></script>
-
 </head>
 <body>
 <div id="winDealWithTaskDetail" class="x-panel">
 <div class="x-panel-header">协调指挥&nbsp;&gt;&nbsp;任务处理</div>
 <div id="dealWithTaskDetail" class="x-toolbar"></div>
 <div>
-	<s:form  id="frmDealWithTaskDetail" action="doCommitTaskDetail.do" method="post" theme="simple" enctype="multipart/form-data" onsubmit="return onCheckForm()">
+	<s:form  id="frmDealWithTaskDetail" action="doDealWithTaskDetail.do" method="post" theme="simple" enctype="multipart/form-data" onsubmit="return onCheckForm()">
 	<s:hidden name="model.id"/>
 	<s:hidden name="isMultipleCase"/>
 	<s:hidden name="modelId" />
@@ -90,7 +81,7 @@
              <td align="right" width="80">名称：</td>        
              <td align="left" width="270">
              	<s:hidden name="model.task.fsCase.corp.id" id="corpId"></s:hidden>
-             	<s:textfield id="companyName" name="model.task.fsCase.corp.name" onblur="queryCompanyByCode()" cssStyle="width:270px"/>
+             	<s:textfield id="companyName" name="model.task.fsCase.corp.name" onblur="queryCompanyByCode()"  cssStyle="width:270px"/>
              </td>
           </tr>
 		  <tr>
@@ -159,10 +150,64 @@ $(function() {
 	   
 </script>
 <script type="text/javascript">
+$().ready(function(){
+	$.ajax({
+		url:'${ctx}/taskdetail/getCorps.do',
+		type:'post',
+		dataType:'json',
+		success:function(corps,textStatus){
+			if(corps.length > 0){
+			$('#companyName').autocomplete(corps,{
+				mustMatch : true,
+				matchContains:true,
+				minChars:0,
+				width :'200px',
+				scrollHeight:200
+			});
+			}
+		},
+		failure: function() {
+	         alert('错误');
+	    }
+	
+	});
+	  $("#companyName").result(function(event,data,formatter){
+			queryCompanyByCode();
+	  }); 
+});
+//根据企业编号查询企业信息
+function queryCompanyByCode(){
+  var companyInfo = $("#companyName").val();
+  var code = companyInfo.substring(0,companyInfo.indexOf(":"));
+	$.ajax({
+		url:'${ctx}/taskdetail/getCorpByCode.do',
+		type:'post',
+		dataType:'json',
+		data:{corpId:code},
+		success:function(corp,textStatus){
+		  if(corp){            
+	          $("#companyName").val(corp.name);              
+	          $("#companyCode").val(corp.code);
+	          $("#companyAddress").val(corp.address);
+	          $("#legalPerson").val(corp.legalPerson);
+	          $("#produceLicense").val(corp.produceLicense);
+	          $("#sanitationLicense").val(corp.sanitationLicense);
+	          $("#corpId").val(corp.id);
+	       }  
+	},
+	failure: function() {
+     alert('错误');
+}
+	
+	});
+}
+/*
 $().ready(function() {	  	  
 	  //查询所有企业信息
-	   CorpDwrAction.getCorps(function(companies){	  		    
-	    var companiesArr = eval(companies);	    
+	   CorpDwrAction.getCorps(function(companies){
+		   alert(companies);	  		    
+	    var companiesArr = eval(companies);	   
+	    alert(companiesArr); 
 	    if(companiesArr.length > 0){
 	      $("#companyName").autocomplete(companiesArr,{
         	matchContains: true,
@@ -191,7 +236,7 @@ $().ready(function() {
            $("#corpId").val(corp.id);
           }  
       });		
-	}
+	}*/
 </script>
 
 <!-- script type="text/javascript"
