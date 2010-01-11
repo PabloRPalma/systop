@@ -77,6 +77,20 @@ Ext.onReady(function(){
             </td>
           </tr>
           <tr>
+            <td width="112" align="right">专家级别：</td>
+            <td width="139" align="left">
+                <s:select id="expertLevel" list="%{expertLevels}" name="model.level" headerKey="" headerValue="--请选择--"
+	              cssStyle="width:133px;"/>	
+            </td>
+            <td align="right" width="90">专家类别：</td>
+            <td width="213" align="left">
+               <s:select id="categoryId" name="model.expertCategory.id" 
+                 list="expertCateList" listKey="ecId" listValue="ecName"
+						headerKey="" headerValue="--请选择--" cssStyle="width:133px" cssClass="required"/>
+			   <font color="red">*</font>		
+            </td>
+          </tr>            
+          <tr>
             <td width="112" align="right">办公电话：</td>
             <td width="139" align="left">
             	<s:textfield id="officePhone" name="model.officePhone" />
@@ -103,20 +117,6 @@ Ext.onReady(function(){
             	<s:textfield id="graduateSchool" name="model.graduateSchool"  cssStyle="width:360px" />
              </td>
           </tr> 
-          <tr>
-            <td width="112" align="right">专家级别：</td>
-            <td width="139" align="left">
-                <s:select id="expertLevel" list="%{expertLevels}" name="model.level" headerKey="" headerValue="--请选择--"
-	              cssStyle="width:133px;" />
-            </td>
-            <td align="right" width="90">专家类别：</td>
-            <td width="213" align="left">
-               <s:select id="categoryId" name="model.expertCategory.id" 
-                 list="expertCateList" listKey="ecId" listValue="ecName"
-						headerKey="" headerValue="--请选择--" cssStyle="width:133px" cssClass="required"/>
-			   <font color="red">*</font>		
-            </td>
-          </tr>  
           <tr>
             <td width="112" align="right">学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历：</td>
             <td width="139" align="left">
