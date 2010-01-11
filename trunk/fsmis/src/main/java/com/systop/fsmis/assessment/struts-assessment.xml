@@ -32,7 +32,7 @@
 			 <result type="json" name="json">
 		        <param name="ignoreHierarchy">false</param>
 		        <param name="root">page</param>
-		    </result>
+		    </result>	    
 		</action>		
 	</package>
 	<!-- 风险评估附件请求处理 -->
