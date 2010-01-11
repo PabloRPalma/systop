@@ -21,7 +21,7 @@ window.onload = function(){
 		dataType: 'json',
 		success: function(titles, textStatus){
 			$("#caseTitle").autocomplete(titles, {
-				mustMatch :true ,
+				//mustMatch :true ,
        			matchContains: true,
         		minChars:1,
         		width:'191px', 
