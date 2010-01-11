@@ -6,15 +6,17 @@
 <title>通知管理</title>
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/ec.jsp"%>
+<%@include file="/common/extjs.jsp"%>
 <script type="text/javascript">
 /**
  * 删除提交
  */
 function remove(id){
-  
-	if (confirm("确认要删除该通知吗?")){
-		window.location.href="remove.do?model.id=" + id;	
-	}
+	Ext.MessageBox.confirm('提示','确认要删除所选择的通知吗？删除后不能恢复！', function(btn){
+        if (btn == 'yes') {
+        	location.href = "remove.do?model.id=" + id;
+        }
+    });
 }
 </script>
 </head>
@@ -36,7 +38,6 @@ function remove(id){
 		<table>
 			<tr>
 				<td>
-					<img src="${ctx}/images/icons/add.gif" />
 					<a href="${ctx}/office/notice/edit.do">添加</a>
 				</td>
 			</tr>

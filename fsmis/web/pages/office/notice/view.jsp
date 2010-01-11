@@ -18,7 +18,7 @@ Ext.onReady(function(){
     var tabs = new Ext.TabPanel({
         renderTo: 'tabs',
         anchor : '100% 100%',
-        height : 270,
+        height : 355,
         activeTab: 0,
         frame:false,
         defaults:{autoHeight: false},
@@ -47,8 +47,8 @@ Ext.onReady(function(){
 			</td>
 		</tr>
 		<tr>
-			<td align="left" style="padding: 10 30 10 30;" height="150px" valign="top">
-				<div style="line-height: 20px; word-spacing: 50px;">
+			<td align="left" style="padding: 10 30 10 30;" valign="top">
+				<div style="line-height: 20px; word-spacing: 50px; overflow:scroll; width:760px; height:210px">
 					${model.content}
 				</div>
 			</td>
@@ -68,7 +68,7 @@ Ext.onReady(function(){
 </div>
 </div>
 <div id="received" class="x-hide-display">
-<iframe height="300" id="iFrame1" name="iFrame1" width="100%" frameborder="0" src="${ctx }/office/receiverecord/listbyNoticeId.do?noticeId=${model.id}"></iframe>
+<iframe height="360" id="iFrame1" name="iFrame1" width="100%" frameborder="0" src="${ctx }/office/receiverecord/listbyNoticeId.do?noticeId=${model.id}"></iframe>
 </div>
 </div>
 <div align="center" style="padding-top: 10px;">
