@@ -13,7 +13,7 @@
 				<param name="ignoreHierarchy">false</param>
 		   		<param name="root">corps</param>
 			</result>
-			<result name="index">/pages/fsCase/task/taskdetail/list.jsp</result>
+			<result name="index">/pages/fsCase/task/taskdetail/index.jsp</result>
 			<result name="input">/pages/fsCase/task/taskdetail/edit.jsp</result>
 			<result name="returnTaskDetail">/pages/fsCase/task/taskdetail/returnTaskDetail.jsp</result>
 			<result name="toDealWithTaskDetail">/pages/fsCase/task/taskdetail/dealWithTaskDetail.jsp</result>
