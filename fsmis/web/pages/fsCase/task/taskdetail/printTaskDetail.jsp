@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@include file="/common/taglibs.jsp"%>
+<html>
+<head>
 <style type="text/css">
 <!--
 
@@ -10,16 +12,8 @@
 }
 -->
 </style>
-<html>
-<head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <object ID='WebBrowser' WIDTH="0" HEIGHT="0" CLASSID='CLSID:8856F961-340A-11D0-A96B-00C04FD705A2'></object> 
-<p align="right">
-<input type=button value=打印 onClick="document.all.WebBrowser.ExecWB(6,6)" class="button noprint">
-<input type=button value=设置 onClick="document.all.WebBrowser.ExecWB(8,1)" class="button noprint">
-<input type=button value=预览 onClick="document.all.WebBrowser.ExecWB(7,1)" class="button noprint">
-</p>
-<br/>
 <title>食品安全问题投诉登记表</title>
 <style>
 	.tdBottom{
@@ -29,6 +23,12 @@
 </style>
 </head>
 <body>
+<p align="right">
+<input type=button value=打印 onClick="document.all.WebBrowser.ExecWB(6,6)" class="button noprint">
+<input type=button value=设置 onClick="document.all.WebBrowser.ExecWB(8,1)" class="button noprint">
+<input type=button value=预览 onClick="document.all.WebBrowser.ExecWB(7,1)" class="button noprint">
+</p>
+<br/>
 <table width="650" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
     <td colspan="4" align="center"><h2>食品安全问题投诉登记表</h2></td>
