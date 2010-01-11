@@ -110,14 +110,24 @@ var win = new Ext.Window({
 					Ext.Ajax.request({
 								url : '/assessment/member/saveAssessmentMembers.do',
 								params : {
-									'assessment.id' : currentAssessmentId
+									'assessment.id' : currentAssessmentId,
+									'expertType'    : currentExpertType			
 								},
 								method : 'POST',
-								success : function() {
-									win.hide();
-									Ext.my().msg('', '您已经成功的为评估对象设置了专家成员.');
-									window.location.reload(true);
-									//ECSideUtil.reload('ec');
+								success : function(xhr, textStatus) {
+									win.hide(textStatus);
+									//Ext.my().msg('', '您已经成功的为评估对象设置了专家成员.');
+									if(xhr.responseText != null){
+									  if(currentExpertType == '1') {
+										 Ext.my().msg('', '您已经成功的为评估对象设置了专家组长.');
+										 $("#leader")[0].value = xhr.responseText;
+									  }	
+									  if(currentExpertType == '2') {
+										 Ext.my().msg('', '您已经成功的为评估对象设置了专家成员.');										  
+										 $("#member")[0].value = xhr.responseText;
+									  }											
+									}
+									//window.location.reload();
 								}
 							});
 				}
