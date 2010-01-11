@@ -2,9 +2,12 @@ package com.systop.fsmis.assessment.service;
 
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.systop.core.service.BaseGenericsManager;
+import com.systop.fsmis.assessment.AssessMentConstants;
 import com.systop.fsmis.model.AsseMember;
 
 /**
@@ -52,6 +55,52 @@ public class AsseMemberManager extends BaseGenericsManager<AsseMember> {
 		String hql = "from AsseMember ass where ass.assessment.id = ? and ass.type <> ? ";
 		List asseMembers = this.getDao().query(hql, new Object[]{assessmentId, type} );
 		return asseMembers;
+	}
+	
+	/**
+	 * 获取该风险评估对象所选择的专家组长信息
+	 * @param assessmentId 风险评估Id
+	 * @return
+	 */
+	public String getLeaders(Integer assessmentId) {
+		String jsonLeaders = StringUtils.EMPTY;
+		StringBuffer leaders = new StringBuffer();
+		if (assessmentId != null ){
+			List<AsseMember> AsseMembers = this.getAsseMembers(assessmentId, AssessMentConstants.EXPERT_LEADER);
+	  	if (CollectionUtils.isNotEmpty(AsseMembers)){
+		    for (AsseMember asseMember : AsseMembers) {
+		    	leaders.append(asseMember.getExpert().getName());
+		    	leaders.append(",");
+		    }
+		    if (leaders.length() > 0 && leaders.lastIndexOf(",") > 0){
+		    	jsonLeaders = leaders.substring(0, leaders.length() -1 );
+		    }
+	  	}
+		}
+		return jsonLeaders;
+	}
+	
+	/**
+	 * 获取该风险评估对象所选择的专家成员信息
+	 * @param assessmentId 风险评估Id
+	 * @return
+	 */
+	public String getMembers(Integer assessmentId) {
+		String jsonMembers = StringUtils.EMPTY;
+		StringBuffer members = new StringBuffer();
+		if (assessmentId != null ){
+			List<AsseMember> AsseMembers = this.getAsseMembers(assessmentId, AssessMentConstants.EXPERT_MEMBER);
+	  	if (CollectionUtils.isNotEmpty(AsseMembers)){
+		    for (AsseMember asseMember : AsseMembers) {
+		    	members.append(asseMember.getExpert().getName());
+		    	members.append(",");
+		    }
+		    if (members.length() > 0 && members.lastIndexOf(",") > 0){
+		    	jsonMembers = members.substring(0, members.length() -1 );
+		    }
+	  	}
+		}
+		return jsonMembers;
 	}
 	
 }
