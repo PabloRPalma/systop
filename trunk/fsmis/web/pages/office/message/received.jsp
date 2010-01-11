@@ -5,12 +5,15 @@
 <head>
 <title>已接收内部消息管理</title>
 <%@include file="/common/ec.jsp"%>
+<%@include file="/common/extjs.jsp"%>
 <%@include file="/common/meta.jsp"%>
 <script type="text/javascript">
 function remove(aID){
-	if(confirm("确实要删除该消息吗？")){
-		location.href = "remove.do?model.id=" + aID;
-	}	
+	Ext.MessageBox.confirm('提示','确认要删除所选择的消息吗？删除后不能恢复！', function(btn){
+        if (btn == 'yes') {
+        	location.href = "remove.do?model.id=" + aID;
+        }
+    });	
 }
 
 function view(aID){
@@ -27,12 +30,12 @@ function view(aID){
 	<tr>
 		<td>
 			<s:form action="received.do" method="post">
-				  起始时间：
+				 从：
 			 	 <input type="text" name="createTimeBegin" style="width: 140px"
 					value='<s:date name="createTimeBegin" format="yyyy-MM-dd HH:mm:ss"/>'
 					onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})"
 					class="Wdate" /> 
-			 	 截止时间：
+			 	 至：
 			 	 <input type="text" name="createTimeEnd" style="width: 140px"
 					value='<s:date name="createTimeEnd" format="yyyy-MM-dd HH:mm:ss"/>'
 					onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})"
@@ -43,10 +46,11 @@ function view(aID){
 		<td align="right">
 		<table>
 			<tr>
-				<td align="right"><a href="${ctx}/office/message/sended.do"><img
-					src="${ctx}/images/icons/mail_3.gif" /> 已发送的内部消息</a></td>
-				<td align="right"><a href="${ctx}/office/message/edit.do"><img
-					src="${ctx}/images/icons/send.gif" /> 发送内部消息</a></td>					
+				<td align="right">
+				<a href="${ctx}/office/message/sended.do">已发送的内部消息</a></td>
+				<td><span class="ytb-sep"></span></td>
+				<td align="right">
+				<a href="${ctx}/office/message/edit.do">发送内部消息</a></td>					
 			</tr>
 		</table>
 		</td>
@@ -76,8 +80,8 @@ function view(aID){
 		<ec:column width="250" property="content" title="内容" sortable="false"/>
 		<ec:column width="120" property="createTime" title="发送时间" sortable="false" style="text-align:center" format="yyyy-MM-dd HH:mm:ss" cell="date"/>
 		<ec:column width="60" property="isNew" title="状态" sortable="false" style="text-align:center">
-			 <c:if test="${item.isNew == '0'}"> <font color="red">已读</font></c:if>
-			<c:if test="${item.isNew == '1'}"> <font color="blue">未读</font></c:if>
+			 <c:if test="${item.isNew == '0'}"> <font color="green">已读</font></c:if>
+			<c:if test="${item.isNew == '1'}"> <font color="red">未读</font></c:if>
 		</ec:column>
 		<ec:column width="120" property="_0" title="操作" style="text-align:center" sortable="false">
 			<a href="reply.do?model.id=${item.id}">回复</a>|
