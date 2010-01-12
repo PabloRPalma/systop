@@ -63,39 +63,33 @@
 				<tr>
 					<c:if test="${model.isAgree eq '0' || model.isAgree == null}">
 					  <td align="right">
-						<a href="#" onclick="CheckWindow.show()"><img
-							src="${ctx}/images/icons/house.gif" /> 审核</a>
+						<a href="#" onclick="CheckWindow.show()"> 审核</a>
 					  </td>
 					  <td><span class="ytb-sep"></span></td>
 					</c:if>
 					<c:if test="${model.isAgree eq '1'&& model.status eq '1'}">
 					  <td align="right">
-						<a href="#" onclick="DispatchWindow.show()"><img
-							src="${ctx}/images/icons/house.gif" /> 任务派遣</a>
+						<a href="#" onclick="DispatchWindow.show()"> 任务派遣</a>
 					  </td>
 					  <td><span class="ytb-sep"></span></td>
 					</c:if>
 					<c:if test="${model.status eq '2'}">
 					  <td align="right">
-						<a href="#" onclick="finished()"><img
-							src="${ctx}/images/icons/house.gif" /> 处理完毕</a>
+						<a href="#" onclick="finished()"> 处理完毕</a>
 					  </td>
 					  <td><span class="ytb-sep"></span></td>
 					</c:if>
 					<c:if test="${model.status eq '2' || model.status eq '3' || model.status eq '4'}">
 					  <td align="right">
-						<a href="${ctx}/urgentcase/viewResultReports.do?model.id=${model.id}" target="_blank"><img
-							src="${ctx}/images/icons/house.gif" /> 查看报告</a>
+						<a href="${ctx}/urgentcase/viewResultReports.do?model.id=${model.id}" target="_blank"> 查看报告</a>
 					  </td>
 					  <td><span class="ytb-sep"></span></td>
 					  <td align="right">
-						<a href="${ctx}/urgentcase/editSendSms.do?model.id=${model.id}"><img
-							src="${ctx}/images/icons/house.gif" /> 短信通知</a>
+						<a href="${ctx}/urgentcase/editSendSms.do?model.id=${model.id}"> 短信通知</a>
 					  </td>
 					  <td><span class="ytb-sep"></span></td>
 					</c:if>
-					<td align="right"><a href="${ctx}/urgentcase/index.do"><img
-						src="${ctx}/images/icons/house.gif" /> 应急事件列表</a></td>
+					<td align="right"><a href="${ctx}/urgentcase/index.do"> 应急事件列表</a></td>
 				</tr>
 			</table>
 		</td>
