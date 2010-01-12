@@ -114,7 +114,7 @@
 		  <c:if test="${item.status == '2' || item.status eq '3' || item.status eq '4'}">
 			<a href="${ctx}/urgentcase/view.do?model.id=${item.id}&actId=3" title="查看事件">看</a> | 
 		  </c:if>
-		  	<a href="${ctx}/urgentcase/printAppForm.do?model.id=${item.id}" title="打印应急预案申请单" target="_blank">打</a> | 
+		  	<a href="${ctx}/urgentcase/printAppForm.do?model.id=${item.id}" title="打印应急预案申请单" target="_blank">印</a> | 
 			<a href="#" onclick="remove(${item.id})" title="删除事件">删</a>
 		</ec:column>
 	</ec:row>
