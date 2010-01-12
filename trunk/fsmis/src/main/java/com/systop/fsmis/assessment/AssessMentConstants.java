@@ -55,6 +55,10 @@ public final class AssessMentConstants {
 	/** UPLOAD_ALLOWED_FILE_SIZE 允许上传的文件大小，默认10MB*/
 	public static final long UPLOAD_ALLOWED_FILE_SIZE = getAllowedFileSize();
 	
+	/** MSG_RISK_EVAL :	向专家组成员发送的风险评估任务短消息，消息格式为：{0}专家，您好！您有一条风险评估任务！*/
+	public static final String MSG_EXPERT_SMSSEND = ResourceBundleUtil.getString(ResourceBundle.getBundle("application"),
+			"assessment_expert_smsSend","专家，您好！您有一条风险评估任务！");
+	
 	/**
 	 * 获得风险评估结果附件允许上传的最大文件大小,默认10MB
 	 * @return 允许上传的风险评估附件的大小	long
