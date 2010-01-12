@@ -1,35 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglibs.jsp"%>
-<html>
-<head>
-
-<%@include file="/common/extjs.jsp"%>
-<%@include file="/common/meta.jsp"%>
-<style type="text/css">
-#mytable {
-	border: 0px solid #A6C9E2;
-	margin-left: 0px;
-	margin-top: 0px;
-	width: 100%;
-	border-collapse: collapse;
-}
-
-#mytable td {
-	border: 0px solid #A6C9E2;
-	height: 26;
-}
-</style>
-</head>
-<body>
-<div id="tabs2"><c:forEach items="${model.taskses}" var="task"
+<div id="taskDiv" style="margin: -1">
+<c:forEach items="${model.taskses}" var="task"
 	varStatus="varStatus">
 	<div id="taskDiv${varStatus.index+1}" class="x-hide-display">
 	<table id="mytable" align="left" style="border-bottom: 0">
 		<tr>
-			<td>
-			<fieldset style="width: 800px; padding: 0px 0px 0px 0px;">
-			<legend>任务${varStatus.index+1}信息</legend>
+			<td>			
 			<table width="800px" align="left">
 				<tr>
 					<td align="right" width="15%">任务标题：</td>
@@ -63,27 +41,23 @@
 						rows="3" readonly="readonly">${task.descn}</textarea></td>
 				</tr>
 			</table>
-			</fieldset>
 			</td>
 		</tr>
 		<tr>
-			<td>		
-			<fieldset
-				style="width: 800px; height: 160px; padding: 0px 0px 0px 0px;">
-			<legend>任务${varStatus.index+1}明细</legend>
+			<td>					
 			<s:action name="getTaskDetailsByTaskId" namespace="/taskdetail"  executeResult="true" >
 				<s:param name="taskId">${task.id}</s:param>
 			</s:action>			
-			</fieldset>
 			</td>
 		</tr>
 	</table>
 	</div>
 </c:forEach></div>
 <script type="text/javascript">
+<c:if test="${not empty model.taskses }">	
 	Ext.onReady(function() {
-		var tabs2 = new Ext.TabPanel( {
-			renderTo : 'tabs2',
+		var taskDiv = new Ext.TabPanel( {
+			renderTo : 'taskDiv',
 			anchor : '100% 100%',
 			activeTab : 0,
 			frame : false,
@@ -101,6 +75,5 @@
 					]
 		});
 	});	
+</c:if>
 </script>
-</body>
-</html>
