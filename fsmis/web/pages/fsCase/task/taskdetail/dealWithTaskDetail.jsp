@@ -193,6 +193,7 @@ function queryCompanyByCode(){
 	          $("#produceLicense").val(corp.produceLicense);
 	          $("#sanitationLicense").val(corp.sanitationLicense);
 	          $("#corpId").val(corp.id);
+	          $("#operateDetails").val(corp.operateDetails);
 	       }  
 	},
 	failure: function() {
