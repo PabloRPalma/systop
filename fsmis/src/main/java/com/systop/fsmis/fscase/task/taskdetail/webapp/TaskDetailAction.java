@@ -34,6 +34,7 @@ import edu.emory.mathcs.backport.java.util.Collections;
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class TaskDetailAction extends
     ExtJsCrudAction<TaskDetail, TaskDetailManager> {
+
   // 是否为综合案件
   private String isMultipleCase;
   // 默认显示的Tab序号,用于在view页面默认显示哪个Tab
@@ -264,7 +265,6 @@ public class TaskDetailAction extends
     return "json";
   }
 
-
   /**
    * 单体任务状态列表返回页面
    */
@@ -309,10 +309,10 @@ public class TaskDetailAction extends
         "from Corp c where c.code = ?", String.valueOf(corpId));
     if (corp != null) {
       jsonResult = ReflectUtil.toMap(corp, new String[] { "id", "name", "code",
-          "address", "legalPerson", "produceLicense", "sanitationLicense","operateDetails" },
-          false);
+          "address", "legalPerson", "produceLicense", "sanitationLicense",
+          "operateDetails" }, false);
     }
-        
+
     return "jsonResult";
   }
 
