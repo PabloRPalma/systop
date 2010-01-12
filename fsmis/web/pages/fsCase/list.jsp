@@ -34,15 +34,15 @@ function remove(id){
 			<s:textfield name="model.title" cssStyle="width:100px"></s:textfield>	
 						案件编号:
 			<s:textfield name="model.code" cssStyle="width:70px"></s:textfield>
-						案发时间:开始
-			<input type="text" name="caseBeginTime" style="width: 140px"
-				value='<s:date name="caseBeginTime" format="yyyy-MM-dd HH:mm:ss"/>'
-				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})"
+						案发时间:
+			<input type="text" name="caseBeginTime" style="width: 100px"
+				value='<s:date name="caseBeginTime" format="yyyy-MM-dd HH:mm"/>'
+				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
 				class="Wdate" />
-						结束
-			<input type="text" name="caseEndTime" style="width: 140px"
-				value='<s:date name="caseEndTime" format="yyyy-MM-dd HH:mm:ss"/>'
-				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})"
+						至
+			<input type="text" name="caseEndTime" style="width: 100px"
+				value='<s:date name="caseEndTime" format="yyyy-MM-dd HH:mm"/>'
+				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
 				class="Wdate" />
 			                              案件状态:
 			<s:select name="model.status" list="stateMap" headerKey="" headerValue="请选择"/>		
@@ -54,7 +54,7 @@ function remove(id){
 			<tr>
 				<td><span class="ytb-sep"></span></td>
 				<td>
-					<c:if test="${param['isMultipleCase'] eq 0}"><a href="${ctx}/fscase/edit.do?isMultipleCase=${param['isMultipleCase'] }&modelId=${param['modelId']}"> 添加一般案件信息</a></c:if>			
+					<c:if test="${param['isMultipleCase'] eq 0}"><a href="${ctx}/fscase/edit.do?isMultipleCase=${param['isMultipleCase'] }&modelId=${param['modelId']}"> 添加事件</a></c:if>			
 				</td>
 			</tr>
 		</table>
@@ -82,7 +82,7 @@ function remove(id){
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	<ec:row>
 		<ec:column width="30" property="_s" title="No." value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center"/>	
-		<ec:column width="350" property="title" title="案件标题" sortable="false"/>
+		<ec:column width="260" property="title" title="案件标题" sortable="false"/>
 		<ec:column width="70" property="code" title="案件编号" sortable="false"/>
 		<ec:column width="100" property="caseType.name" title="案件类别" sortable="false"/>
 		<ec:column width="110" property="caseTime" title="案发时间"
@@ -120,6 +120,8 @@ function remove(id){
 			<c:if test="${item.status != '0'}">
 			     <font color="#999999" title="已派遣案件不能删除">删除</font>
 			</c:if>
+			<a
+				href="#" onclick="showChooseSendTypeWindow(${model.id})"> 派</a>
 			<c:if test="${item.status == '0'}">
 			 <a href="#" onclick="remove(${item.id})" >
 			               删除
