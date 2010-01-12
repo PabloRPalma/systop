@@ -129,8 +129,19 @@ function remove(id){
 			</c:if>
 				
 			                地图
-			
-				
+			<c:if test="${item.status == '2'}" >
+			  <a href="addSendMsg.do?model.id=${item.id}">核实</a>
+			</c:if>
+			<c:if test="${item.status == '2' && item.msgCheckedFlag == '1'}">
+			    <a href="confirmBackMsg.do?model.id=${item.id}">
+					核实反馈
+				</a>	
+			</c:if>
+			<c:if test="${item.status == '4'}">
+			     <a href="confirmBackMsg.do?model.id=${item.id}&operType='v'">
+					查看核实反馈
+				</a>				
+			</c:if>		
 		</ec:column>
 		</stc:role>
 	</ec:row>
