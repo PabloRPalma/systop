@@ -6,19 +6,12 @@
 <head>
 <%@include file="/common/meta.jsp"%>
 <title>单体事件核实信息确认</title>
+<%@include file="/common/extjs.jsp" %>
+<%@include file="/common/validator.jsp"%>
 <script type="text/javascript">
 	//去掉字符串两端的空格
 	String.prototype.trim = function(){
 	  return this.replace(/^\s*/,"").replace(/\s*$/,"");
-	}
-	//验证表单数据的有效性
-	function onCheckForm(){
-		var confirmMsg = document.getElementById("checkedConfirmMsg").value.trim();
-		if(confirmMsg.length == 0){
-			alert("核实意见不能为空!");
-			return false;
-		}
-		return true;
 	}
 </script>
 </head>
@@ -26,7 +19,7 @@
 <div class="x-panel">
 <div class="x-panel-header"></div>
 <div align="center" style="margin-top:80px">
-<s:form action="confirmCheckedMsg.do" method="post" onsubmit="return onCheckForm()">  
+<s:form action="confirmCheckedMsg.do" id="confirmCheckedMsg" method="post" validate="true" >  
   <s:hidden name="model.id"/>
   <fieldset style="width: 700px; padding-top: 10px">
   <legend>单体事件核实确认信息</legend>
@@ -43,9 +36,7 @@
   				<c:if test="${empty param.operType}">请填写</c:if>核实意见：
   			</td>
   			<td>  				
-  				<textarea id="checkedConfirmMsg" name="model.checkedConfirmMsg" style="width:400px;height:80px"
-  					<c:if test="${not empty param.operType}">readonly</c:if>
-  				>${model.checkedConfirmMsg}</textarea>
+  				<s:textarea id="checkedConfirmMsg" name="model.checkedConfirmMsg" cssClass="required" cssStyle="width:400px;height:80px" value="%{checkedConfirmMsg}"/>
   			</td>
   				
 			<td width="120px" align="right">核实结果：</td>
@@ -70,6 +61,10 @@
 </s:form>
 </div>
 </div>
-
+<script type="text/javascript">
+	$(document).ready(function() {
+	$("#confirmCheckedMsg").validate();
+});
+</script>
 </body>
 </html>
