@@ -56,7 +56,7 @@ public class ExpertManager extends BaseGenericsManager<Expert>{
    * @return list of map
    */
   @SuppressWarnings("unchecked")
-  public static List<Map> toMapArray(List<ExpertCategory> list) {
+  private static List<Map> toMapArray(List<ExpertCategory> list) {
     List<Map> result = new ArrayList(list.size());
     for (ExpertCategory expertCategory : list) {
       Map item = new HashMap();
