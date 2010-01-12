@@ -42,11 +42,7 @@
    	    
    	    <create javascript="UcTypeDwrAction" creator="spring">
    	         <param name="beanName" value="ucTypeDwrAction"></param>
-   	    </create>  	 	  	    
-   	    
-   	    <create javascript="CorpDwrAction" creator="spring">
-   	         <param name="beanName" value="corpDwrAction"></param>
-   	    </create> 
+   	    </create>  	 	  	       	    
    	    
   	    <convert converter="bean"  match="com.systop.common.core.dao.support.Page"  />
    	    <convert converter="bean"  match="com.systop.common.core.webapp.ajax.RemoteQueryParams"></convert>
@@ -56,7 +52,6 @@
    	    <convert converter="bean"  match="com.systop.common.modules.security.user.model.Permission"  />
    	    <convert converter="bean"  match="com.systop.common.modules.dept.model.Dept"  />
    	    <convert converter="bean"  match="com.systop.common.modules.employee.model.Employee"  />
-   	    <convert converter="bean"  match="com.systop.fsmis.model.Corp"  />
    	    <convert converter="map"   match="java.util.Map" />
 	</allow>
 
