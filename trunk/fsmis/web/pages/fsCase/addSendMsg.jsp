@@ -41,6 +41,15 @@ function init(){
 <body onload="init()">
 <div class="x-panel">
 <div class="x-panel-header"></div>
+<div class="x-toolbar">
+<table width="100%">
+   <tr>
+      <td align="right">
+        <a  href="confirmBackMsg.do?model.id=${model.id}">手动核实</a>
+      </td>
+   </tr>
+</table>
+</div>
 <div align="center">
 	<s:form action="sendMsg" method="post" theme="simple" onsubmit="return valileader()">
 		<s:hidden name="model.id"/>
@@ -61,12 +70,6 @@ function init(){
 			<tr>
 				<td align="right">短信内容：</td>
 				<td colspan="3" align="left" width="340"><s:textarea id="msgContent" name="msgContent" cssStyle="width:340px;height:40px;"/></td>
-			</tr>
-			<tr>
-			   <td align="right"></td>
-			   <td colspan="3" align="right" width="300" >
-					  <a href="confirmBackMsg.do?model.id=${model.id}"><font color="blue">手动核实</font></a>
-			   </td>
 			</tr>
 		</table>
 		</fieldset>
