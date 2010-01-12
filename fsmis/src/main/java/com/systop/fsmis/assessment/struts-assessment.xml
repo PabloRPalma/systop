@@ -39,8 +39,8 @@
 	 <package name="fsmis.assessment.attaches" extends="json"  namespace="/assessment/attaches">    
 	   <action name="*" class="asseAttachAction" method="{1}">
 	     <result name="index">/pages/assessment/attaches.jsp</result> 
+	     <result name="input">/pages/assessment/attaches.jsp</result> 
 	     <result name="success" type="redirect">index.do?assessmentId=${assessmentId}</result>    
-	     <result name="input">/pages/assessment/error.jsp</result> 
 	     <result name="view">/pages/assessment/attachesView.jsp</result> 	               
 	   </action>
 	 </package>  	
