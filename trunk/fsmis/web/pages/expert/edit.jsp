@@ -67,7 +67,7 @@ Ext.onReady(function(){
           </tr>
           <tr>
             <td width="112" align="right">专家名称：</td>
-            <td width="139" align="left">
+            <td width="141" align="left">
             	<s:textfield id="name" name="model.name" cssClass="required"/>
             	<font color="red">*</font>
             </td>
@@ -86,7 +86,7 @@ Ext.onReady(function(){
             <td width="213" align="left">
                <s:select id="categoryId" name="model.expertCategory.id" 
                  list="expertCateList" listKey="ecId" listValue="ecName"
-						headerKey="" headerValue="--请选择--" cssStyle="width:133px" cssClass="required"/>
+						headerKey="" headerValue="--请选择--" cssStyle="width:132px" cssClass="required"/>
 			   <font color="red">*</font>		
             </td>
           </tr>            
@@ -114,7 +114,7 @@ Ext.onReady(function(){
           <tr>
             <td width="112" align="right">毕业院校：</td>
             <td align="left" colspan="3">
-            	<s:textfield id="graduateSchool" name="model.graduateSchool"  cssStyle="width:360px" />
+            	<s:textfield id="graduateSchool" name="model.graduateSchool"  cssStyle="width:362px" />
              </td>
           </tr> 
           <tr>
@@ -140,19 +140,19 @@ Ext.onReady(function(){
           <tr>
             <td width="112" align="right">研究方向：</td>
             <td align="left" colspan="3">
-            	<s:textfield id="research" name="model.research"  cssStyle="width:360px" />
+            	<s:textfield id="research" name="model.research"  cssStyle="width:362px" />
              </td>
           </tr>  
           <tr>
             <td width="112" align="right">备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</td>
             <td align="left" colspan="3">
-            	<s:textfield id="remark" name="model.remark"  cssStyle="width:360px" />
+            	<s:textfield id="remark" name="model.remark"  cssStyle="width:362px" />
              </td>
           </tr>  
           <tr>
             <td width="112" align="right">专家简介：</td>
             <td align="left" colspan="3">
-            	<s:textarea id="summery" name="model.summery" cssStyle="width:360px; height:90px"/>
+            	<s:textarea id="summery" name="model.summery" cssStyle="width:362px; height:90px"/>
             </td>
           </tr>                                                                                      
         </table></td>
