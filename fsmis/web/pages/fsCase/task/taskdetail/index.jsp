@@ -1,19 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@include file="/common/meta.jsp"%>
 <%@include file="/common/taglibs.jsp"%>
 <html>
 <head>
-<%@include file="/common/meta.jsp"%>
 <%@include file="/common/ec.jsp"%>
-<%@include file="/common/extjs.jsp"%>
+
 <title>任务列表</title>
 </head>
 <body>
 <div><%@ include file="/common/messages.jsp"%></div>
-<div class="x-panel">
+<div class="x-panel" style="margin: -1;">
 <div class="x-panel-header">协调指挥&nbsp;&gt;&nbsp;${isMultipleCase eq 0?'一般任务':'综合任务'}接收&nbsp;&gt;&nbsp;${isMultipleCase eq
 0?'一般任务':'综合任务'}列表</div>
 <div class="x-toolbar">
+<%@include file="/common/extjs.jsp"%>
 <table width="99%">
 	<tr>
 		<td><s:form action="index" method="post">
