@@ -113,7 +113,7 @@ window.onload = function(){
        </c:if>
        <c:if test="${item.state eq '3'}">
   	      <a href="result.do?model.id=${item.id}">上报</a>|	  
-       </c:if>                      
+       </c:if>                 
 	   <c:choose>
 	     <c:when test="${!empty item.checkResults}"> 
 	        <font color="#999999">删除</font>|
