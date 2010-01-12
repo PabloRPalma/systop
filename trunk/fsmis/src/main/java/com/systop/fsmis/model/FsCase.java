@@ -17,8 +17,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import com.systop.common.modules.dept.model.Dept;
 import com.systop.core.model.BaseModel;
@@ -108,6 +110,17 @@ public class FsCase extends BaseModel {
 	private Set<SmsSend> smsSendses = new HashSet<SmsSend>(0);
 
 	private Set<SmsReceive> smsReceiveses = new HashSet<SmsReceive>(0);
+	
+	/** 是否发送通知核实短信 */
+	private String isSendInformMsg;
+	
+
+	/** 短信核实判断标识:	0代表未核实【默认值】，1代表已核实*/
+	private String msgCheckedFlag = "0";
+
+	/** 反馈确认信息 **/
+	private String checkedConfirmMsg;
+	
 
 	public FsCase() {
 	}
@@ -416,5 +429,32 @@ public class FsCase extends BaseModel {
 	public void setSmsReceiveses(Set<SmsReceive> smsReceiveses) {
 		this.smsReceiveses = smsReceiveses;
 	}
+	
+	@Column(name = "is_send_inform_msg")
+	public String getIsSendInformMsg() {
+		return isSendInformMsg;
+	}
 
+	public void setIsSendInformMsg(String isSendInformMsg) {
+		this.isSendInformMsg = isSendInformMsg;
+	}
+	
+	@Transient
+	public String getMsgCheckedFlag() {
+		return msgCheckedFlag;
+	}
+
+	public void setMsgCheckedFlag(String msgCheckedFlag) {
+		this.msgCheckedFlag = msgCheckedFlag;
+	}
+
+	@Column(name = "CHECKED_CONFIRM_MSG")
+	@Type(type = "text")
+	public String getCheckedConfirmMsg() {
+		return checkedConfirmMsg;
+	}
+
+	public void setCheckedConfirmMsg(String checkedConfirmMsg) {
+		this.checkedConfirmMsg = checkedConfirmMsg;
+	}
 }
