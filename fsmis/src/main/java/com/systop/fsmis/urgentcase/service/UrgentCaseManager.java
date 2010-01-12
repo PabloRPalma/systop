@@ -285,6 +285,8 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
     		logger.info("编辑后要保存的处理结果：{}", newRst.toString());
     		
     		urgentResult.setContent(newRst.toString());
+    		//指挥组填写处理结果的时间
+    		urgentResult.setHandleTime(new Date());
     		//修改应急事件中指挥组的处理结果
     		getDao().save(urgentResult);
   		}

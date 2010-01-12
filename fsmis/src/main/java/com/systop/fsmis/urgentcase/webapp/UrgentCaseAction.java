@@ -207,10 +207,12 @@ public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseMana
 			List<UrgentResult> urgentResults = getManager().queryGroupResult(
 					getModel().getId(), county.getId());
 			for(UrgentResult urgentRst : urgentResults){
-				groupMap.put(urgentRst.getUrgentGroup().getCategory(), urgentRst.getUrgentGroup());
+				groupMap.put(urgentRst.getUrgentGroup().getCategory(), urgentRst);
 			}
 		}
 		getRequest().setAttribute("groupMap", groupMap);
+		getRequest().setAttribute("loginUser", loginUserService.getLoginUser(getRequest()));
+		//logger.info("当前登录用户：{}", loginUserService.getLoginUser(getRequest()).getLoginId());
 		
 		return "groupResult";
 	}
