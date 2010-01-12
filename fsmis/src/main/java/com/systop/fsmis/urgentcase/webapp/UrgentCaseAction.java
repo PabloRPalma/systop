@@ -165,9 +165,9 @@ public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseMana
 	 */
 	public String saveCheckResult() {
 		checkResult = Collections.synchronizedMap(new HashMap<String, String>());
-		String caseId = getRequest().getParameter("caseId").toString();
-		String isAgree = getRequest().getParameter("isAgree").toString();
-		String reason = getRequest().getParameter("reason").toString();
+		String caseId = getRequest().getParameter("caseId");
+		String isAgree = getRequest().getParameter("isAgree");
+		String reason = getRequest().getParameter("reason");
 		User checker = loginUserService.getLoginUser(getRequest());
 		if (checker != null) {
 			getManager().saveCheckResult(caseId, isAgree, reason, checker);
@@ -186,9 +186,9 @@ public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseMana
 		checkResult = Collections.synchronizedMap(new HashMap<String, String>());
 		//根据页面选择的派遣方式查询该派遣方式对应的组
 		//应急事件ID
-		String caseId = getRequest().getParameter("caseId").toString();
+		String caseId = getRequest().getParameter("caseId");
 		//派遣环节ID
-		String typeId = getRequest().getParameter("typeId").toString();
+		String typeId = getRequest().getParameter("typeId");
 		logger.info("应急事件ID:{}, 派遣方式ID:{}", caseId, typeId);
 		Dept county = loginUserService.getLoginUserCounty(getRequest());
 		
@@ -255,11 +255,11 @@ public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseMana
 		Dept county = loginUserService.getLoginUserCounty(getRequest());
 		checkResult = Collections.synchronizedMap(new HashMap<String, String>());
 		//应急事件ID
-		String caseId = getRequest().getParameter("caseId").toString();
+		String caseId = getRequest().getParameter("caseId");
 		//指挥组ID
-		String groupId = getRequest().getParameter("groupId").toString();
+		String groupId = getRequest().getParameter("groupId");
 		//取得结果字符串
-		String rstValue = getRequest().getParameter("rstValue").toString();
+		String rstValue = getRequest().getParameter("rstValue");
 		logger.info("保存处理结果-->>事件ID:{}, 组ID:{}", caseId, groupId);
 		logger.info("结果集:{}", rstValue);
 		

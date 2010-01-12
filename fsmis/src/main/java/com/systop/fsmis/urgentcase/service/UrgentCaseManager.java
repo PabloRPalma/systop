@@ -8,8 +8,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import net.sf.json.JSONObject;
 
@@ -57,7 +55,7 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
 	@Transactional
 	public void saveCheckResult(String caseId, String isAgree, String reason, User checker) {
 		if (StringUtils.isNotEmpty(caseId)) {
-			if (isNumeric(caseId)) {
+			if (StringUtils.isNumeric(caseId)) {
 				UrgentCase urgentCase = getDao().get(UrgentCase.class, Integer.valueOf(caseId));
 				urgentCase.setStatus(isAgree);
 				urgentCase.setIsAgree(isAgree);
@@ -101,7 +99,7 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
   @Transactional
   public void sendUrgentCase(String caseId, String typeId, Dept county) {
   	if (StringUtils.isNotEmpty(caseId) && StringUtils.isNotEmpty(typeId)) {
-  		if (isNumeric(caseId) && isNumeric(typeId)) {
+  		if (StringUtils.isNumeric(caseId) && StringUtils.isNumeric(typeId)) {
   			UrgentCase urgentCase = getDao().get(UrgentCase.class, Integer.valueOf(caseId));
   			UrgentType urgentType = getDao().get(UrgentType.class, Integer.valueOf(typeId));
   			List<UrgentGroup> groups = Collections.EMPTY_LIST;
@@ -264,7 +262,7 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
   public void saveGroupResult(String caseId, Dept county, String groupId, String result) {
   	UrgentResult urgentResult = null;
   	if (StringUtils.isNotEmpty(caseId) && StringUtils.isNotEmpty(groupId)) {
-  		if (isNumeric(caseId) && isNumeric(groupId)) {
+  		if (StringUtils.isNumeric(caseId) && StringUtils.isNumeric(groupId)) {
   			if (county != null) {
   				urgentResult = getUrgentResult(Integer.valueOf(caseId), county.getId(), Integer.valueOf(groupId));
   			}
@@ -391,20 +389,7 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
 		
 		return valueMap;
   }
-  
-	/**
-	 * 判断字符串是否由数字组成
-	 * @param str
-	 */
-	private boolean isNumeric(String str) {
-		Pattern pattern = Pattern.compile("[0-9]*");
-		Matcher isNum = pattern.matcher(str);
-		if(!isNum.matches()){
-			return false;
-		}
-		return true;
-	} 
-	
+  	
 	/**
 	 * 取得组类型对应的结果集字段
 	 * @param rst
