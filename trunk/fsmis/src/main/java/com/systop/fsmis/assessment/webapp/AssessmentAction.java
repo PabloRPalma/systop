@@ -22,6 +22,7 @@ import com.systop.fsmis.assessment.service.AsseMemberManager;
 import com.systop.fsmis.assessment.service.AssessmentAttachManager;
 import com.systop.fsmis.assessment.service.AssessmentManager;
 import com.systop.fsmis.fscase.service.FsCaseManager;
+import com.systop.fsmis.model.AsseMember;
 import com.systop.fsmis.model.Assessment;
 import com.systop.fsmis.model.AssessmentAttach;
 import com.systop.fsmis.model.CheckResult;
@@ -149,14 +150,26 @@ public class AssessmentAction extends
 	public String remove() {
 		Assessment assessment = getManager().get(getModel().getId());
 		Set<AssessmentAttach> attaches = assessment.getAsseAtts();
+		Set<AsseMember> asseMembers = assessment.getAsseMemberse();
+		//删除评估附件信息
 		for (AssessmentAttach assAttach : attaches) {
 			String realPath = assAttach.getPath();
 			if (StringUtils.isNotBlank(realPath)) {
 				assessmentAttachManager.removeAttach(assAttach, getRealPath(realPath));
-				return SUCCESS;
 			}
 		}
-		return super.remove();
+		
+		//删除评估审核信息		
+		getManager().delCheckResults(assessment);
+		
+		//删除评估所选专家信息
+		for (AsseMember asseMember : asseMembers) {
+			asseMemberManager.remove(asseMember);
+		}		
+		
+		//删除评估对象信息
+		getManager().remove(assessment);
+		return SUCCESS;
 	}
 
   /**
@@ -184,8 +197,10 @@ public class AssessmentAction extends
 		}
 		//设置审核人为当前登录用户
 		User user = UserUtil.getPrincipal(getRequest());
-		checkResult.setChecker(user);
-		getManager().auditSave(checkResult);
+		if (user != null ) {
+			checkResult.setChecker(user);
+			getManager().auditSave(checkResult);
+		}
 		return SUCCESS;
 	}
 	
@@ -202,25 +217,16 @@ public class AssessmentAction extends
 	public String startSave() {
 		if (getModel().getId() != null ){
 			Assessment assessment = getManager().get(getModel().getId());	
-			assessment.setState(AssessMentConstants.EVAL_IS_START_STATE);
+			assessment.setState(AssessMentConstants.EVAL_IS_START_STATE);		
 			getManager().save(assessment);
+		  //给该条评估申请所选择的专家发送短信
+			asseMemberManager.sendTaskMessage(assessment);
 		}
 		return SUCCESS;
 	}
+
 	/**
-	 * 获取该风险评估对象所选择的专家成员信息
-	 * @return
-	 */
-	
-  public String getMembers() {
-		if (getModel().getId() != null ){
-			jsonMembers = asseMemberManager.getMembers(getModel().getId());
-		}
-    return "members";
-  }
-  
-	/**
-	 * 获取该风险评估对象所选择的专家成员信息
+	 * 获取该风险评估对象所选择的专家组长信息
 	 * @return
 	 */
   public String getLeaders() {
@@ -228,6 +234,17 @@ public class AssessmentAction extends
 			jsonLeaders = asseMemberManager.getLeaders(getModel().getId());
 		}
     return "leaders";
+  }
+  
+	/**
+	 * 获取该风险评估对象所选择的专家成员信息
+	 * @return
+	 */
+  public String getMembers() {
+		if (getModel().getId() != null ){
+			jsonMembers = asseMemberManager.getMembers(getModel().getId());
+		}
+    return "members";
   }
   
 	/**
@@ -274,6 +291,21 @@ public class AssessmentAction extends
 		return "view";
 	}
 	
+	/**
+	 * 查询风险评估的审核记录
+	 */
+	public String listCheckResult() {
+		if (assessmentId != null ) {
+			Page page = PageUtil.getPage(getPageNo(), getPageSize());
+			StringBuffer sql = new StringBuffer("from CheckResult cr where 1=1 ");
+			sql.append(" and cr.assessment.id = ?");
+			sql.append(" order by cr.isAgree,cr.checkTime desc");
+			page = getManager().pageQuery(page, sql.toString(), assessmentId);
+			restorePageData(page);
+		}
+		
+		return "listCheckRst";
+	}
 	/**
 	 * 
 	 * @return
