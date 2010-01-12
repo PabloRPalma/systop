@@ -6,31 +6,31 @@
 	<div id="command">		
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
-			<a href="${ctx}/casetype/index.do" target="main">案件类别</a>
+			<a href="${ctx}/casetype/index.do" target="main">事件类别</a>
 		</div>
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
-			<a href="${ctx}/fscase/index.do?isMultipleCase=0&modelId=0" target="main">一般案件管理</a>
+			<a href="${ctx}/fscase/index.do?isMultipleCase=0&modelId=0" target="main">单体事件管理</a>
 		</div>
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
-			<a href="${ctx}/task/index.do?isMultipleCase=0&modelId=1" target="main">一般任务管理</a>
+			<a href="${ctx}/task/index.do?isMultipleCase=0&modelId=1" target="main">单体任务管理</a>
 		</div>
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
-			<a href="${ctx}/taskdetail/index.do?isMultipleCase=0&modelId=1" target="main">一般任务接收</a>
+			<a href="${ctx}/taskdetail/index.do?isMultipleCase=0&modelId=1" target="main">单体任务接收</a>
 		</div>
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
-			<a href="${ctx}/fscase/index.do?isMultipleCase=1&modelId=0" target="main">综合案件管理</a>
+			<a href="${ctx}/fscase/index.do?isMultipleCase=1&modelId=0" target="main">多体事件管理</a>
 		</div>
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
-			<a href="${ctx}/task/index.do?isMultipleCase=1&modelId=2" target="main">综合任务管理</a>
+			<a href="${ctx}/task/index.do?isMultipleCase=1&modelId=2" target="main">多体任务管理</a>
 		</div>
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
-			<a href="${ctx}/taskdetail/index.do?isMultipleCase=1&modelId=2" target="main">综合任务接收</a>
+			<a href="${ctx}/taskdetail/index.do?isMultipleCase=1&modelId=2" target="main">多体任务接收</a>
 		</div>
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
