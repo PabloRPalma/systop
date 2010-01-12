@@ -82,7 +82,7 @@
 				href="#" onclick="alert(1);showChooseSendTypeWindow(${model.id})"> 任务派遣1</a></td>
 			<td><span class="ytb-sep"></span></td>
 		</c:if>
-		<td align="right"><a href="${ctx}/assessment/edit.do?model.fsCase.id=${model.id}"> 风险评估</a><td><span class="ytb-sep"></span></td></td>
+		<td align="right"><a href="${ctx}/assessment/edit.do?model.fsCase.id=${model.id}"> 风险评估</a><span class="ytb-sep"></span></td>
 		<td></td>
 		<td align="right"><a href="#"> 联合整治</a></td>
 	</tr>
