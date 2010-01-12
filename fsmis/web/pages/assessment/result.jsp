@@ -209,7 +209,7 @@ Ext.onReady(function(){
 				<s:submit value="保存" cssClass="button"/>&nbsp;&nbsp;
 				<s:reset value="重置" cssClass="button"/>
 			</td>
-		</tr>
+		</tr>	
 </table>
 </s:form>
 </div>
