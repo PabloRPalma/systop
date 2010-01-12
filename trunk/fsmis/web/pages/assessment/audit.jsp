@@ -67,6 +67,7 @@ Ext.onReady(function(){
              	<stc:username></stc:username>
              </td>
           </tr>
+          <!--  
           <tr>
              <td align="right" width="90">审核日期：</td>
              <td align="left">
@@ -75,6 +76,7 @@ Ext.onReady(function(){
                 <font color="red">*</font>
              </td>    
           </tr>
+          -->
 	     <tr>
 			<td width="90" align="right">是否通过：</td>
 			<td colspan="3" align="left">
