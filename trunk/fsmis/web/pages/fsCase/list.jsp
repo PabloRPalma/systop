@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglibs.jsp"%>
-
+<%@include file="chooseSendType.jsp" %>
 <html>
 <head>
 <title>案件采集管理</title>
@@ -11,15 +11,12 @@
 function examine(id){
 	alert(id);
 }
-
-
 function remove(id){
 	if (confirm("确认要删除事件信息吗?")){
 		window.location.href="${ctx}/fscase/remove.do?model.id=" + id+"&modelId=0&isMultipleCase="+${isMultipleCase};
 		
 	}
 }
-
 </script>
 </head>
 <body>
@@ -98,37 +95,37 @@ function remove(id){
 		<ec:column width="150" property="_0" title="操作" style="text-align:left" sortable="false">
 			 &nbsp;&nbsp;
 			 <a href="${ctx}/fscase/view.do?fsCaseId=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">
-			                查看
+			                看
 			 </a>  
 			 <stc:role ifAnyGranted="ROLE_ADMIN">
 			    <a href="${ctx}/fscase/edit.do?model.id=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">
-                                                 编辑
+                                                 改
                </a>
              </stc:role>
             <stc:role  ifNotGranted="ROLE_ADMIN">
             <c:if test="${item.status == '2' || item.status == '4'}">
                 <a href="#">
-                <font color="#999999">编辑</font>
+                <font color="#999999">改</font>
              </a>
             </c:if>
 			<c:if test="${item.status == '0' || item.status == '1'}">
 			   <a href="${ctx}/fscase/edit.do?model.id=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">
-                                               编辑
+                                               改
              </a>	
             </c:if>
             </stc:role>
 			<c:if test="${item.status != '0'}">
-			     <font color="#999999" title="已派遣案件不能删除">删除</font>
+			     <font color="#999999" title="已派遣案件不能删除">删</font>
 			</c:if>
 			<a
-				href="#" onclick="showChooseSendTypeWindow(${model.id})"> 派</a>
+				href="#" onclick="showChooseSendTypeWindow(${item.id})"> 派</a>
 			<c:if test="${item.status == '0'}">
 			 <a href="#" onclick="remove(${item.id})" >
-			               删除
+			               删
 			 </a>
 			</c:if>
 				
-			                地图
+			                图
 			<c:if test="${item.status == '2'}" >
 			  <a href="addSendMsg.do?model.id=${item.id}">核实</a>
 			</c:if>
