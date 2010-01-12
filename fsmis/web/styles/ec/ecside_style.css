@@ -7,20 +7,7 @@ overflow:auto;
 
 }
 
-button{
-	background-color:transparent;
-	background-image:url(../../images/button1.gif);
-	background-repeat: repeat-x;
-	border: outset 1px  #bbbbbb;
-	border-collapse:  separate;
-	vertical-align: bottom;
-	color:#333333;
-	cursor:pointer;
-	height:22px;
-	width:80px;
-	margin:3px 4px 3px 4px;
-	padding: 3px 3px 0px 3px;
-}
+
 
 div {
 	font-size: 12px;
