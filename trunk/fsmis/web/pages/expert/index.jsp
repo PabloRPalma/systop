@@ -72,8 +72,14 @@ function removeExpert(eID){
     <ec:column width="100" property="homePhone" title="家庭电话" style="text-align:left"/>                                   
     <ec:column width="100" property="_0" title="操作" style="text-align:center" sortable="false">
 	   <a href="edit.do?model.id=${item.id}">编辑</a> |
-	   <a href="#" onClick="removeExpert(${item.id})">删除</a> 
-	   
+	   	<c:choose>
+	     <c:when test="${!empty item.asseMemberse}"> 
+	        <font color="#999999">删除</font>
+	     </c:when>
+	     <c:otherwise>
+	        <a href="#" onClick="removeExpert(${item.id})">删除</a> 
+	     </c:otherwise>
+	   </c:choose>    
 	</ec:column>    
   </ec:row>
 </ec:table>
