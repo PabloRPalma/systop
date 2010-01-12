@@ -6,7 +6,6 @@
 <title>派遣任务</title>
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/validator.jsp"%>
-<%@include file="/common/dwr.jsp"%>
 <script type="text/javascript"	src="${ctx}/scripts/fckeditor/fckeditor.js"></script>
 <script type="text/javascript" language="javascript"	src="${ctx}/scripts/fsmis/attachments.js"></script>
 <script type="text/javascript"	src="${ctx}/scripts/fsmis/ShowDeptName.js"></script>
