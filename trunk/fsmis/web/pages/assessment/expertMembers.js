@@ -119,11 +119,11 @@ var win = new Ext.Window({
 									//Ext.my().msg('', '您已经成功的为评估对象设置了专家成员.');
 									if(xhr.responseText != null){
 									  if(currentExpertType == '1') {
-										 Ext.my().msg('', '您已经成功的为评估对象设置了专家组长.');
+										 Ext.my().msg('', '您已经成功为评估信息设置了专家组长.');
 										 $("#leader")[0].value = xhr.responseText;
 									  }	
 									  if(currentExpertType == '2') {
-										 Ext.my().msg('', '您已经成功的为评估对象设置了专家成员.');										  
+										 Ext.my().msg('', '您已经成功为评估信息设置了专家成员.');										  
 										 $("#member")[0].value = xhr.responseText;
 									  }											
 									}
