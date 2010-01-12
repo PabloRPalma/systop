@@ -60,7 +60,7 @@ public class AssessmentAttachManager extends
    * @return list of map
    */
   @SuppressWarnings("unchecked")
-  public static List<Map> toMapArray(List<AsseMember> list) {
+  private static List<Map> toMapArray(List<AsseMember> list) {
     List<Map> result = new ArrayList(list.size());
     for (AsseMember asseMember : list) {
       Map item = new HashMap();

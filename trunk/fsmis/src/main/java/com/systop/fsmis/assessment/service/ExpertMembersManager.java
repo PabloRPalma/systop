@@ -22,9 +22,8 @@ public class ExpertMembersManager extends BaseGenericsManager<Expert> {
 	 */
 	public Assessment getAssessmentById(Integer assessmentId) {
 		String hql = "from Assessment ass where ass.id = ?";
-		Assessment assessment = (Assessment) getDao().findObject(hql,
+		return (Assessment) getDao().findObject(hql,
 				new Object[] { assessmentId });
-		return assessment;
 	}
 
 }

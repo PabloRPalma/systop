@@ -1,6 +1,8 @@
 package com.systop.fsmis.assessment.service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
@@ -29,17 +31,15 @@ public class AssessmentManager extends BaseGenericsManager<Assessment> {
 	@SuppressWarnings("unchecked")
 	public String[] getAllTitles() {
   	String[] titles = null;
-    if (titles == null) {
-      List<FsCase> fsCases = this.getDao().query("from FsCase fs");
-      if (CollectionUtils.isNotEmpty(fsCases)) {
-        int arraySize = fsCases.size();
-        titles = new String[arraySize];
-        // 遍历各条记录
-        for (int i = 0; i < arraySize; i++) {
-          FsCase fsCase = (FsCase) fsCases.get(i);
-          // 取得事件标题放入标题数组中
-          titles[i] = (String) fsCase.getTitle();
-        }
+    List<FsCase> fsCases = this.getDao().query("from FsCase fs");
+    if (CollectionUtils.isNotEmpty(fsCases)) {
+      int arraySize = fsCases.size();
+      titles = new String[arraySize];
+      // 遍历各条记录
+      for (int i = 0; i < arraySize; i++) {
+        FsCase fsCase = (FsCase) fsCases.get(i);
+        // 取得事件标题放入标题数组中
+        titles[i] = (String) fsCase.getTitle();
       }
     }
     return titles;
@@ -64,7 +64,7 @@ public class AssessmentManager extends BaseGenericsManager<Assessment> {
 			super.save(checkResult.getAssessment());
 			cResult.setAssessment(checkResult.getAssessment());
 			cResult.setChecker(checkResult.getChecker());
-			cResult.setCheckTime(checkResult.getCheckTime());
+			cResult.setCheckTime(new Date());
 			cResult.setIsAgree(checkResult.getIsAgree());
 			cResult.setResult(checkResult.getResult());
 			getDao().save(cResult);
@@ -85,4 +85,18 @@ public class AssessmentManager extends BaseGenericsManager<Assessment> {
     		    (CheckResult) checkResults.get(0) : null;
   }
 	
+  /**
+   * 删除风险评估对应的审核数据
+   * @param assessment 风险评估对象
+   */
+  @Transactional
+  public void delCheckResults(Assessment assessment) {
+		Set<CheckResult> checkResults = assessment.getCheckResults();
+  	if (CollectionUtils.isNotEmpty(checkResults)) {
+  		for (CheckResult checkResult : checkResults) {
+  				getDao().evict(checkResult);
+  				getDao().delete(CheckResult.class, checkResult.getId());
+  	  }
+    }
+  }
 }
