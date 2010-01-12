@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglibs.jsp"%>
+
 <html>
 <head>
 <title></title>
@@ -93,7 +94,6 @@
 <div id="returnWindow" class="x-hidden">
 <div class="x-window-header">退回任务</div>
 <div class="x-window-body">
-
 <table align="center" cellspacing="6">
 	<tr><td></td><td></td></tr>
 	<tr>
