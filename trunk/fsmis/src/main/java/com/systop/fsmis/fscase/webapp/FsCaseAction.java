@@ -30,6 +30,7 @@ import com.systop.fsmis.fscase.service.FsCaseManager;
 import com.systop.fsmis.model.CaseType;
 import com.systop.fsmis.model.FsCase;
 import com.systop.fsmis.model.SmsReceive;
+import com.systop.fsmis.sms.SmsReceiveManager;
 import com.systop.fsmis.supervisor.service.SupervisorManager;
 
 /**
@@ -51,6 +52,10 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 	/** 监管员信息Manager */
 	@Autowired
 	private SupervisorManager supervisorManager;
+	
+	//注入短信接收类
+	@Autowired
+	private SmsReceiveManager smsReceiveManager;
 
 	private String typeId;
 
@@ -69,6 +74,15 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 	private Date caseEndTime;
 
 	private Integer smsReceiveId;
+	
+	//短信息接收人姓名
+	private String supervisorName;
+
+	//短信息接收人电话
+	private String supervisorMobile;
+	
+	//短信息内容
+	private String msgContent;
 
 	/**
 	 * 查询获得一般事件信息列表，分页查询
@@ -118,6 +132,15 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 
 		sql.append("order by gc.caseTime desc,gc.status");
 		page = getManager().pageQuery(page, sql.toString(), args.toArray());
+		
+		//从短信接收表中查询已核实单体事件短信信息,设置单体事件的核实状态 
+		items = page.getData();
+		for(FsCase ca:items){			
+			Long hasCheckedCount= smsReceiveManager.getCheckedMsgCountByFscaseId(ca.getId());
+			if(hasCheckedCount != null && hasCheckedCount > 0){
+				ca.setMsgCheckedFlag(FsConstants.Y);//设置短信核实标识
+			}
+		}
 		restorePageData(page);
 
 		return INDEX;
@@ -277,7 +300,60 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
 
 		return StateMap;
 	}
+	
+	/**
+	 * 编写为核实事件给信息员发送的信息
+	 */
+	public String addSendMsg() {
+		if (getModel().getId() != null) {
+			FsCase fsCase = getManager().get(getModel().getId());
+			supervisorName = fsCase.getInformer();
+			supervisorMobile = fsCase.getInformerPhone();
+		}
+		return "addSendMsg";
+	}
+	
+	/**
+	 * 给信息员发送信息核实事件
+	 */
+	public String sendMsg() {
+		if (getModel().getId() != null) {
+			FsCase fsCase = getManager().get(getModel().getId());
+			getManager().sendMsg(fsCase, supervisorName, supervisorMobile,
+					msgContent);
+		}
+		return SUCCESS;
+	}
+	
+	
+	/**
+	 * 跳转到短信核实确认页面 
+	 */
+	public String confirmBackMsg(){
+		return "confirmBackMsg";	
+	}
 
+	/**
+	 * 确认核实信息
+	 * 
+	 */
+	public String confirmCheckedMsg(){
+		//添加或更新单体事件的反馈确认信息	
+		if(getRequest().getParameter("checked")!= null
+			&& getRequest().getParameter("checked").equals(Constants.YES)){
+			getModel().setClosedTime(new Date());
+			getModel().setStatus(CaseConstants.CASE_STATUS_VERIFYED);
+		}else if(getRequest().getParameter("checked")!= null
+				&& getRequest().getParameter("checked").equals(Constants.NO)){
+			getModel().setStatus(CaseConstants.CASE_STATUS_RESOLVEUN);
+		}
+		
+		//此处应调用多体汇总方法
+		getManager().save(getModel());
+		return SUCCESS;
+	}
+	
+	
 	public List getTypeRst() {
 		return typeRst;
 	}
