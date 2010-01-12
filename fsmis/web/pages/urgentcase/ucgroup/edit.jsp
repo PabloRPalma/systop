@@ -85,13 +85,13 @@ function showWin() {
            <tr>
              <td align="right" width="80">手机号:</td>
              <td align="left" width="520">
-             	<s:textfield id="mobel" name="model.mobel" cssStyle="width:300px" cssClass="digits"/>
+             	<s:textfield id="mobel" name="model.mobel" cssStyle="width:300px" cssClass="required"/><font color="red">&nbsp;*</font>
              </td>
           </tr>
            <tr>
              <td align="right" width="80">固话:</td>
              <td align="left" width="520">
-             	<s:textfield id="phone" name="model.phone" cssStyle="width:300px" cssClass="digits"/>
+             	<s:textfield id="phone" name="model.phone" cssStyle="width:300px" cssClass="required"/><font color="red">&nbsp;*</font>
              </td>
           </tr>
           <tr>
