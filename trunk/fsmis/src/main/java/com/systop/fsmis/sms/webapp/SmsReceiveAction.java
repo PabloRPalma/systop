@@ -45,4 +45,20 @@ public class SmsReceiveAction extends
 		
 		return INDEX;
 	}
+	
+	/**
+	 * 根据事件编号查询反馈消息
+	 * 
+	 */
+	@SuppressWarnings("unchecked")
+	public String checkedMsgIndex(){
+		Integer caseId = getModel().getFsCase().getId();
+		Page page = PageUtil.getPage(getPageNo(),getPageSize());
+		String hql = "from SmsReceive s where s.isReport = 2 and s.fsCase.id = ? order by s.receiveTime desc";
+		getManager().pageQuery(page, hql, new Object[]{caseId});
+		//读取单体事件的短息接收信息
+		items = page.getData();
+		restorePageData(page);		
+		return "backMsgView";
+	}
 }
