@@ -49,16 +49,23 @@ String.prototype.trim = function(){
 <table width="99%">
   <tr>
       <td align="left" width="2%">上传文件：</td>
-      <td align="left" width="20%">
-        <s:file id="attachment" name="attachment" cssClass="FileText" cssStyle="width:300px"/>
+      <td align="left" width="17%">
+        <s:file id="attachment" name="attachment" cssClass="FileText" cssStyle="width:250px"/>
       </td>
       <td align="left" width="2%">
                  完成人：
       </td>
       <td width="8%" style="vertical-align: middle"><s:select id="creator"
 		  name="model.creator" list="expertList" listKey="expertName" listValue="expertName"
-		  headerKey="" headerValue="--请选择--" cssStyle="width:120px" /></td>	
-	  <td align="center"><span style="color:red;font-weight:bold">【只能上传小于10MB的文件】</span></td>     
+		  headerKey="" headerValue="--请选择--" cssStyle="width:100px" /></td>	
+	  <td align="center"><span style="color:red;font-weight:bold">
+			<s:if test="errorMsg.size() > 0">
+				<td align="left"><font color="red">提示信息：
+				<s:iterator value="errorMsg">
+					<s:property />
+				</s:iterator></font></td>
+			</s:if>
+	  </span></td>    
       <td align="right">
         <s:submit value="上传附件" cssClass="button" />
       </td>      
