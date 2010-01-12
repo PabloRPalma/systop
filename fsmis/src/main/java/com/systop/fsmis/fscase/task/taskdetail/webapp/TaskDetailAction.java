@@ -307,10 +307,9 @@ public class TaskDetailAction extends
     jsonResult = Collections.synchronizedMap(new HashMap<String, String>());
     Corp corp = (Corp) getManager().getDao().findObject(
         "from Corp c where c.code = ?", String.valueOf(corpId));
-    logger.info("1");
     if (corp != null) {
       jsonResult = ReflectUtil.toMap(corp, new String[] { "id", "name", "code",
-          "address", "legalPerson", "produceLicense", "sanitationLicense" },
+          "address", "legalPerson", "produceLicense", "sanitationLicense","operateDetails" },
           false);
     }
         
