@@ -3,20 +3,11 @@
 <%@include file="/common/taglibs.jsp"%>
 <html>
 <head>
-
 <title></title>
-<%@include file="/common/ec.jsp"%>
 <%@include file="/common/extjs.jsp"%>
-<%@include file="/common/meta.jsp"%>
-<%
-  pageContext.setAttribute("jquery_autocomplete","scripts/jquery/autocomplete");
-%>
-
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/ec.jsp" %>
 <%@include file="/common/autocomplete.jsp"%>
-<script type="text/javascript" language="JavaScript" src="${ctx}/dwr/interface/CorpDwrAction.js"></script>
-<script type="text/javascript" language="JavaScript" src="${ctx}/dwr/engine.js"></script>
 </head>
 <body>
 <div id="winDealWithTaskDetail" class="x-panel">
@@ -196,52 +187,12 @@ function queryCompanyByCode(){
 	          $("#operateDetails").val(corp.operateDetails);
 	       }  
 	},
-	failure: function() {
-     alert('错误');
-}
+		failure: function() {
+    		alert('错误');
+	}
 	
 	});
 }
-/*
-$().ready(function() {	  	  
-	  //查询所有企业信息
-	   CorpDwrAction.getCorps(function(companies){
-		   alert(companies);	  		    
-	    var companiesArr = eval(companies);	   
-	    alert(companiesArr); 
-	    if(companiesArr.length > 0){
-	      $("#companyName").autocomplete(companiesArr,{
-        	matchContains: true,
-           	minChars: 0
-         });
-	    }
-	  });
-	  $("#companyName").result(function(event,data,formatter){
-		queryCompanyByCode();
-	  });       		  
-	});	
-	
-	//根据企业编号查询企业信息
-	function queryCompanyByCode(){
-	    var companyInfo = $("#companyName").val();
-      var code = companyInfo.substring(0,companyInfo.indexOf(":"));
-      
-      CorpDwrAction.getCorpByCode(code,function(corp){
-         if(corp){            
-           $("#companyName").val(corp.name);              
-           $("#companyCode").val(corp.code);
-           $("#companyAddress").val(corp.address);
-           $("#legalPerson").val(corp.legalPerson);
-           $("#produceLicense").val(corp.produceLicense);
-           $("#sanitationLicense").val(corp.sanitationLicense);
-           $("#corpId").val(corp.id);
-          }  
-      });		
-	}*/
 </script>
-
-<!-- script type="text/javascript"
-	src="${ctx}/pages/fsCase/task/taskdetail/dealWithTaskDetail.js">	
-</script-->
 </body>
 </html>
