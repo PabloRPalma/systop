@@ -87,6 +87,11 @@
 					html : document.getElementById('cms').innerHTML,
 					border : false,
 					iconCls : 'cms'
+				},{
+					title : '<span class="title">成员管理</span>',
+					html : document.getElementById('member').innerHTML,
+					border : false,
+					iconCls : 'cms'
 				}, {
 					title : '<span class="title">许可管理</span>',
 					html : document.getElementById('xkgl').innerHTML,

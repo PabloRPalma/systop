@@ -86,6 +86,16 @@
 			<a href="${ctx}/supervisor/index.do" target="main">信息员</a>
 		</div>
 	</div>
+	<div id=member>
+		<div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/member/edit.do" target="main">添加成员</a>
+		</div>
+		<div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/member/index.do" target="main">成员管理</a>
+		</div>
+	</div>
 	<div id="sms">
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
