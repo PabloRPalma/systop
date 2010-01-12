@@ -14,6 +14,7 @@ import com.systop.fsmis.assessment.AssessMentConstants;
 import com.systop.fsmis.model.AsseMember;
 import com.systop.fsmis.model.Assessment;
 import com.systop.fsmis.sms.SmsSendManager;
+import com.systop.fsmis.sms.util.MobileNumChecker;
 
 /**
  * 风险评估专家成员管理类
@@ -125,7 +126,9 @@ public class AsseMemberManager extends BaseGenericsManager<AsseMember> {
 			asseBuf.append(asseMember.getExpert().getName()).append(
 					AssessMentConstants.MSG_EXPERT_SMSSEND);
 			// 给该条评估申请所选择的专家发送短信
-			smsSendManager.addMessage(asseMember.getExpert().getMobile(), asseBuf.toString());
+			if(MobileNumChecker.checkMobilNumberDigit(asseMember.getExpert().getMobile())) {
+				smsSendManager.addMessage(asseMember.getExpert().getMobile(), asseBuf.toString());
+			}
 		}
 	}
 }
