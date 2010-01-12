@@ -120,6 +120,18 @@ public class AssessmentAction extends
 	}
 
 	/**
+	 * 编辑评估申请信息
+	 */
+	@Override
+	public String edit() {
+		if (getModel().getFsCase() != null) {
+			FsCase fsCase = fsCaseManager.get(getModel().getFsCase().getId());
+			getModel().setFsCase(fsCase);
+		}
+		return super.edit();
+	}
+	
+	/**
 	 * 保存评估申请信息
 	 */
 	@Override
