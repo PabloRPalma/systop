@@ -115,7 +115,7 @@ window.onload = function(){
   	      <a href="result.do?model.id=${item.id}">上报</a>|	  
        </c:if>                 
 	   <c:choose>
-	     <c:when test="${!empty item.checkResults}"> 
+	     <c:when test="${empty item.checkResults}"> 
 	        <font color="#999999">删除</font>|
 	     </c:when>
 	     <c:otherwise>
