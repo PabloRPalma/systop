@@ -4,6 +4,7 @@ package com.systop.fsmis.assessment.webapp;
  * 
  */
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -60,7 +61,7 @@ public class AsseAttachAction extends
 	/**
 	 * 错误提示信息
 	 */
-	private String errorMsg;
+	private List<String> errorMsg;
 
 	/**
 	 * 显示风险评估附件列表
@@ -83,11 +84,12 @@ public class AsseAttachAction extends
 	 * @return
 	 */
 	public String upload() {
+		errorMsg = new ArrayList<String>();
 		try {
 			if (attachment != null) {
 				// 检查文件大小是否符合
 				if (attachment.length() > AssessMentConstants.UPLOAD_ALLOWED_FILE_SIZE) {
-					errorMsg = "上传文件太大！";
+					errorMsg.add("只能上传小于10MB的文件！");
 					return INPUT;
 				}
 				// 检查文件类型是否符合
@@ -101,7 +103,7 @@ public class AsseAttachAction extends
 					}
 				}
 				if (!flag) {
-					errorMsg = "未选择Word文档！";
+					errorMsg.add("未正确选择上传文件类型，请重新选择！");
 					return INPUT;
 				}
 				String fileRelativePath = null;
@@ -118,7 +120,8 @@ public class AsseAttachAction extends
 				getManager().save(asseAttach);
 			}
 		} catch (Exception e) {
-			errorMsg = "文件上传失败！";
+			errorMsg.add("文件上传失败！");
+			//addActionError(e.getMessage());
 			return INPUT;
 		}
 		return SUCCESS;
@@ -181,11 +184,11 @@ public class AsseAttachAction extends
 		this.assessmentId = assessmentId;
 	}
 
-	public String getErrorMsg() {
+	public List<String> getErrorMsg() {
 		return errorMsg;
 	}
 
-	public void setErrorMsg(String errorMsg) {
+	public void setErrorMsg(List<String> errorMsg) {
 		this.errorMsg = errorMsg;
 	}
 
