@@ -5,32 +5,18 @@
 <html>
 <head>
 <title></title>
+<%@include file="/common/extjs.jsp" %>
 <%@include file="/common/meta.jsp"%>
+<%@include file="/common/validator.jsp"%>
 <script type="text/javascript">
 function valileader(){
-	var supervisorName = document.getElementById("supervisorName").value;
-	if(supervisorName == ''){
-		alert("请填写接收人姓名！");
-		return false;
-	}
-	var supervisorMobile = document.getElementById("supervisorMobile").value;
-	if(supervisorMobile == ''){
-		alert("请填写接收人电话");
-		return false;
-	}else{
-         
-         if (supervisorMobile.length != 11){ 
-             alert("对不起，您输入的电话号码格式有错误。"); 
-             return false; 
-         } 
-	}
 	
-	var msgContent = document.getElementById("msgContent").value;
-	if(msgContent == ''){
-		alert("请填写短信内容");
-		return false;
-	}
-	return true;
+	var supervisorMobile = document.getElementById("supervisorMobile").value;     
+    if (supervisorMobile.length != 11){ 
+         alert("对不起，您输入的电话号码格式有错误。"); 
+          return false; 
+    } 
+	
 }
 function init(){
 	document.getElementById("supervisorName").value = "${supervisorName}";
@@ -51,25 +37,29 @@ function init(){
 </table>
 </div>
 <div align="center">
-	<s:form action="sendMsg" method="post" theme="simple" onsubmit="return valileader()">
+	<s:form action="sendMsg" id="sendMsg" method="post" theme="simple" validate="true" onsubmit="return valileader()">
 		<s:hidden name="model.id"/>
-		<fieldset  style="width:500px; padding: 50px 10px 10px 10px;">
+		<fieldset  style="width:700px; padding: 50px 10px 10px 10px;">
 			<legend>编辑短信息</legend>
 		<table width="450" align="center">
 		  <tr>
 			<td colspan="4"><%@ include file="/common/messages.jsp"%></td>
 		  </tr>
 		</table>
-		<table width="450px" align="center">
+		<table width="700px" align="center">
 			<tr>
-				<td align="right">接收人姓名：</td>
-				<td align="left"><s:textfield name="supervisorName" id="supervisorName" value="%{supervisorName}"/></td>
+				<td align="right" width="120">接收人姓名：</td>
+				<td align="left" >
+				   <s:textfield name="supervisorName" id="supervisorName" cssClass="required" value="%{supervisorName}"/>
+				</td>
 				<td align="right">电&nbsp;&nbsp;&nbsp;&nbsp;话：</td>
-				<td align="left"><s:textfield name="supervisorMobile" id="supervisorMobile" value="%{supervisorMobile}"/></td>
+				<td align="left">
+		           <s:textfield name="supervisorMobile" id="supervisorMobile" cssClass="required" value="%{supervisorMobile}"/>
+		        </td>
 			</tr>
 			<tr>
 				<td align="right">短信内容：</td>
-				<td colspan="3" align="left" width="340"><s:textarea id="msgContent" name="msgContent" cssStyle="width:340px;height:40px;"/></td>
+				<td colspan="4" align="left" width="650px"><s:textarea id="msgContent" name="msgContent" cssClass="required" cssStyle="width:500px;height:50px;"/></td>
 			</tr>
 		</table>
 		</fieldset>
@@ -86,7 +76,11 @@ function init(){
 	</s:form>
 </div>
 </div>
-
+<script type="text/javascript">
+	$(document).ready(function() {
+	$("#sendMsg").validate();
+});
+</script>
 
 </body>
 </html>
