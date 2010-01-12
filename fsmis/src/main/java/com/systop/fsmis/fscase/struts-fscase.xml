@@ -8,6 +8,8 @@
 			<result name="index">/pages/fsCase/list.jsp</result> 
 			<result name="input">/pages/fsCase/edit.jsp</result> 
 			<result name="view">/pages/fsCase/view.jsp</result>
+			<result name="addSendMsg">/pages/fsCase/addSendMsg.jsp</result>
+			<result name="confirmBackMsg">/pages/fsCase/confirmBackMsg.jsp</result>
 			<result name="success" type="redirect">
 				index.do?isMultipleCase=${isMultipleCase}&amp;modelId=${modelId}
 			</result>
