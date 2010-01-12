@@ -17,34 +17,43 @@ import com.systop.fsmis.model.SmsSend;
  */
 @Service
 public class SmsSendManager extends BaseGenericsManager<SmsSend> {
-	/**
-	 * 得到需要发送的短信方法(最大记录数由系统变量限定)
-	 * 
-	 * @return
-	 */
-	public List<SmsSend> getNewSmsSends() {
-		// 查询新短信并且以短信记录创建时间早晚排序
-		StringBuffer buf = new StringBuffer("from SmsSend ss where ss.isNew = ");
-		buf.append(SmsConstants.SMS_SMS_SEND_IS_NEW);
-		buf.append(" order by ss.createTime");
+  /**
+   * 得到需要发送的短信方法(最大记录数由系统变量限定)
+   * 
+   * @return
+   */
+  public List<SmsSend> getNewSmsSends() {
+    // 查询新短信并且以短信记录创建时间早晚排序
+    StringBuffer buf = new StringBuffer("from SmsSend ss where ss.isNew = ");
+    buf.append(SmsConstants.SMS_SMS_SEND_IS_NEW);
+    buf.append(" order by ss.createTime");
 
-		List<SmsSend> smsSends = query(buf.toString());
-		// 如果得到的记录数大于系统所指定的一次发送记录数,则只取得指定的记录
-		if (smsSends.size() > SmsConstants.SMS_SMS_SEND_COUNT) {
-			return smsSends.subList(0, SmsConstants.SMS_SMS_SEND_COUNT - 1);
-		}
+    List<SmsSend> smsSends = query(buf.toString());
+    // 如果得到的记录数大于系统所指定的一次发送记录数,则只取得指定的记录
+    if (smsSends.size() > SmsConstants.SMS_SMS_SEND_COUNT) {
+      return smsSends.subList(0, SmsConstants.SMS_SMS_SEND_COUNT - 1);
+    }
 
-		return smsSends;
-	}
+    return smsSends;
+  }
 
-	public void addMessage(String mobileNum, String content) {
-		SmsSend smsSend = new SmsSend();
-		smsSend.setMobileNum(mobileNum);
-		smsSend.setContent(content);
-		smsSend.setCreateTime(new Date());
-		smsSend.setIsNew(SmsConstants.SMS_SMS_SEND_IS_NEW);
-		// 缺少统计发送数量逻辑
-		save(smsSend);
-	}
+  public void addMessage(String mobileNum, String content) {
+    SmsSend smsSend = new SmsSend();
+    smsSend.setMobileNum(mobileNum);
+    smsSend.setContent(content);
+    smsSend.setCreateTime(new Date());
+    smsSend.setIsNew(SmsConstants.SMS_SMS_SEND_IS_NEW);
+    // 缺少统计发送数量逻辑
+    save(smsSend);
+  }
+
+  public void addMessage(SmsSend smsSend) {
+    if (smsSend != null) {
+      smsSend.setCreateTime(new Date());
+      smsSend.setIsNew(SmsConstants.SMS_SMS_SEND_IS_NEW);
+      // 缺少统计发送数量逻辑
+      save(smsSend);
+    }
+  }
 
 }
