@@ -5,7 +5,8 @@
 <struts>
 	<package name="fsmis.sms" extends="json"  namespace="/smsreceive">
 		<action name="*" class="smsReceiveAction" method="{1}">
-			<result name="index">/pages/sms/receive/index.jsp</result> 				
+			<result name="index">/pages/sms/receive/index.jsp</result> 	
+			<result name="backMsgView">/pages/sms/receive/backMsgView.jsp</result>			
 		</action>
 	</package>
 </struts>
