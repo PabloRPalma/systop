@@ -3,25 +3,11 @@
 <%@include file="/common/taglibs.jsp"%>
 <html>
 <head>
-<title>案件列表</title>
+<title>案件相关信息</title>
 <%@include file="/common/ec.jsp"%>
 <%@include file="/common/extjs.jsp"%>
 <%@include file="/common/meta.jsp"%>
-<script type="text/javascript">
-	var tabItemsStr = "[{contentEl : 'basic',title : '案件信息'}";
-</script>
-<c:if test="${1==1}">
-	<script type="text/javascript">
-	tabItemsStr += ",{contentEl : 'descr',title : '任务信息'}";
-</script>
-</c:if>
-<c:if test="${1==1}">
-	<script type="text/javascript">
-	tabItemsStr += ",{contentEl : 'reward',title : '任务处理情况'}";
-	tabItemsStr +="{contentEl : 'punish',title : '短信收发情况'} ]";
-	//alert(tabItemsStr);
-</script>
-</c:if>
+<%@include file="chooseSendType.jsp" %>
 <script type="text/javascript">
 	Ext.onReady(function() {
 		var tabs = new Ext.TabPanel( {
@@ -33,7 +19,7 @@
 				autoHeight : false
 			},
 			items : [ {
-				contentEl : 'basic',
+				contentEl : 'fsCaseDiv',
 				title : '案件信息'
 			}
 			<c:if test="${model.isMultiple eq '1'}">			
@@ -45,21 +31,14 @@
 			</c:if>
 			<c:if test="${not empty model.taskses }">			
 			,{
-				contentEl : 'descr',
+				contentEl : 'tasks',
 				title : '任务信息'
 			}
 			
-			</c:if>
-			
-			<s:if test="not empty  model.taskses[0].taskDetails">
-			, {
-				contentEl : 'reward',
-				title : '任务处理情况'
-			}
-			</s:if>
+			</c:if>			
 			<s:if test="1==1">
 			, {
-				contentEl : 'punish',
+				contentEl : 'sms',
 				title : '短信收发情况'
 			} 
 			</s:if>
@@ -67,10 +46,8 @@
 		});
 	});
 </script>
-<s:if test="">
-</s:if>
 <style type="text/css">
-#mytable {
+.mytable {
 	border: 0px solid #A6C9E2;
 	margin-left: 0px;
 	margin-top: 0px;
@@ -78,16 +55,14 @@
 	border-collapse: collapse;
 }
 
-#mytable td {
+.mytable td {
 	border: 0px solid #A6C9E2;
 	height: 26;
 }
 </style>
-<c:forEach items="model.taskses" var="task" begin="0" end="1">
-	<c:if test=""></c:if>
-</c:forEach>
 </head>
 <body>
+<!-- 事件信息 -->
 <div class="x-panel">
 <div class="x-panel-header">案件信息</div>
 <div class="x-toolbar">
@@ -102,22 +77,22 @@
 		<td><span class="ytb-sep"></span></td>
 		<c:if test="${model.status eq '0'}">
 			<td align="right"><a
-				href="${ctx}/sendType/chooseSendType.do?caseId=${model.id}&modelId=${param['modelId']}&isMultipleCase=${param['isMultipleCase']}"> 任务派遣</a></td>
+				href="${ctx}/sendType/chooseSendType.do?caseId=${model.id}&modelId=${param['modelId']}&isMultipleCase=${param['isMultipleCase']}"> 任务派遣</a>
+				<a
+				href="#" onclick="alert(1);showChooseSendTypeWindow(${model.id})"> 任务派遣1</a></td>
 			<td><span class="ytb-sep"></span></td>
 		</c:if>
-		<td align="right"><a href="${ctx}/assessment/edit.do?model.fsCase.id=${model.id}"> 风险评估</a></td>
+		<td align="right"><a href="${ctx}/assessment/edit.do?model.fsCase.id=${model.id}"> 风险评估</a><td><span class="ytb-sep"></span></td></td>
 		<td></td>
 		<td align="right"><a href="#"> 联合整治</a></td>
 	</tr>
 </table>
 </div>
 <div id="tabs">
-<div id="basic" class="x-hide-display">
-<table id="mytable">
+<div id="fsCaseDiv" class="x-hide-display">
+<table id="fsCaseTable" class="mytable">
 	<tr>
 		<td width="800" align="left">
-		<fieldset style="width: 800px; padding: 5px 10px 5px 10px;">
-			<legend>案件信息</legend>
 		<table width="400" align="left" border="0" cellpadding="0"
 			cellspacing="0">
 			<tr>
@@ -155,41 +130,31 @@
 				<td width="149" align="left">${model.descn}</td>
 			</tr>
 		</table>
-		</fieldset>
 		</td>
 	</tr>
 </table>
 </div>
 <div id="general" class="x-hide-display">
-<table id="mytable" height="520">
+<table id="genericCasesTable" height="520" class="mytable">
 	<tr>
 		<td height="500" align="left" valign="top">
-		<!-- include进来二级Tab以现实一个食品安全综合案件关联的多个一般案件 -->
-		<%--@include	file="viewGenericCases.jsp" --%>
+		<!-- include进来二级Tab以现实一个食品安全综合案件关联的多个一般案件 -->		
+		<%--@include	file="viewGenericCases.jsp"--%>			
 		</td>
 	</tr>
 </table>
 </div>
-<div id="descr" class="x-hide-display">
-<table id="mytable" height="400">
+<div id="tasks" class="x-hide-display">
+<table id="tasksTable" height="400" class="mytable">
 	<tr>
 		<td height="400" align="left" valign="top">
-		<!-- include进来二级Tab以现实一个食品安全案件下的多个任务 -->
-		<%@include	file="viewTasks.jsp"%>
+		<!-- include进来二级Tab以现实一个食品安全案件下的多个任务 -->		
+		<%@include file="viewTasks.jsp"%>
 		</td>
 	</tr>
 </table>
 </div>
-<div id="reward" class="x-hide-display">
-<table id="mytable" height="520">
-	<tr>
-		<td height="500" align="left" valign="top">
-		<div style="line-height: 20px; padding: 10px 10px 10px 10px;"></div>
-		</td>
-	</tr>
-</table>
-</div>
-<div id="punish" class="x-hide-display">
+<div id="sms" class="x-hide-display">
 <table id="mytable" height="520">
 	<tr>
 		<td height="500" align="left" valign="top">

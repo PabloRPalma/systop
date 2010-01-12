@@ -1,33 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglibs.jsp"%>
-<html>
-<head>
-<%@include file="/common/extjs.jsp"%>
-<%@include file="/common/meta.jsp"%>
-<style type="text/css">
-#mytable {
-	border: 0px solid #A6C9E2;
-	margin-left: 0px;
-	margin-top: 0px;
-	width: 100%;
-	border-collapse: collapse;
-}
-
-#mytable td {
-	border: 0px solid #A6C9E2;
-	height: 26;
-}
-</style>
-</head>
-<body>
-<div id="tabs3"><c:forEach items="${model.genericCases}"
+<div id="tabs3" style="margin: -1;">
+<c:forEach items="${model.genericCases}"
 	var="genericCase" varStatus="varStatus">
 	<div id="genericCasesDiv${varStatus.index+1}" class="x-hide-display">
 	<table id="mytable" align="left">
 		<tr>
 			<td>
-
 			<fieldset style="width: 800px; padding: 5px 10px 5px 10px;">
 			<legend>案件${varStatus.index+1}信息</legend>
 			<table width="800px" align="left">
@@ -59,18 +39,16 @@
 					<td align="right" width="15%">案件描述11：</td>
 					<td colspan="4" align="left">${genericCase.descn}					
 						</td>
-				</tr>
-				
+				</tr>				
 			</table>
 			</fieldset>
 			</td>
-		</tr>
-		
-	</table>
-	
+		</tr>		
+	</table>	
 	</div>
 </c:forEach></div>
 <script type="text/javascript">
+<c:if test="${model.isMultiple eq '1'}">	
 	Ext.onReady(function() {
 		var tabs3 = new Ext.TabPanel( {
 			renderTo : 'tabs3',
@@ -91,6 +69,5 @@
 					]
 		});
 	});	
+</c:if>
 </script>
-</body>
-</html>
