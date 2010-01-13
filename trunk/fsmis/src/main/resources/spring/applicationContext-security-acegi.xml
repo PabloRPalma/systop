@@ -261,6 +261,7 @@
 		        </bean>
 		    </list>
 		</property>
+		
 		<property name="rememberMeServices" ref="rememberMeServices" />
 		<property name="exceptionMappings">
 			<value>
