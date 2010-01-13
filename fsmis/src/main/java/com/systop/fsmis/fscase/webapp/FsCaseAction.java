@@ -191,7 +191,7 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
     if (StringUtils.isBlank(getModel().getIsMultiple())) {
       getModel().setIsMultiple(FsConstants.N);
     }
-    getManager().getDao().clear();
+    //getManager().getDao().clear();
     getManager().save(getModel());
 
     // 如果是通过短信添加的案件,则为短信添加案件关联

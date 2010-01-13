@@ -20,11 +20,6 @@ public class FsCaseManager extends BaseGenericsManager<FsCase> {
 	@Autowired
 	private SmsSendManager sesSendManager;
 
-	@Transactional
-	public void save(FsCase fsCase) {
-		// FIXME 什么意思，重写spuer.save()?有现实意义吗？
-		getDao().saveOrUpdate(fsCase);
-	}
 
 	/**
 	 * 根据单体事件的编号查询事件的详情
@@ -40,10 +35,10 @@ public class FsCaseManager extends BaseGenericsManager<FsCase> {
 	/**
 	 * 给信息员发送信息核实事件
 	 * 
-	 * @param fsCase
-	 * @param name
-	 * @param moblie
-	 * @param msgContent
+	 * @param fsCase 事件信息
+	 * @param name   接收人姓名
+	 * @param moblie 接收人手机号
+	 * @param msgContent  短信内容
 	 */
 	public void sendMsg(FsCase fsCase, String name, String moblie,
 			String msgContent) {
