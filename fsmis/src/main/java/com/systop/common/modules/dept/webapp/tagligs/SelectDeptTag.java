@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.xwork.StringUtils;
+
 import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.dept.service.DeptManager;
 import com.systop.common.modules.security.user.LoginUserService;
@@ -21,13 +23,13 @@ import com.systop.fsmis.model.CountySendType;
 @SuppressWarnings("serial")
 public class SelectDeptTag extends BaseFreeMarkerTagSupport {
 
-	//用于获得登录用户的相关信息
+	// 用于获得登录用户的相关信息
 	private LoginUserService loginUserService;
 
-	//区县派遣类别配置管理类
+	// 区县派遣类别配置管理类
 	private CountySendTypeManager cstManager;
 
-	//用于查询操作dept数据
+	// 用于查询操作dept数据
 	private DeptManager deptManager;
 
 	/** 标签的name属性，用于表单提交 */
@@ -47,9 +49,12 @@ public class SelectDeptTag extends BaseFreeMarkerTagSupport {
 
 	/** 派遣类别ID */
 	private Integer sendTypeId;
-	
+
 	/** 单击事件 */
 	private String onclick;
+
+	/** 默认选中的部门ID,以逗号隔开 */
+	private String defDeptIds;
 
 	/**
 	 * 初始化Managers
@@ -58,7 +63,7 @@ public class SelectDeptTag extends BaseFreeMarkerTagSupport {
 		loginUserService = (LoginUserService) getBean("loginUserService");
 		cstManager = (CountySendTypeManager) getBean("countySendTypeManager");
 		deptManager = (DeptManager) getBean("deptManager");
-		logger.debug("theme is {}", this.getTheme());
+		logger.debug("theme is {}", getTheme());
 	}
 
 	/**
@@ -93,16 +98,22 @@ public class SelectDeptTag extends BaseFreeMarkerTagSupport {
 		// 定义返回的存储相关部门的list对象
 		List<Map> deptMaps = null;
 		if (county != null) {
+			// 获得参数sendTypeId对应的区县派遣配置
+			CountySendType cst = cstManager.getCountySendType(sendTypeId,
+					county.getId());
+			logger.debug("当前派遣环节ID:{}", sendTypeId);
+			String[] defDeptId = null;
+			if (StringUtils.isNotBlank(defDeptIds)) {
+				defDeptId = defDeptIds.split(",");
+			} else {
+				if (cst != null && StringUtils.isNotBlank(cst.getGeneralDept())) {
+					defDeptId = cst.getGeneralDept().split(",");
+				}
+			}
 			logger.debug("当前区县:{}", county.getName());
 			List<Dept> depts = deptManager.getEnforcementByCounty(county
 					.getId());
-			logger.debug("当前派遣环节ID:{}", sendTypeId);
-			CountySendType cst = cstManager.getCountySendType(sendTypeId,
-					county.getId());
-			deptMaps = Util.toMap(depts, cst);
-			logger.debug("CountySendTypes dept id:{}",
-					cst == null ? "CountySendType is null" : cst.getId());
-
+			deptMaps = Util.toMap(depts, defDeptId);
 		} else {
 			ctx.addParameter("errorMsg", "当前用户所属部门无效，请重新登陆并检查所属部门类别。");
 		}
@@ -172,4 +183,12 @@ public class SelectDeptTag extends BaseFreeMarkerTagSupport {
 		this.onclick = onclick;
 	}
 
+	public String getDefDeptIds() {
+		return defDeptIds;
+	}
+
+	public void setDefDeptIds(String defDeptIds) {
+		this.defDeptIds = defDeptIds;
+	}
+	
 }
