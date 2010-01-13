@@ -120,8 +120,8 @@ public class TaskDetailAction extends
 
       restorePageData(page);
     }
-
-    // return "listTaskDetailsByTaskId";
+    
+    // return "listTaskDetailsByTaskId";//原有页面转向,待ExtGreadPanel 完成后删除注释
     return JSON;
   }
 
