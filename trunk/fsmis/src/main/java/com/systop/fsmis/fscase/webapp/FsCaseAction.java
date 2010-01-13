@@ -353,12 +353,10 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
         && getRequest().getParameter("checked").equals(Constants.NO)) {
       getModel().setStatus(CaseConstants.CASE_UN_RESOLVE);
     }
-
+    getManager().save(getModel());
     // 汇总单体事件，创建多体事件
 	getManager().gatherFscase(getModel().getCaseType().getId(),
 			getModel().getCounty());
-
-    getManager().save(getModel());
     return SUCCESS;
   }
 
