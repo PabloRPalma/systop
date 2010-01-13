@@ -8,11 +8,6 @@
 <%@include file="/common/extjs.jsp"%>
 <%@include file="/common/meta.jsp"%>
 <script type="text/javascript">
-function examine(id){
-	alert(id);
-}
-
-
 function remove(id){
 	if (confirm("确认要删除事件信息吗?")){
 		window.location.href="${ctx}/fscase/remove.do?model.id=" + id+"&modelId=0&isMultipleCase="+${isMultipleCase};
@@ -81,7 +76,7 @@ function remove(id){
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	<ec:row>
 		<ec:column width="30" property="_s" title="No." value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center"/>	
-		<ec:column width="260" property="title" title="事件标题" sortable="false"/>
+		<ec:column width="300" property="title" title="事件标题" sortable="false"/>
 		<ec:column width="70" property="code" title="事件编号" sortable="false"/>
 		<ec:column width="100" property="caseType.name" title="事件类别" sortable="false"/>
 		<ec:column width="110" property="caseTime" title="事发时间"
@@ -93,12 +88,12 @@ function remove(id){
 			<c:if test="${item.status == '3'}"><font color="gray">已回退</font></c:if>
 			<c:if test="${item.status == '4'}"><font color="blue">已核实</font></c:if>
 		</ec:column>
-		<ec:column width="50" property="_6" title="查看" style="text-align:center" sortable="false">
+		<ec:column width="55" property="_6" title="查看" style="text-align:center" sortable="false">
 			<a  title="查看事件" href="${ctx}/fscase/view.do?fsCaseId=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">看 </a> |
 			<a title="地图" href="#">图</a>
 		</ec:column>
 		<stc:role ifNotGranted="ROLE_DEPT_OPER">
-		<ec:column width="180" property="_0" title="操作" style="text-align:left" sortable="false">
+		<ec:column width="140" property="_0" title="操作" style="text-align:center" sortable="false">
 		<!-- 0未派遣1已派遣2已处理3回退4已核实完成5忽略-->	
 			<c:if test="${empty item.status or item.status eq '0' or item.status eq '5'}">		
 			    <a title="修改事件" href="${ctx}/fscase/edit.do?model.id=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">改 </a> |
