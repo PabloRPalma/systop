@@ -121,7 +121,8 @@ public class TaskDetailAction extends
       restorePageData(page);
     }
 
-    return "listTaskDetailsByTaskId";
+    // return "listTaskDetailsByTaskId";
+    return JSON;
   }
 
   /**
