@@ -88,39 +88,28 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 	 * 
 	 * @param beginDate
 	 * @param endDate
-	 * @param county
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
 	public String getFsCaseCountyStatistic(Date beginDate, Date endDate) {
-		List<Object[]> result = new ArrayList();
+		StringBuffer cvsData = new StringBuffer();
 		Dept d = deptManager.findObject("from Dept d where d.parentDept is null");
 		String sql = "from Dept d where d.type = ? and d.parentDept.id = ?";
 		List<Dept> depts = deptManager.query(sql, DeptConstants.TYPE_COUNTY, d
 				.getId());
 		for (Dept dp : depts) {
-			String sqlTemp = "select count(fc.id) from FsCase fc where fc.county.id=? and fc.caseTime between ? and ? group by fc.county.id ";
-			List<Object[]> temp = getDao().query(sqlTemp, dp.getId(), beginDate,
+			String sqlTemp = "select fc.county.name,count(fc.id) from FsCase fc where fc.county.id=? and fc.caseTime between ? and ? group by fc.county.id ";
+			List<Object[]> result = getDao().query(sqlTemp, dp.getId(), beginDate,
 					endDate);
-			Object[] o = new Object[2];
-			o[0] = dp.getName();
-			if (CollectionUtils.isNotEmpty(temp)) {
-				o[1] = temp.get(0)[0];
+			if (result.size() > 0) {
+				for (Object[] objs : result) {
+					cvsData.append(objs[0] + ";").append(objs[1] + "\\n");
+				}
 			} else {
-				o[1] = null;
+				cvsData.append(dp.getName() + ";").append("0" + "\\n");
 			}
-			result.add(o);
-		}
 
-		StringBuffer cvsData = new StringBuffer();
-		if (result.size() > 0) {
-			for (Object[] objs : result) {
-				cvsData.append(objs[0] + ";").append(objs[1] + "\\n");
-			}
-		} else {
-			cvsData.append("nothing;").append("0\\n");
 		}
-
 		return cvsData.toString();
 	}
 }

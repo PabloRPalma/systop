@@ -5,7 +5,8 @@
 <struts>
 	<package name="fsmis.statistics" extends="default"  namespace="/statistics">
 		<action name="*" class="fsCaseStatisticsAction" method="{1}">
-			<result name="fsCaseStatisticsStatus">/pages/statistics/fscase/fsCaseStatisticsStatus.jsp</result>			
+			<result name="fsCaseStatisticsStatus">/pages/statistics/fscase/fsCaseStatisticsStatus.jsp</result>	
+			<result name="fsCaseStatisticsCounty">/pages/statistics/fscase/fsCaseStatisticsCounty.jsp</result>					
 		</action>
 	</package>
 </struts>
