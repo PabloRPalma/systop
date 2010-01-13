@@ -100,7 +100,7 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
     }
 
     Page page = new Page(Page.start(getPageNo(), getPageSize()), getPageSize());
-    StringBuffer sql = new StringBuffer("from FsCase gc where isSubmitSj=0 ");
+    StringBuffer sql = new StringBuffer("from FsCase gc where isSubmited=0 ");
     List args = new ArrayList();
     // 判断是否是市级人员登录,如果不是,则需要添加根据本区县查询案件的查询条件,本逻辑需要确认
     if (loginUserService.getLoginUserCounty(getRequest()).getParentDept() != null) {
