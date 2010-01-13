@@ -13,5 +13,7 @@ import com.systop.fsmis.model.Configuration;
 
 @Service
 public class ConfigurationManager extends BaseGenericsManager<Configuration>{
+	
+	
 
 }
