@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import com.systop.cms.utils.PageUtil;
 import com.systop.core.dao.support.Page;
 import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
-import com.systop.fsmis.CaseConstants;
+import com.systop.fsmis.fscase.CaseConstants;
 import com.systop.fsmis.fscase.configer.service.ConfigurationManager;
 import com.systop.fsmis.model.Configuration;
 
