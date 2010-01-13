@@ -140,7 +140,7 @@ function remove(id){
 			</c:if>
 			<c:if test="${item.status == '4'}">
 			     <a href="confirmBackMsg.do?model.id=${item.id}&operType='v'">
-					查看核实反馈
+					查看已核实信息
 				</a>				
 			</c:if>		
 		</ec:column>
