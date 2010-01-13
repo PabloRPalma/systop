@@ -134,7 +134,7 @@
 	<tr>
 		<td height="500" align="left" valign="top">
 		<!-- include进来二级Tab以现实一个食品安全综合案件关联的多个一般案件 -->		
-		<%--@include	file="viewGenericCases.jsp"--%>			
+		<%@include	file="viewGenericCases.jsp"%>			
 		</td>
 	</tr>
 </table>
