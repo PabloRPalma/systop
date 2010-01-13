@@ -177,12 +177,6 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
       return INPUT;
     }
 
-    if (getRequest().getParameter("isDone") != null
-        && getRequest().getParameter("isDone").equals(Constants.YES)) {
-      getModel().setClosedTime(new Date());
-      getModel().setStatus(CaseConstants.CASE_STATUS_VERIFYED);
-    }
-
     CaseType cType = null;
     if (typetwoId != null) {
       cType = getManager().getDao().get(CaseType.class, typetwoId);
