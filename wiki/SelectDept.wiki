@@ -5,7 +5,7 @@ escape: `*`
 
 {{{
     <fs:selectDepts name="leader" theme="select"/>
-
+     
     <!-- 定义div用于显示选中的checkbox部门名称 -->
     <div id="showDiv" style="border-bottom: 1px dotted #97B7E7; padding: 2 7 2 7;"></div>
 
