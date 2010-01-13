@@ -23,7 +23,7 @@ function remove(id){
 </head>
 <body>
 <div class="x-panel">
-<div class="x-panel-header">协调指挥&nbsp;&gt;&nbsp;${param['isMultipleCase'] eq 0?'一般案件':'综合案件'}列表</div>
+<div class="x-panel-header">协调指挥&nbsp;&gt;&nbsp;${param['isMultipleCase'] eq 0?'单体事件':'多体案件'}列表</div>
 <div class="x-toolbar">
 <table width="99%">
 	<tr>
@@ -34,12 +34,12 @@ function remove(id){
 						事件编号:
 			<s:textfield name="model.code" cssStyle="width:70px"></s:textfield>
 						事发时间:
-			<input type="text" name="caseBeginTime" style="width: 100px"
+			<input type="text" name="caseBeginTime" style="width: 120px"
 				value='<s:date name="caseBeginTime" format="yyyy-MM-dd HH:mm"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
 				class="Wdate" />
 						至
-			<input type="text" name="caseEndTime" style="width: 100px"
+			<input type="text" name="caseEndTime" style="width: 120px"
 				value='<s:date name="caseEndTime" format="yyyy-MM-dd HH:mm"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
 				class="Wdate" />
@@ -86,29 +86,63 @@ function remove(id){
 		<ec:column width="100" property="caseType.name" title="事件类别" sortable="false"/>
 		<ec:column width="110" property="caseTime" title="事发时间"
 			style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm" sortable="false"/>
-		<ec:column width="60" property="_2" title="状态" style="text-align:center" sortable="false">
+		<ec:column width="50" property="_2" title="事件状态" style="text-align:center" sortable="false">
 			<c:if test="${item.status == '0'}"><font color="red">未派遣</font></c:if>
 			<c:if test="${item.status == '1'}"><font color="#FF9D07">已派遣</font></c:if>
 			<c:if test="${item.status == '2'}"><font color="green">已处理</font></c:if>
 			<c:if test="${item.status == '3'}"><font color="gray">已回退</font></c:if>
 			<c:if test="${item.status == '4'}"><font color="blue">已核实</font></c:if>
 		</ec:column>
-		<ec:column width="40" property="_6" title="查看" style="text-align:center" sortable="false">
-			<a href="${ctx}/fscase/view.do?fsCaseId=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">
-			                查看
-			 </a> 
+		<ec:column width="50" property="_6" title="查看" style="text-align:center" sortable="false">
+			<a  title="查看事件" href="${ctx}/fscase/view.do?fsCaseId=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">看 </a> |
+			<a title="地图" href="#">图</a>
 		</ec:column>
 		<stc:role ifNotGranted="ROLE_DEPT_OPER">
 		<ec:column width="180" property="_0" title="操作" style="text-align:left" sortable="false">
-			 &nbsp;&nbsp;
-			  
-			 <stc:role ifAnyGranted="ROLE_ADMIN">
-			    <a href="${ctx}/fscase/edit.do?model.id=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">
-                                                 改 |
-               </a>
-                    	图 |
-             </stc:role>
-            <stc:role  ifNotGranted="ROLE_ADMIN">
+		<!-- 0未派遣1已派遣2已处理3回退4已核实完成5忽略-->	
+			<c:if test="${empty item.status or item.status eq '0' or item.status eq '5'}">		
+			    <a title="修改事件" href="${ctx}/fscase/edit.do?model.id=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">改 </a> |
+			    <a title="派遣任务" href="#" onclick="showChooseSendTypeWindow(${model.id})">派</a> |
+			    <a href="#" onclick="remove(${item.id})" >删</a> |
+			    <font color="silver" >核</font> |
+			    <font color="silver" >核实反馈</font> |
+			    <font color="silver" >查看核实反馈</font> |
+            </c:if>
+            <c:if test="${item.status eq '1'}">		
+			    <font color="silver" >改</font> |
+			    <font color="silver" >派</font> |
+			    <a href="#" onclick="remove(${item.id})" >删</a> |
+			    <font color="silver" >核</font> |
+			    <font color="silver" >核实反馈</font> |
+			    <font color="silver" >查看核实反馈</font> |
+            </c:if>
+            <c:if test="${item.status eq '2'}">		
+			    <a title="修改事件" href="${ctx}/fscase/edit.do?model.id=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">改 </a> |
+			    <a title="派遣任务" href="#" onclick="showChooseSendTypeWindow(${model.id})">派</a> |
+			    <a href="#" onclick="remove(${item.id})" >删</a> |
+			    <a title="核实" href="addSendMsg.do?model.id=${item.id}">核</a>
+			    <a href="confirmBackMsg.do?model.id=${item.id}">
+					核实反馈
+				</a>
+			    <font color="silver" >查看核实反馈</font> |
+            </c:if>
+            <c:if test="${item.status eq '3'}">		
+			    <font color="silver" >改</font> |
+			    <font color="silver" >派</font> |
+			    <a href="#" onclick="remove(${item.id})" >删</a> |
+			    <font color="silver" >核</font> |
+			    <font color="silver" >核实反馈</font> |
+			    <font color="silver" >查看核实反馈</font> |
+            </c:if>
+             <c:if test="${item.status eq '4'}">		
+			    <font color="silver" >改</font> |
+			    <font color="silver" >派</font> |
+			    <a href="#" onclick="remove(${item.id})" >删</a> |
+			    <font color="silver" >核</font> |
+			    <font color="silver" >核实反馈</font> |
+			    <a href="confirmBackMsg.do?model.id=${item.id}&operType='v'">查看核实反馈</a>
+            </c:if>
+            <%--
             <c:if test="${item.status == '2' || item.status == '4'}">
                 <a href="#">
                 <font color="#999999">编辑</font>
@@ -119,16 +153,13 @@ function remove(id){
                                                编辑
              </a>	
             </c:if>
-            </stc:role>
+
 			<c:if test="${item.status != '0'}">
 			     <font color="#999999" title="已派遣事件不能删除">删 |</font>
 			</c:if>
-			<a
-				href="#" onclick="showChooseSendTypeWindow(${model.id})"> 派 |</a>
+			
 			<c:if test="${item.status == '0'}">
-			 <a href="#" onclick="remove(${item.id})" >
-			               删 |
-			 </a>
+			
 			</c:if>							         
 			<c:if test="${item.status == '2'}" >
 			  <a href="addSendMsg.do?model.id=${item.id}">核实</a>
@@ -140,9 +171,10 @@ function remove(id){
 			</c:if>
 			<c:if test="${item.status == '4'}">
 			     <a href="confirmBackMsg.do?model.id=${item.id}&operType='v'">
-					查看已核实信息
+					查看核实反馈
 				</a>				
-			</c:if>		
+			</c:if>	
+			 --%>	
 		</ec:column>
 		</stc:role>
 	</ec:row>
