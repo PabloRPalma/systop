@@ -14,6 +14,7 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.systop.common.modules.dept.model.Dept;
 import com.systop.core.model.BaseModel;
 
 /**
@@ -73,7 +74,11 @@ public class SmsReceive extends BaseModel {
 	 * 备注
 	 */
 	private String remark;
-
+	/**
+	 * 所属区县
+	 */
+	private Dept county;
+	
 	@Id
 	@GeneratedValue(generator = "hibseq")
 	@GenericGenerator(name = "hibseq", strategy = "hilo")
@@ -188,4 +193,13 @@ public class SmsReceive extends BaseModel {
 		this.remark = remark;
 	}
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "COUNTY")
+	public Dept getCounty() {
+		return this.county;
+	}
+
+	public void setCounty(Dept county) {
+		this.county = county;
+	}
 }
