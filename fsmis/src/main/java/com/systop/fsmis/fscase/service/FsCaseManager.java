@@ -16,8 +16,8 @@ import com.systop.core.util.DateUtil;
 import com.systop.fsmis.FsConstants;
 import com.systop.fsmis.fscase.CaseConstants;
 import com.systop.fsmis.model.CaseType;
-import com.systop.fsmis.model.GatherConfiger;
 import com.systop.fsmis.model.FsCase;
+import com.systop.fsmis.model.GatherConfiger;
 import com.systop.fsmis.model.SmsSend;
 import com.systop.fsmis.sms.SmsSendManager;
 
@@ -56,6 +56,7 @@ public class FsCaseManager extends BaseGenericsManager<FsCase> {
 	 * @param msgContent
 	 *          短信内容
 	 */
+	@Transactional
 	public void sendMsg(FsCase fsCase, String name, String moblie,
 			String msgContent) {
 		SmsSend smsSend = new SmsSend();
@@ -89,6 +90,7 @@ public class FsCaseManager extends BaseGenericsManager<FsCase> {
 		// 查询单体事件个数
 		int fsCaseCount = getFsCaseCount(caseTypeId, country, configer);
 		List<FsCase> fsList = getFsCase(caseTypeId, country, configer);
+		logger.info("单体个数：{}  配置条件：{}", fsCaseCount, configer.getRecords());
 		// 单体事件个数是否大于等于汇总配置条件设置的个数
 		if (fsCaseCount >= configer.getRecords()) {
 			// 查询相对应的多体事件，如果有则删除其
@@ -108,8 +110,8 @@ public class FsCaseManager extends BaseGenericsManager<FsCase> {
 			mFCase.setCounty(country);
 			mFCase.setIsSubmited(FsConstants.N);
 			mFCase.setStatus(CaseConstants.CASE_UN_RESOLVE);
-			mFCase.setTitle("单体事件自动汇总的多体事件");
-			save(mFCase);
+			mFCase.setTitle("单体事件自动汇总的多体事件"+mFCase.getCounty().getName());
+			getDao().save(mFCase);
 		}
 		
 		
@@ -121,8 +123,9 @@ public class FsCaseManager extends BaseGenericsManager<FsCase> {
 		// 查询单体事件个数
 		int fsCaseCityCount = getFsCaseCityCount(caseTypeId, configerCity);
 		List<FsCase> fsCityList = getCityFsCase(caseTypeId, configerCity);
+		logger.info("市单体个数：{}  市配置条件：{}", fsCaseCityCount, configerCity.getRecords());
 		// 单体事件个数是否大于等于汇总配置条件设置的个数
-		if (fsCaseCityCount >= configer.getRecords()) {
+		if (fsCaseCityCount >= configerCity.getRecords()) {
 			// 查询相对应的多体事件，如果有则删除其
 			List<FsCase> mFsCase = getCityMFsCase(caseTypeId);
 			if (mFsCase != null) {
@@ -131,18 +134,18 @@ public class FsCaseManager extends BaseGenericsManager<FsCase> {
 				}
 			}
 			// 新建多体事件，并与查出的单体事件建立关联
-			FsCase mFCase = new FsCase();
-			mFCase.setCaseType(getDao().get(CaseType.class, caseTypeId));
+			FsCase aMFCase = new FsCase();
+			aMFCase.setCaseType(getDao().get(CaseType.class, caseTypeId));
 			for (FsCase fCase : fsCityList) {
-				mFCase.getGenericCases().add(fCase);
+				aMFCase.getGenericCases().add(fCase);
 			}
-			mFCase.setIsMultiple(FsConstants.Y);
+			aMFCase.setIsMultiple(FsConstants.Y);
 			Dept city = (Dept) getDao().findObject("from Dept d where d.parentDept.id is null ");
-			mFCase.setCounty(city);
-			mFCase.setIsSubmited(FsConstants.N);
-			mFCase.setStatus(CaseConstants.CASE_UN_RESOLVE);
-			mFCase.setTitle("单体事件自动汇总的多体事件");
-			save(mFCase);
+			aMFCase.setCounty(city);
+			aMFCase.setIsSubmited(FsConstants.N);
+			aMFCase.setStatus(CaseConstants.CASE_UN_RESOLVE);
+			aMFCase.setTitle("单体事件自动汇总的多体事件" + city.getName());
+			getDao().save(aMFCase);
 		}
 		
 	}
@@ -302,7 +305,7 @@ public class FsCaseManager extends BaseGenericsManager<FsCase> {
 	 */
 	@SuppressWarnings("unchecked")
 	private GatherConfiger getConfigerList(String flag) {
-		String configerHql = "from Configuration c where c.level = ?";
+		String configerHql = "from GatherConfiger gc where gc.level = ?";
 		List<GatherConfiger> configerList = Collections.EMPTY_LIST;
 		configerList = getDao().query(configerHql, flag);
 		return (configerList != null && configerList.size() > 0) ? configerList
