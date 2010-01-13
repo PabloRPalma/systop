@@ -16,7 +16,7 @@ import com.systop.core.util.DateUtil;
 import com.systop.fsmis.FsConstants;
 import com.systop.fsmis.fscase.CaseConstants;
 import com.systop.fsmis.model.CaseType;
-import com.systop.fsmis.model.Configuration;
+import com.systop.fsmis.model.GatherConfiger;
 import com.systop.fsmis.model.FsCase;
 import com.systop.fsmis.model.SmsSend;
 import com.systop.fsmis.sms.SmsSendManager;
@@ -81,7 +81,7 @@ public class FsCaseManager extends BaseGenericsManager<FsCase> {
 	public void gatherFscase(Integer caseTypeId, Dept country) {
 		logger.info("多体事件汇总进来了");
 		// 得到相应的汇总配置条件--区县级
-		Configuration configer = getConfigerList(CaseConstants.COUNTY);
+		GatherConfiger configer = getConfigerList(CaseConstants.COUNTY);
 		if (configer == null) {
 			return;
 		}
@@ -114,7 +114,7 @@ public class FsCaseManager extends BaseGenericsManager<FsCase> {
 		
 		
 		// 得到相应的汇总配置条件--市级
-		Configuration configerCity = getConfigerList(CaseConstants.CITY);
+		GatherConfiger configerCity = getConfigerList(CaseConstants.CITY);
 		if (configerCity == null) {
 			return;
 		}
@@ -174,7 +174,7 @@ public class FsCaseManager extends BaseGenericsManager<FsCase> {
 	 */
 	@SuppressWarnings("unchecked")
 	private List<FsCase> getCityFsCase(Integer caseTypeId,
-			Configuration configerCity) {
+			GatherConfiger configerCity) {
 		StringBuffer hql = new StringBuffer("from FsCase fe where 1=1 ");
 		List arg = new ArrayList();
 		hql.append("and fe.status = ? ");
@@ -198,7 +198,7 @@ public class FsCaseManager extends BaseGenericsManager<FsCase> {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	private int getFsCaseCityCount(Integer caseTypeId, Configuration configerCity) {
+	private int getFsCaseCityCount(Integer caseTypeId, GatherConfiger configerCity) {
 		StringBuffer hql = new StringBuffer("select count(*) from FsCase fe where 1=1 ");
 		List arg = new ArrayList();
 		hql.append("and fe.status = ? ");
@@ -224,7 +224,7 @@ public class FsCaseManager extends BaseGenericsManager<FsCase> {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	private List<FsCase> getFsCase(Integer caseTypeId, Dept country, Configuration configer) {
+	private List<FsCase> getFsCase(Integer caseTypeId, Dept country, GatherConfiger configer) {
 		StringBuffer hql = new StringBuffer("from FsCase fe where 1=1 ");
 		List arg = new ArrayList();
 		hql.append("and fe.status = ? ");
@@ -276,7 +276,7 @@ public class FsCaseManager extends BaseGenericsManager<FsCase> {
 	 */
 	@SuppressWarnings("unchecked")
 	private int getFsCaseCount(Integer caseTypeId, Dept country,
-			Configuration configer) {
+			GatherConfiger configer) {
 		StringBuffer hql = new StringBuffer(
 				"select count(*) from FsCase fe where 1=1 ");
 		List arg = new ArrayList();
@@ -301,9 +301,9 @@ public class FsCaseManager extends BaseGenericsManager<FsCase> {
 	 * 根据用户所属机构，得到其相应的汇总配置条件
 	 */
 	@SuppressWarnings("unchecked")
-	private Configuration getConfigerList(String flag) {
+	private GatherConfiger getConfigerList(String flag) {
 		String configerHql = "from Configuration c where c.level = ?";
-		List<Configuration> configerList = Collections.EMPTY_LIST;
+		List<GatherConfiger> configerList = Collections.EMPTY_LIST;
 		configerList = getDao().query(configerHql, flag);
 		return (configerList != null && configerList.size() > 0) ? configerList
 				.get(0) : null;
