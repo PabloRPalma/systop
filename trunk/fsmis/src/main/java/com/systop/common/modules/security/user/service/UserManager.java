@@ -22,6 +22,7 @@ import com.systop.common.modules.security.user.UserConstants;
 import com.systop.common.modules.security.user.dao.UserDao;
 import com.systop.common.modules.security.user.model.Permission;
 import com.systop.common.modules.security.user.model.User;
+import com.systop.common.modules.security.user.model.UserLoginHistory;
 import com.systop.common.modules.security.user.service.listener.UserChangeListener;
 import com.systop.core.ApplicationException;
 import com.systop.core.Constants;
@@ -125,7 +126,23 @@ public class UserManager extends BaseGenericsManager<User> {
      
      update(user);
    }   
-   
+   /**
+    * 添加用户登录历史记录
+    * @param user 给定用户
+    * @param loginIp 给定用户登录所在IP
+    */
+   @Transactional
+   public void addUserLoginHistory(User user, String loginIp){
+	   if (user == null || user.getId() == null) {
+	       logger.error("No user login, return only.");
+	       return;
+	     } 
+	   if(loginIp.equals("0:0:0:0:0:0:0:1")){
+		   loginIp="127.0.0.1";
+	   }
+	   UserLoginHistory userLoginHistory=new UserLoginHistory(user.getName(),new Date(),loginIp,user.getDept().getName());
+	   getDao().save(userLoginHistory);
+   }
   /**
    * @see BaseManager#save(java.lang.Object)
    */
