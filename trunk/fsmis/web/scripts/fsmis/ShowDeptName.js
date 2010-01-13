@@ -1,11 +1,22 @@
 function DeptOperator() {
 
+	/**
+	 * 初始化
+	 * @param elemanetName
+	 * @param showNameDivId
+	 * @return
+	 */
 	this.init = function(elemanetName, showNameDivId) {
 		this.elemanetName = elemanetName;
 		this.showDeptName(elemanetName, showNameDivId);
 	};
 	
-	
+	/**
+	 * 在指定的DIV显示已经选中的部门名称
+	 * @param elemanetName
+	 * @param showNameDivId
+	 * @return
+	 */
 	this.showDeptName = function(elemanetName, showNameDivId) {
 		// 获得所有选择框
 		var inputs = document.getElementsByName(elemanetName);
@@ -28,6 +39,12 @@ function DeptOperator() {
 		showNameDiv.innerHTML = selectedDeptNameStr;
 	};
 	
+	/**
+	 * 获得重复的牵头部门名称
+	 * @param leaderElId
+	 * @param deptElName
+	 * @return
+	 */
 	this.getRepetitiveLeader = function(leaderElId, deptElName){
 		var selt = document.getElementById(leaderElId);
 		var inpts = document.getElementsByName(deptElName);
