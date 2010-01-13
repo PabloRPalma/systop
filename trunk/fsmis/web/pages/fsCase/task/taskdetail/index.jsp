@@ -1,20 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@include file="/common/meta.jsp"%>
 <%@include file="/common/taglibs.jsp"%>
 <html>
 <head>
-<%@include file="/common/ec.jsp"%>
-
 <title>任务列表</title>
+<%@include file="/common/ec.jsp"%>
+<%@include file="/common/extjs.jsp"%>
+<%@include file="/common/meta.jsp"%>
 </head>
 <body>
 <div><%@ include file="/common/messages.jsp"%></div>
-<div class="x-panel" style="margin: -1;">
+<div class="x-panel">
 <div class="x-panel-header">协调指挥&nbsp;&gt;&nbsp;${isMultipleCase eq 0?'一般任务':'综合任务'}接收&nbsp;&gt;&nbsp;${isMultipleCase eq
 0?'一般任务':'综合任务'}列表</div>
 <div class="x-toolbar">
-<%@include file="/common/extjs.jsp"%>
 <table width="99%">
 	<tr>
 		<td><s:form action="index" method="post">
@@ -22,12 +21,12 @@
            		        任务标题：
 			<s:textfield name="model.task.title"></s:textfield>
 			                   派发时间:
-			<input type="text" name="taskBeginTime" style="width: 140px"
+			<input type="text" name="taskBeginTime" style="width: 120px"
 				value='<s:date name="taskBeginTime" format="yyyy-MM-dd HH:mm"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
 				class="Wdate" />
 			                    至
-			<input type="text" name="taskEndTime" style="width: 140px"
+			<input type="text" name="taskEndTime" style="width: 120px"
 				value='<s:date name="taskEndTime" format="yyyy-MM-dd HH:mm"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
 				class="Wdate" />
@@ -37,9 +36,7 @@
 
 			</s:select>
 			<s:submit value="查询" cssClass="button"></s:submit>
-		</s:form></td>
-		<td align="right"><a href="${ctx}/taskdetail/index.do"><img
-			src="${ctx}/images/icons/house.gif" />返回事件列表</a></td>
+		</s:form></td>		
 	</tr>
 </table>
 </div>
@@ -66,15 +63,15 @@
 	<ec:row>
 		<ec:column width="30" property="_n" title="No."
 			value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center" />
-		<ec:column width="180" tipTitle="${item.task.title}" property="task.title" title="任务标题" />
-		<ec:column width="100" property="task" title="执行部门"
+		<ec:column width="220" tipTitle="${item.task.title}" property="task.title" title="任务标题" />
+		<ec:column width="130" property="task" title="执行部门"
 			cell="com.systop.fsmis.fscase.webapp.ec.DeptsCell">
 		</ec:column>
 		<ec:column width="80" property="task.dispatchTime" cell="date"
 			title="发布时间" format="yyyy-MM-dd HH:mm" style="text-align:center" />
 		<ec:column width="80" property="task.presetTime" cell="date"
 			title="规定完成时间" format="yyyy-MM-dd HH:mm" style="text-align:center" />
-		<ec:column width="80" property="completionTime" cell="date"
+		<ec:column width="110" property="completionTime" cell="date"
 			title="完成时间" format="yyyy-MM-dd HH:mm" style="text-align:center">
 			<c:choose>
 				<c:when test="${item.status == '3' or item.status == '4'}">
@@ -102,7 +99,7 @@
 			<a href="${ctx}/taskdetail/view.do?taskDetailId=${item.id}&fsCaseId=${item.task.fsCase.id}&modelId=${param['modelId']}">看</a>
 			<a href="#">| 图</a>
 		</ec:column>
-		<ec:column width="100" property="_0" title="操作"
+		<ec:column width="100" property="_1" title="操作"
 			style="text-align:center" sortable="false">
 			<c:if test="${item.status == '0' or item.status == '1'}">
 				<a href="${ctx}/taskdetail/receiveTask.do?model.id=${item.id}&isMultipleCase=${param['isMultipleCase']}&modelId=${param['modelId']}">收 |</a>
@@ -116,7 +113,8 @@
 				target="_blank">印</a>
 		</ec:column>
 	</ec:row>
-</ec:table></div>
+</ec:table>
+</div>
 </div>
 <jsp:include page="returnTaskDetail.jsp"></jsp:include>
 </body>
