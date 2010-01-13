@@ -179,6 +179,34 @@
 		}
 		
 		checkNewNotice();
+		//提示新任务信息
+		function checkNewTaskDetail(){
+			Ext.Ajax.request({
+				url: '${ctx}/taskdetail/getDeptTaskDetailMes.do',
+				methos :'POST',
+				success : function(response,textStatus){
+					 var respText = Ext.util.JSON.decode(response.responseText);
+					 var json = {single:0,multiple:0};
+					 var message = '';
+					 if(respText.single != 0 || respText.multiple != 0){
+						 message+= "您部门有";
+						 if(respText.single != 0){
+							 message+=respText.single;
+							 message+="条<a href='${ctx}/taskdetail/index.do?isMultipleCase=0&modelId=1' target='main'><font color='red'>单体任务</font></a>,";
+						 }
+						 if(respText.multiple != 0){
+							 message+=respText.multiple;
+							 message+="条<a href='${ctx}/taskdetail/index.do?isMultipleCase=1&modelId=1' target='main'><font color='red'>多体任务</font></a>,";
+						 }
+						 message+="请注意接收";
+
+						 Ext.my().msg('', message);
+					 }					
+				}
+			});
+			setTimeout("checkNewTaskDetail()", 2000);
+		}
+		checkNewTaskDetail();
 	</script>
 </body>
 </html>
