@@ -5,56 +5,56 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.systop.core.service.BaseGenericsManager;
-import com.systop.fsmis.CaseConstants;
 import com.systop.fsmis.model.FsCase;
 import com.systop.fsmis.model.SmsSend;
 import com.systop.fsmis.sms.SmsSendManager;
 
-
 /**
  * 一般事件
+ * 
  * @author shaozhiyuan
- *
  */
 @Service
-public class FsCaseManager extends BaseGenericsManager<FsCase>{
-	
-	//注入短信类用于发送短信
+public class FsCaseManager extends BaseGenericsManager<FsCase> {
+
 	@Autowired
 	private SmsSendManager sesSendManager;
-	
-	/**
-	 * 保存一般事件信息
-	 */
+
 	@Transactional
-	public void save(FsCase genericCase) {
-		getDao().saveOrUpdate(genericCase);
+	public void save(FsCase fsCase) {
+		// FIXME 什么意思，重写spuer.save()?有现实意义吗？
+		getDao().saveOrUpdate(fsCase);
 	}
 
 	/**
 	 * 根据单体事件的编号查询事件的详情
-	 * @param code 单体事件编号
+	 * 
+	 * @param code
+	 *          单体事件编号
 	 * @return 对应的单体事件
 	 */
 	public FsCase getGenericCaseByCode(String code) {
 		return findObject("from FsCase g where g.code =?", code);
 	}
-	
+
 	/**
 	 * 给信息员发送信息核实事件
+	 * 
+	 * @param fsCase
+	 * @param name
+	 * @param moblie
+	 * @param msgContent
 	 */
-	@Transactional
-	public void sendMsg(FsCase fsCase, String supervisorName,
-			String supervisorMoblie, String msgContent) {
+	public void sendMsg(FsCase fsCase, String name, String moblie,
+			String msgContent) {
 		SmsSend smsSend = new SmsSend();
-		String content = CaseConstants.SEND_CONTENT + " "
-				+ String.valueOf(fsCase.getId()) + " [" + msgContent + "]";
-		smsSend.setMobileNum(supervisorMoblie);
-		smsSend.setName(supervisorName);
-		smsSend.setContent(content);
+		// 定义短信发送内容，组织短信发送内容
+		StringBuffer content = new StringBuffer();
+		content.append("ID:").append(fsCase.getId()).append("\\n");
+		content.append(msgContent);
+		smsSend.setName(name);
+		smsSend.setMobileNum(moblie);
+		smsSend.setContent(content.toString());
 		sesSendManager.addMessage(smsSend);
-		//设置标识，核实短信已发送
-		fsCase.setIsSendInformMsg(CaseConstants.SENDED);
-		getDao().save(fsCase);
 	}
 }
