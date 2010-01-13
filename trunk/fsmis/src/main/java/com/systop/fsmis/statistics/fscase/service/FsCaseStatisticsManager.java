@@ -54,19 +54,19 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 		result = getDao().query(sql.toString(), args.toArray());
 		// 各状态转化，为页面显示做准备
 		for (Object[] o : result) {
-			if (o[0].toString().equals(CaseConstants.CASE_STATUS_RESOLVEED)) {
+			if (o[0].toString().equals(CaseConstants.CASE_PROCESSED)) {
 				o[0] = "已处理";
 			}
-			if (o[0].toString().equals(CaseConstants.CASE_STATUS_RESOLVEING)) {
-				o[0] = "已派遣";
+			if (o[0].toString().equals(CaseConstants.CASE_PROCESSING)) {
+				o[0] = "处理中";
 			}
-			if (o[0].toString().equals(CaseConstants.CASE_STATUS_RESOLVEUN)) {
+			if (o[0].toString().equals(CaseConstants.CASE_UN_RESOLVE)) {
 				o[0] = "未派遣";
 			}
-			if (o[0].toString().equals(CaseConstants.CASE_STATUS_RETURNED)) {
+			if (o[0].toString().equals(CaseConstants.CASE_RETURNED)) {
 				o[0] = "已退回";
 			}
-			if (o[0].toString().equals(CaseConstants.CASE_STATUS_VERIFYED)) {
+			if (o[0].toString().equals(CaseConstants.CASE_CLOSED)) {
 				o[0] = "已核实";
 			}
 		}
