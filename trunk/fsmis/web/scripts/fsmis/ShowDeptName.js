@@ -1,9 +1,11 @@
 function DeptOperator() {
 
 	this.init = function(elemanetName, showNameDivId) {
+		this.elemanetName = elemanetName;
 		this.showDeptName(elemanetName, showNameDivId);
 	};
-
+	
+	
 	this.showDeptName = function(elemanetName, showNameDivId) {
 		// 获得所有选择框
 		var inputs = document.getElementsByName(elemanetName);
@@ -24,6 +26,24 @@ function DeptOperator() {
 			selectedDeptNameStr += "<b>" + selectedDeptNames[i] + "</b>&nbsp;&nbsp;";
 		}
 		showNameDiv.innerHTML = selectedDeptNameStr;
+	};
+	
+	this.getRepetitiveLeader = function(leaderElId, deptElName){
+		var selt = document.getElementById(leaderElId);
+		var inpts = document.getElementsByName(deptElName);
+		var opts = selt.options;
+		if (opts != null){
+			for(i = 0; i < opts.length; i++){
+				if (opts[i].selected){
+					for(j = 0; j < inpts.length; j++){
+						if (inpts[j].checked == true && inpts[j].value == opts[i].value){
+							return opts[i].text;
+						}
+					}
+				}
+			}
+		}
+		return "";
 	};
 }
 
