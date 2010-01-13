@@ -38,7 +38,6 @@ public class AnnounceListTag extends BaseFreeMarkerTagSupport {
   @SuppressWarnings("unchecked")
   @Override
   protected void setTemplateParameters(TemplateContext ctx) {
-    // TODO Auto-generated method stub
     BaseHibernateDao dao = (BaseHibernateDao) getBean("dao");
 
     DetachedCriteria criteria = DetachedCriteria.forClass(Announces.class);
