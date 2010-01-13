@@ -2,13 +2,13 @@ package com.systop.fsmis.fscase.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.systop.core.service.BaseGenericsManager;
 import com.systop.fsmis.model.FsCase;
 import com.systop.fsmis.model.SmsSend;
 import com.systop.fsmis.sms.SmsSendManager;
 
+//FIXME:这个注释?...不再是一般的事件了。
 /**
  * 一般事件
  * 
@@ -19,7 +19,6 @@ public class FsCaseManager extends BaseGenericsManager<FsCase> {
 
 	@Autowired
 	private SmsSendManager sesSendManager;
-
 
 	/**
 	 * 根据单体事件的编号查询事件的详情
@@ -35,10 +34,14 @@ public class FsCaseManager extends BaseGenericsManager<FsCase> {
 	/**
 	 * 给信息员发送信息核实事件
 	 * 
-	 * @param fsCase 事件信息
-	 * @param name   接收人姓名
-	 * @param moblie 接收人手机号
-	 * @param msgContent  短信内容
+	 * @param fsCase
+	 *          事件信息
+	 * @param name
+	 *          接收人姓名
+	 * @param moblie
+	 *          接收人手机号
+	 * @param msgContent
+	 *          短信内容
 	 */
 	public void sendMsg(FsCase fsCase, String name, String moblie,
 			String msgContent) {
