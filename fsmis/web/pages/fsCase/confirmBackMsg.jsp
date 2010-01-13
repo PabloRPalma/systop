@@ -18,11 +18,12 @@
 <body>
 <div class="x-panel">
 <div class="x-panel-header"></div>
-<div align="center" style="margin-top:80px">
+<div align="center" style="margin-top:90px">
 <s:form action="confirmCheckedMsg.do" id="confirmCheckedMsg" method="post" validate="true" >  
   <s:hidden name="model.id"/>
   <fieldset style="width: 700px; padding-top: 10px">
   <legend>单体事件核实确认信息</legend>
+  <c:if test="${empty param.operType}">
   <table  border="0" cellpadding="0" cellspacing="0" style="padding-top: 10px">
   		<tr>
   			<td height="200px" valign="top" align="center" colspan="3">
@@ -30,16 +31,16 @@
   			</td>  			
   		</tr>
   </table>
+  </c:if>
   <table width="750px" >
         <tr>
-  			<td width="180px" align="right"> 
+  			<td width="150px" align="right"> 
   				<c:if test="${empty param.operType}">请填写</c:if>核实意见：
   			</td>
-  			<td>  				
+  			<td width="400px">  				
   				<s:textarea id="checkedConfirmMsg" name="model.checkedConfirmMsg" cssClass="required" cssStyle="width:400px;height:80px" value="%{checkedConfirmMsg}"/>
   			</td>
-  				
-			<td width="120px" align="right">核实结果：</td>
+			<td width="100px" align="right">核实结果：</td>
 			<td align="left">	
 					<select name="checked">
 						<option value="1">同意</option>
@@ -49,7 +50,7 @@
   		</tr>
   		<tr>
   		     <td style="text-align: center;" height="50" colspan="4">
-  					<c:if test="${empty param.operType}">
+  					<c:if test="${empty param.operType || param.operType == 'M'}">
 	  					<s:submit value="保存"  cssClass="submit button" />  					
 	  					<s:reset value="重置" cssClass="button"/>
   					</c:if>  					 
