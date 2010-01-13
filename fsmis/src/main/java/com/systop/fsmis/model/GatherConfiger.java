@@ -15,8 +15,8 @@ import com.systop.core.model.BaseModel;
  */
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "CONFIGURATION", schema = "FSMIS")
-public class Configuration extends BaseModel {
+@Table(name = "GATHER_CONFIGER", schema = "FSMIS")
+public class GatherConfiger extends BaseModel {
 
 	/**
 	 * 主键
@@ -58,7 +58,7 @@ public class Configuration extends BaseModel {
 	 */
 	private String level; 
 	
-	public Configuration() {
+	public GatherConfiger() {
 		
 	}
 	
