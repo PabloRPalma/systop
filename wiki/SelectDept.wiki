@@ -1,7 +1,10 @@
 ==标签:<fs:selectDepts>目前提供两种样式,theme:{simple,select}.==
-==simple:复选框样式,select:下拉选择框.==
+==simple:复选框样式(缺省值),select:下拉选择框.==
 ===Eg:===
 {{{
     <fs:selectDepts name="leader" theme="select"/>
-    <fs:selectDepts name="deptIds" onclick="show()" sendTypeId="${model.sendType.id}" itemClass="checkbox"/>
+    <!-- 定义div用于显示选中的checkbox部门名称 -->
+    <div id="showDiv" style="border-bottom: 1px dotted #97B7E7; padding: 2 7 2 7;"></div>
+    <!-- 如果theme="simple" 可以省略此属性. onclick事件需要我们自己定义,可以借助现有的js类,具体用法参照下面的js代码-->
+    <fs:selectDepts name="deptIds" onclick="show()" sendTypeId="${model.sendType.id}" itemClass="checkbox" theme="simple"/>
 }}}
