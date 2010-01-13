@@ -24,6 +24,11 @@
     		<description>需要传递派遣环节 ID,如果为空这不考虑派遣环节</description>		
     	</attribute>
     	<attribute>
+    		<name>defDeptIds</name>
+    		<type>java.lang.String</type>
+    		<description>默认选中的部门ID.eg:'ID1,ID2,ID3'</description>
+    	</attribute>
+    	<attribute>
     		<name>column</name>
     		<type>java.lang.Integer</type>
     		<description>显示的列数量</description>
