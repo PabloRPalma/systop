@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglibs.jsp"%>
-
 <html>
 <head>
 <title>事件采集管理</title>
-<%@include file="/common/meta.jsp"%>
 <%@include file="/common/ec.jsp"%>
-<%@include file="chooseSendType.jsp" %>
+<%@include file="/common/extjs.jsp"%>
+<%@include file="/common/meta.jsp"%>
 <script type="text/javascript">
 function examine(id){
 	alert(id);
@@ -20,11 +19,10 @@ function remove(id){
 		
 	}
 }
-
 </script>
 </head>
 <body>
-<div class="x-panel" style="margin: -1;">
+<div class="x-panel">
 <div class="x-panel-header">协调指挥&nbsp;&gt;&nbsp;${param['isMultipleCase'] eq 0?'一般案件':'综合案件'}列表</div>
 <div class="x-toolbar">
 <table width="99%">
@@ -149,9 +147,9 @@ function remove(id){
 		</stc:role>
 	</ec:row>
 </ec:table>
-
 </div>
 </div>
 </div>
+<jsp:include page="chooseSendType.jsp"></jsp:include>
 </body>
 </html>

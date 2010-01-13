@@ -19,7 +19,7 @@ function remove(id){
 <div><%@ include file="/common/messages.jsp"%></div>
 <div class="x-panel">
 <div class="x-panel-header">协调指挥&nbsp;&gt;&nbsp;${param['isMultipleCase']
-eq 0?'一般任务':'综合任务'}管理&nbsp;&gt;&nbsp;${param['isMultipleCase'] eq
+eq 0?'一般事件':'综合任务'}管理&nbsp;&gt;&nbsp;${param['isMultipleCase'] eq
 0?'一般任务':'综合任务'}列表</div>
 <div class="x-toolbar">
 <table width="99%">
@@ -30,12 +30,12 @@ eq 0?'一般任务':'综合任务'}管理&nbsp;&gt;&nbsp;${param['isMultipleCase
 			<s:textfield name="model.title"></s:textfield>
 			                   派发时间:
 			<input type="text" name="taskBeginTime" style="width: 120px"
-				value='<s:date name="taskBeginTime" format="yyyy-MM-dd HH:mm:ss"/>'
+				value='<s:date name="taskBeginTime" format="yyyy-MM-dd HH:mm"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
 				class="Wdate" />
 			                    至:
 			<input type="text" name="taskEndTime" style="width: 120px"
-				value='<s:date name="taskEndTime" format="yyyy-MM-dd HH:mm:ss"/>'
+				value='<s:date name="taskEndTime" format="yyyy-MM-dd HH:mm"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
 				class="Wdate" />
            			任务状态:
@@ -49,12 +49,24 @@ eq 0?'一般任务':'综合任务'}管理&nbsp;&gt;&nbsp;${param['isMultipleCase
 </table>
 </div>
 <div class="x-panel-body">
-<div style="margin-left: -3px;" align="center"><ec:table
-	items="items" var="item" retrieveRowsCallback="limit"
-	sortRowsCallback="limit" action="index.do" useAjax="false"
-	doPreload="false" pageSizeList="20,50,100,200" editable="false"
-	sortable="false" rowsDisplayed="20" generateScript="true"
-	resizeColWidth="false" classic="false" width="100%" height="460px"
+<div style="margin-left: -3px;" align="center">
+<ec:table
+	items="items" 
+	var="item" 
+	retrieveRowsCallback="limit"
+	sortRowsCallback="limit" 
+	action="index.do" 
+	useAjax="false"
+	doPreload="false" 
+	pageSizeList="20,50,100,200" 
+	editable="false"
+	sortable="false" 
+	rowsDisplayed="20" 
+	generateScript="true"
+	resizeColWidth="false" 
+	classic="false" 
+	width="100%" 
+	height="460px"
 	minHeight="460"
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	<ec:row>
