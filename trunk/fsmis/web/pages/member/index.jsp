@@ -43,9 +43,9 @@ function removeMember(mebId) {
 		<td align="right">
 		  <table>
 			<tr>
-				<td><a href="edit.do" title="添加成员信息"><img
-					src="${ctx}/images/icons/add.gif" /></a></td>
-				<td valign="middle"><a href="edit.do" title="添加成员信息">添加</a></td>
+				<td><a href="edit.do" title="添加成员信息">添加</a></td>
+				<td><span class="ytb-sep"></span></td>
+				<td valign="middle"><a href="#" onclick="NumWindow.show()">导出手机号码</a></td>
 			</tr>
 		  </table>
 		</td>
@@ -69,7 +69,6 @@ function removeMember(mebId) {
 	minHeight="460"
 	csvFileName="成员名单.csv"
 	toolbarContent="navigation|pagejump|pagesize|export|refresh|extend|status">
-	<ec:extend><td align="left"><input type="button" value="导出手机号" class="button" onclick="exportMobileNum()" style="width:70px"/></td></ec:extend>
 	<ec:row>
 		<ec:column width="40" property="_s" title="No." value="${GLOBALROWCOUNT}" sortable="false" style="text-align: center" />
 		<ec:column width="100" property="name" title="姓名" />
@@ -85,5 +84,57 @@ function removeMember(mebId) {
 </ec:table></div>
 </div>
 </div>
+<!-- 查看手机号码 -->
+<div id="numWindow" class="x-hidden">
+<div class="x-window-header">手机号码</div>
+<div class="x-window-body">
+	<table width="550" cellspacing="6">
+	  <tr>
+	    <td align="right"><font color="green">有号码成员数：</font></td>
+		<td align="left" colspan="3">
+		  ${hasNum}&nbsp;&nbsp;&nbsp;&nbsp;<font color="red">无号码成员数：</font>${noNum}
+	    </td>
+	  </tr>
+	  <tr>
+	    <td height="5" colspan="4"></td>
+	  </tr>
+	  <tr>
+	    <td width="90px" align="right"><font color="green">成员手机号码：</font></td>
+	    <td width="320px">${mobileNums}</td>
+        <td colspan="2">
+        	<input type="button" class="button" onclick="copyNum('${mobileNums}')" style="text-align: center;width: 90px;" value="复制到剪切板" />
+        </td>
+	  </tr>
+	</table>
+	
+ </div>
+</div>
+<!-- 查看手机号码 -->
+<script type="text/javascript">
+  var NumWindow = new Ext.Window({
+      el: 'numWindow',
+      width: 550,
+      height: 250,
+      layout : 'fit',
+      closeAction:'hide',
+      buttonAlign:'center',
+      modal:'false',
+      buttons:[
+        {text:'关闭',
+        	handler:function(){
+        	NumWindow.hide();
+        }
+      }]
+  });
+</script>
+<script type="text/javascript">
+  function copyNum(copyText) {
+	var reg = new RegExp(/\<br\/>/ig);
+	copyText = copyText.replace(reg, "");
+    if (window.clipboardData) {
+        window.clipboardData.setData("Text", copyText);
+    } 
+  }
+</script>
 </body>
 </html>
