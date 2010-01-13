@@ -116,13 +116,13 @@ function remove(id){
 			    <a title="修改事件" href="${ctx}/fscase/edit.do?model.id=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">改 </a> |
 			    <a title="派遣任务" href="#" onclick="showChooseSendTypeWindow('${item.id}')">派</a> |
 			    <a href="#" onclick="remove(${item.id})" >删</a> |
-			    <c:if test="${item.msgCheckedFlag == '1'}">	
-			      <a title="核实" href="addSendMsg.do?model.id=${item.id}">核实反馈</a>	
-			    </c:if>	
 			    <c:choose>
-				    <c:when test="${item.msgCheckedFlag == '1'}">
-				    	<a title="核实" href="addSendMsg.do?model.id=${item.id}">核实反馈</a>
-				    </c:when>			    
+				    <c:when test="${empty item.msgCheckedFlag or item.msgCheckedFlag == '0'}">
+				    	<a title="核实反馈" href="confirmBackMsg.do?model.id=${item.id}">核</a>
+				    </c:when>	
+				     <c:when test="${item.msgCheckedFlag == '1'}">
+				    	<a title="核实反馈" href="confirmBackMsg.do?model.id=${item.id}">核</a>
+				    </c:when>		    
 				    <c:otherwise>
 				    	<font color="silver" >核</font> 	
 				    </c:otherwise>
@@ -138,7 +138,7 @@ function remove(id){
 			    <font color="silver" >改</font> |
 			    <font color="silver" >派</font> |
 			    <a href="#" onclick="remove(${item.id})" >删</a> |
-			    <a href="confirmBackMsg.do?model.id=${item.id}&operType='v'">查看核实反馈</a>
+			    <a title="查看核实反馈" href="confirmBackMsg.do?model.id=${item.id}&operType='v'">核</a>
             </c:if>
             <%--
             <c:if test="${item.status == '2' || item.status == '4'}">
