@@ -1,12 +1,14 @@
 package com.systop.fsmis.fscase.task.taskdetail.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.systop.common.modules.dept.model.Dept;
 import com.systop.core.service.BaseGenericsManager;
 import com.systop.fsmis.fscase.CaseConstants;
 import com.systop.fsmis.fscase.task.TaskConstants;
@@ -109,7 +111,7 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
     // 遍历当前任务明细实体实例关联的任务实体的任务明细
     for (TaskDetail detail : taskDetail.getTask().getTaskDetails()) {
       // 只要有一个任务明细的状态不为"已处理",则返回false(未全部完成)
-      if (!TaskConstants.TASK_DETAIL_PROCESSED .equals(detail.getStatus())) {
+      if (!TaskConstants.TASK_DETAIL_PROCESSED.equals(detail.getStatus())) {
         return false;
       }
     }
@@ -136,5 +138,13 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
     }
 
     return true;
+  }
+
+  public List<TaskDetail> getNewTasks(Dept dept, String isMultiple) {
+    // 查询指定部门的未查看任务明细
+    String hql = "from TaskDetail td where td.dept.id = ? and td.status = ? and td.task.fsCase.isMultiple = ?";
+
+    return query(hql, new Object[] { dept.getId(),
+        TaskConstants.TASK_DETAIL_UN_RECEIVE, isMultiple });
   }
 }
