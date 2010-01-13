@@ -53,6 +53,7 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 		args.add(endDate);
 		result = getDao().query(sql.toString(), args.toArray());
 		// 各状态转化，为页面显示做准备
+		//FIXME:这个状态的顺序调整一下
 		for (Object[] o : result) {
 			if (o[0].toString().equals(CaseConstants.CASE_PROCESSED)) {
 				o[0] = "已处理";
