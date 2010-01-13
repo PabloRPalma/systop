@@ -52,7 +52,7 @@
 			"10", "#FFFFFF");
 	so.addVariable("path", "${ctx}/amcharts/");
 	so.addVariable("settings_file",
-			encodeURIComponent("${ctx}/pages/statistics/fscase/statisticCounty_amcolumn.xml"));
+			encodeURIComponent("${ctx}/pages/statistics/fscase/setting/statisticCounty_amcolumn.xml"));
 	so.addVariable("chart_data", "${csvData}");
 	so.write("flashcontent");
 	// ]]>
