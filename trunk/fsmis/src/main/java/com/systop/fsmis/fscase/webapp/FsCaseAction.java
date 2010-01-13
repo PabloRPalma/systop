@@ -354,7 +354,10 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
       getModel().setStatus(CaseConstants.CASE_UN_RESOLVE);
     }
 
-    // 此处应调用多体汇总方法
+    // 汇总单体事件，创建多体事件
+	getManager().gatherFscase(getModel().getCaseType().getId(),
+			getModel().getCounty());
+
     getManager().save(getModel());
     return SUCCESS;
   }
