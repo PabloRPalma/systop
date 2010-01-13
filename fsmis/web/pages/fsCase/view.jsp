@@ -130,9 +130,9 @@
 </table>
 </div>
 <div id="general" class="x-hide-display">
-<table id="genericCasesTable" height="520" class="mytable">
+<table id="genericCasesTable" class="mytable">
 	<tr>
-		<td height="500" align="left" valign="top">
+		<td height="800" align="left" valign="top">
 		<!-- include进来二级Tab以现实一个食品安全综合案件关联的多个一般案件 -->		
 		<%@include	file="viewGenericCases.jsp"%>			
 		</td>
