@@ -20,7 +20,7 @@
 		  }
 		  }]
 });
-  ChooseSendTypeWindow.selectType = function(sendtypeId){	  
+  ChooseSendTypeWindow.selectType = function(sendtypeId){	  	 
 	  window.location = "${ctx}/task/edit.do?sendTypeId=" + sendtypeId + "&caseId=" + faCaseId + "&isMultipleCase=${isMultipleCase}&modelId=${param['modelId']}";
 	  ChooseSendTypeWindow.hide();
   }
