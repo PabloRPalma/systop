@@ -31,7 +31,7 @@ function init(){
 <table width="100%">
    <tr>
       <td align="right">
-        <a  href="confirmBackMsg.do?model.id=${model.id}">手动核实</a>
+        <a  href="confirmBackMsg.do?model.id=${model.id}&operType=M">手动核实</a>
       </td>
    </tr>
 </table>
