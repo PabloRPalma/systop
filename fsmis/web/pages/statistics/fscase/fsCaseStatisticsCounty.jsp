@@ -16,12 +16,12 @@
 </style>
 </head>
 <body>
-<div class="x-panel-header">事件状态统计图</div>
+<div class="x-panel-header">事件区县统计图</div>
 <div class="x-toolbar" style="height:25px;padding:3px;">
 <table width="99%">
   <tr>
     <td>
-      <form id="fscaseStaticForm" action="${ctx}/statistics/statisticFsCaseStatus.do" method="post">
+      <form id="fscaseStaticForm" action="${ctx}/statistics/statisticFsCaseCounty.do" method="post">
         时间：
 			<input type="text" name="beginDate" style="width: 120px"
 				value='<s:date name="beginDate" format="yyyy-MM-dd"/>'
@@ -48,11 +48,11 @@
 
 <script type="text/javascript">
 	// <![CDATA[		
-	var so = new SWFObject("${ctx}/amcharts/ampie.swf", "ampie", "750", "550",
-			"8", "#FFFFFF");
+	var so = new SWFObject("${ctx}/amcharts/amcolumn.swf", "amcolumn", "750", "550",
+			"10", "#FFFFFF");
 	so.addVariable("path", "${ctx}/amcharts/");
 	so.addVariable("settings_file",
-			encodeURIComponent("${ctx}/pages/statistics/fscase/flatPie.xml"));
+			encodeURIComponent("${ctx}/pages/statistics/fscase/statisticCounty_amcolumn.xml"));
 	so.addVariable("chart_data", "${csvData}");
 	so.write("flashcontent");
 	// ]]>
