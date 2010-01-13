@@ -11,7 +11,7 @@ import com.systop.common.modules.dept.DeptConstants;
 import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.dept.service.DeptManager;
 import com.systop.core.service.BaseGenericsManager;
-import com.systop.fsmis.CaseConstants;
+import com.systop.fsmis.fscase.CaseConstants;
 import com.systop.fsmis.model.FsCase;
 
 /**
