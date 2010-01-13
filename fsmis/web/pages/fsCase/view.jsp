@@ -7,7 +7,6 @@
 <%@include file="/common/ec.jsp"%>
 <%@include file="/common/extjs.jsp"%>
 <%@include file="/common/meta.jsp"%>
-<%@include file="chooseSendType.jsp" %>
 <script type="text/javascript">
 	Ext.onReady(function() {
 		var tabs = new Ext.TabPanel( {
@@ -46,12 +45,13 @@
 		});
 	});
 </script>
-<style type="text/css">
+<!-- style type="text/css">
+
 .mytable {
 	border: 0px solid #A6C9E2;
 	margin-left: 0px;
 	margin-top: 0px;
-	width: 100%;
+	width: 99%;
 	border-collapse: collapse;
 }
 
@@ -59,14 +59,14 @@
 	border: 0px solid #A6C9E2;
 	height: 26;
 }
-</style>
+</style-->
 </head>
 <body>
 <!-- 事件信息 -->
-<div class="x-panel">
-<div class="x-panel-header">案件信息</div>
+<div class="x-panel" style="margin: -1;">
+<div class="x-panel-header">事件信息</div>
 <div class="x-toolbar">
-<table width="100%">
+<table width="99%">
 	<tr>
 		<td width="70%" align="left"></td>
 		<td align="right"><a href="#"> 地理位置</a></td>
@@ -74,7 +74,7 @@
 		<td align="right"><a href="#"> 上报市级</a></td>
 		<td><span class="ytb-sep"></span></td>
 		<c:if test="${model.status eq '0'}">
-			<td align="right"><a href="#" onclick="alert(1);showChooseSendTypeWindow(${model.id})"> 任务派遣</a></td>
+			<td align="right"><a href="#" onclick="showChooseSendTypeWindow(${model.id})"> 任务派遣</a></td>
 			<td><span class="ytb-sep"></span></td>
 		</c:if>
 		<td align="right"><a href="${ctx}/assessment/edit.do?model.fsCase.id=${model.id}"> 风险评估</a></td>
@@ -87,7 +87,7 @@
 <div id="fsCaseDiv" class="x-hide-display">
 <table id="fsCaseTable" class="mytable">
 	<tr>
-		<td width="800" align="left">
+		<td width="400" align="left">
 		<table width="400" align="left" border="0" cellpadding="0"
 			cellspacing="0">
 			<tr>
@@ -134,7 +134,7 @@
 	<tr>
 		<td height="800" align="left" valign="top">
 		<!-- include进来二级Tab以现实一个食品安全综合案件关联的多个一般案件 -->		
-		<%@include	file="viewGenericCases.jsp"%>			
+		<%--@include	file="viewGenericCases.jsp"--%>			
 		</td>
 	</tr>
 </table>
@@ -144,7 +144,7 @@
 	<tr>
 		<td height="400" align="left" valign="top">
 		<!-- include进来二级Tab以现实一个食品安全案件下的多个任务 -->		
-		<%@include file="viewTasks.jsp"%>
+		<%--@include file="viewTasks.jsp"--%>
 		</td>
 	</tr>
 </table>
@@ -179,5 +179,6 @@
 </div>
 </div>
 </div>
+<%--@include file="chooseSendType.jsp" --%>
 </body>
 </html>
