@@ -9,10 +9,14 @@
 				<param name="ignoreHierarchy">false</param>
 		   		<param name="root">jsonResult</param>
 			</result>
-			<result type="json" name="json">
+			<result type="json" name="jsonCorpNames">
 				<param name="ignoreHierarchy">false</param>
 		   		<param name="root">corpNames</param>
 			</result>
+			<result type="json" name="json">
+		        <param name="ignoreHierarchy">false</param>
+		        <param name="root">page</param>				
+		    </result>
 			<result name="index">/pages/fsCase/task/taskdetail/index.jsp</result>
 			<result name="input">/pages/fsCase/task/taskdetail/edit.jsp</result>
 			<result name="returnTaskDetail">/pages/fsCase/task/taskdetail/returnTaskDetail.jsp</result>
