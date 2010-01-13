@@ -42,7 +42,7 @@ public class FsCase extends BaseModel {
 	private SendType sendType;
 
 	/** 对应上报市级后的案件 */
-	private FsCase selfSJ;
+	private FsCase submitedCase;
 
 	/** 部门上报 */
 	private Dept reportDept;
@@ -113,8 +113,8 @@ public class FsCase extends BaseModel {
 	/** 关联评估信息 */
 	private Set<Assessment> assessmentses = new HashSet<Assessment>(0);
 
-	/** 自关联上报市级信息 */
-	private Set<FsCase> submitCases = new HashSet<FsCase>(0);
+	/** 关联上报市级信息 */
+	private Set<FsCase> casesBySubmitedCase = new HashSet<FsCase>(0);
 
 	/** 若为一般案件，代表所属的综合案件集合 */
 	private Set<FsCase> compositiveCases = new HashSet<FsCase>(0);
@@ -173,13 +173,13 @@ public class FsCase extends BaseModel {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "SELF_SJ")
-	public FsCase getSelfSJ() {
-		return this.selfSJ;
+	@JoinColumn(name = "SUBMITED_CASE")
+	public FsCase getSubmitedCase() {
+		return this.submitedCase;
 	}
 
-	public void setSelfSJ(FsCase selfSJ) {
-		this.selfSJ = selfSJ;
+	public void setSubmitedCase(FsCase submitedCase) {
+		this.submitedCase = submitedCase;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -213,7 +213,7 @@ public class FsCase extends BaseModel {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ENTERPRISE")
+	@JoinColumn(name = "CORP")
 	public Corp getCorp() {
 		return this.corp;
 	}
@@ -398,13 +398,13 @@ public class FsCase extends BaseModel {
 		this.taskses = taskses;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "selfSJ")
-	public Set<FsCase> getSubmitCases() {
-		return this.submitCases;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "submitedCase")
+	public Set<FsCase> getCasesBySubmitedCase() {
+		return this.casesBySubmitedCase;
 	}
 
-	public void setSubmitCases(Set<FsCase> submitCases) {
-		this.submitCases = submitCases;
+	public void setCasesBySubmitedCase(Set<FsCase> casesBySubmitedCase) {
+		this.casesBySubmitedCase = casesBySubmitedCase;
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY)
