@@ -99,10 +99,10 @@ public class FsCase extends BaseModel {
 	private Date endDate;
 
 	/** 是否上报市级 */
-	private String isSubmitSj;
+	private String isSubmited;
 
 	/** 上报市级时间 */
-	private Date submitSjTime;
+	private Date submitTime;
 
 	/** 关联任务信息 */
 	private Set<Task> taskses = new HashSet<Task>(0);
@@ -127,9 +127,6 @@ public class FsCase extends BaseModel {
 
 	/** 关联事件对应的短信接收信息 */
 	private Set<SmsReceive> smsReceiveses = new HashSet<SmsReceive>(0);
-
-	/** 是否发送通知核实短信 */
-	private String isSendInformMsg;
 
 	/** 短信核实判断标识: 0代表未核实【默认值】，1代表已核实 */
 	private String msgCheckedFlag = "0";
@@ -355,23 +352,23 @@ public class FsCase extends BaseModel {
 		this.endDate = endDate;
 	}
 
-	@Column(name = "IS_SUBMIT_SJ", length = 1)
-	public String getIsSubmitSj() {
-		return this.isSubmitSj;
+	@Column(name = "IS_SUBMITED", length = 1)
+	public String getIsSubmited() {
+		return this.isSubmited;
 	}
 
-	public void setIsSubmitSj(String isSubmitSj) {
-		this.isSubmitSj = isSubmitSj;
+	public void setIsSubmited(String isSubmited) {
+		this.isSubmited = isSubmited;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "SUBMIT_SJ_TIME", length = 11)
-	public Date getSubmitSjTime() {
-		return this.submitSjTime;
+	@Column(name = "SUBMI_TTIME", length = 11)
+	public Date getSubmitTime() {
+		return this.submitTime;
 	}
 
-	public void setSubmitSjTime(Date submitSjTime) {
-		this.submitSjTime = submitSjTime;
+	public void setSubmitTime(Date submitTime) {
+		this.submitTime = submitTime;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "fsCase")
@@ -446,15 +443,6 @@ public class FsCase extends BaseModel {
 
 	public void setSmsReceiveses(Set<SmsReceive> smsReceiveses) {
 		this.smsReceiveses = smsReceiveses;
-	}
-
-	@Column(name = "is_send_inform_msg")
-	public String getIsSendInformMsg() {
-		return isSendInformMsg;
-	}
-
-	public void setIsSendInformMsg(String isSendInformMsg) {
-		this.isSendInformMsg = isSendInformMsg;
 	}
 
 	@Transient
