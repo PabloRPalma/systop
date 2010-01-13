@@ -23,7 +23,7 @@ import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.core.Constants;
 import com.systop.core.dao.support.Page;
 import com.systop.core.webapp.struts2.action.DefaultCrudAction;
-import com.systop.fsmis.CaseConstants;
+import com.systop.fsmis.fscase.CaseConstants;
 import com.systop.fsmis.FsConstants;
 import com.systop.fsmis.fscase.casetype.service.CaseTypeManager;
 import com.systop.fsmis.fscase.sendtype.service.SendTypeManager;
@@ -166,7 +166,7 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
         return INPUT;
       }
       getModel().setCaseTime(new Date());
-      getModel().setStatus(CaseConstants.CASE_STATUS_RESOLVEUN);
+      getModel().setStatus(CaseConstants.CASE_UN_RESOLVE);
     }
 
     if (getModel().getCounty() == null
@@ -187,7 +187,7 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
     }
 
     getModel().setCaseType(cType);
-    getModel().setIsSubmitSj(CaseConstants.IS_NOSUBSJ);
+    getModel().setIsSubmited(FsConstants.N);
     if (StringUtils.isBlank(getModel().getIsMultiple())) {
       getModel().setIsMultiple(FsConstants.N);
     }
@@ -300,10 +300,10 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
    */
   public Map getStateMap() {
     Map StateMap = new LinkedHashMap();
-    StateMap.put(CaseConstants.CASE_STATUS_RESOLVEUN, "未派遣");
-    StateMap.put(CaseConstants.CASE_STATUS_RESOLVEING, "已派遣");
-    StateMap.put(CaseConstants.CASE_STATUS_VERIFYED, "已核实");
-    StateMap.put(CaseConstants.CASE_STATUS_RESOLVEED, "已处理");
+    StateMap.put(CaseConstants.CASE_UN_RESOLVE, "未派遣");
+    StateMap.put(CaseConstants.CASE_PROCESSING, "处理中");
+    StateMap.put(CaseConstants.CASE_CLOSED, "已核实");
+    StateMap.put(CaseConstants.CASE_PROCESSED, "已处理");
 
     return StateMap;
   }
@@ -348,10 +348,10 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
     if (getRequest().getParameter("checked") != null
         && getRequest().getParameter("checked").equals(Constants.YES)) {
       getModel().setClosedTime(new Date());
-      getModel().setStatus(CaseConstants.CASE_STATUS_VERIFYED);
+      getModel().setStatus(CaseConstants.CASE_CLOSED);
     } else if (getRequest().getParameter("checked") != null
         && getRequest().getParameter("checked").equals(Constants.NO)) {
-      getModel().setStatus(CaseConstants.CASE_STATUS_RESOLVEUN);
+      getModel().setStatus(CaseConstants.CASE_UN_RESOLVE);
     }
 
     // 此处应调用多体汇总方法
