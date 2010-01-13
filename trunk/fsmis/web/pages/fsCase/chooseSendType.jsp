@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglibs.jsp"%>
-<html>
-<head>
-<title></title>
 <script type="text/javascript">
   var faCaseId = null;
   var ChooseSendTypeWindow = new Ext.Window({
@@ -29,8 +26,6 @@
 		ChooseSendTypeWindow.show();	  
 } 
 </script>
-</head>
-<body>
 <div id="chooseSendTypeWindow" class="x-hidden">
 <div class="x-window-header">选择派遣类别</div>
 <div class="x-window-body">
@@ -55,5 +50,3 @@
 	</table>
 </div>
 </div>
-</body>
-</html>
