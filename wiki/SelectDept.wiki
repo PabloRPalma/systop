@@ -1,3 +1,1 @@
-==
-标签:<fs:selectDepts>目前提供两种theme:{simple,select}.simple:复选框样式,select:下拉选择框.
-==
+==标签:<fs:selectDepts>目前提供两种样式,theme:{simple,select}.simple:复选框样式,select:下拉选择框.==
