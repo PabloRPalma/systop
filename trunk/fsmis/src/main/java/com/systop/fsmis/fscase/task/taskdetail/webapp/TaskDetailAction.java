@@ -22,7 +22,7 @@ import com.systop.common.modules.security.user.model.User;
 import com.systop.core.dao.support.Page;
 import com.systop.core.util.ReflectUtil;
 import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
-import com.systop.fsmis.CaseConstants;
+import com.systop.fsmis.fscase.task.TaskConstants;
 import com.systop.fsmis.fscase.task.taskdetail.service.TaskDetailManager;
 import com.systop.fsmis.model.Corp;
 import com.systop.fsmis.model.TaskDetail;
@@ -153,9 +153,9 @@ public class TaskDetailAction extends
       Integer taskDetailId = Integer.parseInt(id);
       setModel(getManager().get(taskDetailId));
       // 只有任务明细状态为"未接收"时,才涉及到改状态为"已查看"
-      if (getModel().getStatus().equals(CaseConstants.TASK_DETAIL_UN_RECEIVE)) {
+      if (getModel().getStatus().equals(TaskConstants.TASK_DETAIL_UN_RECEIVE)) {
         // 置任务明细状态为"已查看"
-        getModel().setStatus(CaseConstants.TASK_DETAIL_LOOK_OVERED);
+        getModel().setStatus(TaskConstants.TASK_DETAIL_LOOKED);
         getManager().save(getModel());
       }
     }
@@ -170,7 +170,7 @@ public class TaskDetailAction extends
    */
   public String receiveTask() {
     // 接收状态
-    getModel().setStatus(CaseConstants.TASK_DETAIL_RECEIVEED);
+    getModel().setStatus(TaskConstants.TASK_DETAIL_RECEIVED);
     getManager().save(getModel());
 
     return SUCCESS;
@@ -271,11 +271,11 @@ public class TaskDetailAction extends
   public Map<String, String> getStateMap() {
 
     Map<String, String> StateMap = new LinkedHashMap<String, String>();
-    StateMap.put(CaseConstants.TASK_DETAIL_UN_RECEIVE, "未接收");
-    StateMap.put(CaseConstants.TASK_DETAIL_LOOK_OVERED, "已查看");
-    StateMap.put(CaseConstants.TASK_DETAIL_RECEIVEED, "已接收");
-    StateMap.put(CaseConstants.TASK_DETAIL_RETURNED, "已退回 ");
-    StateMap.put(CaseConstants.TASK_DETAIL_RESOLVEED, "已处理  ");
+    StateMap.put(TaskConstants.TASK_DETAIL_UN_RECEIVE, "未接收");
+    StateMap.put(TaskConstants.TASK_DETAIL_LOOKED, "已查看");
+    StateMap.put(TaskConstants.TASK_DETAIL_RECEIVED, "已接收");
+    StateMap.put(TaskConstants.TASK_DETAIL_RETURNED, "已退回 ");
+    StateMap.put(TaskConstants.TASK_DETAIL_PROCESSED, "已处理  ");
 
     return StateMap;
   }

@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.systop.core.service.BaseGenericsManager;
-import com.systop.fsmis.CaseConstants;
+import com.systop.fsmis.fscase.CaseConstants;
+import com.systop.fsmis.fscase.task.TaskConstants;
 import com.systop.fsmis.model.Corp;
 import com.systop.fsmis.model.FsCase;
 import com.systop.fsmis.model.Task;
@@ -30,19 +31,19 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
   @Transactional
   public void doReturnTaskDetail(TaskDetail taskDetail) {
     // 设定当前任务明细的状态为退回状态
-    taskDetail.setStatus(CaseConstants.TASK_DETAIL_RETURNED);
+    taskDetail.setStatus(TaskConstants.TASK_DETAIL_RETURNED);
     save(taskDetail);
     // 如果所有任务明细已经退回,则把任务和案件状态都置为"退回",
     if (checkIsAllTaskDetailReturned(taskDetail)) {
       Task task = taskDetail.getTask();
-      task.setStatus(CaseConstants.TASK_STATUS_RETURNED);
+      task.setStatus(TaskConstants.TASK_RETURNED);
       getDao().save(task);
       // 系统限定:如果一个案件的一个任务未处理或者未退回(全部任务明细未全部处理或者退回),则不会再次派遣任务,
       // 所以不会出现一个案件的多个任务并行状态,也就不会引起案件状态的冲突.
       // 作为当前案件的有效任务,当前任务已退回(对应所有任务明细都已退回),则修改案件的状态为"退回"
       FsCase fsCase = task.getFsCase();
       if (fsCase != null && fsCase.getId() != null) {
-        fsCase.setStatus(CaseConstants.CASE_STATUS_RETURNED);
+        fsCase.setStatus(CaseConstants.CASE_RETURNED);
         getDao().save(fsCase);
       }
     }
@@ -56,7 +57,7 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
   @Transactional
   public void doCommitTaskDetail(TaskDetail taskDetail) {
     // 任务明细状态置为"已处理"
-    taskDetail.setStatus(CaseConstants.TASK_DETAIL_RESOLVEED);
+    taskDetail.setStatus(TaskConstants.TASK_DETAIL_PROCESSED);
     // 任务完成时间
     taskDetail.setCompletionTime(new Date());
     save(taskDetail);
@@ -86,10 +87,10 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
     // 如果所有任务明细已经处理,则把任务状态置为"已处理",
     if (checkIsAllTaskDetailResolved(taskDetail)) {
 
-      task.setStatus(CaseConstants.TASK_STATUS_RESOLVEED);
+      task.setStatus(TaskConstants.TASK_PROCESSED);
       getDao().save(task);
       if (fsCase != null && fsCase.getId() != null) {
-        fsCase.setStatus(CaseConstants.CASE_STATUS_RESOLVEED);
+        fsCase.setStatus(CaseConstants.CASE_PROCESSED);
         getDao().save(fsCase);
       }
     }
@@ -108,7 +109,7 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
     // 遍历当前任务明细实体实例关联的任务实体的任务明细
     for (TaskDetail detail : taskDetail.getTask().getTaskDetails()) {
       // 只要有一个任务明细的状态不为"已处理",则返回false(未全部完成)
-      if (!CaseConstants.TASK_DETAIL_RESOLVEED.equals(detail.getStatus())) {
+      if (!TaskConstants.TASK_DETAIL_PROCESSED .equals(detail.getStatus())) {
         return false;
       }
     }
@@ -129,7 +130,7 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
     // 遍历当前任务明细实体实例关联的任务实体的任务明细
     for (TaskDetail detail : taskDetail.getTask().getTaskDetails()) {
       // 只要遍历到的任一个任务明细的状态不为退回,则直接返回false(未全部退回)
-      if (!CaseConstants.TASK_DETAIL_RETURNED.equals(detail.getStatus())) {
+      if (!TaskConstants.TASK_DETAIL_RETURNED.equals(detail.getStatus())) {
         return false;
       }
     }
