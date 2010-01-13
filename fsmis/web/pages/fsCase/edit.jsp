@@ -184,10 +184,6 @@
 				<font color="red">*</font>
 			</td>
 		</tr>
-		<c:if test="${model.status == '2'}">
-			<td align="right">是否核实：</td>
-			<td align="left">否<input name="isDone" value="0" type="radio" />是<input name="isDone" value="1" type="radio" /></td>
-		</c:if>
 	</table>
 	</fieldset>
 	<table width="600px" style="margin-bottom: 10px;">
