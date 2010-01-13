@@ -34,32 +34,46 @@ import com.systop.core.model.BaseModel;
 public class FsCase extends BaseModel {
 
 	private Integer id;
+	/** 关联监管员 */
 	private Supervisor supervisor;
+	/** 事件派遣快捷方式 */
 	private SendType sendType;
 
 	/**
 	 * 对应上报市级后的案件
 	 */
 	private FsCase selfSJ;
+	/** 部门上报 */
 	private Dept reportDept;
+	/** 关联部门信息 */
 	private Dept county;
+	/** 事件类别 */
 	private CaseType caseType;
+	/** 关联企业*/
 	private Corp corp;
+	/** 事件标题*/
 	private String title;
 	/**
 	 * 案发时间
 	 */
 	private Date caseTime;
+	/** 事件地址*/
 	private String address;
+	/** 事件编号*/
 	private String code;
+	/** 事件描述*/
 	private String descn;
+	/** 事件地理坐标*/
 	private String coordinate;
+	/** 事件报告人*/
 	private String informer;
+	/** 事件报告人电话*/
 	private String informerPhone;
 	/**
 	 * 结案时间
 	 */
 	private Date closedTime;
+	/** 事件状态*/
 	private String status;
 
 	/**
@@ -86,15 +100,24 @@ public class FsCase extends BaseModel {
 	 * 是否上报市级
 	 */
 	private String isSubmitSj;
+	/** 上报市级时间*/
 	private Date submitSjTime;
 	
-	
+	/**
+	 * 关联任务信息
+	 */
 	private Set<Task> taskses = new HashSet<Task>(0);
-
+	/**
+	 * 关联联合整治任务信息
+	 */
 	private Set<JointTask> jointTaskses = new HashSet<JointTask>(0);
-
+	/**
+	 * 关联评估信息
+	 */
 	private Set<Assessment> assessmentses = new HashSet<Assessment>(0);
-
+	/**
+	 * 自关联上报市级信息
+	 */
 	private Set<FsCase> submitCases = new HashSet<FsCase>(0);
 
 	/**
@@ -106,9 +129,13 @@ public class FsCase extends BaseModel {
 	 * 若为综合案件，代表包含一般案件的集合
 	 */
 	private Set<FsCase> genericCases = new HashSet<FsCase>(0);
-
+	/**
+	 * 关联事件对应的短信发送信息
+	 */
 	private Set<SmsSend> smsSendses = new HashSet<SmsSend>(0);
-
+	/**
+	 * 关联事件对应的短信接收信息
+	 */
 	private Set<SmsReceive> smsReceiveses = new HashSet<SmsReceive>(0);
 	
 	/** 是否发送通知核实短信 */
