@@ -3,6 +3,7 @@ package com.systop.fsmis.fscase.task.taskdetail.webapp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.Assert;
 
 import com.systop.cms.utils.PageUtil;
 import com.systop.common.modules.dept.model.Dept;
@@ -22,6 +22,7 @@ import com.systop.common.modules.security.user.model.User;
 import com.systop.core.dao.support.Page;
 import com.systop.core.util.ReflectUtil;
 import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
+import com.systop.fsmis.FsConstants;
 import com.systop.fsmis.fscase.task.TaskConstants;
 import com.systop.fsmis.fscase.task.taskdetail.service.TaskDetailManager;
 import com.systop.fsmis.model.Corp;
@@ -109,20 +110,48 @@ public class TaskDetailAction extends
    * @return
    */
   public String getTaskDetailsByTaskId() {
-    logger.info("ext.....");
-    Object taskIdStr = getRequest().getAttribute("taskId");
-    Assert.notNull(taskIdStr);
-    if (StringUtils.isNumeric(taskIdStr.toString())) {
-      Page page = PageUtil.getPage(getPageNo(), getPageSize());
-      page = getManager().pageQuery(page,
-          "from TaskDetail detail where detail.task.id = ?",
-          Integer.parseInt(taskIdStr.toString()));
+    // Object taskIdStr =
+    // getRequest().getAttribute("taskId");//原有include的action参数,待grid完成后删除注释
 
-      restorePageData(page);
+    page = PageUtil.getPage(getPageNo(), getPageSize());
+    page = getManager().pageQuery(page,
+        "from TaskDetail detail where detail.task.id = ?",
+        Integer.parseInt(taskId));
+    // restorePageData(page);
+    List taskDetails = page.getData();
+    List mapTaskDetails = new ArrayList(taskDetails.size());
+    for (Iterator itr = taskDetails.iterator(); itr.hasNext();) {
+      TaskDetail td = (TaskDetail) itr.next();
+      Map mapTaskDetail = ReflectUtil.toMap(td, new String[] { "id",
+          "completionTime", "remainDays", "status" }, true);
+      mapTaskDetail.put("dept.name", td.getDept().getName());
+      mapTaskDetail.put("task.title", td.getTask().getTitle());
+      mapTaskDetails.add(mapTaskDetail);
     }
-    
-    // return "listTaskDetailsByTaskId";//原有页面转向,待ExtGreadPanel 完成后删除注释
+    page.setData(mapTaskDetails);
+
+    logger.info(page.getData().toString());
+
     return JSON;
+  }
+
+  /**
+   * 得到当前登录人员的部门的新任务数量,被客户端Ajax访问,形成提示信息
+   * 
+   * @return
+   */
+  public String getDeptTaskDetailMes() {
+    jsonResult = Collections.synchronizedMap(new HashMap<String, String>());
+    // 得到当前登录人员的部门
+    Dept dept = loginUserService.getLoginUserDept(getRequest());    
+    if (dept != null) {
+      //单体任务
+      jsonResult.put("single", String.valueOf(getManager().getNewTasks(dept,FsConstants.N).size()));
+      //多体任务
+      jsonResult.put("multiple",  String.valueOf(getManager().getNewTasks(dept,FsConstants.Y).size()));      
+    }
+   
+    return "jsonResult";
   }
 
   /**
@@ -263,7 +292,7 @@ public class TaskDetailAction extends
       corpNames[i] = buf.toString();
     }
     logger.info(corpNames.toString());
-    return "json";
+    return "jsonCorpNames";
   }
 
   /**
