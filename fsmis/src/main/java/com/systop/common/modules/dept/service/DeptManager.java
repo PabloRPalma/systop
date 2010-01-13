@@ -97,14 +97,15 @@ public class DeptManager extends BaseGenericsManager<Dept> {
 		Dept dept = (Dept) getDao().findObject(hql, name);
 		return dept;
 	}
-	
+
 	/**
 	 * 根据区县ID获得该区县的所有执法部门
+	 * 
 	 * @param countyId
 	 * @return
 	 */
-	public List<Dept> getEnforcementByCounty(Integer countyId){
-		// FIXME: 未添加判断执法部门的条件
+	public List<Dept> getEnforcementByCounty(Integer countyId) {
+		// FIXME:未添加判断执法部门的条件
 		String hql = "from Dept d where d.parentDept.id = ?";
 		List<Dept> depts = query(hql, countyId);
 		return depts;
