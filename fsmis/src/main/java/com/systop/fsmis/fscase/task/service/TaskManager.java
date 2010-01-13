@@ -12,7 +12,8 @@ import org.springframework.util.Assert;
 import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.security.user.model.User;
 import com.systop.core.service.BaseGenericsManager;
-import com.systop.fsmis.CaseConstants;
+import com.systop.fsmis.fscase.CaseConstants;
+import com.systop.fsmis.fscase.task.TaskConstants;
 import com.systop.fsmis.model.FsCase;
 import com.systop.fsmis.model.Task;
 import com.systop.fsmis.model.TaskAtt;
@@ -45,11 +46,11 @@ public class TaskManager extends BaseGenericsManager<Task> {
 		// 得到任务关联事件实体
 		FsCase fsCase = getDao().get(FsCase.class, task.getFsCase().getId());
 		// 更新食品安全案件状态,正在处理,并保存
-		fsCase.setStatus(CaseConstants.CASE_STATUS_RESOLVEING);
+		fsCase.setStatus(CaseConstants.CASE_PROCESSING);
 		getDao().save(fsCase);
 
 		// 设置任务信息,正在处理,并保存
-		task.setStatus(CaseConstants.TASK_STATUS_RESOLVEING);
+		task.setStatus(TaskConstants.TASK_PROCESSING);
 
 		// 根据任务选择的部门集合,作任务明细信息操作
 		// 如果部门id集合不为空,遍历部门构建任务明细实例.
@@ -59,7 +60,7 @@ public class TaskManager extends BaseGenericsManager<Task> {
 				Dept dept = getDao().get(Dept.class, id);
 				taskDetail.setDept(dept);
 				// 任务明细状态属性,未接收
-				taskDetail.setStatus(CaseConstants.TASK_DETAIL_UN_RECEIVE);
+				taskDetail.setStatus(TaskConstants.TASK_DETAIL_UN_RECEIVE);
 				// 设定任务明细关联的任务
 				taskDetail.setTask(task);
 				task.getTaskDetails().add(taskDetail);
@@ -126,7 +127,7 @@ public class TaskManager extends BaseGenericsManager<Task> {
 			}
 			FsCase fsCase = task.getFsCase();
 			// 置相关联的案件状态为"未派遣"
-			fsCase.setStatus(CaseConstants.CASE_STATUS_RESOLVEUN);
+			fsCase.setStatus(CaseConstants.CASE_UN_RESOLVE);
 			// 保存案件实例
 			getDao().save(fsCase);
 			// 删除任务

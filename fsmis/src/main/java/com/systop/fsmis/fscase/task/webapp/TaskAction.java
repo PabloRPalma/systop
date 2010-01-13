@@ -23,7 +23,6 @@ import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.core.dao.support.Page;
 import com.systop.core.webapp.struts2.action.DefaultCrudAction;
 import com.systop.core.webapp.upload.UpLoadUtil;
-import com.systop.fsmis.CaseConstants;
 import com.systop.fsmis.FsConstants;
 import com.systop.fsmis.fscase.task.TaskConstants;
 import com.systop.fsmis.fscase.task.service.TaskManager;
@@ -230,10 +229,10 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 	public Map<String, String> getStateMap() {
 
 		Map<String, String> StateMap = new LinkedHashMap<String, String>();
-		StateMap.put(CaseConstants.TASK_STATUS_UN_RECEIVE, "未接收");
-		StateMap.put(CaseConstants.TASK_STATUS_RESOLVEING, "已派遣");
-		StateMap.put(CaseConstants.TASK_STATUS_RESOLVEED, "已处理");
-		StateMap.put(CaseConstants.TASK_STATUS_RETURNED, "已退回");
+		StateMap.put(TaskConstants.TASK_UN_RECEIVE, "未接收");
+		StateMap.put(TaskConstants.TASK_PROCESSING, "处理中");
+		StateMap.put(TaskConstants.TASK_PROCESSED, "已处理");
+		StateMap.put(TaskConstants.TASK_RETURNED, "已退回");
 
 		return StateMap;
 	}
