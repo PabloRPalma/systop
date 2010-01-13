@@ -19,8 +19,7 @@ public final class TaskConstants {
 	 */
 	private static final long getAllowedFileSize() {
 		String sizeStr = ResourceBundleUtil.getString(ResourceBundle
-				.getBundle("application"), "fscase_task_att_max_size",
-				"10240000");
+				.getBundle("application"), "fscase_task_att_max_size", "10240000");
 		long size = 0L;
 		try {
 			size = Long.parseLong(sizeStr);
@@ -30,4 +29,31 @@ public final class TaskConstants {
 
 		return size;
 	}
+
+	/** 任务状态：未接收 */
+	public static final String TASK_UN_RECEIVE = "0";
+
+	/** 任务状态：处理中 */
+	public static final String TASK_PROCESSING = "1";
+
+	/** 任务状态：已处理 */
+	public static final String TASK_PROCESSED = "2";
+
+	/** 任务状态：已退回 */
+	public static final String TASK_RETURNED = "3";
+
+	/** 任务详细状态：未接收 */
+	public static final String TASK_DETAIL_UN_RECEIVE = "0";
+
+	/** 任务详细状态：已查看 */
+	public static final String TASK_DETAIL_LOOKED = "1";
+
+	/** 任务详细状态：已接收 */
+	public static final String TASK_DETAIL_RECEIVED = "2";
+
+	/** 任务详细状态：已退回 */
+	public static final String TASK_DETAIL_RETURNED = "3";
+
+	/** 任务详细状态：已处理 */
+	public static final String TASK_DETAIL_PROCESSED = "4";
 }
