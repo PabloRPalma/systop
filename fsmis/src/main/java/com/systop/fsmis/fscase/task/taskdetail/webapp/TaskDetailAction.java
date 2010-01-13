@@ -109,7 +109,7 @@ public class TaskDetailAction extends
    * @return
    */
   public String getTaskDetailsByTaskId() {
-
+    logger.info("ext.....");
     Object taskIdStr = getRequest().getAttribute("taskId");
     Assert.notNull(taskIdStr);
     if (StringUtils.isNumeric(taskIdStr.toString())) {
