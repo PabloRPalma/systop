@@ -1,15 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglibs.jsp"%>
-<div id="tabs3" style="margin: -1;">
+<div id="tabs3" style="margin: -1; width: 800px;">
 <c:forEach items="${model.genericCases}"
 	var="genericCase" varStatus="varStatus">
 	<div id="genericCasesDiv${varStatus.index+1}" class="x-hide-display">
 	<table id="mytable" align="left">
 		<tr>
 			<td>
-			<fieldset style="width: 800px; padding: 5px 10px 5px 10px;">
-			<legend>案件${varStatus.index+1}信息</legend>
 			<table width="800px" align="left">
 				<tr>
 					<td align="right" width="15%">案件标题：</td>
@@ -41,7 +39,6 @@
 						</td>
 				</tr>				
 			</table>
-			</fieldset>
 			</td>
 		</tr>		
 	</table>	
