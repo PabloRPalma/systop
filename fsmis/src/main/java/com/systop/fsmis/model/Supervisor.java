@@ -57,6 +57,8 @@ public class Supervisor extends BaseModel {
 	private String photoUrl;
 	/** 是否负责人 */
 	private String isLeader;
+	/** 举报次数 */
+	private Integer reportCount;
 	/** 一般案件 */
 	private Set<FsCase> fsCase = new HashSet<FsCase>(0);
 
@@ -207,5 +209,14 @@ public class Supervisor extends BaseModel {
 
 	public void setIdNumber(String idNumber) {
 		this.idNumber = idNumber;
+	}
+
+	@Column(name = "REPORT_COUNT", columnDefinition = "integer default 0")
+	public Integer getReportCount() {
+		return reportCount;
+	}
+
+	public void setReportCount(Integer reportCount) {
+		this.reportCount = reportCount;
 	}
 }
