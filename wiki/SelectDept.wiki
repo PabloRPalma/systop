@@ -3,8 +3,8 @@
  
 ===注:===
     ====需要说明的两个属性sendTypeId和defDeptIds都是默认选中部门的条件,但它俩不能同时使用.====
-    #sendTypeId:区县的派遣类别确定选中的部门.
-    #defDeptIds:默认选中的部门id字符串,每个部门id用','隔开.例如"id1,id2,id3".
+    #*sendTypeId*：区县的派遣类别确定选中的部门.
+    #*defDeptIds*：默认选中的部门id字符串,每个部门id用','隔开.例如"id1,id2,id3".
  
 ===Eg:===
 {{{
