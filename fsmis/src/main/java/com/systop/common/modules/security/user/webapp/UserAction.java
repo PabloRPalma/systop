@@ -2,6 +2,7 @@ package com.systop.common.modules.security.user.webapp;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,7 @@ import com.opensymphony.xwork2.validator.annotations.ExpressionValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
+import com.systop.cms.utils.PageUtil;
 import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.dept.webapp.DeptAction;
 import com.systop.common.modules.security.user.UserConstants;
@@ -47,6 +49,16 @@ public class UserAction extends ExtJsCrudAction<User, UserManager> {
    * 对应页面查询条件
    */
   private String queryUsername;
+  /**
+	 * 对应页面查询条件:部门名称
+	 */
+	private String queryLogindept;
+	
+	/** 查询起始时间 */
+	private Date beginDate;
+
+	/** 查询结束时间 */
+	private Date endDate;
 
   /**
    * 修改密码的时候对应输入的旧密码
@@ -250,7 +262,34 @@ public class UserAction extends ExtJsCrudAction<User, UserManager> {
     }
     return INDEX;
   }
-  
+  /**
+	 * 2010-1-13 yj 用户登录记录查询
+	 */
+	@SuppressWarnings("unchecked")
+	public String userHistoryList() {
+		Page page = PageUtil.getPage(getPageNo(), getPageSize());
+		StringBuffer hql = new StringBuffer(
+				"from UserLoginHistory  ulh  where 1=1 ");
+		List args = new ArrayList();
+		if (StringUtils.isNotBlank(queryUsername)) {
+			hql.append(" and ulh.userName like ? ");
+			args.add("%" + queryUsername + "%");
+		}
+		if (StringUtils.isNotBlank(queryLogindept)) {
+			hql.append(" and ulh.loginDept like ? ");
+			args.add("%" + queryLogindept + "%");
+		}
+		if (beginDate != null && endDate != null) {
+			hql.append("and ulh.loginTime >= ? and ulh.loginTime <= ? ");
+			args.add(beginDate);
+			args.add(endDate);
+		}	
+		hql.append(" order by ulh.loginTime desc ");
+		page = getManager().pageQuery(page, hql.toString(), args.toArray());
+		restorePageData(page);
+		
+		return "userHistoryList";
+	}
   
   /**
    * 取得用户登陆后的信息
@@ -360,4 +399,28 @@ public class UserAction extends ExtJsCrudAction<User, UserManager> {
   public void setRoleName(String roleName) {
     this.roleName = roleName;
   }
+
+	public String getQueryLogindept() {
+		return queryLogindept;
+	}
+
+	public void setQueryLogindept(String queryLogindept) {
+		this.queryLogindept = queryLogindept;
+	}
+
+	public Date getBeginDate() {
+		return beginDate;
+	}
+
+	public void setBeginDate(Date beginDate) {
+		this.beginDate = beginDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
 }
