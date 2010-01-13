@@ -82,7 +82,6 @@
       </text>        
     </label>
   </labels>
-  
 	<!-- DATA can also be set in settings file. Just place data in CSV or XML format between <data></data> -->
 	
 	<!--<data>
