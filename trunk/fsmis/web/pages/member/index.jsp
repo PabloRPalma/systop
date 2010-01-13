@@ -76,7 +76,7 @@ function removeMember(mebId) {
 		<ec:column width="100" property="jobs" title="职位" />
 		<ec:column width="100" property="phone" title="固话" />
 		<ec:column width="100" property="mobile" title="手机" />
-		<ec:column width="120" property="_0" title="操作" style="text-align:center" sortable="false">
+		<ec:column property="_0" title="操作" style="text-align:center" sortable="false">
 			<a href="edit.do?model.id=${item.id}">编辑</a> |
 			<a href="#" onClick="removeMember(${item.id})"> 删除</a>
 		</ec:column>
