@@ -19,7 +19,7 @@
 		<td><s:form action="index" method="post">
 			<s:hidden name="isMultipleCase"></s:hidden>
            		        任务标题：
-			<s:textfield name="model.task.title"></s:textfield>
+			<s:textfield name="model.task.title" cssStyle="width:100px"></s:textfield>
 			                   派发时间:
 			<input type="text" name="taskBeginTime" style="width: 120px"
 				value='<s:date name="taskBeginTime" format="yyyy-MM-dd HH:mm"/>'
@@ -63,20 +63,20 @@
 	<ec:row>
 		<ec:column width="30" property="_n" title="No."
 			value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center" />
-		<ec:column width="220" tipTitle="${item.task.title}" property="task.title" title="任务标题" />
+		<ec:column width="210" tipTitle="${item.task.title}" property="task.title" title="任务标题" />
 		<ec:column width="130" property="task" title="执行部门"
 			cell="com.systop.fsmis.fscase.webapp.ec.DeptsCell">
 		</ec:column>
-		<ec:column width="80" property="task.dispatchTime" cell="date"
+		<ec:column width="90" property="task.dispatchTime" cell="date"
 			title="发布时间" format="yyyy-MM-dd HH:mm" style="text-align:center" />
-		<ec:column width="80" property="task.presetTime" cell="date"
+		<ec:column width="90" property="task.presetTime" cell="date"
 			title="规定完成时间" format="yyyy-MM-dd HH:mm" style="text-align:center" />
-		<ec:column width="110" property="completionTime" cell="date"
+		<ec:column width="90" property="completionTime" cell="date"
 			title="完成时间" format="yyyy-MM-dd HH:mm" style="text-align:center">
 			<c:choose>
 				<c:when test="${item.status == '3' or item.status == '4'}">
 					<fmt:formatDate value="${item.completionTime}"
-						pattern="yyyy-MM-dd HH:mm:ss" />
+						pattern="yyyy-MM-dd HH:mm" />
 				</c:when>
 				<c:otherwise>
 					<c:choose>
@@ -88,28 +88,35 @@
 		</ec:column>
 		<ec:column width="50" property="status" style="text-align:center"
 			title="任务状态">
-			<c:if test="${item.status == '0'}">	<font color="red">未接收</font>	</c:if>
+			<c:if test="${item.status == '0'}"><font color="red">未接收</font>	</c:if>
 			<c:if test="${item.status == '1'}"><font color="blue">已查看</font></c:if>
 			<c:if test="${item.status == '2'}"><font color="#FF9D07">处理中...</font></c:if>
 			<c:if test="${item.status == '3'}"><font color="gray">已退回</font></c:if>
 			<c:if test="${item.status == '4'}"><font color="green">处理完毕</font></c:if>
 		</ec:column>
-		<ec:column width="50" property="_0" title="查看"
+		<ec:column width="45" property="_0" title="查看"
 			style="text-align:center" sortable="false">
-			<a href="${ctx}/taskdetail/view.do?taskDetailId=${item.id}&fsCaseId=${item.task.fsCase.id}&modelId=${param['modelId']}">看</a>
-			<a href="#">| 图</a>
+			<a title="查看任务" href="${ctx}/taskdetail/view.do?taskDetailId=${item.id}&fsCaseId=${item.task.fsCase.id}&modelId=${param['modelId']}">看</a>
+			<a title="地图" href="#">| 图</a>
 		</ec:column>
-		<ec:column width="100" property="_1" title="操作"
-			style="text-align:center" sortable="false">
-			<c:if test="${item.status == '0' or item.status == '1'}">
-				<a href="${ctx}/taskdetail/receiveTask.do?model.id=${item.id}&isMultipleCase=${param['isMultipleCase']}&modelId=${param['modelId']}">收 |</a>
-				<%-- <a href="#"	onclick="javascript:returnTaskDetail(${item.id},'${userName}')">退 |</a>--%>
-				<a href="#"	onclick="javascript:showReturnWindow(${item.id},'${userName}')">退 |</a>
+		<ec:column width="120" property="_1" title="操作"style="text-align:center" sortable="false">
+		    <!-- 0未接收1已查看2已接收3已退回4已处理 -->
+			<c:if test="${empty item.status or item.status eq '0' or item.status eq '1'}">
+				<a title="接收任务" href="${ctx}/taskdetail/receiveTask.do?model.id=${item.id}&isMultipleCase=${param['isMultipleCase']}&modelId=${param['modelId']}">收</a> |
+				<a title="退回任务" href="#"	onclick="javascript:showReturnWindow(${item.id},'${userName}')">退</a> |
+				<font color="silver" >办</font> |  				
 			</c:if>
-			<c:if test="${item.status == '2'}">
-				<a href="${ctx}/taskdetail/toDealWithTaskDetail.do?model.id=${item.id}&isMultipleCase=${param['isMultipleCase']}&modelId=${param['modelId']}">处理|</a>
+			<c:if test="${item.status eq '2'}">
+				<font color="silver" >收</font> |
+				<font color="silver" >退</font> |  
+				<a title="处理任务" href="${ctx}/taskdetail/toDealWithTaskDetail.do?model.id=${item.id}&isMultipleCase=${param['isMultipleCase']}&modelId=${param['modelId']}">办</a> |
 			</c:if>
-			<a href="${ctx}/taskdetail/printTaskDetail.do?model.id=${item.id}&isMultipleCase=${param['isMultipleCase']}&modelId=${param['modelId']}"
+			<c:if test="${item.status eq '3' or item.status eq '4'}">
+				<font color="silver">收</font> |
+				<font color="silver">退</font> | 
+				<font color="silver">办</font> |
+			</c:if>
+			<a title="打印任务" href="${ctx}/taskdetail/printTaskDetail.do?model.id=${item.id}&isMultipleCase=${param['isMultipleCase']}&modelId=${param['modelId']}"
 				target="_blank">印</a>
 		</ec:column>
 	</ec:row>
