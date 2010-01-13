@@ -5,11 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.xwork.StringUtils;
 
 import com.systop.common.modules.dept.model.Dept;
 import com.systop.core.util.ReflectUtil;
-import com.systop.fsmis.model.CountySendType;
 
 public final class Util {
 
@@ -17,39 +15,33 @@ public final class Util {
 	 * 将Dept对象转换成Map对象
 	 * 
 	 * @param depts
-	 * @param deptIds
+	 * @param deftDeptIds
+	 *            默认选中的部门id
 	 * @param theme
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static List<Map> toMap(List<Dept> depts, CountySendType cst) {
-		
-		if (CollectionUtils.isEmpty(depts)) {
-			return null;
-		}
+	public static List<Map> toMap(List<Dept> depts, String[] deftDeptIds) {
 		List<Map> newDatas = new ArrayList();
+		// 是否判断需要选中部门
+		boolean isJudgeId = deftDeptIds != null;
 
-		String[] ids = null;
-		// 是否需要判断ID,用于显示部门是否被选中
-		boolean isJudgeId = false;
-		if (cst != null && StringUtils.isNotBlank(cst.getGeneralDept())) {
-			ids = cst.getGeneralDept().split(",");
-			isJudgeId = true;
-		}
-
-		for (Dept dept : depts) {
-			Map map = ReflectUtil.toMap(dept, new String[] { "id", "name" },
-					true);
-			map.put("checked", "");
-			if (isJudgeId) {
-				for (String id : ids) {
-					if (Integer.valueOf(id).equals(dept.getId())) {
-						map.put("checked", "checked=\"checked\"");
+		if (CollectionUtils.isNotEmpty(depts)) {
+			for (Dept dept : depts) {
+				Map map = ReflectUtil.toMap(dept,
+						new String[] { "id", "name" }, true);
+				map.put("checked", "");
+				if (isJudgeId) {//如果存在默认选中部门则进行选中.
+					for (String id : deftDeptIds) {
+						if (Integer.valueOf(id).equals(dept.getId())) {
+							map.put("checked", "checked=\"checked\"");
+						}
 					}
 				}
+				newDatas.add(map);
 			}
-			newDatas.add(map);
 		}
+
 		return newDatas;
 	}
 }
