@@ -186,7 +186,6 @@
 				methos :'POST',
 				success : function(response,textStatus){
 					 var respText = Ext.util.JSON.decode(response.responseText);
-					 var json = {single:0,multiple:0};
 					 var message = '';
 					 if(respText.single != 0 || respText.multiple != 0){
 						 message+= "您部门有";
