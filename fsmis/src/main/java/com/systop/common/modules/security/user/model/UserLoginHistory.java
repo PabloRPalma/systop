@@ -4,12 +4,16 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.systop.common.modules.dept.model.Dept;
 import com.systop.core.model.BaseModel;
 
 /**
@@ -26,10 +30,11 @@ public class UserLoginHistory extends BaseModel {
 	private Integer id;
 
 	/** 姓名 */
-	private String userName;
-	
-	/** 部门 */
-	private String loginDept;
+	private User user;
+	/**
+	 * 对应的Dept
+	 */
+	private Dept dept;
 
 	/** 登录时间 */
 	private Date loginTime;
@@ -43,11 +48,12 @@ public class UserLoginHistory extends BaseModel {
 	}
 
 	/** 构造 */
-	public UserLoginHistory(String userName, Date loginTime, String loginIp,String loginDept) {
-		this.userName = userName;
+	public UserLoginHistory(User user, Date loginTime, String loginIp,
+			Dept loginDept) {
+		this.user = user;
 		this.loginTime = loginTime;
 		this.loginIp = loginIp;
-		this.loginDept = loginDept;
+		this.dept = loginDept;
 	}
 
 	@Id
@@ -59,15 +65,6 @@ public class UserLoginHistory extends BaseModel {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	@Column(name = "USER_NAME")
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
 	}
 
 	@Column(name = "LOGIN_TIME")
@@ -86,6 +83,26 @@ public class UserLoginHistory extends BaseModel {
 
 	public void setLoginIp(String loginIp) {
 		this.loginIp = loginIp;
+	}
+
+	@ManyToOne(cascade = {}, fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	@ManyToOne(cascade = {}, fetch = FetchType.LAZY)
+	@JoinColumn(name = "dept_id")
+	public Dept getDept() {
+		return this.dept;
+	}
+
+	public void setDept(Dept dept) {
+		this.dept = dept;
 	}
 
 	@Override
@@ -111,15 +128,6 @@ public class UserLoginHistory extends BaseModel {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-
-	@Column(name = "LOGIN_DEPT")
-	public String getLoginDept() {
-		return loginDept;
-	}
-
-	public void setLoginDept(String loginDept) {
-		this.loginDept = loginDept;
 	}
 
 }
