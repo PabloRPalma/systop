@@ -27,7 +27,7 @@
           <tr>
              <td align="right" width="90">关键字：</td>
              <td align="left" width="300">
-             	<s:textfield id="name" name="model.keyWord" cssStyle="width:300px"/>
+             	<s:textfield id="name" name="model.keyWord" cssClass="required" cssStyle="width:300px"/><font color="red">&nbsp;*</font>
              </td>
           </tr>
            <tr>
