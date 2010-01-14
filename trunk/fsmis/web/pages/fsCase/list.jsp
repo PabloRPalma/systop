@@ -104,13 +104,13 @@ function remove(id){
             <c:if test="${item.status eq '1'}">		
 			    <font color="silver" >改</font> |
 			    <font color="silver" >派</font> |
-			    <a title="删除任务" href="#" onclick="remove(${item.id})" >删</a> |
+			    <font color="silver" >删</font> |
 			    <font color="silver" >核</font> 		  
             </c:if>
             <c:if test="${item.status eq '2'}">		
 			    <a title="修改事件" href="${ctx}/fscase/edit.do?model.id=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">改 </a> |
 			    <a title="派遣任务" href="#" onclick="showChooseSendTypeWindow('${item.id}')">派</a> |
-			    <a title="删除任务" href="#" onclick="remove(${item.id})" >删</a> |
+			    <font color="silver" >删</font> |
 			    <c:choose>
 				    <c:when test="${empty item.msgCheckedFlag or item.msgCheckedFlag == '0'}">
 				    	<a title="核实" href="addSendMsg.do?model.id=${item.id}">核</a>
@@ -126,13 +126,13 @@ function remove(id){
             <c:if test="${item.status eq '3'}">		
 			    <font color="silver" >改</font> |
 			    <font color="silver" >派</font> |
-			    <a title="删除任务" href="#" onclick="remove(${item.id})" >删</a> |
+			    <font color="silver" >删</font> |
 			    <font color="silver" >核</font> 			    
             </c:if>
              <c:if test="${item.status eq '4'}">		
 			    <font color="silver" >改</font> |
 			    <font color="silver" >派</font> |
-			    <a title="删除任务" href="#" onclick="remove(${item.id})" >删</a> |
+			    <font color="silver" >删</font> |
 			    <a title="查看核实反馈" href="confirmBackMsg.do?model.id=${item.id}&operType='v'">核</a>
             </c:if>
             <%--
