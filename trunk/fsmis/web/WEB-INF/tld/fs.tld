@@ -25,6 +25,7 @@
     	</attribute>
     	<attribute>
     		<name>defDeptIds</name>
+    		<rtexprvalue>true</rtexprvalue>
     		<type>java.lang.String</type>
     		<description>默认选中的部门ID.eg:'ID1,ID2,ID3'</description>
     	</attribute>
