@@ -140,7 +140,7 @@ public class UserManager extends BaseGenericsManager<User> {
 	   if(loginIp.equals("0:0:0:0:0:0:0:1")){
 		   loginIp="127.0.0.1";
 	   }
-	   UserLoginHistory userLoginHistory=new UserLoginHistory(user.getName(),new Date(),loginIp,user.getDept().getName());
+	   UserLoginHistory userLoginHistory=new UserLoginHistory(user,new Date(),loginIp,user.getDept());
 	   getDao().save(userLoginHistory);
    }
   /**
