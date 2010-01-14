@@ -55,8 +55,8 @@
 	<ec:row>
 	    
 		<ec:column width="40" property="_0" title="序号" value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center"/>
-		<ec:column width="80" property="userName" title="用户名称" />
-		<ec:column width="80" property="loginDept" title="部门" />
+		<ec:column width="80" property="user.name" title="用户名称" />
+		<ec:column width="80" property="dept.name" title="部门" />
 		<ec:column width="120" property="loginTime" title="登录时间" cell="date" format="yyyy-MM-dd HH:mm" />
 		<ec:column width="120" property="loginIp" title="登录地址" />
 		
