@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings> 
+  <data_type>csv</data_type>                                  <!-- [xml] (xml / csv) -->
+  <csv_separator>;</csv_separator>                             <!-- [;] (string) csv file data separator (you need it only if you are using csv file for your data) -->     
+  <skip_rows>0</skip_rows>                                    <!-- [0] (Number) if you are using csv data type, you can set the number of rows which should be skipped here -->
+                                                                    
+  <pie>
+    <x></x>                                                   <!-- [50%](Number / Number% / !Number) -->
+    <y></y>                                                   <!-- [45%](Number / Number% / !Number) -->
+    <radius>120</radius>                                       <!-- [25%] (Number / Number%) -->
+    <inner_radius></inner_radius>                             <!-- [0] (Number / Number%) the radius of the hole (if you want to have donut, use > 0) -->
+    <height></height>                                        <!-- [0] (Number) pie height (for 3D effect) -->
+    <angle></angle>                                          <!-- [0] (0 - 90) lean angle (for 3D effect) -->
+    <base_color></base_color>                                 <!-- [] (hex color code) color of first slice -->
+    <brightness_step>45</brightness_step>                       <!-- [20] (-100 - 100) if base_color is used, every next slice is filled with lighter by brightnessStep % color. Use negative value if you want to get darker colors -->
+  </pie>
+  
+  <animation>
+    <start_time>2</start_time>                                <!-- [0] (Number) fly-in time in seconds. Leave 0 to appear instantly -->
+    <start_effect>strong</start_effect>                       <!-- [bounce] (bounce, regular, strong) -->
+    <sequenced>true</sequenced>                               <!-- [false] (true / false) Whether the slices should appear all together or one after another -->                
+    <pull_out_on_click></pull_out_on_click>                   <!-- [true] (true / false) whether to pull out slices when user clicks on them (or on legend entry) -->
+    <pull_out_time>1.5</pull_out_time>                        <!-- [0] (number) pull-out time (then user clicks on the slice) -->
+    <pull_out_effect>Bounce</pull_out_effect>                 <!-- [bounce] (bounce, regular, strong) -->
+  </animation>
+  
+  <data_labels>
+    <show>
+       <![CDATA[{title}: {percents}%]]>                       <!-- [] ({value} {title} {percents} {description}) You can format any data label: {value} - will be replaced with value and so on. You can add your own text or html code too. -->
+    </show>
+    <line_color>#000000</line_color>           
+    <line_alpha>15</line_alpha>                
+    <hide_labels_percent>3</hide_labels_percent>   
+    <text_size>15</text_size>     
+  </data_labels>
+
+ 
+  <balloon>                                                   <!-- BALLOON -->
+    <enabled></enabled>                                       <!-- [true] (true / false) -->
+    <color></color>                                           <!-- [] (hex color code) balloon background color. If empty, slightly darker then current slice color will be used -->
+    <alpha>80</alpha>                                         <!-- [80] (0 - 100) -->
+  </balloon>
+    
+  <legend>                                                    <!-- LEGEND -->
+    <enabled></enabled>                                       <!-- [true] (true / false) -->
+    <border_alpha>20</border_alpha>                           <!-- [0] (0 - 100) border alpha -->
+    <spacing>9</spacing>                                      <!-- [10] (Number) vertical and horizontal gap between legend entries -->
+    <margins>5</margins>                                      <!-- [0] (Number) legend margins (space between legend border and legend entries, recommended to use only if legend border is visible or background color is different from chart area background color) -->
+    <align>center</align>                                     <!-- [left] (left / center / right) alignment of legend entries -->
+  </legend>  
+ 
+ <strings>
+    <no_data><![CDATA[没有加载任何数据. ]]></no_data>
+    <export_as_image><![CDATA[导出图片 ]]></export_as_image>
+    <error_in_data_file><![CDATA[数据文件中有错误]]></error_in_data_file>
+    <collecting_data><![CDATA[正在收集数据... ]]></collecting_data>
+    <wrong_zoom_value><![CDATA[错误的缩放值]]></wrong_zoom_value>
+  </strings>
+  <error_messages>                                            <!-- "error_messages" settings will be applied for all error messages except the one which is showed if settings file wasn't found -->
+    <enabled>true</enabled>                                       <!-- [true] (true / false) -->
+  </error_messages>    
+  <context_menu>     
+     <default_items>
+       <zoom></zoom>                                          <!-- [false] (true / false) to show or not flash players zoom menu -->
+       <print></print>                                        <!-- [true] (true / false) to show or not flash players print menu -->
+     </default_items>
+  </context_menu>  
+  
+  <labels>                                                   <!-- LABELS -->
+                                                              <!-- you can add as many labels as you want -->
+                                                              <!-- labels can also be added in data xml file, using exactly the same structure like it is here -->
+    <label lid="0">
+      <x>0</x>                                                <!-- [0] (Number / Number% / !Number) -->
+      <y>10</y>                                               <!-- [0] (Number / Number% / !Number) -->
+      <rotate>false</rotate>                                  <!-- [false] (true / false) -->
+      <width></width>                                         <!-- [] (Number / Number%) if empty, will stretch from left to right untill label fits -->
+      <align>center</align>                                   <!-- [left] (left / center / right) -->  
+      <text_color></text_color>                               <!-- [text_color] (hex color code) button text color -->
+      <text_size>12</text_size>                               <!-- [text_size](Number) button text size -->
+      <text>                                                  <!-- [] (text) html tags may be used (supports <b>, <i>, <u>, <font>, <a href="">, <br/>. Enter text between []: <![CDATA[your <b>bold</b> and <i>italic</i> text]]>-->
+        <![CDATA[<b></b>]]>
+      </text>        
+    </label>
+  </labels>
+	<!-- DATA can also be set in settings file. Just place data in CSV or XML format between <data></data> -->
+	
+	<!--<data>
+	</data> -->  
+</settings>

@@ -21,7 +21,7 @@
 <table width="99%">
   <tr>
     <td>
-      <form id="fscaseStaticForm" action="${ctx}/statistics/statisticFsCaseStatus.do" method="post">
+      <form id="fscaseStaticForm" action="${ctx}/statistics/fscase/statisticFsCaseStatus.do" method="post">
         时间：
 			<input type="text" name="beginDate" style="width: 120px"
 				value='<s:date name="beginDate" format="yyyy-MM-dd"/>'
