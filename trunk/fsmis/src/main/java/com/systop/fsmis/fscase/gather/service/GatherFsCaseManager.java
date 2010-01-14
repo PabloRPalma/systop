@@ -80,6 +80,8 @@ public class GatherFsCaseManager extends BaseGenericsManager<FsCase> {
 				}
 				cMFCase.setIsMultiple(FsConstants.Y);
 				cMFCase.setCounty(country);
+				cMFCase.setGatherConfiger(configer);
+				cMFCase.setCaseTime(fsList.get(0).getCaseTime());
 				cMFCase.setIsSubmited(FsConstants.N);
 				cMFCase.setStatus(CaseConstants.CASE_UN_RESOLVE);
 				cMFCase.setTitle(fsCaseCount + "个单体事件" + "根据关键字" + "'"
@@ -126,6 +128,8 @@ public class GatherFsCaseManager extends BaseGenericsManager<FsCase> {
 				}
 				aMFCase.setIsMultiple(FsConstants.Y);
 				aMFCase.setCounty(city);
+				aMFCase.setGatherConfiger(configerCity);
+				aMFCase.setCaseTime(fsCityList.get(0).getCaseTime());
 				aMFCase.setIsSubmited(FsConstants.N);
 				aMFCase.setStatus(CaseConstants.CASE_UN_RESOLVE);
 				aMFCase.setTitle(fsCaseCityCount + " 个单体事件" + "根据关键字" + "'"
