@@ -9,4 +9,12 @@
 			<result name="backMsgView">/pages/sms/receive/backMsgView.jsp</result>			
 		</action>
 	</package>
+	<!-- 短信管理-发送 -->
+	<package name="fsmis.smsend" extends="json"  namespace="/smssend">
+		<action name="*" class="smsSendAction" method="{1}">
+			<result name="index">/pages/sms/send/index.jsp</result>
+			<result name="input">/pages/sms/send/edit.jsp</result> 
+			<result name="success" type="redirect">index.do</result>
+		</action>
+	</package>
 </struts>
