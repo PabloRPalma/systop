@@ -50,6 +50,7 @@ public class GatherFsCaseManager extends BaseGenericsManager<FsCase> {
 	 * @param caseTypeId         事件类别
 	 * @param country            事件所属部门
 	 */
+	@SuppressWarnings("unchecked")
 	@Transactional
 	public void gatherCounty(Integer caseTypeId, Dept country) {
 		// 得到相应的汇总配置条件--区县级
@@ -62,9 +63,22 @@ public class GatherFsCaseManager extends BaseGenericsManager<FsCase> {
 			// 查询单体事件个数
 			int fsCaseCount = getFsCaseCount(caseTypeId, country, configer);
 			List<FsCase> fsList = getFsCase(caseTypeId, country, configer);
+			// 得到此汇总配置条件相关的多体事件
+			StringBuffer hql = new StringBuffer("from FsCase fe where 1=1 ");
+			List arg = new ArrayList();
+			hql.append("fe.gatherConfiger.id = ? ");
+			arg.add(configer.getId());
+			hql.append("and fe.status <> ? ");
+			arg.add(CaseConstants.CASE_UN_RESOLVE);
+			hql.append("and fe.caseTime between ? and ?");
+			arg.add(DateUtil.add(new Date(), Calendar.DAY_OF_MONTH, -configer.getDays()));
+			List<FsCase> oldMCase = this.query(hql.toString(), arg.toArray());
+			int oldCaseCount = oldMCase.size();
+			
 			logger.info("单体个数：{}  配置条件：{}", fsCaseCount, configer.getRecords());
+			logger.info("多体事件的数量：{}", oldCaseCount);
 			// 单体事件个数是否大于等于汇总配置条件设置的个数
-			if (fsCaseCount >= configer.getRecords()) {
+			if (fsCaseCount - oldCaseCount >= configer.getRecords()) {
 				// 查询相对应的多体事件，如果有则删除其
 				List<FsCase> mFsCase = getMFsCase(caseTypeId, country, configer.getKeyWord());
 				if (mFsCase != null) {
