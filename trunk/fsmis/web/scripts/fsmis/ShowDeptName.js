@@ -6,7 +6,7 @@ function DeptOperator() {
 	 * @param showNameDivId
 	 * @return
 	 */
-	this.init = function(elemanetName, showNameDivId) {
+	this.initShowDept = function(elemanetName, showNameDivId) {
 		this.elemanetName = elemanetName;
 		this.showDeptName(elemanetName, showNameDivId);
 	};
