@@ -1,9 +1,14 @@
 package com.systop.fsmis.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -43,6 +48,11 @@ public class GatherConfiger extends BaseModel {
 	 */
 	private String level; 
 	
+	/**
+	 * 所包含的多体事件
+	 */
+	private Set<FsCase> fsCases = new HashSet<FsCase>(0);
+
 	public GatherConfiger() {
 		
 	}
@@ -90,4 +100,14 @@ public class GatherConfiger extends BaseModel {
 	public void setLevel(String level) {
 		this.level = level;
 	}
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "gatherConfiger")
+	public Set<FsCase> getFsCases() {
+		return fsCases;
+	}
+
+	public void setFsCases(Set<FsCase> fsCases) {
+		this.fsCases = fsCases;
+	}
+
 }
