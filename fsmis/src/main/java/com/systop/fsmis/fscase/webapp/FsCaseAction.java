@@ -23,9 +23,10 @@ import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.core.Constants;
 import com.systop.core.dao.support.Page;
 import com.systop.core.webapp.struts2.action.DefaultCrudAction;
-import com.systop.fsmis.fscase.CaseConstants;
 import com.systop.fsmis.FsConstants;
+import com.systop.fsmis.fscase.CaseConstants;
 import com.systop.fsmis.fscase.casetype.service.CaseTypeManager;
+import com.systop.fsmis.fscase.gather.service.GatherFsCaseManager;
 import com.systop.fsmis.fscase.sendtype.service.SendTypeManager;
 import com.systop.fsmis.fscase.service.FsCaseManager;
 import com.systop.fsmis.model.CaseType;
@@ -57,6 +58,10 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
   /** 监管员信息Manager */
   @Autowired
   private SupervisorManager supervisorManager;
+  
+  /** 单体事件汇总Manager */
+  @Autowired
+  private GatherFsCaseManager gatherFsCaseManager;
 
   // 注入短信接收类
   @Autowired
@@ -355,8 +360,9 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
     }
     getManager().save(getModel());
     // 汇总单体事件，创建多体事件
-	getManager().gatherFscase(getModel().getCaseType().getId(),
-			getModel().getCounty());
+	//getManager().gatherFscase(getModel().getCaseType().getId(), getModel().getCounty());
+    gatherFsCaseManager.gatherFscase(getModel().getCaseType().getId(), getModel().getCounty());
+	
     return SUCCESS;
   }
 
