@@ -31,10 +31,12 @@ public final class Util {
 				Map map = ReflectUtil.toMap(dept,
 						new String[] { "id", "name" }, true);
 				map.put("checked", "");
+				map.put("selected", "");
 				if (isJudgeId) {//如果存在默认选中部门则进行选中.
 					for (String id : deftDeptIds) {
 						if (Integer.valueOf(id).equals(dept.getId())) {
 							map.put("checked", "checked=\"checked\"");
+							map.put("selected", "selected=\"selected\"");
 						}
 					}
 				}
