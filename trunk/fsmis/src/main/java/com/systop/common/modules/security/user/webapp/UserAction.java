@@ -272,11 +272,11 @@ public class UserAction extends ExtJsCrudAction<User, UserManager> {
 				"from UserLoginHistory  ulh  where 1=1 ");
 		List args = new ArrayList();
 		if (StringUtils.isNotBlank(queryUsername)) {
-			hql.append(" and ulh.userName like ? ");
+			hql.append(" and ulh.user.name like ? ");
 			args.add("%" + queryUsername + "%");
 		}
 		if (StringUtils.isNotBlank(queryLogindept)) {
-			hql.append(" and ulh.loginDept like ? ");
+			hql.append(" and ulh.dept.name like ? ");
 			args.add("%" + queryLogindept + "%");
 		}
 		if (beginDate != null && endDate != null) {
