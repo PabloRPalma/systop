@@ -73,6 +73,10 @@ public final class FsConstants {
   public static final String ASSESSMENT_ATT_FOLDER = ResourceBundleUtil.getString(RESOURCE_BUNDLE,
       "assessment_att_path", "/uploadFiles/assessment/att/");
   
+  /** 联合整治任务附件路径 */
+  public static final String JOINT_TASK_ATT_FOLDER = ResourceBundleUtil.getString(RESOURCE_BUNDLE,
+      "joint_task_att_path", "/uploadFiles/jointtask/att/"); 
+  
   /** 任务附件路径 */
   public static final String TASK_ATT_FOLDER = ResourceBundleUtil.getString(RESOURCE_BUNDLE,
       "fscase_task_att_path", "/uploadFiles/task/att/");
