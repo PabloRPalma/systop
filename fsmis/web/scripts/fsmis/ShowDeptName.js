@@ -23,13 +23,13 @@ function DeptOperator() {
 		// 获得显示部门名称的DIV
 		var showNameDiv = document.getElementById(showNameDivId);
 
-		showNameDiv.innerHTML = "&nbsp;";
 		var selectedStr = "";
 		for (i = 0; i < inputs.length; i++) {
 			if (inputs[i].checked == true) {
 				selectedStr += "<b>" + inputs[i].deptName + "</b>&nbsp;&nbsp;";
 			}
 		}
+		selectedStr += "&nbsp;"
 		showNameDiv.innerHTML = selectedStr;
 	};
 	
