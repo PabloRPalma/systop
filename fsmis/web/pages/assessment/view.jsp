@@ -166,12 +166,12 @@ Ext.onReady(function(){
      <tr>
         <td align="right" style="height:20px"><span style="font-weight:bold">事件类型：</span></td>
         <td align="left" >
-           <c:if test="${empty model.fsCase.isMultiple}">
-                                             单体事件
-           </c:if>
-           <c:if test="${!empty model.fsCase.isMultiple}">
-                                             多体事件
-           </c:if>
+            <c:if test="${model.fsCase.isMultiple eq '0'}">
+                                              单体事件
+            </c:if>
+            <c:if test="${model.fsCase.isMultiple eq '1'}">
+                                              多体事件
+            </c:if>
         </td>
      </tr>
      <tr>
