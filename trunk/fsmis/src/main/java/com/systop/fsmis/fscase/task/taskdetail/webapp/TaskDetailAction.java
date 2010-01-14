@@ -124,13 +124,11 @@ public class TaskDetailAction extends
       TaskDetail td = (TaskDetail) itr.next();
       Map mapTaskDetail = ReflectUtil.toMap(td, new String[] { "id",
           "completionTime", "remainDays", "status" }, true);
-      mapTaskDetail.put("dept.name", td.getDept().getName());
-      mapTaskDetail.put("task.title", td.getTask().getTitle());
+      mapTaskDetail.put("deptName", td.getDept().getName());
+      mapTaskDetail.put("taskTitle", td.getTask().getTitle());
       mapTaskDetails.add(mapTaskDetail);
     }
-    page.setData(mapTaskDetails);
-
-    logger.info(page.getData().toString());
+    page.setData(mapTaskDetails);    
 
     return JSON;
   }
@@ -291,7 +289,7 @@ public class TaskDetailAction extends
           .append(list.get(i).getName());
       corpNames[i] = buf.toString();
     }
-    logger.info(corpNames.toString());
+
     return "jsonCorpNames";
   }
 
@@ -345,7 +343,25 @@ public class TaskDetailAction extends
 
     return "jsonResult";
   }
+  /**
+   * 根据id得到任务明细处理结果信息,以在Ext弹出界面中显示
+   * @return
+   */
+  public String viewResultById(){
+    jsonResult = Collections.synchronizedMap(new HashMap<String, String>());
+    String idStr = getRequest().getParameter("taskDetailId");
 
+    if(StringUtils.isNotBlank(idStr)&&StringUtils.isNumeric(idStr)){
+
+      TaskDetail td = getManager().get(Integer.valueOf(idStr));
+      jsonResult = ReflectUtil.toMap(td, new String[] { "inputer",
+          "processor", "process", "basis","result" }, true);
+      jsonResult.put("taskTitle", td.getTask().getTitle());
+      jsonResult.put("deptName", td.getDept().getName());      
+    }
+    
+    return "jsonResult";
+  }
   /**
    * 打印任务明细
    * 
