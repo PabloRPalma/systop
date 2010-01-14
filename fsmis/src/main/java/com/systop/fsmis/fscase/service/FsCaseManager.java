@@ -81,6 +81,21 @@ public class FsCaseManager extends BaseGenericsManager<FsCase> {
 	@Transactional
 	public void gatherFscase(Integer caseTypeId, Dept country) {
 		logger.info("多体事件汇总进来了");
+		// 处理市级的多体事件汇总
+		gatherCity(caseTypeId);
+		// 处理区县级的多体事件汇总
+		gatherCounty(caseTypeId, country);
+				
+		
+	}
+	
+	/**
+	 * 处理多体事件汇总--区县级
+	 * @param caseTypeId 事件类别
+	 * @param country 事件所属部门
+	 */
+	@Transactional
+	private void gatherCounty(Integer caseTypeId, Dept country) {
 		// 得到相应的汇总配置条件--区县级
 		GatherConfiger configer = getConfigerList(CaseConstants.COUNTY);
 		if (configer == null) {
@@ -101,21 +116,26 @@ public class FsCaseManager extends BaseGenericsManager<FsCase> {
 				}
 			}
 			// 新建多体事件，并与查出的单体事件建立关联
-			FsCase mFCase = new FsCase();
-			mFCase.setCaseType(getDao().get(CaseType.class, caseTypeId));
+			FsCase cMFCase = new FsCase();
+			cMFCase.setCaseType(getDao().get(CaseType.class, caseTypeId));
 			for (FsCase fCase : fsList) {
-				mFCase.getGenericCases().add(fCase);
+				cMFCase.getGenericCases().add(fCase);
 			}
-			mFCase.setIsMultiple(FsConstants.Y);
-			mFCase.setCounty(country);
-			mFCase.setIsSubmited(FsConstants.N);
-			mFCase.setStatus(CaseConstants.CASE_UN_RESOLVE);
-			mFCase.setTitle("单体事件自动汇总的多体事件"+mFCase.getCounty().getName());
-			getDao().save(mFCase);
+			cMFCase.setIsMultiple(FsConstants.Y);
+			cMFCase.setCounty(country);
+			cMFCase.setIsSubmited(FsConstants.N);
+			cMFCase.setStatus(CaseConstants.CASE_UN_RESOLVE);
+			cMFCase.setTitle("单体事件自动汇总的多体事件"+cMFCase.getCounty().getName());
+			getDao().save(cMFCase);
 		}
-		
-		
-		// 得到相应的汇总配置条件--市级
+	}
+
+	/**
+	 * 处理多体事件汇总--市级
+	 * @param caseTypeId 事件类别
+	 */
+	@Transactional
+	public void gatherCity(Integer caseTypeId) {
 		GatherConfiger configerCity = getConfigerList(CaseConstants.CITY);
 		if (configerCity == null) {
 			return;
@@ -147,9 +167,8 @@ public class FsCaseManager extends BaseGenericsManager<FsCase> {
 			aMFCase.setTitle("单体事件自动汇总的多体事件" + city.getName());
 			getDao().save(aMFCase);
 		}
-		
 	}
-
+	
 	/**
 	 * 得到满足条件的多体事件（不分区县）
 	 * @param caseTypeId
