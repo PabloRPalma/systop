@@ -187,13 +187,13 @@
 				success : function(response,textStatus){
 					 var respText = Ext.util.JSON.decode(response.responseText);
 					 var message = '';
-					 if(respText.single != 0 || respText.multiple != 0){
+					 if(respText.single != 0 && respText.single != undefined || respText.multiple != undefined && respText.multiple != 0){
 						 message+= "您部门有";
-						 if(respText.single != 0){
+						 if(respText.single != 0 && respText.single != 'undefined'){
 							 message+=respText.single;
 							 message+="条<a href='${ctx}/taskdetail/index.do?isMultipleCase=0&modelId=1' target='main'><font color='red'>单体任务</font></a>,";
 						 }
-						 if(respText.multiple != 0){
+						 if(respText.multiple != 0 && respText.multiple != 'undefined'){
 							 message+=respText.multiple;
 							 message+="条<a href='${ctx}/taskdetail/index.do?isMultipleCase=1&modelId=1' target='main'><font color='red'>多体任务</font></a>,";
 						 }
@@ -203,7 +203,7 @@
 					 }					
 				}
 			});
-			setTimeout("checkNewTaskDetail()", 2000);
+			setTimeout("checkNewTaskDetail()", 20000);
 		}
 		checkNewTaskDetail();
 	</script>
