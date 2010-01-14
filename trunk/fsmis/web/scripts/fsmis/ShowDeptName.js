@@ -6,8 +6,7 @@ function DeptOperator() {
 	 * @param showNameDivId
 	 * @return
 	 */
-	this.initShowDept = function(elemanetName, showNameDivId) {
-		this.elemanetName = elemanetName;
+	this.init = function(elemanetName, showNameDivId) {
 		this.showDeptName(elemanetName, showNameDivId);
 	};
 	
@@ -24,19 +23,14 @@ function DeptOperator() {
 		// 获得显示部门名称的DIV
 		var showNameDiv = document.getElementById(showNameDivId);
 
-		// 定义数组,存放被选择的部门名称
-		var selectedDeptNames = [];
+		showNameDiv.innerHTML = "&nbsp;";
+		var selectedStr = "";
 		for (i = 0; i < inputs.length; i++) {
 			if (inputs[i].checked == true) {
-				selectedDeptNames.push(inputs[i].deptName);
+				selectedStr += "<b>" + inputs[i].deptName + "</b>&nbsp;&nbsp;";
 			}
 		}
-		showNameDiv.innerHTML = "&nbsp;";
-		var selectedDeptNameStr = "&nbsp;";
-		for (i in selectedDeptNames) {
-			selectedDeptNameStr += "<b>" + selectedDeptNames[i] + "</b>&nbsp;&nbsp;";
-		}
-		showNameDiv.innerHTML = selectedDeptNameStr;
+		showNameDiv.innerHTML = selectedStr;
 	};
 	
 	/**
