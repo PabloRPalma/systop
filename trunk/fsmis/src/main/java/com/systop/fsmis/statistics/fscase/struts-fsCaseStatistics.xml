@@ -3,7 +3,7 @@
     "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-	<package name="fsmis.statistics" extends="default"  namespace="/statistics">
+	<package name="fsmis.statistics.fscase" extends="default"  namespace="/statistics/fscase">
 		<action name="*" class="fsCaseStatisticsAction" method="{1}">
 			<result name="fsCaseStatisticsStatus">/pages/statistics/fscase/fsCaseStatisticsStatus.jsp</result>	
 			<result name="fsCaseStatisticsCounty">/pages/statistics/fscase/fsCaseStatisticsCounty.jsp</result>					
