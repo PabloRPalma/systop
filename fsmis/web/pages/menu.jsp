@@ -106,6 +106,10 @@
 	<div id="sms">
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/smssend/index.do" target="main">短信发送</a>
+		</div>
+		<div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/smsreceive/index.do" target="main">接收短信列表</a>
 		</div>
 	</div>
