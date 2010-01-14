@@ -19,15 +19,15 @@
     	<legend>编辑汇总配置</legend>
         <table width="510px" align="center" >
           <tr>
-             <td align="right" width="90">名称：</td>
-             <td align="left" width="300">
-             	<s:textfield id="name" name="model.name" cssStyle="width:300px" cssClass="required"/><font color="red">&nbsp;*</font>
-             </td>
-          </tr>
-          <tr>
              <td align="right" width="90">级别：</td>
              <td align="left" width="300">
              	<s:select id="level" name="model.level" listKey="key" listValue="value" list="levelMap" headerKey="" headerValue="请选择配置级别" cssStyle="width:300px;height:150px"/>
+             </td>
+          </tr>
+          <tr>
+             <td align="right" width="90">关键字：</td>
+             <td align="left" width="300">
+             	<s:textfield id="name" name="model.keyWord" cssStyle="width:300px"/>
              </td>
           </tr>
            <tr>

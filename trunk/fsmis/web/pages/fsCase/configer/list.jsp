@@ -48,8 +48,8 @@ function remove(id){
 	   toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	   <ec:row>
 		<ec:column width="40" property="_o" title="No." value="${GLOBALROWCOUNT}" style="text-align:center" sortable="false"/>
-		<ec:column width="150" property="name" title="名称" />
 		<ec:column width="150" property="level"  mappingItem="levelMap" title="汇总配置级别" style="text-align:center" />
+		<ec:column width="150" property="keyWord" title="关键字" />
 		<ec:column width="60" property="records" title="记录数" style="text-align:center" />
 		<ec:column width="60" property="days" title="天数" style="text-align:center"/>
 		<ec:column width="120" property="_0" title="操作" style="text-align:center" sortable="false">
