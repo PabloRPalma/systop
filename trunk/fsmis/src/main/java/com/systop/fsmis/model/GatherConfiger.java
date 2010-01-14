@@ -24,9 +24,9 @@ public class GatherConfiger extends BaseModel {
 	private Integer id;
 	
 	/**
-	 * 名称
+	 * 关键字
 	 */
-	private String name;
+	private String keyWord;
 	
 	/**
 	 * 记录数
@@ -37,21 +37,6 @@ public class GatherConfiger extends BaseModel {
 	 * 天数
 	 */
 	private Integer days;
-	
-	/**
-	 * 关键字1
-	 */
-	private String keyWord1;
-	
-	/**
-	 * 关键字2
-	 */
-	private String keyWord2;
-	
-	/**
-	 * 关键字3
-	 */
-	private String keyWord3;
 	
 	/**
 	 * 级别标识（市级、区县）
@@ -73,15 +58,6 @@ public class GatherConfiger extends BaseModel {
 		this.id = id;
 	}
 	
-	public String getName() {
-		return name;
-	}
-
-	@Column(name = "NAME", length = 255)
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	@Column(name = "RECORDS", length = 11)
 	public Integer getRecords() {
 		return records;
@@ -99,27 +75,11 @@ public class GatherConfiger extends BaseModel {
 	}
 	
 	@Column(name = "KEY_1", length = 50)
-	public String getKeyWord1() {
-		return keyWord1;
+	public String getKeyWord() {
+		return keyWord;
 	}
-	public void setKeyWord1(String keyWord1) {
-		this.keyWord1 = keyWord1;
-	}
-	
-	@Column(name = "KEY_2", length = 50)
-	public String getKeyWord2() {
-		return keyWord2;
-	}
-	public void setKeyWord2(String keyWord2) {
-		this.keyWord2 = keyWord2;
-	}
-	
-	@Column(name = "KEY_3", length = 50)
-	public String getKeyWord3() {
-		return keyWord3;
-	}
-	public void setKeyWord3(String keyWord3) {
-		this.keyWord3 = keyWord3;
+	public void setKeyWord(String keyWord) {
+		this.keyWord = keyWord;
 	}
 
 	@Column(name = "LEVEL", length = 1)
