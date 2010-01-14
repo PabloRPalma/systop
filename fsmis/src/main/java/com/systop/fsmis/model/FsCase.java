@@ -103,6 +103,9 @@ public class FsCase extends BaseModel {
 
 	/** 上报市级时间 */
 	private Date submitTime;
+	
+	/** 关联汇总配置条件 */
+	private GatherConfiger gatherConfiger;
 
 	/** 关联任务信息 */
 	private Set<Task> taskses = new HashSet<Task>(0);
@@ -369,6 +372,16 @@ public class FsCase extends BaseModel {
 
 	public void setSubmitTime(Date submitTime) {
 		this.submitTime = submitTime;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "GATHER_CONF")	
+	public GatherConfiger getGatherConfiger() {
+		return gatherConfiger;
+	}
+
+	public void setGatherConfiger(GatherConfiger gatherConfiger) {
+		this.gatherConfiger = gatherConfiger;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "fsCase")
