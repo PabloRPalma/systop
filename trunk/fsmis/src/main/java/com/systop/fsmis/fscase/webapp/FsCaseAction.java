@@ -361,7 +361,7 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
     getManager().save(getModel());
     // 汇总单体事件，创建多体事件
 	//getManager().gatherFscase(getModel().getCaseType().getId(), getModel().getCounty());
-    gatherFsCaseManager.gatherFscase(getModel().getCaseType().getId(), getModel().getCounty());
+    //gatherFsCaseManager.gatherFscase(getModel().getCaseType().getId(), getModel().getCounty());
 	
     return SUCCESS;
   }
