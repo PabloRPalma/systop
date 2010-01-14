@@ -36,6 +36,10 @@
 			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/sendType/index.do" target="main">派遣环节</a>
 		</div>
+		<div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/jointTask/index.do" target="main">联合整治管理</a>
+		</div>		
 	</div>
 	<div id="assess">
 		<div style="padding-top:2px">
