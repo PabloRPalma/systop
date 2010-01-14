@@ -70,6 +70,10 @@
 			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/statistics/supervisor/statisticReportCount.do" target="main">信息员信息统计</a>
 		</div>
+		<div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/statistics/corp/statisticFsCaseCount.do" target="main">企业信息统计</a>
+		</div>
 	</div>
 	<div id="corp">
 		<div style="padding-left:5px;">
