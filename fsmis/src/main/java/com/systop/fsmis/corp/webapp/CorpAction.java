@@ -90,7 +90,7 @@ public class CorpAction extends ExtJsCrudAction<Corp, CorpManager> {
 				getModel().setPhotoUrl(fileRelativePath);
 
 			}
-			Dept dept = loginUserService.getLoginUserDept(getRequest());
+			Dept dept = loginUserService.getLoginUserCounty(getRequest());
 			if (getModel().getDept().getId() != null) {
 				// 当更改部门时需要重新设置部门
 				dept = getManager().getDao().get(Dept.class,
@@ -110,7 +110,7 @@ public class CorpAction extends ExtJsCrudAction<Corp, CorpManager> {
 	 */
 	private DetachedCriteria setupDetachedCriteria() {
 		DetachedCriteria criteria = DetachedCriteria.forClass(Corp.class);
-		Dept dept = loginUserService.getLoginUserDept(getRequest());
+		Dept dept = loginUserService.getLoginUserCounty(getRequest());
 		if (dept != null) {
 			criteria.createAlias("dept", "dept");
 			if (dept.getChildDepts().size() > 0) {
