@@ -72,6 +72,18 @@
 	<div id="analyse">
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/statistics/fscase/statisticFsCaseStatus.do" target="main">事件状态统计</a>
+		</div>
+		<div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/statistics/fscase/statisticFsCaseCounty.do" target="main">事件区县统计</a>
+		</div>
+		<div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/statistics/user/statisticUser.do" target="main">用户登录统计</a>
+		</div>
+		<div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/statistics/supervisor/statisticReportCount.do" target="main">信息员信息统计</a>
 		</div>
 		<div style="padding-top:2px">
@@ -201,6 +213,10 @@
 			<div style="padding-top:2px">
 				<img src="${ctx}/images/icons/authority.gif" class="icon">
 				<a href="${ctx}/security/permission/index.do" target="main">权限管理</a>
+			</div>
+			<div style="padding-top:4px;"> 
+				<img src="${ctx}/images/icons/resource.gif" class="icon">
+				<a href="${ctx}/userHistory/userHistoryList.do" target="main"><font color="red">登录记录</font></a>
 			</div>
 			<!--  
 			<div style="padding-top:2px"> 
