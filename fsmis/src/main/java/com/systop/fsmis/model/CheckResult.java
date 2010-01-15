@@ -54,6 +54,10 @@ public class CheckResult extends BaseModel {
 	 * 风险评估对象
 	 */
 	private Assessment assessment;
+	/**
+	 * 联合整治对象
+	 */
+	private JointTask jointTask;
 
 	@Id
 	@GeneratedValue(generator = "hibseq")
@@ -123,6 +127,16 @@ public class CheckResult extends BaseModel {
 
 	public void setAssessment(Assessment assessment) {
 		this.assessment = assessment;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "JOINT_TASKS")
+	public JointTask getJointTask() {
+		return jointTask;
+	}
+
+	public void setJointTask(JointTask jointTask) {
+		this.jointTask = jointTask;
 	}
 	
 }
