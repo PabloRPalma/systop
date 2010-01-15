@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import com.opensymphony.xwork2.util.ArrayUtils;
 import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.security.user.model.User;
 import com.systop.core.service.BaseGenericsManager;
@@ -37,7 +38,7 @@ public class TaskManager extends BaseGenericsManager<Task> {
 	 * @param taskAtts 任务附件实体集合
 	 */
 	@Transactional
-	public void save(Task task, List<Integer> deptIds, List<TaskAtt> taskAtts) {
+	public void save(Task task, String[] deptIds, List<TaskAtt> taskAtts) {
 		Assert.notNull(task);
 		Assert.notNull(task.getFsCase());
 		Assert.notNull(task.getFsCase().getId());
@@ -54,10 +55,10 @@ public class TaskManager extends BaseGenericsManager<Task> {
 
 		// 根据任务选择的部门集合,作任务明细信息操作
 		// 如果部门id集合不为空,遍历部门构建任务明细实例.
-		if (CollectionUtils.isNotEmpty(deptIds)) {
-			for (Integer id : deptIds) {
+		if (ArrayUtils.isNotEmpty(deptIds)) {
+			for (String id : deptIds) {
 				TaskDetail taskDetail = new TaskDetail();
-				Dept dept = getDao().get(Dept.class, id);
+				Dept dept = getDao().get(Dept.class, Integer.valueOf(id));
 				taskDetail.setDept(dept);
 				// 任务明细状态属性,未接收
 				taskDetail.setStatus(TaskConstants.TASK_DETAIL_UN_RECEIVE);
