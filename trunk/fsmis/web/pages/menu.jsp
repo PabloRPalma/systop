@@ -39,7 +39,11 @@
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/jointTask/index.do" target="main">联合整治管理</a>
-		</div>		
+		</div>	
+		<div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/jointTask/index.do" target="main">部门上报</a>
+		</div>	
 	</div>
 	<div id="assess">
 		<div style="padding-top:2px">
@@ -126,7 +130,7 @@
 		</div>
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
-			<a href="${ctx}/smsreceive/index.do" target="main">接收短信列表</a>
+			<a href="${ctx}/smsreceive/index.do" target="main">短信接收</a>
 		</div>
 	</div>
 	<div id="office">
