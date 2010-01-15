@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.apache.commons.lang.xwork.StringUtils;
 import org.hibernate.criterion.MatchMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -282,8 +283,10 @@ public class GatherFsCaseManager extends BaseGenericsManager<FsCase> {
 	private int getFsCaseCityCount(Integer caseTypeId, GatherConfiger configerCity) {
 		StringBuffer hql = new StringBuffer("select count(*) from FsCase fe where 1=1 ");
 		List arg = new ArrayList();
-		hql.append("and fe.title like ? ");
-		arg.add(MatchMode.ANYWHERE.toMatchString(configerCity.getKeyWord()));
+		if(StringUtils.isNotBlank(configerCity.getKeyWord())) {
+			hql.append("and fe.title like ? ");
+			arg.add(MatchMode.ANYWHERE.toMatchString(configerCity.getKeyWord()));
+		}
 		hql.append("and fe.status = ? ");
 		arg.add(CaseConstants.CASE_CLOSED);
 		hql.append("and fe.caseType.id = ? ");
@@ -308,8 +311,10 @@ public class GatherFsCaseManager extends BaseGenericsManager<FsCase> {
 	private List<FsCase> getCityFsCase(Integer caseTypeId, GatherConfiger configerCity) {
 		StringBuffer hql = new StringBuffer("from FsCase fe where 1=1 ");
 		List arg = new ArrayList();
-		hql.append("and fe.title like ? ");
-		arg.add(MatchMode.ANYWHERE.toMatchString(configerCity.getKeyWord()));
+		if(StringUtils.isNotBlank(configerCity.getKeyWord())) {
+			hql.append("and fe.title like ? ");
+			arg.add(MatchMode.ANYWHERE.toMatchString(configerCity.getKeyWord()));
+		}
 		hql.append("and fe.status = ? ");
 		arg.add(CaseConstants.CASE_CLOSED);
 		hql.append("and fe.caseType.id = ? ");
@@ -363,8 +368,10 @@ public class GatherFsCaseManager extends BaseGenericsManager<FsCase> {
 			GatherConfiger configer) {
 		StringBuffer hql = new StringBuffer("from FsCase fe where 1=1 ");
 		List arg = new ArrayList();
-		hql.append("and fe.title like ? ");
-		arg.add(MatchMode.ANYWHERE.toMatchString(configer.getKeyWord()));
+		if(StringUtils.isNotBlank(configer.getKeyWord())) {
+			hql.append("and fe.title like ? ");
+			arg.add(MatchMode.ANYWHERE.toMatchString(configer.getKeyWord()));
+		}
 		hql.append("and fe.status = ? ");
 		arg.add(CaseConstants.CASE_CLOSED);
 		hql.append("and fe.caseType.id = ? ");
@@ -394,8 +401,10 @@ public class GatherFsCaseManager extends BaseGenericsManager<FsCase> {
 			GatherConfiger configer) {
 		StringBuffer hql = new StringBuffer("select count(*) from FsCase fe where 1=1 ");
 		List arg = new ArrayList();
-		hql.append("and fe.title like ? ");
-		arg.add(MatchMode.ANYWHERE.toMatchString(configer.getKeyWord()));
+		if(StringUtils.isNotBlank(configer.getKeyWord())) {
+			hql.append("and fe.title like ? ");
+			arg.add(MatchMode.ANYWHERE.toMatchString(configer.getKeyWord()));
+		}
 		hql.append("and fe.status = ? ");
 		arg.add(CaseConstants.CASE_CLOSED);
 		hql.append("and fe.caseType.id = ? ");
