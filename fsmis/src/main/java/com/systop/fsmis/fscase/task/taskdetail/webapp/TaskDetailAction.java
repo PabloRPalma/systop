@@ -128,7 +128,7 @@ public class TaskDetailAction extends
       mapTaskDetail.put("taskTitle", td.getTask().getTitle());
       mapTaskDetails.add(mapTaskDetail);
     }
-    page.setData(mapTaskDetails);    
+    page.setData(mapTaskDetails);
 
     return JSON;
   }
@@ -141,14 +141,16 @@ public class TaskDetailAction extends
   public String getDeptTaskDetailMes() {
     jsonResult = Collections.synchronizedMap(new HashMap<String, String>());
     // 得到当前登录人员的部门
-    Dept dept = loginUserService.getLoginUserDept(getRequest());    
-    if (dept != null) {
-      //单体任务
-      jsonResult.put("single", String.valueOf(getManager().getNewTasks(dept,FsConstants.N).size()));
-      //多体任务
-      jsonResult.put("multiple",  String.valueOf(getManager().getNewTasks(dept,FsConstants.Y).size()));      
+    Dept dept = loginUserService.getLoginUserDept(getRequest());
+    if (dept != null && dept.getId() != null) {
+      // 单体任务
+      jsonResult.put("single", String.valueOf(getManager().getNewTasks(dept,
+          FsConstants.N).size()));
+      // 多体任务
+      jsonResult.put("multiple", String.valueOf(getManager().getNewTasks(dept,
+          FsConstants.Y).size()));
     }
-   
+
     return "jsonResult";
   }
 
@@ -343,25 +345,28 @@ public class TaskDetailAction extends
 
     return "jsonResult";
   }
+
   /**
    * 根据id得到任务明细处理结果信息,以在Ext弹出界面中显示
+   * 
    * @return
    */
-  public String viewResultById(){
+  public String viewResultById() {
     jsonResult = Collections.synchronizedMap(new HashMap<String, String>());
     String idStr = getRequest().getParameter("taskDetailId");
 
-    if(StringUtils.isNotBlank(idStr)&&StringUtils.isNumeric(idStr)){
+    if (StringUtils.isNotBlank(idStr) && StringUtils.isNumeric(idStr)) {
 
       TaskDetail td = getManager().get(Integer.valueOf(idStr));
-      jsonResult = ReflectUtil.toMap(td, new String[] { "inputer",
-          "processor", "process", "basis","result" }, true);
+      jsonResult = ReflectUtil.toMap(td, new String[] { "inputer", "processor",
+          "process", "basis", "result" }, true);
       jsonResult.put("taskTitle", td.getTask().getTitle());
-      jsonResult.put("deptName", td.getDept().getName());      
+      jsonResult.put("deptName", td.getDept().getName());
     }
-    
+
     return "jsonResult";
   }
+
   /**
    * 打印任务明细
    * 
