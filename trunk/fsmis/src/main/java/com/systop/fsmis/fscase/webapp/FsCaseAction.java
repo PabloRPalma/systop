@@ -7,22 +7,27 @@ package com.systop.fsmis.fscase.webapp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.hibernate.criterion.MatchMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
+import com.systop.cms.utils.PageUtil;
 import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.core.Constants;
 import com.systop.core.dao.support.Page;
-import com.systop.core.webapp.struts2.action.DefaultCrudAction;
+import com.systop.core.util.ReflectUtil;
+import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
 import com.systop.fsmis.FsConstants;
 import com.systop.fsmis.fscase.CaseConstants;
 import com.systop.fsmis.fscase.casetype.service.CaseTypeManager;
@@ -33,6 +38,7 @@ import com.systop.fsmis.model.CaseType;
 import com.systop.fsmis.model.FsCase;
 import com.systop.fsmis.model.SendType;
 import com.systop.fsmis.model.SmsReceive;
+import com.systop.fsmis.model.SmsSend;
 import com.systop.fsmis.sms.SmsReceiveManager;
 import com.systop.fsmis.supervisor.service.SupervisorManager;
 
@@ -45,7 +51,7 @@ import com.systop.fsmis.supervisor.service.SupervisorManager;
 @SuppressWarnings( { "serial", "unchecked" })
 @Controller
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
+public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
   // 是否综合(多体)案件
   private String isMultipleCase;
   @Autowired
@@ -58,7 +64,7 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
   /** 监管员信息Manager */
   @Autowired
   private SupervisorManager supervisorManager;
-  
+
   /** 单体事件汇总Manager */
   @Autowired
   private GatherFsCaseManager gatherFsCaseManager;
@@ -196,7 +202,7 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
     if (StringUtils.isBlank(getModel().getIsMultiple())) {
       getModel().setIsMultiple(FsConstants.N);
     }
-    //getManager().getDao().clear();
+    // getManager().getDao().clear();
     getManager().save(getModel());
 
     // 如果是通过短信添加的案件,则为短信添加案件关联
@@ -360,9 +366,80 @@ public class FsCaseAction extends DefaultCrudAction<FsCase, FsCaseManager> {
     }
     getManager().save(getModel());
     // 汇总单体事件，创建多体事件
-	gatherFsCaseManager.gatherFscase(getModel().getCaseType().getId(), getModel().getCounty());
-	
+    gatherFsCaseManager.gatherFscase(getModel().getCaseType().getId(),
+        getModel().getCounty());
+
     return SUCCESS;
+  }
+
+  /**
+   * 得到事件相关联的短信(发送/接收),<br>
+   * 客户端通过ExtAjax请求发送参数传递给服务器
+   * 
+   * @return
+   */
+  public String getSmsByFsCaseId() {
+    page = PageUtil.getPage(getPageNo(), getPageSize());
+    // 得到请求的短信的类型(请求短信/发送短信)
+    String smsType = getRequest().getParameter("smsType");
+    String fsCaseIdStr = getRequest().getParameter("fsCaseId");
+    Assert.notNull(smsType);
+    Assert.notNull(fsCaseIdStr);
+
+    if (StringUtils.isNumeric(fsCaseIdStr)) {
+      Integer fsCaseId = Integer.valueOf(fsCaseIdStr);
+      page = PageUtil.getPage(getPageNo(), getPageSize());
+      // 请求发送短信
+      if ("smsSend".equals(smsType)) {
+        page = getManager().pageQuery(page,
+            "from SmsSend ss where ss.fsCase.id = ?", fsCaseId);
+        List smsSends = page.getData();
+        List mapSmsSends = new ArrayList(smsSends.size());
+        for (Iterator itr = smsSends.iterator(); itr.hasNext();) {
+          SmsSend ss = (SmsSend) itr.next();
+          Map mapSmsSend = ReflectUtil.toMap(ss, new String[] { "content",
+              "mobileNum", "isNew", "isReceive", "name" }, true);
+          // 由于通过ReflectUtil.toMap转换日期类型得到的字符串:2010-01-13 15:34:08.0,
+          // 在Ext的GridPanel中显示不正确,所以在这里处理一下
+          mapSmsSend.put("createTime", convertDate2String(ss.getCreateTime()));
+          mapSmsSend.put("sendTime", convertDate2String(ss.getSendTime()));
+
+          mapSmsSends.add(mapSmsSend);
+        }
+        page.setData(mapSmsSends);
+      } else {// 请求接收短信
+        page = getManager().pageQuery(page,
+            "from SmsReceive sr where sr.fsCase.id = ?", fsCaseId);
+        List smsReceives = page.getData();
+        List mapSmsReceives = new ArrayList(smsReceives.size());
+        for (Iterator itr = smsReceives.iterator(); itr.hasNext();) {
+          SmsReceive sr = (SmsReceive) itr.next();
+          Map mapSmsReceive = ReflectUtil.toMap(sr, new String[] { "content",
+              "mobileNum", "isParsed", "isReport", "isTreated", "isVerify",
+              "isNew" }, true);
+          mapSmsReceive.put("sendTime", convertDate2String(sr.getSendTime()));
+          mapSmsReceive.put("receiveTime", convertDate2String(sr
+              .getReceiveTime()));
+          mapSmsReceives.add(mapSmsReceive);
+        }
+        page.setData(mapSmsReceives);
+      }
+    }
+
+    return JSON;
+  }
+
+  /**
+   * 转换日期为字符串类型,以解决在Ext的GridPanel中显示不正确问题
+   * 
+   * @param date
+   * @return
+   */
+  private String convertDate2String(Date date) {
+    if (date != null) {
+      return DateFormatUtils.format(date, "yyyy-MM-dd HH:mm:ss");
+    }
+    return "";
   }
 
   public List getTypeRst() {
