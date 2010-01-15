@@ -3,9 +3,11 @@
     "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
+	<!-- 短信管理-接收 -->
 	<package name="fsmis.sms" extends="json"  namespace="/smsreceive">
 		<action name="*" class="smsReceiveAction" method="{1}">
 			<result name="index">/pages/sms/receive/index.jsp</result> 	
+			<result name="success" type="redirect">index.do</result>
 			<result name="backMsgView">/pages/sms/receive/backMsgView.jsp</result>			
 		</action>
 	</package>
