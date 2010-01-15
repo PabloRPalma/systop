@@ -153,5 +153,6 @@ td{
 </div>
 </div>
 <%@include file="chooseSendType.jsp"%>
+<%@include file="viewTaskDetailResult.jsp"%>
 </body>
 </html>

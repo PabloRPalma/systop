@@ -81,7 +81,7 @@
 		var grid = new Ext.grid.GridPanel({
 			title : '任务${varStatus.index+1}明细',
 			applyTo : 'taskDetailGridDiv${taskStatus.index+1}',
-			width:848,
+			width:853,
 			height:150,
 			frame:true,			
 			store: store,
@@ -96,5 +96,4 @@
 		})
 	});
   </script>
-  <div id='taskDetailGridDiv${taskStatus.index+1}' style="margin:0px; padding: -1" ></div>
-  <%@include file="viewTaskDetailResult.jsp"%>
+  <div id='taskDetailGridDiv${taskStatus.index+1}'></div>
