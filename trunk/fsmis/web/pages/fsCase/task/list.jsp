@@ -108,8 +108,7 @@ eq 0?'单体任务':'多体任务'}管理&nbsp;&gt;&nbsp;${param['isMultipleCase
 		<ec:column width="85" property="_o" title="操作" sortable="false" style="text-align: center">
 			<a title="查看任务" href="${ctx}/fscase/view.do?fsCaseId=${item.fsCase.id}&modelId=${modelId}">
 			看</a> |
-			<a title="修改任务" href="#">
-			 改</a> |
+			<a title="修改任务" href="${ctx}/fscase/task/edit.do?model.id=${item.id}&modelId=1&isMultipleCase="+${isMultipleCase}">改</a> |
 			<a href="#" title="删除任务" onclick="remove(${item.id})">删 </a>
 		</ec:column>
 	</ec:row>
