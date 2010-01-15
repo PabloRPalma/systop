@@ -128,7 +128,7 @@
 			<c:if test="${model.isMultiple eq '1'}">			
 			,{
 				contentEl : 'general',
-				title : '相关一般事件'
+				title : '相关单体事件'
 			}
 			
 			</c:if>
