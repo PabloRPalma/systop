@@ -7,6 +7,7 @@ package com.systop.fsmis.fscase.webapp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -23,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import com.systop.cms.utils.PageUtil;
+import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.core.Constants;
 import com.systop.core.dao.support.Page;
@@ -99,6 +101,8 @@ public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
 
   // 短信息内容
   private String msgContent;
+
+  private Map<String, String> jsonResult;
 
   /**
    * 查询获得一般事件信息列表，分页查询
@@ -430,6 +434,24 @@ public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
   }
 
   /**
+   * 得到当前登录人员所在区县和事件相关的短信,<br>
+   * 举报/反馈等<br>
+   * 以被客户端Ajax访问,形成提示信息
+   * 
+   * @return
+   */
+  public String getFsCaseSmsMes() {
+    jsonResult = Collections.synchronizedMap(new HashMap<String, String>());
+    // 得到当前登录人员的区县----问题:谁有权力来处理短信,需要再讨论加以角色限制
+    Dept county = loginUserService.getLoginUserCounty(getRequest());
+    if (county != null && county.getId() != null) {
+      jsonResult.put("reportSms", String.valueOf(getManager().getReportSms(county).size()));
+      jsonResult.put("verifySms", String.valueOf(getManager().getVerifySms(county).size()));
+    }
+    return "jsonResult";
+  }
+
+  /**
    * 转换日期为字符串类型,以解决在Ext的GridPanel中显示不正确问题
    * 
    * @param date
@@ -528,6 +550,14 @@ public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
 
   public void setSmsReceiveId(Integer smsReceiveId) {
     this.smsReceiveId = smsReceiveId;
+  }
+
+  public Map<String, String> getJsonResult() {
+    return jsonResult;
+  }
+
+  public void setJsonResult(Map<String, String> jsonResult) {
+    this.jsonResult = jsonResult;
   }
 
 }
