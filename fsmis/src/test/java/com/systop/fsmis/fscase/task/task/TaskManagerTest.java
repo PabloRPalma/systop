@@ -36,8 +36,9 @@ public class TaskManagerTest extends BaseTransactionalTestCase {
 		fsCase.setCode("11111");
 		fsCase.setTitle("test");
 		//新增部门记录
-		List<Integer> deptIds = new ArrayList<Integer>();
-		deptIds.add(50);
+		//List<Integer> deptIds = new ArrayList<Integer>();
+		//deptIds.add(50);
+		String[] deptIds = new String[]{"50"};
 		//新增任务记录
 		Task task= new Task();
 		task.setTitle("测试任务标题");
