@@ -28,14 +28,10 @@
 		           sortable : true,
 		           renderer: function(value, cellmeta, record, rowIndex, columnIndex, store) {
 		           	   if(record.data["status"] == '4'){
-			           	   return '<a href="#" onclick = "showResultWindow('+record.data["id"]+')"><font color="blue">'+record.data["taskTitle"]+'</font></a>';			           	
+			           	   return '<a href="#" onclick = "showResultWindow('+record.data["id"]+')"><font color="blue" title="点击查看任务处理结果">'+record.data["taskTitle"]+'</font></a>';			           	
 		           	   }else{
 			           	   return record.data["taskTitle"];
-		           	   }
-		           		switch(value){		              		
-		              		case '4': return '<font color="green"><a href="#" onclick = "showResultWindow('+record.data["id"]+')">看</a></font>';
-		              		default : return '<font color="silver" >看</font>';							
-		              	}
+		           	   }		           	
 		            }
 		       },{
 			       header : '执行部门',
