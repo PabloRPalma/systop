@@ -4,7 +4,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@include file="/common/ec.jsp"%>
+<%@include file="/common/extjs.jsp" %>
+<link href="${ctx}/styles/treeSelect.css" type='text/css' rel='stylesheet'>
 <%@include file="/common/meta.jsp"%>
 <script type="text/javascript" src="${ctx}/amcharts/swfobject.js"></script>
 </head>
@@ -13,6 +16,29 @@
 <div class="x-toolbar">
 <table width="100%" border="0">
 	<tr>
+		<s:form id="supervisorstatistic" action="statisticReportCount.do"
+			method="post" target="main">
+			<td width="60" align="right">所属部门：</td>
+			<td class="simple" align="left" width="160">
+				<div id="comboxWithTree" style="float: left;width: 100px"></div>
+				<s:hidden name="deptId" id="deptId"/>
+			</td>
+			<td align="left">
+				时间：
+				<input type="text" name="beginDate" style="width: 120px"
+					value='<s:date name="beginDate" format="yyyy-MM-dd"/>'
+					onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"
+					class="Wdate" />
+				至
+				<input type="text" name="endDate" style="width: 120px"
+					value='<s:date name="endDate" format="yyyy-MM-dd"/>'
+					onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"
+					class="Wdate" />
+				图显：
+				<s:textfield name="displayNum" cssStyle="width:30px"></s:textfield>个
+				<s:submit value="查询" cssClass="button"/>
+			</td>
+		</s:form>
 		<td align="right">
 		<table>
 			<tr>
@@ -43,7 +69,7 @@
 				action="statisticReportCount.do" 
 				useAjax="false"
 				doPreload="false" 
-				pageSizeList="10,20,50" 
+				pageSizeList="10" 
 				editable="false"
 				sortable="true" 
 				rowsDisplayed="10" 
@@ -58,7 +84,9 @@
 					<ec:column width="35" property="_No" title="名次" value="${GLOBALROWCOUNT}" style="text-align:center" sortable="false"/>
 					<ec:column width="70" property="name" title="姓名" sortable="false" />
 					<ec:column width="120" property="dept.name" title="所属部门" sortable="false"/>
-					<ec:column width="60" property="reportCount" title="举报次数" sortable="false"/>
+					<ec:column width="60" property="_reportCount" title="举报次数" sortable="false">
+						${fn:length(item.fsCase)}
+					</ec:column>
 				</ec:row>
 			</ec:table></div>
 			</div>
@@ -76,6 +104,22 @@
 	so.addVariable("chart_data", "${result}");
 	so.write("flashcontent");
 	// ]]>
+</script>
+<script type="text/javascript" src="${ctx}/pages/admin/dept/edit.js"></script>
+<script type="text/javascript">
+Ext.onReady(function() {
+	var dtree = new DeptTree({
+		url : '/admin/dept/deptTree.do',
+		parent : '<stc:loginUserDept showPath="false" propertyName="id" showTopDept="true"></stc:loginUserDept>',
+		initValue : '${model.dept.name}',
+		el : 'comboxWithTree',
+		innerTree :'inner-tree',
+		onclick : function(nodeId) {
+		  Ext.get('deptId').dom.value = nodeId;
+		}
+	});
+	dtree.init();	
+});
 </script>
 </body>
 </html>
