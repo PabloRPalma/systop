@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="fsmis.statistics.corp" extends="default"  namespace="/statistics/corp">
+		<action name="*" class="corpStatisticsAction" method="{1}">
+			<result name="statisticfscasecount">/pages/statistics/corp/statisticfscasecount.jsp</result>
+			<result name="statisticbydept">/pages/statistics/corp/statisticbydept.jsp</result>
+		</action>
+	</package>
+</struts>
+
