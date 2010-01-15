@@ -206,6 +206,33 @@
 			setTimeout("checkNewTaskDetail()", 20000);
 		}
 		checkNewTaskDetail();
+		//提示新短信信息
+		function checkNewSms(){
+			Ext.Ajax.request({
+				url: '${ctx}/fscase/getFsCaseSmsMes.do',
+				methos :'POST',
+				success : function(response,textStatus){
+					 var respText = Ext.util.JSON.decode(response.responseText);
+					 var message = '';
+					 if(respText.reportSms != 0 && respText.reportSms != undefined || respText.verifySms != undefined && respText.verifySms != 0){
+						 message+= "有";
+						 if(respText.reportSms != 0 && respText.reportSms != 'undefined'){
+							 message+=respText.reportSms;
+							 message+="条<a href='${ctx}/smsreceive/index.do?' target='main'><font color='red'>举报短信</font></a>,";
+						 }
+						 if(respText.verifySms != 0 && respText.verifySms != 'undefined'){
+							 message+=respText.verifySms;
+							 message+="条<a href='${ctx}/smsreceive/index.do?' target='main'><font color='red'>核实短信</font></a>,";
+						 }
+						 message+="请注意查收";
+
+						 Ext.my().msg('', message);
+					 }					
+				}
+			});
+			setTimeout("checkNewSms()", 20000);
+		}
+		checkNewSms();
 	</script>
 </body>
 </html>
