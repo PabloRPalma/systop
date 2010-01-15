@@ -16,6 +16,9 @@
 			<result type="json" name="jsonRst">
 		   		<param name="root">typeRst</param>
 			</result>
+			<result type="json" name="json">
+		   		<param name="root">page</param>
+			</result>
 		</action>
 	</package>
 </struts>
