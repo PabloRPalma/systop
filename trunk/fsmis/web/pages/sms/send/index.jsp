@@ -7,39 +7,6 @@
 <%@include file="/common/ec.jsp"%>
 <%@include file="/common/extjs.jsp"%>
 <%@include file="/common/meta.jsp"%>
-<script type="text/javascript">
-/**
- * 删除提交
- */
-function remove(){
-    var sels = document.getElementsByName("selectedItems");
-    var checked = false;;
-    for(i = 0; i < sels.length; i++) {
-        if(sels[i].checked) {
-           checked = true;
-           break;
-        }
-    } 
-    if(!checked) {
-    	Ext.MessageBox.show({
-            title:'提示',
-            minWidth:260,
-            msg:'<div style=\'width:180\';><br/>请选择要删除的短信！</div>',
-            buttons:Ext.MessageBox.OK,
-            icon:Ext.MessageBox.INFO
-       });
-       return;
-    }
-	Ext.MessageBox.confirm('提示','确定要删除所选择的短信息吗？删除后不能恢复！', function(btn){
-        if (btn == 'yes') {
-        	var from = document.getElementById("ec");
-    		from.target="_self";
-    		from.action="remove.do";
-    		from.submit();
-        }
-    });
-}
-</script>
 </head>
 <body>
 <div class="x-panel">
@@ -115,5 +82,38 @@ function remove(){
 </div>
 </div>
 </div>
+<script type="text/javascript">
+/**
+ * 删除提交
+ */
+function remove(){
+    var sels = document.getElementsByName("selectedItems");
+    var checked = false;;
+    for(i = 0; i < sels.length; i++) {
+        if(sels[i].checked) {
+           checked = true;
+           break;
+        }
+    } 
+    if(!checked) {
+    	Ext.MessageBox.show({
+            title:'提示',
+            minWidth:260,
+            msg:'<div style=\'width:180\';><br/>请选择要删除的短信！</div>',
+            buttons:Ext.MessageBox.OK,
+            icon:Ext.MessageBox.INFO
+       });
+       return;
+    }
+	Ext.MessageBox.confirm('提示','确定要删除所选择的短信吗？删除后不能恢复！', function(btn){
+        if (btn == 'yes') {
+        	var from = document.getElementById("ec");
+    		from.target="_self";
+    		from.action="remove.do";
+    		from.submit();
+        }
+    });
+}
+</script>
 </body>
 </html>
