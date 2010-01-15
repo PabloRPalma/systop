@@ -211,5 +211,5 @@
 		//gridReceive.refresh();
 	});
   </script>
-  <div id='smsSendDiv' style="margin:-1px; padding: -1" ></div>
-  <div id='smsReceiveSmsDiv' style="margin:-1px; padding: -1" ></div>
+  <div id='smsSendDiv' style="margin:-1; padding: -1" ></div>
+  <div id='smsReceiveSmsDiv' style="margin:-1; padding: -1" ></div>

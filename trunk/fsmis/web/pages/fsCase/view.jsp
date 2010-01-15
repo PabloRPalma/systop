@@ -4,24 +4,109 @@
 <%@include file="/common/taglibs.jsp"%>
 <html>
 <head>
+<title>事件信息</title>
+<%@include file="/common/extjs.jsp"%>
+<%@include file="/common/meta.jsp"%>
 <style type="text/css">
 .mytable {
-	border: 0px solid #A6C9E2;
-	margin-left: 0px;
-	margin-top: 0px;
+  border:2;
 	width: 100%;
 	border-collapse: collapse;
+	border-collapse:   separate;   border-spacing:   10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 .mytable td {
 	border: 0px solid #A6C9E2;
 	height: 28;
+	margin-top: 10;
+	margin-bottom: 10;
+	padding: 6px 6px 6px 6px;
+}
+#tabs{
+  margin-top: -1;
 }
 </style>
-<title>案件相关信息</title>
-<%@include file="/common/ec.jsp"%>
-<%@include file="/common/extjs.jsp"%>
-<%@include file="/common/meta.jsp"%>
+</head>
+<body>
+<!-- 事件信息 -->
+<div class="x-panel">
+	<div class="x-panel-header">事件信息</div>
+	<div class="x-toolbar">
+		<table width="100%">
+			<tr>
+				<td width="70%" align="left"></td>
+				<td align="right"><a href="#"> 地理位置</a></td>
+				<td><span class="ytb-sep"></span></td>
+				<td align="right"><a href="#"> 上报市级</a></td>
+				<td><span class="ytb-sep"></span></td>
+				<c:if test="${model.status eq '0'}">
+					<td align="right"><a href="#" onclick="showChooseSendTypeWindow(${model.id})"> 任务派遣</a></td>
+					<td><span class="ytb-sep"></span></td>
+				</c:if>
+				<td align="right"><a href="${ctx}/assessment/edit.do?model.fsCase.id=${model.id}"> 风险评估</a></td>
+				<td><span class="ytb-sep"></span></td>
+				<td align="right"><a href="#"> 联合整治</a></td>
+			</tr>
+		</table>
+	</div>
+	<div id="tabs">
+		<div id="fsCaseDiv" class="x-hide-display">
+			<table id="fsCaseTable" width="100%" >
+				<tr>
+					<td align="left" width="100%">
+						<table class="mytable" >		
+							<tr>
+								<td class="simple" width="15%"align="right">案件标题：</td>
+								<td class="simple" align="left" ><s:property	value="model.title" /></td>
+							</tr>
+							<tr>
+								<td width="10%"  align="right">案件类别：</td>
+								<td align="left" ><s:property	value="model.caseType.name" /></td>
+							</tr>
+							<tr>
+								<td width="10%"  align="right">案件地点：</td>
+								<td align="left" ><s:property value="model.address" />
+								</td>
+							</tr>
+							<tr>
+								<td width="10%"  align="right">事发时间：</td>
+								<td align="left" ><s:date name="model.caseTime"format="yyyy-MM-dd" /></td>
+							</tr>
+							<tr>
+								<td width="10%"  align="right">案件报告人：</td>
+								<td  align="left"><s:property value="model.informer" />
+								</td>
+							</tr>
+							<tr>
+								<td width="10%"  align="right">报告人电话：</td>
+								<td  align="left"><s:property	value="model.informerPhone" /></td>
+							</tr>
+							<tr>
+								<td width="10%"  align="right">案件描述：</td>
+								<td  align="left">${model.descn}</td>
+							</tr>						
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div id="general" class="x-hide-display" >
+			<!-- include进来二级Tab以现实一个食品安全综合案件关联的多个一般案件 -->		
+			<%@include	file="viewGenericCases.jsp"%>			
+		</div>
+		<div id="tasks" class="x-hide-display" style="margin: -1; border: 0;">
+			<!-- include进来二级Tab以现实一个食品安全案件下的多个任务 -->		
+			<%@include file="viewTasks.jsp"%>
+		</div>
+		<div id="sms" class="x-hide-display">
+		<%@include file="viewSmsGrid.jsp" %>
+		</div>
+	</div>
+</div>
+<%@include file="chooseSendType.jsp"%>
+<%@include file="viewTaskDetailResult.jsp"%>
 <script type="text/javascript">
 	Ext.onReady(function() {
 		var tabs = new Ext.TabPanel( {
@@ -34,12 +119,12 @@
 			},
 			items : [ {
 				contentEl : 'fsCaseDiv',
-				title : '案件信息'
+				title : '事件信息'
 			}
 			<c:if test="${model.isMultiple eq '1'}">			
 			,{
 				contentEl : 'general',
-				title : '相关一般案件'
+				title : '相关一般事件'
 			}
 			
 			</c:if>
@@ -60,99 +145,5 @@
 		});
 	});
 </script>
-<style type="text/css">
-td{
-   text-align:left;
-   padding-left:1px;
-}
-
-</style>
-</head>
-<body>
-<!-- 事件信息 -->
-
-<div class="x-panel-header">事件信息</div>
-<div class="x-toolbar">
-<table width="99%">
-	<tr>
-		<td width="70%" align="left"></td>
-		<td align="right"><a href="#"> 地理位置</a></td>
-		<td><span class="ytb-sep"></span></td>
-		<td align="right"><a href="#"> 上报市级</a></td>
-		<td><span class="ytb-sep"></span></td>
-		<c:if test="${model.status eq '0'}">
-			<td align="right"><a href="#" onclick="showChooseSendTypeWindow(${model.id})"> 任务派遣</a></td>
-			<td><span class="ytb-sep"></span></td>
-		</c:if>
-		<td align="right"><a href="${ctx}/assessment/edit.do?model.fsCase.id=${model.id}"> 风险评估</a></td>
-		<td><span class="ytb-sep"></span></td>
-		<td align="right"><a href="#"> 联合整治</a></td>
-	</tr>
-</table>
-</div>
-<div id="tabs">
-<div id="fsCaseDiv" class="x-hide-display">
-<table id="fsCaseTable" class="mytable">
-	<tr>
-		<td width="400" align="left">
-		<table width="800px" align="left" class="mytable" border="0" cellpadding="0"
-			cellspacing="0">
-			<tr><td width="100">&nbsp;</td><td>&nbsp;</td></tr>
-			
-			<tr>
-				<td class="simple" width="100" align="right">案件标题：</td>
-				<td class="simple" align="left" width="149"><s:property
-					value="model.title" /></td>
-			</tr>
-			<tr>
-				<td width="100" align="right">案件类别：</td>
-				<td align="left" width="149"><s:property
-					value="model.caseType.name" /></td>
-			</tr>
-			<tr>
-				<td width="100" align="right">案件地点：</td>
-				<td align="left" width="149"><s:property value="model.address" />
-				</td>
-			</tr>
-			<tr>
-				<td width="100" align="right">事发时间：</td>
-				<td align="left" width="149"><s:date name="model.caseTime"
-					format="yyyy-MM-dd" /></td>
-			</tr>
-			<tr>
-				<td width="100" align="right">案件报告人：</td>
-				<td width="149" align="left"><s:property value="model.informer" />
-				</td>
-			</tr>
-			<tr>
-				<td width="100" align="right">报告人电话：</td>
-				<td width="149" align="left"><s:property
-					value="model.informerPhone" /></td>
-			</tr>
-			<tr>
-				<td width="100" align="right">案件描述：</td>
-				<td width="149" align="left">${model.descn}</td>
-			</tr>
-			<tr><td width="100">&nbsp;</td><td>&nbsp;</td></tr>
-		</table>
-		</td>
-	</tr>
-</table>
-</div>
-<div id="general" class="x-hide-display" >
-	<!-- include进来二级Tab以现实一个食品安全综合案件关联的多个一般案件 -->		
-	<%@include	file="viewGenericCases.jsp"%>			
-</div>
-<div id="tasks" class="x-hide-display" style="margin: -1;">
-	<!-- include进来二级Tab以现实一个食品安全案件下的多个任务 -->		
-	<%@include file="viewTasks.jsp"%>
-</div>
-<div id="sms" class="x-hide-display">
-<%@include file="viewSmsGrid.jsp" %>
-</div>
-</div>
-</div>
-<%@include file="chooseSendType.jsp"%>
-<%@include file="viewTaskDetailResult.jsp"%>
 </body>
 </html>
