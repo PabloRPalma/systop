@@ -4,9 +4,7 @@
 <c:forEach items="${model.taskses}" var="task"	varStatus="taskStatus">
 	<div id="taskDiv${taskStatus.index+1}" class="x-hide-display">
 		<div>
-		<table >
-			<tr><td colspan="6">&nbsp;</td></tr>
-			<tr><td colspan="6">&nbsp;</td></tr>
+		<table class="mytable" >
 				<tr>
 					<td align="right" width="6%" >任务标题：</td>
 					<td colspan="5" align="left" >${task.title }</td>
@@ -40,8 +38,6 @@
 					</div>
 					</td>
 				</tr>
-			<tr><td colspan="6">&nbsp;</td></tr>
-			<tr><td colspan="6">&nbsp;</td></tr>
 			</table>
 		</div>
 		<div >

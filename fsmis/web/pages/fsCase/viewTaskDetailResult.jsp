@@ -50,7 +50,7 @@
 <div class="x-window-header">任务处理结果</div>
 <div class="x-window-body">
 <div>
-<table align="left" width="500px">
+<table align="left" class="mytable" width="500px">
 	<tr>
 		<td>
 		<table width="500px" align="center">
