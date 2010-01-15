@@ -2,11 +2,9 @@
 	pageEncoding="UTF-8"%>
 <div id="taskDiv" style="margin: -1">
 <c:forEach items="${model.taskses}" var="task"	varStatus="taskStatus">
-	<div id="taskDiv${taskStatus.index+1}" class="x-hide-display" style="padding:0">
-	<table align="left" style="border-bottom: 0;padding: -1; border: 0;" >
-		<tr>
-			<td>			
-			<table width="800px" align="left" class="mytable" style="padding: 0; border: 0;">
+	<div id="taskDiv${taskStatus.index+1}" class="x-hide-display">
+		<div>
+		<table >
 			<tr><td colspan="6">&nbsp;</td></tr>
 			<tr><td colspan="6">&nbsp;</td></tr>
 				<tr>
@@ -45,15 +43,11 @@
 			<tr><td colspan="6">&nbsp;</td></tr>
 			<tr><td colspan="6">&nbsp;</td></tr>
 			</table>
-			</td>
-		</tr>
-		<tr>
-			<td>	
+		</div>
+		<div >
 			<!-- 任务明细信息的Ext GridPanel -->				
 			<%@include file="viewTaskDetailsGrid.jsp" %>
-	    	</td>	
-		</tr>
-	</table>	
+		</div>
 	</div>
 </c:forEach></div>
 <script type="text/javascript">
