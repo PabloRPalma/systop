@@ -61,7 +61,8 @@ public class TaskManager extends BaseGenericsManager<Task> {
     if (ArrayUtils.isNotEmpty(deptIds)) {
       for (String id : deptIds) {
         TaskDetail taskDetail = new TaskDetail();
-        Dept dept = getDao().get(Dept.class, Integer.valueOf(id));
+        //Dept dept = getDao().get(Dept.class, Integer.valueOf(id));
+        Dept dept= (Dept) getDao().findObject("from Dept d where d.id = ?", Integer.valueOf(id));
         taskDetail.setDept(dept);
         // 任务明细状态属性,未接收
         taskDetail.setStatus(TaskConstants.TASK_DETAIL_UN_RECEIVE);
@@ -117,6 +118,7 @@ public class TaskManager extends BaseGenericsManager<Task> {
     StringBuffer buf = new StringBuffer();
     buf.append(dept.getName()).append(",你部门现有一条待处理任务,请及时登录系统处理.");
     for (User u : users) {
+      logger.info(u.getName());
       // User实体中没有isMesReceive属性,暂时无法判断是否是短信接收人,待加上该属性后,启用本段代码
       /*
        * if(){ getSmsSendManager().addMessage(mobileNum, content) }
