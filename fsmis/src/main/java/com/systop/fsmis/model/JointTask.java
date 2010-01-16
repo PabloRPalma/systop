@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -14,9 +15,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import com.systop.common.modules.security.user.model.User;
 import com.systop.core.model.BaseModel;
+import com.systop.core.util.RemaindaysUtil;
 
 /**
  * 联合任务表
@@ -29,25 +34,29 @@ public class JointTask extends BaseModel {
 	private Integer id;
 	private FsCase fsCase;
 	private User proposer;
-	private User auditor;
+
 	private String title;
 	private String descn;
 	private Date createDate;
 	private Date presetTime;
-	private Character status;
-	private Character isAgree;
+	private String status;
+
 	private String opinion;
-	private Date auditDate;
+
 
 	private Set<JointTaskDetail> taskDetailses = new HashSet<JointTaskDetail>(0);
 	private Set<JointTaskAttach> taskAttachses = new HashSet<JointTaskAttach>(0);
 	private Set<SmsSend> smsSendses = new HashSet<SmsSend>(0);
+	
+	private Set<CheckResult> checkResults = new HashSet<CheckResult>(0);
 
 	public JointTask() {
 	}
 
 	@Id
-	@Column(name = "ID", unique = true, nullable = false, precision = 10, scale = 0)
+	@GeneratedValue(generator = "hibseq")
+	@GenericGenerator(name = "hibseq", strategy = "hilo")
+	@Column(name = "ID", unique = true, nullable = false)
 	public Integer getId() {
 		return this.id;
 	}
@@ -64,16 +73,6 @@ public class JointTask extends BaseModel {
 
 	public void setFsCase(FsCase fsCase) {
 		this.fsCase = fsCase;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "AUDITOR")
-	public User getAuditor() {
-		return this.auditor;
-	}
-
-	public void setAuditor(User auditor) {
-		this.auditor = auditor;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -125,21 +124,12 @@ public class JointTask extends BaseModel {
 	}
 
 	@Column(name = "STATUS", length = 1)
-	public Character getStatus() {
+	public String getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(Character status) {
+	public void setStatus(String status) {
 		this.status = status;
-	}
-
-	@Column(name = "IS_AGREE", length = 1)
-	public Character getIsAgree() {
-		return this.isAgree;
-	}
-
-	public void setIsAgree(Character isAgree) {
-		this.isAgree = isAgree;
 	}
 
 	@Column(name = "OPINION", length = 255)
@@ -151,15 +141,6 @@ public class JointTask extends BaseModel {
 		this.opinion = opinion;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "AUDIT_DATE", length = 11)
-	public Date getAuditDate() {
-		return this.auditDate;
-	}
-
-	public void setAuditDate(Date auditDate) {
-		this.auditDate = auditDate;
-	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "jointTask")
 	public Set<JointTaskDetail> getTaskDetailses() {
@@ -187,5 +168,21 @@ public class JointTask extends BaseModel {
 	public void setSmsSendses(Set<SmsSend> smsSendses) {
 		this.smsSendses = smsSendses;
 	}
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "jointTask")
+	public Set<CheckResult> getCheckResults() {
+  	return checkResults;
+  }
 
+	public void setCheckResults(Set<CheckResult> checkResults) {
+  	this.checkResults = checkResults;
+  }
+	
+	/**
+	 * 得到任务逾期天数方法
+	 */
+	@Transient
+	public double getRemainDays() {
+		return RemaindaysUtil.getRemainDays(getPresetTime());
+	}
 }
