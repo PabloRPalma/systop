@@ -42,7 +42,7 @@
 		</div>	
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
-			<a href="${ctx}/jointTask/index.do" target="main">部门上报</a>
+			<a href="${ctx}/casereport/index.do" target="main">部门上报</a>
 		</div>	
 	</div>
 	<div id="assess">
