@@ -3,6 +3,10 @@
 	<%@include file="/common/taglibs.jsp"%>
 <div id="taskDiv" style="margin: -1">
 <c:forEach items="${model.taskses}" var="task"	varStatus="taskStatus">
+  <c:if test="${task.isCurrentTask eq '1'}">
+  <c:set var="currentTask" value="${taskStatus.index}"></c:set>
+  </c:if>
+  
 	<div id="taskDiv${taskStatus.index+1}" class="x-hide-display">
 		<div>
 		<table class="mytable" >
@@ -50,7 +54,7 @@
 		var taskDiv = new Ext.TabPanel( {
 			renderTo : 'taskDiv',
 			anchor : '100% 100%',
-			activeTab : 0,
+			activeTab : ${currentTask},
 			frame : false,
 			defaults : {
 				autoHeight : false
