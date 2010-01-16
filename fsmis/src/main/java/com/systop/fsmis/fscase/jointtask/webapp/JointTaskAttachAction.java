@@ -25,7 +25,7 @@ import com.systop.fsmis.model.JointTask;
 import com.systop.fsmis.model.JointTaskAttach;
 
 /**
- * 针对风险评估实体选择专家组成员
+ * 联合整治任务附件管理Action
  * @author ShangHua
  * 
  */
