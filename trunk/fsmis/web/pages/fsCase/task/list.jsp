@@ -80,7 +80,7 @@ eq 0?'单体任务':'多体任务'}管理&nbsp;&gt;&nbsp;${param['isMultipleCase
 			style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm" />
 		<ec:column width="100" property="presetTime" title="规定完成时间"
 			style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm" />
-		<ec:column width="100" property="completionTime" title="完成时间"
+		<ec:column width="100" property="closedTime" title="完成时间"
 			style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm">
 			<%--<c:choose>
 				<c:when test="${item.status == '2'}">
