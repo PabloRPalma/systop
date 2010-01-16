@@ -218,13 +218,13 @@
 						 message+= "有";
 						 if(respText.reportSms != 0 && respText.reportSms != 'undefined'){
 							 message+=respText.reportSms;
-							 message+="条<a href='${ctx}/smsreceive/index.do?' target='main'><font color='red'>举报短信</font></a>,";
+							 message+="条举报短信,";
 						 }
 						 if(respText.verifySms != 0 && respText.verifySms != 'undefined'){
 							 message+=respText.verifySms;
-							 message+="条<a href='${ctx}/smsreceive/index.do?' target='main'><font color='red'>核实短信</font></a>,";
+							 message+="条核实短信,";
 						 }
-						 message+="请注意查收";
+						 message+="请注意<a href='${ctx}/smsreceive/index.do?' target='main'><font color='red'>查收</font></a>";
 
 						 Ext.my().msg('', message);
 					 }					
