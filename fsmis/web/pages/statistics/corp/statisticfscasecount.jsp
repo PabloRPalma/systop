@@ -9,14 +9,23 @@
 <%@include file="/common/extjs.jsp" %>
 <link href="${ctx}/styles/treeSelect.css" type='text/css' rel='stylesheet'>
 <script type="text/javascript" src="${ctx}/amcharts/swfobject.js"></script>
+<script type="text/javascript">
+function validator(){
+	var phone = document.getElementById("displayNum").value;
+	if(isNaN(phone)){
+		alert("图显输入必须是数字！");
+		return false;
+	}
+}
+</script>
 </head>
 <body>
 <div class="x-panel-header">企业处罚统计</div>
 <div class="x-toolbar">
 <table width="100%" border="0">
 	<tr>
-		<s:form id="supervisorstatistic" action="statisticFsCaseCount.do"
-			method="post" target="main">
+		<s:form id="corptatistic" action="statisticFsCaseCount.do"
+			method="post" target="main" onsubmit="return validator()">
 			<td width="60" align="right">所属部门：</td>
 			<td class="simple" align="left" width="160">
 				<div id="comboxWithTree" style="float: left;width: 100px"></div>
@@ -34,7 +43,7 @@
 					onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"
 					class="Wdate" />
 				图显：
-				<s:textfield name="displayNum" cssStyle="width:30px"></s:textfield>个
+				<s:textfield id="displayNum" name="displayNum" cssStyle="width:30px"></s:textfield>个
 				<s:submit value="查询" cssClass="button"/>
 			</td>
 		</s:form>
@@ -45,7 +54,6 @@
 				<td><a href="statisticFsCaseCount.do">处罚统计</a></td>
 				<td><span class="ytb-sep"></span></td>
 				<td><a href="statisticByDept.do">部门统计</a></td>
-			</tr>
 		</table>
 		</td>
 	</tr>
