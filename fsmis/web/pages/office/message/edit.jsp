@@ -51,11 +51,11 @@ function showWin() {
 <fieldset style="width: 700px; padding-top: 2px ;">
   <legend>编辑内部消息</legend>
 	<s:hidden name="model.id"/>
-	<table width="550px" align="center" border="0" cellpadding="3" cellspacing="3">
+	<table width="600px" align="center" border="0" cellpadding="3" cellspacing="3">
 		<tr>
 			<td align="right" width="70">收信人：</td>
 			<td align="left">
-					<s:textfield id="person" name="person" cssStyle="width:450px" />
+					<s:textfield id="person" name="person" cssStyle="width:450px" cssClass="required" /><font color="red">&nbsp;*</font>
 					<s:hidden name="userId"></s:hidden>
 					<input onclick="showWin()" value="添加人员" type="button">
 			</td>
@@ -63,8 +63,8 @@ function showWin() {
 		<tr>
 			<td align="right">内容：</td>
 			<td align="left">
-			<s:textarea id="content" name="model.content" cssStyle="width:450px; height:50px" cssClass="required"/>
-			<font color="red">&nbsp;*</font>
+			<s:textarea id="content" name="model.content" cssStyle="width:450px; height:50px" cssClass="required"/><font color="red">&nbsp;*</font>
+			</td>
 		</tr>
 	</table>
 </fieldset>
