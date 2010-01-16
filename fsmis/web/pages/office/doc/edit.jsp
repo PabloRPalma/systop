@@ -15,14 +15,14 @@
 <div><%@ include file="/common/messages.jsp"%></div>
 <div align="center">
 <s:form action="save.do" id="save" method="post" theme="simple" validate="true">
-<fieldset style="width: 800px; padding-top: 2px">
+<fieldset style="width: 820px; padding-top: 2px">
   <legend>添加文章信息</legend>
 	<s:hidden name="model.id"/>
 	<table width="800px" align="center" border="0" cellpadding="3" cellspacing="3">
 		<tr>
 			<td align="right" width="70">文章标题：</td>
 			<td align="left">
-				<s:textfield id="title" name="model.title" cssStyle="width:700px" cssClass="required"/>
+				<s:textfield id="title" name="model.title" cssStyle="width:600px" cssClass="required"/><font color="red">&nbsp;*</font>
 			</td>
 		</tr>
 		<tr>
@@ -34,13 +34,13 @@
 		<tr>
 			<td align="right" width="70">所属栏目：</td>
 			<td align="left">
-				<s:select name="model.documentType.id" listKey="id" listValue="name" list="DocumentTypeMap" headerKey=""  headerValue="选择栏目..." cssStyle="width:200px"></s:select>
+				<s:select name="model.documentType.id" listKey="id" listValue="name" list="DocumentTypeMap" headerKey=""  headerValue="选择栏目..." cssStyle="width:200px"></s:select><font color="red">&nbsp;*</font>
 			</td>
 		</tr>
 		<tr>
 			<td align="right">内容：</td>
 			<td align="left">
-			<s:textarea id="content" name="model.content" cssStyle="width:550px;" />
+			<s:textarea id="content" name="model.content" cssStyle="width:450px;" />
 		</tr>
 	</table>
 </fieldset>
