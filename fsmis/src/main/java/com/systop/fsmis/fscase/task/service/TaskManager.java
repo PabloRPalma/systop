@@ -61,8 +61,8 @@ public class TaskManager extends BaseGenericsManager<Task> {
     if (ArrayUtils.isNotEmpty(deptIds)) {
       for (String id : deptIds) {
         TaskDetail taskDetail = new TaskDetail();
-        //Dept dept = getDao().get(Dept.class, Integer.valueOf(id));
-        Dept dept= (Dept) getDao().findObject("from Dept d where d.id = ?", Integer.valueOf(id));
+        Dept dept = getDao().get(Dept.class, Integer.valueOf(id));
+        //Dept dept= (Dept) getDao().findObject("from Dept d where d.id = ?", Integer.valueOf(id));
         taskDetail.setDept(dept);
         // 任务明细状态属性,未接收
         taskDetail.setStatus(TaskConstants.TASK_DETAIL_UN_RECEIVE);
