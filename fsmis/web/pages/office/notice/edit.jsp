@@ -4,8 +4,8 @@
 <html>
 <head>
 <title>编辑通知</title>
-<%@include file="/common/meta.jsp"%>
 <%@include file="/common/validator.jsp"%>
+<%@include file="/common/meta.jsp"%>
 <%@include file="/common/dwr.jsp" %>
 <script type="text/javascript" src="${ctx}/scripts/fckeditor/fckeditor.js"></script>
 <script type="text/javascript" src="${ctx}/dwr/interface/NoticeDwrAction.js"></script>
@@ -48,15 +48,10 @@ function deleAtt(id) {
 		<tr>
 			<td align="right">发送部门：</td>
 			<td align="left">
-			<c:if test="${!empty model.recRecordses}">
-				<c:forEach items="${model.recRecordses}" var="rr">
-					【${rr.dept.name}】
-				</c:forEach>
-			</c:if>
-			<c:if test="${empty model.recRecordses}">
-				<div id="showDiv" style="border-bottom: 1px dotted #97B7E7; padding: 2 7 2 7;">部门内容</div>
-				<fs:selectDepts name="deptIds" column="4" onclick="show()" itemClass="checkbox"/>
-			</c:if>
+			
+				<div id="showDiv" style="border-bottom: 1px dotted #97B7E7; padding: 2 7 2 7;"></div>
+				<fs:selectDepts name="deptIds" column="4" onclick="show()" defDeptIds="${receDeptIds}" itemClass="checkbox"/>
+		
 			</td>
 		</tr>
 		<tr>
