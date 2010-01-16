@@ -43,6 +43,7 @@ function deleAtt(id) {
 	<input type="hidden" name="model.fsCase.id" value="${model.fsCase.id}"></input>
 	<input type="hidden" name="modelId" value="${param['modelId'] }"></input>
 	<input type="hidden" name="isMultipleCase" value="${isMultipleCase}"></input>
+	<s:hidden name="model.id"></s:hidden>
 	<s:hidden name="isMultiple"></s:hidden>
 	<fieldset style="width: 700px; padding: 10px 10px 10px 10px;">
 	<legend> 派遣信息</legend>
@@ -59,10 +60,9 @@ function deleAtt(id) {
 			<div id="selectDepts"
 				style="width: 400px; word-break: break-all; color: red;"></div>
 			<s:hidden id="selectDeptNames" name="selectDeptNames"></s:hidden>
-
 			<div id="showDiv"
 				style="border-bottom: 1px dotted #97B7E7; padding: 2 7 2 7;"></div>
-			<fs:selectDepts name="deptIds" column="4" sendTypeId="${sendTypeId}"
+			<fs:selectDepts name="deptIds"  column="4" sendTypeId="${sendTypeId}"
 				onclick="show()" itemClass="checkbox" /></td>
 		</tr>
 		<tr>
