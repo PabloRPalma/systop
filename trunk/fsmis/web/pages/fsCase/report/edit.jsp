@@ -7,6 +7,7 @@
 <title>上报事件</title>
 <%@include file="/common/extjs.jsp"%>
 <%@include file="/common/meta.jsp"%>
+<%@include file="/common/autocomplete.jsp"%>
 <%@include file="/common/validator.jsp"%>
 <style type="text/css">
 #mytable {
@@ -177,10 +178,10 @@
 <div id="traffic" class="x-hide-display">
 	<table id="mytable" style="margin-top: 5px; width: 800px"
 		align="center">
-	  <s:hidden name="corp.id" />
+	  <s:hidden id="corpId" name="corp.id" />
 		<tr>
 			<td width="151" align="right" height="26">单位名称：</td>
-			<td width="637" align="left"><s:textfield id="companyName"
+			<td width="637" align="left"><s:textfield id="companyName" onblur="compCorpInfo(this.value)"
 				name="corpName" cssStyle="width:550px" cssClass="required"/>
 			<font color="red">&nbsp;*</font></td>
 		</tr>
@@ -279,6 +280,70 @@
 	     }); 		    
 	
   });
+</script>
+<script type="text/javascript">
+    window.onload = function(){
+    // jQuery自动装配    
+    $.ajax({
+		url: '${ctx}/casereport/getCorpOfCounty.do',
+		type: 'post',
+		dataType: 'json',
+		success: function(corps, textStatus){
+			$("#companyName").autocomplete(corps, {
+       			matchContains: true,
+        		minChars:1,
+        		width:'154px', 
+        		scrollHeight: 200
+      		});
+		}
+	});
+  };
+  function compCorpInfo(cName){
+	//alert(cName);
+    $.ajax({
+		url: '${ctx}/casereport/getCorpByName.do',
+		type: 'post',
+		dataType: 'json',
+		data: {corpName : cName},
+		success: function(rst, textStatus){
+			var companyAddress = document.getElementById('companyAddress');
+			var legalPerson = document.getElementById('legalPerson');
+			var produceLicense = document.getElementById('produceLicense');
+			var businessLicense = document.getElementById('businessLicense');
+			var sanitationLicense = document.getElementById('sanitationLicense');
+			var operateDetails = document.getElementById('operateDetails');
+			if (rst.id != null) {
+				document.getElementById('corpId').value = rst.id;
+				companyAddress.value = rst.address;
+				legalPerson.value = rst.legalPerson;
+				produceLicense.value = rst.produceLicense;
+				businessLicense.value = rst.businessLicense;
+				sanitationLicense.value = rst.sanitationLicense;
+				operateDetails.value = rst.operateDetails;
+				companyAddress.readOnly = 'isReadOnly';
+				legalPerson.readOnly = 'isReadOnly';
+				produceLicense.readOnly = 'isReadOnly';
+				businessLicense.readOnly = 'isReadOnly';
+				sanitationLicense.readOnly = 'isReadOnly';
+				operateDetails.readOnly = 'isReadOnly';
+			}else{
+				document.getElementById('corpId').value = '';
+				document.getElementById('companyAddress').value = '';
+				document.getElementById('legalPerson').value = '';
+				document.getElementById('produceLicense').value = '';
+				document.getElementById('businessLicense').value = '';
+				document.getElementById('sanitationLicense').value = '';
+				document.getElementById('operateDetails').value = '';
+				companyAddress.readOnly = '';
+				legalPerson.readOnly = '';
+				produceLicense.readOnly = '';
+				businessLicense.readOnly = '';
+				sanitationLicense.readOnly = '';
+				operateDetails.readOnly = '';
+			}
+		}
+	});
+  }
 </script>
 <script type="text/javascript">
 	$(document).ready(function() {
