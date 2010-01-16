@@ -61,10 +61,10 @@
 	<ec:row>
 		<ec:column width="40" property="_s" title="No." style="text-align:center" value="${GLOBALROWCOUNT}" sortable="false" />
 		<ec:column width="280" property="title" title="事件标题" sortable="false" />
-		<ec:column width="100" property="caseType.name" title="事件类别" style="text-align:center"/>
-		<ec:column width="110" property="caseTime" title="事发时间" style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm" sortable="false" />
+		<ec:column width="100" property="caseType.name" title="事件类别" style="text-align:center" sortable="false"/>
+		<ec:column width="110" property="caseTime" title="事发时间" style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm" />
 		<ec:column width="80" property="reportDept.name" title="上报部门" sortable="false" style="text-align:center" />
-		<ec:column width="80" property="status" title="状态" sortable="false" style="text-align:center">
+		<ec:column width="80" property="status" title="状态" sortable="false" style="text-align:center" >
 			<c:if test="${item.status == '0'}"><font color="red">未派遣</font></c:if>
 			<c:if test="${item.status == '1'}"><font color="#FF9D07">已派遣</font></c:if>
 			<c:if test="${item.status == '2'}"><font color="green">已处理</font></c:if>
