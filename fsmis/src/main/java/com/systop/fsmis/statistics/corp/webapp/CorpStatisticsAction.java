@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.xwork.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -42,7 +43,7 @@ public class CorpStatisticsAction extends
 	private Date endDate;
 
 	/** 部门查询关键字 */
-	private Integer deptId;
+	private String deptId;
 
 	/** 显示数目 */
 	private Integer displayNum;
@@ -70,7 +71,7 @@ public class CorpStatisticsAction extends
 			args.add(endDate);
 		}
 		// 根据部门关键字查询
-		if (deptId != null) {
+		if (deptId != null && StringUtils.isNotBlank(deptId)) {
 			hql.append("and cp.dept.id = ? ");
 			args.add(deptId);
 		} else {//如果部门关键字为空，则按当前用户所属部门查询
@@ -195,11 +196,11 @@ public class CorpStatisticsAction extends
 		this.displayNum = displayNum;
 	}
 
-	public Integer getDeptId() {
+	public String getDeptId() {
 		return deptId;
 	}
 
-	public void setDeptId(Integer deptId) {
+	public void setDeptId(String deptId) {
 		this.deptId = deptId;
 	}
 }
