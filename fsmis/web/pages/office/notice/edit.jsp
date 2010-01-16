@@ -1,16 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <%@include file="/common/taglibs.jsp"%>
+<%@include file="/common/meta.jsp"%>
+<%@include file="/common/validator.jsp"%>
 <html>
 <head>
 <title>编辑通知</title>
-<%@include file="/common/validator.jsp"%>
-<%@include file="/common/meta.jsp"%>
+<%@include file="/common/ec.jsp"%>
 <%@include file="/common/dwr.jsp" %>
+
 <script type="text/javascript" src="${ctx}/scripts/fckeditor/fckeditor.js"></script>
 <script type="text/javascript" src="${ctx}/dwr/interface/NoticeDwrAction.js"></script>
 <script type="text/javascript" src="${ctx}/scripts/fsmis/ShowDeptName.js"></script>
 <script type="text/javascript">
+$(document).ready(function() {
+	$("#save").validate();
+});
 function deleAtt(id) {
 		if (confirm("确定要删除吗？")) {
 			deleteDiv('att');
@@ -28,6 +34,19 @@ function deleAtt(id) {
 		document.getElementById(attachmentId).style.display = 'none';
 		document.getElementById(attachmentId).innerHTML = "";
 	}
+
+	function preFckEditor(){
+		var fckEditor = new FCKeditor( 'content' ) ;
+	    fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
+	    fckEditor.ToolbarSet = 'BasicA';
+	    fckEditor.Height = 280;
+	    fckEditor.Width = 600;
+	    fckEditor.ReplaceTextarea();
+	}
+	function show(){
+		deptOperator.showDeptName("deptIds", "showDiv");
+	}
+	deptOperator.init("deptIds", "showDiv");
 </script>
 </head>
 <body onload="preFckEditor()">
@@ -35,9 +54,9 @@ function deleAtt(id) {
 <div class="x-panel-header">编辑通知</div>
 <div><%@ include file="/common/messages.jsp"%></div>
 <div align="center">
-  <s:form action="save.do" id="saveNotice" method="post" theme="simple" validate="true" enctype="multipart/form-data">
+  <s:form action="save.do" id="save" method="post" theme="simple" validate="true" enctype="multipart/form-data">
 	<s:hidden name="model.id"/>
-	<fieldset style="width: 700px; padding: 10px 10px 10px 10px;">
+	<fieldset style="width: 700px; padding-top: 10px;">
 	<legend>通知信息</legend>
 	<table width="650px" align="center">
 		<tr>
@@ -84,26 +103,8 @@ function deleAtt(id) {
 		    </td>
 		</tr>
 	</table>
-</s:form></div>
+</s:form>
 </div>
-<script type="text/javascript">
-	$(document).ready(function() {
-	$("#saveNotice").validate();
-});
-	
-	deptOperator.init("deptIds", "showDiv");
-
-	function show(){
-		deptOperator.showDeptName("deptIds", "showDiv");
-	}
-	
-	function preFckEditor(){
-		var fckEditor = new FCKeditor( 'content' ) ;
-	    fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
-	    fckEditor.ToolbarSet = 'Basic';
-	    fckEditor.Height = 280;
-	    fckEditor.ReplaceTextarea();
-	}
-</script>
+</div>
 </body>
 </html>
