@@ -170,9 +170,7 @@ public class NoticeAction extends ExtJsCrudAction<Notice, NoticeManager> {
 			while(it.hasNext()) {
 				receDeptIds.append(it.next().getDept().getId()).append(",");
 			}
-			logger.info("idS: {}", receDeptIds.toString());
-			this.getRequest().setAttribute("receDeptIds", receDeptIds.toString().substring(0, receDeptIds.toString().length() - 1));
-			logger.info("reQuserIDS: {}", this.getRequest().getAttribute("receDeptIds"));
+			getRequest().setAttribute("receDeptIds", receDeptIds.toString().substring(0, receDeptIds.toString().length() - 1));
 		}
 		return INPUT;
 	}
