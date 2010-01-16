@@ -67,9 +67,6 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
     // 作为当前案件的唯一有效任务,当前任务已处理(对应所有任务明细都已处理),则修改案件的状态为"已处理"
     FsCase fsCase = task.getFsCase();
     // 如果案件没有关联企业,而在完成任务中为案件指定了企业(创建新企业),则需要保存企业信息
-    logger.info("----");
-    logger.info(taskDetail.getTask().getFsCase().getCorp().getId()
-        + "-------------->");
     if (taskDetail.getTask().getFsCase().getCorp() != null
         && StringUtils.isNotBlank(taskDetail.getTask().getFsCase().getCorp()
             .getName())
@@ -88,7 +85,6 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
     }
     // 如果所有任务明细已经处理,则把任务状态置为"已处理",完成时间为当前时间
     if (checkIsAllTaskDetailResolved(taskDetail)) {
-
       task.setStatus(TaskConstants.TASK_PROCESSED);
       task.setClosedTime(new Date());
       getDao().save(task);
