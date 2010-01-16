@@ -3,12 +3,10 @@ package com.systop.fsmis.fscase.task.webapp;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -208,15 +206,16 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
   public String modify() {
     Assert.notNull(getModel().getId());
     StringBuffer buf = new StringBuffer();
-    //setModel(getManager().get(getModel().getId()));
-    setModel((Task)getManager().getDao().findObject("from Task t where t.id = ?", getModel().getId()));
+    // setModel(getManager().get(getModel().getId()));
+    setModel((Task) getManager().getDao().findObject(
+        "from Task t where t.id = ?", getModel().getId()));
     deptIds = new String[getModel().getTaskDetails().size()];
     List<TaskDetail> list = new ArrayList(getModel().getTaskDetails());
     for (int i = 0; i < list.size(); i++) {
       if (list.get(i).getDept().getId() != null) {
-        deptIds[i] = list.get(i).getDept().getId().toString();        
+        deptIds[i] = list.get(i).getDept().getId().toString();
         buf.append(list.get(i).getDept().getId().toString());
-        if(i<list.size()-1){
+        if (i < list.size() - 1) {
           buf.append(",");
         }
       }
