@@ -12,6 +12,12 @@
 			<result type="json" name="jsonRst">
 		   		<param name="root">typeRst</param>
 			</result>
+			<result type="json" name="jsonCorp">
+		   		<param name="root">jsonCorps</param>
+			</result>
+			<result type="json" name="jcorp">
+		   		<param name="root">corpInfo</param>
+			</result>
 		</action>
 	</package>
 </struts>

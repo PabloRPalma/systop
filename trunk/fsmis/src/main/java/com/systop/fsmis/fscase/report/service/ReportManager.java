@@ -1,6 +1,8 @@
 package com.systop.fsmis.fscase.report.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -149,5 +151,44 @@ public class ReportManager extends BaseGenericsManager<FsCase> {
   		corp = (Corp) corpList.get(0);
   	}
   	return corp;
+  }
+  
+  /**
+   * 根据企业名称和区县ID取得企业信息
+   * @param corpName 企业名称
+   * @param countyId 区县ID
+   */
+  public Map getCorpMapByName(String corpName, Integer countyId) {
+  	Map map = new HashMap();
+  	Corp corp = getCorpByName(corpName, countyId);
+  	if (corp != null) {
+  		map.put("id", corp.getId());
+      map.put("name", corp.getName());
+      map.put("address", corp.getAddress());
+      map.put("legalPerson", corp.getLegalPerson());
+      map.put("produceLicense", corp.getProduceLicense());
+      map.put("businessLicense", corp.getBusinessLicense());
+      map.put("sanitationLicense", corp.getSanitationLicense());
+      map.put("operateDetails", corp.getOperateDetails());
+  	}
+  	return map;
+  }
+  
+  /**
+   * 根据区县ID取得该区县下所有的企业
+   * @param countyId 区县ID
+   */
+  public String[] getCorpOfCounty(Integer countyId) {
+  	String[] corps = null;
+  	List<Corp> corpList = getDao().query("from Corp c where c.dept.id = ?", countyId);
+  	if (CollectionUtils.isNotEmpty(corpList)) {
+      int arraySize = corpList.size();
+      corps = new String[arraySize];
+      for (int i = 0; i < arraySize; i++) {
+      	Corp corp = (Corp) corpList.get(i);
+        corps[i] = (String) corp.getName();
+      }
+    }
+    return corps;
   }
 }

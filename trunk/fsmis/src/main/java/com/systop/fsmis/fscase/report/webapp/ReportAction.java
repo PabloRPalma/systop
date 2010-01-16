@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.criterion.MatchMode;
@@ -51,15 +52,31 @@ public class ReportAction extends ExtJsCrudAction<FsCase, ReportManager> {
 	 * 查询截止事件
 	 */
 	private Date endTime;
-
+	/**
+	 * 任务
+	 */
 	private Task task;
-	
+	/**
+	 * 任务明细
+	 */
 	private TaskDetail taskDetail;
-	
+	/**
+	 * 对应的处理企业
+	 */
 	private Corp corp;
-	
+	/**
+	 * 企业名称
+	 */
 	private String corpName;
-		
+	/**
+	 * 所有企业信息ajax结果
+	 */
+	private String[] jsonCorps;
+	/**
+	 * 企业信息ajax结果
+	 */
+	private Map corpInfo;
+	
 	/**
 	 * 部门上报事件查询列表
 	 */
@@ -205,6 +222,30 @@ public class ReportAction extends ExtJsCrudAction<FsCase, ReportManager> {
     return "jsonRst";
   }
   
+  /**
+   * 取得区县下所有的企业
+   */
+  public String getCorpOfCounty() {
+  	Dept county = loginUserService.getLoginUserCounty(getRequest());
+  	if (county != null) {
+  		jsonCorps = getManager().getCorpOfCounty(county.getId());
+  	}
+  	
+  	return "jsonCorp";
+  }
+  
+  /**
+   * 取得企业信息
+   */
+  public String getCorpByName() {
+  	Dept county = loginUserService.getLoginUserCounty(getRequest());
+  	if (county != null) {
+  		corpInfo = getManager().getCorpMapByName(corpName, county.getId());;
+  	}
+  	
+  	return "jcorp";
+  }
+  
 	public Date getBeginTime() {
   	return beginTime;
   }
@@ -313,4 +354,19 @@ public class ReportAction extends ExtJsCrudAction<FsCase, ReportManager> {
   	this.typeRst = typeRst;
   }
 
+	public String[] getJsonCorps() {
+  	return jsonCorps;
+  }
+
+	public void setJsonCorps(String[] jsonCorps) {
+  	this.jsonCorps = jsonCorps;
+  }
+	
+	public Map getCorpInfo() {
+  	return corpInfo;
+  }
+
+	public void setCorpInfo(Map corpInfo) {
+  	this.corpInfo = corpInfo;
+  }
 }
