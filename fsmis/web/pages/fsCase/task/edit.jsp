@@ -76,7 +76,7 @@ function deleAtt(id) {
 		<tr>
 			<td align="right" width="180">任务描述：</td>
 			<td align="left" width="600"><s:textarea id="desc"
-				name="model.desc" 
+				name="model.descn" 
 				cssStyle="width:600px; height:100px;" cssClass="required" /><font
 				color="red">&nbsp;*</font></td>
 		</tr>
