@@ -57,10 +57,7 @@
 	</div>
 	<div id="tabs">
 		<div id="fsCaseDiv" class="x-hide-display">
-			<table id="fsCaseTable" width="100%" >
-				<tr>
-					<td align="left" width="100%">
-						<table class="mytable" >		
+						<table class="mytable"  >		
 							<tr>
 								<td class="simple" width="15%"align="right">案件标题：</td>
 								<td class="simple" align="left" ><s:property	value="model.title" /></td>
@@ -92,9 +89,6 @@
 								<td  align="left">${model.descn}</td>
 							</tr>						
 						</table>
-					</td>
-				</tr>
-			</table>
 		</div>
 		<div id="general" class="x-hide-display" >
 			<!-- include进来二级Tab以现实一个食品安全综合案件关联的多个一般案件 -->		

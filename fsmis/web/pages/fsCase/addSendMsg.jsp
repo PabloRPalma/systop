@@ -31,7 +31,7 @@ function init(){
 <table width="100%">
    <tr>
       <td align="right">
-        <a  href="confirmBackMsg.do?model.id=${model.id}&operType=M">手动核实</a>
+        <a  href="confirmBackMsg.do?model.id=${model.id}&operType=M&modelId=0&isMultipleCase=${isMultipleCase}">手动核实</a>
       </td>
    </tr>
 </table>
@@ -39,6 +39,8 @@ function init(){
 <div align="center">
 	<s:form action="sendMsg" id="sendMsg" method="post" theme="simple" validate="true" onsubmit="return valileader()">
 		<s:hidden name="model.id"/>
+		<input type="hidden" name="modelId" value="${param['modelId'] }"></input>
+		<input type="hidden" name="isMultipleCase" value="${isMultipleCase}"></input>
 		<fieldset  style="width:700px; padding: 50px 10px 10px 10px;">
 			<legend>编辑短信息</legend>
 		<table width="450" align="center">

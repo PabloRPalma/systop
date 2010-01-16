@@ -21,6 +21,8 @@
 <div align="center" style="margin-top:90px">
 <s:form action="confirmCheckedMsg.do" id="confirmCheckedMsg" method="post" validate="true" >  
   <s:hidden name="model.id"/>
+  <input type="hidden" name="modelId" value="${param['modelId'] }"></input>
+  <input type="hidden" name="isMultipleCase" value="${isMultipleCase}"></input>
   <fieldset style="width: 700px; padding-top: 10px">
   <legend>单体事件核实确认信息</legend>
   <c:if test="${empty param.operType}">
@@ -54,7 +56,7 @@
 	  					<s:submit value="保存"  cssClass="submit button" />  					
 	  					<s:reset value="重置" cssClass="button"/>
   					</c:if>  					 
-      	 			<input type="button" value="返回" class="button" onclick="location.href='index.do'"/>  			
+      	 			<input type="button" value="返回" class="button" onclick="location.href='index.do?modelId=0&isMultipleCase=${isMultipleCase}'"/>  			
   			</td>
   		</tr>
   	</table>
