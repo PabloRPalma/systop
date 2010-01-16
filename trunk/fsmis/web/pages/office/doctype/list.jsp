@@ -5,9 +5,9 @@
 <html>
 <head>
 <title>栏目管理</title>
-<%@include file="/common/meta.jsp"%>
-<%@include file="/common/extjs.jsp"%>
 <%@include file="/common/ec.jsp"%>
+<%@include file="/common/extjs.jsp"%>
+<%@include file="/common/meta.jsp"%>
 <script type="text/javascript">
 
 /**

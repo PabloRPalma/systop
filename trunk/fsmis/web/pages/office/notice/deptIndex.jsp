@@ -4,14 +4,13 @@
 <html>
 <head>
 <title>通知部门记录</title>
-<%@include file="/common/meta.jsp"%>
 <%@include file="/common/ec.jsp"%>
-
+<%@include file="/common/meta.jsp"%>
 </head>
 <body>
 <div class="x-panel">
 <div class="x-panel-header">部门接收通知列表</div>
-<div class="x-toolbar" style="padding-left: 20px">
+<div class="x-toolbar">
 <table width="99%">
 	<tr>
 		<td align="left">

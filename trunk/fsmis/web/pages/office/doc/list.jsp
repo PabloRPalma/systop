@@ -4,9 +4,9 @@
 <html>
 <head>
 <title>文章信息列表</title>
-<%@include file="/common/meta.jsp"%>
-<%@include file="/common/extjs.jsp"%>
 <%@include file="/common/ec.jsp"%>
+<%@include file="/common/extjs.jsp"%>
+<%@include file="/common/meta.jsp"%>
 <script type="text/javascript">
 function removeArticle(aID) {
     Ext.MessageBox.confirm('提示','确认要删除所选择的文章吗？删除后不能恢复！', function(btn){
