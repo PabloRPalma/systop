@@ -96,7 +96,7 @@
 	</tr>
 </table>
 </div>
-<div id="tabs">
+<div id="tabs" style="margin-top: -1px;margin-left: -1px;margin-right: -1px;">
 <div id="basic" class="x-hide-display"><s:hidden name="model.id" id="caseId" />
 <table id="mytable" height="360" style="margin-top: 8px;width: 800px" align="center">
 	<tr>
