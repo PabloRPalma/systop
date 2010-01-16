@@ -71,22 +71,35 @@
 <div id="basic" class="x-hide-display"><s:hidden name="model.id" />
 	<table id="mytable" height="360" style="margin-top: 5px; width: 800px"
 		align="center">
+		<s:hidden id="oneId" name="oneId"/>
+		<s:hidden id="twoId" name="twoId"/>
 		<tr>
-			<td width="163" height="30" align="right">事件标题：</td>
+			<td width="150" height="30" align="right">事件标题：</td>
 			<td align="left" colspan="3"><s:textfield id="title"
 				name="model.title" cssStyle="width:550px" cssClass="required" /><font
 				color="red">&nbsp;*</font></td>
 		</tr>
 		<tr>
 			<td align="right" height="30">事发时间：</td>
-			<td width="263" align="left"><input type="text"
-				name="model.caseTime" style="width: 175px"
+			<td align="left" colspan="3"><input type="text"
+				name="model.caseTime" style="width: 150px"
 				value='<s:property value="model.caseTime"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
 				class="Wdate required" /><font color="red">&nbsp;*</font></td>
-			<td width="102" align="right">事件类型：</td>
-			<td width="252" align="left">
-				
+		</tr>
+		<tr>
+			<td align="right" height="30">案件类别：</td>
+			<td align="left" colspan="3">
+				 <select id="levelone" name="typeoneId" style="width:154px;" class="required">
+					    <option value="">请选择...</option>
+						<c:forEach items="${levelone}" var="item">
+					       <option value="${item.id}" >${item.name}</option>
+					    </c:forEach>
+			      </select>
+			     <select id="itemId" name="typetwoId" style="width:154px;">
+					    <option value="">请选择...</option>
+				 </select>
+				 <font color="red">&nbsp;*</font>
 			</td>
 		</tr>
 		<tr>
@@ -97,18 +110,18 @@
 		</tr>
 		<tr>
 			<td align="right" height="30">举&nbsp;&nbsp;报&nbsp;&nbsp;人：</td>
-			<td align="left"><s:textfield id="informer"
-				name="model.informer" cssStyle="width:175px" />
+			<td width="256" align="left"><s:textfield id="informer"
+				name="model.informer" cssStyle="width:150px" />
 			</td>
-			<td align="right" height="30">举报人电话：</td>
-			<td align="left"><s:textfield id="informerPhone"
-				name="model.informerPhone" cssStyle="width:175px" />
+			<td width="136" height="30" align="right">举报人电话：</td>
+			<td width="242" align="left"><s:textfield id="informerPhone"
+				name="model.informerPhone" cssStyle="width:150px" />
 			</td>
 		</tr>
 		<tr>
 			<td align="right">事件描述：</td>
 			<td align="left" colspan="3" style="vertical-align: top"><s:textarea
-				id="descn" name="model.descn" cssStyle="width:550px; height:230px"
+				id="descn" name="model.descn" cssStyle="width:550px; height:210px"
 				cssClass="required" /> <font color="red">&nbsp;*</font></td>
 		</tr>
 	</table>
@@ -119,21 +132,21 @@
 		<s:hidden name="taskDetail.id" />
 		<s:hidden name="task.id" />
 		<tr>
-			<td width="163" height="28" align="right">处&nbsp;&nbsp;理&nbsp;&nbsp;人：</td>
+			<td width="150" height="28" align="right">处&nbsp;&nbsp;理&nbsp;&nbsp;人：</td>
 			<td align="left" colspan="3"><s:textfield id="processor"
 				name="taskDetail.processor" cssStyle="width:550px" cssClass="required" /><font
 				color="red">&nbsp;*</font></td>
 		</tr>
 		<tr>
 			<td align="right" height="33">调查时间：</td>
-			<td width="263" align="left"><input type="text"
+			<td width="266" align="left"><input type="text"
 				name="task.dispatchTime" style="width: 175px"
 				value='<s:property value="task.dispatchTime"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
 				class="Wdate required" /><font color="red">&nbsp;*</font>
 			</td>
-			<td width="102" align="right">结案时间：</td>
-			<td width="252" align="left">
+			<td width="99" align="right">结案时间：</td>
+			<td width="265" align="left">
 				<input type="text"
 				name="taskDetail.completionTime" style="width: 175px"
 				value='<s:property value="taskDetail.completionTime"/>'
@@ -166,8 +179,8 @@
 		align="center">
 	  <s:hidden name="corp.id" />
 		<tr>
-			<td width="165" align="right" height="26">单位名称：</td>
-			<td width="623" align="left"><s:textfield id="companyName"
+			<td width="151" align="right" height="26">单位名称：</td>
+			<td width="637" align="left"><s:textfield id="companyName"
 				name="corpName" cssStyle="width:550px" cssClass="required"/>
 			<font color="red">&nbsp;*</font></td>
 		</tr>
@@ -216,6 +229,57 @@
 		</tr>
 	</table>
 </s:form></div>
+<script type="text/javascript">
+  $(function(){
+	  $('#levelone').change(function() {
+			var subid = $("#levelone")[0].value;
+			if (subid == null || subid == '') {
+				$('#itemId').empty();
+				$('<option value=\'\'>请选择...</option>').appendTo('#itemId');
+				return;
+			}
+			$.ajax({
+				url: '${ctx}/casereport/getLevelTwo.do',
+				type: 'post',
+				dataType: 'json',
+				data: {typeId : subid},
+				success: function(rows, textStatus){
+				   $('#itemId').empty();
+				   $('<option value=\'\'>请选择...</option>').appendTo('#itemId');
+				   for (var i = 0; i < rows.length; i ++) {
+				   	var row = rows[i];
+				   	$('<option value=' + row.id + '>' + row.name + '</option>').appendTo('#itemId');
+				   }
+				}
+			});
+	    });
+  });
+  Ext.onReady(function(){
+		var subid = document.getElementById("oneId").value;
+		var twoid = document.getElementById("twoId").value;
+		if (subid != null && subid != '') {
+			$('#levelone').val(subid);
+		}
+	      $.ajax({
+			     url: '${ctx}/casereport/getLevelTwo.do',
+			     type: 'post',
+				 dataType: 'json',
+				 data: {typeId : subid},
+				 success: function(rows, textStatus){
+				 $('#itemId').empty();
+				 $('<option value=\'\'>请选择...</option>').appendTo('#itemId');
+				 for (var i = 0; i < rows.length; i ++) {
+					  var row = rows[i];
+					   $('<option value=' + row.id + '>' + row.name + '</option>').appendTo('#itemId');
+				 }
+				 if (twoid != null && twoid != '') {
+						$('#itemId').val(twoid);
+				 }
+			}
+	     }); 		    
+	
+  });
+</script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#save").validate();

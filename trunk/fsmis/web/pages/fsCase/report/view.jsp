@@ -74,22 +74,22 @@
 		<tr>
 			<td width="163" height="30" align="right">事件标题：</td>
 			<td align="left" colspan="3"><s:textfield id="title" readonly="true"
-				name="model.title" cssStyle="width:550px" cssClass="required" /><font
-				color="red">&nbsp;*</font></td>
+				name="model.title" cssStyle="width:550px" cssClass="required" /></td>
 		</tr>
 		<tr>
 			<td align="right" height="30">事发时间：</td>
 			<td width="263" align="left">${model.caseTime}</td>
 			<td width="102" align="right">事件类型：</td>
 			<td width="252" align="left">
-				
+				<c:if test="${model.caseType != null}">
+					${model.caseType.name}
+				</c:if>
 			</td>
 		</tr>
 		<tr>
 			<td align="right" >事发地点：</td>
 			<td align="left" colspan="3"><s:textfield id="address" readonly="true"
-				name="model.address" cssStyle="width:550px" cssClass="required" /><font
-				color="red">&nbsp;*</font></td>
+				name="model.address" cssStyle="width:550px" cssClass="required" /></td>
 		</tr>
 		<tr>
 			<td align="right" height="30">举&nbsp;&nbsp;报&nbsp;&nbsp;人：</td>
@@ -105,7 +105,7 @@
 			<td align="right">事件描述：</td>
 			<td align="left" colspan="3" style="vertical-align: top"><s:textarea readonly="true"
 				id="descn" name="model.descn" cssStyle="width:550px; height:230px"
-				cssClass="required" /> <font color="red">&nbsp;*</font></td>
+				cssClass="required" /></td>
 		</tr>
 	</table>
 </div>
