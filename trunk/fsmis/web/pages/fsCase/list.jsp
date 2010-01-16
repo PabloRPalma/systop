@@ -113,10 +113,10 @@ function remove(id){
 			    <font color="silver" >删</font> |
 			    <c:choose>
 				    <c:when test="${empty item.msgCheckedFlag or item.msgCheckedFlag == '0'}">
-				    	<a title="核实" href="addSendMsg.do?model.id=${item.id}">核</a>
+				    	<a title="核实" href="addSendMsg.do?model.id=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">核</a>
 				    </c:when>	
 				     <c:when test="${item.msgCheckedFlag == '1'}">
-				    	<a title="核实反馈" href="confirmBackMsg.do?model.id=${item.id}">核</a>
+				    	<a title="核实反馈" href="confirmBackMsg.do?model.id=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">核</a>
 				    </c:when>		    
 				    <c:otherwise>
 				    	<font color="silver" >核</font> 	
@@ -133,7 +133,7 @@ function remove(id){
 			    <font color="silver" >改</font> |
 			    <font color="silver" >派</font> |
 			    <font color="silver" >删</font> |
-			    <a title="查看核实反馈" href="confirmBackMsg.do?model.id=${item.id}&operType='v'">核</a>
+			    <a title="查看核实反馈" href="confirmBackMsg.do?model.id=${item.id}&operType='v'&modelId=0&isMultipleCase=${isMultipleCase}">核</a>
             </c:if>
             <%--
             <c:if test="${item.status == '2' || item.status == '4'}">
