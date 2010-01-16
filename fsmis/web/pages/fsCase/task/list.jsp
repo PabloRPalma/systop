@@ -6,11 +6,14 @@
 <title>任务列表</title>
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/ec.jsp"%>
+<%@include file="/common/extjs.jsp"%>
 <script type="text/javascript">
 function remove(id){
-	if (confirm("确认要删除此任务吗?")){
-		window.location.href="${ctx}/task/remove.do?model.id=" + id+"&modelId=1&isMultipleCase=${isMultipleCase}";	
-	}
+		Ext.MessageBox.confirm('提示', '确认要删除此任务吗?删除后不能恢复!    ', function(btn){
+			if(btn == 'yes'){
+				location.href="${ctx}/task/remove.do?model.id=" + id+"&modelId=1&isMultipleCase=${isMultipleCase}";	
+			} 
+		});
 }
 
 </script>
@@ -108,7 +111,7 @@ eq 0?'单体任务':'多体任务'}管理&nbsp;&gt;&nbsp;${param['isMultipleCase
 		<ec:column width="85" property="_o" title="操作" sortable="false" style="text-align: center">
 			<a title="查看任务" href="${ctx}/fscase/view.do?fsCaseId=${item.fsCase.id}&modelId=${modelId}">
 			看</a> |
-			<a title="修改任务" href="${ctx}/task/modify.do?model.id=${item.id}&modelId=1&isMultipleCase=${isMultipleCase}">改</a> |
+			<%--a title="修改任务" href="${ctx}/task/modify.do?model.id=${item.id}&modelId=1&isMultipleCase=${isMultipleCase}">改</a> | --%>
 			<a href="#" title="删除任务" onclick="remove(${item.id})">删 </a>
 		</ec:column>
 	</ec:row>
