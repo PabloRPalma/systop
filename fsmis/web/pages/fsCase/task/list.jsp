@@ -82,21 +82,12 @@ eq 0?'单体任务':'多体任务'}管理&nbsp;&gt;&nbsp;${param['isMultipleCase
 			style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm" />
 		<ec:column width="100" property="closedTime" title="完成时间"
 			style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm">
-			<%--<c:choose>
-				<c:when test="${item.status == '2'}">
-					<c:choose>
-						<c:when test="${not empty item.completionTime}">bb</c:when>
-						<c:otherwise>aa&nbsp;</c:otherwise>
-					</c:choose>
-				</c:when>
-				<c:otherwise>
-					<c:choose>
+			<c:if test="${item.status eq '1'}">
+			<c:choose>
 						<c:when test="${item.remainDays >= 0}">剩余天数${item.remainDays}</c:when>
 						<c:otherwise>逾期天数${-item.remainDays}</c:otherwise>
 					</c:choose>
-				</c:otherwise>
-			</c:choose> --%>
-			
+			</c:if>	
 		</ec:column>
 		<ec:column width="140" property="taskDetails" title="执行部门"
 			cell="com.systop.fsmis.fscase.webapp.ec.DeptsCell">
