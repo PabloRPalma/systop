@@ -8,10 +8,12 @@
 <%@include file="/common/ec.jsp"%>
 <script type="text/javascript">
 function removeArticle(aID){
-	if(confirm("确实要删除该文章吗？")){
-		location.href = "${ctx}/office/doc/remove.do?model.id=" + aID;
-	}	
-}
+	 Ext.MessageBox.confirm('提示','确认要删除所选择的文章吗？删除后不能恢复！', function(btn){
+	        if (btn == 'yes') {
+	        	location.href = "${ctx}/office/doc/remove.do?model.id=" + aID;
+	        }
+	    });
+	  }
 
 function showArticle(aID){
 	url = "${ctx}/office/doc/view.do?model.id=" + aID;
@@ -31,11 +33,8 @@ function showArticle(aID){
 		<table>
 			<tr>
 				<td>
-					<a href="${ctx}/office/doc/edit.do">
-						<img src="${ctx}/images/icons/add.gif" />添加
-					</a>
+					<a href="${ctx}/office/doc/edit.do">添加</a>
 				</td>
-				<td><span class="ytb-sep"></span></td>
 			</tr>
 		</table>
 		</td>
@@ -61,10 +60,12 @@ function showArticle(aID){
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	<ec:row>
 		<ec:column width="35" property="_No" title="No." value="${GLOBALROWCOUNT}" style="text-align:center" sortable="false"/>
-		<ec:column width="400" property="title" title="文章标题" onclick="showArticle(${item.id})" style="cursor:hand" sortable="false"/>
+		<ec:column width="400" property="_0" title="文章标题" onclick="showArticle(${item.id})" style="cursor:hand" sortable="false">
+			<font color="blue">${item.title}</font>
+		</ec:column>
 		<ec:column width="70" property="author" title="录入者" sortable="false"/>
-		<ec:column width="100" property="catalog.name" title="所属栏目" sortable="false"/>
-		<ec:column width="100" property="_0" title="操作" style="text-align:center" sortable="false">
+		<ec:column width="100" property="documentType.name" title="所属栏目" style="text-align:center" sortable="false"/>
+		<ec:column width="120" property="_1" title="操作" style="text-align:center" sortable="false">
 			<a href="edit.do?model.id=${item.id}">编辑</a>|
 			<a href="view.do?model.id=${item.id}" target="_blank">查看</a>|
 			<a href="#" onclick="removeArticle(${item.id})">删除	</a>
