@@ -102,7 +102,7 @@
 		<ec:column width="120" property="_1" title="操作"style="text-align:center" sortable="false">
 		    <!-- 0未接收1已查看2已接收3已退回4已处理 -->
 			<c:if test="${empty item.status or item.status eq '0' or item.status eq '1'}">
-				<a title="接收任务" href="${ctx}/taskdetail/receiveTask.do?model.id=${item.id}&isMultipleCase=${param['isMultipleCase']}&modelId=${param['modelId']}">收</a> |
+				<a title="接收任务" href="#" onclick="receive(${item.id})">收</a> |
 				<a title="退回任务" href="#"	onclick="javascript:showReturnWindow(${item.id},'${userName}')">退</a> |
 				<font color="silver" >办</font> |  				
 			</c:if>
@@ -123,6 +123,15 @@
 </ec:table>
 </div>
 </div>
+<script type="text/javascript">
+function receive(taskDetaiId){
+	Ext.MessageBox.confirm('提示', '您确定接收该任务吗?    ', function(btn){ 
+		if(btn=='yes'){
+			location.href="${ctx}/taskdetail/receiveTask.do?model.id="+taskDetaiId+"&isMultipleCase=${param['isMultipleCase']}&modelId=${param['modelId']}";
+		} 
+	});
+}
+</script>
 <jsp:include page="returnTaskDetail.jsp"></jsp:include>
 </body>
 </html>
