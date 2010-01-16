@@ -3,6 +3,7 @@ package com.systop.fsmis.office.notice.webapp;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -157,6 +158,23 @@ public class NoticeAction extends ExtJsCrudAction<Notice, NoticeManager> {
 	 */
 	public String view() {
 		return "view";
+	}
+	
+	/**
+	 * 编辑
+	 */
+	public String edit() {
+		if(getModel().getId() != null) {
+			StringBuffer receDeptIds = new StringBuffer();
+			Iterator<ReceiveRecord> it = getModel().getRecRecordses().iterator();
+			while(it.hasNext()) {
+				receDeptIds.append(it.next().getDept().getId()).append(",");
+			}
+			logger.info("idS: {}", receDeptIds.toString());
+			this.getRequest().setAttribute("receDeptIds", receDeptIds.toString().substring(0, receDeptIds.toString().length() - 1));
+			logger.info("reQuserIDS: {}", this.getRequest().getAttribute("receDeptIds"));
+		}
+		return INPUT;
 	}
 
 	/**
