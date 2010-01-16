@@ -1,6 +1,7 @@
 package com.systop.fsmis.fscase.report.webapp;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +18,9 @@ import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.core.dao.support.Page;
 import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
 import com.systop.fsmis.fscase.CaseConstants;
+import com.systop.fsmis.fscase.casetype.service.CaseTypeManager;
 import com.systop.fsmis.fscase.report.service.ReportManager;
+import com.systop.fsmis.model.CaseType;
 import com.systop.fsmis.model.Corp;
 import com.systop.fsmis.model.FsCase;
 import com.systop.fsmis.model.Task;
@@ -37,11 +40,13 @@ public class ReportAction extends ExtJsCrudAction<FsCase, ReportManager> {
 	@Autowired
 	private LoginUserService loginUserService;
 	
+	@Autowired
+  private CaseTypeManager caseTypeManager;
+	
 	/**
 	 * 查询起始事件
 	 */
 	private Date beginTime;
-	
 	/**
 	 * 查询截止事件
 	 */
@@ -54,7 +59,7 @@ public class ReportAction extends ExtJsCrudAction<FsCase, ReportManager> {
 	private Corp corp;
 	
 	private String corpName;
-	
+		
 	/**
 	 * 部门上报事件查询列表
 	 */
@@ -106,6 +111,16 @@ public class ReportAction extends ExtJsCrudAction<FsCase, ReportManager> {
 			getModel().setReportDept(dept);
 			//事件状态为‘以核实’
 			getModel().setStatus(CaseConstants.CASE_CLOSED);
+			CaseType cType = null;
+	    if (typetwoId != null) {
+	      cType = getManager().getDao().get(CaseType.class, typetwoId);
+	    } else {
+	      if (typeoneId != null) {
+	        cType = getManager().getDao().get(CaseType.class, typeoneId);
+	      }
+	    }
+	    //编辑事件类型
+	    getModel().setCaseType(cType);
 			getManager().saveReportInfoOfCase(getModel(), task, taskDetail, corp, corpName);
 			return SUCCESS;
 		} catch (Exception e) {
@@ -120,6 +135,19 @@ public class ReportAction extends ExtJsCrudAction<FsCase, ReportManager> {
 	@Override
 	public String edit() {
 		initPageInfo();
+		getRequest().setAttribute("levelone", getLevelOne());
+    if (getModel().getId() != null) {
+      //为类别赋默认值，用于编辑时显示
+      CaseType caseType = getModel().getCaseType();
+      if ( caseType != null) {
+      	if (caseType.getCaseType() != null) {
+      		oneId = caseType.getCaseType().getId();
+      		twoId = caseType.getId();
+      	} else {
+      		oneId = caseType.getId();
+      	}
+      }
+    }
 		return super.edit();
 	}
 	
@@ -161,6 +189,22 @@ public class ReportAction extends ExtJsCrudAction<FsCase, ReportManager> {
 		}
 	}
 	
+	/**
+   * 用于显示事件类型_一级
+   */
+  public List getLevelOne() {
+    return caseTypeManager.getLevelOneList();
+  }
+
+  /**
+   * 用于显示事件类型_二级
+   */
+  public String getLevelTwo() {
+    typeRst = Collections.EMPTY_LIST;
+    typeRst = caseTypeManager.getLevelTwoList(Integer.valueOf(typeId));
+    return "jsonRst";
+  }
+  
 	public Date getBeginTime() {
   	return beginTime;
   }
@@ -205,7 +249,68 @@ public class ReportAction extends ExtJsCrudAction<FsCase, ReportManager> {
   	return corpName;
   }
 
+	private String typeId;
+
+  private Integer typeoneId;
+
+  private Integer typetwoId;
+
+  private Integer oneId;
+
+  private Integer twoId;
+
+  private List typeRst;
+  
 	public void setCorpName(String corpName) {
   	this.corpName = corpName;
   }
+	
+	public String getTypeId() {
+  	return typeId;
+  }
+
+	public void setTypeId(String typeId) {
+  	this.typeId = typeId;
+  }
+
+	public Integer getTypeoneId() {
+  	return typeoneId;
+  }
+
+	public void setTypeoneId(Integer typeoneId) {
+  	this.typeoneId = typeoneId;
+  }
+
+	public Integer getTypetwoId() {
+  	return typetwoId;
+  }
+
+	public void setTypetwoId(Integer typetwoId) {
+  	this.typetwoId = typetwoId;
+  }
+
+	public Integer getOneId() {
+  	return oneId;
+  }
+
+	public void setOneId(Integer oneId) {
+  	this.oneId = oneId;
+  }
+
+	public Integer getTwoId() {
+  	return twoId;
+  }
+
+	public void setTwoId(Integer twoId) {
+  	this.twoId = twoId;
+  }
+
+	public List getTypeRst() {
+  	return typeRst;
+  }
+
+	public void setTypeRst(List typeRst) {
+  	this.typeRst = typeRst;
+  }
+
 }

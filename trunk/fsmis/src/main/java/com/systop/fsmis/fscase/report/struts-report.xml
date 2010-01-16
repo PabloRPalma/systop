@@ -9,6 +9,9 @@
 			<result name="input">/pages/fsCase/report/edit.jsp</result> 
 			<result name="success" type="redirect">index.do</result>
 			<result name="view">/pages/fsCase/report/view.jsp</result>
+			<result type="json" name="jsonRst">
+		   		<param name="root">typeRst</param>
+			</result>
 		</action>
 	</package>
 </struts>
