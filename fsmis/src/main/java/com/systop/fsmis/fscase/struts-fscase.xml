@@ -19,6 +19,9 @@
 			<result type="json" name="json">
 		   		<param name="root">page</param>
 			</result>
+			<result type="json" name="jsonResult">
+		   		<param name="root">jsonResult</param>
+			</result>
 		</action>
 	</package>
 </struts>
