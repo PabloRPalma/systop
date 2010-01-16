@@ -105,10 +105,6 @@ public class JointTaskDetailAction extends
 	 * 联合整治任务处理
 	 */
 	public String result(){
-		if (getModel().getId() != null ) {
-			addActionError("有部门还没有查看任务");
-			return INPUT;
-		}
 		return "result";
 	}
 	
