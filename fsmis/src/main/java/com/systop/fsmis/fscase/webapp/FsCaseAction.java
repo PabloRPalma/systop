@@ -464,100 +464,124 @@ public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
     return "";
   }
 
-  public List getTypeRst() {
-    return typeRst;
-  }
+	public List getTypeRst() {
+		return typeRst;
+	}
 
-  public void setTypeRst(List typeRst) {
-    this.typeRst = typeRst;
-  }
+	public void setTypeRst(List typeRst) {
+		this.typeRst = typeRst;
+	}
 
-  public String getTypeId() {
-    return typeId;
-  }
+	public String getTypeId() {
+		return typeId;
+	}
 
-  public void setTypeId(String typeId) {
-    this.typeId = typeId;
-  }
+	public void setTypeId(String typeId) {
+		this.typeId = typeId;
+	}
 
-  public Integer getTypeoneId() {
-    return typeoneId;
-  }
+	public Integer getTypeoneId() {
+		return typeoneId;
+	}
 
-  public void setTypeoneId(Integer typeoneId) {
-    this.typeoneId = typeoneId;
-  }
+	public void setTypeoneId(Integer typeoneId) {
+		this.typeoneId = typeoneId;
+	}
 
-  public Integer getTypetwoId() {
-    return typetwoId;
-  }
+	public Integer getTypetwoId() {
+		return typetwoId;
+	}
 
-  public void setTypetwoId(Integer typetwoId) {
-    this.typetwoId = typetwoId;
-  }
+	public void setTypetwoId(Integer typetwoId) {
+		this.typetwoId = typetwoId;
+	}
 
-  public Integer getOneId() {
-    return oneId;
-  }
+	public Integer getOneId() {
+		return oneId;
+	}
 
-  public void setOneId(Integer oneId) {
-    this.oneId = oneId;
-  }
+	public void setOneId(Integer oneId) {
+		this.oneId = oneId;
+	}
 
-  public Integer getTwoId() {
-    return twoId;
-  }
+	public Integer getTwoId() {
+		return twoId;
+	}
 
-  public void setTwoId(Integer twoId) {
-    this.twoId = twoId;
-  }
+	public void setTwoId(Integer twoId) {
+		this.twoId = twoId;
+	}
 
-  public Date getCaseBeginTime() {
-    return caseBeginTime;
-  }
+	public Date getCaseBeginTime() {
+		return caseBeginTime;
+	}
 
-  public void setCaseBeginTime(Date caseBeginTime) {
-    this.caseBeginTime = caseBeginTime;
-  }
+	public void setCaseBeginTime(Date caseBeginTime) {
+		this.caseBeginTime = caseBeginTime;
+	}
 
-  public Date getCaseEndTime() {
-    return caseEndTime;
-  }
+	public Date getCaseEndTime() {
+		return caseEndTime;
+	}
 
-  public void setCaseEndTime(Date caseEndTime) {
-    this.caseEndTime = caseEndTime;
-  }
+	public void setCaseEndTime(Date caseEndTime) {
+		this.caseEndTime = caseEndTime;
+	}
 
-  public LoginUserService getLoginUserService() {
-    return loginUserService;
-  }
+	public LoginUserService getLoginUserService() {
+		return loginUserService;
+	}
 
-  public void setLoginUserService(LoginUserService loginUserService) {
-    this.loginUserService = loginUserService;
-  }
+	public void setLoginUserService(LoginUserService loginUserService) {
+		this.loginUserService = loginUserService;
+	}
 
-  public String getIsMultipleCase() {
-    return isMultipleCase;
-  }
+	public String getIsMultipleCase() {
+		return isMultipleCase;
+	}
 
-  public void setIsMultipleCase(String isMultipleCase) {
-    this.isMultipleCase = isMultipleCase;
-  }
+	public void setIsMultipleCase(String isMultipleCase) {
+		this.isMultipleCase = isMultipleCase;
+	}
 
-  public Integer getSmsReceiveId() {
-    return smsReceiveId;
-  }
+	public Integer getSmsReceiveId() {
+		return smsReceiveId;
+	}
 
-  public void setSmsReceiveId(Integer smsReceiveId) {
-    this.smsReceiveId = smsReceiveId;
-  }
+	public void setSmsReceiveId(Integer smsReceiveId) {
+		this.smsReceiveId = smsReceiveId;
+	}
 
-  public Map<String, String> getJsonResult() {
-    return jsonResult;
-  }
+	public Map<String, String> getJsonResult() {
+		return jsonResult;
+	}
 
-  public void setJsonResult(Map<String, String> jsonResult) {
-    this.jsonResult = jsonResult;
-  }
+	public void setJsonResult(Map<String, String> jsonResult) {
+		this.jsonResult = jsonResult;
+	}
+
+	public String getSupervisorName() {
+		return supervisorName;
+	}
+
+	public void setSupervisorName(String supervisorName) {
+		this.supervisorName = supervisorName;
+	}
+
+	public String getSupervisorMobile() {
+		return supervisorMobile;
+	}
+
+	public void setSupervisorMobile(String supervisorMobile) {
+		this.supervisorMobile = supervisorMobile;
+	}
+
+	public String getMsgContent() {
+		return msgContent;
+	}
+
+	public void setMsgContent(String msgContent) {
+		this.msgContent = msgContent;
+	}
 
 }
