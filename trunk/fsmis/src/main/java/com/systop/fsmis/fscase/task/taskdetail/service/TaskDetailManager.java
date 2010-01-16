@@ -86,10 +86,11 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
         && taskDetail.getTask().getFsCase().getCorp().getId() == null) {
       fsCase.setCorp(null);
     }
-    // 如果所有任务明细已经处理,则把任务状态置为"已处理",
+    // 如果所有任务明细已经处理,则把任务状态置为"已处理",完成时间为当前时间
     if (checkIsAllTaskDetailResolved(taskDetail)) {
 
       task.setStatus(TaskConstants.TASK_PROCESSED);
+      task.setClosedTime(new Date());
       getDao().save(task);
       if (fsCase != null && fsCase.getId() != null) {
         fsCase.setStatus(CaseConstants.CASE_PROCESSED);
