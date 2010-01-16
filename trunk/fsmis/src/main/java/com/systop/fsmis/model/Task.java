@@ -36,193 +36,211 @@ import com.systop.core.util.RemaindaysUtil;
 @Table(name = "TASK")
 public class Task extends BaseModel {
 
-	/**
-	 * 主键
-	 */
-	private Integer id;
+  /**
+   * 主键
+   */
+  private Integer id;
 
-	/**
-	 * 一般案件
-	 */
-	private FsCase fsCase;
+  /**
+   * 一般案件
+   */
+  private FsCase fsCase;
 
-	/**
-	 * 标题
-	 */
-	private String title;
+  /**
+   * 标题
+   */
+  private String title;
 
-	/**
-	 * 描述
-	 */
-	private String descn;
+  /**
+   * 描述
+   */
+  private String descn;
 
-	/**
-	 * 派遣时间
-	 */
-	private Date dispatchTime;
+  /**
+   * 派遣时间
+   */
+  private Date dispatchTime;
 
-	/**
-	 * 规定完成时间
-	 */
-	private Date presetTime;
-	/**
-	 * 完成时间
-	 */
-	private Date closedTime;
+  /**
+   * 规定完成时间
+   */
+  private Date presetTime;
+  /**
+   * 完成时间
+   */
+  private Date closedTime;
 
-	/**
-	 * 任务状态
-	 */
-	private String status;
+  /**
+   * 任务状态
+   */
+  private String status;
 
-	/**
-	 * 任务明细
-	 */
-	private Set<TaskDetail> taskDetails = new HashSet<TaskDetail>(0);
+  /**
+   * 任务明细
+   */
+  private Set<TaskDetail> taskDetails = new HashSet<TaskDetail>(0);
 
-	/**
-	 * 任务附件
-	 */
-	private Set<TaskAtt> taskAtts = new HashSet<TaskAtt>(0);
+  /**
+   * 任务附件
+   */
+  private Set<TaskAtt> taskAtts = new HashSet<TaskAtt>(0);
+  /**
+   * <pre>
+   * 是否是当前任务,由于任务被退回后,可以重新派遣,
+   * 则一个事件可以对应多个任务,通过本属性标示当前活动任务
+   * 0--不是当前任务
+   * 1--是当前任务
+   * </pre>
+   */
+  private String isCurrentTask;
 
-	/**
-	 * 缺省构造方法
-	 */
-	public Task() {
-	}
+  /**
+   * 缺省构造方法
+   */
 
-	@Id
-	@GeneratedValue(generator = "hibseq")
-	@GenericGenerator(name = "hibseq", strategy = "hilo")
-	@Column(name = "ID", unique = true, nullable = false)
-	public Integer getId() {
-		return this.id;
-	}
+  public Task() {
+  }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+  @Id
+  @GeneratedValue(generator = "hibseq")
+  @GenericGenerator(name = "hibseq", strategy = "hilo")
+  @Column(name = "ID", unique = true, nullable = false)
+  public Integer getId() {
+    return this.id;
+  }
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "GENERIC_CASE")
-	public FsCase getFsCase() {
-		return this.fsCase;
-	}
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-	public void setFsCase(FsCase fsCase) {
-		this.fsCase = fsCase;
-	}
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "GENERIC_CASE")
+  public FsCase getFsCase() {
+    return this.fsCase;
+  }
 
-	@Column(name = "TITLE", length = 255)
-	public String getTitle() {
-		return this.title;
-	}
+  public void setFsCase(FsCase fsCase) {
+    this.fsCase = fsCase;
+  }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+  @Column(name = "TITLE", length = 255)
+  public String getTitle() {
+    return this.title;
+  }
 
-	@Column(name = "DESCN", length = 255)
-	public String getDescn() {
-		return this.descn;
-	}
+  public void setTitle(String title) {
+    this.title = title;
+  }
 
-	public void setDescn(String descn) {
-		this.descn = descn;
-	}
+  @Column(name = "DESCN", length = 255)
+  public String getDescn() {
+    return this.descn;
+  }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "DISPATCH_TIME", length = 11)
-	public Date getDispatchTime() {
-		return this.dispatchTime;
-	}
+  public void setDescn(String descn) {
+    this.descn = descn;
+  }
 
-	public void setDispatchTime(Date dispatchTime) {
-		this.dispatchTime = dispatchTime;
-	}
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "DISPATCH_TIME", length = 11)
+  public Date getDispatchTime() {
+    return this.dispatchTime;
+  }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "PRESET_TIME", length = 11)
-	public Date getPresetTime() {
-		return this.presetTime;
-	}
+  public void setDispatchTime(Date dispatchTime) {
+    this.dispatchTime = dispatchTime;
+  }
 
-	public void setPresetTime(Date presetTime) {
-		this.presetTime = presetTime;
-	}
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "PRESET_TIME", length = 11)
+  public Date getPresetTime() {
+    return this.presetTime;
+  }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CLOSED_TIME", length = 11)
-	public Date getClosedTime() {
-		return closedTime;
-	}
+  public void setPresetTime(Date presetTime) {
+    this.presetTime = presetTime;
+  }
 
-	public void setClosedTime(Date closedTime) {
-		this.closedTime = closedTime;
-	}
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "CLOSED_TIME", length = 11)
+  public Date getClosedTime() {
+    return closedTime;
+  }
 
-	@Column(name = "STATUS", length = 255)
-	public String getStatus() {
-		return this.status;
-	}
+  public void setClosedTime(Date closedTime) {
+    this.closedTime = closedTime;
+  }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+  @Column(name = "STATUS", length = 255)
+  public String getStatus() {
+    return this.status;
+  }
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, mappedBy = "task")
-	public Set<TaskDetail> getTaskDetails() {
-		return this.taskDetails;
-	}
+  public void setStatus(String status) {
+    this.status = status;
+  }
 
-	public void setTaskDetails(Set<TaskDetail> taskDetails) {
-		this.taskDetails = taskDetails;
-	}
+  @OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, mappedBy = "task")
+  public Set<TaskDetail> getTaskDetails() {
+    return this.taskDetails;
+  }
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "task")
-	public Set<TaskAtt> getTaskAtts() {
-		return this.taskAtts;
-	}
+  public void setTaskDetails(Set<TaskDetail> taskDetails) {
+    this.taskDetails = taskDetails;
+  }
 
-	public void setTaskAtts(Set<TaskAtt> taskAtts) {
-		this.taskAtts = taskAtts;
-	}
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "task")
+  public Set<TaskAtt> getTaskAtts() {
+    return this.taskAtts;
+  }
 
-	/**
-	 * @see Object#equals(Object)
-	 */
-	public boolean equals(Object other) {
-		if (this == other) {
-			return true;
-		}
-		if (!(other instanceof Task)) {
-			return false;
-		}
-		Task task = (Task) other;
-		return new EqualsBuilder().append(this.getId(), task.getId())
-				.isEquals();
-	}
+  public void setTaskAtts(Set<TaskAtt> taskAtts) {
+    this.taskAtts = taskAtts;
+  }
 
-	/**
-	 * @see Object#hashCode()
-	 */
-	public int hashCode() {
-		return new HashCodeBuilder().append(getId()).toHashCode();
-	}
+  /**
+   * @see Object#equals(Object)
+   */
+  public boolean equals(Object other) {
+    if (this == other) {
+      return true;
+    }
+    if (!(other instanceof Task)) {
+      return false;
+    }
+    Task task = (Task) other;
+    return new EqualsBuilder().append(this.getId(), task.getId()).isEquals();
+  }
 
-	/**
-	 * @see Object#toString()
-	 */
-	public String toString() {
-		return new ToStringBuilder(this).append("id", getId()).toString();
-	}
+  /**
+   * @see Object#hashCode()
+   */
+  public int hashCode() {
+    return new HashCodeBuilder().append(getId()).toHashCode();
+  }
 
-	/**
-	 * 得到任务逾期天数方法
-	 */
-	@Transient
-	public double getRemainDays() {
-		return RemaindaysUtil.getRemainDays(getPresetTime());
-	}
+  /**
+   * @see Object#toString()
+   */
+  public String toString() {
+    return new ToStringBuilder(this).append("id", getId()).toString();
+  }
+
+  /**
+   * 得到任务逾期天数方法
+   */
+  @Transient
+  public double getRemainDays() {
+    return RemaindaysUtil.getRemainDays(getPresetTime());
+  }
+
+  @Column(name = "IS_CURRENTTASK", columnDefinition = "char(1) default '0'")
+  public String getIsCurrentTask() {
+    return isCurrentTask;
+  }
+
+  public void setIsCurrentTask(String isCurrentTask) {
+    this.isCurrentTask = isCurrentTask;
+  }
 
 }
