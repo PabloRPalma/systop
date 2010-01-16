@@ -19,7 +19,7 @@ import com.systop.fsmis.fscase.jointtask.service.JointTaskDetailManager;
 import com.systop.fsmis.model.JointTaskDetail;
 
 /**
- * 针对风险评估实体选择专家组成员
+ * 联合整治任务明细管理Action
  * @author ShangHua
  * 
  */
