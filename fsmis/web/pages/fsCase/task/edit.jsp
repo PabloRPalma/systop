@@ -5,6 +5,7 @@
 <head>
 <title>派遣任务</title>
 <%@include file="/common/meta.jsp"%>
+<%@include file="/common/ec.jsp"%>
 <%@include file="/common/validator.jsp"%>
 <script type="text/javascript"	src="${ctx}/scripts/fckeditor/fckeditor.js"></script>
 <script type="text/javascript" language="javascript"	src="${ctx}/scripts/fsmis/attachments.js"></script>
@@ -57,8 +58,6 @@ function deleAtt(id) {
 		<tr>
 			<td align="right">执行部门:</td>
 			<td align="left">
-			<div id="selectDepts"
-				style="width: 400px; word-break: break-all; color: red;"></div>
 			<s:hidden id="selectDeptNames" name="selectDeptNames"></s:hidden>
 			<div id="showDiv"
 				style="border-bottom: 1px dotted #97B7E7; padding: 2 7 2 7;"></div>
