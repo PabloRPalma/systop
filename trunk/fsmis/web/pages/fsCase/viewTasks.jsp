@@ -65,7 +65,7 @@
 										<td>${attStatus.index+1 }</td>
 										<td>${att.title }</td>
 										<td>${att.remark }</td>
-										<td></td>
+										<td><a href="${ctx}${att.path }" target="_blank" type="下载附件">下载</a></td>
 									</tr>
 								</c:forEach>
 							</tbody>
