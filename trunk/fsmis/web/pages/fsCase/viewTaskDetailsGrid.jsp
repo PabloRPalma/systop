@@ -29,6 +29,8 @@
 		           renderer: function(value, cellmeta, record, rowIndex, columnIndex, store) {
 		           	   if(record.data["status"] == '4'){
 			           	   return '<a href="#" onclick = "showResultWindow('+record.data["id"]+')"><font color="blue" title="点击查看任务处理结果">'+record.data["taskTitle"]+'</font></a>';			           	
+		           	   }else if(record.data["status"] == '3'){
+		           		return '<a href="#" onclick = "showReturnWindow('+record.data["id"]+')"><font color="blue" title="点击查看任务回退结果">'+record.data["taskTitle"]+'</font></a>';
 		           	   }else{
 			           	   return record.data["taskTitle"];
 		           	   }		           	
