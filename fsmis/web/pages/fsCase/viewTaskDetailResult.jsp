@@ -6,7 +6,7 @@
 	function showResultWindow(taskDetailId) {
 		this.taskDetailId = taskDetailId;
 		Ext.Ajax.request({
-		    url: '${ctx}/taskdetail/viewResultById.do',
+		    url: '${ctx}/taskdetail/viewTaskDetailById.do',
 		    params: { taskDetailId: taskDetailId },
 		    success: function(response) {
 		    	var jsonResult = Ext.util.JSON.decode(response.responseText);

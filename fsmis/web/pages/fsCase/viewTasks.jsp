@@ -2,11 +2,19 @@
 	pageEncoding="UTF-8"%>
 	<%@include file="/common/taglibs.jsp"%>
 <div id="taskDiv" style="margin: -1">
-<c:forEach items="${model.taskses}" var="task"	varStatus="taskStatus">
-  <c:if test="${task.isCurrentTask eq '1'}">
-  <c:set var="currentTask" value="${taskStatus.index}"></c:set>
-  </c:if>
-  
+<c:forEach items="${model.taskses}" var="task"	varStatus="taskStatus">  
+  <c:choose>
+  	<c:when test="${not empty taskId}">
+  		<c:if test="${task.id eq taskId}">
+  			<c:set var="currentTask" value="${taskStatus.index}"></c:set>
+  		</c:if>
+  	</c:when>
+  	<c:otherwise>
+  	 	<c:if test="${task.isCurrentTask eq '1'}">
+  			<c:set var="currentTask" value="${taskStatus.index}"></c:set>
+  		</c:if>
+  	</c:otherwise>
+  </c:choose>
 	<div id="taskDiv${taskStatus.index+1}" class="x-hide-display">
 		<div>
 		<table class="mytable" >
@@ -40,8 +48,41 @@
 					</div>
 					</td>
 				</tr>
+				<tr>
+					<td colspan="2">
+						<table id="task${taskStatus.index}AttTable">
+						  <thead>
+            		<tr>
+	                <th width="20">No.</th>
+	                <th width="100">标题</th>
+	                <th width="300">备注</th>
+	                <th width="100">操作</th>
+            		</tr>
+        			</thead>
+        			<tbody>
+								<c:forEach items="${task.taskAtts}" var="att" varStatus="attStatus">
+									<tr>
+										<td>${attStatus.index+1 }</td>
+										<td>${att.title }</td>
+										<td>${att.remark }</td>
+										<td></td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+						
+					</td>
+				</tr>
 			</table>
 		</div>
+		<script type="text/javascript">
+		Ext.onReady(function() {
+		 var grid${taskStatus.index} = new Ext.grid.TableGrid("task${taskStatus.index}AttTable", {
+		      stripeRows: true // stripe alternate rows
+		    });
+		    grid${taskStatus.index}.render();
+		});
+		</script>
 		<div >
 			<!-- 任务明细信息的Ext GridPanel -->				
 			<%@include file="viewTaskDetailsGrid.jsp" %>
@@ -54,7 +95,7 @@
 		var taskDiv = new Ext.TabPanel( {
 			renderTo : 'taskDiv',
 			anchor : '100% 100%',
-			activeTab : ${currentTask},
+			activeTab : ${empty currentTask ? 0 : currentTask},
 			frame : false,
 			defaults : {
 				autoHeight : false
