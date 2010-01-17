@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -181,6 +182,7 @@ public class Task extends BaseModel {
   }
 
   @OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, mappedBy = "task")
+  @OrderBy("id")
   public Set<TaskDetail> getTaskDetails() {
     return this.taskDetails;
   }
@@ -190,6 +192,7 @@ public class Task extends BaseModel {
   }
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "task")
+  @OrderBy("id")  
   public Set<TaskAtt> getTaskAtts() {
     return this.taskAtts;
   }
