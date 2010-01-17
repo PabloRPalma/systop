@@ -172,6 +172,7 @@ public class TaskDetailAction extends
 
   /**
    * 查看派遣给当前登录人员部门的任务明细方法<br>
+   * 由于任务明细的查看操作需要置状态为"已查看",所以需要有本方法,而不是直接访问FsCaseAction的view方法.
    * 由于查看功能使用的是在FsCase模块中统一的Tab页方式,<br>
    * 各个子模块间就不能用"model.id"方式来传递当前实体id了,否则会引起冲突<br>
    * 所以在各个子模块中需要通过getParameter("taskDetailId")方式来获得当前实体实例id
@@ -347,11 +348,14 @@ public class TaskDetailAction extends
   }
 
   /**
-   * 根据id得到任务明细处理结果信息,以在Ext弹出界面中显示
-   * 
+   * <pre>
+   * 根据id得到任务明细信息,用于:
+   * 1.根据id得到任务明细处理结果信息,以在Ext弹出界面中显示
+   * 2.根据id得到任务退回人员/退回原因信息在Ext弹出界面中显示
+   * </pre>
    * @return
    */
-  public String viewResultById() {
+  public String viewTaskDetailById() {
     jsonResult = Collections.synchronizedMap(new HashMap<String, String>());
     String idStr = getRequest().getParameter("taskDetailId");
 
@@ -359,7 +363,7 @@ public class TaskDetailAction extends
 
       TaskDetail td = getManager().get(Integer.valueOf(idStr));
       jsonResult = ReflectUtil.toMap(td, new String[] { "inputer", "processor",
-          "process", "basis", "result" }, true);
+          "process", "basis", "result" ,"returnPeople","returnReason"}, true);
       jsonResult.put("taskTitle", td.getTask().getTitle());
       jsonResult.put("deptName", td.getDept().getName());
     }
