@@ -267,6 +267,9 @@ public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
   @Override
   public String view() {
     String id = getRequest().getParameter("fsCaseId");
+    //将从界面传递过来的用户点击的任务的id放入request作用域,以在查看界面中默认选中
+    String taskId = getRequest().getParameter("taskId");
+    getRequest().setAttribute("taskId", taskId);
     if (StringUtils.isNotBlank(id)) {
       Integer fsCaseId = Integer.parseInt(id);
       setModel(getManager().get(fsCaseId));
