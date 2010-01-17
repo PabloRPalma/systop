@@ -99,8 +99,8 @@ eq 0?'单体任务':'多体任务'}管理&nbsp;&gt;&nbsp;${param['isMultipleCase
 			<c:if test="${item.status == '2'}"><font color="green">已处理</font>	</c:if>
 			<c:if test="${item.status == '3'}"><font color="gray">已退回</font></c:if>  
 		</ec:column>
-		<ec:column width="85" property="_o" title="操作" sortable="false" style="text-align: center">
-			<a title="查看任务" href="${ctx}/fscase/view.do?fsCaseId=${item.fsCase.id}&modelId=${modelId}">
+		<ec:column width="83" property="_o" title="操作" sortable="false" style="text-align: center">
+			<a title="查看任务" href="${ctx}/fscase/view.do?fsCaseId=${item.fsCase.id}&modelId=${modelId}&taskId=${item.id}">
 			看</a> |
 			<%--a title="修改任务" href="${ctx}/task/modify.do?model.id=${item.id}&modelId=1&isMultipleCase=${isMultipleCase}">改</a> | --%>
 			<a href="#" title="删除任务" onclick="remove(${item.id})">删 </a>
