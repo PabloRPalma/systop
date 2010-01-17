@@ -14,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -403,6 +404,7 @@ public class FsCase extends BaseModel {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "fsCase")
+	@OrderBy("id")
 	public Set<Task> getTaskses() {
 		return this.taskses;
 	}
