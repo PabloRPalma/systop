@@ -25,7 +25,7 @@ public class JointTaskAttachManager extends BaseGenericsManager<JointTaskAttach>
 	 * @return list
 	 */
 	@SuppressWarnings("unchecked")
-	public List<JointTaskAttach> getTaskDetails(Integer jointTaskId) {
+	public List<JointTaskAttach> getTaskAttachs(Integer jointTaskId) {
 		String hql = "from JointTaskAttach jta where jta.jointTask.id = ? ";
 		return getDao().query(hql, jointTaskId);
 	}

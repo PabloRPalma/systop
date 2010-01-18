@@ -9,7 +9,9 @@
 			<result name="input">/pages/fsCase/jointtask/editJointTask.jsp</result>
 			<result name="addCase">/pages/fsCase/jointtask/editCase.jsp</result>
 			<result name="addJointTask" type="redirect">edit.do?model.fsCase.id=${model.fsCase.id}</result>
-			<result name="audit">/pages/fsCase/jointtask/audit.jsp</result> 	
+			<result name="audit">/pages/fsCase/jointtask/audit.jsp</result> 
+			<result name="view">/pages/fsCase/jointtask/view.jsp</result> 	
+			<result name="listCheckRst">/pages/fsCase/jointtask/checkRstView.jsp</result>							
 			<result name="print">/pages/fsCase/jointtask/printpage.jsp</result> 					
 			<result name="success" type="redirect">index.do</result>	
 		</action>
@@ -23,26 +25,38 @@
 	 </package> 
 	 
 	<!-- 部门登陆后显示该部门的联合整治任务明细 -->
-	<package name="fsmis.jointtask.deptTaskDetails" extends="default"  namespace="/jointTask/deptTaskDetail">
+	<package name="fsmis.jointtask.deptTaskDetails" extends="json"  namespace="/jointTask/deptTaskDetail">
 		<action name="*" class="jointTaskDetailAction" method="{1}">
 			<result name="deptTaskDetailIndex">/pages/fsCase/jointtask/taskdetail/deptTaskDetailIndex.jsp</result>
 			<result name="input">/pages/fsCase/jointtask/taskdetail/deptTaskDetailIndex.jsp</result>			
 			<result name="view">/pages/fsCase/jointtask/taskdetail/view.jsp</result>	
 			<result name="result">/pages/fsCase/jointtask/taskdetail/result.jsp</result>					
 			<result name="success" type="redirect">deptTaskDetailIndex.do</result> 		
+		    <result type="json" name="jsonCheckRst">
+			    <param name="root">checkResult</param>
+			</result>				
 		</action>
 	</package>	 	
 	
 	<!-- 联合整治任务附件 -->
 	 <package name="fsmis.jointtask.attaches" extends="json"  namespace="/jointTask/attaches">    
 	   <action name="*" class="jointTaskAttachAction" method="{1}">
-	     <result name="index">/pages/fsCase/jointtask/attaches.jsp</result> 
-	     <result name="input">/pages/fsCase/jointtask/attaches.jsp</result> 	     
+	     <result name="index">/pages/fsCase/jointtask/taskdetail/attaches.jsp</result> 
+	     <result name="input">/pages/fsCase/jointtask/taskdetail/attaches.jsp</result> 	     
 	     <result name="success" type="redirect">index.do?jointTaskId=${jointTaskId}</result>     
 	     <result type="json" name="jsonRst">
 		    <param name="root">delResult</param>
 		</result>	             
 	   </action>
-	 </package>  	
+	 </package>  
+	 	
+	<!-- 联合整治任务明细附件 -->
+	 <package name="fsmis.jointtaskdetail.attaches" extends="json"  namespace="/jointTaskDetail/attaches">    
+	   <action name="*" class="jointTaskDetailAttAction" method="{1}">
+	     <result name="index">/pages/fsCase/jointtask/taskdetail/attaches.jsp</result> 
+	     <result name="input">/pages/fsCase/jointtask/taskdetail/attaches.jsp</result> 	     
+	     <result name="success" type="redirect">index.do?jointTaskDetailId=${jointTaskDetailId}</result>     	             
+	   </action>
+	 </package>  	 
 </struts>
 
