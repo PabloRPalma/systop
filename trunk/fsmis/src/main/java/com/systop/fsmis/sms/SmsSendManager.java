@@ -6,9 +6,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.xwork.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.systop.core.service.BaseGenericsManager;
+import com.systop.core.util.DateUtil;
+import com.systop.fsmis.model.SmsCount;
 import com.systop.fsmis.model.SmsSend;
 
 /**
@@ -20,7 +24,10 @@ import com.systop.fsmis.model.SmsSend;
  */
 @Service
 public class SmsSendManager extends BaseGenericsManager<SmsSend> {
-  /**
+  @Autowired
+  private SmsSendCountManager smsSendCountManager;
+	
+	/**
    * 得到需要发送的短信方法(最大记录数由系统变量限定)
    * 
    * @return
@@ -79,4 +86,72 @@ public class SmsSendManager extends BaseGenericsManager<SmsSend> {
   	
   	return map;
   }
+
+	/**
+	 * 统计短信数量
+	 * 
+	 * @param mobileNum
+	 *          手机号
+	 */
+	@Transactional
+	public void statisticsSendConnt(String mobileNum) {
+
+		String strMobileNum = "134,135,136,137,138,139,150,151,157,158,159,187,188";
+		String[] strArray = strMobileNum.split(",");
+		Boolean bIsMobileNum = false;
+
+		if (mobileNum != null) {
+			String strFlag = "";
+			if (StringUtils.indexOf(mobileNum, "+86") != -1) {
+				strFlag = StringUtils.substring(mobileNum, 3, 6);
+			} else {
+				strFlag = StringUtils.substring(mobileNum, 0, 3);
+			}
+			for (int i = 0; i < strArray.length; i++) {
+				if (strArray[i].equals(strFlag)) {
+					bIsMobileNum = true;
+					SmsCount smsCount = null;
+					List<SmsCount> listSC = smsSendCountManager.query(
+							"from SmsCount s where s.sendDate between ? and ?", DateUtil
+									.firstSecondOfDate(new Date()), DateUtil
+									.lastSecondOfDate(new Date()));
+
+					if (listSC.size() != 0) {
+						smsCount = listSC.get(0);
+						if (smsCount.getMobileCount() == null) {
+							smsCount.setMobileCount(0);
+						}
+						smsCount.setMobileCount(smsCount.getMobileCount() + 1);
+						smsSendCountManager.save(smsCount);
+					} else {
+						smsCount = new SmsCount();
+						smsCount.setSendDate(new Date());
+						smsCount.setMobileCount(1);
+						smsSendCountManager.save(smsCount);
+					}
+					break;
+				}
+			}
+			if (!bIsMobileNum) {
+				SmsCount sendCount = null;
+				List<SmsCount> listSC = smsSendCountManager.query(
+						"from SmsCount s where s.sendDate between ? and ?", DateUtil
+								.firstSecondOfDate(new Date()), DateUtil
+								.lastSecondOfDate(new Date()));
+				if (!listSC.isEmpty()) {
+					sendCount = listSC.get(0);
+					if (sendCount.getOtherCount() == null) {
+						sendCount.setOtherCount(0);
+					}
+					sendCount.setOtherCount(sendCount.getOtherCount() + 1);
+					smsSendCountManager.save(sendCount);
+				} else {
+					sendCount = new SmsCount();
+					sendCount.setSendDate(new Date());
+					sendCount.setOtherCount(1);
+					smsSendCountManager.save(sendCount);
+				}
+			}
+		}
+	}
 }
