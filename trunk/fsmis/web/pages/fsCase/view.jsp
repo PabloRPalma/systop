@@ -48,11 +48,11 @@
 				</c:if>
 				<c:if test="${model.status eq '0' || model.status eq '3'}">	
 				<td><span class="ytb-sep"></span></td>	
-				    <c:if test="${empty model.assessmentses">
+				    <c:if test="${empty model.assessmentses}">
 				    <td align="right"><a href="${ctx}/assessment/edit.do?model.fsCase.id=${model.id}"> 风险评估</a></td>
 				    </c:if>
-				    <c:if test="${not empty  model.assessmentses">
-				    <td align="right"><a href="#"> 查看风险评估</a></td>
+				    <c:if test="${!empty model.assessmentses}">
+				    <td align="right"><a href="${ctx}/assessment/view.do?model.id=<c:forEach items='${model.assessmentses}' var='assessment'>${assessment.id}</c:forEach>"> 查看风险评估</a></td>
 				    </c:if>
 				</c:if>
 				<c:if test="${empty model.jointTaskses && (model.status eq '0' || model.status eq '3')}">
