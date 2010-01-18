@@ -84,6 +84,8 @@ public class ReportAction extends ExtJsCrudAction<FsCase, ReportManager> {
 	public String index() {
 		Page page = PageUtil.getPage(getPageNo(), getPageSize());
 		StringBuffer hql = new StringBuffer("from FsCase fc where fc.reportDept.id is not null ");
+		//查询事件类型是‘部门上报’
+		hql.append(" and fc.caseSourceType = ").append(CaseConstants.CASE_SOURCE_TYPE_DEPTREPORT);
 		List args = new ArrayList();
 		//取得登陆用户部门所属区县
 		Dept county = loginUserService.getLoginUserCounty(getRequest());
@@ -128,6 +130,8 @@ public class ReportAction extends ExtJsCrudAction<FsCase, ReportManager> {
 			getModel().setReportDept(dept);
 			//事件状态为‘以核实’
 			getModel().setStatus(CaseConstants.CASE_CLOSED);
+			//单体事件类型为‘部门上报添加的单体事件’
+			getModel().setCaseSourceType(CaseConstants.CASE_SOURCE_TYPE_DEPTREPORT);
 			CaseType cType = null;
 	    if (typetwoId != null) {
 	      cType = getManager().getDao().get(CaseType.class, typetwoId);
