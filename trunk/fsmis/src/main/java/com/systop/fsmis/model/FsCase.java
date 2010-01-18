@@ -139,6 +139,8 @@ public class FsCase extends BaseModel {
 	private String checkedConfirmMsg;
 	/** 处理类型 **/
 	private String processType;
+	/**事件来源类型(直接添加/上报)*/
+	private String caseSourceType;
 
 	/**
 	 * 默认构造
@@ -489,4 +491,12 @@ public class FsCase extends BaseModel {
 	public void setProcessType(String processType) {
 		this.processType = processType;
 	}
+  @Column(name = "CASE_SOURCE_TYPE", length = 1)
+  public String getCaseSourceType() {
+    return caseSourceType;
+  }
+
+  public void setCaseSourceType(String caseSourceType) {
+    this.caseSourceType = caseSourceType;
+  }
 }
