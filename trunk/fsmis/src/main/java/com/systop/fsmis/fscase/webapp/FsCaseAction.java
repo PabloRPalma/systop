@@ -202,6 +202,7 @@ public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
 
     getModel().setCaseType(cType);
     getModel().setIsSubmited(FsConstants.N);
+    getModel().setCaseSourceType(CaseConstants.CASE_SOURCE_TYPE_GENERIC);
     if (StringUtils.isBlank(getModel().getIsMultiple())) {
       getModel().setIsMultiple(FsConstants.N);
     }
