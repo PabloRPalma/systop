@@ -6,6 +6,12 @@
 <title></title>
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/ec.jsp"%>
+<script type="text/javascript">
+function result(id){
+  url = "${ctx}/jointTask/deptTaskDetail/view.do?model.id=" + id;
+  window.open(url,"main");
+}
+</script>
 </head>
 <body>
 <div class="x-panel">
@@ -58,7 +64,11 @@
 			</c:if>			
 			<c:if test="${item.status == '4'}"><font color="green">已处理</font></c:if>	
 	</ec:column>	
-	<ec:column width="150" property="result" title="任务结果" style="text-align:center"/>	       
+	    <ec:column width="150" property="result" style="text-align:center" title="任务结果" >
+		  <c:if test="${item.status == '4' && item.isLeader eq '1'}">
+		    <a href="#" onclick="result(${item.id})">查看</a>
+		  </c:if>
+		</ec:column>      
   </ec:row>
 </ec:table>
 </div>

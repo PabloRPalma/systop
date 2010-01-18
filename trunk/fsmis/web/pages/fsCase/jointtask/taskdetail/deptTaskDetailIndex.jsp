@@ -9,7 +9,7 @@
 <script type="text/javascript">
 
 </script>
-<title>联合任务管理</title>
+<title>联合整治管理</title>
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/ec.jsp"%>
 <script type="text/javascript">
@@ -36,7 +36,7 @@ function result(id, jointTaskId){
 </head>
 <body>
 <div class="x-panel">
-<div class="x-panel-header">联合整治任务接收&nbsp;&gt;&nbsp;任务列表</div>
+<div class="x-panel-header">联合整治&nbsp;&gt;&nbsp;任务列表</div>
 <div class="x-toolbar">
 <table width="99%">
   <tr>
