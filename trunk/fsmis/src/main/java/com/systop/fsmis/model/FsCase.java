@@ -137,6 +137,8 @@ public class FsCase extends BaseModel {
 
 	/** 反馈确认信息 **/
 	private String checkedConfirmMsg;
+	/** 处理类型 **/
+	private String processType;
 
 	/**
 	 * 默认构造
@@ -477,5 +479,14 @@ public class FsCase extends BaseModel {
 
 	public void setCheckedConfirmMsg(String checkedConfirmMsg) {
 		this.checkedConfirmMsg = checkedConfirmMsg;
+	}
+
+	@Column(name = "PROCESS_TYPE", length = 1)
+	public String getProcessType() {
+		return processType;
+	}
+
+	public void setProcessType(String processType) {
+		this.processType = processType;
 	}
 }
