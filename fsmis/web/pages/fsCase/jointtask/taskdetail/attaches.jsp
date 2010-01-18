@@ -44,7 +44,7 @@ String.prototype.trim = function(){
 <s:hidden id="jointTaskDetailId" name="jointTaskDetailId"></s:hidden>
 <table width="99%">
   <tr>
-      <td align="left" width="2%">上传文件：</td>
+      <td align="left" width="2%">上传任务明细文件：</td>
       <td align="left" width="17%">
         <s:file id="attachment" name="attachment" cssClass="FileText" cssStyle="width:250px"/>
       </td>

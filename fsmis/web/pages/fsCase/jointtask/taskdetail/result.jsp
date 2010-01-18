@@ -30,7 +30,7 @@ Ext.onReady(function(){
 });
 </script>
 <div class="x-panel">
-<div class="x-panel-header">联合整治&nbsp;&gt;&nbsp;任务处理管理</div>
+<div class="x-panel-header">联合整治&nbsp;&gt;&nbsp;任务处理</div>
 <div class="x-toolbar">
     <table width="100%">
       <tr>
@@ -82,25 +82,39 @@ Ext.onReady(function(){
 
 <div id="task" class="x-hide-display">
 <table id="mytable" border="0" cellpadding="1" cellspacing="1">  
-  <tr>
-	<td align="right" width="80">任务标题：</td>
-	<td align="left">${model.jointTask.title}</td>
-  </tr>    
-  <tr>
-	<td align="right">任务说明：</td>
-    <td align="left" colspan="1">
-    	<div style="width:700px;word-break:break-all;">
-     	${model.jointTask.descn}
-    	</div>
-    </td>
-  </tr>  
-  <tr>
-		<td align="right">派送时间：</td>
-		<td align="left" width="420"><s:date
-			 name="model.jointTask.createDate" 
-			format="yyyy-MM-dd hh:mm" />
-			</td>
-  </tr>       
+	<tr>
+	  <td align="right" width="80">任务标题：</td>
+	  <td align="left">${model.jointTask.title}</td>
+	</tr>    
+	<tr>
+	  <td align="right">任务说明：</td>
+	  <td align="left" colspan="1">
+	   	<div style="width:700px;word-break:break-all;">
+	    	${model.jointTask.descn}
+	  	</div>
+	  </td>
+	</tr>  
+	<tr>
+	  <td align="right">派送时间：</td>
+	  <td align="left" width="420"><s:date
+		  name="model.jointTask.createDate" 
+		 format="yyyy-MM-dd hh:mm" />
+	  </td>
+	</tr> 
+	<tr>
+	  <td align="right">&nbsp;&nbsp;附件信息：</td>
+		<td>
+		   <table>
+				<c:forEach var="mtd" items="${model.jointTask.taskAttachses}" >
+		            <tr>
+		              <td width="300" >
+						  <a href="${ctx}${mtd.path}" target="_blank"><font color="blue">${mtd.title}</font></a>&nbsp;&nbsp;
+		               </td>
+					</tr>
+				</c:forEach>			
+		  </table>
+	  </td>
+	</tr>      
 </table>
 </div>
 
@@ -147,7 +161,7 @@ Ext.onReady(function(){
           </tr>
           <tr>
              <td align="right" style="height:20px"><span style="font-weight:bold">事件报告人：</span></td>
-             <td align="left" >
+             <td align="left">
              	<s:property value="model.jointTask.fsCase.informer" />
              </td>
           </tr> 
@@ -174,7 +188,7 @@ Ext.onReady(function(){
 		</tr>
 		<tr>
 			<td style="text-align: center;">
-			    <s:submit value="保存" cssClass="button" />&nbsp;&nbsp;
+			    <s:submit value="保存" cssClass="button" />&nbsp;
 				<s:reset value="重置" cssClass="button"/>
 			</td>
 		</tr>
