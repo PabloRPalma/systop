@@ -107,6 +107,11 @@ public class JointTaskAction extends
 	private CheckResult checkResult;
 	
 	/**
+	 * 联合整治任务Id
+	 */
+	private Integer jointTaskId;
+	
+	/**
 	 * 重写父类的index方法，实现分页检索风险评估信息
 	 */
 	@SuppressWarnings("unchecked")
@@ -197,6 +202,12 @@ public class JointTaskAction extends
 			getModel().getFsCase().setCounty(
 					deptManager.get(getModel().getFsCase().getCounty().getId()));
 			getModel().getFsCase().setIsSubmited(FsConstants.N);
+			//事件添加类别
+			getModel().getFsCase().setCaseSourceType(CaseConstants.CASE_SOURCE_TYPE_JOINTASK);
+			//事件处理类型
+			getModel().getFsCase().setProcessType(CaseConstants.PROCESS_TYPE_JOIN_TASK);
+			//事件派遣类型
+			getModel().getFsCase().setStatus(CaseConstants.CASE_PROCESSING);
 			if (StringUtils.isBlank(getModel().getFsCase().getIsMultiple())) {
 				getModel().getFsCase().setIsMultiple(FsConstants.N);
 			}
@@ -317,6 +328,29 @@ public class JointTaskAction extends
 	}
 	
 	/**
+	 * 联合整治任务查看
+	 */
+	public String view() {
+		return "view";
+	}
+	
+	/**
+	 * 查询联合整治任务的审核记录
+	 */
+	public String listCheckResult() {
+		if (jointTaskId != null ) {
+			Page page = PageUtil.getPage(getPageNo(), getPageSize());
+			StringBuffer sql = new StringBuffer("from CheckResult cr where 1=1 ");
+			sql.append(" and cr.jointTask.id = ?");
+			sql.append(" order by cr.isAgree,cr.checkTime desc");
+			page = getManager().pageQuery(page, sql.toString(), jointTaskId);
+			restorePageData(page);
+		}
+		
+		return "listCheckRst";
+	}
+	
+	/**
 	 * 用于显示一级主题类，用于edit.jsp显示
 	 */
 	@SuppressWarnings("unchecked")
@@ -382,6 +416,14 @@ public class JointTaskAction extends
 
 	public void setCheckResult(CheckResult checkResult) {
 		this.checkResult = checkResult;
+	}
+
+	public Integer getJointTaskId() {
+		return jointTaskId;
+	}
+
+	public void setJointTaskId(Integer jointTaskId) {
+		this.jointTaskId = jointTaskId;
 	}
 
 }

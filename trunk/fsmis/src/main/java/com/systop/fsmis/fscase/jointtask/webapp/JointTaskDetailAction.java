@@ -1,10 +1,15 @@
 package com.systop.fsmis.fscase.jointtask.webapp;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.criterion.MatchMode;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -15,7 +20,10 @@ import com.systop.common.modules.security.user.model.User;
 import com.systop.core.dao.support.Page;
 import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
 import com.systop.fsmis.FsConstants;
+import com.systop.fsmis.fscase.jointtask.JointTaskConstants;
 import com.systop.fsmis.fscase.jointtask.service.JointTaskDetailManager;
+import com.systop.fsmis.fscase.jointtask.service.JointTaskManager;
+import com.systop.fsmis.model.JointTask;
 import com.systop.fsmis.model.JointTaskDetail;
 
 /**
@@ -33,6 +41,17 @@ public class JointTaskDetailAction extends
 	 * 联合整治任务Id
 	 */
 	private Integer jointTaskId;
+	
+	/**
+	 * JSON返回结果
+	 */
+	private Map<String, String> checkResult;
+	
+	/**
+	 * 联合整治任务管理Manager
+	 */
+	@Autowired
+	private JointTaskManager jointTaskManager;
 	
 	/**
 	 * 重写父类的index方法，实现分页检索任务附件信息
@@ -109,6 +128,34 @@ public class JointTaskDetailAction extends
 	}
 	
 	/**
+	 * AJAX方式检查联合整治任务是否可以处理
+	 */
+	public String checkResult() {
+		checkResult = Collections.synchronizedMap(new HashMap<String, String>());
+		StringBuffer detailBuf = new StringBuffer();
+		if (jointTaskId != null) {
+      JointTask jointTask = jointTaskManager.get(jointTaskId);
+      Set<JointTaskDetail> jointTaskDetails = jointTask.getTaskDetailses();
+      for (JointTaskDetail jointTaskDetail : jointTaskDetails) {
+      	if (jointTaskDetail.getStatus().equals(JointTaskConstants.TASK_DETAIL_UN_RECEIVE)) {
+      		detailBuf.append("【");
+      		detailBuf.append(jointTaskDetail.getDept().getName());
+      		detailBuf.append("】");
+      		detailBuf.append(",");
+      	}
+      }
+  		if (detailBuf.length() > 0 && detailBuf.lastIndexOf(",") > 0) {
+  			String detailStr = detailBuf.substring(0, detailBuf.length() -1 );
+  			checkResult.put("result", detailStr);
+  		}
+  		else {
+  			checkResult.put("result", null);
+  		}
+		} 
+		return "jsonCheckRst";
+	}
+	
+	/**
 	 * 联合整治任务处理结果保存
 	 */
 	public String resultSave(){
@@ -129,6 +176,16 @@ public class JointTaskDetailAction extends
 
 	public void setJointTaskId(Integer jointTaskId) {
 		this.jointTaskId = jointTaskId;
+	}
+
+
+	public Map<String, String> getCheckResult() {
+		return checkResult;
+	}
+
+
+	public void setCheckResult(Map<String, String> checkResult) {
+		this.checkResult = checkResult;
 	}
 	
 }

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.systop.common.modules.security.user.model.User;
 import com.systop.core.service.BaseGenericsManager;
 import com.systop.fsmis.FsConstants;
+import com.systop.fsmis.fscase.CaseConstants;
 import com.systop.fsmis.fscase.jointtask.JointTaskConstants;
 import com.systop.fsmis.model.JointTask;
 import com.systop.fsmis.model.JointTaskDetail;
@@ -83,5 +84,8 @@ public class JointTaskDetailManager extends BaseGenericsManager<JointTaskDetail>
 		jointTaskDetail.setStatus(JointTaskConstants.TASK_DETAIL_RESOLVEED);
 		jointTaskDetail.setCompletionTime(new Date());
 		save(jointTaskDetail);
+		//处理后将FsCase中的事件状态设置为"已处理"
+		jointTaskDetail.getJointTask().getFsCase().setStatus(CaseConstants.CASE_PROCESSED);
+		getDao().save(jointTaskDetail.getJointTask().getFsCase());
 	}
 }
