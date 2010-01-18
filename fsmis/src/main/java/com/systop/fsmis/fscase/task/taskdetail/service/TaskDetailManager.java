@@ -55,9 +55,10 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
    * 完成提交任务明细(处理完毕)方法
    * 
    * @param taskDetail 要提交的任务明细
+   * @param isNewCorp 是否新添加企业
    */
   @Transactional
-  public void doCommitTaskDetail(TaskDetail taskDetail) {
+  public void doCommitTaskDetail(TaskDetail taskDetail, String isNewCorp) {
     // 任务明细状态置为"已处理"
     taskDetail.setStatus(TaskConstants.TASK_DETAIL_PROCESSED);
     // 任务完成时间
@@ -67,7 +68,7 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
     // 作为当前案件的唯一有效任务,当前任务已处理(对应所有任务明细都已处理),则修改案件的状态为"已处理"
     FsCase fsCase = task.getFsCase();
     // 如果案件没有关联企业,而在完成任务中为案件指定了企业(创建新企业),则需要保存企业信息
-    if (taskDetail.getTask().getFsCase().getCorp() != null
+    /*if (taskDetail.getTask().getFsCase().getCorp() != null
         && StringUtils.isNotBlank(taskDetail.getTask().getFsCase().getCorp()
             .getName())
         && taskDetail.getTask().getFsCase().getCorp().getId() == null) {
@@ -82,7 +83,8 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
             .getName())
         && taskDetail.getTask().getFsCase().getCorp().getId() == null) {
       fsCase.setCorp(null);
-    }
+    }*/
+    processCorp(taskDetail, fsCase, isNewCorp);
     // 如果所有任务明细已经处理,则把任务状态置为"已处理",完成时间为当前时间
     if (checkIsAllTaskDetailResolved(taskDetail)) {
       task.setStatus(TaskConstants.TASK_PROCESSED);
@@ -94,6 +96,42 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
       }
     }
 
+  }
+
+  /**
+   * <pre>
+   * 
+   * </pre>
+   * 
+   * @param taskDetail
+   */
+  private void processCorp(TaskDetail taskDetail, FsCase fsCase,
+      String isNewCorp) {
+    // 新添加加企业
+    if ("Y".equalsIgnoreCase(isNewCorp)) {
+      Corp corp = taskDetail.getTask().getFsCase().getCorp();
+      corp.setId(null);
+      getDao().save(corp);
+      fsCase.setCorp(corp);
+    } else {
+      // 选择得到企业
+      if (taskDetail.getTask().getFsCase().getCorp() != null
+          && taskDetail.getTask().getFsCase().getCorp().getId() != null) {
+        FsCase fsCaseDb = (FsCase) getDao().findObject(
+            "from FsCase fc where fc.id = ?", fsCase.getId());
+        // 客户端传递的企业不eq数据库中原有企业
+        if (!taskDetail.getTask().getFsCase().getCorp().equals(
+            fsCaseDb.getCorp())) {
+          Corp corp = (Corp) getDao().findObject("from Corp c where c.id = ?", taskDetail.getTask().getFsCase().getCorp().getId());
+          fsCase.setCorp(null);
+          getDao().evict(fsCaseDb.getCorp());
+          fsCase.setCorp(corp);
+          getDao().update(fsCase);// 让事件关联选择的企业
+        }
+      } else {// 没有选择也没有录入企业,企业空缺
+        fsCase.setCorp(null);
+      }
+    }
   }
 
   /**

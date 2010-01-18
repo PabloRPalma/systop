@@ -95,7 +95,7 @@ public class TaskDetailAction extends
     args.add(isMultipleCase);
     getRequest().setAttribute("userId", user.getId());
     getRequest().setAttribute("userName", user.getName());
-
+    
     Page page = PageUtil.getPage(getPageNo(), getPageSize());
     page = getManager().pageQuery(page, buf.toString(), args.toArray());
     restorePageData(page);
@@ -252,8 +252,8 @@ public class TaskDetailAction extends
      * if (getModel().getTask().getFsCase().getCorp().getId() == null) {
      * getModel().getTask().getFsCase().setCorp(null); }
      */
-
-    getManager().doCommitTaskDetail(getModel());
+    String isNewCorp = getRequest().getParameter("isNewCorp");
+    getManager().doCommitTaskDetail(getModel(),isNewCorp);
 
     return SUCCESS;
 
