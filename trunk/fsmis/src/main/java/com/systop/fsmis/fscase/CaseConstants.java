@@ -32,10 +32,18 @@ public final class CaseConstants {
 
   /** 区、县级 */
   public static final String COUNTY = "2";
+  
   /** 事件处理类型:任务派遣 */
-  public static final String PROCESS_TYPE_TASK = "0";
+  public static final String PROCESS_TYPE_TASK = "0"; 
   /** 事件处理类型:联合整治 */
   public static final String PROCESS_TYPE_JOIN_TASK = "1";
+  
+  /** 事件添加类别:普通添加单体事件 */
+  public static final String CASE_SOURCE_TYPE_GENERIC = "0";
+  /** 事件添加类别:联合整治添加单体事件 */
+  public static final String CASE_SOURCE_TYPE_JOINTASK = "1";
+  /** 事件添加类别:部门上报添加单体事件 */
+  public static final String CASE_SOURCE_TYPE_DEPTREPORT = "2";
   /**
    * 配置类别
    */
