@@ -124,7 +124,7 @@ function remove(id){
             </c:if>
             <c:if test="${item.status eq '2'}">		
 			    <a title="修改事件" href="${ctx}/fscase/edit.do?model.id=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">改 </a> |
-			    <a title="派遣任务" href="#" onclick="showChooseSendTypeWindow('${item.id}')">派</a> |
+			    <font color="silver" >派</font> |
 			    <font color="silver" >删</font> 
 			    <c:if test="${param['isMultipleCase'] eq 0}">
 			    <c:choose>
