@@ -11,27 +11,20 @@
 .mytable {
   border:2;
 	width: 100%;
-	border-collapse: collapse;
-	border-collapse:   separate;   border-spacing:   10px;
-	margin-top: 10px;
-	margin-bottom: 10px;
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
-
 .mytable td {
 	border: 0px solid #A6C9E2;
-	height: 28;
-	margin-top: 10;
-	margin-bottom: 10;
-	padding: 6px 6px 6px 6px;
-}
-#tabs{
-  margin-top: -1;
+	margin-top: 2;
+	margin-bottom: 2;
+	padding: 2px 2px 2px 2px;
 }
 </style>
 </head>
 <body>
 <!-- 事件信息 -->
-<div class="x-panel">
+<div class="x-panel" style="width: 100%">
 	<div class="x-panel-header">事件信息</div>
 	<div class="x-toolbar">
 		<table width="100%">
@@ -62,52 +55,88 @@
 			</tr>
 		</table>
 	</div>
-	<div id="tabs">
-		<div id="fsCaseDiv" class="x-hide-display">
-						<table class="mytable"  >		
-							<tr>
-								<td class="simple" width="15%"align="right">案件标题：</td>
-								<td class="simple" align="left" ><s:property	value="model.title" /></td>
-							</tr>
-							<tr>
-								<td width="10%"  align="right">案件类别：</td>
-								<td align="left" ><s:property	value="model.caseType.name" /></td>
-							</tr>
-							<tr>
-								<td width="10%"  align="right">案件地点：</td>
-								<td align="left" ><s:property value="model.address" />
-								</td>
-							</tr>
-							<tr>
-								<td width="10%"  align="right">事发时间：</td>
-								<td align="left" ><s:date name="model.caseTime"format="yyyy-MM-dd" /></td>
-							</tr>
-							<tr>
-								<td width="10%"  align="right">案件报告人：</td>
-								<td  align="left"><s:property value="model.informer" />
-								</td>
-							</tr>
-							<tr>
-								<td width="10%"  align="right">报告人电话：</td>
-								<td  align="left"><s:property	value="model.informerPhone" /></td>
-							</tr>
-							<tr>
-								<td width="10%"  align="right">案件描述：</td>
-								<td  align="left">${model.descn}</td>
-							</tr>						
-						</table>
+	<div id="tabs" style="width: 100%">
+		<div id="fsCaseDiv" class="x-hide-display">			
+			<table width="100%">		
+				<tr>
+					<td  width="10%"align="right">案件标题：</td>
+					<td  align="left" >${model.title}</td>
+				</tr>
+				<tr>
+					<td width="10%"  align="right">案件类别：</td>
+					<td align="left" >${model.caseType.name}</td>
+				</tr>
+				<tr>
+					<td width="10%"  align="right">案件地点：</td>
+					<td align="left" >${model.address}</td>
+				</tr>
+				<tr>
+					<td width="10%"  align="right">事发时间：</td>
+					<td align="left" ><s:date name="model.caseTime"format="yyyy-MM-dd" /></td>
+				</tr>
+				<tr>
+					<td width="10%"  align="right">案件报告人：</td>
+					<td  align="left">${model.informer}</td>
+				</tr>
+				<tr>
+					<td width="10%"  align="right">报告人电话：</td>
+					<td  align="left">${model.informerPhone}</td>
+				</tr>
+				<tr>
+					<td width="10%"  align="right">案件描述：</td>
+					<td  align="left">${model.descn}</td>
+				</tr>						
+			</table>
 		</div>
+		<c:if test="${model.isMultiple eq '1'}">		
 		<div id="general" class="x-hide-display" >
 			<!-- include进来二级Tab以现实一个食品安全综合案件关联的多个一般案件 -->		
 			<%@include	file="viewGenericCases.jsp"%>			
 		</div>
-		<div id="tasks" class="x-hide-display" style="margin: -1; border: 0;">
+		</c:if>
+		<c:if test="${not empty model.taskses }">	
+		<div id="tasks" class="x-hide-display" style="margin: -1; border: 0; width: 100%">
 			<!-- include进来二级Tab以现实一个食品安全案件下的多个任务 -->		
 			<%@include file="viewTasks.jsp"%>
 		</div>
+		</c:if>
 		<div id="sms" class="x-hide-display" style="width: 100%;">
 		<%@include file="viewSmsGrid.jsp" %>
 		</div>
+		<c:if test="${not empty model.corp}">
+			<div id="corp" class="x-hide-display" style="width: 100%;">		
+				<table width="100%">		
+					<tr>
+						<td  width="10%"align="right">企业名称：</td>
+						<td  align="left" >${model.corp.name}</td>
+					</tr>
+					<tr>
+						<td width="10%"  align="right">企业编号：</td>
+						<td align="left" >${model.corp.code} </td>
+					</tr>
+					<tr>
+						<td width="10%"  align="right">地址：</td>
+						<td align="left" >${model.corp.address}</td>
+					</tr>
+					<tr>
+						<td width="10%"  align="right">法人：</td>
+						<td align="left" >${model.corp.legalPerson}</td>
+					</tr>
+					<tr>
+						<td width="10%"  align="right">生产许可证：</td>
+						<td  align="left">${model.corp.produceLicense}</td>
+					</tr>
+					<tr>
+						<td width="10%"  align="right">卫生许可证：</td>
+						<td  align="left">${model.corp.sanitationLicense}</td>
+					</tr>
+					<tr>
+						<td width="10%"  align="right">经营范围：</td>
+						<td  align="left">${model.corp.operateDetails}</td>
+					</tr>						
+			</table>			
+	</div>
+		</c:if>
 	</div>
 </div>
 <%@include file="chooseSendType.jsp"%>
@@ -121,7 +150,7 @@
 			activeTab : ${param['modelId']},
 			frame : false,
 			defaults : {
-				autoHeight : false
+				autoHeight : true
 			},
 			items : [ {
 				contentEl : 'fsCaseDiv',
@@ -141,12 +170,16 @@
 			}
 			
 			</c:if>			
-			<s:if test="1==1">
 			, {
 				contentEl : 'sms',
 				title : '短信收发情况'
 			} 
-			</s:if>
+			<c:if test="${not empty model.corp}">
+			, {
+				contentEl : 'corp',
+				title : '关联企业'
+			} 
+			</c:if>
 			]
 		});
 	});
