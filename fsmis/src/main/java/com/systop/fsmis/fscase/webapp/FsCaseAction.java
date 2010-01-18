@@ -180,7 +180,6 @@ public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
         getRequest().setAttribute("levelone", getLevelOne());
         return INPUT;
       }
-      getModel().setCaseTime(new Date());
       getModel().setStatus(CaseConstants.CASE_UN_RESOLVE);
     }
 
