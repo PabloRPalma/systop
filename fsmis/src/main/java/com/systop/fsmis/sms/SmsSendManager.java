@@ -1,8 +1,11 @@
 package com.systop.fsmis.sms;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.lang.xwork.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.systop.core.service.BaseGenericsManager;
@@ -56,4 +59,24 @@ public class SmsSendManager extends BaseGenericsManager<SmsSend> {
     }
   }
 
+  /**
+   * 取得发送短信的具体内容
+   * @param smsId 短信ID
+   * @author DU
+   */
+  @SuppressWarnings("unchecked")
+  public Map getSmsMapById(String smsId) {
+  	Map map = new HashMap();
+  	if (StringUtils.isNotBlank(smsId) && StringUtils.isNumeric(smsId)) {
+  		SmsSend smsSend = get(Integer.valueOf(smsId));
+  		if (smsSend != null) {
+  			map.put("mobileNum", smsSend.getMobileNum());
+  			map.put("name", smsSend.getName());
+  			map.put("sendTime", smsSend.getSendTime());
+  			map.put("content", smsSend.getContent());
+  		}
+  	}
+  	
+  	return map;
+  }
 }
