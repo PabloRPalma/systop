@@ -44,7 +44,7 @@
 				<c:if test="${model.status eq '0'}">
 					<td align="right"><a href="#" onclick="showChooseSendTypeWindow(${model.id})"> 任务派遣</a></td>
 				</c:if>
-				<c:if test="${empty model.assessmentses }">		
+				<c:if test="${empty model.assessmentses && (model.status eq '0' || model.status eq '3')}">		
 				<td></td>
 				<td align="right"><a href="${ctx}/assessment/edit.do?model.fsCase.id=${model.id}"> 风险评估</a></td>
 				</c:if>
