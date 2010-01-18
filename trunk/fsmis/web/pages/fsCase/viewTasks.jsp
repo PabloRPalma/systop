@@ -49,8 +49,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2">
-						<table id="task${taskStatus.index}AttTable">
+					<td colspan="6">
+						<table id="task${taskStatus.index}AttTable" width="100%" class="mytable" style="margin-left: -1;" height="100">
 						  <thead>
             		<tr>
 	                <th width="20">No.</th>
@@ -65,12 +65,11 @@
 										<td>${attStatus.index+1 }</td>
 										<td>${att.title }</td>
 										<td>${att.remark }</td>
-										<td><a href="${ctx}${att.path }" target="_blank" type="下载附件">下载</a></td>
+										<td><a href="${ctx}${att.path }" target="_blank" title="下载附件">下载</a></td>
 									</tr>
 								</c:forEach>
 							</tbody>
-						</table>
-						
+						</table>						
 					</td>
 				</tr>
 			</table>
@@ -98,7 +97,7 @@
 			activeTab : ${empty currentTask ? 0 : currentTask},
 			frame : false,
 			defaults : {
-				autoHeight : false
+				autoHeight : true
 			},
 			items : [ 
 			
