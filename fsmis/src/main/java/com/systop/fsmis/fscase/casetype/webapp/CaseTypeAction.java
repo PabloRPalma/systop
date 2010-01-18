@@ -35,6 +35,7 @@ public class CaseTypeAction extends
 	public String index() {
 		Page page = new Page(Page.start(getPageNo(), getPageSize()),
 				getPageSize());
+		//FIXME:属性名称
 		StringBuffer sql = new StringBuffer(
 				"from CaseType ct where ct.caseType.id is null ");
 		List args = new ArrayList();
