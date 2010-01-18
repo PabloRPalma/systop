@@ -16,8 +16,21 @@
 function view(id){
 	window.location.href="${ctx}/jointTask/deptTaskDetail/view.do?model.id=" + id;
 }
-function result(id){
-	window.location.href="${ctx}/jointTask/deptTaskDetail/result.do?model.id=" + id;
+
+function result(id, jointTaskId){  
+    $.ajax({
+		url: '${ctx}/jointTask/deptTaskDetail/checkResult.do',
+		type: 'post',
+		dataType: 'json',
+		data: {jointTaskId : jointTaskId},
+		success: function(rst, textStatus){
+	  		if(rst.result != null){
+		  	   alert(rst.result + "还没有查看任务，不能进行任务处理！");	    	  		
+	  	  	}else{
+	  	  	  window.location.href='${ctx}/jointTask/deptTaskDetail/result.do?model.id=' + id;
+	  	  	}
+		}
+   });
 }
 </script>
 </head>
@@ -91,7 +104,7 @@ function result(id){
 		</ec:column>
 		 <ec:column width="80" property="_0" title="操作" style="text-align:center" sortable="false">
 		 <c:if test="${item.isLeader == '1'}">
-			  <c:if test="${item.status == '2'}"><a href="javascript:result(${item.id})">处理</a>|</c:if>
+			  <c:if test="${item.status == '2'}"><a href="javascript:result(${item.id},${item.jointTask.id})">处理</a>|</c:if>
 		 </c:if>
 		 <a href="javascript:view(${item.id})">查看</a>
 		</ec:column>
