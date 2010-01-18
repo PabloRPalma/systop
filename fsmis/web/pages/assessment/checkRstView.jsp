@@ -36,7 +36,7 @@
 		<c:if test="${item.isAgree == '1'}"><font color="green">同意</font></c:if>
 	    <c:if test="${item.isAgree == '0'}"><font color="red">不同意</font></c:if>
 	</ec:column>
-	<ec:column width="520" property="result" title="具体意见" sortable="false"/>
+	<ec:column width="510" property="result" title="具体意见" sortable="false"/>
  </ec:row>
 </ec:table>
 </div>
