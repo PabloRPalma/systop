@@ -8,21 +8,6 @@
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/extjs.jsp" %>
 <%@include file="/common/validator.jsp"%>
-<link href="${ctx}/styles/treeSelect.css" type='text/css' rel='stylesheet'>
-<style type="text/css">
-#mytable {
-	border: 0px solid #A6C9E2;
-	margin-left: 0px;
-	margin-top: 0px;
-	width: 100%;
-	border-collapse: collapse;
-}
-
-#mytable td {
-	border: 0px solid #A6C9E2;
-	height: 28;
-}
-</style>
 </head>
 <body >
 <script type="text/javascript">
