@@ -17,6 +17,9 @@
 			<result name="index">/pages/sms/send/index.jsp</result>
 			<result name="input">/pages/sms/send/edit.jsp</result> 
 			<result name="success" type="redirect">index.do</result>
+			<result type="json" name="jsonRst">
+		   		<param name="root">smsSendInfo</param>
+			</result>
 		</action>
 	</package>
 </struts>

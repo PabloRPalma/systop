@@ -3,6 +3,7 @@ package com.systop.fsmis.sms.webapp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.criterion.MatchMode;
@@ -34,6 +35,10 @@ public class SmsSendAction extends ExtJsCrudAction<SmsSend, SmsSendManager> {
 	@Autowired
 	private LoginUserService loginUserService;
 
+	private String smsSendId;
+	
+	private Map smsSendInfo;
+	
 	/**
 	 * 短信发送
 	 */
@@ -91,4 +96,30 @@ public class SmsSendAction extends ExtJsCrudAction<SmsSend, SmsSendManager> {
 		
 		return INDEX;
 	}
+	
+	/**
+	 * 查看发送的短信内容
+	 */
+	public String viewSmsSendInfo() {
+		if (StringUtils.isNotBlank(smsSendId)) {
+			smsSendInfo = getManager().getSmsMapById(smsSendId);;
+		}
+  	return "jsonRst";
+	}
+	
+	public String getSmsSendId() {
+  	return smsSendId;
+  }
+
+	public void setSmsSendId(String smsSendId) {
+  	this.smsSendId = smsSendId;
+  }
+
+	public Map getSmsSendInfo() {
+  	return smsSendInfo;
+  }
+
+	public void setSmsSendInfo(Map smsSendInfo) {
+  	this.smsSendInfo = smsSendInfo;
+  }
 }
