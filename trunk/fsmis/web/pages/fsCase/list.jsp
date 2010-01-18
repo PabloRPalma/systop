@@ -88,11 +88,13 @@ function remove(id){
 			<c:if test="${item.status == '3'}"><font color="gray">已回退</font></c:if>
 			<c:if test="${item.status == '4'}"><font color="blue">已核实</font></c:if>
 		</ec:column>
+		<c:if test="${param['isMultipleCase'] eq 0}">
 		<ec:column width="100" property="_3" title="事件来源" style="text-align:center" sortable="false">
 			<c:if test="${item.caseSourceType == '0'}">普通添加</c:if>
 			<c:if test="${item.caseSourceType == '1'}">联合整治添加</c:if>
 			<c:if test="${item.caseSourceType == '2'}">部门上报</c:if>
 		</ec:column>
+		</c:if>
 		<ec:column width="100" property="_4" title="事件处理流程" style="text-align:center" sortable="false">
 			<c:if test="${item.processType == '0'}">普通派遣处理</c:if>
 			<c:if test="${item.processType == '1'}">联合整治处理</c:if>
