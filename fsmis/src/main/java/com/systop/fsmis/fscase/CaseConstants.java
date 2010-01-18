@@ -32,7 +32,10 @@ public final class CaseConstants {
 
   /** 区、县级 */
   public static final String COUNTY = "2";
-
+  /** 事件处理类型:任务派遣 */
+  public static final String PROCESS_TYPE_TASK = "0";
+  /** 事件处理类型:联合整治 */
+  public static final String PROCESS_TYPE_JOIN_TASK = "1";
   /**
    * 配置类别
    */
