@@ -76,13 +76,16 @@
 		              				     
 		  ]);
 		//创建Grid表格组件
-		var grid = new Ext.grid.GridPanel({
+		var taskDetailGrid${taskStatus.index} = new Ext.grid.GridPanel({
+			bodyStyle:'width:99%',
 			title : '任务${taskStatus.index+1}明细',
 			applyTo : 'taskDetailGridDiv${taskStatus.index+1}',
-			width:853,
 			height:100,
-			frame:true,			
+			frame:true,
+			//width:this.getComputedWidth(),--不支持			
 			store: store,
+			stripeRows:true,
+			monitorWindowResie:true,
 			cm : cm,
 			bbar : new Ext.PagingToolbar({
 				  pageSize : 10,
@@ -93,5 +96,9 @@
 			  })
 		})
 	});
+	window.onresize=function(){
+      //grid.setWidth(gridGrid.getComputedWidth());
+	    //当浏览器
+	}; 
   </script>
-  <div id='taskDetailGridDiv${taskStatus.index+1}'></div>
+  <div id='taskDetailGridDiv${taskStatus.index+1}' style="width:100%"></div>
