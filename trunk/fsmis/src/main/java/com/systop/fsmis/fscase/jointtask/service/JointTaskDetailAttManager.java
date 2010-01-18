@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.systop.core.service.BaseGenericsManager;
 import com.systop.fsmis.model.JointTaskDetailAttach;
 /**
- * 联合整治任务附件service层类
+ * 联合整治任务明细附件service层类
  * @author ShangHua
  *
  */
