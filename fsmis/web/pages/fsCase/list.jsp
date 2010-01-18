@@ -90,14 +90,14 @@ function remove(id){
 		</ec:column>
 		<c:if test="${param['isMultipleCase'] eq 0}">
 		<ec:column width="100" property="_3" title="事件来源" style="text-align:center" sortable="false">
-			<c:if test="${item.caseSourceType == '0'}">普通添加</c:if>
-			<c:if test="${item.caseSourceType == '1'}">联合整治添加</c:if>
-			<c:if test="${item.caseSourceType == '2'}">部门上报</c:if>
+			<c:if test="${item.caseSourceType == 'generic'}">普通添加</c:if>
+			<c:if test="${item.caseSourceType == 'jointask'}">联合整治添加</c:if>
+			<c:if test="${item.caseSourceType == 'deptreport'}">部门上报</c:if>
 		</ec:column>
 		</c:if>
 		<ec:column width="100" property="_4" title="事件处理流程" style="text-align:center" sortable="false">
-			<c:if test="${item.processType == '0'}">普通派遣处理</c:if>
-			<c:if test="${item.processType == '1'}">联合整治处理</c:if>
+			<c:if test="${item.processType == 'task'}">普通派遣处理</c:if>
+			<c:if test="${item.processType == 'jointask'}">联合整治处理</c:if>
 		</ec:column>
 		<ec:column width="55" property="_6" title="查看" style="text-align:center" sortable="false">
 			<a  title="查看事件" href="${ctx}/fscase/view.do?fsCaseId=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">看 </a> |
