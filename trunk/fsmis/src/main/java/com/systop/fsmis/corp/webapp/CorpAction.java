@@ -144,7 +144,7 @@ public class CorpAction extends ExtJsCrudAction<Corp, CorpManager> {
 		// 检查是否与事件关联
 		if (corp.getFsCases().size() != 0) {
 			addActionError("该企业涉及食品安全事件，无法删除！");
-			return "error";
+			return INDEX;
 		}
 		// 如果存在照片，则连照片一起删除
 		String Path = getModel().getPhotoUrl();
