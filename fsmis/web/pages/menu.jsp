@@ -42,8 +42,12 @@
 		</div>	
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/jointTask/deptTaskDetail/deptTaskDetailIndex.do" target="main">联合整治接收</a>
+		</div>			
+		<div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/casereport/index.do" target="main">部门上报</a>
-		</div>	
+		</div>			
 	</div>
 	<div id="assess">
 		<div style="padding-top:2px">
