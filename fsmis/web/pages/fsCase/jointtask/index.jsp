@@ -21,7 +21,7 @@ function removeJointTask(eID){
 </head>
 <body>
 <div class="x-panel">
-<div class="x-panel-header">联合整治管理&nbsp;&gt;&nbsp;任务列表</div>
+<div class="x-panel-header">联合整治&nbsp;&gt;&nbsp;任务列表</div>
 <div class="x-toolbar">
 <table width="99%">
   <tr>
@@ -67,7 +67,9 @@ function removeJointTask(eID){
 	<ec:row>
 	    <ec:column width="30" property="_num" title="No." value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center" />
 		
-		<ec:column width="170" property="title" title="任务标题" />
+		<ec:column width="170" property="_title" title="任务标题" >
+		  	   <a href="view.do?model.id=${item.id}"><font color="blue">${item.title}</font></a> 
+		</ec:column>
 		<ec:column width="80" property="_mt" title="牵头部门">	 						
 			<c:forEach var="mtd" items="${item.taskDetailses}">
 				<c:if test="${mtd.isLeader eq '1'}">
