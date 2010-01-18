@@ -117,6 +117,7 @@ public class TaskManager extends BaseGenericsManager<Task> {
    * @param dept 任务明细关联的部门,短信的发送依据就是部门
    */
   private void sendTaskMessage(Dept dept) {
+  	//FIXME:这里这么获得用户肯定是不行的,要获得短信接收人员.郭红亮2010-01-18 
     Set<User> users = dept.getUsers();
     StringBuffer buf = new StringBuffer();
     buf.append(dept.getName()).append(",你部门现有一条待处理任务,请及时登录系统处理.");
