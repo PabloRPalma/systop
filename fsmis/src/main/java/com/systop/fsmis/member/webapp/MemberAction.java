@@ -49,6 +49,7 @@ public class MemberAction extends ExtJsCrudAction<Member, MemberManager> {
 		StringBuffer hql = new StringBuffer("from Member m where 1=1 ");
 		List args = new ArrayList();
 		Dept county = loginUserService.getLoginUserCounty(getRequest());
+		//FIXME:如果登录用户所属区县为空还显示企业吗？郭红亮2010-01-18
 		if (county != null) {
 			hql.append(" and m.county.id = ?");
 			args.add(county.getId());
