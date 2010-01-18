@@ -38,7 +38,7 @@ public class TaskDetailManagerTest extends BaseTransactionalTestCase {
 		//新增任务详细记录
 		TaskDetail taskDetail = new TaskDetail();
 		taskDetail.setStatus("1");
-		taskDetailManager.doCommitTaskDetail(taskDetail);
+		taskDetailManager.doCommitTaskDetail(taskDetail,"N");
 	}
 
 }
