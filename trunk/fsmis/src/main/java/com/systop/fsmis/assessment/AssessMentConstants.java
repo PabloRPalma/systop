@@ -43,10 +43,10 @@ public final class AssessMentConstants {
 	public static final Map<String, String> ASSESSMENT_LEVEL = Collections
 			.synchronizedMap(new LinkedHashMap<String, String>());
 	static {
-		ASSESSMENT_LEVEL.put("特大", "特大");
-		ASSESSMENT_LEVEL.put("重大", "重大");
-		ASSESSMENT_LEVEL.put("较大", "较大");
 		ASSESSMENT_LEVEL.put("一般", "一般");
+		ASSESSMENT_LEVEL.put("较大", "较大");
+		ASSESSMENT_LEVEL.put("重大", "重大");
+		ASSESSMENT_LEVEL.put("特大", "特大");
 	}
 
 	/** UPLOAD_ALLOWED_FILE_TYPES:允许上传的文件类型 **/
