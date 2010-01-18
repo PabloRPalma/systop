@@ -77,7 +77,7 @@
 		  ]);
 		//创建Grid表格组件
 		var grid = new Ext.grid.GridPanel({
-			title : '任务${varStatus.index+1}明细',
+			title : '任务${taskStatus.index+1}明细',
 			applyTo : 'taskDetailGridDiv${taskStatus.index+1}',
 			width:853,
 			height:150,
