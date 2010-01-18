@@ -59,8 +59,7 @@
 	$(document).ready(function() {
 	$("#save").validate();
 });
-</script>
-<script type="text/javascript">
+
 function preFckEditor(){
 	var fckEditor = new FCKeditor( 'content' ) ;
     fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
