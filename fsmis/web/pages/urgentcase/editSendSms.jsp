@@ -34,21 +34,22 @@
 	</tr>
 	<tr>
 		<td>
-		<fieldset style="width: 750"><legend>短信内容编辑</legend>
+		<fieldset style="width: 790"><legend>短信内容编辑</legend>
 		<table>
 			<tr>
 				<td width="80" align="center">短信号码：</td>
-				<td width="410"><textarea id="mobiles" name="mobelNums" class="required"
-					style="width: 500px; height: 100px;">${mobelNums}</textarea>
+				<td width="570"><textarea id="mobiles" name="mobelNums" onBlur="checkNum()"
+					style="width: 550px; height: 100px;">${mobelNums}</textarea> <font color="red">*</font>
 				</td>
-				<td width="140"><font color="red">*</font><br><br>如果发送多个手机号码请用分号隔开。例：<br>
-				号码1;号码2;号码3</td>
+				<td width="132" id="numInfo">多个号码请用分号隔开</td>
 			</tr>
 			<tr>
 				<td align="center">短信内容：</td>
-				<td><textarea id="content" name="smsContent" class="required"
-					style="width: 500px; height: 200px;"></textarea></td>
-				<td width="140"><font color="red">*</font><br><br>编辑短信内容</td>
+				<td><textarea id="content" name="smsContent" onBlur="checkContent()"
+					style="width: 550px; height: 200px;"></textarea>
+					<font color="red">*</font>
+				</td>
+				<td id="contInfo">编辑短信内容</td>
 			</tr>
 		</table>
 		</fieldset>
@@ -58,7 +59,7 @@
 <table width="100%" style="margin-bottom: 0px;">
 	<tr>
 		<td style="text-align: center;">
-			<input type="button" value="保存" onclick="save()" class="button">&nbsp;&nbsp;
+			<input type="button" value="保存" onClick="sendSms()" class="button">&nbsp;&nbsp;
 			<input type="button" value="返回" onclick="backToCase()" class="button"></td>
 	</tr>
 </table>
@@ -68,50 +69,58 @@
 </div>
 
 <script type="text/javascript">
-	function save() {
-		mobiles = document.getElementById("mobiles").value;
-		if (mobiles == null || mobiles == "") {
-			alert("请输入手机号");
-			return;
+function checkNum(){
+	var mobiles = document.getElementById("mobiles").value;
+	if (mobiles == null || mobiles == ""){
+		document.getElementById('numInfo').innerHTML = '<font color="red">'+'请输入手机号'+'</font>';
+		return false;
+	}
+	if (mobiles.indexOf(";") < 0){
+		if ( isNaN(mobiles)){
+			document.getElementById('numInfo').innerHTML = '<font color="red">'+'手机号码必须是数字'+'</font>';
+			return false;
 		}
-		if (mobiles.indexOf(";") < 0) {
-			if (mobiles.length != 11) {
-				alert("手机号码位数不正确");
-				return;
-			}
-			if (isNaN(mobiles)) {
-				alert(mobiles + "此号码错误，手机号码应全部是数字");
-				return;
-			}
-		} else {
-			arrayMobile = mobiles.split(";");
-			if (arrayMobile.length > 0) {
-				for (i = 0; i < arrayMobile.length; i++) {
-					if (arrayMobile[i].length != 11
-							&& arrayMobile[i].length != 0) {
-						alert(arrayMobile[i] + "手机号码位数不正确");
-						return;
-					}
-					if (isNaN(arrayMobile[i])) {
-						alert(arrayMobile[i] + "此号码错误，手机号码应全部是数字");
-						return;
-					}
+		if (mobiles.length != 11){
+			document.getElementById('numInfo').innerHTML = '<font color="red">'+'手机号码位数不正确'+'</font>';
+			return false;
+		}
+	}else{
+		arrayMobile = mobiles.split(";");
+		if (arrayMobile.length > 0){
+			for(i = 0; i < arrayMobile.length; i++){
+				if ( isNaN(arrayMobile[i])){
+					document.getElementById('numInfo').innerHTML = arrayMobile[i] + '<font color="red">'+' 手机号码必须是数字'+'</font>';
+					return false;
+				}
+				if (arrayMobile[i].length != 11 && arrayMobile[i].length !=0){
+					document.getElementById('numInfo').innerHTML = arrayMobile[i] + '<font color="red">'+' 手机号码位数不正确'+'</font>';
+					return false;
 				}
 			}
 		}
-
-		content = document.getElementById("content").value;
-		if (content == null || content == "") {
-			alert("请输入短信内容");
-			return;
-		}
+	}
+	document.getElementById('numInfo').innerHTML = '多个号码请用分号隔开';
+	return true;
+}
+function checkContent() {
+	var content = document.getElementById("content").value;
+	if (content == null || content == ""){
+		document.getElementById('contInfo').innerHTML = '<font color="red">'+'请输入短信内容'+'</font>';
+		return false;
+	}
+	document.getElementById('contInfo').innerHTML = '编辑短信内容';
+	return true;
+}
+function sendSms() {
+	if(checkNum()&&checkContent()) {
 		document.getElementById("saveFrom").submit();
 	}
+}
 
-	function backToCase() {
-		var caseId = document.getElementById('caseId').value;
-		window.location = '${ctx}/urgentcase/view.do?model.id='+ caseId + '&actId=3';
-	}
+function backToCase() {
+	var caseId = document.getElementById('caseId').value;
+	window.location = '${ctx}/urgentcase/view.do?model.id='+ caseId + '&actId=3';
+}
 </script>
 </body>
 </html>
