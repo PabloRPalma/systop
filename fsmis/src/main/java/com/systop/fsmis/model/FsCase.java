@@ -483,7 +483,7 @@ public class FsCase extends BaseModel {
 		this.checkedConfirmMsg = checkedConfirmMsg;
 	}
 
-	@Column(name = "PROCESS_TYPE", length = 1)
+	@Column(name = "PROCESS_TYPE", length = 20)
 	public String getProcessType() {
 		return processType;
 	}
@@ -491,7 +491,7 @@ public class FsCase extends BaseModel {
 	public void setProcessType(String processType) {
 		this.processType = processType;
 	}
-  @Column(name = "CASE_SOURCE_TYPE", length = 1)
+  @Column(name = "CASE_SOURCE_TYPE", length = 20)
   public String getCaseSourceType() {
     return caseSourceType;
   }
