@@ -1,6 +1,8 @@
 package com.systop.fsmis.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -51,6 +54,8 @@ public class JointTaskDetail extends BaseModel {
 	private Date completionTime;
 
 	private JointTask jointTask;
+	
+	private Set<JointTaskDetailAttach> taskDetailAttachses = new HashSet<JointTaskDetailAttach>(0);
 
 	public JointTaskDetail() {
 	}
@@ -171,4 +176,13 @@ public class JointTaskDetail extends BaseModel {
 		this.completionTime = completionTime;
 	}
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "jointTaskDetail")
+	public Set<JointTaskDetailAttach> getTaskDetailAttachses() {
+		return taskDetailAttachses;
+	}
+
+	public void setTaskDetailAttachses(
+			Set<JointTaskDetailAttach> taskDetailAttachses) {
+		this.taskDetailAttachses = taskDetailAttachses;
+	}
 }
