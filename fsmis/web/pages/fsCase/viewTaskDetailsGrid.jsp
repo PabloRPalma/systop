@@ -80,7 +80,7 @@
 			title : '任务${taskStatus.index+1}明细',
 			applyTo : 'taskDetailGridDiv${taskStatus.index+1}',
 			width:853,
-			height:150,
+			height:100,
 			frame:true,			
 			store: store,
 			cm : cm,

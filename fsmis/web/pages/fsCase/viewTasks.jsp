@@ -47,9 +47,10 @@
 						${task.descn}
 					</div>
 					</td>
-				</tr>
+				</tr>				
 				<tr>
 					<td colspan="6">
+					<%--
 						<table id="task${taskStatus.index}AttTable" width="100%" class="mytable" style="margin-left: -1;" height="100">
 						  <thead>
             		<tr>
@@ -69,20 +70,23 @@
 									</tr>
 								</c:forEach>
 							</tbody>
-						</table>						
+						</table>	 
+						--%>					
 					</td>
 				</tr>
 			</table>
 		</div>
 		<script type="text/javascript">
-		Ext.onReady(function() {
+		/*Ext.onReady(function() {
 		 var grid${taskStatus.index} = new Ext.grid.TableGrid("task${taskStatus.index}AttTable", {
 		      stripeRows: true // stripe alternate rows
 		    });
 		    grid${taskStatus.index}.render();
-		});
+		});*/
 		</script>
 		<div >
+			<!-- 任务附件信息的Ext GridPanel -->
+			<%@include file="viewTaskAttGrid.jsp" %>
 			<!-- 任务明细信息的Ext GridPanel -->				
 			<%@include file="viewTaskDetailsGrid.jsp" %>
 		</div>
