@@ -224,7 +224,7 @@ public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseMana
 		Page page = PageUtil.getPage(getPageNo(), getPageSize());
 		StringBuffer sql = new StringBuffer("from CheckResult cr where 1=1 ");
 		sql.append(" and cr.urgentCase.id = ?");
-		sql.append(" order by cr.isAgree,cr.checkTime desc");
+		sql.append(" order by cr.isAgree desc,cr.checkTime desc");
 		page = getManager().pageQuery(page, sql.toString(), getModel().getId());
 		restorePageData(page);
 		
