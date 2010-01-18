@@ -98,7 +98,7 @@
 			<!-- include进来二级Tab以现实一个食品安全案件下的多个任务 -->		
 			<%@include file="viewTasks.jsp"%>
 		</div>
-		<div id="sms" class="x-hide-display">
+		<div id="sms" class="x-hide-display" style="width: 100%;">
 		<%@include file="viewSmsGrid.jsp" %>
 		</div>
 	</div>
