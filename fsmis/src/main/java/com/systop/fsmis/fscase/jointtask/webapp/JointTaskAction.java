@@ -112,7 +112,7 @@ public class JointTaskAction extends
 	private Integer jointTaskId;
 	
 	/**
-	 * 重写父类的index方法，实现分页检索风险评估信息
+	 * 重写父类的index方法，实现分页检索联合整治任务信息
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -121,7 +121,7 @@ public class JointTaskAction extends
 		hql.append("from JointTask jt where 1=1 ");
 		List<Object> args = new ArrayList<Object>();
 		if (StringUtils.isNotBlank(getModel().getTitle())) {
-			hql.append(" and jt.title = ?");
+			hql.append(" and jt.title like ? ");
 			args.add(MatchMode.ANYWHERE.toMatchString(getModel().getTitle()));
 		}
 		hql.append(" order by jt.createDate desc");
