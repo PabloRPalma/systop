@@ -18,6 +18,7 @@ function removeCompany(corpId) {
 </script>
 </head>
 <body>
+<div><%@ include file="/common/messages.jsp"%></div>
 <div class="x-panel">
 <div class="x-panel-header">企业管理</div>
 <div class="x-toolbar">
@@ -87,19 +88,14 @@ function removeCompany(corpId) {
 		<ec:column width="140" property="_0" title="操作" style="text-align:center" sortable="false">
 			<a href="edit.do?model.id=${item.id}">编辑</a> |
 			<a href="view.do?model.id=${item.id}" target="_self">查看</a> |
-			<a href="#" onClick="removeCompany(${item.id})">删除</a>
-			<!--
-			<s:if test="#attr.item.locationType != null">
-			    <a href="${ctx}/pages/opengis/mapCompany.jsp?value='${item.id}'">
-				    <img src="${ctx}/images/company.gif" title="查看地理位置" board="0"/>
-			    </a>
-			</s:if>
-			<s:else>
-				<a href="${ctx}/pages/opengis/mapCompany.jsp?value='${item.id}'">
-				    <img src="${ctx}/images/company_NoLocation.gif" title="标注地理位置" board="0"/>
-			    </a>
-			</s:else>
-			-->
+			<c:choose>
+	     		<c:when test="${!empty item.fsCases}"> 
+	        		<font color="#999999" title="该企业涉及食品安全事件，不能删除！">删除</font>
+	     		</c:when>
+	     		<c:otherwise>
+	        		<a href="#" onClick="removeCompany(${item.id})">删除</a>
+	     		</c:otherwise>
+	   		</c:choose> 
 		</ec:column>
 	</ec:row>
 </ec:table></div>
