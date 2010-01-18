@@ -110,14 +110,11 @@ public class TaskDetailAction extends
    * @return
    */
   public String getTaskDetailsByTaskId() {
-    // Object taskIdStr =
-    // getRequest().getAttribute("taskId");//原有include的action参数,待grid完成后删除注释
-
     page = PageUtil.getPage(getPageNo(), getPageSize());
     page = getManager().pageQuery(page,
         "from TaskDetail detail where detail.task.id = ?",
         Integer.parseInt(taskId));
-    // restorePageData(page);
+
     List taskDetails = page.getData();
     List mapTaskDetails = new ArrayList(taskDetails.size());
     for (Iterator itr = taskDetails.iterator(); itr.hasNext();) {
@@ -353,6 +350,7 @@ public class TaskDetailAction extends
    * 1.根据id得到任务明细处理结果信息,以在Ext弹出界面中显示
    * 2.根据id得到任务退回人员/退回原因信息在Ext弹出界面中显示
    * </pre>
+   * 
    * @return
    */
   public String viewTaskDetailById() {
@@ -363,7 +361,7 @@ public class TaskDetailAction extends
 
       TaskDetail td = getManager().get(Integer.valueOf(idStr));
       jsonResult = ReflectUtil.toMap(td, new String[] { "inputer", "processor",
-          "process", "basis", "result" ,"returnPeople","returnReason"}, true);
+          "process", "basis", "result", "returnPeople", "returnReason" }, true);
       jsonResult.put("taskTitle", td.getTask().getTitle());
       jsonResult.put("deptName", td.getDept().getName());
     }
