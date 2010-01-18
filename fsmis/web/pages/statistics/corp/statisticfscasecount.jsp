@@ -20,7 +20,7 @@ function validator(){
 </script>
 </head>
 <body>
-<div class="x-panel-header">企业处罚统计</div>
+<div class="x-panel-header" style="margin-top: -1;margin-left: -1;">企业处罚统计</div>
 <div class="x-toolbar">
 <table width="100%" border="0">
 	<tr>
