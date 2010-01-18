@@ -102,6 +102,10 @@
 			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/statistics/corp/statisticFsCaseCount.do" target="main">企业信息统计</a>
 		</div>
+		<div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/statistics/sms/statisticsSmsSend.do" target="main">短信统计</a>
+		</div>
 	</div>
 	<div id="corp">
 		<div style="padding-left:5px;">
