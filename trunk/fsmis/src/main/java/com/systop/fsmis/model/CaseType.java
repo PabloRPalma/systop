@@ -26,14 +26,20 @@ public class CaseType extends BaseModel {
 
 	/** 主键 */
 	private Integer id;
+	
+	//FIXME:属性名称该修改一下，parent
 	/** 上级类别ID */
 	private CaseType caseType;
+	
 	/** 名称 */
 	private String name;
+	
 	/** 描述 */
 	private String descn;
+	
 	/** 类别对应的一般事件 */
 	private Set<FsCase> fsCases = new HashSet<FsCase>(0);
+	
 	/** 类别记录 */
 	private Set<CaseType> caseTypes = new HashSet<CaseType>(0);
 
