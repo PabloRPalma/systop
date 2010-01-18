@@ -75,13 +75,79 @@
 		</ec:column>
 		</stc:role>      
 		<ec:column width="40" property="_option" title="操作" style="text-align:center">
-			查看
+			<a href="#" onClick="viewSmsInfo(${item.id})">查看</a>
 		</ec:column>
 	</ec:row>
 </ec:table>
 </div>
 </div>
 </div>
+<!-- 查看短信内容 -->
+<div id="smsWindow" class="x-hidden">
+<div class="x-window-header">短信内容</div>
+<div class="x-window-body">
+	<table width="600">
+	  <tr>
+	    <td align="right" width="100" height="28"><font color="green">发送号码：</font></td>
+		<td align="left" id="smsNum"></td>
+	  </tr>
+	  <tr>
+	    <td align="right" width="100" height="28"><font color="green">接&nbsp;收&nbsp;人：</font></td>
+		<td align="left" id="reciever"></td>
+	  </tr>
+	  <tr>
+	    <td align="right" width="100" height="28"><font color="green">发送时间：</font></td>
+		<td align="left" id="sendTime"></td>
+	  </tr>
+	  <tr>
+	    <td align="right" width="100" height="28"><font color="green">短信内容：</font></td>
+		<td align="left" id="smsContent"></td>
+	  </tr>
+	</table>
+ </div>
+</div>
+<!-- 查看短信内容 -->
+<script type="text/javascript">
+  var SmsWindow = new Ext.Window({
+      el: 'smsWindow',
+      width: 600,
+      height: 320,
+      layout : 'fit',
+      closeAction:'hide',
+      buttonAlign:'center',
+      modal:'false',
+      buttons:[
+        {text:'关闭',
+        	handler:function(){
+        	SmsWindow.hide();
+        }
+      }]
+  });
+  function viewSmsInfo(smsId) {
+	  $.ajax({
+		     url: '${ctx}/smssend/viewSmsSendInfo.do',
+		     type: 'post',
+			 dataType: 'json',
+			 data: {smsSendId : smsId},
+			 success: function(rst, textStatus){
+				 if(rst.mobileNum != null) {
+					 document.getElementById("smsNum").innerHTML = rst.mobileNum;
+				 }
+				 if(rst.name != null) {
+					 document.getElementById("reciever").innerHTML = rst.name;
+				 }
+				 if(rst.sendTime != null) {
+					 document.getElementById("sendTime").innerHTML = rst.sendTime;
+				 }
+				 if(rst.content != null) {
+					 document.getElementById("smsContent").innerHTML = rst.content;
+				 }
+				 SmsWindow.show();
+			 }
+  	  }); 
+  }
+</script>
+
 <script type="text/javascript">
 /**
  * 删除提交
@@ -114,6 +180,7 @@ function remove(){
         }
     });
 }
+
 </script>
 </body>
 </html>
