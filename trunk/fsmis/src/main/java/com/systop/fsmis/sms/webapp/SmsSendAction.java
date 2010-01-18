@@ -57,7 +57,7 @@ public class SmsSendAction extends ExtJsCrudAction<SmsSend, SmsSendManager> {
 				smsSend.setContent(content);
 				smsSend.setCreateTime(new Date());
 				smsSend.setCounty(county);
-				//mesSendManager.statisticsSendConnt(num);
+				getManager().statisticsSendConnt(num);
 				getManager().save(smsSend);
 			}
 		}
