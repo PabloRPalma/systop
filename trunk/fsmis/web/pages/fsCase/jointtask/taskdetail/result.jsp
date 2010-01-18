@@ -21,7 +21,7 @@ Ext.onReady(function(){
         defaults:{autoHeight: false},
         items:[
             {contentEl:'result', title: '任务处理'},  
-            {contentEl:'taskAttach', title: '任务附件'},               
+            {contentEl:'taskDetailAttach', title: '任务附件'},               
             {contentEl:'task', title: '任务信息'},                              
             {contentEl:'fsCase', title: '事件信息'}
        
@@ -104,8 +104,8 @@ Ext.onReady(function(){
 </table>
 </div>
 
-<div id="taskAttach" class="x-hide-display">
-<iframe  height="450" src="${ctx}/jointTask/attaches/index.do?jointTaskId=${622592}" width="100%" name="taskDetails" frameborder="0"></iframe>
+<div id="taskDetailAttach" class="x-hide-display">
+<iframe  height="450" src="${ctx}/jointTaskDetail/attaches/index.do?jointTaskDetailId=${param['model.id']}" width="100%" name="taskDetailAttachs" frameborder="0"></iframe>
 </div>
 
 <div id="fsCase" class="x-hide-display">

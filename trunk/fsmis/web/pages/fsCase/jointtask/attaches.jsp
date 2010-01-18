@@ -8,11 +8,11 @@
 <%@include file="/common/ec.jsp"%>
 <script type="text/javascript">
 
-//删除单条风险评估附件
+//删除单条联合整治任务明细附件
 function removeTaskDetailAttach(attachId){
-  if(confirm("确认要删除该任务的附件信息吗？")){    
+  if(confirm("确认要删除该任务明细的附件信息吗？")){    
     location.href = "remove.do?model.id=" + attachId 
-                    + "&jointTaskId=" + document.getElementById("jointTaskId").value;
+                    + "&jointTaskDetailId=" + document.getElementById("jointTaskDetailId").value;
   }
 }
 
@@ -22,10 +22,6 @@ function checkUpload(){
     alert("上传附件不能为空！");
     return false;
   }
-  if(document.getElementById("creator").value.trim().length == 0){
-    alert("完成人不能为空!");
-    return false;
-  } 
   try{  
     document.getElementById("uploadForm").submit();
   }catch(e){    
@@ -45,7 +41,7 @@ String.prototype.trim = function(){
 
 <div class="x-toolbar">
 <s:form id="uploadForm" action="upload.do" method="post" enctype="multipart/form-data" onsubmit="return checkUpload()">
-<s:hidden id="jointTaskId" name="jointTaskId"></s:hidden>
+<s:hidden id="jointTaskDetailId" name="jointTaskDetailId"></s:hidden>
 <table width="99%">
   <tr>
       <td align="left" width="2%">上传文件：</td>
