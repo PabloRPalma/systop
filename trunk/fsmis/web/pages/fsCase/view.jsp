@@ -48,7 +48,7 @@
 				<td></td>
 				<td align="right"><a href="${ctx}/assessment/edit.do?model.fsCase.id=${model.id}"> 风险评估</a></td>
 				</c:if>
-				<c:if test="${empty model.jointTaskses && model.status eq '0'}">
+				<c:if test="${empty model.jointTaskses && (model.status eq '0' || model.status eq '3')}">
 				<td><span class="ytb-sep"></span></td>
 				<td align="right"><a href="${ctx}/jointTask/edit.do?model.fsCase.id=${model.id}"> 联合整治</a></td>
 				</c:if>
