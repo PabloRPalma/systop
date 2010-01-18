@@ -77,7 +77,7 @@
 			applyTo : 'smsSendDiv',
 			//width:855,
 			bodyStyle:'width:99%',
-			height:150,
+			height:200,
 			frame:true,			
 			store: storeSend,
 			loadMask:true,
@@ -198,7 +198,7 @@
 			applyTo : 'smsReceiveSmsDiv',
 			//width:855,
 			bodyStyle:'width:99%',
-			height:150,
+			height:203,
 			frame:true,			
 			store: storeReceive,
 			cm : cmReceive,
@@ -215,5 +215,5 @@
 		//gridReceive.refresh();
 	});
   </script>
-  <div id='smsSendDiv' style="margin:-1; padding: -1; width: 100%;" ></div>
-  <div id='smsReceiveSmsDiv' style="margin:-1; padding: -1;width: 100%;" ></div>
+  <div id='smsSendDiv' style="margin:-1; padding: -1; width: 100%; background-color: red; z-index: 111;" ></div>
+  <div id='smsReceiveSmsDiv' style="margin:-1; padding: -1;width: 100%;background-color: red; z-index: 1112;" ></div>

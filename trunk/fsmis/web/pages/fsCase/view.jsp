@@ -89,18 +89,18 @@
 			</table>
 		</div>
 		<c:if test="${model.isMultiple eq '1'}">		
-		<div id="general" class="x-hide-display" >
+		<div id="general" class="x-hide-display"  style="background-color: white; z-index: 100;">
 			<!-- include进来二级Tab以现实一个食品安全综合案件关联的多个一般案件 -->		
 			<%@include	file="viewGenericCases.jsp"%>			
 		</div>
 		</c:if>
 		<c:if test="${not empty model.taskses }">	
-		<div id="tasks" class="x-hide-display" style="margin: -1; border: 0; width: 100%">
+		<div id="tasks" class="x-hide-display" style="margin: -1; border: 0; width: 100%;">
 			<!-- include进来二级Tab以现实一个食品安全案件下的多个任务 -->		
 			<%@include file="viewTasks.jsp"%>
 		</div>
 		</c:if>
-		<div id="sms" class="x-hide-display" style="width: 100%;">
+		<div id="sms" class="x-hide-display" style="width: 100%; background-color: white; z-index: 1000;">
 		<%@include file="viewSmsGrid.jsp" %>
 		</div>
 		<c:if test="${not empty model.corp}">

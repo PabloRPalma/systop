@@ -80,7 +80,7 @@
 			bodyStyle:'width:99%',
 			title : '任务${taskStatus.index+1}明细',
 			applyTo : 'taskDetailGridDiv${taskStatus.index+1}',
-			height:100,
+			height:150,
 			frame:true,
 			//width:this.getComputedWidth(),--不支持			
 			store: store,
