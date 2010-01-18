@@ -51,6 +51,8 @@ public class TaskManager extends BaseGenericsManager<Task> {
     FsCase fsCase = getDao().get(FsCase.class, task.getFsCase().getId());
     // 更新食品安全案件状态,正在处理,并保存
     fsCase.setStatus(CaseConstants.CASE_PROCESSING);
+    // 事件处理类型为"任务派遣"
+    fsCase.setProcessType(CaseConstants.PROCESS_TYPE_TASK);
     getDao().save(fsCase);
 
     // 设置任务信息,正在处理,并保存
@@ -62,7 +64,8 @@ public class TaskManager extends BaseGenericsManager<Task> {
       for (String id : deptIds) {
         TaskDetail taskDetail = new TaskDetail();
         Dept dept = getDao().get(Dept.class, Integer.valueOf(id));
-        //Dept dept= (Dept) getDao().findObject("from Dept d where d.id = ?", Integer.valueOf(id));
+        // Dept dept= (Dept) getDao().findObject("from Dept d where d.id = ?",
+        // Integer.valueOf(id));
         taskDetail.setDept(dept);
         // 任务明细状态属性,未接收
         taskDetail.setStatus(TaskConstants.TASK_DETAIL_UN_RECEIVE);
@@ -86,7 +89,7 @@ public class TaskManager extends BaseGenericsManager<Task> {
     }
     // 置历史任务为"非当前任务"
     markCurrentTask(fsCase);
-    //设置新添加的任务实体实例为"当前任务"
+    // 设置新添加的任务实体实例为"当前任务"
     task.setIsCurrentTask(FsConstants.Y);
     save(task);
   }
