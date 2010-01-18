@@ -16,7 +16,7 @@ import com.systop.fsmis.statistics.task.service.TaskStatisticsManager;
 /**
  * 任务统计
  * 
- * @author yj
+ * @author zzg
  * 
  */
 @SuppressWarnings( { "serial" })
