@@ -124,9 +124,11 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
             fsCaseDb.getCorp())) {
           Corp corp = (Corp) getDao().findObject("from Corp c where c.id = ?", taskDetail.getTask().getFsCase().getCorp().getId());
           fsCase.setCorp(null);
-          getDao().evict(fsCaseDb.getCorp());
+          getDao().update(fsCase);
+          //getDao().evict(fsCaseDb.getCorp());
           fsCase.setCorp(corp);
-          getDao().update(fsCase);// 让事件关联选择的企业
+          //getDao().update(fsCase);// 让事件关联选择的企业
+          getDao().merge(fsCase);
         }
       } else {// 没有选择也没有录入企业,企业空缺
         fsCase.setCorp(null);
