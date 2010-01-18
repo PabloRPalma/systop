@@ -98,7 +98,7 @@ function deleAtt(id) {
 	<table width="600px" style="margin-bottom: 10px;">
 		<tr>
 			<td style="text-align: center;"><s:submit value="派遣任务"
-				cssClass="button" /> <s:reset value="重置" cssClass="button" /></td>
+				cssClass="button" /> <s:reset value="重    置" cssClass="button" /></td>
 		</tr>
 	</table>
 </s:form></div>
