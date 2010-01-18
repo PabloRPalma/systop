@@ -104,5 +104,9 @@ public final class FsConstants {
   /** 专家照片上传路径 */
   public static final String REGION_DEPT_IDS = ResourceBundleUtil.getString(RESOURCE_BUNDLE,
 	  "region_dept_ids", "");
+  
+  /** 禁止上传文件格式 */
+	public static final String NOT_ALLOW_UPLOAD = ResourceBundleUtil.getString(
+			RESOURCE_BUNDLE, "not_allow_upload", "");
 
 }
