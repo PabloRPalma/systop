@@ -81,7 +81,7 @@
 		    grid${taskStatus.index}.render();
 		});*/
 		</script>
-		<div style="width: 100%;" >
+		<div style="width: 100%; " >
 			<!-- 任务附件信息的Ext GridPanel -->
 			<%@include file="viewTaskAttGrid.jsp" %>
 			<!-- 任务明细信息的Ext GridPanel -->				
