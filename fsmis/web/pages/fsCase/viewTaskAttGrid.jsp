@@ -31,7 +31,7 @@
 		           width : 200,
 		           sortable : true,
 		           renderer: function(value, cellmeta, record, rowIndex, columnIndex, store) {		           	   
-			           return '<a href="'+ ${ctx}record.data['path'] +'" title="下载附件"> <font color="blue" >'+record.data["title"]+'</font></a>';			           			           	 	           
+			           return '<a href="'+ ${ctx}record.data['path'] +'" target="_blank" title="下载附件"> <font color="blue" >'+record.data["title"]+'</font></a>';			           			           	 	           
 		            }				     
 		       },{
 			       header : '附件路径',
@@ -46,10 +46,11 @@
 		       } 				     
 		  ]);
 		//创建Grid表格组件
-		var grid = new Ext.grid.GridPanel({
+		var taskAttGrid${taskStatus.index} = new Ext.grid.GridPanel({
 			title : '任务${taskStatus.index+1}附件',
 			applyTo : 'taskAttGridDiv${taskStatus.index+1}',
-			width:853,
+			//width:853,
+			bodyStyle:'width:99%',
 			height:100,
 			frame:true,			
 			store: store,

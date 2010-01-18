@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	<%@include file="/common/taglibs.jsp"%>
-<div id="taskDiv" style="margin: -1">
+<div id="taskDiv" style="margin: -1; width: 100%;">
 <c:forEach items="${model.taskses}" var="task"	varStatus="taskStatus">  
   <c:choose>
   	<c:when test="${not empty taskId}">
@@ -17,7 +17,7 @@
   </c:choose>
 	<div id="taskDiv${taskStatus.index+1}" class="x-hide-display">
 		<div>
-		<table class="mytable" >
+		<table >
 				<tr>
 					<td align="right" width="6%" >任务标题：</td>
 					<td colspan="5" align="left" >${task.title }</td>
@@ -42,15 +42,12 @@
 				</tr>
 				<tr>
 					<td align="right" >任务描述：</td>
-					<td colspan="5">
-					<div style="overflow: auto;">
-						${task.descn}
-					</div>
-					</td>
-				</tr>				
+					<td colspan="5"><div style="overflow: auto;">	${task.descn}	</div>			</td>
+				</tr>		
+				<%--		
 				<tr>
 					<td colspan="6">
-					<%--
+					
 						<table id="task${taskStatus.index}AttTable" width="100%" class="mytable" style="margin-left: -1;" height="100">
 						  <thead>
             		<tr>
@@ -71,9 +68,9 @@
 								</c:forEach>
 							</tbody>
 						</table>	 
-						--%>					
+											
 					</td>
-				</tr>
+				</tr>--%>
 			</table>
 		</div>
 		<script type="text/javascript">
@@ -84,7 +81,7 @@
 		    grid${taskStatus.index}.render();
 		});*/
 		</script>
-		<div >
+		<div style="width: 100%;" >
 			<!-- 任务附件信息的Ext GridPanel -->
 			<%@include file="viewTaskAttGrid.jsp" %>
 			<!-- 任务明细信息的Ext GridPanel -->				

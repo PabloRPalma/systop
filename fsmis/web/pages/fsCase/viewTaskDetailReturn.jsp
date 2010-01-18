@@ -25,8 +25,8 @@
 
 	var ReturnWindow = new Ext.Window( {
 		el : 'returnWindow',
-		width : 520,
-		height : 300,
+		width : 460,
+		height : 250,
 		layout : 'fit',
 		closeAction : 'hide',
 		buttonAlign : 'center',
@@ -49,6 +49,7 @@
 	<tr>
 		<td>
 		<table width="500px" align="center">
+		<tr></tr>
 		<tr>
 				<td align="right" width="100">任务标题：</td>
 				<td width="450"><div id="taskTitle_return"></div></td>
@@ -68,7 +69,6 @@
 				</td>
 			</tr>
 		</table>
-
 		</td>
 	</tr>
 </table>
