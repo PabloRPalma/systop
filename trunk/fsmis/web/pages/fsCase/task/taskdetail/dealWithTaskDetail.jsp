@@ -4,9 +4,8 @@
 <html>
 <head>
 <title></title>
-<%@include file="/common/extjs.jsp"%>
 <%@include file="/common/meta.jsp"%>
-<%@include file="/common/ec.jsp" %>
+<%@include file="/common/extjs.jsp"%>
 <%@include file="/common/autocomplete.jsp"%>
 </head>
 <body>
