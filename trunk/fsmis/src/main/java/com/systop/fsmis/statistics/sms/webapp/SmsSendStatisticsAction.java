@@ -1,9 +1,9 @@
 package com.systop.fsmis.statistics.sms.webapp;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -21,10 +21,10 @@ import com.systop.fsmis.statistics.sms.service.SmsSendStatisticsManager;
 public class SmsSendStatisticsAction extends DefaultCrudAction<SmsCount,SmsSendStatisticsManager> {
 
 	/** 查询起始时间 */
-	private String beginDate;
+	private Date beginDate;
 
 	/** 查询结束时间 */
-	private String endDate;
+	private Date endDate;
 	
 	
 	/**
@@ -35,33 +35,37 @@ public class SmsSendStatisticsAction extends DefaultCrudAction<SmsCount,SmsSendS
 		StringBuffer hql = new StringBuffer(
 				"from SmsCount s where 1=1 ");
 		List args = new ArrayList();
-		if (StringUtils.isNotBlank(beginDate) && StringUtils.isNotBlank(endDate)) {
-			hql.append(" and s.sendDate between ? and ?");
+		if (beginDate != null && endDate != null) {
+			hql.append(" and s.smsDate between ? and ?");
 			args.add(beginDate);
 			args.add(endDate);
 		}
 		
-		hql.append(" order by s.sendDate desc ");
+		hql.append(" order by s.smsDate desc ");
 		
 		Page page = PageUtil.getPage(getPageNo(), getPageSize());
 		page = getManager().pageQuery(page, hql.toString(), args.toArray());
 		restorePageData(page);
 		return "statisticssmssend";
 	}
-	
-	public String getBeginDate() {
+
+
+	public Date getBeginDate() {
 		return beginDate;
 	}
 
-	public void setBeginDate(String beginDate) {
+
+	public void setBeginDate(Date beginDate) {
 		this.beginDate = beginDate;
 	}
 
-	public String getEndDate() {
+
+	public Date getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(String endDate) {
+
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 }
