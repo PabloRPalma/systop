@@ -65,4 +65,4 @@
 		})
 	});
   </script>
-  <div id='taskAttGridDiv${taskStatus.index+1}' style="background-color: white;"></div>
+  <div id='taskAttGridDiv${taskStatus.index+1}' ></div>

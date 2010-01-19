@@ -20,9 +20,6 @@
 	margin-bottom: 2;
 	padding: 2px 2px 2px 2px;
 }
-.x-panel-body{
-  background-color: white;
-}
 </style>
 </head>
 <body>
@@ -92,18 +89,18 @@
 			</table>
 		</div>
 		<c:if test="${model.isMultiple eq '1'}">		
-		<div id="general" class="x-hide-display"  style="background-color: white; z-index: 100;">
+		<div id="general" class="x-hide-display"  style="z-index: 100;">
 			<!-- include进来二级Tab以现实一个食品安全综合案件关联的多个一般案件 -->		
 			<%@include	file="viewGenericCases.jsp"%>			
 		</div>
 		</c:if>
 		<c:if test="${not empty model.taskses }">	
-		<div id="tasks" class="x-hide-display" style="background-color: green;">	
+		<div id="tasks" class="x-hide-display" >	
 			<!-- include进来二级Tab以现实一个食品安全案件下的多个任务 -->		
 			<%@include file="viewTasks.jsp"%>
 		</div>
 		</c:if>
-		<div id="sms" class="x-hide-display" style="width: 100%; background-color: white; z-index: 1000;">
+		<div id="sms" class="x-hide-display" style="width: 100%; z-index: 1000;">
 		<%@include file="viewSmsGrid.jsp" %>
 		</div>
 		<c:if test="${not empty model.corp}">
