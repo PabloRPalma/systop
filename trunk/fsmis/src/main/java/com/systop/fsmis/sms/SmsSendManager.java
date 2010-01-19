@@ -25,7 +25,7 @@ import com.systop.fsmis.model.SmsSend;
 @Service
 public class SmsSendManager extends BaseGenericsManager<SmsSend> {
   @Autowired
-  private SmsSendCountManager smsSendCountManager;
+  private SmsCountManager smsCountManager;
 	
 	/**
    * 得到需要发送的短信方法(最大记录数由系统变量限定)
@@ -94,64 +94,84 @@ public class SmsSendManager extends BaseGenericsManager<SmsSend> {
 	 *          手机号
 	 */
 	@Transactional
-	public void statisticsSendConnt(String mobileNum) {
-
+	public void statisticsSendCount(String mobileNum) {
+		if (mobileNum == null || StringUtils.isBlank(mobileNum)) {
+			return;
+		}
+		// 移动号码段
 		String strMobileNum = "134,135,136,137,138,139,150,151,157,158,159,187,188";
-		String[] strArray = strMobileNum.split(",");
-		Boolean bIsMobileNum = false;
+		// 联通号码段
+		String strUnicomNum = "130,131,132,133,153,156";
 
-		if (mobileNum != null) {
-			String strFlag = "";
-			if (StringUtils.indexOf(mobileNum, "+86") != -1) {
-				strFlag = StringUtils.substring(mobileNum, 3, 6);
+		String[] mobileNums = strMobileNum.split(",");
+		String[] unicomNums = strUnicomNum.split(",");
+
+		Boolean isMobileNum = false;
+		Boolean isUnicomNum = false;
+
+		// 获取strFlag号码标志段，例如：131，132等
+		String strFlag = "";
+		if (StringUtils.indexOf(mobileNum, "+86") != -1) {
+			strFlag = StringUtils.substring(mobileNum, 3, 6);
+		} else {
+			strFlag = StringUtils.substring(mobileNum, 0, 3);
+		}
+
+		// 根据标志号段，判断号码供应商
+		for (int i = 0; i < mobileNums.length; i++) {
+			if (mobileNums[i].equals(strFlag)) {
+				isMobileNum = true;
+				isUnicomNum = false;
+				break;
+			}
+		}
+		for (int i = 0; i < unicomNums.length; i++) {
+			if (unicomNums[i].equals(strFlag)) {
+				isUnicomNum = true;
+				isMobileNum = false;
+				break;
+			}
+		}
+		// 获取当天的统计实体
+		SmsCount smsCount = smsCountManager.findObject(
+				"from SmsCount s where s.sendDate between ? and ?", DateUtil
+						.firstSecondOfDate(new Date()), DateUtil
+						.lastSecondOfDate(new Date()));
+		// 存在当天的记录
+		if (smsCount != null) {
+			// 为移动短信
+			if (isMobileNum) {
+				if (smsCount.getMobileSendCount() == null) {
+					smsCount.setMobileSendCount(0);
+				}
+				smsCount.setMobileSendCount(smsCount.getMobileSendCount() + 1);
+			}
+			// 为联通短信
+			else if (isUnicomNum) {
+				if (smsCount.getUnicomSendCount() == null) {
+					smsCount.setUnicomSendCount(0);
+				}
+				smsCount.setUnicomSendCount(smsCount.getUnicomSendCount() + 1);
+			}
+			// 为其他供应商短信
+			else {
+				if (smsCount.getOtherSendCount() == null) {
+					smsCount.setOtherSendCount(0);
+				}
+				smsCount.setOtherSendCount(smsCount.getOtherSendCount() + 1);
+			}
+			smsCountManager.save(smsCount);
+		} else {// 当天记录不存在
+			smsCount = new SmsCount();
+			smsCount.setSmsDate(new Date());
+			if (isMobileNum) {
+				smsCount.setMobileSendCount(1);
+			} else if (isUnicomNum) {
+				smsCount.setUnicomSendCount(1);
 			} else {
-				strFlag = StringUtils.substring(mobileNum, 0, 3);
+				smsCount.setOtherSendCount(1);
 			}
-			for (int i = 0; i < strArray.length; i++) {
-				if (strArray[i].equals(strFlag)) {
-					bIsMobileNum = true;
-					SmsCount smsCount = null;
-					List<SmsCount> listSC = smsSendCountManager.query(
-							"from SmsCount s where s.sendDate between ? and ?", DateUtil
-									.firstSecondOfDate(new Date()), DateUtil
-									.lastSecondOfDate(new Date()));
-
-					if (listSC.size() != 0) {
-						smsCount = listSC.get(0);
-						if (smsCount.getMobileCount() == null) {
-							smsCount.setMobileCount(0);
-						}
-						smsCount.setMobileCount(smsCount.getMobileCount() + 1);
-						smsSendCountManager.save(smsCount);
-					} else {
-						smsCount = new SmsCount();
-						smsCount.setSendDate(new Date());
-						smsCount.setMobileCount(1);
-						smsSendCountManager.save(smsCount);
-					}
-					break;
-				}
-			}
-			if (!bIsMobileNum) {
-				SmsCount sendCount = null;
-				List<SmsCount> listSC = smsSendCountManager.query(
-						"from SmsCount s where s.sendDate between ? and ?", DateUtil
-								.firstSecondOfDate(new Date()), DateUtil
-								.lastSecondOfDate(new Date()));
-				if (!listSC.isEmpty()) {
-					sendCount = listSC.get(0);
-					if (sendCount.getOtherCount() == null) {
-						sendCount.setOtherCount(0);
-					}
-					sendCount.setOtherCount(sendCount.getOtherCount() + 1);
-					smsSendCountManager.save(sendCount);
-				} else {
-					sendCount = new SmsCount();
-					sendCount.setSendDate(new Date());
-					sendCount.setOtherCount(1);
-					smsSendCountManager.save(sendCount);
-				}
-			}
+			smsCountManager.save(smsCount);
 		}
 	}
 }
