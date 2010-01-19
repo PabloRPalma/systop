@@ -23,15 +23,31 @@ public class SmsCount extends BaseModel {
 	/**
 	 * 移动发送数量
 	 */
-	private Integer mobileCount;
+	private Integer mobileSendCount;
 	/**
-	 * 联通及其他发送数量
+	 * 移动接收数量
 	 */
-	private Integer otherCount;
+	private Integer mobileReceiveCount;
 	/**
-	 * 发送日期
+	 * 联通发送数量
 	 */
-	private Date sendDate;
+	private Integer unicomSendCount;
+	/**
+	 * 联通接收数量
+	 */
+	private Integer unicomReceiveCount;
+	/**
+	 * 其他发送数量
+	 */
+	private Integer otherSendCount;
+	/**
+	 * 其他接收数量
+	 */
+	private Integer otherReceiveCount;
+	/**
+	 * 收发日期
+	 */
+	private Date smsDate;
 
 	@Id
 	@GeneratedValue(generator = "hibseq")
@@ -45,31 +61,66 @@ public class SmsCount extends BaseModel {
 		this.id = id;
 	}
 
-	@Column(name = "MOBILE_COUNT")
-	public Integer getMobileCount() {
-		return this.mobileCount;
+	@Column(name = "MOBILE_SEND_COUNT")
+	public Integer getMobileSendCount() {
+		return mobileSendCount;
 	}
 
-	public void setMobileCount(Integer mobileCount) {
-		this.mobileCount = mobileCount;
+	public void setMobileSendCount(Integer mobileSendCount) {
+		this.mobileSendCount = mobileSendCount;
 	}
 
-	@Column(name = "OTHER_COUNT")
-	public Integer getOtherCount() {
-		return this.otherCount;
+	@Column(name = "MOBILE_RECEIVE_COUNT")
+	public Integer getMobileReceiveCount() {
+		return mobileReceiveCount;
 	}
 
-	public void setOtherCount(Integer otherCount) {
-		this.otherCount = otherCount;
+	public void setMobileReceiveCount(Integer mobileReceiveCount) {
+		this.mobileReceiveCount = mobileReceiveCount;
 	}
 
-	@Column(name = "SEND_DATE")
-	public Date getSendDate() {
-		return this.sendDate;
+	@Column(name = "OTHER_SEND_COUNT")
+	public Integer getOtherSendCount() {
+		return otherSendCount;
 	}
 
-	public void setSendDate(Date sendDate) {
-		this.sendDate = sendDate;
+	public void setOtherSendCount(Integer otherSendCount) {
+		this.otherSendCount = otherSendCount;
+	}
+	
+	@Column(name = "OTHER_RECEIVE_COUNT")
+	public Integer getOtherReceiveCount() {
+		return otherReceiveCount;
 	}
 
+	public void setOtherReceiveCount(Integer otherReceiveCount) {
+		this.otherReceiveCount = otherReceiveCount;
+	}
+
+	@Column(name = "SMS_DATE")
+	public Date getSmsDate() {
+		return smsDate;
+	}
+
+	public void setSmsDate(Date smsDate) {
+		this.smsDate = smsDate;
+	}
+
+	@Column(name = "UNICOM_SEND_COUNT")
+	public Integer getUnicomSendCount() {
+		return unicomSendCount;
+	}
+
+	public void setUnicomSendCount(Integer unicomSendCount) {
+		this.unicomSendCount = unicomSendCount;
+	}
+
+	@Column(name = "UNICOM_RECEIVE_COUNT")
+	public Integer getUnicomReceiveCount() {
+		return unicomReceiveCount;
+	}
+
+	public void setUnicomReceiveCount(Integer unicomReceiveCount) {
+		this.unicomReceiveCount = unicomReceiveCount;
+	}
 }
