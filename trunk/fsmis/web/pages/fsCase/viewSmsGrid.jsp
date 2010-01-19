@@ -213,6 +213,7 @@
 		//grid记录下的空白部分为蓝色,怎样去掉?下面的操作不行:(
 		//gridSend.refresh();
 		//gridReceive.refresh();
+		gridReceive.store.reload(); 
 	});
   </script>
   <div id='smsSendDiv' style="margin:-1; padding: -1; width: 100%; background-color: red; z-index: 111;" ></div>
