@@ -50,7 +50,7 @@
 			title : '任务${taskStatus.index+1}附件',
 			applyTo : 'taskAttGridDiv${taskStatus.index+1}',
 			//width:853,
-			bodyStyle:'width:99%',
+			bodyStyle:'width:100%',
 			height:150,
 			frame:true,			
 			store: store,
@@ -65,4 +65,4 @@
 		})
 	});
   </script>
-  <div id='taskAttGridDiv${taskStatus.index+1}' ></div>
+  <div id='taskAttGridDiv${taskStatus.index+1}'  style="width: 100%"></div>
