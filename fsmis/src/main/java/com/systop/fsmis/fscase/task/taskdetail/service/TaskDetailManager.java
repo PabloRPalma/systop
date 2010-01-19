@@ -105,12 +105,12 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
         // 客户端传递的企业不eq数据库中原有企业
         if (!taskDetail.getTask().getFsCase().getCorp().equals(
             fsCaseDb.getCorp())) {
-          Corp corp = (Corp) getDao().findObject("from Corp c where c.id = ?", taskDetail.getTask().getFsCase().getCorp().getId());
-         
+          //Corp corp = (Corp) getDao().findObject("from Corp c where c.id = ?", taskDetail.getTask().getFsCase().getCorp().getId());
+          getDao().getHibernateTemplate().clear();
           //getDao().evict(fsCaseDb.getCorp());
-          fsCase.setCorp(corp);
+          //fsCase.setCorp(corp);
           //getDao().update(fsCase);// 让事件关联选择的企业
-          getDao().merge(fsCase);
+          getDao().save(fsCase);
         }
       } else {// 没有选择也没有录入企业,企业空缺
         fsCase.setCorp(null);
