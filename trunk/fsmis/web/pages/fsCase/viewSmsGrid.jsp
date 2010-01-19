@@ -216,5 +216,5 @@
 		gridReceive.store.reload(); 
 	});
   </script>
-  <div id='smsSendDiv' style="margin:-1; padding: -1; width: 100%; background-color: red; z-index: 111;" ></div>
-  <div id='smsReceiveSmsDiv' style="margin:-1; padding: -1;width: 100%;background-color: red; z-index: 1112;" ></div>
+  <div id='smsSendDiv' style="margin:-1; padding: -1; width: 100%;  z-index: 111;" ></div>
+  <div id='smsReceiveSmsDiv' style="margin:-1; padding: -1;width: 100%; z-index: 1112;" ></div>
