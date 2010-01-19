@@ -363,12 +363,10 @@ public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
    */
   public String confirmCheckedMsg() {
     // 添加或更新单体事件的反馈确认信息
-    if (getRequest().getParameter("checked") != null
-        && getRequest().getParameter("checked").equals(Constants.YES)) {
+    if (Constants.YES.equals(getRequest().getParameter("checked"))) {
       getModel().setClosedTime(new Date());
       getModel().setStatus(CaseConstants.CASE_CLOSED);
-    } else if (getRequest().getParameter("checked") != null
-        && getRequest().getParameter("checked").equals(Constants.NO)) {
+    } else if (Constants.NO.equals(getRequest().getParameter("checked"))) {
       getModel().setStatus(CaseConstants.CASE_UN_RESOLVE);
     }
     getManager().save(getModel());
