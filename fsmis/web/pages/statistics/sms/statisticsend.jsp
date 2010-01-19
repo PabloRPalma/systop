@@ -11,12 +11,12 @@
 
 <body>
 <div class="x-panel">
-<div class="x-panel-header">短信发送</div>
+<div class="x-panel-header">短信统计</div>
 <div class="x-toolbar">
 <table width="99%">
 	<tr>
 		<td style="padding: 5px 0px 3px 10px;"> 
-			<form action="index.do" method="post" >
+			<form action="statisticsSmsSend.do" method="post" >
 				 <!-- 选择查询起始时间 -->
                       起始时间
                  <input type="text" id="beginDate" name="beginDate" value="${param.beginDate}"
@@ -36,7 +36,7 @@
 <div class="x-panel-body">
 <div style="margin-left: -3px;" align="center">
 <ec:table items="items" var="item" retrieveRowsCallback="limit" sortRowsCallback="limit" 
-	action="index.do" 
+	action="statisticsSmsSend.do" 
 	useAjax="false"
 	doPreload="false" 
 	pageSizeList="20,50,100,200" 
@@ -51,13 +51,20 @@
 	minHeight="462"
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	<ec:row>
-		<ec:column width="40" property="_s" title="No." value="${GLOBALROWCOUNT}" style="text-align:center"/>
-		<ec:column width="120" property="sendDate" title="创建日期"
+		<ec:column width="20" property="_s" title="No." value="${GLOBALROWCOUNT}" style="text-align:center"/>
+		<ec:column width="100" property="smsDate" title="收发日期"
 			style="text-align:center" cell="date" />
-		<ec:column width="110" property="mobileCount" style="text-align:center" title="移动发送数" />
-		<ec:column width="110" property="otherCount" style="text-align:center" title="联通及其他发送数" />
-		<ec:column width="110" property="_1" style="text-align:center" title="合计">
-		${item.mobileCount+item.otherCount}
+		<ec:column width="100" property="mobileSendCount" style="text-align:center" title="移动发送数" />
+		<ec:column width="100" property="unicomSendCount" style="text-align:center" title="联通发送数" />
+		<ec:column width="100" property="otherSendCount" style="text-align:center" title="其他发送数" />
+		<ec:column width="40" property="_1" style="text-align:center" title="合计">
+		${item.mobileSendCount+item.unicomSendCount+item.otherSendCount}
+		</ec:column>
+		<ec:column width="100" property="mobileReceiveCount" style="text-align:center" title="移动接收数" />
+		<ec:column width="100" property="unicomReceiveCount" style="text-align:center" title="联通接收数" />
+		<ec:column width="100" property="otherReceiveCount" style="text-align:center" title="其他接收数" />
+		<ec:column width="40" property="_2" style="text-align:center" title="合计">
+		${item.mobileReceiveCount+item.unicomReceiveCount+item.otherReceiveCount}
 		</ec:column>
 	</ec:row>
 </ec:table>
