@@ -17,7 +17,7 @@
 <br/>
 <anchor>
 	企业信息
-	<go href="${ctx}/wap/companylist.do"/>
+	<go href="${ctx}/wapcorp/index.do"/>
 </anchor>
 </p>
 </card>
