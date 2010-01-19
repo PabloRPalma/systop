@@ -11,5 +11,11 @@
 			<result name="identit">/pages/wap/identit.jsp</result> 
 		</action>
 	</package>
+	<package name="fsmis.wapcorp" extends="default"  namespace="/wapcorp">
+		<action name="*" class="corpWapAction" method="{1}">
+			<result name="index">/pages/wap/listCorp.jsp</result> 
+			<result name="view">/pages/wap/viewCorp.jsp</result>	
+		</action>
+	</package>
 </struts>
 
