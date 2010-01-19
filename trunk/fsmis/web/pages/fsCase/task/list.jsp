@@ -4,9 +4,9 @@
 <html>
 <head>
 <title>任务列表</title>
-<%@include file="/common/meta.jsp"%>
 <%@include file="/common/ec.jsp"%>
 <%@include file="/common/extjs.jsp"%>
+<%@include file="/common/meta.jsp"%>
 <script type="text/javascript">
 function remove(id){
 		Ext.MessageBox.confirm('提示', '确认要删除此任务吗?删除后不能恢复!    ', function(btn){
@@ -75,7 +75,7 @@ eq 0?'单体任务':'多体任务'}管理&nbsp;&gt;&nbsp;${param['isMultipleCase
 	<ec:row>
 		<ec:column width="40" property="_s" title="No."
 			value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center" />
-		<ec:column width="200" property="title" tipTitle="${item.title}" title="任务标题" sortable="false" />
+		<ec:column width="202" property="title" tipTitle="${item.title}" title="任务标题" sortable="false" />
 		<ec:column width="120" property="dispatchTime" title="派发时间"
 			style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm" />
 		<ec:column width="120" property="presetTime" title="规定完成时间"
