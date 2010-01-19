@@ -15,8 +15,8 @@
   		</c:if>
   	</c:otherwise>
   </c:choose>
-	<div id="taskDiv${taskStatus.index+1}" class="x-hide-display">
-		<div>
+	<div id="taskDiv${taskStatus.index+1}" class="x-hide-display" style="width: 100%">
+		<div style="width: 100%">
 		<table >
 				<tr>
 					<td align="right" width="6%" >任务标题：</td>
@@ -81,9 +81,11 @@
 		    grid${taskStatus.index}.render();
 		});*/
 		</script>
-		<div style="width: 100%; " >
+		<div style="width: 100%;">
 			<!-- 任务附件信息的Ext GridPanel -->
 			<%@include file="viewTaskAttGrid.jsp" %>
+		</div>
+		<div style="width: 100%">
 			<!-- 任务明细信息的Ext GridPanel -->				
 			<%@include file="viewTaskDetailsGrid.jsp" %>
 		</div>

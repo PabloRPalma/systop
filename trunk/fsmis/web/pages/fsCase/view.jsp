@@ -1,10 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglibs.jsp"%>
 <html>
 <head>
 <title>事件信息</title>
+<%@include file="/common/ec.jsp"%>
 <%@include file="/common/extjs.jsp"%>
 <%@include file="/common/meta.jsp"%>
 <style type="text/css">
@@ -20,6 +20,15 @@
 	margin-bottom: 2;
 	padding: 2px 2px 2px 2px;
 }
+/*去掉粗边框的样式*/
+.x-tab-panel{
+  margin: -1;
+}
+/*设置GridPanel空行背景为*/
+.x-panel-mc{
+ background-color: white;	
+ margin-top: -4;
+ }
 </style>
 </head>
 <body>
@@ -30,7 +39,7 @@
 		<table width="100%">
 			<tr>
 				<td width="80%" align="left"></td>
-				<td align="right"><a href="#"> 地理位置</a></td>
+				<td align="right"> <a href="#">地理位置</a></td>
 				<c:if test="${model.status eq '0' || model.status eq '3'}">
 				<td><span class="ytb-sep"></span></td>
 				    <td align="right"><a href="#"> 上报市级</a></td>
@@ -56,7 +65,7 @@
 		</table>
 	</div>
 	<div id="tabs" style="width: 100%;">
-		<div id="fsCaseDiv" class="x-hide-display">			
+		<div id="fsCaseDiv" class="x-hide-display" style="width: 100%">			
 			<table width="100%">		
 				<tr>
 					<td  width="10%"align="right">案件标题：</td>
@@ -95,12 +104,12 @@
 		</div>
 		</c:if>
 		<c:if test="${not empty model.taskses }">	
-		<div id="tasks" class="x-hide-display" >	
+		<div id="tasks" class="x-hide-display" style="width: 100%">	
 			<!-- include进来二级Tab以现实一个食品安全案件下的多个任务 -->		
 			<%@include file="viewTasks.jsp"%>
 		</div>
 		</c:if>
-		<div id="sms" class="x-hide-display" style="width: 100%; z-index: 1000;">
+		<div id="sms" class="x-hide-display" style="width: 100%;">
 		<%@include file="viewSmsGrid.jsp" %>
 		</div>
 		<c:if test="${not empty model.corp}">
@@ -145,6 +154,7 @@
 <script type="text/javascript">
 	Ext.onReady(function() {
 		var tabs = new Ext.TabPanel( {
+			layoutOnTabChange : true ,
 			renderTo : 'tabs',
 			anchor : '100% 100%',
 			activeTab : ${param['modelId']},
@@ -172,7 +182,11 @@
 			</c:if>			
 			, {
 				contentEl : 'sms',
-				title : '短信收发情况'
+				title : '短信收发情况',
+				listeners:{
+					activate:function(tab){
+					}
+				}
 			} 
 			<c:if test="${not empty model.corp}">
 			, {

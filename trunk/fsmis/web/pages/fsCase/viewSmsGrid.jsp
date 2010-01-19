@@ -76,7 +76,7 @@
 			title : '发送的短信',
 			applyTo : 'smsSendDiv',
 			//width:855,
-			bodyStyle:'width:99%',
+			bodyStyle:'width:100%',
 			height:200,
 			frame:true,			
 			store: storeSend,
@@ -197,7 +197,7 @@
 			title : '接收的短信',
 			applyTo : 'smsReceiveSmsDiv',
 			//width:855,
-			bodyStyle:'width:99%',
+			bodyStyle:'width:100%',
 			height:203,
 			frame:true,			
 			store: storeReceive,
@@ -210,11 +210,7 @@
 				  emptyMsg : "没有记录"
 			  })
 		});
-		//grid记录下的空白部分为蓝色,怎样去掉?下面的操作不行:(
-		//gridSend.refresh();
-		//gridReceive.refresh();
-		gridReceive.store.reload(); 
 	});
   </script>
-  <div id='smsSendDiv' style="margin:-1; padding: -1; width: 100%;  z-index: 111;" ></div>
-  <div id='smsReceiveSmsDiv' style="margin:-1; padding: -1;width: 100%; z-index: 1112;" ></div>
+  <div id='smsSendDiv' style=" width: 100%; "></div>
+  <div id='smsReceiveSmsDiv' style="width: 100%; " ></div>
