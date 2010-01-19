@@ -25,6 +25,7 @@ import com.systop.fsmis.assessment.AssessMentConstants;
 import com.systop.fsmis.fscase.CaseConstants;
 import com.systop.fsmis.fscase.casetype.service.CaseTypeManager;
 import com.systop.fsmis.fscase.jointtask.service.JointTaskAttachManager;
+import com.systop.fsmis.fscase.jointtask.service.JointTaskDetailAttManager;
 import com.systop.fsmis.fscase.jointtask.service.JointTaskDetailManager;
 import com.systop.fsmis.fscase.jointtask.service.JointTaskManager;
 import com.systop.fsmis.fscase.service.FsCaseManager;
@@ -34,6 +35,7 @@ import com.systop.fsmis.model.FsCase;
 import com.systop.fsmis.model.JointTask;
 import com.systop.fsmis.model.JointTaskAttach;
 import com.systop.fsmis.model.JointTaskDetail;
+import com.systop.fsmis.model.JointTaskDetailAttach;
 
 /**
  * 联合整治任务Action
@@ -74,6 +76,12 @@ public class JointTaskAction extends
 	@Autowired
 	private JointTaskDetailManager jointTaskDetailManager;
 
+	/**
+	 * 联合整治任务明细附件管理Manager
+	 */
+	@Autowired
+	private JointTaskDetailAttManager jointTaskDetailAttManager;
+	
 	/**
 	 * 案件一级类型
 	 */
@@ -131,7 +139,7 @@ public class JointTaskAction extends
 		restorePageData(page);
 		return INDEX;
 	}
-
+	
 	/**
 	 * 添加联合整治单体案件
 	 * @return
@@ -305,6 +313,14 @@ public class JointTaskAction extends
 		
 		//删除联合整治任务明细信息
 		for (JointTaskDetail jointTaskDetail : taskDetails) {
+			Set<JointTaskDetailAttach> taskDetailAttaches = jointTaskDetail.getTaskDetailAttachses();
+			//删除联合整治任务明细附件信息
+			for (JointTaskDetailAttach taskDetailAttach : taskDetailAttaches) {
+				String realPath = taskDetailAttach.getPath();
+				if (StringUtils.isNotBlank(realPath)) {
+					jointTaskDetailAttManager.removeDetailAttach(taskDetailAttach, getRealPath(realPath));
+				}
+			}
 			jointTaskDetailManager.remove(jointTaskDetail);
 		}		
 		

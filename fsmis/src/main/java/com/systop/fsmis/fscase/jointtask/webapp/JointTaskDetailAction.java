@@ -2,6 +2,7 @@ package com.systop.fsmis.fscase.jointtask.webapp;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +54,16 @@ public class JointTaskDetailAction extends
 	@Autowired
 	private JointTaskManager jointTaskManager;
 	
+  /**
+   * 逾期开始时间
+   */
+  private Date presetBeginTime;
+  
+  /**
+   * 逾期截止时间
+   */
+  private Date presetEndTime;
+  
 	/**
 	 * 重写父类的index方法，实现分页检索任务附件信息
 	 */
@@ -98,6 +109,45 @@ public class JointTaskDetailAction extends
 		items = page.getData();
 		restorePageData(page);
 		return "deptTaskDetailIndex";
+	}
+	
+	/**
+	 * 查询联合整治逾期未处理任务信息
+	 * @return
+	 */
+	public String expiredIndex() {
+		StringBuffer hql = new StringBuffer();
+		hql.append("from JointTaskDetail jtd where 1=1 ");
+		List<Object> args = new ArrayList<Object>();
+		//根据联合整治任务表的任务标题查询
+		if(getModel().getJointTask() != null && StringUtils.isNotBlank(getModel().getJointTask().getTitle())){
+			hql.append(" and jtd.jointTask.title like ?");
+			args.add(MatchMode.ANYWHERE.toMatchString(getModel().getJointTask().getTitle()));
+		}
+		//联合整治任务明细中是牵头部门的任务
+		hql.append(" and jtd.isLeader = ?");
+		args.add(FsConstants.Y);
+		//联合整治任务必须已审核
+		hql.append(" and jtd.jointTask.status = ?");
+		args.add(FsConstants.Y);
+		//联合整治任务明细状态不等于"已处理"
+		hql.append(" and jtd.status <> ? ");
+		args.add(JointTaskConstants.TASK_DETAIL_RESOLVEED);
+		
+		hql.append(" and jtd.jointTask.presetTime <= ? ");
+		args.add(new Date());
+    // 根据规定完成时间查询
+    if (presetBeginTime != null && presetEndTime != null) {
+      hql.append("and jtd.jointTask.presetTime >= ? and jtd.jointTask.presetTime <= ? ");
+      args.add(presetBeginTime);
+      args.add(presetEndTime);
+    }
+		hql.append(" order by jtd.jointTask.createDate desc");
+		Page page = PageUtil.getPage(getPageNo(), getPageSize());
+		getManager().pageQuery(page, hql.toString(), args.toArray());
+		items = page.getData();
+		restorePageData(page);
+		return "expiredIndex";
 	}
 	
 	/**
@@ -178,14 +228,28 @@ public class JointTaskDetailAction extends
 		this.jointTaskId = jointTaskId;
 	}
 
-
 	public Map<String, String> getCheckResult() {
 		return checkResult;
 	}
 
-
 	public void setCheckResult(Map<String, String> checkResult) {
 		this.checkResult = checkResult;
+	}
+
+	public Date getPresetBeginTime() {
+		return presetBeginTime;
+	}
+
+	public void setPresetBeginTime(Date presetBeginTime) {
+		this.presetBeginTime = presetBeginTime;
+	}
+
+	public Date getPresetEndTime() {
+		return presetEndTime;
+	}
+
+	public void setPresetEndTime(Date presetEndTime) {
+		this.presetEndTime = presetEndTime;
 	}
 	
 }
