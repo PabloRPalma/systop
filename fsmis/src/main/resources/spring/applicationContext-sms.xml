@@ -1,40 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
 <beans default-lazy-init="false">
-	<!-- 定义目标bean和bean中的方法 -->
-	<bean id="jobDetailSmsManager"
+	<!--发送短信作业-->
+	<bean id="jobDetailSmsManagerSend"
 		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-		<!-- 目标业务对象 -->
 		<property name="targetObject">
-			<!-- 实际完成业务操作的类 -->
 			<ref bean="smsManager" />
 		</property>
-		<!-- 业务类的方法 -->
 		<property name="targetMethod">
-			<value>sendMessages</value>
+				<value>sendMessages</value>
 		</property>
 	</bean>
-	<!-- 定义触发的精确时间 -->
-	<bean id="smsManagerTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
-		<!-- jobDetail 属性告诉触发器调度哪个工作 -->
+	<bean id="smsManagerTriggerSend" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail">
-			<!-- 引用业务操作 -->
-			<ref bean="jobDetailSmsManager" />
+			<ref bean="jobDetailSmsManagerSend" />
 		</property>
-
 		<property name="cronExpression">
 			<value>${sms.SmsSend.cronExpression}</value>
 		</property>
-
 	</bean>
-	<!-- 总管理 日程安排工厂-->
+	<!--接收短信作业-->
+	<bean id="jobDetailSmsManagerReceive"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="smsManager" />
+		</property>
+		<property name="targetMethod">
+				<value>receiveMessages</value>
+		</property>
+	</bean>
+	<bean id="smsManagerTriggerReceive" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="jobDetailSmsManagerReceive" />
+		</property>
+		<property name="cronExpression">
+			<value>${sms.SmsSend.cronExpression}</value>
+		</property>
+	</bean>
+	
 	<bean autowire="no"
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-		<!-- triggers属性接受一组触发器 -->
 		<property name="triggers">
 			<list>
-				<!-- 引用定义触发器的实现 -->
-				<ref bean="smsManagerTrigger" />
+				<ref bean="smsManagerTriggerSend" />
+				<ref bean="smsManagerTriggerReceive" />
 			</list>
 		</property>
 		<property name="autoStartup" value="true"></property>
@@ -42,5 +51,4 @@
 			<value>${sms.SmsSend.startDelay}</value>
 		</property>
 	</bean>
-
 </beans>
