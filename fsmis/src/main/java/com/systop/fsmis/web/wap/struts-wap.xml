@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="fsmis.wap" extends="default"  namespace="/wap">
+		<action name="*" class="complainAction" method="{1}">
+			<result name="index">/pages/wap/index.jsp</result> 
+			<result name="input">/pages/wap/edit.jsp</result>	
+			<result name="success">/pages/wap/success.jsp</result>	
+			<result name="identit">/pages/wap/identit.jsp</result> 
+		</action>
+	</package>
+</struts>
+
