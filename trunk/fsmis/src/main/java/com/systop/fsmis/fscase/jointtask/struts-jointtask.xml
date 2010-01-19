@@ -5,7 +5,7 @@
 <struts>
 	<package name="fsmis.fscase.jointtask" extends="json"  namespace="/jointTask">
 		<action name="*" class="jointTaskAction" method="{1}">
-			<result name="index">/pages/fsCase/jointtask/index.jsp</result> 
+			<result name="index">/pages/fsCase/jointtask/index.jsp</result> 	
 			<result name="input">/pages/fsCase/jointtask/editJointTask.jsp</result>
 			<result name="addCase">/pages/fsCase/jointtask/editCase.jsp</result>
 			<result name="addJointTask" type="redirect">edit.do?model.fsCase.id=${model.fsCase.id}</result>
@@ -20,7 +20,8 @@
 	<!-- 联合整治任务明细 -->
 	 <package name="fsmis.jointtask.details" extends="json"  namespace="/jointTask/details">    
 	   <action name="*" class="jointTaskDetailAction" method="{1}">
-	     <result name="index">/pages/fsCase/jointtask/taskdetail/taskDetails.jsp</result>              
+	     <result name="index">/pages/fsCase/jointtask/taskdetail/taskDetails.jsp</result>    
+		 <result name="expiredIndex">/pages/fsCase/jointtask/taskdetail/expiredIndex.jsp</result> 			               
 	   </action>
 	 </package> 
 	 
