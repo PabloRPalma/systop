@@ -122,7 +122,6 @@ public class TaskManager extends BaseGenericsManager<Task> {
     StringBuffer buf = new StringBuffer();
     buf.append(dept.getName()).append(",你部门现有一条待处理任务,请及时登录系统处理.");
     for (User u : users) {
-      logger.info(u.getName());
       // User实体中没有isMesReceive属性,暂时无法判断是否是短信接收人,待加上该属性后,启用本段代码
       /*
        * if(){ getSmsSendManager().addMessage(mobileNum, content) }
