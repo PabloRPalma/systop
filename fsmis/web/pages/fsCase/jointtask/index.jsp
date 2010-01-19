@@ -38,7 +38,7 @@ function removeJointTask(eID){
 			</td>
 			<td><span class="ytb-sep"></span></td>
 			<td>
-			   <a href="#">逾期未处理任务</a>
+			   <a href="${ctx}/jointTask/details/expiredIndex.do">逾期未处理任务</a>
 			</td>			
 		  </tr>
 		</table>
