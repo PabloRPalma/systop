@@ -28,94 +28,69 @@ import com.systop.fsmis.sms.util.MobileNumChecker;
 @Service("smsManager")
 public class SmsManager {
 
-	private static Logger logger = LoggerFactory.getLogger(SmsManager.class);
-	/**
-	 * 依赖短信服务代理接口,用于完成特定的短信平台的短信发送/接收/查询操作
-	 */
-	private SmsProxy smsProxy;
-	/**
-	 * 依赖发送短信Manager,用于进行发送短信的数据库操作
-	 */
-	private SmsSendManager smsSendManager;
-	/**
-	 * 依赖接收短信Manager,用于进行接收短信的数据库操作
-	 */
-	private SmsReceiveManager smsReceiveManager;
+  private static Logger logger = LoggerFactory.getLogger(SmsManager.class);
+  /**
+   * 依赖短信服务代理接口,用于完成特定的短信平台的短信发送/接收/查询操作
+   */
+  @Autowired
+  private SmsProxy smsProxy;
+  /**
+   * 依赖发送短信Manager,用于进行发送短信的数据库操作
+   */
+  @Autowired
+  private SmsSendManager smsSendManager;
+  /**
+   * 依赖接收短信Manager,用于进行接收短信的数据库操作
+   */
+  @Autowired
+  private SmsReceiveManager smsReceiveManager;
 
-	/**
-	 * 接收短信方法
-	 */
-	public void receiveMessages() throws Exception {
-		try {
-			SmsReceive smsReceive = smsProxy.receiveMessage();
-			getSmsReceiveManager().save(smsReceive);
-		} catch (Exception ex) {
-			logger.error(ex.getMessage());
-			throw ex;
-		}
-	}
+  /**
+   * 接收短信方法
+   */
+  public void receiveMessages() throws Exception {
+    logger.debug("SmsManager.receiveMessages()");
+    try {
+      SmsReceive smsReceive = smsProxy.receiveMessage();
+      smsReceiveManager.save(smsReceive);
+    } catch (Exception ex) {
+      logger.error("SmsManager.receiveMessages()Error:{}", ex.getMessage());
+      throw ex;
+    }
+  }
 
-	/**
-	 * 发送短信方法
-	 */
-	public void sendMessages() throws Exception {
-		// 得到数据库中需要发送的短信列表
-		List<SmsSend> smsSendList = getSmsSendManager().getNewSmsSends();
-		// 遍历列表
-		for (SmsSend smsSend : smsSendList) {
-			if (smsSend == null) {
-				logger.error("查询得到为null的短信");
-			} else {
-				if (!MobileNumChecker.checkMobilNumberDigit(smsSend
-						.getMobileNum())) {
-					logger.error("ID为:{}的短信,接收手机号[{}]有误,发送失败!",
-							smsSend.getId(), smsSend.getMobileNum());
-				} else {
-					try {
-						// 调用代理的发送功能,state变量在mas端用于标示是否发送成功,但在这里暂时没有用到
-						@SuppressWarnings("unused")
-						int state = getSmsProxy().sendMessage(smsSend);
+  /**
+   * 发送短信方法
+   */
+  public void sendMessages() throws Exception {
+    logger.debug("SmsManager.sendMessages()");
+    // 得到数据库中需要发送的短信列表
+    List<SmsSend> smsSendList = smsSendManager.getNewSmsSends();
+    // 遍历列表
+    for (SmsSend smsSend : smsSendList) {
+      if (smsSend == null) {
+        logger.error("查询得到为null的短信");
+      } else {
+        if (!MobileNumChecker.checkMobilNumberDigit(smsSend.getMobileNum())) {
+          logger.error("ID为:{}的短信,接收手机号[{}]有误,发送失败!", smsSend.getId(), smsSend
+              .getMobileNum());
+        } else {
+          try {
+            // 调用代理的发送功能,state变量在mas端用于标示是否发送成功,但在这里暂时没有用到
+            @SuppressWarnings("unused")
+            int state = smsProxy.sendMessage(smsSend);
 
-						// 更新数据库中短信的状态,不为新短信,短信发送时间
-						smsSend.setIsNew(SmsConstants.SMS_SMS_SEND_IS_NOT_NEW);
-						smsSend.setSendTime(new Date());
-						getSmsSendManager().update(smsSend);
+            // 更新数据库中短信的状态,不为新短信,短信发送时间
+            smsSend.setIsNew(SmsConstants.SMS_SMS_SEND_IS_NOT_NEW);
+            smsSend.setSendTime(new Date());
+            smsSendManager.update(smsSend);
 
-					} catch (Exception ex) {
-						logger.error(ex.getMessage());
-						throw ex;
-					}
-				}
-			}
-		}
-		// getSmsProxy().receiveMessage();
-	}
-
-	public SmsSendManager getSmsSendManager() {
-		return smsSendManager;
-	}
-
-	@Autowired(required = true)
-	public void setSmsSendManager(SmsSendManager smsSendManager) {
-		this.smsSendManager = smsSendManager;
-	}
-
-	public SmsReceiveManager getSmsReceiveManager() {
-		return smsReceiveManager;
-	}
-
-	@Autowired(required = true)
-	public void setSmsReceiveManager(SmsReceiveManager smsReceiveManager) {
-		this.smsReceiveManager = smsReceiveManager;
-	}
-
-	public SmsProxy getSmsProxy() {
-		return smsProxy;
-	}
-
-	@Autowired(required = true)
-	public void setSmsProxy(SmsProxy smsProxy) {
-		this.smsProxy = smsProxy;
-	}
-
+          } catch (Exception ex) {
+            logger.error("SmsManager.sendMessages()Error:{}", ex.getMessage());
+            throw ex;
+          }
+        }
+      }
+    }
+  }
 }
