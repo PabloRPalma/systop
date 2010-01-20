@@ -206,6 +206,24 @@
 			setTimeout("checkNewTaskDetail()", 20000);
 		}
 		checkNewTaskDetail();
+		
+		//提示新联合整治任务信息
+		function checkNewJointTaskDetail(){
+			Ext.Ajax.request({
+				url: '${ctx}/jointTask/deptTaskDetail/getDeptJointTaskDetailMes.do',
+				method : 'POST',
+				success : function(xhr, textStatus) {
+					if (xhr.responseText != '0'){
+						var message = "您有联合整治任务，请注意<a href='${ctx}/jointTask/deptTaskDetail/deptTaskDetailIndex.do' target='main'><font color='red'>查收</font></a>";
+						Ext.my().msg('', message);			
+					}
+				}
+
+			});
+			setTimeout("checkNewJointTaskDetail()", 20000);
+		}
+		checkNewJointTaskDetail();		
+		
 		//提示新短信信息
 		function checkNewSms(){
 			Ext.Ajax.request({
