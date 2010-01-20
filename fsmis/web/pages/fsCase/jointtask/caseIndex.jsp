@@ -3,7 +3,7 @@
 <%@include file="/common/taglibs.jsp"%>
 <html>
 <head>
-<title>事件采集管理</title>
+<title>联合整治管理</title>
 <%@include file="/common/ec.jsp"%>
 <%@include file="/common/extjs.jsp"%>
 <%@include file="/common/meta.jsp"%>
