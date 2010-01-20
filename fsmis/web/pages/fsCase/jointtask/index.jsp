@@ -34,6 +34,10 @@ function removeJointTask(eID){
 		<table>
 		  <tr>
 			<td>
+			   <a href="${ctx}/jointTask/caseIndex.do?">联合整治事件</a>
+			</td>	
+			<td><span class="ytb-sep"></span></td>				  
+			<td>
 			   <a href="${ctx}/jointTask/addCase.do?">申请联合整治</a>
 			</td>
 			<td><span class="ytb-sep"></span></td>
