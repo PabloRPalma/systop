@@ -114,7 +114,7 @@ public class JointTaskDetailAction extends
 			hql.append(" and jtd.jointTask.title like ?");
 			args.add(MatchMode.ANYWHERE.toMatchString(getModel().getJointTask().getTitle()));
 		}
-		hql.append(" order by jtd.jointTask.createDate desc");
+		hql.append(" order by jtd.status asc, jtd.jointTask.createDate desc");
 		Page page = PageUtil.getPage(getPageNo(), getPageSize());
 		getManager().pageQuery(page, hql.toString(), args.toArray());
 		items = page.getData();

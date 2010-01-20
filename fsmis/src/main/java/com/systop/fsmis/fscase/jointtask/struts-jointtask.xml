@@ -5,7 +5,8 @@
 <struts>
 	<package name="fsmis.fscase.jointtask" extends="json"  namespace="/jointTask">
 		<action name="*" class="jointTaskAction" method="{1}">
-			<result name="index">/pages/fsCase/jointtask/index.jsp</result> 	
+			<result name="index">/pages/fsCase/jointtask/index.jsp</result> 
+			<result name="caseIndex">/pages/fsCase/jointtask/caseIndex.jsp</result> 					
 			<result name="input">/pages/fsCase/jointtask/editJointTask.jsp</result>
 			<result name="addCase">/pages/fsCase/jointtask/editCase.jsp</result>
 			<result name="addJointTask" type="redirect">edit.do?model.fsCase.id=${model.fsCase.id}</result>

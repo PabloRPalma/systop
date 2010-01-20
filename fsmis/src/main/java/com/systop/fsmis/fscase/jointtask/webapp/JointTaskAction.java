@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.systop.cms.utils.PageUtil;
 import com.systop.common.modules.dept.service.DeptManager;
+import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.common.modules.security.user.UserUtil;
 import com.systop.core.dao.support.Page;
 import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
@@ -119,6 +120,19 @@ public class JointTaskAction extends
 	 */
 	private Integer jointTaskId;
 	
+  @Autowired
+  private LoginUserService loginUserService;
+  
+  /**
+   * 查询事件事发起始时间
+   */
+  private Date caseBeginTime;
+  
+  /**
+   * 查询事件事发截止时间
+   */
+  private Date caseEndTime;
+  
 	/**
 	 * 重写父类的index方法，实现分页检索联合整治任务信息
 	 */
@@ -138,6 +152,48 @@ public class JointTaskAction extends
 		items = page.getData();
 		restorePageData(page);
 		return INDEX;
+	}
+	
+	/**
+	 * 联合整治添加的案件信息查询
+	 */
+	@SuppressWarnings("unchecked")
+	public String caseIndex() {
+    StringBuffer hql = new StringBuffer("from FsCase fc where fc.isSubmited = 0 ");
+		List<Object> args = new ArrayList<Object>();
+    // 判断是否是市级人员登录,如果不是,则需要添加根据本区县查询案件的查询条件,本逻辑需要确认
+    if (loginUserService.getLoginUserCounty(getRequest()).getParentDept() != null) {
+      hql.append("and fc.county.id = ? ");
+      args.add(loginUserService.getLoginUserCounty(getRequest()).getId());
+    }
+		if (getModel().getFsCase() != null ) {
+	    if (StringUtils.isNotBlank(getModel().getFsCase().getTitle())) {
+	      hql.append("and fc.title like ? ");
+	      args.add(MatchMode.ANYWHERE.toMatchString(getModel().getFsCase().getTitle()));	
+	    }
+	    if (StringUtils.isNotBlank(getModel().getFsCase().getCode())) {
+	      hql.append("and fc.code = ? ");
+	      args.add(getModel().getFsCase().getCode());
+	    }
+		}
+    // 根据事发时间区间查询
+    if (caseBeginTime != null && caseEndTime != null) {
+      hql.append("and fc.caseTime >= ? and fc.caseTime <= ? ");
+      args.add(caseBeginTime);
+      args.add(caseEndTime);
+    }
+    
+    hql.append("and fc.caseSourceType = ? ");
+    args.add(CaseConstants.CASE_SOURCE_TYPE_JOINTASK);	    
+    hql.append("and fc.processType = ? ");
+    args.add(CaseConstants.PROCESS_TYPE_JOIN_TASK);	 
+    hql.append("order by fc.caseTime desc, fc.status");
+    
+		Page page = PageUtil.getPage(getPageNo(), getPageSize());
+		getManager().pageQuery(page, hql.toString(), args.toArray());
+		items = page.getData();
+		restorePageData(page);
+		return "caseIndex";
 	}
 	
 	/**
@@ -442,4 +498,19 @@ public class JointTaskAction extends
 		this.jointTaskId = jointTaskId;
 	}
 
+	public Date getCaseBeginTime() {
+		return caseBeginTime;
+	}
+
+	public void setCaseBeginTime(Date caseBeginTime) {
+		this.caseBeginTime = caseBeginTime;
+	}
+
+	public Date getCaseEndTime() {
+		return caseEndTime;
+	}
+
+	public void setCaseEndTime(Date caseEndTime) {
+		this.caseEndTime = caseEndTime;
+	}
 }
