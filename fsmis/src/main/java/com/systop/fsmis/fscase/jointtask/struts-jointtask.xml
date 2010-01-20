@@ -21,7 +21,7 @@
 	 <package name="fsmis.jointtask.details" extends="json"  namespace="/jointTask/details">    
 	   <action name="*" class="jointTaskDetailAction" method="{1}">
 	     <result name="index">/pages/fsCase/jointtask/taskdetail/taskDetails.jsp</result>    
-		 <result name="expiredIndex">/pages/fsCase/jointtask/taskdetail/expiredIndex.jsp</result> 			               
+		 <result name="expiredIndex">/pages/fsCase/jointtask/taskdetail/expiredIndex.jsp</result> 	 			               
 	   </action>
 	 </package> 
 	 
@@ -35,7 +35,7 @@
 			<result name="success" type="redirect">deptTaskDetailIndex.do</result> 		
 		    <result type="json" name="jsonCheckRst">
 			    <param name="root">checkResult</param>
-			</result>				
+			</result>							
 		</action>
 	</package>	 	
 	

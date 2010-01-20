@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.criterion.MatchMode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.systop.cms.utils.PageUtil;
+import com.systop.common.modules.dept.model.Dept;
+import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.common.modules.security.user.UserUtil;
 import com.systop.common.modules.security.user.model.User;
 import com.systop.core.dao.support.Page;
@@ -63,6 +66,14 @@ public class JointTaskDetailAction extends
    * 逾期截止时间
    */
   private Date presetEndTime;
+  
+	/**
+	 * 登录用户的新联合整治任务数
+	 */
+	private String mesCount;
+	
+  @Autowired
+  private LoginUserService loginUserService;
   
 	/**
 	 * 重写父类的index方法，实现分页检索任务附件信息
@@ -205,6 +216,24 @@ public class JointTaskDetailAction extends
 		return "jsonCheckRst";
 	}
 	
+  /**
+   * 得到当前登录人员的部门的新联合整治任务数量,被客户端Ajax访问,形成提示信息
+   * 
+   * @return
+   */
+  public String getDeptJointTaskDetailMes() {
+    // 得到当前登录人员的部门
+    Dept dept = loginUserService.getLoginUserDept(getRequest());
+    if (dept != null && dept.getId() != null) {
+    	List<JointTaskDetail> jointTasks = getManager().getNewJointTasks(dept);
+    	if (CollectionUtils.isNotEmpty(jointTasks)) {
+    		mesCount = String.valueOf(jointTasks.size());
+    	}
+    }
+		this.renderJson(getResponse(), mesCount);
+		return null;
+  }
+  
 	/**
 	 * 联合整治任务处理结果保存
 	 */
@@ -251,5 +280,13 @@ public class JointTaskDetailAction extends
 	public void setPresetEndTime(Date presetEndTime) {
 		this.presetEndTime = presetEndTime;
 	}
-	
+
+	public String getMesCount() {
+		return mesCount;
+	}
+
+	public void setMesCount(String mesCount) {
+		this.mesCount = mesCount;
+	}
+
 }

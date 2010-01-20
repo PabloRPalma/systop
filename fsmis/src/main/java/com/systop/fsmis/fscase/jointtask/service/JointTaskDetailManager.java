@@ -2,12 +2,14 @@ package com.systop.fsmis.fscase.jointtask.service;
 
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.security.user.model.User;
 import com.systop.core.service.BaseGenericsManager;
 import com.systop.fsmis.FsConstants;
@@ -88,4 +90,15 @@ public class JointTaskDetailManager extends BaseGenericsManager<JointTaskDetail>
 		jointTaskDetail.getJointTask().getFsCase().setStatus(CaseConstants.CASE_PROCESSED);
 		getDao().save(jointTaskDetail.getJointTask().getFsCase());
 	}
+	
+  
+	/**
+	 * 根据登录的部门，提示该部门下是否有未查看的联合整治任务信息
+	 * @param dept
+	 * @return
+	 */
+  public List<JointTaskDetail> getNewJointTasks(Dept dept) {
+    String hql = "from JointTaskDetail jtd where jtd.dept.id = ? and jtd.status = ? and jtd.jointTask.status = ? ";
+    return query(hql, new Object[] { dept.getId(), JointTaskConstants.TASK_DETAIL_UN_RECEIVE, FsConstants.Y});
+  }
 }
