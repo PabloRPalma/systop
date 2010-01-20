@@ -91,7 +91,6 @@ public class JointTaskDetailManager extends BaseGenericsManager<JointTaskDetail>
 		getDao().save(jointTaskDetail.getJointTask().getFsCase());
 	}
 	
-  
 	/**
 	 * 根据登录的部门，提示该部门下是否有未查看的联合整治任务信息
 	 * @param dept
