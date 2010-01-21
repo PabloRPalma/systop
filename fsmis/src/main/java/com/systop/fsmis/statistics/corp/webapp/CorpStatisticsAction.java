@@ -88,7 +88,6 @@ public class CorpStatisticsAction extends
 		hql.append("group by cp.id order by count(*) desc");
 
 		page = getManager().pageQuery(page, hql.toString(), args.toArray());
-		items = page.getData();
 		restorePageData(page);
 
 		// 设置统计数据
