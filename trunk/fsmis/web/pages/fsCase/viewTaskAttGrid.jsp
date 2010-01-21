@@ -51,6 +51,9 @@
 			applyTo : 'taskAttGridDiv${taskStatus.index+1}',
 			//width:853,
 			bodyStyle:'width:100%',
+			 viewConfig: {
+			       forceFit: true
+			   },						
 			height:150,
 			frame:true,			
 			store: store,
