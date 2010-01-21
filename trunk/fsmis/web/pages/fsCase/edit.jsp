@@ -89,16 +89,16 @@
 	var fckEditor = new FCKeditor( 'descn' ) ;
     fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
     fckEditor.ToolbarSet = 'BasicA';
-    fckEditor.Height = 300;
-    fckEditor.Width = 600;
+    fckEditor.Height = 250;
+    fckEditor.Width = 500;
     fckEditor.ReplaceTextarea();
   }
 </script>
 </head>
 <body onload="preFckEditor()">
-<div class="x-panel">
-<div class="x-panel-header">案件列表</div>
-<div class="x-toolbar">
+<div class="x-panel" style="width: 100%">
+<div class="x-panel-header">事件信息</div>
+<div class="x-toolbar" style="width: 100%">
  <table width="100%">
      <tr>
         <td  align="right">
@@ -108,7 +108,7 @@
  </table>
 </div>
 <div><%@ include file="/common/messages.jsp"%></div>
-<div align="center">
+<div align="center" style="width: 100%">
 <s:form action="save.do" id="save" method="post" theme="simple" validate="true" onsubmit="return valileader()">
     <input type="hidden" name="isMultipleCase" value="${isMultipleCase}"></input>
     <input type="hidden" name="modelId" value="${param['modelId'] }"></input>
@@ -118,35 +118,35 @@
 	<s:hidden name="mesId"/>
 	<s:hidden id="oneId" name="oneId"/>
 	<s:hidden id="twoId" name="twoId"/>
-	<fieldset style="width: 800px; padding: 10px 10px 10px 10px;">
-	<legend>编辑案件</legend>
-	<table width="800px" align="left">
+	<fieldset style="width: 90%; padding:10px 10px 10px 10px;">
+	<legend>编辑事件</legend>
+	<table width="90%" align="left">
 		<tr>
-			<td align="right" width="150">案件标题：</td>
+			<td align="right" width="150">事件标题：</td>
 			<td align="left"><s:textfield id="name"
 				name="model.title" cssStyle="width:380px" cssClass="required"/><font color="red">&nbsp;*</font>
 			</td>
 		</tr>
 		
 		<tr>
-			<td align="right">案发时间：</td>
+			<td align="right">事发时间：</td>
 			<td align="left"><input type="text" name="model.caseTime"  style="width: 160px" class="required"
 				value='<s:date name="model.caseTime" format="yyyy-MM-dd HH:mm:ss"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})"
 				class="Wdate" /><font color="red">&nbsp;*</font></td>
 		</tr>
 		<tr>
-			<td align="right">案发地点：</td>
+			<td align="right">事发地点：</td>
 			<td align="left"><s:textfield id="softVersion"
 				name="model.address" cssStyle="width:380px" cssClass="required"/><font color="red">&nbsp;*</font></td>
 		</tr>
 		<tr>
-			<td align="right">案件编号：</td>
+			<td align="right">事件编号：</td>
 			<td align="left"><s:textfield id="code"
 				name="model.code" cssStyle="width:380px" cssClass="required"/><font color="red">&nbsp;*</font></td>
 		</tr>
 		<tr>
-			<td align="right">案件类别：</td>
+			<td align="right">事件类别：</td>
 			<td align="left">
 				 <select id="levelone" name="typeoneId" style="width:120px;" class="required">
 					    <option value="">请选择...</option>
@@ -178,7 +178,7 @@
 				name="model.informerPhone" cssStyle="width:120px" /></td>
 		</tr>
 		<tr>
-			<td align="right">案件描述：</td>
+			<td align="right">事件描述：</td>
 			<td align="left">
 				<textarea id="descn" name="model.descn" cols="45" rows="4" class="required" >${model.descn}</textarea>
 				<font color="red">*</font>
