@@ -50,7 +50,7 @@ public class FsCaseManager extends BaseGenericsManager<FsCase> {
     SmsSend smsSend = new SmsSend();
     // 定义短信发送内容，组织短信发送内容
     StringBuffer content = new StringBuffer();
-    content.append("ID:").append(fsCase.getId()).append("\\n");
+    content.append("ID:").append(fsCase.getId()).append("\n");
     content.append(msgContent);
     smsSend.setName(name);
     smsSend.setMobileNum(moblie);
