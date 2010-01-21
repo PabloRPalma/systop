@@ -24,7 +24,7 @@
     <td>
       <form id="fscaseStaticForm" action="${ctx}/statistics/fscase/statisticByTime.do" method="post">
   <table border="0"><tr>
-                       <td>  区县:</td>
+                       <td>  部门:</td>
 				<td><div id="comboxWithTree" class="required"></div>
 				<s:hidden name="deptId" id="deptId"></s:hidden></td>    
        <td>  时间:
