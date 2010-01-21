@@ -5,7 +5,16 @@
 <html>
 <head>
 <%@include file="/common/ec.jsp" %>
+<%@include file="/common/extjs.jsp" %>
 <%@include file="/common/meta.jsp" %>
+<script type="text/javascript" src="${ctx}/amcharts/swfobject.js"></script>
+<link href="${ctx}/styles/treeSelect.css" type='text/css'
+	rel='stylesheet'>
+<style type="text/css">
+	input[type="text"]{
+	width:180px;
+}
+</style>
 <title></title>
 </head>
 <body>
@@ -16,17 +25,20 @@
         <tr>
           <td> 
         <s:form action="/userHistory/userHistoryList.do" theme="simple">
-        	
-	         用户名:<s:textfield name="queryUsername" size="15"/>
-	         部门名:<s:textfield name="queryLogindept" size="15"/>
-	          时间:
+      <table border="0"><tr>  	
+	      <td>用户名:<s:textfield name="queryUsername" size="15"/></td>
+	      <td>部门:</td>
+	         <td width="20"><div id="comboxWithTree" class="required"></div>
+				<s:hidden name="deptId" id="deptId"></s:hidden></td>
+	         <td>&nbsp; 时间:
       <input type="text" id="beginDate" name="beginDate" value="${param.beginDate}"
           onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})" class="Wdate required"  readonly/>      
       <!-- 选择查询结束时间 --> 
      至
         <input type="text" id="endDate" name="endDate" value="${param.endDate}"
-          onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})" class="Wdate required"  readonly/>      
-	        &nbsp;&nbsp;<s:submit value="查询" cssClass="button"></s:submit>
+          onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})" class="Wdate required"  readonly/> </td>     
+	       <td>&nbsp;&nbsp;<s:submit value="查询" cssClass="button"></s:submit></td> 
+         </tr></table>
          </s:form>
         </td>
         
@@ -64,5 +76,22 @@
 	</ec:table>
 	</div>
 </div>
+<script type="text/javascript" src="${ctx}/pages/admin/dept/edit.js"></script>
+<script type="text/javascript">
+Ext.onReady(function() {
+	var dtree = new DeptTree({
+		url : '/admin/dept/deptTree.do',
+		parent : '<stc:loginUserDept showPath="false" propertyName="id" showTopDept="true"></stc:loginUserDept>',
+		initValue : '${deptName}',
+		el : 'comboxWithTree',
+		innerTree :'inner-tree',
+		onclick : function(nodeId) {
+		  Ext.get('deptId').dom.value = nodeId;
+		}
+	});
+	dtree.init();	
+	
+});
+</script>
 </body>
 </html>
