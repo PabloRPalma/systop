@@ -48,7 +48,7 @@ function remove(id){
 			<tr>
 				<td><span class="ytb-sep"></span></td>
 				<td>
-					<c:if test="${isMultipleCase eq 0}"><a href="${ctx}/fscase/edit.do?isMultipleCase=${isMultipleCase}&modelId=${modelId}"> 添加${modelId}事件</a></c:if>			
+					<c:if test="${isMultipleCase eq 0}"><a href="${ctx}/fscase/edit.do?isMultipleCase=${isMultipleCase}&modelId=${modelId}"> 添加事件</a></c:if>			
 				</td>
 			</tr>
 		</table>
