@@ -63,7 +63,7 @@
 			"10", "#FFFFFF");
 	so.addVariable("path", "${ctx}/amcharts/");
 	so.addVariable("settings_file",
-			encodeURIComponent("${ctx}/pages/statistics/user/setting/flatPie.xml"));
+			encodeURIComponent("${ctx}/pages/statistics/user/setting/user.xml"));
 	so.addVariable("chart_data", "${csvData}");
 	so.write("flashcontent");
 	// ]]>
