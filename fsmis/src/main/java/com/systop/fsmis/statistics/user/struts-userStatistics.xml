@@ -5,7 +5,7 @@
 <struts>
 	<package name="fsmis.statistics.user" extends="default"  namespace="/statistics/user">
 		<action name="*" class="userLoginStatisticsAction" method="{1}">
-			<result name="userStatistics">/pages/statistics/user/userStatistics.jsp</result>	
+			<result name="userStatistics">/pages/statistics/user/userLogin.jsp</result>	
 		</action>
 	</package>
 </struts>

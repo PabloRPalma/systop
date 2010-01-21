@@ -5,8 +5,11 @@
 <struts>
 	<package name="fsmis.statistics.fscase" extends="default"  namespace="/statistics/fscase">
 		<action name="*" class="fsCaseStatisticsAction" method="{1}">
-			<result name="fsCaseStatisticsStatus">/pages/statistics/fscase/fsCaseStatisticsStatus.jsp</result>	
-			<result name="fsCaseStatisticsCounty">/pages/statistics/fscase/fsCaseStatisticsCounty.jsp</result>					
+			<result name="fsCaseByStatus">/pages/statistics/fscase/fsCaseByStatus.jsp</result>	
+			<result name="fsCaseByCounty">/pages/statistics/fscase/fsCaseByCounty.jsp</result>	
+			<result name="fsCaseNum">/pages/statistics/fscase/fsCaseNum.jsp</result>	
+			<result name="fsCaseByType">/pages/statistics/fscase/fsCaseByType.jsp</result>
+			<result name="fsCaseByTime">/pages/statistics/fscase/fsCaseByTime.jsp</result>							
 		</action>
 	</package>
 </struts>

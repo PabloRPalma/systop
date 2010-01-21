@@ -46,24 +46,12 @@ public class UserLoginStatisticsAction extends
 	public String statisticUser() {
 		Dept county = loginUserService.getLoginUserCounty(getRequest());
 		if (county != null) {
-			initDateRange();
 			String cvsData = getManager().getUserStatistic(beginDate, endDate,
 					county, deptId);
 			getRequest().setAttribute("csvData", cvsData);
 
 		}
 		return "userStatistics";
-	}
-
-	/**
-	 * initDateRange私有访法用于初始化时间范围
-	 * 
-	 */
-	private void initDateRange() {
-		if (beginDate == null && endDate == null) {
-			beginDate = new Date();
-			endDate = new Date();
-		}
 	}
 
 	public Date getBeginDate() {
@@ -83,13 +71,7 @@ public class UserLoginStatisticsAction extends
 	}
 
 	public String getDeptId() {
-	/*	if (deptId != null) {
-			Dept d = (Dept) getManager().getDao().findObject(
-					"from dept d where d.id=?", deptId);
-			return d.getName();
-		} else {*/
-			return deptId;
-		//}
+		return deptId;
 	}
 
 	public void setDeptId(String deptId) {
