@@ -134,7 +134,7 @@ public class SmsSendManager extends BaseGenericsManager<SmsSend> {
 		}
 		// 获取当天的统计实体
 		SmsCount smsCount = smsCountManager.findObject(
-				"from SmsCount s where s.sendDate between ? and ?", DateUtil
+				"from SmsCount s where s.smsDate between ? and ?", DateUtil
 						.firstSecondOfDate(new Date()), DateUtil
 						.lastSecondOfDate(new Date()));
 		// 存在当天的记录
