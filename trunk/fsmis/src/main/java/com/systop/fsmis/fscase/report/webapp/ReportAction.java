@@ -84,9 +84,10 @@ public class ReportAction extends ExtJsCrudAction<FsCase, ReportManager> {
 	public String index() {
 		Page page = PageUtil.getPage(getPageNo(), getPageSize());
 		StringBuffer hql = new StringBuffer("from FsCase fc where fc.reportDept.id is not null ");
-		//查询事件类型是‘部门上报’
-		hql.append(" and fc.caseSourceType = ").append(CaseConstants.CASE_SOURCE_TYPE_DEPTREPORT);
 		List args = new ArrayList();
+		//查询事件类型是‘部门上报’
+		hql.append(" and fc.caseSourceType = ?");
+		args.add(CaseConstants.CASE_SOURCE_TYPE_DEPTREPORT);
 		//取得登陆用户部门所属区县
 		Dept county = loginUserService.getLoginUserCounty(getRequest());
 		if (county != null) {
@@ -103,6 +104,7 @@ public class ReportAction extends ExtJsCrudAction<FsCase, ReportManager> {
 			args.add(endTime);
 		}
 		hql.append(" order by fc.caseTime desc");
+		logger.info("执行查询：{}", hql.toString());
 		page = getManager().pageQuery(page, hql.toString(), args.toArray());
 		restorePageData(page);
 		
