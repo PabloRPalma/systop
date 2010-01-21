@@ -95,12 +95,11 @@ public class SupervisorStatisticsAction extends
 		hql.append("group by sp.id order by count(*) desc");
 
 		page = getManager().pageQuery(page, hql.toString(), args.toArray());
-		items = page.getData();
 		restorePageData(page);
 
 		// 设置统计数据
 		StringBuffer cvsData = new StringBuffer();
-		if (items.size() > 0) {
+		if (items != null && items.size() > 0) {
 			// 获取元素个数计数
 			int i = 0;
 			for (Supervisor Sp : items) {
@@ -117,7 +116,9 @@ public class SupervisorStatisticsAction extends
 					}
 					i++;
 					cvsData.append(Sp.getName()).append(";");
-					cvsData.append(Sp.getFsCase().size());
+					if(Sp.getFsCase() != null){
+						cvsData.append(Sp.getFsCase().size());
+					}
 					cvsData.append("\\n");
 				}
 			}
@@ -166,7 +167,7 @@ public class SupervisorStatisticsAction extends
 		List<Dept> depts = deptManager.query(hql.toString(), args.toArray());
 		// 设置统计数据
 		StringBuffer cvsData = new StringBuffer();
-		if (depts.size() > 0) {
+		if (depts != null && depts.size() > 0) {
 			for (Dept dp : depts) {
 				if (dp.getName() != null) {
 					cvsData.append(dp.getName()).append(";");
