@@ -22,18 +22,16 @@
   <tr>
     <td>
       <form id="fscaseStaticForm" action="${ctx}/statistics/fscase/statisticByCounty.do" method="post">
-        时间:
-			<input type="text" name="beginDate" style="width: 90px"
+        时间:<input type="text" name="beginDate" style="width: 90px"
 				value='<s:date name="beginDate" format="yyyy-MM-dd"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"
 				class="Wdate" />
-			至
-			<input type="text" name="endDate" style="width: 90px"
+			至<input type="text" name="endDate" style="width: 90px"
 				value='<s:date name="endDate" format="yyyy-MM-dd"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"
 				class="Wdate" />
-				状态:<s:select id="status" list="statusMap" cssStyle="width:60px" name="status" headerKey="" headerValue="请选择"/>
-      <input type="submit" value="查询" class="button" />      
+				&nbsp;状态:<s:select id="status" list="statusMap" cssStyle="width:60px" name="status" headerKey="" headerValue="请选择"/>
+      &nbsp;<input type="submit" value="查询" class="button" />      
     </form>
     </td>    
   </tr>

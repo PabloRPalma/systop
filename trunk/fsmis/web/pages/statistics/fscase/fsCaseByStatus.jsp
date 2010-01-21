@@ -24,10 +24,10 @@
     <td>
       <form id="fscaseStaticForm" action="${ctx}/statistics/fscase/statisticByStatus.do" method="post">
   <table border="0"><tr>
-                       <td>  区县:</td>
+                       <td>  部门:</td>
 				<td><div id="comboxWithTree" class="required"></div>
 				<s:hidden name="deptId" id="deptId"></s:hidden></td>    
-      <td>   时间：
+      <td>  &nbsp; 时间:
 			<input type="text" name="beginDate" style="width: 90px"
 				value='<s:date name="beginDate" format="yyyy-MM-dd"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"
@@ -37,7 +37,7 @@
 				value='<s:date name="endDate" format="yyyy-MM-dd"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"
 				class="Wdate" /></td>
-    <td> <input type="submit" value="查询" class="button" /></td>
+    <td> &nbsp;&nbsp;<input type="submit" value="查询" class="button" /></td>
       </tr></table>     
     </form>
     </td>    
