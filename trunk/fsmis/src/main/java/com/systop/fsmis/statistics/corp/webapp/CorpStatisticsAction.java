@@ -92,7 +92,7 @@ public class CorpStatisticsAction extends
 
 		// 设置统计数据
 		StringBuffer cvsData = new StringBuffer();
-		if (items.size() > 0) {
+		if (items != null && items.size() > 0) {
 			// 获取元素个数计数
 			int i = 0;
 			for (Corp cp : items) {
@@ -109,7 +109,9 @@ public class CorpStatisticsAction extends
 					}
 					i++;
 					cvsData.append(cp.getName()).append(";");
-					cvsData.append(cp.getFsCases().size());
+					if(cp.getFsCases() != null){
+						cvsData.append(cp.getFsCases().size());
+					}
 					cvsData.append("\\n");
 				}
 			}
@@ -155,7 +157,7 @@ public class CorpStatisticsAction extends
 		List<Dept> depts = deptManager.query(hql.toString(), args.toArray());
 		// 设置统计数据
 		StringBuffer cvsData = new StringBuffer();
-		if (depts.size() > 0) {
+		if (depts != null && depts.size() > 0) {
 			for (Dept dp : depts) {
 				if (dp.getName() != null && dp.getCorps() != null
 						&& dp.getCorps() .size() > 0) {
