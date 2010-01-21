@@ -80,7 +80,11 @@
 	<div id="analyse">
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
-			<a href="${ctx}/statistics/fscase/statisticFsCaseStatus.do" target="main">事件状态统计</a>
+			<a href="${ctx}/statistics/fscase/statisticByStatus.do" target="main">事件状态统计</a>
+		</div>
+		<div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/statistics/fscase/statisticByCounty.do" target="main">事件区县统计</a>
 		</div>
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
@@ -88,7 +92,18 @@
 		</div>
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
-			<a href="${ctx}/statistics/fscase/statisticFsCaseCounty.do" target="main">事件区县统计</a>
+			<a href="${ctx}/statistics/fscase/statisticByCounty.do" target="main">事件区县统计</a>
+		</div>
+		<div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/statistics/fscase/statisticByNum.do" target="main">事件数量统计</a>
+		</div><div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/statistics/fscase/statisticByType.do" target="main">事件类别统计</a>
+		</div>
+		<div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/statistics/fscase/statisticByTime.do" target="main">事件时间统计</a>
 		</div>
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
