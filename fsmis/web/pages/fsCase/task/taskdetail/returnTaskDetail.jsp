@@ -7,16 +7,17 @@
 <script type="text/javascript">
 	/**任务明细实体id*/
 	var taskDetailId = null;
-	function showReturnWindow(taskDetailId,userName){
+	function showReturnWindow(taskDetailId,userName,taskTitle){
 		this.taskDetailId = taskDetailId;
 		ReturnWindow.show();
 		document.getElementById('returnPeople').value = userName;
+		document.getElementById('taskTitle').innerHTML = taskTitle;
 	}
 	
 	var ReturnWindow = new Ext.Window({
 		el:'returnWindow',
 		width:500,
-		height:300,
+		height:270,
 		layout:'fit',
 		closeAction:'hide',
 		buttonAlign:'center',
@@ -96,11 +97,15 @@
 <table align="center" cellspacing="6">
 	<tr><td></td><td></td></tr>
 	<tr>
-		<td>负责人</td>
+		<td  align="right">任务标题：</td>
+		<td><div id="taskTitle"></div></td>
+	</tr>
+	<tr>
+		<td align="right">负责人：</td>
 		<td><s:textfield name="model.returnPeople" id="returnPeople"></s:textfield><font color="red">*</font></td>
 	</tr>
 	<tr>
-		<td>退回原因</td>
+		<td align="right">退回原因：</td>
 		<td><textarea rows="6" cols="50" style="widows: 300px;" id="returnReason"
 			name="model.returnReason"></textarea><font color="red">*</font></td>
 	</tr>
