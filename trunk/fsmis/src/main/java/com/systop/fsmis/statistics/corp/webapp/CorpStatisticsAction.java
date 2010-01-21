@@ -54,7 +54,7 @@ public class CorpStatisticsAction extends
 	 */
 	@SuppressWarnings("unchecked")
 	public String statisticFsCaseCount() {
-	// 只查询登录用户所属部门下的企业
+		// 只查询登录用户所属部门下的企业
 		Dept dept = loginUserService.getLoginUserDept(getRequest());
 		if(dept == null){
 			addActionError("获取用户信息失败,请重新登录!");
@@ -63,8 +63,9 @@ public class CorpStatisticsAction extends
 		// 创建分页查询对象
 		Page page = PageUtil.getPage(getPageNo(), getPageSize());
 		List args = new ArrayList();
-		StringBuffer hql = new StringBuffer("select cp from Corp cp, FsCase fs where cp.id = fs.corp ");
-	// 根据时间查询
+		StringBuffer hql = new StringBuffer(
+				"select cp from Corp cp, FsCase fs where cp.id = fs.corp ");
+		// 根据时间查询
 		if (beginDate != null && endDate != null) {
 			hql.append("and fs.caseTime between ? and ? ");
 			args.add(beginDate);
@@ -72,17 +73,16 @@ public class CorpStatisticsAction extends
 		}
 		// 根据部门关键字查询
 		if (deptId != null && StringUtils.isNotBlank(deptId)) {
-			hql.append("and cp.dept.id = ? ");
-			args.add(deptId);
-		} else {//如果部门关键字为空，则按当前用户所属部门查询
-			if (dept != null) {
-				if (dept.getChildDepts().size() > 0) {
-					hql.append("and cp.dept.serialNo like ? ");
-					args.add("%" + dept.getSerialNo() + "%");
-				} else {
-					hql.append("and cp.dept.id = ? ");
-					args.add(dept.getId());
-				}
+			dept = deptManager.get(Integer.valueOf(deptId));
+			getRequest().setAttribute("deptName", dept.getName());
+		}
+		if (dept != null) {
+			if (dept.getChildDepts().size() > 0) {
+				hql.append("and cp.dept.serialNo like ? ");
+				args.add("%" + dept.getSerialNo() + "%");
+			} else {
+				hql.append("and cp.dept.id = ? ");
+				args.add(dept.getId());
 			}
 		}
 		hql.append("group by cp.id order by count(*) desc");
