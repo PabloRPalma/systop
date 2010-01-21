@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.systop.cms.utils.PageUtil;
+import com.systop.common.modules.dept.DeptConstants;
 import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.dept.service.DeptManager;
 import com.systop.common.modules.security.user.LoginUserService;
@@ -77,8 +78,9 @@ public class SupervisorStatisticsAction extends
 		}
 		// 根据部门关键字查询
 		if (deptId != null && StringUtils.isNotBlank(deptId)) {
-			hql.append("and sp.dept.id = ? ");
-			args.add(Integer.valueOf(deptId));
+			dept = deptManager.get(Integer.valueOf(deptId));
+			// 页面回显所选部门
+			getRequest().setAttribute("deptName", dept.getName());
 		} else {//如果部门关键字为空，则按当前用户所属部门查询
 			if (dept != null) {
 				if (dept.getChildDepts().size() > 0) {
@@ -129,14 +131,22 @@ public class SupervisorStatisticsAction extends
 	 */
 	@SuppressWarnings("unchecked")
 	public String statisticByDept() {
-		StringBuffer hql = new StringBuffer("from Dept where 1=1 ");
-		List args = new ArrayList();
 		// 获取当前用户所属部门
 		Dept dept = loginUserService.getLoginUserDept(getRequest());
 		if (dept == null) {
 			addActionError("获取用户信息失败,请重新登录!");
 			return "statisticbydept";
 		}
+		
+		StringBuffer hql = new StringBuffer("from Dept where 1=1 ");
+		List args = new ArrayList();
+		
+		// 根据部门关键字查询
+		if (deptId != null && StringUtils.isNotBlank(deptId)) {
+			dept = deptManager.get(Integer.valueOf(deptId));
+			getRequest().setAttribute("deptName", dept.getName());
+		} 
+		
 		if (dept != null) {
 			// 非顶级部门
 			if (dept.getParentDept() != null) {
@@ -147,15 +157,10 @@ public class SupervisorStatisticsAction extends
 					hql.append("and id = ? ");
 					args.add(dept.getId());
 				}
-			} else {// 顶级部门只显示直属部门
-				hql.append("and id = ? ");
+			} else {// 顶级部门显示区县
+				hql.append("and type = ? and parentDept.id = ? ");
+				args.add(DeptConstants.TYPE_COUNTY);
 				args.add(dept.getId());
-				if (dept.getChildDepts().size() > 0) {
-					for (Dept de : dept.getChildDepts()) {
-						hql.append("or id = ? ");
-						args.add(de.getId());
-					}
-				}
 			}
 		}
 		List<Dept> depts = deptManager.query(hql.toString(), args.toArray());
@@ -163,14 +168,16 @@ public class SupervisorStatisticsAction extends
 		StringBuffer cvsData = new StringBuffer();
 		if (depts.size() > 0) {
 			for (Dept dp : depts) {
-				if (dp.getName() != null && dp.getSupervisors() != null
-						&& dp.getSupervisors().size() > 0) {
+				if (dp.getName() != null) {
 					cvsData.append(dp.getName()).append(";");
 					if (dp.getSupervisors() != null) {
 						cvsData.append(dp.getSupervisors().size());
 					}
-					cvsData.append("\\n");
-				}
+					else{
+						cvsData.append("0");
+					}
+				} 
+				cvsData.append("\\n");
 			}
 		}
 		getRequest().setAttribute("result", cvsData.toString());
