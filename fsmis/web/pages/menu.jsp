@@ -95,7 +95,7 @@
 		</div>
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
-			<a href="${ctx}/statistics/fscase/statisticByTime.do" target="main">事件时间统计</a>
+			<a href="${ctx}/statistics/fscase/statisticByTime.do" target="main">事件统计</a>
 		</div>
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
