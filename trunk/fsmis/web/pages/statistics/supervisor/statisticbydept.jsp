@@ -6,6 +6,8 @@
 <head>
 <%@include file="/common/ec.jsp"%>
 <%@include file="/common/meta.jsp"%>
+<%@include file="/common/extjs.jsp" %>
+<link href="${ctx}/styles/treeSelect.css" type='text/css' rel='stylesheet'>
 <script type="text/javascript" src="${ctx}/amcharts/swfobject.js"></script>
 </head>
 <body>
@@ -13,6 +15,17 @@
 <div class="x-toolbar">
 <table width="100%" border="0">
 	<tr>
+		<s:form id="supervisorstatistic" action="statisticByDept.do"
+				method="post" target="main" >
+				<td width="60" align="right">所属部门：</td>
+				<td class="simple" align="left" width="160">
+					<div id="comboxWithTree" style="float: left;width: 100px"></div>
+					<s:hidden name="deptId" id="deptId"/>
+				</td>
+				<td>
+					<s:submit value="查询" cssClass="button"/>
+				</td>
+			</s:form>
 		<td align="right">
 		<table>
 			<tr>
@@ -48,6 +61,22 @@
 	so.addVariable("chart_data", "${result}");
 	so.write("flashcontent");
 	// ]]>
+</script>
+<script type="text/javascript" src="${ctx}/pages/admin/dept/edit.js"></script>
+<script type="text/javascript">
+Ext.onReady(function() {
+	var dtree = new DeptTree({
+		url : '/admin/dept/deptTree.do',
+		parent : '<stc:loginUserDept showPath="false" propertyName="id" showTopDept="true"></stc:loginUserDept>',
+		initValue : '${deptName}',
+		el : 'comboxWithTree',
+		innerTree :'inner-tree',
+		onclick : function(nodeId) {
+		  Ext.get('deptId').dom.value = nodeId;
+		}
+	});
+	dtree.init();	
+});
 </script>
 </body>
 </html>
