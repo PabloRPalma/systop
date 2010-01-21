@@ -37,7 +37,10 @@
     <td colspan="4" align="right" class="tdBottom">编号：(　　　　)号&nbsp;&nbsp;</td>
   </tr>
   <tr>
-    <td colspan="4" style="padding:7px 5px 6px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;举报人、电话：${model.task.fsCase.informer}、${model.task.fsCase.informerPhone}</td>
+    <td colspan="4" style="padding:7px 5px 6px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;举报人：${model.task.fsCase.informer}</td>
+  </tr>
+  <tr>
+  	<td colspan="4" style="padding:7px 5px 6px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;电话：${model.task.fsCase.informerPhone}</td>
   </tr>
   <tr>
     <td colspan="4" class="tdBottom">&nbsp;</td>

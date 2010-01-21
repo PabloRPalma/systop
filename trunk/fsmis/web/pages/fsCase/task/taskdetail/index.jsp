@@ -103,7 +103,7 @@
 		    <!-- 0未接收1已查看2已接收3已退回4已处理 -->
 			<c:if test="${empty item.status or item.status eq '0' or item.status eq '1'}">
 				<a title="接收任务" href="#" onclick="receive(${item.id})">收</a> |
-				<a title="退回任务" href="#"	onclick="javascript:showReturnWindow(${item.id},'${userName}')">退</a> |
+				<a title="退回任务" href="#"	onclick="javascript:showReturnWindow(${item.id},'${userName}','${item.task.title }')">退</a> |
 				<font color="silver" >办</font> |  				
 			</c:if>
 			<c:if test="${item.status eq '2'}">
