@@ -2,12 +2,14 @@ package com.systop.fsmis.statistics.user.webapp;
 
 import java.util.Date;
 
+import org.apache.commons.lang.xwork.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.systop.common.modules.dept.model.Dept;
+import com.systop.common.modules.dept.service.DeptManager;
 import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.common.modules.security.user.model.UserLoginHistory;
 import com.systop.core.webapp.struts2.action.DefaultCrudAction;
@@ -37,6 +39,11 @@ public class UserLoginStatisticsAction extends
 	 */
 	@Autowired
 	private LoginUserService loginUserService;
+	/**
+	 * 部门管理
+	 */
+	@Autowired
+	private DeptManager deptManager;
 
 	/**
 	 * 用户登录记录统计
@@ -49,7 +56,14 @@ public class UserLoginStatisticsAction extends
 			String cvsData = getManager().getUserStatistic(beginDate, endDate,
 					county, deptId);
 			getRequest().setAttribute("csvData", cvsData);
-
+			//页面回显所选部门
+			if (StringUtils.isNotBlank(deptId)) {
+				Dept dp = deptManager.findObject("from Dept d where d.id=?", Integer
+						.valueOf(deptId));
+				getRequest().setAttribute("deptName", dp.getName());
+			} else {
+				getRequest().setAttribute("deptName", county.getName());
+			}
 		}
 		return "userStatistics";
 	}
