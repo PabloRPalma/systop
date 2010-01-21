@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,9 +25,7 @@ import com.systop.core.service.BaseGenericsManager;
 @Service
 public class UserStatisticsManager extends
 		BaseGenericsManager<UserLoginHistory> {
-	/**
-	 * 部门管理
-	 */
+	/** 部门管理 */
 	@Autowired
 	private DeptManager deptManager;
 	/** 用户管理 */
@@ -47,6 +46,10 @@ public class UserStatisticsManager extends
 	@SuppressWarnings("unchecked")
 	public String getUserStatistic(Date beginDate, Date endDate, Dept county,
 			String deptId) {
+		if (beginDate == null && endDate == null) {
+			beginDate = new Date();
+			endDate = new Date();
+		}
 		String dataString = null;
 		if (deptId == null || deptId.equals("")) {// 未选择
 			if (county.getParentDept() != null) {// 区县
@@ -72,7 +75,7 @@ public class UserStatisticsManager extends
 	}
 
 	/**
-	 * 私有方法，拼接数据 针对区县
+	 * 拼接数据 针对区县
 	 * 
 	 * @return
 	 */
@@ -86,7 +89,7 @@ public class UserStatisticsManager extends
 			String sqlTemp = "select ulh.dept.name,count(ulh.id) from UserLoginHistory ulh where ulh.dept.id=? and ulh.loginTime between ? and ?  group by ulh.dept.id ";
 			List<Object[]> result = getDao().query(sqlTemp, dp.getId(), beginDate,
 					endDate);
-			if (result.size() > 0) {
+			if (CollectionUtils.isNotEmpty(result)) {
 				for (Object[] objs : result) {
 					cvsData.append(objs[0] + ";").append(objs[1] + "\\n");
 				}
@@ -98,7 +101,7 @@ public class UserStatisticsManager extends
 	}
 
 	/**
-	 * 私有方法，拼接数据 针对市
+	 * 拼接数据 针对市
 	 * 
 	 * @return
 	 */
@@ -115,13 +118,13 @@ public class UserStatisticsManager extends
 						endDate);
 				Object[] o = new Object[2];
 				o[0] = dp.getName();
-				if (result.size() > 0) {
+				if (CollectionUtils.isNotEmpty(result)) {
 					o[1] = result.get(0)[1];
 				} else {// 该直属部门下无人员登录
 					o[1] = 0;
 				}
 				r.add(o);
-			} else {// 区县  记录该区县下的所有部门人员的登录次数，一并归为这个区县下的
+			} else {// 区县 记录该区县下的所有部门人员的登录次数，一并归为这个区县下的
 				List<Dept> ds = deptManager.query(
 						"from Dept d where d.parentDept.id=? or d.id=?", dp.getId(), dp
 								.getId());
@@ -132,7 +135,7 @@ public class UserStatisticsManager extends
 					String sqlTemp = "select ulh.dept.name,count(ulh.id) from UserLoginHistory ulh where ulh.dept.id=? and ulh.loginTime between ? and ?  group by ulh.dept.id ";
 					List<Object[]> result = getDao().query(sqlTemp, dTemp.getId(),
 							beginDate, endDate);
-					if (result.size() > 0) {//累加
+					if (CollectionUtils.isNotEmpty(result)) {// 累加
 						count += Integer.valueOf(result.get(0)[1].toString());
 					}
 				}
@@ -141,7 +144,7 @@ public class UserStatisticsManager extends
 			}
 		}
 		StringBuffer cvsData = new StringBuffer();
-		if (r.size() > 0) {
+		if (CollectionUtils.isNotEmpty(r)) {
 			for (Object[] objs : r) {
 				cvsData.append(objs[0] + ";").append(objs[1] + "\\n");
 			}
@@ -164,12 +167,12 @@ public class UserStatisticsManager extends
 		List<User> us = userManager.query("from User u where u.dept.id=?", dt
 				.getId());
 		StringBuffer cvsData = new StringBuffer();
-		if (us.size() > 0) {
+		if (CollectionUtils.isNotEmpty(us)) {
 			for (User u : us) {
 				String sqlTemp = "select ulh.user.name,count(ulh.id) from UserLoginHistory ulh where ulh.user.id=? and ulh.loginTime between ? and ?  group by ulh.user.id ";
 				List<Object[]> result = getDao().query(sqlTemp, u.getId(), beginDate,
 						endDate);
-				if (result.size() > 0) {
+				if (CollectionUtils.isNotEmpty(result)) {
 					for (Object[] objs : result) {
 						cvsData.append(objs[0] + ";").append(objs[1] + "\\n");
 					}
