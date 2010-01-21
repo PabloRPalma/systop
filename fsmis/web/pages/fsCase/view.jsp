@@ -67,6 +67,7 @@
 	<div id="tabs" style="width: 100%;">
 		<div id="fsCaseDiv" class="x-hide-display" style="width: 100%">			
 			<table width="100%">		
+				<tr><td>&nbsp;</td><td>&nbsp;</td></tr>
 				<tr>
 					<td  width="10%"align="right">案件标题：</td>
 					<td  align="left" >${model.title}</td>
@@ -114,7 +115,8 @@
 		</div>
 		<c:if test="${not empty model.corp}">
 			<div id="corp" class="x-hide-display" style="width: 100%;">		
-				<table width="100%">		
+				<table width="100%">	
+					<tr><td>&nbsp;</td><td>&nbsp;</td></tr>	
 					<tr>
 						<td  width="10%"align="right">企业名称：</td>
 						<td  align="left" >${model.corp.name}</td>

@@ -17,7 +17,8 @@
   </c:choose>
 	<div id="taskDiv${taskStatus.index+1}" class="x-hide-display" style="width: 100%">
 		<div style="width: 100%">
-		<table >
+		<table style="100%" >
+			 <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
 				<tr>
 					<td align="right" width="6%" >任务标题：</td>
 					<td colspan="5" align="left" >${task.title }</td>

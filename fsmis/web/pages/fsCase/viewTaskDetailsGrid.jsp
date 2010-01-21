@@ -80,6 +80,8 @@
 			title : '任务${taskStatus.index+1}明细',
 			applyTo : 'taskDetailGridDiv${taskStatus.index+1}',
 			bodyStyle:'width:100%',
+			autoWidth : true,  
+			autoScroll : true,  
 			height:150,			
 			frame:true,
 			//width:this.getComputedWidth(),--不支持			
