@@ -7,13 +7,6 @@
 <%@include file="/common/ec.jsp"%>
 <%@include file="/common/meta.jsp"%>
 <script type="text/javascript" src="${ctx}/amcharts/swfobject.js"></script>
-<link href="${ctx}/styles/treeSelect.css" type='text/css'
-	rel='stylesheet'>
-<style type="text/css">
-	input[type="text"]{
-	width:180px;
-}
-</style>
 </head>
 <body>
 <div class="x-panel-header">任务区县统计图</div>
