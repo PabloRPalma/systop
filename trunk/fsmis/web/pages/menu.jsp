@@ -88,14 +88,6 @@
 		</div>
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
-			<a href="${ctx}/statistics/task/statisticTaskStatus.do" target="main">任务状态统计</a>
-		</div>
-		<div style="padding-top:2px">
-			<img src="${ctx}/images/icons/add.gif" class="icon">
-			<a href="${ctx}/statistics/fscase/statisticByCounty.do" target="main">事件区县统计</a>
-		</div>
-		<div style="padding-top:2px">
-			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/statistics/fscase/statisticByNum.do" target="main">事件数量统计</a>
 		</div><div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
@@ -108,6 +100,10 @@
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/statistics/task/statisticTaskCounty.do" target="main">任务区县统计</a>
+		</div>
+		<div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/statistics/task/statisticTaskStatus.do" target="main">任务状态统计</a>
 		</div>
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
