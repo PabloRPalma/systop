@@ -117,7 +117,7 @@ public class CorpStatisticsAction extends
 				}
 			}
 		}else{
-			cvsData.append("nothing;0\\n");
+			cvsData.append("无数据;0\\n");
 		}
 		getRequest().setAttribute("result", cvsData.toString());
 		return "statisticfscasecount";
@@ -172,7 +172,7 @@ public class CorpStatisticsAction extends
 				}
 			}
 		}else{
-			cvsData.append("nothing;0\\n");
+			cvsData.append("无数据;0\\n");
 		}
 		getRequest().setAttribute("result", cvsData.toString());
 		return "statisticbydept";
