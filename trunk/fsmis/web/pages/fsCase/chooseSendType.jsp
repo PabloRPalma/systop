@@ -26,6 +26,10 @@
 		document.getElementById("caseTitle").innerHTML = caseTitle;
 		ChooseSendTypeWindow.show();	  
 } 
+ChooseSendTypeWindow.selectOtherType = function(){	  	 
+	  window.location = "${ctx}/task/edit.do?caseId=" + faCaseId + "&isMultipleCase=${isMultipleCase}&modelId=${modelId}";
+	  ChooseSendTypeWindow.hide();
+}
 </script>
 <div id="chooseSendTypeWindow" class="x-hidden">
 <div class="x-window-header">选择派遣类别</div>
@@ -55,7 +59,7 @@
 			<tr><td>&nbsp;</td></tr>
 			<tr>
 		<td>
-			<input type="button" value="其他派遣" onclick="send()"	style="width:555px; height:35px; border: 0px; background-image: url(${ctx}/images/choosesendtype/01.gif);font-size:16px;color:#000" />
+			<input type="button" value="其他派遣" onclick="ChooseSendTypeWindow.selectOtherType()"	style="width:555px; height:35px; border: 0px; background-image: url(${ctx}/images/choosesendtype/01.gif);font-size:16px;color:#000" />
 		</td>
 		</tr>
 		</table>
