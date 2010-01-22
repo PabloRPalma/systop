@@ -58,7 +58,7 @@ public class TaskManagerTest extends BaseTransactionalTestCase {
 		List<TaskAtt> taskAtts = new ArrayList<TaskAtt>();
 		taskAtts.add(taskatt);
 		
-		taskManager.save(task,deptIds, taskAtts);
+		taskManager.save(task,deptIds, taskAtts,null);
 		
 		assertEquals("测试任务标题", taskManager.get(task.getId()).getTitle());	
 		
