@@ -42,7 +42,6 @@ import com.systop.fsmis.model.SendType;
 import com.systop.fsmis.model.SmsReceive;
 import com.systop.fsmis.model.SmsSend;
 import com.systop.fsmis.sms.SmsConstants;
-import com.systop.fsmis.sms.SmsManager;
 import com.systop.fsmis.sms.SmsReceiveManager;
 import com.systop.fsmis.supervisor.service.SupervisorManager;
 
@@ -104,7 +103,7 @@ public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
   private String msgContent;
   // 是否综合(多体)案件
   private String isMultipleCase;
-  //查看页面中默认显示那个tab
+  // 查看页面中默认显示那个tab
   private String modelId;
   private Map<String, String> jsonResult;
 
@@ -303,10 +302,11 @@ public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
           supervisorManager.getSupervisorByMobile(smsReceive.getMobileNum())
               .getName());
     }
-    getRequest().setAttribute("isMultipleCase",FsConstants.N);
+    getRequest().setAttribute("isMultipleCase", FsConstants.N);
     smsReceive.setIsNew(SmsConstants.N);
     smsReceiveManager.save(smsReceive);
-    
+    //当查看该短信时,置事件的核实判断标识为已核实,具体暂时先这样作,逻辑待定....
+    getModel().setMsgCheckedFlag(FsConstants.Y);
     return edit();
   }
 
