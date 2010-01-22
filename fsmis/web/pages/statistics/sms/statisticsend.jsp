@@ -54,17 +54,29 @@
 		<ec:column width="20" property="_s" title="No." value="${GLOBALROWCOUNT}" style="text-align:center"/>
 		<ec:column width="100" property="smsDate" title="收发日期"
 			style="text-align:center" cell="date" />
-		<ec:column width="100" property="mobileSendCount" style="text-align:center" title="移动发送数" />
-		<ec:column width="100" property="unicomSendCount" style="text-align:center" title="联通发送数" />
-		<ec:column width="100" property="otherSendCount" style="text-align:center" title="其他发送数" />
-		<ec:column width="40" property="_1" style="text-align:center" title="合计">
-		${item.mobileSendCount+item.unicomSendCount+item.otherSendCount}
+		<ec:column width="100" property="mobileSendCount" style="text-align:center" title="移动发送数" >
+			<c:if test="${empty item.mobileSendCount}">0</c:if>
 		</ec:column>
-		<ec:column width="100" property="mobileReceiveCount" style="text-align:center" title="移动接收数" />
-		<ec:column width="100" property="unicomReceiveCount" style="text-align:center" title="联通接收数" />
-		<ec:column width="100" property="otherReceiveCount" style="text-align:center" title="其他接收数" />
+		<ec:column width="100" property="unicomSendCount" style="text-align:center" title="联通发送数" >
+			<c:if test="${empty item.unicomSendCount}">0</c:if>
+		</ec:column>
+		<ec:column width="100" property="otherSendCount" style="text-align:center" title="其他发送数" >
+			<c:if test="${empty item.otherSendCount}">0</c:if>
+		</ec:column>
+		<ec:column width="40" property="_1" style="text-align:center" title="合计">
+			${item.mobileSendCount+item.unicomSendCount+item.otherSendCount}
+		</ec:column>
+		<ec:column width="100" property="mobileReceiveCount" style="text-align:center" title="移动接收数" >
+			<c:if test="${empty item.mobileReceiveCount}">0</c:if>
+		</ec:column>
+		<ec:column width="100" property="unicomReceiveCount" style="text-align:center" title="联通接收数" >
+			<c:if test="${empty item.unicomReceiveCount}">0</c:if>
+		</ec:column>
+		<ec:column width="100" property="otherReceiveCount" style="text-align:center" title="其他接收数" >
+			<c:if test="${empty item.otherReceiveCount}">0</c:if>
+		</ec:column>
 		<ec:column width="40" property="_2" style="text-align:center" title="合计">
-		${item.mobileReceiveCount+item.unicomReceiveCount+item.otherReceiveCount}
+			${item.mobileReceiveCount+item.unicomReceiveCount+item.otherReceiveCount}
 		</ec:column>
 	</ec:row>
 </ec:table>
