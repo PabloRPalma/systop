@@ -23,10 +23,12 @@ import com.systop.common.modules.security.user.model.User;
 import com.systop.core.service.BaseGenericsManager;
 import com.systop.fsmis.FsConstants;
 import com.systop.fsmis.model.CheckResult;
+import com.systop.fsmis.model.SmsSend;
 import com.systop.fsmis.model.UrgentCase;
 import com.systop.fsmis.model.UrgentGroup;
 import com.systop.fsmis.model.UrgentResult;
 import com.systop.fsmis.model.UrgentType;
+import com.systop.fsmis.sms.SmsConstants;
 import com.systop.fsmis.sms.SmsSendManager;
 import com.systop.fsmis.sms.util.MobileNumChecker;
 import com.systop.fsmis.urgentcase.UcConstants;
@@ -328,18 +330,26 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
   
   /**
    * 向事件派遣的相关组的负责人发送短信
-   * @param caseId 事件ID
-   * @param countyId 区县ID
+   * @param mobelNum 手机号码
+   * @param content 短信内容
+   * @param county 所属区县
    */
   @Transactional
-  public void sendSms(String mobelNum, String content) {
+  public void sendSms(String mobelNum, String content, Dept county) {
   	String[] nums = new String[]{};
   	if (StringUtils.isNotBlank(mobelNum)) {
   		nums = mobelNum.split(";");
   		for (int i = 0; i < nums.length; i++ ) {
   			if(MobileNumChecker.checkMobilNumberDigit(nums[i])) {
   				logger.info("发送到手机号码：{}, 内容：{}", nums[i], content);
-  				smsSendManager.addMessage(nums[i], content);
+  				SmsSend smsSend = new SmsSend();
+  		    smsSend.setMobileNum(nums[i]);
+  		    smsSend.setContent(content);
+  		    //所属区县
+  		    smsSend.setCounty(county);
+  		    smsSend.setCreateTime(new Date());
+  		    smsSend.setIsNew(SmsConstants.SMS_SMS_SEND_IS_NEW);
+  				smsSendManager.addMessage(smsSend);
   			}
   		}
   	}
