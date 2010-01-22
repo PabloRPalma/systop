@@ -55,6 +55,7 @@ public class FsCaseManager extends BaseGenericsManager<FsCase> {
     smsSend.setName(name);
     smsSend.setMobileNum(moblie);
     smsSend.setContent(content.toString());
+    smsSend.setFsCase(fsCase);
     sesSendManager.addMessage(smsSend);
   }
 
