@@ -32,7 +32,7 @@ public class SmsReceiveManager extends BaseGenericsManager<SmsReceive> {
 	 */
 	@SuppressWarnings("unchecked")
 	public Long getCheckedMsgCountByFscaseId(Integer FscaseId){
-		String hql = "select count(*) from SmsReceive s where s.fsCase.id = ? and  s.isReport = 2";
+		String hql = "select count(*) from SmsReceive s where s.fsCase.id = ? and  s.isVerify = 1";
 		List<Object> result = this.getDao().query(hql, new Object[]{FscaseId});		
 		return (Long)result.get(0);
 	}
