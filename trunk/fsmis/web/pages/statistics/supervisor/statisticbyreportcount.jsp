@@ -23,7 +23,7 @@ function validator(){
 <body>
 <div class="x-panel-header">信息员举报统计</div>
 <div class="x-toolbar">
-<table width="100%" border="0">
+<table width="100%">
 	<tr>
 		<s:form id="supervisorstatistic" action="statisticReportCount.do"
 			method="post" target="main" onsubmit="return validator()">
@@ -60,19 +60,12 @@ function validator(){
 	</tr>
 </table>
 </div>
-<table width="532" align="center">
-		  <tr>
+<table width="100%" style="margin: -5">
+		<tr>
 			<td colspan="4"><%@ include file="/common/messages.jsp"%></td>
-		  </tr>
-		</table>
-<table width="100%">
-	<tr>
-		<td align="left">
-			<div id="flashcontent"><strong>你需要更新你的flash了。</strong></div>
-		</td>
-		<td align="left">
-			<div class="x-panel-body">
-			<div style="margin-left: -3px;" align="center">
+		</tr>
+		<tr>
+		   <td align="left" valign="top">
 			<ec:table
 				items="items" var="item" retrieveRowsCallback="limit" sortRowsCallback="limit"
 				action="statisticReportCount.do" 
@@ -86,26 +79,28 @@ function validator(){
 				resizeColWidth="false" 
 				classic="false" 
 				width="100%" 
-				height="300px"
-				minHeight="300"
+				height="330px"
+				minHeight="330"
 				toolbarContent="pagejump|pagesize|status">
 				<ec:row>
 					<ec:column width="35" property="_No" title="名次" value="${GLOBALROWCOUNT}" style="text-align:center" sortable="false"/>
 					<ec:column width="70" property="name" title="姓名" sortable="false" />
-					<ec:column width="120" property="dept.name" title="所属部门" sortable="false"/>
+					<ec:column width="120" property="dept.name" title="所属单位" sortable="false"/>
 					<ec:column width="60" property="_reportCount" title="举报次数" sortable="false">
 						${fn:length(item.fsCase)}
 					</ec:column>
 				</ec:row>
-			</ec:table></div>
-			</div>
+			</ec:table>
+		</td>
+		<td align="left">
+			<div id="flashcontent"><strong>你需要更新你的flash了。</strong></div>
 		</td>
 	</tr>
 </table>
 
 <script type="text/javascript">
 	// <![CDATA[		
-	var so = new SWFObject("${ctx}/amcharts/amcolumn.swf", "column", "500", "450",
+	var so = new SWFObject("${ctx}/amcharts/amcolumn.swf", "column", "400", "450",
 			"8", "#FFFFFF");
 	so.addVariable("path", "${ctx}/amcharts/");
 	so.addVariable("settings_file",
