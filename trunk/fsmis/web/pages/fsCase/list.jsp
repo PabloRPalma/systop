@@ -108,7 +108,7 @@ function remove(id){
 		<!-- 0未派遣1已派遣2已处理3回退4已核实完成5忽略-->	
 			<c:if test="${empty item.status or item.status eq '0' or item.status eq '3' or item.status eq '5'}">		
 			    <a title="修改事件" href="${ctx}/fscase/edit.do?model.id=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">改 </a> |
-			    <a title="派遣任务" href="#" onclick="showChooseSendTypeWindow(${item.id})">派</a> |
+			    <a title="派遣任务" href="#" onclick="showChooseSendTypeWindow(${item.id},'${item.title}')">派</a> |
 			    <a title="删除任务"href="#" onclick="remove(${item.id})" >删</a> 
 			    <c:if test="${param['isMultipleCase'] eq 0}">
 			     | <font color="silver" >核</font>	
