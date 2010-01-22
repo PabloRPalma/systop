@@ -17,30 +17,27 @@
 </style>
 </head>
 <body>
-<div class="x-panel-header">事件时间统计图</div>
+<div class="x-panel-header">事件派遣环节统计图</div>
 <div class="x-toolbar" style="height:25px;padding:3px;">
 <table width="99%">
   <tr>
     <td>
-      <form id="fscaseStaticForm" action="${ctx}/statistics/fscase/statisticByTime.do" method="post">
+      <form id="fscaseStaticForm" action="${ctx}/statistics/fscase/statisticBySource.do" method="post">
   <table border="0"><tr>
                        <td>  部门:</td>
 				<td><div id="comboxWithTree" class="required"></div>
 				<s:hidden name="deptId" id="deptId"></s:hidden></td>    
-       <td>  &nbsp;时间:
-			<input id="beginDate" type="text" name="beginDate" style="width: 90px"
+      <td>  &nbsp; 时间:
+			<input type="text" name="beginDate" style="width: 90px"
 				value='<s:date name="beginDate" format="yyyy-MM-dd"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"
-				class="Wdate"/>
-					至
-			<input id="endDate" type="text" name="endDate" style="width: 90px"
+				class="Wdate" />
+			至
+			<input type="text" name="endDate" style="width: 90px"
 				value='<s:date name="endDate" format="yyyy-MM-dd"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"
-				class="Wdate" />
-				统计单位:<s:select id="yearOrMonth" list="yearOrMonthMap" cssStyle="width:40px" name="yearOrMonth"/>
-				状态:<s:select id="status" list="statusMap" cssStyle="width:60px" name="status" headerKey="" headerValue="请选择"/>
-      </td>
-      <td> <input type="submit" value="查询" class="button" /></td>
+				class="Wdate" /></td>
+    <td> &nbsp;&nbsp;<input type="submit" value="查询" class="button" /></td>
       </tr></table>     
     </form>
     </td>    
@@ -48,9 +45,10 @@
 </table>
 </div>
 <table width="100%">
-	<tr><td align="left" width="30%">
-		&nbsp;
-		</td>
+	<tr>
+	<td align="left" width="30%">
+	&nbsp;
+	</td>
 		<td align="right" width="70%">
 			<div id="flashcontent"><strong>你需要更新你的flash了。</strong></div>
 		</td>
@@ -59,11 +57,11 @@
 
 <script type="text/javascript">
 	// <![CDATA[		
-	var so = new SWFObject("${ctx}/amcharts/amcolumn.swf", "amcolumn", "650", "550",
-			"10", "#FFFFFF");
+	var so = new SWFObject("${ctx}/amcharts/ampie.swf", "ampie", "645", "550",
+			"8", "#FFFFFF");
 	so.addVariable("path", "${ctx}/amcharts/");
 	so.addVariable("settings_file",
-			encodeURIComponent("${ctx}/pages/statistics/fscase/setting/fsCaseByTime.xml"));
+			encodeURIComponent("${ctx}/pages/statistics/fscase/setting/fsCaseByStatus.xml"));
 	so.addVariable("chart_data", "${csvData}");
 	so.write("flashcontent");
 	// ]]>
