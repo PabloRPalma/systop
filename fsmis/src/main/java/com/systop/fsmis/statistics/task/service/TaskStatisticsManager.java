@@ -77,7 +77,7 @@ public class TaskStatisticsManager extends BaseGenericsManager<Task> {
 				cvsData.append(objs[0] + ";").append(objs[1] + "\\n");
 			}
 		} else {
-			cvsData.append("nothing;").append("0\\n");
+			cvsData.append("无数据;0\\n");
 		}
 		return cvsData.toString();
 	}
