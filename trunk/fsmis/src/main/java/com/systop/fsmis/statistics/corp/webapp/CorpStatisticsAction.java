@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.systop.cms.utils.PageUtil;
+import com.systop.common.modules.dept.DeptConstants;
 import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.dept.service.DeptManager;
 import com.systop.common.modules.security.user.LoginUserService;
@@ -124,18 +125,20 @@ public class CorpStatisticsAction extends
 	}
 	
 	/**
-	 * 按部门统计信息员
+	 * 按部门统计企业
 	 */
 	@SuppressWarnings("unchecked")
 	public String statisticByDept() {
-		StringBuffer hql = new StringBuffer("from Dept where 1=1 ");
-		List args = new ArrayList();
 		// 获取当前用户所属部门
 		Dept dept = loginUserService.getLoginUserDept(getRequest());
 		if (dept == null) {
 			addActionError("获取用户信息失败,请重新登录!");
 			return "statisticbydept";
 		}
+		
+		StringBuffer hql = new StringBuffer("from Dept where 1=1 ");
+		List args = new ArrayList();
+	
 		if (dept != null) {
 			// 非顶级部门
 			if (dept.getParentDept() != null) {
@@ -146,24 +149,19 @@ public class CorpStatisticsAction extends
 					hql.append("and id = ? ");
 					args.add(dept.getId());
 				}
-			} else {// 顶级部门只显示直属部门
-				hql.append("and id = ? ");
+			} else {// 顶级部门显示区县
+				hql.append("and type = ? and parentDept.id = ? ");
+				args.add(DeptConstants.TYPE_COUNTY);
 				args.add(dept.getId());
-				if (dept.getChildDepts().size() > 0) {
-					for (Dept de : dept.getChildDepts()) {
-						hql.append("or id = ? ");
-						args.add(de.getId());
-					}
-				}
 			}
 		}
+		
 		List<Dept> depts = deptManager.query(hql.toString(), args.toArray());
 		// 设置统计数据
 		StringBuffer cvsData = new StringBuffer();
 		if (depts != null && depts.size() > 0) {
 			for (Dept dp : depts) {
-				if (dp.getName() != null && dp.getCorps() != null
-						&& dp.getCorps() .size() > 0) {
+				if (dp.getName() != null) {
 					cvsData.append(dp.getName()).append(";");
 					if (dp.getCorps() != null) {
 						cvsData.append(dp.getCorps().size());
