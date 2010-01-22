@@ -13,13 +13,13 @@ import com.systop.fsmis.model.SmsReceive;
 import com.systop.fsmis.sms.SmsConstants;
 
 /**
- * 短信内容解析工具类
+ * 短信内容解析器
  * 
  * @author WorkShopers
  * 
  */
 @Service
-public class MessagePraseUtil {
+public class MessagePraser {
   private Logger logger = LoggerFactory.getLogger(MessagePraseUtil.class);
   @Autowired
   private FsCaseManager fsCaseManager;
@@ -85,6 +85,7 @@ public class MessagePraseUtil {
         if (content.startsWith(s)) {
           // 取得标示位后的字符串,去掉标示核实短信的字符以后的字符串
           content = content.substring(s.length(), content.length());
+          //举报短信应该是2/B/b 空格   事件id组成,取完标示的字符串1/B/b后根据空格,取得后面的事件id
           if (content.startsWith(" ")) {
             int index = (content.trim()).indexOf(" ");
             if (index > 0) {

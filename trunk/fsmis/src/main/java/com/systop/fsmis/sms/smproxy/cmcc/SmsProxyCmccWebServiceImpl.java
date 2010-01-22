@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.systop.core.util.DateUtil;
@@ -16,6 +17,7 @@ import com.systop.fsmis.sms.SmsConstants;
 import com.systop.fsmis.sms.smproxy.SmsProxy;
 import com.systop.fsmis.sms.smproxy.cmcc.webservice.IfSMSService;
 import com.systop.fsmis.sms.smproxy.cmcc.webservice.IfSMSServiceProxy;
+import com.systop.fsmis.sms.util.MessagePraser;
 
 /**
  * SMSProxy接口实现类<br>
@@ -27,6 +29,8 @@ import com.systop.fsmis.sms.smproxy.cmcc.webservice.IfSMSServiceProxy;
  */
 @Service("smsProxy")
 public class SmsProxyCmccWebServiceImpl implements SmsProxy {
+  @Autowired
+  private MessagePraser messagePraser;
   private static Logger logger = Logger
       .getLogger(SmsProxyCmccWebServiceImpl.class);
 
@@ -90,9 +94,12 @@ public class SmsProxyCmccWebServiceImpl implements SmsProxy {
     SmsReceive smsReceive = null;
     if (!ArrayUtils.isEmpty(receiveStrings)) {
       if (receiveStrings.length == 3) {
+
         smsReceive = new SmsReceive();
         smsReceive.setMobileNum(receiveStrings[0]);
+        receiveStrings[1] = receiveStrings[1].trim();
         smsReceive.setContent(receiveStrings[1]);
+        smsReceive = messagePraser.praseContent(smsReceive);
         try {
           smsReceive.setSendTime(DateUtil
               .convertStringToDate(receiveStrings[2]));
