@@ -35,14 +35,19 @@ public class ReportManager extends BaseGenericsManager<FsCase> {
 	@Transactional
 	public void saveReportInfoOfCase(FsCase fsCase, Task task, 
 			TaskDetail taskDetail, Corp corp, String corpName) {
-		//保存相关处理企业
+		//修改上报事件时，如果企业不为空
 		if (corp != null && corp.getId() != null) {
 			Corp tcorp = getDao().get(Corp.class, corp.getId());
+			//如果页面输入企业名字不为空
 			if (StringUtils.isNotBlank(corpName)) {
+				//页面输入企业的名字跟已经添加了的企业名字相同，则不更改该事件对应的企业。
 				if (corpName.equalsIgnoreCase(tcorp.getName())) {
 					fsCase.setCorp(tcorp);
-				}else{
+				}else{//如果不相同
+					//根据页面输入的名字查找企业
 					Corp oldCorp = getCorpByName(corpName, fsCase.getCounty().getId());
+					//如果该企业存在，则上报事件直接关联该企业，
+					//否则保存新输入的企业信息，然后与上报事件关联.
 					if (oldCorp != null) {
 						fsCase.setCorp(oldCorp);
 					} else {
@@ -55,9 +60,12 @@ public class ReportManager extends BaseGenericsManager<FsCase> {
 			}else{
 				fsCase.setCorp(null);
 			}
-		} else {
+		} else { //新添加上报事件时
 			if (corp != null && StringUtils.isNotBlank(corpName)) {
+				//根据页面输入的名字查找企业
 				Corp oldCorp = getCorpByName(corpName, fsCase.getCounty().getId());
+				//如果该企业存在，则上报事件直接关联该企业，
+				//否则保存新输入的企业信息，然后与上报事件关联.
 				if (oldCorp != null) {
 					fsCase.setCorp(oldCorp);
 				} else {
