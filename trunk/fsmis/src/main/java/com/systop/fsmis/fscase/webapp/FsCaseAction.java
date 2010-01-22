@@ -302,6 +302,7 @@ public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
           supervisorManager.getSupervisorByMobile(smsReceive.getMobileNum())
               .getName());
     }
+    getRequest().setAttribute("isMultipleCase",FsConstants.N);
     smsReceive.setIsNew(SmsConstants.N);
     getManager().getDao().update(smsReceive);
     return edit();
