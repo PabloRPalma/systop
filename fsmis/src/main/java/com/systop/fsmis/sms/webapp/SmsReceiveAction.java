@@ -40,10 +40,10 @@ public class SmsReceiveAction extends ExtJsCrudAction<SmsReceive, SmsReceiveMana
 		StringBuffer hql = new StringBuffer("from SmsReceive sr where 1=1 ");
 		List args = new ArrayList();
 		Dept county = loginUserService.getLoginUserCounty(getRequest());
-		if (county != null) {
+		/*if (county != null) {
 			hql.append(" and sr.county.id = ?");
 			args.add(county.getId());
-		}
+		}*/
 		if (StringUtils.isNotBlank(getModel().getMobileNum())) {
 			hql.append(" and sr.mobileNum like ?");
 			args.add(MatchMode.ANYWHERE.toMatchString(getModel().getMobileNum()));
@@ -75,7 +75,7 @@ public class SmsReceiveAction extends ExtJsCrudAction<SmsReceive, SmsReceiveMana
 	public String checkedMsgIndex(){
 		Integer caseId = getModel().getFsCase().getId();
 		Page page = PageUtil.getPage(getPageNo(),getPageSize());
-		String hql = "from SmsReceive s where s.isReport = 2 and s.fsCase.id = ? order by s.receiveTime desc";
+		String hql = "from SmsReceive s where s.isVerify = 1 and s.fsCase.id = ? order by s.receiveTime desc";
 		getManager().pageQuery(page, hql, new Object[]{caseId});
 		//读取单体事件的短息接收信息
 		items = page.getData();
