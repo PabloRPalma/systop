@@ -88,6 +88,7 @@ public class CorpStatisticsAction extends
 		hql.append("group by cp.id order by count(*) desc");
 
 		page = getManager().pageQuery(page, hql.toString(), args.toArray());
+		items = page.getData();
 		restorePageData(page);
 
 		// 设置统计数据
@@ -115,6 +116,8 @@ public class CorpStatisticsAction extends
 					cvsData.append("\\n");
 				}
 			}
+		}else{
+			cvsData.append("nothing;0\\n");
 		}
 		getRequest().setAttribute("result", cvsData.toString());
 		return "statisticfscasecount";
@@ -168,6 +171,8 @@ public class CorpStatisticsAction extends
 					cvsData.append("\\n");
 				}
 			}
+		}else{
+			cvsData.append("nothing;0\\n");
 		}
 		getRequest().setAttribute("result", cvsData.toString());
 		return "statisticbydept";
