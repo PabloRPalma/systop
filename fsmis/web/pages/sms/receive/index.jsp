@@ -79,7 +79,10 @@
 			<s:else><font color="red">未处理</font></s:else>
 		</ec:column>
 		<ec:column width="100" property="_0" title="操作" style="text-align:center" sortable="false">
+		<%--
 			<a href="${ctx}/fscase/editFsCaseBySmsReceive.do?smsReceiveId=${item.id}">查看</a> |
+		--%>		
+		<a href="${ctx}/smsreceive/view.do?model.id=${item.id}">查看</a> |
 			<c:choose>
 				<c:when test="${item.isReport eq '1'}">
 					<a href="${ctx}/fscase/editFsCaseBySmsReceive.do?smsReceiveId=${item.id}&isMultipleCase=0">处理</a>
