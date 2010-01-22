@@ -304,6 +304,7 @@ public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
     }
     getRequest().setAttribute("isMultipleCase", FsConstants.N);
     smsReceive.setIsNew(SmsConstants.N);
+    smsReceive.setIsTreated(SmsConstants.N);
     smsReceiveManager.save(smsReceive);
     /*//当查看该短信时,置事件的核实判断标识为已核实,具体暂时先这样作,这个逻辑究竟放到哪儿,待沟通后确定并删除此注释....
     getModel().setMsgCheckedFlag(FsConstants.Y);
