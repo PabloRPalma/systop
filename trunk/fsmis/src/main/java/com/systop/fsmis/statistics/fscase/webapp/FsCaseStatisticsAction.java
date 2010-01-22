@@ -63,7 +63,7 @@ public class FsCaseStatisticsAction extends
 		Dept county = loginUserService.getLoginUserCounty(getRequest());
 		if (county != null) {
 			initDateRange();
-			String cvsData = getManager().getFsCaseCounty(beginDate, endDate,status);
+			String cvsData = getManager().getFsCaseCounty(beginDate, endDate, status);
 			getRequest().setAttribute("csvData", cvsData);
 		}
 		return "fsCaseByCounty";
@@ -78,16 +78,11 @@ public class FsCaseStatisticsAction extends
 		Dept county = loginUserService.getLoginUserCounty(getRequest());
 		if (county != null) {
 			initDateRange();
-			String cvsData = getManager().getFsCaseStatus(beginDate, endDate, county,deptId);
+			String cvsData = getManager().getFsCaseStatus(beginDate, endDate, county,
+					deptId);
 			getRequest().setAttribute("csvData", cvsData);
-			//页面回显所选部门
-			if (StringUtils.isNotBlank(deptId)) {
-				Dept dp = deptManager.findObject("from Dept d where d.id=?", Integer
-						.valueOf(deptId));
-				getRequest().setAttribute("deptName", dp.getName());
-			} else {
-				getRequest().setAttribute("deptName", county.getName());
-			}
+			// 页面回显所选部门
+			setDeptName(deptId, county);
 		}
 		return "fsCaseByStatus";
 	}
@@ -120,11 +115,47 @@ public class FsCaseStatisticsAction extends
 			String cvsData = getManager().getFsCaseByType(beginDate, endDate,
 					yearOrMonth, county);
 			getRequest().setAttribute("csvData", cvsData);
-			//准备数据，页面图表下显示各种类别
+			// 准备数据，页面图表下显示各种类别
 			String graph = getManager().getGraph();
 			getRequest().setAttribute("graph", graph);
 		}
 		return "fsCaseByType";
+	}
+
+	/**
+	 * 按事件派遣环节统计
+	 * 
+	 * @return
+	 */
+	public String statisticBySendType() {
+		Dept county = loginUserService.getLoginUserCounty(getRequest());
+		if (county != null) {
+			initDateRange();
+			String cvsData = getManager().getFsCaseSendType(beginDate, endDate,
+					county, deptId);
+			getRequest().setAttribute("csvData", cvsData);
+			// 页面回显所选部门
+			setDeptName(deptId, county);
+		}
+		return "fsCaseBySendType";
+	}
+
+	/**
+	 * 按事件来源统计
+	 * 
+	 * @return
+	 */
+	public String statisticBySource() {
+		Dept county = loginUserService.getLoginUserCounty(getRequest());
+		if (county != null) {
+			initDateRange();
+			String cvsData = getManager().getFsCaseSource(beginDate, endDate,
+					county, deptId);
+			getRequest().setAttribute("csvData", cvsData);
+			// 页面回显所选部门
+			setDeptName(deptId, county);
+		}
+		return "fsCaseBySource";
 	}
 
 	/**
@@ -139,16 +170,26 @@ public class FsCaseStatisticsAction extends
 			String cvsData = getManager().getFsCaseByTime(beginDate, endDate,
 					yearOrMonth, county, status, deptId);
 			getRequest().setAttribute("csvData", cvsData);
-		//页面回显所选部门
-			if (StringUtils.isNotBlank(deptId)) {
-				Dept dp = deptManager.findObject("from Dept d where d.id=?", Integer
-						.valueOf(deptId));
-				getRequest().setAttribute("deptName", dp.getName());
-			} else {
-				getRequest().setAttribute("deptName", county.getName());
-			}
+			// 页面回显所选部门
+			setDeptName(deptId, county);
 		}
 		return "fsCaseByTime";
+	}
+
+	/**
+	 * 设置页面部门名称
+	 * 
+	 * @param deptId
+	 * @param county
+	 */
+	private void setDeptName(String deptId, Dept county) {
+		if (StringUtils.isNotBlank(deptId)) {
+			Dept dp = deptManager.findObject("from Dept d where d.id=?", Integer
+					.valueOf(deptId));
+			getRequest().setAttribute("deptName", dp.getName());
+		} else {
+			getRequest().setAttribute("deptName", county.getName());
+		}
 	}
 
 	/**

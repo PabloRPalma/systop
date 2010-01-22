@@ -20,8 +20,10 @@ import com.systop.core.util.DateUtil;
 import com.systop.core.util.StringUtil;
 import com.systop.fsmis.fscase.CaseConstants;
 import com.systop.fsmis.fscase.casetype.service.CaseTypeManager;
+import com.systop.fsmis.fscase.sendtype.service.SendTypeManager;
 import com.systop.fsmis.model.CaseType;
 import com.systop.fsmis.model.FsCase;
+import com.systop.fsmis.model.SendType;
 import com.systop.fsmis.statistics.StatisticsConstants;
 import com.systop.fsmis.statistics.fscase.util.Util;
 
@@ -40,6 +42,9 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 	/** 事件类别管理 */
 	@Autowired
 	private CaseTypeManager caseTypeManager;
+	/** 事件派遣环节管理 */
+	@Autowired
+	private SendTypeManager sendTypeManager;
 
 	/**
 	 * 按事件状态进行统计
@@ -444,7 +449,8 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 		StringBuffer cvsData = new StringBuffer();
 		for (String year : yearData.keySet()) {
 			ArrayList<Object[]> al = yearData.get(year);
-			cvsData.append(year).append("月;").append(praseString(al, caseTypes)).append("\\n");
+			cvsData.append(year).append("月;").append(praseString(al, caseTypes))
+					.append("\\n");
 		}
 		logger.info("年度月{}", cvsData.toString());
 		return cvsData.toString();
@@ -539,13 +545,13 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 	private String praseString(List<Object[]> result, List<CaseType> caseTypes) {
 		String returnString = "";
 		for (CaseType temp : caseTypes) {
-			String valueString = "0;";
-			for (Object[] o : result) {
-				if (o[2].toString().equals(temp.getId().toString())) {
-					valueString = o[0] + ";";
-					break;
+			String valueString = "0;";		
+				for (Object[] o : result) {
+					if (o[2].toString().equals(temp.getId().toString())) {
+						valueString = o[0] + ";";
+						break;
+					}
 				}
-			}
 			returnString += valueString;
 		}
 		returnString = returnString.substring(0, returnString.length() - 1);
@@ -726,9 +732,10 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 					}
 				}
 			} else {
-				Object[] data = new Object[2];
+				Object[] data = new Object[3];
 				data[0] = 0;
 				data[1] = i;
+				data[2] = "";
 				returnValue.add(data);
 			}
 		}
@@ -864,6 +871,118 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 			}
 		}
 		return month;
+	}
+
+	/**
+	 * 按事件派遣环节统计
+	 * 
+	 * @param beginDate
+	 * @param endDate
+	 * @param county
+	 * @param deptId
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public String getFsCaseSendType(Date beginDate, Date endDate, Dept county,
+			String deptId) {
+		List<Object[]> result = new ArrayList();
+		List<SendType> sts = sendTypeManager.orderSendType();
+		for (SendType st : sts) {
+			StringBuffer sql = new StringBuffer(
+					"select fc.sendType.name,count(fc.id) from FsCase fc where 1=1");
+			List args = new ArrayList();
+			if (deptId == null || deptId.equals("")) {// 未选择部门
+				if (county.getParentDept() != null) {// 不是市级，按当前登录人员所属部门
+					sql.append("and fc.county.id = ? ");
+					args.add(county.getId());
+				}
+			} else {// 选择部门
+				Dept dp = deptManager.findObject("from Dept d where d.id=?", Integer
+						.valueOf(deptId));
+				if (dp.getParentDept() != null) {// 选择部门不是市级
+					sql.append("and fc.county.id = ? ");
+					args.add(Integer.valueOf(deptId));
+				}
+			}
+			sql.append(" and fc.sendType.id =?");
+			args.add(st.getId());
+			sql.append(" and fc.caseTime between ? and ? ");
+			args.add(beginDate);
+			args.add(endDate);
+			List<Object[]> r = getDao().query(sql.toString(), args.toArray());
+			Object[] data = new Object[2];
+			data[0] = st.getName();
+			if (CollectionUtils.isNotEmpty(r)) {
+				data[1] = r.get(0)[1];
+			} else {
+				data[1] = 0;
+			}
+			result.add(data);
+		}
+		StringBuffer cvsData = new StringBuffer();
+		if (CollectionUtils.isNotEmpty(result)) {
+			for (Object[] o : result) {
+				cvsData.append(o[0] + ";").append(o[1] + "\\n");
+			}
+		} else {
+			cvsData.append("nothing;").append("0\\n");
+		}
+		return cvsData.toString();
+	}
+
+	/**
+	 * 按事件信息来源统计
+	 * 
+	 * @param beginDate
+	 * @param endDate
+	 * @param county
+	 * @param deptId
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public String getFsCaseSource(Date beginDate, Date endDate, Dept county,
+			String deptId) {
+		List<Object[]> result = null;
+		StringBuffer sql = new StringBuffer(
+				"select fc.caseSourceType,count(fc.id) from FsCase fc where 1=1");
+		List args = new ArrayList();
+		if (deptId == null || deptId.equals("")) {// 未选择部门
+			if (county.getParentDept() != null) {// 不是市级，按当前登录人员所属部门
+				sql.append("and fc.county.id = ? ");
+				args.add(county.getId());
+			}
+		} else {// 选择部门
+			Dept dp = deptManager.findObject("from Dept d where d.id=?", Integer
+					.valueOf(deptId));
+			if (dp.getParentDept() != null) {// 选择部门不是市级
+				sql.append("and fc.county.id = ? ");
+				args.add(Integer.valueOf(deptId));
+			}
+		}
+		sql.append(" and fc.caseTime between ? and ?  group by fc.caseSourceType");
+		args.add(beginDate);
+		args.add(endDate);
+		result = getDao().query(sql.toString(), args.toArray());
+
+		StringBuffer cvsData = new StringBuffer();
+		if (CollectionUtils.isNotEmpty(result)) {
+			for (Object[] o : result) {
+				// 各状态转化，为页面显示做准备
+				if (o[0].toString().equals(CaseConstants.CASE_SOURCE_TYPE_DEPTREPORT)) {
+					o[0] = "部门上报";
+				}
+				if (o[0].toString().equals(CaseConstants.CASE_SOURCE_TYPE_GENERIC)) {
+					o[0] = "普通";
+				}
+				if (o[0].toString().equals(CaseConstants.CASE_SOURCE_TYPE_JOINTASK)) {
+					o[0] = "联合整治";
+				}
+				cvsData.append(o[0] + ";").append(o[1] + "\\n");
+			}
+		} else {
+			cvsData.append("nothing;").append("0\\n");
+		}
+		return cvsData.toString();
 	}
 
 }
