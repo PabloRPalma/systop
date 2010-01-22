@@ -17,6 +17,7 @@ import com.systop.fsmis.FsConstants;
 import com.systop.fsmis.fscase.CaseConstants;
 import com.systop.fsmis.fscase.task.TaskConstants;
 import com.systop.fsmis.model.FsCase;
+import com.systop.fsmis.model.SendType;
 import com.systop.fsmis.model.Task;
 import com.systop.fsmis.model.TaskAtt;
 import com.systop.fsmis.model.TaskDetail;
@@ -41,7 +42,8 @@ public class TaskManager extends BaseGenericsManager<Task> {
    * @param taskAtts 任务附件实体集合
    */
   @Transactional
-  public void save(Task task, String[] deptIds, List<TaskAtt> taskAtts) {
+  public void save(Task task, String[] deptIds, List<TaskAtt> taskAtts,
+      Integer sendTypeId) {
     Assert.notNull(task);
     Assert.notNull(task.getFsCase());
     Assert.notNull(task.getFsCase().getId());
@@ -53,6 +55,12 @@ public class TaskManager extends BaseGenericsManager<Task> {
     fsCase.setStatus(CaseConstants.CASE_PROCESSING);
     // 事件处理类型为"任务派遣"
     fsCase.setProcessType(CaseConstants.PROCESS_TYPE_TASK);
+    // 如果选择的是既定派遣类型,则设定事件的派遣类型
+    if (sendTypeId != null) {
+      SendType st = getDao().get(SendType.class, sendTypeId);
+      fsCase.setSendType(st);
+    }
+    
     getDao().save(fsCase);
 
     // 设置任务信息,正在处理,并保存
@@ -117,7 +125,7 @@ public class TaskManager extends BaseGenericsManager<Task> {
    * @param dept 任务明细关联的部门,短信的发送依据就是部门
    */
   private void sendTaskMessage(Dept dept) {
-  	//FIXME:这里这么获得用户肯定是不行的,要获得短信接收人员.郭红亮2010-01-18 
+    // FIXME:这里这么获得用户肯定是不行的,要获得短信接收人员.郭红亮2010-01-18
     Set<User> users = dept.getUsers();
     StringBuffer buf = new StringBuffer();
     buf.append(dept.getName()).append(",你部门现有一条待处理任务,请及时登录系统处理.");
