@@ -124,7 +124,7 @@ public class SupervisorStatisticsAction extends
 				}
 			}
 		}else{
-			cvsData.append("nothing;0\\n");
+			cvsData.append("无数据;0\\n");
 		}
 		getRequest().setAttribute("result", cvsData.toString());
 		return "statisticreportcount";
@@ -184,7 +184,7 @@ public class SupervisorStatisticsAction extends
 				cvsData.append("\\n");
 			}
 		}else{
-			cvsData.append("nothing;0\\n");
+			cvsData.append("无数据;0\\n");
 		}
 		getRequest().setAttribute("result", cvsData.toString());
 		return "statisticbydept";
