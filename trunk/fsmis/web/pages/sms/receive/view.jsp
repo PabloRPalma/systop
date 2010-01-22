@@ -28,7 +28,7 @@
 	</tr>
 	<tr>
 		<td>内容</td>
-		<td>${model.content }</td>
+		<td><div style="overflow: auto;">${model.content }</div></td>
 	</tr>
 </table>
 </fieldset>
