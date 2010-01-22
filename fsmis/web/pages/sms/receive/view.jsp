@@ -10,6 +10,15 @@
 <body>
 <div class="x-panel">
 <div class="x-panel-header">短信信息</div>
+<div class="x-toolbar">
+    <table width="100%">
+      <tr>
+        <td align="right">
+          <a href="${ctx}/smsreceive/index.do">接收短信列表</a>
+        </td>
+      </tr>
+    </table>
+</div>
 <div class="x-panel-body">
 <fieldset style="margin: 30px;"><legend>短信信息</legend>
 <table width="100%">
