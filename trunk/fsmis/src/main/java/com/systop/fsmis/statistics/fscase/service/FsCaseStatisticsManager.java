@@ -175,7 +175,7 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 				}
 			}
 		} else {
-			dataString = "nothing;0\\n";
+			dataString = getByYear(beginDate, county);
 		}
 
 		return dataString;
