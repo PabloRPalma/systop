@@ -65,9 +65,8 @@ public class FsCaseManager extends BaseGenericsManager<FsCase> {
    */
   @SuppressWarnings("unchecked")
   public List<SmsReceive> getVerifySms(Dept county) {
-    String hql = "from SmsReceive sr where sr.county.id = ? and sr.isVerify = ? and sr.isNew = ?";
-    return getDao().query(hql,
-        new Object[] { county.getId(), FsConstants.Y, FsConstants.Y });
+    String hql = "from SmsReceive sr where  sr.isVerify = ? and sr.isNew = ?";
+    return getDao().query(hql, new Object[] { FsConstants.Y, FsConstants.Y });
   }
 
   /**
@@ -77,8 +76,7 @@ public class FsCaseManager extends BaseGenericsManager<FsCase> {
    */
   @SuppressWarnings("unchecked")
   public List<SmsReceive> getReportSms(Dept county) {
-    String hql = "from SmsReceive sr where sr.county.id = ? and sr.isReport = ? and sr.isNew = ?";
-    return getDao().query(hql,
-        new Object[] { county.getId(), FsConstants.Y, FsConstants.Y });
+    String hql = "from SmsReceive sr where sr.isReport = ? and sr.isNew = ?";
+    return getDao().query(hql, new Object[] { FsConstants.Y, FsConstants.Y });
   }
 }
