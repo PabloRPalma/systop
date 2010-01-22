@@ -59,19 +59,12 @@ function validator(){
 	</tr>
 </table>
 </div>
-<table width="532" align="center">
-		  <tr>
-			<td colspan="4"><%@ include file="/common/messages.jsp"%></td>
-		  </tr>
-		</table>
-<table width="100%">
+<table width="100%" style="margin: -5">
 	<tr>
-		<td align="left">
-			<div id="flashcontent"><strong>你需要更新你的flash了。</strong></div>
-		</td>
-		<td align="left">
-			<div class="x-panel-body">
-			<div style="margin-left: -3px;" align="center">
+		<td colspan="4"><%@ include file="/common/messages.jsp"%></td>
+	</tr>
+	<tr>
+		<td align="left" valign="top">
 			<ec:table
 				items="items" var="item" retrieveRowsCallback="limit" sortRowsCallback="limit"
 				action="statisticFsCaseCount.do" 
@@ -85,8 +78,8 @@ function validator(){
 				resizeColWidth="false" 
 				classic="false" 
 				width="100%" 
-				height="300px"
-				minHeight="300"
+				height="330px"
+				minHeight="330"
 				toolbarContent="pagejump|pagesize|status">
 				<ec:row>
 					<ec:column width="35" property="_No" title="No." value="${GLOBALROWCOUNT}" style="text-align:center" sortable="false"/>
@@ -100,15 +93,17 @@ function validator(){
 						</c:forEach>
 					</ec:column>
 				</ec:row>
-			</ec:table></div>
-			</div>
+			</ec:table>
+		</td>
+		<td align="left">
+			<div id="flashcontent"><strong>你需要更新你的flash了。</strong></div>
 		</td>
 	</tr>
 </table>
 
 <script type="text/javascript">
 	// <![CDATA[		
-	var so = new SWFObject("${ctx}/amcharts/amcolumn.swf", "column", "500", "450",
+	var so = new SWFObject("${ctx}/amcharts/amcolumn.swf", "column", "400", "450",
 			"8", "#FFFFFF");
 	so.addVariable("path", "${ctx}/amcharts/");
 	so.addVariable("settings_file",
