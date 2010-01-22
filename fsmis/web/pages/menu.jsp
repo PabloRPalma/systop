@@ -95,6 +95,14 @@
 		</div>
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/statistics/fscase/statisticBySendType.do" target="main">事件派遣环节统计</a>
+		</div>
+		<div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/statistics/fscase/statisticBySource.do" target="main">事件来源统计</a>
+		</div>
+		<div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/statistics/fscase/statisticByTime.do" target="main">事件统计</a>
 		</div>
 		<div style="padding-top:2px">
