@@ -110,7 +110,7 @@
 			<%@include file="viewTasks.jsp"%>
 		</div>
 		</c:if>
-		<div id="sms" class="x-hide-display" style="width: 100%;">
+		<div id="sms" class="x-hide-display" style="width: 100%; margin: -1;">
 		<%@include file="viewSmsGrid.jsp" %>
 		</div>
 		<c:if test="${not empty model.corp}">
