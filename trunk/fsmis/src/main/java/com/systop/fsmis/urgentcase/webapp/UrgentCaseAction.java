@@ -311,7 +311,7 @@ public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseMana
 		Dept county = loginUserService.getLoginUserCounty(getRequest());
 		if (county != null) {
 			logger.info("手机号码字符串：{}，内容：{}", mobelNums, smsContent);
-			getManager().sendSms(mobelNums, smsContent);
+			getManager().sendSms(mobelNums, smsContent, county);
 		}
 		
 		return SUCCESS;
