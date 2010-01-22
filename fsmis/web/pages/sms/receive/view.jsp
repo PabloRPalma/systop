@@ -13,8 +13,23 @@
 <div class="x-panel-body">
 <fieldset style="margin: 30px;"><legend>短信信息</legend>
 <table width="100%">
-	<tr><td></td></tr>
-	
+	<tr>
+		<td>接收手机号</td>
+		<td>${model.mobileNum }</td>
+	</tr>
+	<tr>
+		<td>发送时间</td>
+		<td><s:date name="model.sendTime" format="yyyy-MM-dd HH:mm" /></td>
+	</tr>
+	<tr>
+		<td>接收时间</td>
+		<td><s:date name="model.receiveTime" format="yyyy-MM-dd HH:mm" />
+		</td>
+	</tr>
+	<tr>
+		<td>内容</td>
+		<td>${model.content }</td>
+	</tr>
 </table>
 </fieldset>
 </div>
