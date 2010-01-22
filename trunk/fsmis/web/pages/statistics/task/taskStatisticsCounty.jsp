@@ -25,6 +25,7 @@
 				value='<s:date name="endDate" format="yyyy-MM-dd"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"
 				class="Wdate" />
+				&nbsp;状态:<s:select id="status" list="statusMap" cssStyle="width:60px" name="status" headerKey="" headerValue="请选择"/>
       <input type="submit" value="查询" class="button" />      
     </form>
     </td>    
