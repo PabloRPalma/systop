@@ -60,6 +60,6 @@ public interface SmsProxy {
 	 * @return
 	 * @throws ApplicationException
 	 */
-	List<String> querySmsSendState() throws Exception;
+	void querySmsSendState(SmsSend smsSend) throws Exception;
 
 }

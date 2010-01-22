@@ -49,10 +49,12 @@ public class SmsManager {
    * 接收短信方法
    */
   public void receiveMessages() throws Exception {
-    logger.debug("SmsManager.receiveMessages()");
+    logger.info("SmsManager.receiveMessages()");
     try {
       SmsReceive smsReceive = smsProxy.receiveMessage();
-      smsReceiveManager.save(smsReceive);
+      if (smsReceive != null) {
+        smsReceiveManager.save(smsReceive);
+      }
     } catch (Exception ex) {
       logger.error("SmsManager.receiveMessages()Error:{}", ex.getMessage());
       throw ex;
@@ -63,7 +65,7 @@ public class SmsManager {
    * 发送短信方法
    */
   public void sendMessages() throws Exception {
-    logger.debug("SmsManager.sendMessages()");
+    logger.info("SmsManager.sendMessages()");
     // 得到数据库中需要发送的短信列表
     List<SmsSend> smsSendList = smsSendManager.getNewSmsSends();
     // 遍历列表
@@ -76,13 +78,13 @@ public class SmsManager {
               .getMobileNum());
         } else {
           try {
-            // 调用代理的发送功能,state变量在mas端用于标示是否发送成功,但在这里暂时没有用到
-            @SuppressWarnings("unused")
+            // 调用代理的发送功能,如果发送成功,则会得到该短信在Mas中的id
             int state = smsProxy.sendMessage(smsSend);
 
             // 更新数据库中短信的状态,不为新短信,短信发送时间
             smsSend.setIsNew(SmsConstants.SMS_SMS_SEND_IS_NOT_NEW);
             smsSend.setSendTime(new Date());
+            smsSend.setMasid(state);
             smsSendManager.update(smsSend);
 
           } catch (Exception ex) {
@@ -93,4 +95,26 @@ public class SmsManager {
       }
     }
   }
+
+  /**
+   * 得到已发送短信的接收状态
+   */
+  public void checkSmsSendState() throws Exception {
+    logger.info("SmsManager.checkSmsSendState()");
+    // 得到已经发送到Mas机的短信集合
+    List<SmsSend> smsSends = smsSendManager.getSendedSmsSends();
+    for (SmsSend smsSend : smsSends) {
+      if (smsSend != null) {
+        try {
+          smsProxy.querySmsSendState(smsSend);
+          smsSendManager.update(smsSend);
+        } catch (Exception ex) {
+          logger.error("SmsManager.checkSmsSendState()Error:{}", ex
+              .getMessage());
+          throw ex;
+        }
+      }
+    }
+  }
+
 }
