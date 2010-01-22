@@ -45,7 +45,7 @@
 		</table>
 <table width="100%">
 	<tr>
-		<td align="left">
+		<td align="center">
 			<div id="flashcontent"><strong>你需要更新你的flash了。</strong></div>
 		</td>
 	</tr>
