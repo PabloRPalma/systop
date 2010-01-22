@@ -56,12 +56,7 @@ ChooseSendTypeWindow.selectOtherType = function(){
 					</td>
 				</tr>
 			</c:forEach>
-			<tr><td>&nbsp;</td></tr>
-			<tr>
-		<td>
-			<input type="button" value="其他派遣" onclick="ChooseSendTypeWindow.selectOtherType()"	style="width:555px; height:35px; border: 0px; background-image: url(${ctx}/images/choosesendtype/01.gif);font-size:16px;color:#000" />
-		</td>
-		</tr>
+			<tr><td>&nbsp;</td></tr>			
 		</table>
 		</td>
 </table>

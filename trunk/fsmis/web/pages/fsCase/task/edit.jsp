@@ -43,6 +43,7 @@ function deleAtt(id) {
 	id="taskForm">
 	<input type="hidden" name="model.fsCase.id" value="${model.fsCase.id}"></input>
 	<input type="hidden" name="modelId" value="${param['modelId'] }"></input>
+	<s:hidden name="sendTypeId"></s:hidden>
 	<input type="hidden" name="isMultipleCase" value="${isMultipleCase}"></input>
 	<s:hidden name="model.id"></s:hidden>
 	<s:hidden name="isMultiple"></s:hidden>
