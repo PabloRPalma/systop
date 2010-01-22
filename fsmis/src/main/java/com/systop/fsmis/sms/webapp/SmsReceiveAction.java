@@ -16,6 +16,7 @@ import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.core.dao.support.Page;
 import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
 import com.systop.fsmis.model.SmsReceive;
+import com.systop.fsmis.sms.SmsConstants;
 import com.systop.fsmis.sms.SmsReceiveManager;
 
 /**
@@ -67,7 +68,15 @@ public class SmsReceiveAction extends ExtJsCrudAction<SmsReceive, SmsReceiveMana
 		
 		return INDEX;
 	}
-	
+	/**
+	 * 查看短信方法,更改短信的isNew状态为"0",即"已读",不是新短信
+	 */
+	public String view(){
+	  getModel().setIsNew(SmsConstants.N);
+	  getManager().save(getModel());
+	  
+	  return VIEW;
+	}
 	/**
 	 * 根据事件编号查询反馈消息
 	 * 
