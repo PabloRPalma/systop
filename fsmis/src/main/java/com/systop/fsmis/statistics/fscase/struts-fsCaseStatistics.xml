@@ -9,7 +9,9 @@
 			<result name="fsCaseByCounty">/pages/statistics/fscase/fsCaseByCounty.jsp</result>	
 			<result name="fsCaseNum">/pages/statistics/fscase/fsCaseNum.jsp</result>	
 			<result name="fsCaseByType">/pages/statistics/fscase/fsCaseByType.jsp</result>
-			<result name="fsCaseByTime">/pages/statistics/fscase/fsCaseByTime.jsp</result>							
+			<result name="fsCaseByTime">/pages/statistics/fscase/fsCaseByTime.jsp</result>
+			<result name="fsCaseBySendType">/pages/statistics/fscase/fsCaseBySendType.jsp</result>	
+			<result name="fsCaseBySource">/pages/statistics/fscase/fsCaseBySource.jsp</result>						
 		</action>
 	</package>
 </struts>
