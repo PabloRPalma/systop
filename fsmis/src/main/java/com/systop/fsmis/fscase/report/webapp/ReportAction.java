@@ -1,7 +1,6 @@
 package com.systop.fsmis.fscase.report.webapp;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -127,7 +126,6 @@ public class ReportAction extends ExtJsCrudAction<FsCase, ReportManager> {
 			taskDetail.setDept(dept);
 			//事件所属区县
 			getModel().setCounty(county);
-			//getModel().getCorp().setDept(county);
 			//上报部门
 			getModel().setReportDept(dept);
 			//事件状态为‘以核实’
@@ -223,7 +221,6 @@ public class ReportAction extends ExtJsCrudAction<FsCase, ReportManager> {
    * 用于显示事件类型_二级
    */
   public String getLevelTwo() {
-    typeRst = Collections.EMPTY_LIST;
     typeRst = caseTypeManager.getLevelTwoList(Integer.valueOf(typeId));
     return "jsonRst";
   }
