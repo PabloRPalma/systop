@@ -21,7 +21,6 @@ import com.opensymphony.xwork2.util.ArrayUtils;
 import com.systop.cms.utils.PageUtil;
 import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.core.dao.support.Page;
-import com.systop.core.util.StringUtil;
 import com.systop.core.webapp.struts2.action.DefaultCrudAction;
 import com.systop.core.webapp.upload.UpLoadUtil;
 import com.systop.fsmis.FsConstants;
@@ -86,12 +85,6 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
     Assert.notNull(getModel().getFsCase().getId());
     Assert.notEmpty(deptIds);
     getModel().setDispatchTime(new Date());// 设定派遣时间
-    //得到客户端传递的派遣类型id(有可能为null,即"其他派遣类型")
-    String sendTypeStr = getRequest().getParameter("sendTypeId");
-    Integer sendTypeId = null;
-    if(StringUtils.isNotBlank(sendTypeStr)){
-      sendTypeId = Integer.parseInt(sendTypeStr);
-    }
     // 将附件信息集合保存到任务附件实体集合中1.完成文件的上传 2.将上传文件路径信息保存到任务附件实体中
     List<TaskAtt> taskAtts = new ArrayList<TaskAtt>(); // 任务附件实体集合
     // 遍历文件数组,完成各个文件的上传并将文件路径信息保存到任务附件实体中
@@ -117,7 +110,7 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
         }
       }
     }
-    getManager().save(getModel(), deptIds, taskAtts,sendTypeId);
+    getManager().save(getModel(), deptIds, taskAtts, sendTypeId);
     return SUCCESS;
   }
 
@@ -306,14 +299,6 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
     this.caseId = caseId;
   }
 
-  public Integer getSendTypeId() {
-    return sendTypeId;
-  }
-
-  public void setSendTypeId(Integer sendTypeId) {
-    this.sendTypeId = sendTypeId;
-  }
-
   public Date getTaskBeginTime() {
     return taskBeginTime;
   }
@@ -352,6 +337,14 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
 
   public void setDeptIds(String[] deptIds) {
     this.deptIds = deptIds;
+  }
+
+  public Integer getSendTypeId() {
+    return sendTypeId;
+  }
+
+  public void setSendTypeId(Integer sendTypeId) {
+    this.sendTypeId = sendTypeId;
   }
 
 }
