@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.xwork.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,7 +51,7 @@ public class TaskStatisticsManager extends BaseGenericsManager<Task> {
 			args.add(county.getId());
 		}
 		if(beginDate != null && endDate != null){
-			sql.append(" and ts.closedTime between ? and ? ");
+			sql.append(" and ts.dispatchTime between ? and ? ");
 			args.add(beginDate);
 			args.add(endDate);
 		}
@@ -67,8 +68,7 @@ public class TaskStatisticsManager extends BaseGenericsManager<Task> {
 				if (objs[0].toString().equals(TaskConstants.TASK_PROCESSING)) {
 					objs[0] = "处理中";
 				}
-				if (objs[0].toString().equals(
-						TaskConstants.TASK_UPLOAD_ALLOWED_FILE_SIZE)) {
+				if (objs[0].toString().equals(TaskConstants.TASK_UN_RECEIVE)) {
 					objs[0] = "未接收";
 				}
 				if (objs[0].toString().equals(TaskConstants.TASK_RETURNED)) {
@@ -90,7 +90,7 @@ public class TaskStatisticsManager extends BaseGenericsManager<Task> {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public String getTaskCountyStatistic(Date beginDate, Date endDate) {
+	public String getTaskCountyStatistic(Date beginDate, Date endDate ,String status) {
 		StringBuffer cvsData = new StringBuffer();
 		
 		//获取顶级部门
@@ -106,11 +106,16 @@ public class TaskStatisticsManager extends BaseGenericsManager<Task> {
 			List args = new ArrayList();
 			//设置按时间查询条件
 			if(beginDate != null && endDate != null){
-				hql.append(" and ts.closedTime between ? and ?  ");
+				hql.append(" and ts.dispatchTime between ? and ?  ");
 				args.add(beginDate);
 				args.add(endDate);
 			}
-			hql.append("and ts.fsCase.county.id=? ");
+		//设置按状态查询条件
+			if(status != null && StringUtils.isNotBlank(status)){
+				hql.append(" and ts.status = ?");
+				args.add(status);
+			}
+			hql.append(" and ts.fsCase.county.id=? ");
 			args.add(Integer.valueOf(dp.getId()));
 			hql.append("group by ts.fsCase.county.id ");
 			List<Object[]> result = getDao().query(hql.toString(), args.toArray());
