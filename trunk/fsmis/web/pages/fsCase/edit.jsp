@@ -130,10 +130,10 @@
 		
 		<tr>
 			<td align="right">事发时间：</td>
-			<td align="left"><input type="text" name="model.caseTime"  style="width: 160px" class="required"
-				value='<s:date name="model.caseTime" format="yyyy-MM-dd HH:mm:ss"/>'
-				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})"
-				class="Wdate" /><font color="red">&nbsp;*</font></td>
+			<td align="left"><input type="text" name="model.caseTime"  style="width: 160px" 
+				value='<s:date name="model.caseTime" format="yyyy-MM-dd HH:mm"/>'
+				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
+				class="Wdate required" /><font color="red">&nbsp;*</font></td>
 		</tr>
 		<tr>
 			<td align="right">事发地点：</td>
