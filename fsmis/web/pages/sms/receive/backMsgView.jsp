@@ -33,7 +33,7 @@
 		</ec:column>
 		<ec:column width="80" property="_option" title="操作" style="text-align:center">
 			<a href="view.do?model.id=${item.id}" target="_blank">
-				<img src="${ctx}/images/icons/zoom.gif"  title="查看"/>
+				查看
 			</a>
 		</ec:column>
 	</ec:row>
