@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 
 import com.systop.cms.utils.PageUtil;
 import com.systop.core.dao.support.Page;
-import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
+import com.systop.core.webapp.struts2.action.DefaultCrudAction;
 import com.systop.fsmis.fscase.CaseConstants;
 import com.systop.fsmis.fscase.gather.conf.service.GatherConfigerManager;
 import com.systop.fsmis.model.GatherConfiger;
@@ -23,7 +23,7 @@ import com.systop.fsmis.model.GatherConfiger;
 @SuppressWarnings("serial")
 @Controller
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-public class GatherConfigerAction extends ExtJsCrudAction<GatherConfiger, GatherConfigerManager> {
+public class GatherConfigerAction extends DefaultCrudAction<GatherConfiger, GatherConfigerManager> {
 
 	/**
 	 * 查询配置信息列表
