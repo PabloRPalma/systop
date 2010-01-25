@@ -327,7 +327,6 @@
 				sanitationLicense.readOnly = 'isReadOnly';
 				operateDetails.readOnly = 'isReadOnly';
 			}else{
-				document.getElementById('corpId').value = '';
 				document.getElementById('companyAddress').value = '';
 				document.getElementById('legalPerson').value = '';
 				document.getElementById('produceLicense').value = '';
