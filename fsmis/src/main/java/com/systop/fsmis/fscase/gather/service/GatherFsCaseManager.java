@@ -111,8 +111,8 @@ public class GatherFsCaseManager extends BaseGenericsManager<FsCase> {
 				aMFCase.setCaseTime(fsCityList.get(0).getCaseTime());
 				aMFCase.setIsSubmited(FsConstants.N);
 				aMFCase.setStatus(CaseConstants.CASE_UN_RESOLVE);
-				aMFCase.setTitle(fsCaseCityCount - oldCaseCount + " 个单体事件" + "根据关键字" + "'"
-						+ configerCity.getKeyWord() + "'" + "自动汇总成 "
+				aMFCase.setTitle(fsCaseCityCount - oldCaseCount + " 个单体事件" + "根据关键字" + " "
+						+ configerCity.getKeyWord() + " " + "自动汇总成 "
 						+ city.getName() + " 多体事件");
 				getDao().save(aMFCase);
 			}
@@ -179,8 +179,8 @@ public class GatherFsCaseManager extends BaseGenericsManager<FsCase> {
 				cMFCase.setCaseTime(fsList.get(0).getCaseTime());
 				cMFCase.setIsSubmited(FsConstants.N);
 				cMFCase.setStatus(CaseConstants.CASE_UN_RESOLVE);
-				cMFCase.setTitle(fsCaseCount - oldCaseCount + "个单体事件" + "根据关键字" + "'"
-						+ configer.getKeyWord() + "'" + "自动汇总成 "
+				cMFCase.setTitle(fsCaseCount - oldCaseCount + "个单体事件" + "根据关键字" + " "
+						+ configer.getKeyWord() + " " + "自动汇总成 "
 						+ cMFCase.getCounty().getName() + " 多体事件");
 				getDao().save(cMFCase);
 			}
