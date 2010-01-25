@@ -103,7 +103,6 @@ public class ReportAction extends ExtJsCrudAction<FsCase, ReportManager> {
 			args.add(endTime);
 		}
 		hql.append(" order by fc.caseTime desc");
-		logger.info("执行查询：{}", hql.toString());
 		page = getManager().pageQuery(page, hql.toString(), args.toArray());
 		restorePageData(page);
 		
@@ -120,6 +119,7 @@ public class ReportAction extends ExtJsCrudAction<FsCase, ReportManager> {
 			Dept dept = loginUserService.getLoginUserDept(getRequest());
 			if (county == null || dept == null) {
 				addActionError("您所在的区县或部门为空...");
+				getRequest().setAttribute("levelone", getLevelOne());
 				return INPUT;
 			}
 			//任务所属部门
@@ -146,6 +146,7 @@ public class ReportAction extends ExtJsCrudAction<FsCase, ReportManager> {
 			return SUCCESS;
 		} catch (Exception e) {
 			addActionError(e.getMessage());
+			getRequest().setAttribute("levelone", getLevelOne());
 			return INPUT;
 		}
 	}
