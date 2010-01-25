@@ -83,6 +83,11 @@
 					border : false,
 					iconCls : 'cms'
 				},{
+					title : '<span class="title">配置管理</span>',
+					html : document.getElementById('configer').innerHTML,
+					border : false,
+					iconCls : 'cms'
+				},{
 					title : '<span class="title">网站管理</span>',
 					html : document.getElementById('cms').innerHTML,
 					border : false,
