@@ -30,10 +30,22 @@
              	<s:textfield id="name" name="model.keyWord" cssClass="required" cssStyle="width:300px"/><font color="red">&nbsp;*</font>
              </td>
           </tr>
+          <tr>
+             <td align="right" width="90"> </td>
+             <td align="left" width="300">
+             	<font color="red">关键字：汇总生成多体事件的单列事件标题所包含的内容；输入多个关键字时，每个关键字间需要用","隔开</font>
+             </td>
+          </tr>
            <tr>
              <td align="right" width="90">记录数：</td>
              <td align="left" width="300">
              	<s:textfield id="records" name="model.records" cssStyle="width:300px" cssClass="digits"/><font color="red">&nbsp;*</font>
+             </td>
+          </tr>
+             <tr>
+             <td align="right" width="90"> </td>
+             <td align="left" width="300">
+             	<font color="red">记录数：汇总生成多体事件的单列事件个数；相同区县及事件类别的单列事件个数，等于或者大于此数时，汇总生成一起多体事件。</font>
              </td>
           </tr>
           <tr>
@@ -42,7 +54,12 @@
              	<s:textfield id="days" name="model.days" cssStyle="width:300px;" cssClass="digits"/><font color="red">&nbsp;*</font>
              </td>
           </tr>
-          
+             <tr>
+             <td align="right" width="90"> </td>
+             <td align="left" width="300">
+             	<font color="red">天数：从当前时间往前推算的天数；汇总单体事件的一个时间段。</font>
+             </td>
+          </tr>
         </table> 
     </fieldset>
     <table width="510px" style="margin-bottom:10px;">
