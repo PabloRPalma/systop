@@ -97,6 +97,7 @@ public class CorpAction extends ExtJsCrudAction<Corp, CorpManager> {
 						getModel().getDept().getId());
 			}
 			getModel().setDept(dept);
+			getManager().getDao().clear();
 			getManager().save(getModel());
 			return SUCCESS;
 		} catch (Exception e) {
