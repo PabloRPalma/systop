@@ -24,8 +24,7 @@ function result(id, jointTaskId){
 		data: {jointTaskId : jointTaskId},
 		success: function(rst, textStatus){
 	  		if(rst.result != null){
-	  		   Ext.my().msg('', rst.result + '还没有查看任务，不能进行任务处理！');		
-		  	   //alert(rst.result + "还没有查看任务，不能进行任务处理！");	    	  		
+	  		  Ext.Msg.alert('', rst.result + '还没有查看任务，不能进行任务处理！');		   	  		
 	  	  	}else{
 	  	  	  window.location.href='${ctx}/jointTask/deptTaskDetail/result.do?model.id=' + id;
 	  	  	}
