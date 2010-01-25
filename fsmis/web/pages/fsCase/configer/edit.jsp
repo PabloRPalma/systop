@@ -21,7 +21,7 @@
           <tr>
              <td align="right" width="90">级别：</td>
              <td align="left" width="300">
-             	<s:select id="level" name="model.level" listKey="key" listValue="value" list="levelMap" headerKey="" headerValue="请选择配置级别" cssStyle="width:300px;height:150px"/>
+             	<s:select id="level" name="model.level" listKey="key" listValue="value" list="levelMap" headerKey="" headerValue="请选择配置级别" cssStyle="width:300px"/>
              </td>
           </tr>
           <tr>
