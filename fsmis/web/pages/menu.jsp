@@ -190,9 +190,13 @@
 				<img src="${ctx}/images/icons/add.gif" class="icon">
 				<a href="${ctx}/office/message/received.do" target="main">内部消息</a>
 			</div>
-			<div style="padding-top:2px">
+		</div>
+	</div>
+	<div id="configer">
+		<div style="padding-left:5px;">
+			  <div style="padding-top:2px">
 				<img src="${ctx}/images/icons/add.gif" class="icon">
-				<a href="${ctx}/configuration/index.do" target="main">多体事件汇总配置管理</a>
+				<a href="${ctx}/configuration/index.do" target="main">多体事件汇总配置</a>
 			</div>
 		</div>
 	</div>
