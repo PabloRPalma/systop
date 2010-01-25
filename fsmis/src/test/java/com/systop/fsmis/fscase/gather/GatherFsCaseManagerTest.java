@@ -104,27 +104,17 @@ public class GatherFsCaseManagerTest extends BaseTransactionalTestCase {
 			fsCase.setCounty(qd);
 			fsCaseManager.save(fsCase);
 		}*/
-		String init = "from FsCase f ";
-		List<FsCase> l = fsCaseManager.query(init);
-		Integer a = l.size() + 7;
 		String hql = "from FsCase f where f.status = ?";
-		List<FsCase> list = fsCaseManager.query(hql, CaseConstants.CASE_PROCESSING);
-		assertEquals(a.toString(), list.size());
+		List<FsCase> list = fsCaseManager.query(hql, CaseConstants.CASE_PROCESSED);
+		
 		for(FsCase fs : list) {
 			fs.setStatus(CaseConstants.CASE_CLOSED);
 			fsCaseManager.save(fs);
+			logger.info("状态: {} 时间：{}", fs.getStatus(), fs.getCaseTime());
 			gatherFsCaseManager.gatherFscase(fs.getCaseType().getId(), fs.getCounty());
 		}
-		String mInit = "from FsCase f where f.isMultiple = ?";
-		List<FsCase> m = fsCaseManager.query(mInit, FsConstants.Y);
-		Integer b = m.size() + 1;
 		String mHql = "from FsCase f where f.isMultiple = ?";
 		List<FsCase> mList = fsCaseManager.query(mHql, FsConstants.Y);
-		assertEquals(b.toString(), mList.size());
-		
-		
-		
-		
-		
+		assertEquals(1, mList.size());
 	}
 }
