@@ -7,8 +7,6 @@
 <%@include file="/common/ec.jsp" %>
 <%@include file="/common/autocomplete.jsp"%>
 <title>联合任务管理</title>
-<%@include file="/common/meta.jsp"%>
-<%@include file="/common/ec.jsp"%>
 <script type="text/javascript">
 </script>
 </head>

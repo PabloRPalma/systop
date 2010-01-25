@@ -5,13 +5,12 @@
 <head>
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/ec.jsp" %>
+<%@include file="/common/extjs.jsp"%>
 <%@include file="/common/autocomplete.jsp"%>
 <script type="text/javascript">
 
 </script>
 <title>联合整治管理</title>
-<%@include file="/common/meta.jsp"%>
-<%@include file="/common/ec.jsp"%>
 <script type="text/javascript">
 function view(id){
 	window.location.href="${ctx}/jointTask/deptTaskDetail/view.do?model.id=" + id;
@@ -25,7 +24,8 @@ function result(id, jointTaskId){
 		data: {jointTaskId : jointTaskId},
 		success: function(rst, textStatus){
 	  		if(rst.result != null){
-		  	   alert(rst.result + "还没有查看任务，不能进行任务处理！");	    	  		
+	  		   Ext.my().msg('', rst.result + '还没有查看任务，不能进行任务处理！');		
+		  	   //alert(rst.result + "还没有查看任务，不能进行任务处理！");	    	  		
 	  	  	}else{
 	  	  	  window.location.href='${ctx}/jointTask/deptTaskDetail/result.do?model.id=' + id;
 	  	  	}
