@@ -178,7 +178,6 @@
 <div id="traffic" class="x-hide-display">
 	<table id="mytable" style="margin-top: 5px; width: 800px"
 		align="center">
-	  <s:hidden id="corpId" name="corp.id" />
 		<tr>
 			<td width="151" align="right" height="26">单位名称：</td>
 			<td width="637" align="left"><s:textfield id="companyName" onblur="compCorpInfo(this.value)"
@@ -313,7 +312,6 @@
 			var sanitationLicense = document.getElementById('sanitationLicense');
 			var operateDetails = document.getElementById('operateDetails');
 			if (rst.id != null) {
-				document.getElementById('corpId').value = rst.id;
 				companyAddress.value = rst.address;
 				legalPerson.value = rst.legalPerson;
 				produceLicense.value = rst.produceLicense;
