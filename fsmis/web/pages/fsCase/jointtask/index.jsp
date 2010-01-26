@@ -91,35 +91,36 @@ function removeJointTask(eID){
 		<ec:column width="70" property="status"  title="任务状态" style="text-align:center" >
 		  <c:if test="${item.status == '0'}"><font color="red">待审核</font></c:if>
 		  <c:if test="${item.status == '1'}"><font color="blue">审核通过</font></c:if>
+		  <c:if test="${item.status == '4'}"><font color="green">处理完毕</font></c:if>		  
 		</ec:column>
 		<ec:column width="80" property="createDate" title="创建日期" style="text-align:center" cell="date" />
-		<ec:column width="80" property="presetTime" title="规定完成日期" style="text-align:center" cell="date" />
-		<ec:column width="150" property="_0" title="操作" style="text-align:left" sortable="false">
+		<ec:column width="95" property="presetTime" title="规定完成日期" style="text-align:center" cell="date" />
+		<ec:column width="135" property="_0" title="操作" style="text-align:left" sortable="false">
 	       <c:choose>
 		     <c:when test="${item.status eq '0'}"> 
-	 	       <a href="edit.do?model.id=${item.id}">编辑</a>|		        
+	 	       <a href="edit.do?model.id=${item.id}">改</a> |		        
 		     </c:when>
 		     <c:otherwise>
-	           <font color="#999999">编辑</font>| 	       
+	           <font color="#999999">改</font> | 	       
 		     </c:otherwise>
 		   </c:choose>  
 	       <c:choose>
 		     <c:when test="${item.status eq '0'}"> 
-		       <a href="audit.do?model.id=${item.id}">审核</a>|			        
+		       <a href="audit.do?model.id=${item.id}">审</a> |			        
 		     </c:when>
 		     <c:otherwise>
-	           <font color="#999999">审核</font>| 	       
+	           <font color="#999999">审</font> | 	       
 		     </c:otherwise>
 		   </c:choose>	
 	       <c:choose>
 		     <c:when test="${item.status eq '0'}"> 
-		       <a href="#" onclick="removeJointTask(${item.id})">删除</a>|        
+		       <a href="#" onclick="removeJointTask(${item.id})">删</a> |        
 		     </c:when>
 		     <c:otherwise>
-	           <font color="#999999">删除</font>| 	       
+	           <font color="#999999">删</font> | 	       
 		     </c:otherwise>
 		   </c:choose>			   	       
-		    <a href="print.do?model.id=${item.id}" target="_blank">打印</a>
+		    <a href="print.do?model.id=${item.id}" target="_blank">印</a>
 		</ec:column>
 	</ec:row>
 </ec:table></div>
