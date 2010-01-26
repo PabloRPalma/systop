@@ -89,6 +89,9 @@ public class JointTaskDetailManager extends BaseGenericsManager<JointTaskDetail>
 		//处理后将FsCase中的事件状态设置为"已处理"
 		jointTaskDetail.getJointTask().getFsCase().setStatus(CaseConstants.CASE_PROCESSED);
 		getDao().save(jointTaskDetail.getJointTask().getFsCase());
+		//处理后将JointTask中的事件状态设置为"已处理"
+		jointTaskDetail.getJointTask().setStatus(JointTaskConstants.TASK_DETAIL_RESOLVEED);
+		getDao().save(jointTaskDetail.getJointTask());		
 	}
 	
 	/**
