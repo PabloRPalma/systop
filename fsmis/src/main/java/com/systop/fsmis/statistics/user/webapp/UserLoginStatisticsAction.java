@@ -33,10 +33,8 @@ public class UserLoginStatisticsAction extends
 	private Date endDate;
 	/** 部门编号 */
 	private String deptId;
-
-	/**
-	 * 登陆用户信息管理
-	 */
+	
+	/** 登陆用户信息管理 */
 	@Autowired
 	private LoginUserService loginUserService;
 	/**
@@ -56,7 +54,7 @@ public class UserLoginStatisticsAction extends
 			String cvsData = getManager().getUserStatistic(beginDate, endDate,
 					county, deptId);
 			getRequest().setAttribute("csvData", cvsData);
-			//页面回显所选部门
+			// 页面回显所选部门
 			if (StringUtils.isNotBlank(deptId)) {
 				Dept dp = deptManager.findObject("from Dept d where d.id=?", Integer
 						.valueOf(deptId));

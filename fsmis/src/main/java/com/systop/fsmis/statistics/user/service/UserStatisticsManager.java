@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.xwork.StringUtils;
+import org.hibernate.criterion.MatchMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,110 +48,60 @@ public class UserStatisticsManager extends
 	@SuppressWarnings("unchecked")
 	public String getUserStatistic(Date beginDate, Date endDate, Dept county,
 			String deptId) {
-		if (beginDate == null && endDate == null) {
-			beginDate = new Date();
-			endDate = new Date();
+		Dept dept;
+		String dataString;
+		if (deptId != null && StringUtils.isNotBlank(deptId)) {
+			dept = deptManager.get(Integer.valueOf(deptId));
+		} else {
+			dept = county;
 		}
-		String dataString = null;
-		if (deptId == null || deptId.equals("")) {// 未选择
-			if (county.getParentDept() != null) {// 区县
-				dataString = getDataStringForCounty(county.getId(), beginDate, endDate);
-			} else {// 市级
-				dataString = getDataStringForCity(beginDate, endDate);
-			}
-		} else {// 选择部门
-			Dept dt = deptManager.findObject("from Dept d where d.id =?", Integer
-					.valueOf(deptId));
-			if (dt.getParentDept() != null) {// 选择区县或直属部门
-				if (dt.getType().equals(DeptConstants.TYPE_COUNTY)) {// 区县
-					dataString = getDataStringForCounty(dt.getId(), beginDate, endDate);
-				} else {// 直属部门
-					dataString = getDataStringForUser(dt, beginDate, endDate);
-				}
-			} else {// 选择市级
-				dataString = getDataStringForCity(beginDate, endDate);
-			}
+		if (dept.getChildDepts().size() > 0) {// 区县或市
+			dataString = getDataStringForCountyOrCity(dept, beginDate, endDate);
+		} else {// 直属部门
+			dataString = getDataStringForUser(dept, beginDate, endDate);
 		}
-		logger.info("拼接数据{}", dataString);
 		return dataString;
 	}
 
 	/**
-	 * 拼接数据 针对区县
+	 * 针对区县或市
 	 * 
+	 * @param dept
+	 * @param beginDate
+	 * @param endDate
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	private String getDataStringForCounty(Integer deptId, Date beginDate,
+	private String getDataStringForCountyOrCity(Dept dept, Date beginDate,
 			Date endDate) {
 		StringBuffer cvsData = new StringBuffer();
 		List<Dept> depts = deptManager.query(
-				"from Dept d where d.parentDept.id=? or d.id=?", deptId, deptId);
-		for (Dept dp : depts) {
-			String sqlTemp = "select ulh.dept.name,count(ulh.id) from UserLoginHistory ulh where ulh.dept.id=? and ulh.loginTime between ? and ?  group by ulh.dept.id ";
-			List<Object[]> result = getDao().query(sqlTemp, dp.getId(), beginDate,
-					endDate);
-			if (CollectionUtils.isNotEmpty(result)) {
-				for (Object[] objs : result) {
-					cvsData.append(objs[0] + ";").append(objs[1] + "\\n");
+				"from Dept d where d.parentDept.id=? or d.id=?", dept.getId(), dept
+						.getId());
+		if (CollectionUtils.isNotEmpty(depts)) {
+			for (Dept dp : depts) {
+				logger.info("子部门:{}", dp.getName());
+				StringBuffer sqlTemp = new StringBuffer(
+						"select ulh.dept.name,count(ulh.id) from UserLoginHistory ulh where 1=1 ");
+				List args = new ArrayList();
+				if (dp.getType().equals(DeptConstants.TYPE_DEPT) || dp == dept) {// 区县下的部门无子部门,或者是其本身例如新华区本身
+					sqlTemp.append("and ulh.dept.id = ? ");
+					args.add(dp.getId());
+				} else {// 市级下的区县有子部门
+					sqlTemp.append("and ulh.dept.serialNo like ? ");
+					args.add(MatchMode.START.toMatchString(dp.getSerialNo()));
 				}
-			} else {
-				cvsData.append(dp.getName() + ";").append("0" + "\\n");
-			}
-		}
-		return cvsData.toString();
-	}
-
-	/**
-	 * 拼接数据 针对市
-	 * 
-	 * @return
-	 */
-	@SuppressWarnings("unchecked")
-	private String getDataStringForCity(Date beginDate, Date endDate) {
-		Dept d = deptManager.findObject("from Dept d where d.parentDept is null");
-		List<Dept> depts = deptManager.query(
-				"from Dept d where d.parentDept.id = ?", d.getId());// 所有部门，包括区县以及直属部门
-		List<Object[]> r = new ArrayList();
-		for (Dept dp : depts) {
-			if (dp.getType().equals(DeptConstants.TYPE_DEPT)) {// 直属部门
-				String sqlTemp = "select ulh.dept.name,count(ulh.id) from UserLoginHistory ulh where ulh.dept.id=? and ulh.loginTime between ? and ?  group by ulh.dept.id ";
-				List<Object[]> result = getDao().query(sqlTemp, dp.getId(), beginDate,
-						endDate);
-				Object[] o = new Object[2];
-				o[0] = dp.getName();
+				if (beginDate != null && endDate != null) {
+					sqlTemp.append("and ulh.loginTime between ? and ? ");
+					args.add(beginDate);
+					args.add(endDate);
+				}
+				List<Object[]> result = getDao().query(sqlTemp.toString(),
+						args.toArray());
 				if (CollectionUtils.isNotEmpty(result)) {
-					o[1] = result.get(0)[1];
-				} else {// 该直属部门下无人员登录
-					o[1] = 0;
+					cvsData.append(dp.getName() + ";").append(result.get(0)[1] + "\\n");
 				}
-				r.add(o);
-			} else {// 区县 记录该区县下的所有部门人员的登录次数，一并归为这个区县下的
-				List<Dept> ds = deptManager.query(
-						"from Dept d where d.parentDept.id=? or d.id=?", dp.getId(), dp
-								.getId());
-				Object[] o = new Object[2];
-				o[0] = dp.getName();
-				int count = 0;
-				for (Dept dTemp : ds) {// 区县下的各个部门
-					String sqlTemp = "select ulh.dept.name,count(ulh.id) from UserLoginHistory ulh where ulh.dept.id=? and ulh.loginTime between ? and ?  group by ulh.dept.id ";
-					List<Object[]> result = getDao().query(sqlTemp, dTemp.getId(),
-							beginDate, endDate);
-					if (CollectionUtils.isNotEmpty(result)) {// 累加
-						count += Integer.valueOf(result.get(0)[1].toString());
-					}
-				}
-				o[1] = count;
-				r.add(o);
 			}
-		}
-		StringBuffer cvsData = new StringBuffer();
-		if (CollectionUtils.isNotEmpty(r)) {
-			for (Object[] objs : r) {
-				cvsData.append(objs[0] + ";").append(objs[1] + "\\n");
-			}
-		} else {
-			cvsData.append("nothing;").append("0\\n");
 		}
 		return cvsData.toString();
 	}
@@ -169,19 +121,23 @@ public class UserStatisticsManager extends
 		StringBuffer cvsData = new StringBuffer();
 		if (CollectionUtils.isNotEmpty(us)) {
 			for (User u : us) {
-				String sqlTemp = "select ulh.user.name,count(ulh.id) from UserLoginHistory ulh where ulh.user.id=? and ulh.loginTime between ? and ?  group by ulh.user.id ";
-				List<Object[]> result = getDao().query(sqlTemp, u.getId(), beginDate,
-						endDate);
+				StringBuffer sqlTemp = new StringBuffer(
+						"select ulh.user.name,count(ulh.id) from UserLoginHistory ulh where  1=1 ");
+				List args = new ArrayList();
+				sqlTemp.append(" and ulh.user.id=? ");
+				args.add(u.getId());
+				if (beginDate != null && endDate != null) {
+					sqlTemp.append("and ulh.loginTime between ? and ? ");
+					args.add(beginDate);
+					args.add(endDate);
+				}
+				List<Object[]> result = getDao().query(sqlTemp.toString(),
+						args.toArray());
 				if (CollectionUtils.isNotEmpty(result)) {
-					for (Object[] objs : result) {
-						cvsData.append(objs[0] + ";").append(objs[1] + "\\n");
-					}
-				} else {
-					cvsData.append(u.getName() + ";").append("0" + "\\n");
+					cvsData.append(u.getName() + ";").append(result.get(0)[1] + "\\n");
+
 				}
 			}
-		} else {// 部门下无人员
-			cvsData.append("nothing;").append("0\\n");
 		}
 		return cvsData.toString();
 	}
