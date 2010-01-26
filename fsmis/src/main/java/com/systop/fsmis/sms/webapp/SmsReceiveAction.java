@@ -2,6 +2,7 @@ package com.systop.fsmis.sms.webapp;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.criterion.MatchMode;
@@ -31,6 +32,10 @@ public class SmsReceiveAction extends ExtJsCrudAction<SmsReceive, SmsReceiveMana
 	@Autowired
 	private LoginUserService loginUserService; 
 	
+	private String smsReceiveId;
+	
+	private Map smsReceiveInfo;
+	
 	/**
 	 * 短信接收列表
 	 * @author DU
@@ -40,11 +45,11 @@ public class SmsReceiveAction extends ExtJsCrudAction<SmsReceive, SmsReceiveMana
 		Page page = PageUtil.getPage(getPageNo(), getPageSize());
 		StringBuffer hql = new StringBuffer("from SmsReceive sr where 1=1 ");
 		List args = new ArrayList();
-		Dept county = loginUserService.getLoginUserCounty(getRequest());
+		/*Dept county = loginUserService.getLoginUserCounty(getRequest());
 		if (county != null) {
 			hql.append(" and sr.county.id = ?");
 			args.add(county.getId());
-		}
+		}*/
 		if (StringUtils.isNotBlank(getModel().getMobileNum())) {
 			hql.append(" and sr.mobileNum like ?");
 			args.add(MatchMode.ANYWHERE.toMatchString(getModel().getMobileNum()));
@@ -68,14 +73,16 @@ public class SmsReceiveAction extends ExtJsCrudAction<SmsReceive, SmsReceiveMana
 		
 		return INDEX;
 	}
+	
 	/**
 	 * 查看短信方法,更改短信的isNew状态为"0",即"已读",不是新短信
 	 */
-	public String view(){
-	  getModel().setIsNew(SmsConstants.N);
-	  getManager().save(getModel());
-	  
-	  return VIEW;
+	public String viewSmsReceiveInfo(){
+		if (StringUtils.isNotBlank(smsReceiveId)) {
+			getManager().changeSmsReceive(smsReceiveId);
+			smsReceiveInfo = getManager().getSmsMapById(smsReceiveId);
+		}
+	  return "jsonRst";
 	}
 	/**
 	 * 根据事件编号查询反馈消息
@@ -90,5 +97,22 @@ public class SmsReceiveAction extends ExtJsCrudAction<SmsReceive, SmsReceiveMana
 		items = page.getData();
 		restorePageData(page);		
 		return "backMsgView";
+	}
+	
+	
+	public String getSmsReceiveId() {
+		return smsReceiveId;
+	}
+
+	public void setSmsReceiveId(String smsReceiveId) {
+		this.smsReceiveId = smsReceiveId;
+	}
+
+	public Map getSmsReceiveInfo() {
+		return smsReceiveInfo;
+	}
+
+	public void setSmsReceiveInfo(Map smsReceiveInfo) {
+		this.smsReceiveInfo = smsReceiveInfo;
 	}
 }

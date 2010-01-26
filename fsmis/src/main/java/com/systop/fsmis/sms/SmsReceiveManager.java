@@ -1,7 +1,9 @@
 package com.systop.fsmis.sms;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.xwork.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import com.systop.core.service.BaseGenericsManager;
 import com.systop.core.util.DateUtil;
 import com.systop.fsmis.model.SmsCount;
 import com.systop.fsmis.model.SmsReceive;
+import com.systop.fsmis.model.SmsSend;
 
 /**
  * SmsReceiveManager<br>
@@ -124,4 +127,37 @@ public class SmsReceiveManager extends BaseGenericsManager<SmsReceive> {
 			smsCountManager.save(smsCount);
 		}
 	}
+   
+	  /**
+	   * 取得接收短信的具体内容
+	   * @param smsId 短信ID
+	   * @author shaozhiyuan
+	   */
+	  @SuppressWarnings("unchecked")
+	  public Map getSmsMapById(String smsId) {
+	    Map map = new HashMap();
+	    if (StringUtils.isNotBlank(smsId) && StringUtils.isNumeric(smsId)) {
+	      SmsReceive smsReceive = get(Integer.valueOf(smsId));
+	      if (smsReceive != null) {
+	        map.put("mobileNum", smsReceive.getMobileNum());
+	        map.put("receiveTime", smsReceive.getReceiveTime());
+	        map.put("content", smsReceive.getContent());
+	      }
+	    }
+	    return map;
+	  }
+	  
+	  /**
+	   * 更改短信的状态为：不是最新
+	   * @param smsId 短信ID
+	   * @author shaozhiyuan
+	   */
+	  @Transactional
+	  public void changeSmsReceive(String smsId) {
+		  if (StringUtils.isNotBlank(smsId) && StringUtils.isNumeric(smsId)) {
+			  SmsReceive smsReceive = get(Integer.valueOf(smsId));
+			  smsReceive.setIsNew(SmsConstants.N);
+			  save(smsReceive);
+		  }
+	  }
 }
