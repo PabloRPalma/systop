@@ -92,13 +92,8 @@ eq 0?'单体任务':'多体任务'}管理&nbsp;&gt;&nbsp;${param['isMultipleCase
 		<ec:column width="140" property="taskDetails" title="执行部门"
 			cell="com.systop.fsmis.fscase.webapp.ec.DeptsCell">
 		</ec:column>
-		<ec:column width="60" property="_status" title="任务状态"
-			style="text-align: center" sortable="false">
-			<c:if test="${item.status == '0'}"><font color="red">未接收</font></c:if>
-			<c:if test="${item.status == '1'}"><font color="blue">已派遣</font></c:if>
-			<c:if test="${item.status == '2'}"><font color="green">已处理</font>	</c:if>
-			<c:if test="${item.status == '3'}"><font color="gray">已退回</font></c:if>  
-		</ec:column>
+		<ec:column width="60" property="status" title="任务状态" mappingItem="stateColorMap"
+			style="text-align: center" sortable="false"/>
 		<ec:column width="50" property="_o" title="操作" sortable="false" style="text-align: center">
 			<a title="查看任务" href="${ctx}/fscase/view.do?fsCaseId=${item.fsCase.id}&modelId=${modelId}&taskId=${item.id}">
 			看</a> |
