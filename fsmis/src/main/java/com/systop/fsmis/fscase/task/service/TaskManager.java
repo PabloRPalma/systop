@@ -63,8 +63,8 @@ public class TaskManager extends BaseGenericsManager<Task> {
     
     getDao().save(fsCase);
 
-    // 设置任务信息,正在处理,并保存
-    task.setStatus(TaskConstants.TASK_PROCESSING);
+    // 设置任务信息,为接收,并保存
+    task.setStatus(TaskConstants.TASK_UN_RECEIVE);
 
     // 根据任务选择的部门集合,作任务明细信息操作
     // 如果部门id集合不为空,遍历部门构建任务明细实例.

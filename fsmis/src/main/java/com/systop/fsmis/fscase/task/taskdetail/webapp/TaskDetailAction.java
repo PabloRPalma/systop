@@ -197,7 +197,9 @@ public class TaskDetailAction extends
    * @return
    */
   public String receiveTask() {
-    // 接收状态
+	// 任务状态为：处理中状态
+	getModel().getTask().setStatus(TaskConstants.TASK_PROCESSING);
+    // 任务详细为：处理中状态
     getModel().setStatus(TaskConstants.TASK_DETAIL_RECEIVED);
     getManager().save(getModel());
 
