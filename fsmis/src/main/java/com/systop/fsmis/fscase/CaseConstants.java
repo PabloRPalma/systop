@@ -3,11 +3,20 @@ package com.systop.fsmis.fscase;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
+
+import com.systop.core.util.ResourceBundleUtil;
 
 /**
  * 事件常量类
  */
 public final class CaseConstants {
+	
+   /** 资源文件 */
+   private static final String BUNDLE_KEY = "application";
+
+  /** 资源绑定对象 */
+  private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_KEY);
 
   /** 事件状态：未派遣 */
   public static final String CASE_UN_RESOLVE = "0";
@@ -47,6 +56,15 @@ public final class CaseConstants {
   public static final String CASE_SOURCE_TYPE_JOINTASK = "jointask";
   /** 事件添加类别:部门上报添加单体事件 */
   public static final String CASE_SOURCE_TYPE_DEPTREPORT = "deptreport";
+  
+  /** 市级汇总生成的多体事件标题名称 */
+  public static final String CITY_MULTCASE_NAME = ResourceBundleUtil.getString(RESOURCE_BUNDLE,
+      "city_multcase_name", "");
+  
+  /** 区县级汇总生成的多体事件标题名称*/
+  public static final String COUNTY_MULTCASE_FOLDER = ResourceBundleUtil.getString(RESOURCE_BUNDLE,
+      "county_multcase_name", "");
+  
   /**
    * 配置类别
    */
