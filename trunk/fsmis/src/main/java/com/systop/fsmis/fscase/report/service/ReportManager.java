@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.systop.core.service.BaseGenericsManager;
+import com.systop.core.util.ReflectUtil;
 import com.systop.fsmis.model.Corp;
 import com.systop.fsmis.model.FsCase;
 import com.systop.fsmis.model.Task;
@@ -145,15 +146,11 @@ public class ReportManager extends BaseGenericsManager<FsCase> {
   	Map map = new HashMap();
   	Corp corp = getCorpByName(corpName, countyId);
   	if (corp != null) {
-  		map.put("id", corp.getId());
-      map.put("name", corp.getName());
-      map.put("address", corp.getAddress());
-      map.put("legalPerson", corp.getLegalPerson());
-      map.put("produceLicense", corp.getProduceLicense());
-      map.put("businessLicense", corp.getBusinessLicense());
-      map.put("sanitationLicense", corp.getSanitationLicense());
-      map.put("operateDetails", corp.getOperateDetails());
+      map = ReflectUtil.toMap(corp, 
+      		new String[]{"id", "name", "address", "legalPerson", "produceLicense",
+      		"businessLicense", "sanitationLicense", "operateDetails"}, true);
   	}
+  	
   	return map;
   }
   
