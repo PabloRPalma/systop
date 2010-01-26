@@ -254,19 +254,27 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
   }
 
   /**
-   * 单体任务状态列表返回页面
+   * 单体任务状态列表返回页面:不带颜色
    */
   public Map<String, String> getStateMap() {
 
     Map<String, String> StateMap = new LinkedHashMap<String, String>();
-    StateMap.put(TaskConstants.TASK_UN_RECEIVE, "未接收");
-    StateMap.put(TaskConstants.TASK_PROCESSING, "处理中");
-    StateMap.put(TaskConstants.TASK_PROCESSED, "已处理");
-    StateMap.put(TaskConstants.TASK_RETURNED, "已退回");
+    StateMap.putAll(TaskConstants.TASK_MAP);
 
     return StateMap;
   }
 
+  /**
+   * 单体任务状态列表返回页面：带颜色
+   */
+  public Map<String, String> getStateColorMap() {
+
+    Map<String, String> StateColorMap = new LinkedHashMap<String, String>();
+    StateColorMap.putAll(TaskConstants.TASK_COLOR_MAP);
+
+    return StateColorMap;
+  }
+  
   public FsCase getFsCase() {
     return fsCase;
   }

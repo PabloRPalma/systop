@@ -324,16 +324,23 @@ public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
   }
 
   /**
-   * 单体事件状态列表返回页面
+   * 单体事件状态列表返回页面:无颜色
    */
   public Map getStateMap() {
     Map StateMap = new LinkedHashMap();
-    StateMap.put(CaseConstants.CASE_UN_RESOLVE, "未派遣");
-    StateMap.put(CaseConstants.CASE_PROCESSING, "处理中");
-    StateMap.put(CaseConstants.CASE_CLOSED, "已核实");
-    StateMap.put(CaseConstants.CASE_PROCESSED, "已处理");
+    StateMap.putAll(CaseConstants.CASE_MAP);
 
     return StateMap;
+  }
+  
+  /**
+   * 单体事件状态列表返回页面:带颜色
+   */
+  public Map getStateColorMap() {
+    Map StateColorMap = new LinkedHashMap();
+    StateColorMap.putAll(CaseConstants.CASE_COLOR_MAP);
+
+    return StateColorMap;
   }
 
   /**
@@ -377,7 +384,7 @@ public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
       getModel().setClosedTime(new Date());
       getModel().setStatus(CaseConstants.CASE_CLOSED);
     } else if (Constants.NO.equals(getRequest().getParameter("checked"))) {
-      getModel().setStatus(CaseConstants.CASE_UN_RESOLVE);
+      getModel().setStatus(CaseConstants.CASE_UN_CLOSED);
     }
     getManager().save(getModel());
     // 汇总单体事件，创建多体事件
