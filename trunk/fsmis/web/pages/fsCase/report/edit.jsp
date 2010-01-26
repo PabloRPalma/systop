@@ -52,7 +52,7 @@
 <div class="x-panel">
 <div class="x-panel-header">上报事件</div>
 <div class="x-toolbar">
-<table width="99%">
+<table width="100%">
 	<tr>
 		<td align="right">
 		<table>
@@ -68,7 +68,7 @@
 <div><%@ include file="/common/messages.jsp"%></div>
 <s:form id="save" action="save.do" method="post" theme="simple"
 	validate="true">
-<div id="tabs" style="margin-top: -1px;margin-left: -1px;margin-right: -1px;">
+<div id="tabs" style="margin-top: -1px;margin-left: -1px;margin-right: 0px;">
 <div id="basic" class="x-hide-display"><s:hidden name="model.id" />
 	<table id="mytable" height="360" style="margin-top: 5px; width: 800px"
 		align="center">
