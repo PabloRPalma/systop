@@ -55,24 +55,14 @@ public class TaskStatisticsManager extends BaseGenericsManager<Task> {
 			args.add(beginDate);
 			args.add(endDate);
 		}
-		sql.append("group by ts.status");
+		sql.append(" group by ts.status");
 		result = getDao().query(sql.toString(), args.toArray());
 		
 		StringBuffer cvsData = new StringBuffer();
 		if (CollectionUtils.isNotEmpty(result)) {
 			for (Object[] objs : result) {
-				// 各状态转化，为页面显示做准备
-				if (objs[0].toString().equals(TaskConstants.TASK_PROCESSED)) {
-					objs[0] = "已处理";
-				}
-				if (objs[0].toString().equals(TaskConstants.TASK_PROCESSING)) {
-					objs[0] = "处理中";
-				}
-				if (objs[0].toString().equals(TaskConstants.TASK_UN_RECEIVE)) {
-					objs[0] = "未接收";
-				}
-				if (objs[0].toString().equals(TaskConstants.TASK_RETURNED)) {
-					objs[0] = "已退回";
+				if(objs != null && objs[0] != null){
+					objs[0] = TaskConstants.TASK_MAP.get(objs[0]);
 				}
 				cvsData.append(objs[0] + ";").append(objs[1] + "\\n");
 			}
