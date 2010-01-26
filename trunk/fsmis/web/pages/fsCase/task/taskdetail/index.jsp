@@ -86,14 +86,8 @@
 				</c:otherwise>
 			</c:choose>
 		</ec:column>
-		<ec:column width="50" property="status" style="text-align:center"
-			title="任务状态">
-			<c:if test="${item.status == '0'}"><font color="red">未接收</font>	</c:if>
-			<c:if test="${item.status == '1'}"><font color="blue">已查看</font></c:if>
-			<c:if test="${item.status == '2'}"><font color="#FF9D07">处理中...</font></c:if>
-			<c:if test="${item.status == '3'}"><font color="gray">已退回</font></c:if>
-			<c:if test="${item.status == '4'}"><font color="green">处理完毕</font></c:if>
-		</ec:column>
+		<ec:column width="50" property="status" mappingItem="stateColorMap" style="text-align:center"
+			title="任务状态"/>
 		<ec:column width="45" property="_0" title="查看"
 			style="text-align:center" sortable="false">
 			<a title="查看任务" href="${ctx}/taskdetail/view.do?taskDetailId=${item.id}&fsCaseId=${item.task.fsCase.id}&modelId=${param['modelId']}&taskId=${item.task.id}">看</a>

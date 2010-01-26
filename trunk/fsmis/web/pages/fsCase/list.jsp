@@ -81,13 +81,7 @@ function remove(id){
 		<ec:column width="80" property="caseType.name" title="事件类别" sortable="false"/>
 		<ec:column width="120" property="caseTime" title="事发时间"
 			style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm" sortable="false"/>
-		<ec:column width="50" property="_2" title="事件状态" style="text-align:center" sortable="false">
-			<c:if test="${item.status == '0'}"><font color="red">未派遣</font></c:if>
-			<c:if test="${item.status == '1'}"><font color="#FF9D07">已派遣</font></c:if>
-			<c:if test="${item.status == '2'}"><font color="green">已处理</font></c:if>
-			<c:if test="${item.status == '3'}"><font color="gray">已回退</font></c:if>
-			<c:if test="${item.status == '4'}"><font color="blue">已核实</font></c:if>
-		</ec:column>
+		<ec:column width="50" property="status" title="事件状态"  mappingItem="stateColorMap" style="text-align:center" sortable="false"/>
 		<c:if test="${param['isMultipleCase'] eq 0}">
 		<ec:column width="80" property="_3" title="事件来源" style="text-align:center" sortable="false">
 			<c:if test="${item.caseSourceType == 'generic'}">普通添加</c:if>
@@ -105,8 +99,8 @@ function remove(id){
 		</ec:column>
 		<stc:role ifNotGranted="ROLE_DEPT_OPER">
 		<ec:column width="115" property="_0" title="操作" style="text-align:center" sortable="false">
-		<!-- 0未派遣1已派遣2已处理3回退4已核实完成5忽略-->	
-			<c:if test="${empty item.status or item.status eq '0' or item.status eq '3' or item.status eq '5'}">		
+		<!-- 0未派遣1已派遣2已处理3回退4已核实完成5忽略6核实不过-->	
+			<c:if test="${empty item.status or item.status eq '0' or item.status eq '3' or item.status eq '5' or item.status eq '6'}">		
 			    <a title="修改事件" href="${ctx}/fscase/edit.do?model.id=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">改 </a> |
 			    <a title="派遣任务" href="#" onclick="showChooseSendTypeWindow(${item.id},'${item.title}')">派</a> |
 			    <a title="删除任务"href="#" onclick="remove(${item.id})" >删</a> 
