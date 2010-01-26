@@ -65,7 +65,7 @@ public final class TaskConstants {
 	      .synchronizedMap(new LinkedHashMap<String, String>());
 	  static {
 		  TASK_COLOR_MAP.put(TASK_UN_RECEIVE, "<font color='red'>未接收</font>");
-		  TASK_COLOR_MAP.put(TASK_PROCESSING, "<font color='blue'>处理中</font>");
+		  TASK_COLOR_MAP.put(TASK_PROCESSING, "<font color='#FF9D07'>处理中</font>");
 		  TASK_COLOR_MAP.put(TASK_PROCESSED, "<font color='green'>已处理</font>");
 		  TASK_COLOR_MAP.put(TASK_RETURNED, "<font color='gray'>已退回</font>");
 	  }
