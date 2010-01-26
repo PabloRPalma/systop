@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.systop.cms.utils.PageUtil;
+import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.dept.service.DeptManager;
 import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.common.modules.security.user.UserUtil;
@@ -91,6 +92,11 @@ public class JointTaskAction extends
 	 * 案件二级类型
 	 */
 	private Integer typeTwoId;
+	
+  private Integer oneId;
+
+  private Integer twoId;
+  
 	/**
 	 * 牵头部门
 	 */
@@ -132,7 +138,7 @@ public class JointTaskAction extends
    * 查询事件事发截止时间
    */
   private Date caseEndTime;
-  
+
 	/**
 	 * 重写父类的index方法，实现分页检索联合整治任务信息
 	 */
@@ -184,9 +190,7 @@ public class JointTaskAction extends
     }
     
     hql.append("and fc.caseSourceType = ? ");
-    args.add(CaseConstants.CASE_SOURCE_TYPE_JOINTASK);	    
-    hql.append("and fc.processType = ? ");
-    args.add(CaseConstants.PROCESS_TYPE_JOIN_TASK);	 
+    args.add(CaseConstants.CASE_SOURCE_TYPE_JOINTASK);	 
     hql.append("order by fc.caseTime desc, fc.status");
     
 		Page page = PageUtil.getPage(getPageNo(), getPageSize());
@@ -197,15 +201,27 @@ public class JointTaskAction extends
 	}
 	
 	/**
-	 * 添加联合整治单体案件
+	 * 添加/编辑联合整治单体案件
 	 * @return
 	 */
 	public String addCase() {
+		if (getModel().getFsCase() != null
+				&& getModel().getFsCase().getId() != null) {
+			FsCase fsCase = fsCaseManager.get(getModel().getFsCase().getId());
+      if (fsCase.getCaseType().getCaseType() != null
+          && fsCase.getCaseType().getCaseType().getId() != null) {
+      	oneId = fsCase.getCaseType().getCaseType().getId();
+      	twoId = fsCase.getCaseType().getId();
+      } else {
+      	oneId = fsCase.getCaseType().getId();
+      }
+			getModel().setFsCase(fsCase);
+		}
 		return "addCase";
 	}
 
 	/**
-	 * 重写父类编辑方法传类别参数，用于edit.jsp显示
+	 * 重写父类编辑方法传类别参数，用于联合整治任务edit.jsp显示
 	 */
 	@Override
 	public String edit() {
@@ -246,12 +262,15 @@ public class JointTaskAction extends
 				getRequest().setAttribute("levelone", getLevelOne());
 				return "addCase";
 			}
-			if (getModel().getFsCase().getCounty() == null
-					|| getModel().getFsCase().getCounty().getId() == null) {
-				addActionError("请选择事件所属区县.");
-				getRequest().setAttribute("levelone", getLevelOne());
+			//联合整治业务不需要选择部门，只保存当前登录用户所在的部门信息
+	    Dept dept = loginUserService.getLoginUserDept(getRequest());
+	    if (dept != null ) {
+	    	getModel().getFsCase().setCounty(dept);
+	    } else {
+	    	addActionError("当前登录用户所属部门信息为空！");
+	    	getRequest().setAttribute("levelone", getLevelOne());
 				return "addCase";
-			}
+	    }
 			CaseType cType = new CaseType();
 			if (typeTwoId != null) {
 				cType = getManager().getDao().get(CaseType.class, typeTwoId);
@@ -268,16 +287,13 @@ public class JointTaskAction extends
 			getModel().getFsCase().setIsSubmited(FsConstants.N);
 			//事件添加类别
 			getModel().getFsCase().setCaseSourceType(CaseConstants.CASE_SOURCE_TYPE_JOINTASK);
-			//事件处理类型
-			getModel().getFsCase().setProcessType(CaseConstants.PROCESS_TYPE_JOIN_TASK);
-			//事件派遣类型
-			getModel().getFsCase().setStatus(CaseConstants.CASE_PROCESSING);
+			//事件派遣类型(未派遣)
+			getModel().getFsCase().setStatus(CaseConstants.CASE_UN_RESOLVE);
 			if (StringUtils.isBlank(getModel().getFsCase().getIsMultiple())) {
 				getModel().getFsCase().setIsMultiple(FsConstants.N);
 			}
 			fsCaseManager.save(getModel().getFsCase());
 		}
-
 		return "addJointTask";
 	}
 
@@ -325,6 +341,11 @@ public class JointTaskAction extends
 				}
 			}
 			getManager().save(getModel(), deptLeaderId, deptIds, jTaskAttachList);
+			//事件处理类型
+			getModel().getFsCase().setProcessType(CaseConstants.PROCESS_TYPE_JOIN_TASK);
+			//事件派遣类型(已派遣)
+			getModel().getFsCase().setStatus(CaseConstants.CASE_PROCESSING);
+			fsCaseManager.save(getModel().getFsCase());
 		}
 		return SUCCESS;		
 	}
@@ -351,11 +372,42 @@ public class JointTaskAction extends
 	}
 	
 	/**
+	 * 删除联合整治案件信息并级联删除该案件所对应的联合整治任务及其附件和审核记录信息
+	 * @return
+	 */
+	public String caseRemove() {
+		if (getModel().getFsCase() != null
+				&& getModel().getFsCase().getId() != null) {
+			FsCase fsCase = fsCaseManager.get(getModel().getFsCase().getId());
+			Set<JointTask> jointTasks = fsCase.getJointTaskses();
+			for (JointTask jointTask : jointTasks) {
+				this.taskRemove(jointTask);
+			}
+			fsCaseManager.remove(fsCase);
+		}
+		return SUCCESS;
+	}
+	
+	/**
 	 * 重写父类的remove方法，用于实现删除联合整治任务及其附件和审核记录的功能
 	 */
 	@Override
 	public String remove() {
 		JointTask jointTask = getManager().get(getModel().getId());
+		//更新事件的派遣类别为"未派遣"
+		jointTask.getFsCase().setStatus(CaseConstants.CASE_UN_RESOLVE);
+		//更新事件的处理流程为"空"
+		jointTask.getFsCase().setProcessType(null);
+		fsCaseManager.save(jointTask.getFsCase());
+		this.taskRemove(jointTask);
+		return SUCCESS;
+	}
+
+	/**
+	 * 根据联合整治任务对象删除其所有相关的信息
+	 * @param jointTask
+	 */
+	public void taskRemove(JointTask jointTask) {
 		Set<JointTaskAttach> taskAttaches = jointTask.getTaskAttachses();
 		Set<JointTaskDetail> taskDetails = jointTask.getTaskDetailses();
 		
@@ -385,8 +437,6 @@ public class JointTaskAction extends
 		
 		//删除联合整治任务信息
 		getManager().remove(jointTask);
-		
-		return SUCCESS;
 	}
 
 	/**
@@ -513,4 +563,21 @@ public class JointTaskAction extends
 	public void setCaseEndTime(Date caseEndTime) {
 		this.caseEndTime = caseEndTime;
 	}
+
+	public Integer getOneId() {
+		return oneId;
+	}
+
+	public void setOneId(Integer oneId) {
+		this.oneId = oneId;
+	}
+
+	public Integer getTwoId() {
+		return twoId;
+	}
+
+	public void setTwoId(Integer twoId) {
+		this.twoId = twoId;
+	}
+
 }

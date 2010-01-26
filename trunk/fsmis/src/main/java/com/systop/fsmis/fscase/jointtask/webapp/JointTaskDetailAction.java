@@ -1,7 +1,6 @@
 package com.systop.fsmis.fscase.jointtask.webapp;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -102,8 +101,8 @@ public class JointTaskDetailAction extends
 		hql.append("from JointTaskDetail jtd where 1=1 ");
 		List<Object> args = new ArrayList<Object>();
 		//联合整治任务必须已审核
-		hql.append(" and jtd.jointTask.status = ?");
-		args.add(FsConstants.Y);
+		hql.append(" and jtd.jointTask.status <> ?");
+		args.add(FsConstants.N);
 		//根据用户登录部门查询
 		if((user.getDept() != null) && (user.getDept().getId() != null)){
 			hql.append(" and jtd.dept.id = ?");
@@ -192,7 +191,7 @@ public class JointTaskDetailAction extends
 	 * AJAX方式检查联合整治任务是否可以处理
 	 */
 	public String checkResult() {
-		checkResult = Collections.synchronizedMap(new HashMap<String, String>());
+		checkResult = new HashMap<String, String>();
 		StringBuffer detailBuf = new StringBuffer();
 		if (jointTaskId != null) {
       JointTask jointTask = jointTaskManager.get(jointTaskId);
@@ -201,8 +200,7 @@ public class JointTaskDetailAction extends
       	if (jointTaskDetail.getStatus().equals(JointTaskConstants.TASK_DETAIL_UN_RECEIVE)) {
       		detailBuf.append("【");
       		detailBuf.append(jointTaskDetail.getDept().getName());
-      		detailBuf.append("】");
-      		detailBuf.append(",");
+      		detailBuf.append("】,");
       	}
       }
   		if (detailBuf.length() > 0 && detailBuf.lastIndexOf(",") > 0) {
