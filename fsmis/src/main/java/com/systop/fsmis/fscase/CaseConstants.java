@@ -12,7 +12,7 @@ public final class CaseConstants {
   /** 事件状态：未派遣 */
   public static final String CASE_UN_RESOLVE = "0";
 
-  /** 事件状态：处理中 */
+  /** 事件状态：已派遣 */
   public static final String CASE_PROCESSING = "1";
 
   /** 事件状态：已处理 */
@@ -26,6 +26,9 @@ public final class CaseConstants {
 
   /** 事件状态：忽略 */
   public static final String CASE_IGNORED = "5";
+  
+  /** 事件状态：核实不通过 */
+  public static final String CASE_UN_CLOSED = "6";
 
   /** 市级 */
   public static final String CITY = "1";
@@ -53,5 +56,30 @@ public final class CaseConstants {
     CONFIGER_CATEGORY_MAP.put(CITY, "市级");
     CONFIGER_CATEGORY_MAP.put(COUNTY, "区县级");
   }
+  
+  /** 事件状态常量Map ：带颜色 */
+  public static final Map<String, String> CASE_COLOR_MAP = Collections
+      .synchronizedMap(new LinkedHashMap<String, String>());
+  static {
+	  CASE_COLOR_MAP.put(CASE_UN_RESOLVE, "<font color='red'>未派遣</font>");
+	  CASE_COLOR_MAP.put(CASE_PROCESSING, "<font color='#FF9D07'>已派遣</font>");
+	  CASE_COLOR_MAP.put(CASE_PROCESSED, "<font color='green'>已处理</font>");
+	  CASE_COLOR_MAP.put(CASE_RETURNED, "<font color='gray'>退回</font>");
+	  CASE_COLOR_MAP.put(CASE_CLOSED, "<font color='blue'>已核实</font>");
+	  CASE_COLOR_MAP.put(CASE_IGNORED, "<font color='gray'>忽略</font>");
+	  CASE_COLOR_MAP.put(CASE_UN_CLOSED, "<font color='#18CADA'>核实不过</font>");
+  }
 
+  /** 事件状态常量Map ：不带颜色 */
+  public static final Map<String, String> CASE_MAP = Collections
+      .synchronizedMap(new LinkedHashMap<String, String>());
+  static {
+	  CASE_MAP.put(CASE_UN_RESOLVE, "未派遣");
+	  CASE_MAP.put(CASE_PROCESSING, "已派遣");
+	  CASE_MAP.put(CASE_PROCESSED, "已处理");
+	  CASE_MAP.put(CASE_RETURNED, "退回");
+	  CASE_MAP.put(CASE_CLOSED, "已核实");
+	  CASE_MAP.put(CASE_IGNORED, "忽略");
+	  CASE_MAP.put(CASE_UN_CLOSED, "核实不过");
+  }
 }

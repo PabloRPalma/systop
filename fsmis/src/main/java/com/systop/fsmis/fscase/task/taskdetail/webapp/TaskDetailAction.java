@@ -294,20 +294,26 @@ public class TaskDetailAction extends
   }
 
   /**
-   * 单体任务状态列表返回页面
+   * 单体任务详细状态列表返回页面:不带颜色
    */
   public Map<String, String> getStateMap() {
 
     Map<String, String> StateMap = new LinkedHashMap<String, String>();
-    StateMap.put(TaskConstants.TASK_DETAIL_UN_RECEIVE, "未接收");
-    StateMap.put(TaskConstants.TASK_DETAIL_LOOKED, "已查看");
-    StateMap.put(TaskConstants.TASK_DETAIL_RECEIVED, "已接收");
-    StateMap.put(TaskConstants.TASK_DETAIL_RETURNED, "已退回 ");
-    StateMap.put(TaskConstants.TASK_DETAIL_PROCESSED, "已处理  ");
+    StateMap.putAll(TaskConstants.TASK_DETAIL_MAP);
 
     return StateMap;
   }
 
+  /**
+   * 单体任务详细状态列表返回页面:带颜色
+   */
+  public Map<String, String> getStateColorMap() {
+
+    Map<String, String> StateColorMap = new LinkedHashMap<String, String>();
+    StateColorMap.putAll(TaskConstants.TASK_DETAIL_COLOR_MAP);
+
+    return StateColorMap;
+  }
   /**
    * 查询所有当前登录人员所在区县辖区的企业,以在页面选择
    * 
