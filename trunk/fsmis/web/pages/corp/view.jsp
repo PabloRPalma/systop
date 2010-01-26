@@ -56,7 +56,7 @@ Ext.onReady(function(){
       </tr>
     </table>
 </div>
-<div id="tabs" style="margin-top: -1px;margin-left: -1px;margin-right: -1px;">
+<div id="tabs" style="margin-top: -1px;margin-left: -1px;margin-right: 0px;">
 <div id="basic" class="x-hide-display">
   <table id="mytable" height="320">
 	<tr>

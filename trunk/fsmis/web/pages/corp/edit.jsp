@@ -21,7 +21,7 @@
 
 #mytable td {
 	border: 0px solid #A6C9E2;
-	height: 28;
+	height: 24;
 }
 </style>
 </head>
@@ -57,7 +57,7 @@ Ext.onReady(function(){
 </div>
 <div><%@ include file="/common/messages.jsp"%></div>
 <s:form id="companyForm" action="save.do" method="post" theme="simple" validate="true" enctype="multipart/form-data">
-<div id="tabs" style="margin-top: -1px;margin-left: -1px;margin-right: -1px;">
+<div id="tabs" style="margin-top: -1px;margin-left: -1px;margin-right: 0px;">
 <div id="basic" class="x-hide-display">
 	<s:hidden id="corpId" name="model.id" />
 	<table id="mytable" height="340">
@@ -65,62 +65,62 @@ Ext.onReady(function(){
 		<td width="520">
 		  <table width="562" align="left" border="0" cellspacing="2">
 		  <tr>
-            <td height="5" colspan="4"></td>
+            <td height="3" colspan="4"></td>
           </tr>
           <tr>
-            <td width="112" align="right" height="24">企业名称：</td>
+            <td width="112" align="right" height="23">企业名称：</td>
             <td align="left" colspan="3">
             	<s:textfield id="name" name="model.name" cssClass="required" cssStyle="width:365px" />
                 <font color="red">&nbsp;*</font> 
             </td>
           </tr>
           <tr>
-            <td width="112" align="right" height="24">地　址：</td>
+            <td width="112" align="right" height="23">地　址：</td>
             <td align="left" colspan="3">
             	<s:textfield id="address" name="model.address" cssClass="required" cssStyle="width:365px" />
                 <font color="red">&nbsp;*</font> </td>
           </tr>
           <tr>
-            <td width="112" align="right" height="24">法　人：</td>
+            <td width="112" align="right" height="23">法　人：</td>
             <td align="left" colspan="3">
             	<s:textfield id="legalPerson" name="model.legalPerson" cssStyle="width:365px" />
             </td>
           </tr>
           <tr>
-            <td width="112" align="right" height="24">营业执照：</td>
+            <td width="112" align="right" height="23">营业执照：</td>
             <td width="129" align="left">
             	<s:textfield id="businessLicense" name="model.businessLicense" />
             </td>
-            <td align="right" width="90" height="24">有效期：</td>
+            <td align="right" width="90" height="23">有效期：</td>
             <td width="213" align="left">
             	<input type="text" name="model.businessLicenseDate" value='<s:date name="model.businessLicenseDate" format="yyyy-MM-dd"/>'
 				  onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})" class="Wdate" style="width:115px;height:16px" readonly="readonly"/>
             </td>
           </tr>
           <tr>
-            <td width="112" align="right" height="24">生产许可证：</td>
+            <td width="112" align="right" height="23">生产许可证：</td>
             <td width="129" align="left">
             	<s:textfield id="produceLicense" name="model.produceLicense"/>
             </td>
-            <td align="right" width="90" height="24">有效期：</td>
+            <td align="right" width="90" height="23">有效期：</td>
             <td width="213" align="left">
             	<input type="text" name="model.produceLicenseDate" value='<s:date name="model.produceLicenseDate" format="yyyy-MM-dd"/>'
 				  onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})" class="Wdate" style="width:115px;height:16px" readonly="readonly"/>
             </td>
           </tr>
           <tr>
-            <td width="112" align="right" height="24">卫生许可证：</td>
+            <td width="112" align="right" height="23">卫生许可证：</td>
             <td width="129" align="left">
             	<s:textfield id="sanitationLicense" name="model.sanitationLicense" />
             </td>
-            <td align="right" width="90" height="24">有效期：</td>
+            <td align="right" width="90" height="23">有效期：</td>
             <td width="213" align="left">
             	<input type="text" name="model.sanitationLicenseDate" value='<s:date name="model.sanitationLicenseDate" format="yyyy-MM-dd"/>'
 				  onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})" class="Wdate" style="width:115px;height:16px" readonly="readonly"/>
             </td>
           </tr>
           <tr>
-            <td width="112" align="right" height="24">企业编号：</td>
+            <td width="112" align="right" height="23">企业编号：</td>
             <td width="129" align="left">
             	<s:textfield id="code" name="model.code" />
             </td>
@@ -131,17 +131,17 @@ Ext.onReady(function(){
             </td>
           </tr>
           <tr>
-            <td width="112" align="right" height="24" >固　话：</td>
+            <td width="112" align="right" height="23" >固　话：</td>
             <td width="129" align="left">
             	<s:textfield id="phone" name="model.phone"/>
             </td>
-            <td width="90" align="right" height="24">手　机：</td>
+            <td width="90" align="right" height="23">手　机：</td>
             <td width="213" align="left">
             	<s:textfield id="mobile" name="model.mobile" cssStyle="width:135px"/>
             </td>
           </tr>
           <tr>
-            <td width="112" align="right" height="24">诚信等级：</td>
+            <td width="112" align="right" height="23">诚信等级：</td>
             <td width="129" align="left">
             	<s:select id="integrityGrade" name="model.integrityGrade" list="{'A','B','C','D'}" headerKey="" headerValue="诚信等级..."/>
             </td>
@@ -151,19 +151,19 @@ Ext.onReady(function(){
             </td>
           </tr>
           <tr>
-            <td width="112" align="right" height="24">经营范围：</td>
+            <td width="112" align="right" height="23">经营范围：</td>
             <td align="left" colspan="3">
             	<s:textfield id="operateDetails" name="model.operateDetails" cssStyle="width:362px;"/>
             </td>
           </tr>
           <tr>
-            <td width="112" align="right" height="24">备　注：</td>
+            <td width="112" align="right" height="23">备　注：</td>
             <td align="left" colspan="3">
             	<s:textfield id="remark" name="model.remark" cssStyle="width:362px;"/>
             </td>
           </tr>
           <tr>
-            <td width="112" align="right" height="24">企业简介：</td>
+            <td width="112" align="right" height="23">企业简介：</td>
             <td align="left" colspan="3">
             	<s:textarea id="descn" name="model.descn" cssStyle="width:362px; height:70px"/>
             </td>
