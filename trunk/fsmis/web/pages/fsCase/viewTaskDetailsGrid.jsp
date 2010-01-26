@@ -51,9 +51,9 @@
 			       		   return value;
 			           }else if(record.data["status"] == '0' || record.data["status"] == '1' || record.data["status"] == '2'){/*否则显示剩余或者逾期天数*/
 			       		   if(record.data["remainDays"] >=0){
-			        		  return '剩余天数'+record.data["remainDays"] ;
+			        		  return '剩余'+record.data["remainDays"]+'天' ;
 						   }else{
-			              	  return '逾期天数'+ eval(-record.data["remainDays"]) ;
+			              	  return '逾期'+ eval(-record.data["remainDays"])+'天' ;
 			               }
 			           }
 		     	   }
