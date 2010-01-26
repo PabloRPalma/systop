@@ -33,19 +33,29 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
     // 设定当前任务明细的状态为退回状态
     taskDetail.setStatus(TaskConstants.TASK_DETAIL_RETURNED);
     save(taskDetail);
-    // 如果所有任务明细已经退回,则把任务和案件状态都置为"退回",
+    // 如果所有任务明细已经退回,则把任务和事件状态都置为"退回"
+    Task task = taskDetail.getTask();
+    FsCase fsCase = task.getFsCase();
     if (checkIsAllTaskDetailReturned(taskDetail)) {
-      Task task = taskDetail.getTask();
       task.setStatus(TaskConstants.TASK_RETURNED);
       getDao().save(task);
-      // 系统限定:如果一个案件的一个任务未处理或者未退回(全部任务明细未全部处理或者退回),则不会再次派遣任务,
-      // 所以不会出现一个案件的多个任务并行状态,也就不会引起案件状态的冲突.
-      // 作为当前案件的有效任务,当前任务已退回(对应所有任务明细都已退回),则修改案件的状态为"退回"
-      FsCase fsCase = task.getFsCase();
+      //修改事件状态为：以退回
       if (fsCase != null && fsCase.getId() != null) {
         fsCase.setStatus(CaseConstants.CASE_RETURNED);
         getDao().save(fsCase);
       }
+     // 如果所有任务明细没有全退回,则再去检查任务是否全部处理完毕
+     }else{
+    	// 如果所有任务明细已经处理,则把任务状态置为"已处理",完成时间为当前时间
+    	if (checkIsAllTaskDetailResolved(taskDetail)) {
+    	      task.setStatus(TaskConstants.TASK_PROCESSED);
+    	      task.setClosedTime(new Date());
+    	      getDao().save(task);
+    	      if (fsCase != null && fsCase.getId() != null) {
+    	        fsCase.setStatus(CaseConstants.CASE_PROCESSED);
+    	        getDao().save(fsCase);
+    	      }
+    	 }
     }
   }
 
@@ -68,7 +78,7 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
     // 如果案件没有关联企业,而在完成任务中为案件指定了企业(创建新企业),则需要保存企业信息,
     //此功能究竟放到哪里经沟通尚未确定,待确定后调整下面这行代码
     processCorp(taskDetail, fsCase, isNewCorp);
-    // 如果所有任务明细已经处理,则把任务状态置为"已处理",完成时间为当前时间
+    // 如果所有任务明细已全部处理（包括退回）,则把任务状态置为"已处理",完成时间为当前时间
     if (checkIsAllTaskDetailResolved(taskDetail)) {
       task.setStatus(TaskConstants.TASK_PROCESSED);
       task.setClosedTime(new Date());
@@ -129,8 +139,9 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
     }
     // 遍历当前任务明细实体实例关联的任务实体的任务明细
     for (TaskDetail detail : taskDetail.getTask().getTaskDetails()) {
-      // 只要有一个任务明细的状态不为"已处理",则返回false(未全部完成)
-      if (!TaskConstants.TASK_DETAIL_PROCESSED.equals(detail.getStatus())) {
+      // 只要有任务明细的状态不为"已处理或已退回",则返回false(未全部完成)
+      if (!(TaskConstants.TASK_DETAIL_PROCESSED.equals(detail.getStatus()) || 
+    		  TaskConstants.TASK_DETAIL_RETURNED.equals(detail.getStatus()))) {
         return false;
       }
     }
