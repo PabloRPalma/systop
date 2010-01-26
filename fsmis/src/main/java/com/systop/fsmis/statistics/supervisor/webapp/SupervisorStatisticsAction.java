@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.xwork.StringUtils;
+import org.hibernate.criterion.MatchMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -85,7 +86,7 @@ public class SupervisorStatisticsAction extends
 			if (dept != null) {
 				if (dept.getChildDepts().size() > 0) {
 					hql.append("and sp.dept.serialNo like ? ");
-					args.add("%" + dept.getSerialNo() + "%");
+					args.add(MatchMode.START.toMatchString(dept.getSerialNo()));
 				} else {
 					hql.append("and sp.dept.id = ? ");
 					args.add(dept.getId());
@@ -101,29 +102,24 @@ public class SupervisorStatisticsAction extends
 		// 设置统计数据
 		StringBuffer cvsData = new StringBuffer();
 		if (items != null && items.size() > 0) {
-			// 获取元素个数计数
-			int i = 0;
-			for (Supervisor Sp : items) {
-				if (Sp.getName() != null && Sp.getFsCase() != null
-						&& Sp.getFsCase().size() > 0) {
-					if (getDisplayNum() != null) {
-						if (i >= displayNum) {
-							break;
-						}
-					} else {// 统计图默认显示10个
-						if (i >= 10) {
-							break;
-						}
-					}
-					i++;
-					cvsData.append(Sp.getName()).append(";");
-					if(Sp.getFsCase() != null){
-						cvsData.append(Sp.getFsCase().size());
+			// 默认显示10个
+			if (displayNum == null) {
+				displayNum = 10;
+			}
+			List<Supervisor> supervisors = new ArrayList();
+			supervisors.addAll(items);
+			for (int i = 0; (i < supervisors.size() && i < displayNum); i++) {
+				if (supervisors.get(i).getName() != null
+						&& supervisors.get(i).getFsCase() != null
+						&& supervisors.get(i).getFsCase().size() > 0) {
+					cvsData.append(supervisors.get(i).getName()).append(";");
+					if (supervisors.get(i).getFsCase() != null) {
+						cvsData.append(supervisors.get(i).getFsCase().size());
 					}
 					cvsData.append("\\n");
 				}
 			}
-		}else{
+		} else {
 			cvsData.append("无数据;0\\n");
 		}
 		getRequest().setAttribute("result", cvsData.toString());
@@ -156,7 +152,7 @@ public class SupervisorStatisticsAction extends
 			if (dept.getParentDept() != null) {
 				if (dept.getChildDepts().size() > 0) {
 					hql.append("and serialNo like ? ");
-					args.add("%" + dept.getSerialNo() + "%");
+					args.add(MatchMode.START.toMatchString(dept.getSerialNo()));
 				} else {
 					hql.append("and id = ? ");
 					args.add(dept.getId());
