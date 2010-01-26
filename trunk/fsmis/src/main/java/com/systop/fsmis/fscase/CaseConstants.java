@@ -82,4 +82,13 @@ public final class CaseConstants {
 	  CASE_MAP.put(CASE_IGNORED, "忽略");
 	  CASE_MAP.put(CASE_UN_CLOSED, "核实不过");
   }
+  /** 事件来源常量Map */
+  public static final Map<String, String> CASE_SOURCE_TYPE = Collections
+      .synchronizedMap(new LinkedHashMap<String, String>());
+  static {
+  	CASE_SOURCE_TYPE.put(CASE_SOURCE_TYPE_GENERIC, "普通事件");
+  	CASE_SOURCE_TYPE.put(CASE_SOURCE_TYPE_JOINTASK, "联合整治事件");
+  	CASE_SOURCE_TYPE.put(CASE_SOURCE_TYPE_DEPTREPORT, "部门上报事件");
+	  
+  }
 }
