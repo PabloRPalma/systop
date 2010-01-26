@@ -29,17 +29,20 @@
 
 					<td align="right" width="12%">规定完成时间：</td>
 					<td width="12%"><fmt:formatDate value="${task.presetTime}"pattern="yyyy-MM-dd HH:mm" /></td>
-					<td align="right" width="8%">事件状态：</td>
-					<td width="15%"><c:if test="${task.status == '0'}">	<font color="red">未派遣</font>
+					<td align="right" width="8%">任务状态：</td>
+					<td width="15%">
+					<c:if test="${task.status == '0'}">
+						<font color="red">未接收</font>
 					</c:if> <c:if test="${task.status == '1'}">
-						<font color="#FF9D07">已派遣</font>
+						<font color="#FF9D07">处理中</font>
 					</c:if> <c:if test="${task.status == '2'}">
 						<font color="green">已处理</font>
 					</c:if> <c:if test="${task.status == '3'}">
 						<font color="gray">已回退</font>
 					</c:if> <c:if test="${task.status == '4'}">
 						<font color="blue">已核实</font>
-					</c:if></td>
+					</c:if>
+					</td>
 				</tr>
 				<tr>
 					<td align="right" >任务描述：</td>
