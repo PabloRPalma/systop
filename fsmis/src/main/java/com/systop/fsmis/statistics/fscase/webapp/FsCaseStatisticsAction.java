@@ -32,12 +32,9 @@ public class FsCaseStatisticsAction extends
 		DefaultCrudAction<FsCase, FsCaseStatisticsManager> {
 	/** 查询起始时间 */
 	private Date beginDate;
-
 	/** 查询结束时间 */
 	private Date endDate;
-	/**
-	 * 登陆用户信息管理
-	 */
+	/** 登陆用户信息管理 */
 	@Autowired
 	private LoginUserService loginUserService;
 	/** 页面选择同比或环比 */
@@ -48,9 +45,7 @@ public class FsCaseStatisticsAction extends
 	private String status;
 	/** 部门编号 */
 	private String deptId;
-	/**
-	 * 部门管理
-	 */
+	/** 部门管理 */
 	@Autowired
 	private DeptManager deptManager;
 
@@ -62,7 +57,6 @@ public class FsCaseStatisticsAction extends
 	public String statisticByCounty() {
 		Dept county = loginUserService.getLoginUserCounty(getRequest());
 		if (county != null) {
-			initDateRange();
 			String cvsData = getManager().getFsCaseCounty(beginDate, endDate, status);
 			getRequest().setAttribute("csvData", cvsData);
 		}
@@ -77,7 +71,6 @@ public class FsCaseStatisticsAction extends
 	public String statisticByStatus() {
 		Dept county = loginUserService.getLoginUserCounty(getRequest());
 		if (county != null) {
-			initDateRange();
 			String cvsData = getManager().getFsCaseStatus(beginDate, endDate, county,
 					deptId);
 			getRequest().setAttribute("csvData", cvsData);
@@ -95,7 +88,6 @@ public class FsCaseStatisticsAction extends
 	public String statisticByNum() {
 		Dept county = loginUserService.getLoginUserCounty(getRequest());
 		if (county != null) {
-			initDateRange();
 			String cvsData = getManager().getFsCaseByYearOrMonth(beginDate,
 					yearOrMonth, county, compareSort);
 			getRequest().setAttribute("csvData", cvsData);
@@ -111,7 +103,6 @@ public class FsCaseStatisticsAction extends
 	public String statisticByType() {
 		Dept county = loginUserService.getLoginUserCounty(getRequest());
 		if (county != null) {
-			initDateRange();
 			String cvsData = getManager().getFsCaseByType(beginDate, endDate,
 					yearOrMonth, county);
 			getRequest().setAttribute("csvData", cvsData);
@@ -130,7 +121,6 @@ public class FsCaseStatisticsAction extends
 	public String statisticBySendType() {
 		Dept county = loginUserService.getLoginUserCounty(getRequest());
 		if (county != null) {
-			initDateRange();
 			String cvsData = getManager().getFsCaseSendType(beginDate, endDate,
 					county, deptId);
 			getRequest().setAttribute("csvData", cvsData);
@@ -148,9 +138,8 @@ public class FsCaseStatisticsAction extends
 	public String statisticBySource() {
 		Dept county = loginUserService.getLoginUserCounty(getRequest());
 		if (county != null) {
-			initDateRange();
-			String cvsData = getManager().getFsCaseSource(beginDate, endDate,
-					county, deptId);
+			String cvsData = getManager().getFsCaseSource(beginDate, endDate, county,
+					deptId);
 			getRequest().setAttribute("csvData", cvsData);
 			// 页面回显所选部门
 			setDeptName(deptId, county);
@@ -166,7 +155,6 @@ public class FsCaseStatisticsAction extends
 	public String statisticByTime() {
 		Dept county = loginUserService.getLoginUserCounty(getRequest());
 		if (county != null) {
-			initDateRange();
 			String cvsData = getManager().getFsCaseByTime(beginDate, endDate,
 					yearOrMonth, county, status, deptId);
 			getRequest().setAttribute("csvData", cvsData);
@@ -189,17 +177,6 @@ public class FsCaseStatisticsAction extends
 			getRequest().setAttribute("deptName", dp.getName());
 		} else {
 			getRequest().setAttribute("deptName", county.getName());
-		}
-	}
-
-	/**
-	 * initDateRange私有访法用于初始化时间范围
-	 * 
-	 */
-	private void initDateRange() {
-		if (beginDate == null && endDate == null) {
-			beginDate = new Date();
-			endDate = new Date();
 		}
 	}
 

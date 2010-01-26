@@ -52,51 +52,38 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 	 * @param beginDate
 	 * @param endDate
 	 * @param county
+	 * @param deptId
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
 	public String getFsCaseStatus(Date beginDate, Date endDate, Dept county,
 			String deptId) {
 		List<Object[]> result = null;
+		Dept dept;
+		if (deptId != null && StringUtils.isNotBlank(deptId)) {// 选择部门
+			dept = deptManager.get(Integer.valueOf(deptId));
+		} else {// 未选择按当前用户所属部门
+			dept = county;
+		}
 		StringBuffer sql = new StringBuffer(
 				"select fc.status,count(fc.status) from FsCase fc where 1=1");
 		List args = new ArrayList();
-		if (deptId == null || deptId.equals("")) {// 未选择部门
-			if (county.getParentDept() != null) {// 不是市级，按当前登录人员所属部门
-				sql.append("and fc.county.id = ? ");
-				args.add(county.getId());
-			}
-		} else {// 选择部门
-			Dept dp = deptManager.findObject("from Dept d where d.id=?", Integer
-					.valueOf(deptId));
-			if (dp.getParentDept() != null) {// 选择部门不是市级
-				sql.append("and fc.county.id = ? ");
-				args.add(Integer.valueOf(deptId));
-			}
+		if (dept.getParentDept() != null) {// 部门是否为市级
+			sql.append("and fc.county.id = ? ");
+			args.add(dept.getId());
 		}
-		sql.append(" and fc.caseTime between ? and ?  group by fc.status");
-		args.add(beginDate);
-		args.add(endDate);
+		if (beginDate != null && endDate != null) {
+			sql.append(" and fc.caseTime between ? and ?  group by fc.status");
+			args.add(beginDate);
+			args.add(endDate);
+		}
 		result = getDao().query(sql.toString(), args.toArray());
-
 		StringBuffer cvsData = new StringBuffer();
 		if (CollectionUtils.isNotEmpty(result)) {
 			for (Object[] o : result) {
 				// 各状态转化，为页面显示做准备
-				if (o[0].toString().equals(CaseConstants.CASE_PROCESSED)) {
-					o[0] = "已处理";
-				}
-				if (o[0].toString().equals(CaseConstants.CASE_PROCESSING)) {
-					o[0] = "处理中";
-				}
-				if (o[0].toString().equals(CaseConstants.CASE_UN_RESOLVE)) {
-					o[0] = "未派遣";
-				}
-				if (o[0].toString().equals(CaseConstants.CASE_RETURNED)) {
-					o[0] = "已退回";
-				}
-				if (o[0].toString().equals(CaseConstants.CASE_CLOSED)) {
-					o[0] = "已核实";
+				if (o[0] != null) {
+					o[0] = CaseConstants.CASE_MAP.get(o[0]);
 				}
 				cvsData.append(o[0] + ";").append(o[1] + "\\n");
 			}
@@ -133,9 +120,11 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 				sqlTemp.append("and fc.status = ? ");
 				args.add(status);
 			}
-			sqlTemp.append("and fc.caseTime between ? and ? group by fc.county.id");
-			args.add(beginDate);
-			args.add(endDate);
+			if (beginDate != null && endDate != null) {
+				sqlTemp.append(" and fc.caseTime between ? and ?  group by fc.status");
+				args.add(beginDate);
+				args.add(endDate);
+			}
 			List<Object[]> result = getDao()
 					.query(sqlTemp.toString(), args.toArray());
 			if (CollectionUtils.isNotEmpty(result)) {
@@ -145,7 +134,6 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 			} else {
 				cvsData.append(dp.getName() + ";").append("0" + "\\n");
 			}
-
 		}
 		return cvsData.toString();
 	}
@@ -161,94 +149,59 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 	 *          同比或环比
 	 * @return
 	 */
-	public String getFsCaseByYearOrMonth(Date beginDate, String yearOrMonth,
+	public String getFsCaseByYearOrMonth(Date date, String yearOrMonth,
 			Dept county, String compareSort) {
 		String dataString = null;
 		if (StringUtils.isNotEmpty(yearOrMonth)) {
 			if (yearOrMonth.equals(StatisticsConstants.YEAR)) {// 按年
-				dataString = getByYear(beginDate, county);
+				dataString = getByYear(date, county);
 			} else {// 按月
-				if (compareSort.equals(StatisticsConstants.SAME_COMPARE)) {// 按同比
-					dataString = getByMonthBySame(beginDate, county);
-				} else {// 按环比
-					dataString = getByMonthByLoop(beginDate, county);
-				}
+				dataString = getByMonth(compareSort, date, county);
 			}
-		} else {
-			dataString = getByYear(beginDate, county);
+		} else {// 默认
+			dataString = getByYear(date, county);
 		}
-
 		return dataString;
 	}
 
 	/**
-	 * 按事件数量月同比
+	 * 按月事件数量
 	 * 
+	 * @param compareSort
 	 * @param date
 	 * @param county
 	 * @return
 	 */
 	@SuppressWarnings("deprecation")
-	private String getByMonthBySame(Date date, Dept county) {
+	private String getByMonth(String compareSort, Date date, Dept county) {
 		StringBuffer cvsData = new StringBuffer();
-		int year = Util.getYear(date);
-		int month = Util.getMonth(date);
-		// 查询用户选定的月
-		List<Object[]> userCheckedResult = getResultByMonth(year, month + 1, county);
-		// 查询同比的月
-		List<Object[]> sameResult = getResultByMonth(year - 1, month + 1, county);
-		if (CollectionUtils.isNotEmpty(sameResult)) {
-			cvsData.append(
-					(year - 1) + "年-" + StringUtil.zeroPadding(month + 1, 2) + "月;")
-					.append(sameResult.get(0)[1] + "\\n");
-			if (CollectionUtils.isNotEmpty(userCheckedResult)) {
-				cvsData.append(
-						year + "年-" + StringUtil.zeroPadding(month + 1, 2) + "月;").append(
-						userCheckedResult.get(0)[1] + "\\n");
-			} else {
-				cvsData.append(year + "年-" + StringUtil.zeroPadding(month + 1, 2)
-						+ "月;0\\n");
-			}
-		} else {
-			cvsData.append((year - 1) + "年-" + StringUtil.zeroPadding(month + 1, 2)
-					+ "月;0\\n");
-			if (CollectionUtils.isNotEmpty(userCheckedResult)) {
-				cvsData.append(
-						year + "年-" + StringUtil.zeroPadding(month + 1, 2) + "月;").append(
-						userCheckedResult.get(0)[1] + "\\n");
-			} else {
-				cvsData.append(year + "年-" + StringUtil.zeroPadding(month + 1, 2)
-						+ "月;0\\n");
-			}
+		if (date == null) {
+			date = new Date();
 		}
-		return cvsData.toString();
-	}
-
-	/**
-	 * 按事件数量月环比
-	 * 
-	 * @param date
-	 * @param county
-	 * @return
-	 */
-	private String getByMonthByLoop(Date date, Dept county) {
-		StringBuffer cvsData = new StringBuffer();
+		int yearNew = 0;
+		int monthNew = 0;
 		int year = Util.getYear(date);
 		int month = Util.getMonth(date);
-		// 小一个月的那个日期
-		Date d = com.systop.core.util.DateUtil.add(date, Calendar.MONTH, -1);
-		int yearNew = Util.getYear(d);
-		int monthNew = Util.getMonth(d);
-		logger.info("环比年月{},{}", year, month);
-		logger.info("环比新年月{},{}", yearNew, monthNew);
 		// 查询用户选定的年月
-		List<Object[]> userCheckedResult = getResultByMonth(year, month + 1, county);
-		// 查询环比的年月
-		List<Object[]> loopResult = getResultByMonth(yearNew, monthNew + 1, county);
-		if (CollectionUtils.isNotEmpty(loopResult)) {
+		List<Object[]> userCheckedResult = getResultByMonth(year, month, county);
+		List<Object[]> compareResult;
+		if (compareSort.equals(StatisticsConstants.SAME_COMPARE)) {// 同比
+			yearNew = year - 1;
+			monthNew = month;
+			// 查询同比的月
+			compareResult = getResultByMonth(yearNew, monthNew, county);
+		} else {// 环比
+			// 小一个月的那个日期
+			Date d = DateUtil.add(date, Calendar.MONTH, -1);
+			yearNew = Util.getYear(d);
+			monthNew = Util.getMonth(d);
+			// 查询环比的年月
+			compareResult = getResultByMonth(yearNew, monthNew, county);
+		}
+		if (CollectionUtils.isNotEmpty(compareResult)) {
 			cvsData.append(
 					yearNew + "年-" + StringUtil.zeroPadding(monthNew + 1, 2) + "月;")
-					.append(loopResult.get(0)[1] + "\\n");
+					.append(compareResult.get(0)[1] + "\\n");
 			if (CollectionUtils.isNotEmpty(userCheckedResult)) {
 				cvsData.append(
 						year + "年-" + StringUtil.zeroPadding(month + 1, 2) + "月;").append(
@@ -281,13 +234,16 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 	 */
 	private String getByYear(Date date, Dept county) {
 		StringBuffer cvsData = new StringBuffer();
+		if (date == null) {
+			date = new Date();
+		}
 		int year = Util.getYear(date);
 		// 查询用户选定的年
 		List<Object[]> userCheckedResult = getResultByYear(year, county);
 		// 查询同比的年
-		List<Object[]> sameResult = getResultByYear(year - 1, county);
-		if (CollectionUtils.isNotEmpty(sameResult)) {
-			cvsData.append((year - 1) + "年;").append(sameResult.get(0)[1] + "\\n");
+		List<Object[]> compareResult = getResultByYear(year - 1, county);
+		if (CollectionUtils.isNotEmpty(compareResult)) {
+			cvsData.append((year - 1) + "年;").append(compareResult.get(0)[1] + "\\n");
 			if (CollectionUtils.isNotEmpty(userCheckedResult)) {
 				cvsData.append(year + "年;").append(userCheckedResult.get(0)[1] + "\\n");
 			} else {
@@ -305,7 +261,7 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 	}
 
 	/**
-	 * 按事件数量年统计-- 针对年
+	 * 按事件数量年统计
 	 * 
 	 * @param year
 	 * @param county
@@ -326,7 +282,7 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 	}
 
 	/**
-	 * 按事件数量月统计--针对月
+	 * 按事件数量月统计
 	 * 
 	 * @param year
 	 * @param month
@@ -339,18 +295,17 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 				" select month(fc.caseTime),count(fc.id) from FsCase fc where year(fc.caseTime)=? and month(fc.caseTime)=? ");
 		List args = new ArrayList();
 		args.add(year);
-		args.add(month);
+		args.add(month + 1);
 		if (county.getParentDept() != null) {// 区县
 			sql.append(" and fc.county.id=? ");
 			args.add(county.getId());
 		}
 		sql.append(" group by year(fc.caseTime)");
 		return getDao().query(sql.toString(), args.toArray());
-
 	}
 
 	/**
-	 * 事件按类别，按年或按月同比或环比统计
+	 * 事件按类别，按年或按月统计
 	 * 
 	 * @param beginDate
 	 * @param endDate
@@ -361,6 +316,11 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 	public String getFsCaseByType(Date beginDate, Date endDate,
 			String yearOrMonth, Dept county) {
 		String dataString = null;
+		if (beginDate == null && endDate == null) {
+			beginDate=new Date();
+			beginDate = DateUtil.add(beginDate, Calendar.YEAR, -1);
+			endDate = new Date();
+		}
 		if (StringUtils.isNotEmpty(yearOrMonth)) {
 			if (yearOrMonth.equals(StatisticsConstants.YEAR)) {// 按年
 				dataString = getByYearByType(beginDate, endDate, county);
@@ -374,7 +334,7 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 	}
 
 	/**
-	 * 事件按类别,按月 分级别 2级的累加到1级上 -针对月
+	 * 事件按类别,按月 分级别 2级的累加到1级上
 	 * 
 	 * @param beginDate
 	 * @param endDate
@@ -422,6 +382,7 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 				args.add(sDate);
 				args.add(eDate);
 				List<Object[]> r = getDao().query(sql.toString(), args.toArray());
+				// 对某一类别某月的统计
 				Object[] data = new Object[3];
 				data[1] = month;
 				data[2] = ct.getId();
@@ -434,6 +395,25 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 			}
 		}
 		// 组装数据
+		HashMap<String, ArrayList> yearData = this.repairData(result);
+		StringBuffer cvsData = new StringBuffer();
+		for (String year : yearData.keySet()) {
+			ArrayList<Object[]> al = yearData.get(year);
+			cvsData.append(year).append("月;").append(praseString(al, caseTypes))
+					.append("\\n");
+		}
+		logger.info("年度月{}", cvsData.toString());
+		return cvsData.toString();
+	}
+
+	/**
+	 * 按类别对数据进行整理,按年或年月组装数据
+	 * 
+	 * @param result
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	private HashMap<String, ArrayList> repairData(List<Object[]> result) {
 		HashMap<String, ArrayList> yearData = new HashMap<String, ArrayList>();
 		for (Object[] o : result) {
 			if (yearData == null || !(yearData.containsKey(o[1].toString()))) {
@@ -446,14 +426,7 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 				yearData.put(o[1].toString(), tempalo);
 			}
 		}
-		StringBuffer cvsData = new StringBuffer();
-		for (String year : yearData.keySet()) {
-			ArrayList<Object[]> al = yearData.get(year);
-			cvsData.append(year).append("月;").append(praseString(al, caseTypes))
-					.append("\\n");
-		}
-		logger.info("年度月{}", cvsData.toString());
-		return cvsData.toString();
+		return yearData;
 	}
 
 	/**
@@ -468,44 +441,6 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 	private String getByYearByType(Date beginDate, Date endDate, Dept county) {
 		List<CaseType> caseTypes = caseTypeManager
 				.query("from CaseType where caseType.id is null");
-		// 所有按年按类别数据
-		List<Object[]> result = getResultByYearByType(county, caseTypes);
-		List<Object[]> tempResult;
-		// 用户选择年数据
-		tempResult = this.limitYear(beginDate, endDate, result);
-		// 年-数据(各个类别)
-		HashMap<String, ArrayList> yearData = new HashMap<String, ArrayList>();
-		for (Object[] o : tempResult) {
-			if (yearData == null || !(yearData.containsKey(o[1].toString()))) {
-				ArrayList<Object[]> alo = new ArrayList<Object[]>();
-				alo.add(o);
-				yearData.put(o[1].toString(), alo);
-			} else {
-				ArrayList<Object[]> tempalo = yearData.get(o[1].toString());
-				tempalo.add(o);
-				yearData.put(o[1].toString(), tempalo);
-			}
-		}
-		StringBuffer cvsData = new StringBuffer();
-		for (String year : yearData.keySet()) {
-			ArrayList<Object[]> al = yearData.get(year);
-			cvsData.append(year).append("年;").append(praseString(al, caseTypes))
-					.append("\\n");
-		}
-		logger.info("年度{}", cvsData.toString());
-		return cvsData.toString();
-	}
-
-	/**
-	 * 按年类别查询 分级别 2级的累加到1级上 -针对年
-	 * 
-	 * @param county
-	 * @param caseTypes
-	 * @return 数据集合
-	 */
-	@SuppressWarnings("unchecked")
-	private List<Object[]> getResultByYearByType(Dept county,
-			List<CaseType> caseTypes) {
 		List<Object[]> result = new ArrayList();
 		for (CaseType ct : caseTypes) {
 			StringBuffer sql = new StringBuffer(
@@ -531,8 +466,18 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 				result.add(r.get(0));
 			}
 		}
-		logger.info("长度：{}", result.size());
-		return result;
+		// 用户选择年数据
+		List<Object[]> tempResult = this.limitYear(beginDate, endDate, result);
+		// 年-数据(各个类别)
+		HashMap<String, ArrayList> yearData = this.repairData(tempResult);
+		StringBuffer cvsData = new StringBuffer();
+		for (String year : yearData.keySet()) {
+			ArrayList<Object[]> al = yearData.get(year);
+			cvsData.append(year).append("年;").append(praseString(al, caseTypes))
+					.append("\\n");
+		}
+		logger.info("年度{}", cvsData.toString());
+		return cvsData.toString();
 	}
 
 	/**
@@ -545,13 +490,13 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 	private String praseString(List<Object[]> result, List<CaseType> caseTypes) {
 		String returnString = "";
 		for (CaseType temp : caseTypes) {
-			String valueString = "0;";		
-				for (Object[] o : result) {
-					if (o[2].toString().equals(temp.getId().toString())) {
-						valueString = o[0] + ";";
-						break;
-					}
+			String valueString = "0;";
+			for (Object[] o : result) {
+				if (o[2].toString().equals(temp.getId().toString())) {
+					valueString = o[0] + ";";
+					break;
 				}
+			}
 			returnString += valueString;
 		}
 		returnString = returnString.substring(0, returnString.length() - 1);
@@ -592,14 +537,24 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 	public String getFsCaseByTime(Date beginDate, Date endDate,
 			String yearOrMonth, Dept county, String status, String deptId) {
 		String dataString = null;
+		Dept dept;
+		if (deptId != null && StringUtils.isNotBlank(deptId)) {// 选择部门
+			dept = deptManager.get(Integer.valueOf(deptId));
+		} else {// 未选择按当前用户所属部门
+			dept = county;
+		}
+		if (beginDate == null && endDate == null) {
+			beginDate = new Date();
+			endDate = new Date();
+		}
 		if (StringUtils.isNotBlank(yearOrMonth)) {
 			if (yearOrMonth.equals(StatisticsConstants.MONTH)) {// 按月
-				dataString = getByMonth(beginDate, endDate, county, status, deptId);
+				dataString = getByMonth(beginDate, endDate, dept, status);
 			} else {// 按年
-				dataString = getByYear(beginDate, endDate, county, status, deptId);
+				dataString = getByYear(beginDate, endDate, dept, status);
 			}
 		} else {// 默认
-			dataString = getByYear(beginDate, endDate, county, status, deptId);
+			dataString = getByYear(beginDate, endDate, dept, status);
 		}
 		return dataString;
 	}
@@ -609,18 +564,16 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 	 * 
 	 * @param beginDate
 	 * @param endDate
-	 * @param county
+	 * @param dept
 	 * @param status
-	 * @param deptId
 	 * @return
 	 */
-	private String getByYear(Date beginDate, Date endDate, Dept county,
-			String status, String deptId) {
+	private String getByYear(Date beginDate, Date endDate, Dept dept,
+			String status) {
 		// 未做时间处理的数据
-		List<Object[]> result = this.statisticCountByYear(county, status, deptId);
-		List<Object[]> tempResult;
+		List<Object[]> result = this.statisticCountByYear(dept, status);
 		// 用户选择的年内数据
-		tempResult = this.limitYear(beginDate, endDate, result);
+		List<Object[]> tempResult = this.limitYear(beginDate, endDate, result);
 		StringBuffer cvsData = new StringBuffer();
 		for (Object[] o : tempResult) {
 			cvsData.append(o[1] + "年;" + o[0] + "\\n");
@@ -635,13 +588,12 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 	 * @param endDate
 	 * @param county
 	 * @param status
-	 * @param deptId
 	 * @return
 	 */
-	private String getByMonth(Date beginDate, Date endDate, Dept county,
-			String status, String deptId) {
+	private String getByMonth(Date beginDate, Date endDate, Dept dept,
+			String status) {
 		List<Object[]> result = this.statisticCountByMonth(beginDate, endDate,
-				county, status, deptId);
+				dept, status);
 		StringBuffer cvsData = new StringBuffer();
 		if (CollectionUtils.isNotEmpty(result)) {
 			for (Object[] o : result) {
@@ -662,24 +614,13 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	private List<Object[]> statisticCountByYear(Dept county, String status,
-			String deptId) {
+	private List<Object[]> statisticCountByYear(Dept dept, String status) {
 		StringBuffer sql = new StringBuffer(
 				" select count(fc.id), year(fc.caseTime) from FsCase fc where 1=1 ");
 		List args = new ArrayList();
-		logger.info("所选区县：{}", deptId);
-		if (deptId == null || deptId.equals("")) {// 未选择部门
-			if (county.getParentDept() != null) {// 不是市级，按当前登录人员所属部门
-				sql.append("and fc.county.id = ? ");
-				args.add(county.getId());
-			}
-		} else {// 选择部门
-			Dept dp = deptManager.findObject("from Dept d where d.id=?", Integer
-					.valueOf(deptId));
-			if (dp.getParentDept() != null) {// 选择部门不是市级
-				sql.append("and fc.county.id = ? ");
-				args.add(Integer.valueOf(deptId));
-			}
+		if (dept.getParentDept() != null) {// 部门是否为市级
+			sql.append("and fc.county.id = ? ");
+			args.add(dept.getId());
 		}
 		// 事件状态
 		if (StringUtils.isNotBlank(status)) {
@@ -747,14 +688,13 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 	 * 
 	 * @param beginDate
 	 * @param endDate
-	 * @param county
+	 * @param dept
 	 * @param status
-	 * @param deptId
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
 	private List<Object[]> statisticCountByMonth(Date beginDate, Date endDate,
-			Dept county, String status, String deptId) {
+			Dept dept, String status) {
 		// 获得开始日期与结束日期时间段的月份
 		List<String> months = getDateMonth(beginDate, endDate);
 		List<Object[]> result = new ArrayList();
@@ -771,17 +711,9 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 			StringBuffer sql = new StringBuffer(
 					" select year(fc.caseTime),count(fc.id) from FsCase fc where 1=1 ");
 			List args = new ArrayList();
-			if (deptId == null || deptId.equals("")) {// 未选择部门
-				if (county.getParentDept() != null) {// 不是市级 按当前登录人员所属部门
-					sql.append("and fc.county.id = ? ");
-					args.add(county.getId());
-				}
-			} else {// 选择部门
-				Dept dp = deptManager.findObject("from dept d where d.id=?", deptId);
-				if (dp.getParentDept() != null) {// 不是市级
-					sql.append("and fc.county.id = ? ");
-					args.add(Integer.valueOf(deptId));
-				}
+			if (dept.getParentDept() != null) {// 部门是否为市级
+				sql.append("and fc.county.id = ? ");
+				args.add(dept.getId());
 			}
 			// 事件状态
 			if (StringUtils.isNotBlank(status)) {
@@ -835,39 +767,13 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 				month.add(String.valueOf(eYear) + "-"
 						+ StringUtil.zeroPadding(temp + 1, 2));
 			}
-		} else if ((eYear - sYear) < 0) {// 结束年比开始年小
-			for (int temp = eMonth; temp < 12; temp++) {// 开始年剩余月份
-				month.add(String.valueOf(eYear) + "-"
-						+ StringUtil.zeroPadding(temp + 1, 2));
-			}
-
-			for (int temp = eYear + 1; temp <= sYear - 1; temp++) {// 开始,结束年之间的月份
-				for (int i = 0; i < 12; i++) {
-					month.add(String.valueOf(eYear) + "-"
-							+ StringUtil.zeroPadding(i + 1, 2));
-				}
-			}
-			for (int temp = 0; temp <= eMonth; temp++) {// 结束年月份
-				month.add(String.valueOf(sYear) + "-"
-						+ StringUtil.zeroPadding(temp + 1, 2));
-			}
-
 		}
 		if (eYear == sYear) {// 同一年
-			if ((eMonth - sMonth) > 0) {
+			if ((eMonth - sMonth) >= 0) {
 				for (int temp = sMonth; temp <= eMonth; temp++) {
 					month.add(String.valueOf(eYear) + "-"
 							+ StringUtil.zeroPadding(temp + 1, 2));
 				}
-			} else if ((eMonth - sMonth) < 0) {
-				for (int temp = eMonth; temp <= sMonth; temp++) {
-					month.add(String.valueOf(eYear) + "-"
-							+ StringUtil.zeroPadding(temp + 1, 2));
-				}
-			}
-			if (eMonth == sMonth) {// 一个月
-				month.add(String.valueOf(eYear) + "-"
-						+ StringUtil.zeroPadding(sMonth + 1, 2));
 			}
 		}
 		return month;
@@ -885,47 +791,36 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 	@SuppressWarnings("unchecked")
 	public String getFsCaseSendType(Date beginDate, Date endDate, Dept county,
 			String deptId) {
+		Dept dept;
+		StringBuffer cvsData = new StringBuffer();
+		if (deptId != null && StringUtils.isNotBlank(deptId)) {// 选择的部门
+			dept = deptManager.get(Integer.valueOf(deptId));
+		} else {// 未选择部门按当前登录用户部门
+			dept = county;
+		}
 		List<Object[]> result = new ArrayList();
 		List<SendType> sts = sendTypeManager.orderSendType();
 		for (SendType st : sts) {
 			StringBuffer sql = new StringBuffer(
 					"select fc.sendType.name,count(fc.id) from FsCase fc where 1=1");
 			List args = new ArrayList();
-			if (deptId == null || deptId.equals("")) {// 未选择部门
-				if (county.getParentDept() != null) {// 不是市级，按当前登录人员所属部门
-					sql.append("and fc.county.id = ? ");
-					args.add(county.getId());
-				}
-			} else {// 选择部门
-				Dept dp = deptManager.findObject("from Dept d where d.id=?", Integer
-						.valueOf(deptId));
-				if (dp.getParentDept() != null) {// 选择部门不是市级
-					sql.append("and fc.county.id = ? ");
-					args.add(Integer.valueOf(deptId));
-				}
+			if (dept.getParentDept() != null) {
+				sql.append("and fc.county.id = ? ");
+				args.add(dept.getId());
 			}
 			sql.append(" and fc.sendType.id =?");
 			args.add(st.getId());
-			sql.append(" and fc.caseTime between ? and ? ");
-			args.add(beginDate);
-			args.add(endDate);
+			if (beginDate != null && endDate != null) {
+				sql.append(" and fc.caseTime between ? and ? ");
+				args.add(beginDate);
+				args.add(endDate);
+			}
 			List<Object[]> r = getDao().query(sql.toString(), args.toArray());
-			Object[] data = new Object[2];
-			data[0] = st.getName();
-			if (CollectionUtils.isNotEmpty(r)) {
-				data[1] = r.get(0)[1];
+			if (CollectionUtils.isNotEmpty(result)) {
+				cvsData.append(st.getName() + ";").append(r.get(0)[1] + "\\n");
 			} else {
-				data[1] = 0;
+				cvsData.append(st.getName() + ";").append(0 + "\\n");
 			}
-			result.add(data);
-		}
-		StringBuffer cvsData = new StringBuffer();
-		if (CollectionUtils.isNotEmpty(result)) {
-			for (Object[] o : result) {
-				cvsData.append(o[0] + ";").append(o[1] + "\\n");
-			}
-		} else {
-			cvsData.append("nothing;").append("0\\n");
 		}
 		return cvsData.toString();
 	}
@@ -942,40 +837,32 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 	@SuppressWarnings("unchecked")
 	public String getFsCaseSource(Date beginDate, Date endDate, Dept county,
 			String deptId) {
-		List<Object[]> result = null;
+		Dept dept;
+		if (deptId != null && StringUtils.isNotBlank(deptId)) {
+			dept = deptManager.get(Integer.valueOf(deptId));
+		} else {
+			dept = county;
+		}
 		StringBuffer sql = new StringBuffer(
 				"select fc.caseSourceType,count(fc.id) from FsCase fc where 1=1");
 		List args = new ArrayList();
-		if (deptId == null || deptId.equals("")) {// 未选择部门
-			if (county.getParentDept() != null) {// 不是市级，按当前登录人员所属部门
-				sql.append("and fc.county.id = ? ");
-				args.add(county.getId());
-			}
-		} else {// 选择部门
-			Dept dp = deptManager.findObject("from Dept d where d.id=?", Integer
-					.valueOf(deptId));
-			if (dp.getParentDept() != null) {// 选择部门不是市级
-				sql.append("and fc.county.id = ? ");
-				args.add(Integer.valueOf(deptId));
-			}
+		if (dept.getParentDept() != null) {
+			sql.append("and fc.county.id = ? ");
+			args.add(dept.getId());
 		}
-		sql.append(" and fc.caseTime between ? and ?  group by fc.caseSourceType");
-		args.add(beginDate);
-		args.add(endDate);
-		result = getDao().query(sql.toString(), args.toArray());
+		if (beginDate != null && endDate != null) {
+			sql
+					.append(" and fc.caseTime between ? and ?  group by fc.caseSourceType");
+			args.add(beginDate);
+			args.add(endDate);
+		}
+		List<Object[]> result = getDao().query(sql.toString(), args.toArray());
 
 		StringBuffer cvsData = new StringBuffer();
 		if (CollectionUtils.isNotEmpty(result)) {
 			for (Object[] o : result) {
-				// 各状态转化，为页面显示做准备
-				if (o[0].toString().equals(CaseConstants.CASE_SOURCE_TYPE_DEPTREPORT)) {
-					o[0] = "部门上报";
-				}
-				if (o[0].toString().equals(CaseConstants.CASE_SOURCE_TYPE_GENERIC)) {
-					o[0] = "普通";
-				}
-				if (o[0].toString().equals(CaseConstants.CASE_SOURCE_TYPE_JOINTASK)) {
-					o[0] = "联合整治";
+				if (o[0] != null) {
+					o[0] = CaseConstants.CASE_SOURCE_TYPE.get(o[0]);
 				}
 				cvsData.append(o[0] + ";").append(o[1] + "\\n");
 			}
