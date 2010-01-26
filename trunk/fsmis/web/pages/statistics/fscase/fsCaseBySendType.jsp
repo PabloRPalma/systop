@@ -28,14 +28,14 @@
 				<td><div id="comboxWithTree" class="required"></div>
 				<s:hidden name="deptId" id="deptId"></s:hidden></td>    
       <td>  &nbsp; 时间:
-			<input type="text" name="beginDate" style="width: 90px"
+			<input type="text" name="beginDate" style="width: 90px" id="beginDate"
 				value='<s:date name="beginDate" format="yyyy-MM-dd"/>'
-				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"
+				onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'endDate\')}',skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"
 				class="Wdate" />
 			至
-			<input type="text" name="endDate" style="width: 90px"
+			<input type="text" name="endDate" style="width: 90px" id="endDate"
 				value='<s:date name="endDate" format="yyyy-MM-dd"/>'
-				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"
+				onfocus="WdatePicker({minDate:'#F{$dp.$D(\'beginDate\')}',skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"
 				class="Wdate" /></td>
     <td> &nbsp;&nbsp;<input type="submit" value="查询" class="button" /></td>
       </tr></table>     

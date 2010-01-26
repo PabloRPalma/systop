@@ -7,6 +7,7 @@
 <%@include file="/common/ec.jsp"%>
 <%@include file="/common/extjs.jsp" %>
 <%@include file="/common/meta.jsp"%>
+<%@include file="/common/calendar.jsp"%>
 <script type="text/javascript" src="${ctx}/amcharts/swfobject.js"></script>
 <link href="${ctx}/styles/treeSelect.css" type='text/css'
 	rel='stylesheet'>
@@ -30,13 +31,12 @@
        <td>  &nbsp;时间:
 			<input id="beginDate" type="text" name="beginDate" style="width: 90px"
 				value='<s:date name="beginDate" format="yyyy-MM-dd"/>'
-				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"
+				onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'endDate\')}',skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"
 				class="Wdate"/>
 					至
 			<input id="endDate" type="text" name="endDate" style="width: 90px"
 				value='<s:date name="endDate" format="yyyy-MM-dd"/>'
-				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"
-				class="Wdate" />
+				onfocus="WdatePicker({minDate:'#F{$dp.$D(\'beginDate\')}',skin:'whyGreen',dateFmt:'yyyy-MM-dd'})" class="Wdate" />
 				统计单位:<s:select id="yearOrMonth" list="yearOrMonthMap" cssStyle="width:40px" name="yearOrMonth"/>
 				状态:<s:select id="status" list="statusMap" cssStyle="width:60px" name="status" headerKey="" headerValue="请选择"/>
       </td>
