@@ -1,5 +1,6 @@
 package com.systop.fsmis.fscase.gather.service;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -92,29 +93,29 @@ public class GatherFsCaseManager extends BaseGenericsManager<FsCase> {
 				// 得到状态不为0的多体事件关联单体事件与符合条件的单体事件之差
 				List<FsCase> newFsCase = reject(oldMCase, fsCityList);
 				// 新建多体事件，并与查出的单体事件建立关联
-				FsCase aMFCase = new FsCase();
-				aMFCase.setCaseType(getDao().get(CaseType.class, caseTypeId));
+				FsCase multiCase = new FsCase();
+				multiCase.setCaseType(getDao().get(CaseType.class, caseTypeId));
 				logger.info("市级差集合数量：{}", newFsCase.size());
 				//不为空时，未包含入多体事件的单体事件与多体建立关联
 				if (CollectionUtils.isEmpty(newFsCase)) {
 					for (FsCase fCase : fsCityList) {
-						aMFCase.getGenericCases().add(fCase);
+						multiCase.getGenericCases().add(fCase);
 					}
 				} else {
 					for (FsCase fCase : newFsCase) {
-						aMFCase.getGenericCases().add(fCase);
+						multiCase.getGenericCases().add(fCase);
 					}
 				}
-				aMFCase.setIsMultiple(FsConstants.Y);
-				aMFCase.setCounty(city);
-				aMFCase.setGatherConfiger(configerCity);
-				aMFCase.setCaseTime(fsCityList.get(0).getCaseTime());
-				aMFCase.setIsSubmited(FsConstants.N);
-				aMFCase.setStatus(CaseConstants.CASE_UN_RESOLVE);
-				aMFCase.setTitle(fsCaseCityCount - oldCaseCount + " 个单体事件" + "根据关键字" + " "
-						+ configerCity.getKeyWord() + " " + "自动汇总成 "
-						+ city.getName() + " 多体事件");
-				getDao().save(aMFCase);
+				multiCase.setIsMultiple(FsConstants.Y);
+				multiCase.setCounty(city);
+				multiCase.setGatherConfiger(configerCity);
+				multiCase.setCaseTime(fsCityList.get(0).getCaseTime());
+				multiCase.setIsSubmited(FsConstants.N);
+				multiCase.setStatus(CaseConstants.CASE_UN_RESOLVE);
+				multiCase.setTitle(MessageFormat.format(CaseConstants.COUNTY_MULTCASE_FOLDER, 
+						new Object[]{fsCaseCityCount - oldCaseCount, configerCity.getKeyWord(), 
+						multiCase.getCounty().getName()}));
+				getDao().save(multiCase);
 			}
 		}
 	}
@@ -161,28 +162,29 @@ public class GatherFsCaseManager extends BaseGenericsManager<FsCase> {
 				// 得到状态不为0的多体事件关联单体事件与符合条件的单体事件之差
 				List<FsCase> newFsCase = reject(oldMCase, fsList);
 				// 新建多体事件，并与查出的单体事件建立关联
-				FsCase cMFCase = new FsCase();
-				cMFCase.setCaseType(getDao().get(CaseType.class, caseTypeId));
+				FsCase multiCase = new FsCase();
+				multiCase.setCaseType(getDao().get(CaseType.class, caseTypeId));
 				logger.info("差集合数量：{}", newFsCase.size());
 				if (CollectionUtils.isEmpty(newFsCase)) {
 					for (FsCase fCase : fsList) {
-						cMFCase.getGenericCases().add(fCase);
+						multiCase.getGenericCases().add(fCase);
 					}
 				} else {
 					for (FsCase fCase : newFsCase) {
-						cMFCase.getGenericCases().add(fCase);
+						multiCase.getGenericCases().add(fCase);
 					}
 				}
-				cMFCase.setIsMultiple(FsConstants.Y);
-				cMFCase.setCounty(country);
-				cMFCase.setGatherConfiger(configer);
-				cMFCase.setCaseTime(fsList.get(0).getCaseTime());
-				cMFCase.setIsSubmited(FsConstants.N);
-				cMFCase.setStatus(CaseConstants.CASE_UN_RESOLVE);
-				cMFCase.setTitle(fsCaseCount - oldCaseCount + "个单体事件" + "根据关键字" + " "
-						+ configer.getKeyWord() + " " + "自动汇总成 "
-						+ cMFCase.getCounty().getName() + " 多体事件");
-				getDao().save(cMFCase);
+				multiCase.setIsMultiple(FsConstants.Y);
+				multiCase.setCounty(country);
+				multiCase.setGatherConfiger(configer);
+				multiCase.setCaseTime(fsList.get(0).getCaseTime());
+				multiCase.setIsSubmited(FsConstants.N);
+				multiCase.setStatus(CaseConstants.CASE_UN_RESOLVE);
+				multiCase.setTitle(MessageFormat.format(CaseConstants.COUNTY_MULTCASE_FOLDER, 
+						new Object[]{fsCaseCount - oldCaseCount, configer.getKeyWord(), 
+						multiCase.getCounty().getName()}));
+				getDao().save(multiCase);
+				
 			}
 		}
 	}
@@ -284,8 +286,17 @@ public class GatherFsCaseManager extends BaseGenericsManager<FsCase> {
 		StringBuffer hql = new StringBuffer("select count(*) from FsCase fe where 1=1 ");
 		List arg = new ArrayList();
 		if(StringUtils.isNotBlank(configerCity.getKeyWord())) {
-			hql.append("and fe.title like ? ");
-			arg.add(MatchMode.ANYWHERE.toMatchString(configerCity.getKeyWord()));
+			hql.append("and (");
+			String [] keyWord = configerCity.getKeyWord().split(",");
+			StringBuffer keyHql = new StringBuffer(5);
+			for(int i=0; i<keyWord.length; i++) {
+				if(StringUtils.isNotBlank(keyWord[i])) {
+					keyHql.append("fe.title like ? or ");
+					arg.add(MatchMode.ANYWHERE.toMatchString(keyWord[i]));
+				}
+			}
+			hql.append(keyHql.substring(0, keyHql.lastIndexOf("or") - 1));
+			hql.append(" ) ");
 		}
 		hql.append("and fe.status = ? ");
 		arg.add(CaseConstants.CASE_CLOSED);
@@ -296,6 +307,7 @@ public class GatherFsCaseManager extends BaseGenericsManager<FsCase> {
 		hql.append("and fe.caseTime between ? and ?");
 		arg.add(DateUtil.add(new Date(), Calendar.DAY_OF_MONTH, -configerCity.getDays()));
 		arg.add(new Date());
+		logger.info("cityHQL: {}", hql.toString());
 		List list = query(hql.toString(), arg.toArray());
 		return (list != null && list.size() > 0) ? Integer.valueOf(list.get(0).toString()) : 0;
 	}
@@ -312,8 +324,17 @@ public class GatherFsCaseManager extends BaseGenericsManager<FsCase> {
 		StringBuffer hql = new StringBuffer("from FsCase fe where 1=1 ");
 		List arg = new ArrayList();
 		if(StringUtils.isNotBlank(configerCity.getKeyWord())) {
-			hql.append("and fe.title like ? ");
-			arg.add(MatchMode.ANYWHERE.toMatchString(configerCity.getKeyWord()));
+			hql.append("and (");
+			String [] keyWord = configerCity.getKeyWord().split(",");
+			StringBuffer keyHql = new StringBuffer(5);
+			for(int i=0; i<keyWord.length; i++) {
+				if(StringUtils.isNotBlank(keyWord[i])) {
+					keyHql.append("fe.title like ? or ");
+					arg.add(MatchMode.ANYWHERE.toMatchString(keyWord[i]));
+				}
+			}
+			hql.append(keyHql.substring(0, keyHql.lastIndexOf("or") - 1));
+			hql.append(" ) ");
 		}
 		hql.append("and fe.status = ? ");
 		arg.add(CaseConstants.CASE_CLOSED);
@@ -325,6 +346,7 @@ public class GatherFsCaseManager extends BaseGenericsManager<FsCase> {
 		arg.add(DateUtil.add(new Date(), Calendar.DAY_OF_MONTH, -configerCity.getDays()));
 		arg.add(new Date());
 		hql.append("order by fe.caseTime asc");
+		logger.info("cityHQL: {}", hql.toString());
 		List<FsCase> list = query(hql.toString(), arg.toArray());
 		return list;
 	}
@@ -369,8 +391,17 @@ public class GatherFsCaseManager extends BaseGenericsManager<FsCase> {
 		StringBuffer hql = new StringBuffer("from FsCase fe where 1=1 ");
 		List arg = new ArrayList();
 		if(StringUtils.isNotBlank(configer.getKeyWord())) {
-			hql.append("and fe.title like ? ");
-			arg.add(MatchMode.ANYWHERE.toMatchString(configer.getKeyWord()));
+			hql.append("and (");
+			String [] keyWord = configer.getKeyWord().split(",");
+			StringBuffer keyHql = new StringBuffer(5);
+			for(int i=0; i<keyWord.length; i++) {
+				if(StringUtils.isNotBlank(keyWord[i])) {
+					keyHql.append("fe.title like ? or ");
+					arg.add(MatchMode.ANYWHERE.toMatchString(keyWord[i]));
+				}
+			}
+			hql.append(keyHql.substring(0, keyHql.lastIndexOf("or") - 1));
+			hql.append(" ) ");
 		}
 		hql.append("and fe.status = ? ");
 		arg.add(CaseConstants.CASE_CLOSED);
@@ -384,6 +415,7 @@ public class GatherFsCaseManager extends BaseGenericsManager<FsCase> {
 		arg.add(DateUtil.add(new Date(), Calendar.DAY_OF_MONTH, -configer.getDays()));
 		arg.add(new Date());
 		hql.append("order by fe.caseTime asc");
+		logger.info("countyHQL: {}", hql.toString());
 		List<FsCase> list = query(hql.toString(), arg.toArray());
 		return list;
 	}
@@ -402,8 +434,17 @@ public class GatherFsCaseManager extends BaseGenericsManager<FsCase> {
 		StringBuffer hql = new StringBuffer("select count(*) from FsCase fe where 1=1 ");
 		List arg = new ArrayList();
 		if(StringUtils.isNotBlank(configer.getKeyWord())) {
-			hql.append("and fe.title like ? ");
-			arg.add(MatchMode.ANYWHERE.toMatchString(configer.getKeyWord()));
+			hql.append("and (");
+			String [] keyWord = configer.getKeyWord().split(",");
+			StringBuffer keyHql = new StringBuffer(5);
+			for(int i=0; i<keyWord.length; i++) {
+				if(StringUtils.isNotBlank(keyWord[i])) {
+					keyHql.append("fe.title like ? or ");
+					arg.add(MatchMode.ANYWHERE.toMatchString(keyWord[i]));
+				}
+			}
+			hql.append(keyHql.substring(0, keyHql.lastIndexOf("or") - 1));
+			hql.append(" ) ");
 		}
 		hql.append("and fe.status = ? ");
 		arg.add(CaseConstants.CASE_CLOSED);
@@ -416,6 +457,7 @@ public class GatherFsCaseManager extends BaseGenericsManager<FsCase> {
 		hql.append("and fe.caseTime between ? and ?");
 		arg.add(DateUtil.add(new Date(), Calendar.DAY_OF_MONTH, -configer.getDays()));
 		arg.add(new Date());
+		logger.info("countyHQL: {}", hql.toString());
 		List list = getDao().query(hql.toString(), arg.toArray());
 		return (list != null && list.size() > 0) ? Integer.valueOf(list.get(0).toString()) : 0;
 	}
