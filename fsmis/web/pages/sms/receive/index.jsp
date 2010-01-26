@@ -78,11 +78,8 @@
 			<s:if test="#attr.item.isTreated eq 1"><font color="green">已处理</font></s:if>
 			<s:else><font color="red">未处理</font></s:else>
 		</ec:column>
-		<ec:column width="100" property="_0" title="操作" style="text-align:center" sortable="false">
-		<%--
-			<a href="${ctx}/fscase/editFsCaseBySmsReceive.do?smsReceiveId=${item.id}">查看</a> |
-		--%>		
-		<a href="${ctx}/smsreceive/view.do?model.id=${item.id}">查看</a> |
+		<ec:column width="100" property="_0" title="操作" style="text-align:center" sortable="false">	
+		<a href="#" onClick="viewSmsInfo(${item.id})">查看</a> |
 			<c:choose>
 				<c:when test="${item.isReport eq '1'}">
 					<a href="${ctx}/fscase/editFsCaseBySmsReceive.do?smsReceiveId=${item.id}&isMultipleCase=0">处理</a>
@@ -98,6 +95,66 @@
 </ec:table></div>
 </div>
 </div>
+<!-- 查看短信内容 -->
+<div id="smsWindow" class="x-hidden">
+<div class="x-window-header">短信内容</div>
+<div class="x-window-body">
+	<table width="600">
+	  <tr>
+	    <td align="right" width="100" height="28"><font color="green">发送号码：</font></td>
+		<td align="left" id="smsNum"></td>
+	  </tr>
+	  <tr>
+	    <td align="right" width="100" height="28"><font color="green">接收时间：</font></td>
+		<td align="left" id="receiveTime"></td>
+	  </tr>
+	  <tr>
+	    <td align="right" width="100" height="28"><font color="green">短信内容：</font></td>
+		<td align="left" id="smsContent"></td>
+	  </tr>
+	</table>
+ </div>
+</div>
+<!-- 查看短信内容 -->
+<script type="text/javascript">
+  var SmsWindow = new Ext.Window({
+      el: 'smsWindow',
+      width: 600,
+      height: 320,
+      layout : 'fit',
+      closeAction:'hide',
+      buttonAlign:'center',
+      modal:'false',
+      buttons:[
+        {text:'关闭',
+        	handler:function(){
+        	SmsWindow.hide();
+        	window.location = '${ctx}/smsreceive/index.do';
+        }
+      }]
+  });
+  function viewSmsInfo(smsId) {
+	  $.ajax({
+		     url: '${ctx}/smsreceive/viewSmsReceiveInfo.do',
+		     type: 'post',
+			 dataType: 'json',
+			 data: {smsReceiveId : smsId},
+			 success: function(rst, textStatus){
+				 if(rst.mobileNum != null) {
+					 document.getElementById("smsNum").innerHTML = rst.mobileNum;
+				 }
+				 if(rst.receiveTime != null) {
+					 document.getElementById("receiveTime").innerHTML = rst.receiveTime;
+				 }
+				 if(rst.content != null) {
+					 document.getElementById("smsContent").innerHTML = rst.content;
+				 }
+				 SmsWindow.show();
+			 }
+  	  }); 
+  }
+</script>
+
 <script type="text/javascript">
 /**
  * 删除提交
