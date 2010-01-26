@@ -85,16 +85,29 @@ public class JointTaskAction extends
 	private JointTaskDetailAttManager jointTaskDetailAttManager;
 	
 	/**
+	 * 当前登录用户管理
+	 */
+  @Autowired
+  private LoginUserService loginUserService;
+	
+	/**
 	 * 案件一级类型
 	 */
 	private Integer typeOneId;
+	
 	/**
 	 * 案件二级类型
 	 */
 	private Integer typeTwoId;
 	
+	/**
+	 * 一级类型（案件编辑）
+	 */
   private Integer oneId;
-
+  
+  /**
+   * 二级类型（案件编辑）
+   */
   private Integer twoId;
   
 	/**
@@ -126,9 +139,6 @@ public class JointTaskAction extends
 	 */
 	private Integer jointTaskId;
 	
-  @Autowired
-  private LoginUserService loginUserService;
-  
   /**
    * 查询事件事发起始时间
    */
@@ -187,8 +197,7 @@ public class JointTaskAction extends
       hql.append("and fc.caseTime >= ? and fc.caseTime <= ? ");
       args.add(caseBeginTime);
       args.add(caseEndTime);
-    }
-    
+    }   
     hql.append("and fc.caseSourceType = ? ");
     args.add(CaseConstants.CASE_SOURCE_TYPE_JOINTASK);	 
     hql.append("order by fc.caseTime desc, fc.status");
