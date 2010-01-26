@@ -199,11 +199,9 @@ public class ReportAction extends ExtJsCrudAction<FsCase, ReportManager> {
 		if (getModel().getId() != null) {
 			//取得上报事件的任务信息
 			task = getManager().getTaskOfCase(getModel().getId());
-			if (getModel().getCorp() != null) {
-				corp = getModel().getCorp();
-				if (corp != null) {
-					corpName = corp.getName();
-				}
+			corp = getModel().getCorp();
+			if (corp != null) {
+				corpName = corp.getName();
 			}
 			if (task != null) {
 				taskDetail = getManager().getTaskDetailOfTask(task.getId(), dept.getId());
