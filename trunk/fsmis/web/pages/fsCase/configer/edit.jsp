@@ -5,7 +5,22 @@
 <html>
 <head>
 <%@include file="/common/meta.jsp" %>
+<%@include file="/common/extjs.jsp" %>
 <%@include file="/common/validator.jsp"%>
+<script type="text/javascript">
+function isRight(name) {
+	var pattern = /(^[\u4e00-\u9fa5\da-zA-Z][\u4e00-\u9fa5\da-zA-Z ,]*[\u4e00-\u9fa5\da-zA-Z]$)|^[\da-zA-Z\u4e00-\u9fa5]$/;   
+	if(!pattern.test(name)) {
+		Ext.MessageBox.show({
+			title :'提示',
+			minWidth:260,
+			msg : '请重新输入关键字，格式不正确!',
+			buttons:Ext.MessageBox.OK,
+			icon:Ext.MessageBox.INFO
+		});
+	}
+}
+</script>
 </head>
 <body>
 <div class="x-panel">
@@ -25,15 +40,21 @@
              </td>
           </tr>
           <tr>
+             <td align="right" width="90"> </td>
+             <td align="left" width="300">
+             	<font color="red">级别：用以区分区县级和市级的不同汇总生成条件。</font>
+             </td>
+          </tr>
+          <tr>
              <td align="right" width="90">关键字：</td>
              <td align="left" width="300">
-             	<s:textfield id="name" name="model.keyWord" cssClass="required" cssStyle="width:300px"/><font color="red">&nbsp;*</font>
+             	<s:textfield id="name" name="model.keyWord" cssClass="required" cssStyle="width:300px" onblur="isRight(this.value)"/><font color="red">&nbsp;*</font>
              </td>
           </tr>
           <tr>
              <td align="right" width="90"> </td>
              <td align="left" width="300">
-             	<font color="red">关键字：汇总生成多体事件的单列事件标题所包含的内容；输入多个关键字时，每个关键字间需要用","隔开</font>
+             	<font color="red">关键字：汇总生成多体事件的单列事件标题所包含的内容；只允许输入字母、数字或中文，输入多个关键字时，每个关键字间需要用 "," 隔开(半角逗号)，如：事件,食品,肉类</font>
              </td>
           </tr>
            <tr>
