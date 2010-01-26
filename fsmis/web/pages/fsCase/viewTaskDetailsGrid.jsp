@@ -41,15 +41,15 @@
 		           width : 200,
 		           sortable : true				     
 		       },{
-			       header : '完成时间',
+			       header : '处理时间',
 		           dataIndex : 'completionTime',
 		           width : 100,
 		           sortable : true,
 		           renderer: function(value, cellmeta, record, rowIndex, columnIndex, store) {
 		               /*已退回或者已处理显示完成时间*/
-			           if(value == '3' || value == '4' ){
+			           if(record.data["status"] == '4'){
 			       		   return value;
-			           }else{/*否则显示剩余或者逾期天数*/
+			           }else if(record.data["status"] == '0' || record.data["status"] == '1' || record.data["status"] == '2'){/*否则显示剩余或者逾期天数*/
 			       		   if(record.data["remainDays"] >=0){
 			        		  return '剩余天数'+record.data["remainDays"] ;
 						   }else{
