@@ -76,7 +76,7 @@ function remove(id){
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	<ec:row>
 		<ec:column width="30" property="_s" title="No." value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center"/>	
-		<ec:column width="200" property="title" title="事件标题" tipTitle="${item.title}" sortable="false"/>
+		<ec:column width="200" property="title" title="事件标题" tipTitle="${item.title}" ellipsis="true" sortable="false"/>
 		<ec:column width="50" property="code" title="事件编号" sortable="false"/>
 		<ec:column width="80" property="caseType.name" title="事件类别" sortable="false"/>
 		<ec:column width="120" property="caseTime" title="事发时间"
