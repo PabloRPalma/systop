@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.xwork.StringUtils;
+import org.hibernate.criterion.MatchMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -80,7 +81,7 @@ public class CorpStatisticsAction extends
 		if (dept != null) {
 			if (dept.getChildDepts().size() > 0) {
 				hql.append("and cp.dept.serialNo like ? ");
-				args.add("%" + dept.getSerialNo() + "%");
+				args.add(MatchMode.START.toMatchString(dept.getSerialNo()));
 			} else {
 				hql.append("and cp.dept.id = ? ");
 				args.add(dept.getId());
@@ -95,24 +96,19 @@ public class CorpStatisticsAction extends
 		// 设置统计数据
 		StringBuffer cvsData = new StringBuffer();
 		if (items != null && items.size() > 0) {
-			// 获取元素个数计数
-			int i = 0;
-			for (Corp cp : items) {
-				if (cp.getName() != null) {
-					if (getDisplayNum() != null) {
-						if (i >= displayNum) {
-							break;
-						}
-					} else {
-						// 统计图默认显示10个
-						if (i >= 10) {
-							break;
-						}
-					}
-					i++;
-					cvsData.append(cp.getName()).append(";");
-					if(cp.getFsCases() != null){
-						cvsData.append(cp.getFsCases().size());
+			// 默认显示10个
+			if (displayNum == null) {
+				displayNum = 10;
+			}
+			List<Corp> corps = new ArrayList();
+			corps.addAll(items);
+			for (int i = 0; (i < corps.size() && i < displayNum); i++) {
+				if (corps.get(i).getName() != null
+						&& corps.get(i).getFsCases() != null
+						&& corps.get(i).getFsCases().size() > 0) {
+					cvsData.append(corps.get(i).getName()).append(";");
+					if (corps.get(i).getFsCases() != null) {
+						cvsData.append(corps.get(i).getFsCases().size());
 					}
 					cvsData.append("\\n");
 				}
@@ -144,7 +140,7 @@ public class CorpStatisticsAction extends
 			if (dept.getParentDept() != null) {
 				if (dept.getChildDepts().size() > 0) {
 					hql.append("and serialNo like ? ");
-					args.add("%" + dept.getSerialNo() + "%");
+					args.add(MatchMode.START.toMatchString(dept.getSerialNo()));
 				} else {
 					hql.append("and id = ? ");
 					args.add(dept.getId());
