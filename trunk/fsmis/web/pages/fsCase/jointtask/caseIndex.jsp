@@ -7,6 +7,13 @@
 <%@include file="/common/ec.jsp"%>
 <%@include file="/common/extjs.jsp"%>
 <%@include file="/common/meta.jsp"%>
+<script type="text/javascript">
+function remove(id){
+	if (confirm("确认要删除联合整治事件信息吗?")){
+		window.location.href="${ctx}/jointTask/caseRemove.do?model.fsCase.id=" + id;	
+	}
+}
+</script>
 </head>
 <body>
 <div class="x-panel">
@@ -61,15 +68,40 @@
 		<ec:column width="120" property="caseType.name" title="事件类别" sortable="false"/>
 		<ec:column width="120" property="caseTime" title="事发时间"
 			style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm" sortable="false"/>
-		<ec:column width="100" property="_2" title="事件状态" style="text-align:center" sortable="false">
-			<c:if test="${item.status == '0'}"><font color="red">未派遣</font></c:if>
-			<c:if test="${item.status == '1'}"><font color="#FF9D07">已派遣</font></c:if>
-			<c:if test="${item.status == '2'}"><font color="green">已处理</font></c:if>
+		<ec:column width="80" property="_2" title="事件状态" style="text-align:center" sortable="false">
+			<c:if test="${item.status eq '0'}"><font color="red">未派遣</font></c:if>
+			<c:if test="${item.status eq '1'}"><font color="#FF9D07">已派遣</font></c:if>
+			<c:if test="${item.status eq '2'}"><font color="green">已处理</font></c:if>
 		</ec:column>	
-		<ec:column width="85" property="_6" title="查看" style="text-align:center" sortable="false">
-			<a title="查看事件" href="${ctx}/fscase/view.do?fsCaseId=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">看 </a> |
+		<ec:column width="80" property="_6" title="查看" style="text-align:center" sortable="false">
+	       <c:choose>
+		     <c:when test="${!empty item.jointTaskses}"> 
+                <a title="查看事件" href="${ctx}/jointTask/view.do?model.id=<c:forEach items='${item.jointTaskses}' var='jointTask'>${jointTask.id}</c:forEach>">看 </a> |       
+		     </c:when>
+		     <c:otherwise>
+                <a title="查看事件" href="${ctx}/fscase/view.do?fsCaseId=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">看 </a> |	       
+		     </c:otherwise>
+		   </c:choose> 
 			<a title="地图" href="#">图</a>
-		</ec:column>					
+		</ec:column>	
+		<ec:column width="80" property="_7" title="操作" style="text-align:center" sortable="false">
+	       <c:choose>
+		     <c:when test="${item.status eq '0'}"> 
+	 	       <a href="${ctx}/jointTask/edit.do?model.fsCase.id=${item.id}">派</a> |		        
+		     </c:when>
+		     <c:otherwise>
+	           <font color="#999999">派</font> | 	       
+		     </c:otherwise>
+		   </c:choose> 	
+	       <c:choose>
+		     <c:when test="${item.status eq '0'}"> 
+	 	       <a href="#" onclick="remove(${item.id})">删</a>        
+		     </c:when>
+		     <c:otherwise>
+	           <font color="#999999">删</font> 
+		     </c:otherwise>
+		   </c:choose> 			   	
+		</ec:column>							
 	</ec:row>
 </ec:table>
 </div>

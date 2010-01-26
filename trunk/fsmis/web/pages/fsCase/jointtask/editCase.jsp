@@ -144,8 +144,7 @@
 			<td align="right">报告人电话：</td>
             <td align="left" width="40%"><s:textfield id="informerPhone"
 				name="model.fsCase.informerPhone" cssStyle="width:158px" cssClass="required"/><font color="red">&nbsp;*</font></td>
-		</tr>
-					
+		</tr>					
 		<tr>
 			<td align="right" >案件类别：</td>
 			<td align="left" colspan="3">
@@ -161,13 +160,6 @@
 				 <font color="red">&nbsp;*</font>
 			</td>
 		</tr>	
-		<tr>
-			<td align="right">所属区县：</td>
-			<td align="left" colspan="3" style="text-align:left;" nowrap>		
-				<div id="comboxWithTree" style="width:50px;float: left;" class="required" ></div><font color="red" style="margin-left:2px;">*</font>
-				<s:hidden name="model.fsCase.county.id" id="deptId"></s:hidden>
-			</td>
-		</tr>
 		<tr>
 			<td align="right">案件描述：</td>
 			<td align="left" colspan="3">
@@ -188,23 +180,6 @@
 </s:form></div>
 </div>
 
-<script type="text/javascript" src="${ctx}/pages/admin/dept/edit.js"></script>
-<script type="text/javascript">
-Ext.onReady(function() {
-	var dtree = new DeptTree({
-		url : '/admin/dept/deptTree.do',
-		parent : '<stc:loginUserDept showPath="false" propertyName="id" showTopDept="true"></stc:loginUserDept>&noLowerDept=1',
-		initValue : '${model.fsCase.county.name}',
-		el : 'comboxWithTree',
-		innerTree :'inner-tree',
-		onclick : function(nodeId) {
-		  Ext.get('deptId').dom.value = nodeId;
-		}
-	});
-	dtree.init();	
-	
-});
-</script>
 <script type="text/javascript">
 	$(document).ready(function() {
 	$("#fsCaseSave").validate();

@@ -21,8 +21,10 @@ Ext.onReady(function(){
         defaults:{autoHeight: false},
         items:[
             {contentEl:'fsCase', title: '事件信息'},               
-            {contentEl:'task', title: '任务信息'},               
+            {contentEl:'task', title: '任务信息'},    
+            <c:if test="${model.status == '1'}">           
             {contentEl:'audit', title: '审核信息'},              
+            </c:if>
             {contentEl:'taskDetail', title: '任务明细'}                            
        
         ]

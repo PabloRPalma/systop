@@ -83,7 +83,7 @@ function result(id, jointTaskId){
 				</c:if>
 			</c:forEach>
 		</ec:column>
-		<ec:column width="70" property="jointTask.createDate" title="创建时间" style="text-align:center" cell="date" />		
+		<ec:column width="70" property="jointTask.createDate" title="创建时间" style="text-align:center" cell="date" />
 		<ec:column width="140" property="status" style="text-align:center" title="任务状态" >
 			<c:if test="${item.status == '0'}"><font color="red">未接收</font></c:if>
 			<c:if test="${item.status == '1'}"><font color="blue">已查看</font></c:if>
