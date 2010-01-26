@@ -22,15 +22,16 @@
 			<s:hidden name="deptId" id="deptId"/>
 		</td>
 		<td>
-			<input type="text" name="beginDate" style="width: 120px"
-				value='<s:date name="beginDate" format="yyyy-MM-dd"/>'
-				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"
-				class="Wdate" />
-			至
-			<input type="text" name="endDate" style="width: 120px"
-				value='<s:date name="endDate" format="yyyy-MM-dd"/>'
-				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"
-				class="Wdate" />
+			时间：
+				<input type="text" name="beginDate" style="width: 120px" id="minDate"
+					value='<s:date name="beginDate" format="yyyy-MM-dd"/>'
+					onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'maxDate\')}',skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"
+					class="Wdate" />
+				至
+				<input type="text" name="endDate" style="width: 120px" id="maxDate"
+					value='<s:date name="endDate" format="yyyy-MM-dd"/>'
+					onfocus="WdatePicker({minDate:'#F{$dp.$D(\'minDate\')}',skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"
+					class="Wdate" />
 			<s:submit value="查询" cssClass="button"/>
 	     </td>     
 	</s:form>
