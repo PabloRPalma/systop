@@ -34,58 +34,25 @@ public class ReportManager extends BaseGenericsManager<FsCase> {
 	 */
 	@Transactional
 	public void saveReportInfoOfCase(FsCase fsCase, Task task, 
-			TaskDetail taskDetail, Corp corp, String corpName) {
-		logger.info("企业名字：{}", corpName);
-		//修改上报事件时，如果企业不为空
-		if (corp != null && corp.getId() != null) {
-			Corp tcorp = getDao().get(Corp.class, corp.getId());
-			//如果页面输入企业名字不为空
-			if (StringUtils.isNotBlank(corpName)) {
-				//页面输入企业的名字跟已经添加了的企业名字相同，则不更改该事件对应的企业。
-				if (corpName.equalsIgnoreCase(tcorp.getName())) {
-					logger.info("修改时，不修改企业企业");
-					fsCase.setCorp(tcorp);
-					getDao().clear();
-				}else{//如果不相同
-					//根据页面输入的名字查找企业
-					Corp oldCorp = getCorpByName(corpName, fsCase.getCounty().getId());
-					//如果该企业存在，则上报事件直接关联该企业，
-					//否则保存新输入的企业信息，然后与上报事件关联.
-					if (oldCorp != null) {
-						logger.info("修改时，数据库有企业");
-						fsCase.setCorp(oldCorp);
-						getDao().clear();
-					} else {
-						logger.info("修改时，添加新的企业");
-						corp.setName(corpName);
-						corp.setDept(fsCase.getCounty());
-						getDao().save(corp);
-						//修改上报事件时，添加一个新的企业(数据库中没有改企业信息时)
-						//强制提交刷新session
-						getDao().flush();
-						fsCase.setCorp(corp);
-					}
-				}
+			TaskDetail taskDetail, Corp corp, String corpName) {	
+		//添加或编辑对应的企业信息
+		if (StringUtils.isNotBlank(corpName)) {
+			//清session确保修改企业时，不更新上报事件原来的企业信息
+			getDao().clear();
+			//根据页面输入的名字查找企业
+			Corp oldCorp = getCorpByName(corpName, fsCase.getCounty().getId());
+			if (oldCorp != null) {
+				fsCase.setCorp(oldCorp);
+				getDao().clear();
+			} else {
+				corp.setName(corpName);
+				corp.setDept(fsCase.getCounty());
+				getDao().save(corp);
+				//将缓存中的对象保存到数据库。
+				getDao().flush();
+				fsCase.setCorp(corp);
 			}
-		} else { //新添加上报事件时
-			if (corp != null && StringUtils.isNotBlank(corpName)) {
-				//根据页面输入的名字查找企业
-				Corp oldCorp = getCorpByName(corpName, fsCase.getCounty().getId());
-				//如果该企业存在，则上报事件直接关联该企业，
-				//否则保存新输入的企业信息，然后与上报事件关联.
-				if (oldCorp != null) {
-					logger.info("添加时，数据库有企业");
-					fsCase.setCorp(oldCorp);
-					getDao().clear();
-				} else {
-					logger.info("添加时，添加新的企业");
-					corp.setName(corpName);
-					corp.setDept(fsCase.getCounty());
-					getDao().save(corp);
-					fsCase.setCorp(corp);
-				}
-			}
-		}		
+		}
 		//保存上报事件
 		save(fsCase);
 		if (task != null && task.getId() != null) {
