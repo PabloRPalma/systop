@@ -14,10 +14,6 @@ function removeJointTask(eID){
 }
 </script>
 <title>联合任务管理</title>
-<%@include file="/common/meta.jsp"%>
-<%@include file="/common/ec.jsp"%>
-<script type="text/javascript">
-</script>
 </head>
 <body>
 <div class="x-panel">
@@ -95,7 +91,7 @@ function removeJointTask(eID){
 		</ec:column>
 		<ec:column width="80" property="createDate" title="创建日期" style="text-align:center" cell="date" />
 		<ec:column width="95" property="presetTime" title="规定完成日期" style="text-align:center" cell="date" />
-		<ec:column width="135" property="_0" title="操作" style="text-align:left" sortable="false">
+		<ec:column width="135" property="_0" title="操作" style="text-align:center" sortable="false">
 	       <c:choose>
 		     <c:when test="${item.status eq '0'}"> 
 	 	       <a href="edit.do?model.id=${item.id}">改</a> |		        

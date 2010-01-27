@@ -68,11 +68,8 @@ function remove(id){
 		<ec:column width="120" property="caseType.name" title="事件类别" sortable="false"/>
 		<ec:column width="120" property="caseTime" title="事发时间"
 			style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm" sortable="false"/>
-		<ec:column width="80" property="_2" title="事件状态" style="text-align:center" sortable="false">
-			<c:if test="${item.status eq '0'}"><font color="red">未派遣</font></c:if>
-			<c:if test="${item.status eq '1'}"><font color="#FF9D07">已派遣</font></c:if>
-			<c:if test="${item.status eq '2'}"><font color="green">已处理</font></c:if>
-		</ec:column>	
+		<ec:column width="80" property="status" title="事件状态"  mappingItem="stateColorMap" style="text-align:center" sortable="false"/>
+	
 		<ec:column width="80" property="_6" title="查看" style="text-align:center" sortable="false">
 	       <c:choose>
 		     <c:when test="${!empty item.jointTaskses}"> 

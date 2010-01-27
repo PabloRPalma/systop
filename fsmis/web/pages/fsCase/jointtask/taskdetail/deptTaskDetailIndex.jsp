@@ -3,13 +3,9 @@
 <%@include file="/common/taglibs.jsp"%>
 <html>
 <head>
-<%@include file="/common/meta.jsp"%>
 <%@include file="/common/ec.jsp" %>
 <%@include file="/common/extjs.jsp"%>
-<%@include file="/common/autocomplete.jsp"%>
-<script type="text/javascript">
-
-</script>
+<%@include file="/common/meta.jsp"%>
 <title>联合整治管理</title>
 <script type="text/javascript">
 function view(id){
@@ -32,6 +28,7 @@ function result(id, jointTaskId){
    });
 }
 </script>
+<title>联合任务管理</title>
 </head>
 <body>
 <div class="x-panel">
@@ -85,9 +82,9 @@ function result(id, jointTaskId){
 		</ec:column>
 		<ec:column width="70" property="jointTask.createDate" title="创建时间" style="text-align:center" cell="date" />
 		<ec:column width="140" property="status" style="text-align:center" title="任务状态" >
-			<c:if test="${item.status == '0'}"><font color="red">未接收</font></c:if>
-			<c:if test="${item.status == '1'}"><font color="blue">已查看</font></c:if>
-			<c:if test="${item.status == '2'}">
+			<c:if test="${item.status eq '0'}"><font color="red">未接收</font></c:if>
+			<c:if test="${item.status eq '1'}"><font color="blue">已查看</font></c:if>
+			<c:if test="${item.status eq '2'}">
 		      <c:if test="${item.isLeader eq '1'}">
 				   <font color="#FF9D07">处理中...</font>
 				   	<c:choose>
@@ -99,11 +96,18 @@ function result(id, jointTaskId){
 			         <font color="blue">已查看</font>
 			   </c:if>
 			</c:if>			
-			<c:if test="${item.status == '4'}"><font color="green">已处理</font></c:if>
+			<c:if test="${item.status eq '4'}"><font color="green">已处理</font></c:if>
 		</ec:column>
 		 <ec:column width="80" property="_0" title="操作" style="text-align:center" sortable="false">
-		 <c:if test="${item.isLeader == '1'}">
-			  <c:if test="${item.status == '2'}"><a href="javascript:result(${item.id},${item.jointTask.id})">处理</a>|</c:if>
+		 <c:if test="${item.isLeader eq '1'}">
+	       <c:choose>
+		     <c:when test="${item.status eq '2'}"> 
+                <a href="javascript:result(${item.id},${item.jointTask.id})">处理</a> |	        
+		     </c:when>
+		     <c:otherwise>
+                <font color="#999999">处理</font> |       
+		     </c:otherwise>
+		   </c:choose>  		 
 		 </c:if>
 		 <a href="javascript:view(${item.id})">查看</a>
 		</ec:column>
