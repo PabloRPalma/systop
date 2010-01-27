@@ -28,4 +28,5 @@ public final class JointTaskConstants {
 	public static final String MSG_JOINT_TASK_SMSSEND = ResourceBundleUtil.getString(ResourceBundle.getBundle("application"),
 			"joint_task_smsSend","您好！您有一条联合整治任务！");
 	
+
 }

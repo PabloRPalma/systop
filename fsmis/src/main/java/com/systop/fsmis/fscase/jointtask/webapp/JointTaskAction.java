@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
@@ -394,7 +395,7 @@ public class JointTaskAction extends
 			}
 			fsCaseManager.remove(fsCase);
 		}
-		return SUCCESS;
+		return "caseList";
 	}
 	
 	/**
@@ -489,6 +490,14 @@ public class JointTaskAction extends
 		return caseTypeManager.getLevelOneList();
 	}
 
+  /**
+   * 返回带颜色的事件状态集合
+   * @return list
+   */
+  public Map<String, String> getStateColorMap() {
+    return CaseConstants.CASE_COLOR_MAP;
+  }
+  
 	/**
 	 * 
 	 * @return
