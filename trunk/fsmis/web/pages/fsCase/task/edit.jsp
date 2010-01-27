@@ -47,11 +47,11 @@ function deleAtt(id) {
 	<input type="hidden" name="isMultipleCase" value="${isMultipleCase}"></input>
 	<s:hidden name="model.id"></s:hidden>
 	<s:hidden name="isMultiple"></s:hidden>
-	<fieldset style="width: 700px; padding: 10px 10px 10px 10px;">
+	<fieldset style="width: 90%; padding: 10px 10px 10px 10px;">
 	<legend> 派遣信息</legend>
-	<table width="650px" align="left">
+	<table width="100%" align="left">
 		<tr>
-			<td align="right">任务标题：</td>
+			<td align="right" width="110">任务标题:</td>
 			<td align="left"><input type="text" name="model.title"
 				value="${model.fsCase.title }" style="width: 400px;"
 				class="required"></input> <font color="red">&nbsp;*</font></td>
@@ -66,22 +66,22 @@ function deleAtt(id) {
 				onclick="show()" itemClass="checkbox" /></td>
 		</tr>
 		<tr>
-			<td align="right" width="180">规定完成时间：</td>
-			<td align="left" width="500"><input type="text"
+			<td align="right">规定完成时间:</td>
+			<td align="left"><input type="text"
 				name="model.presetTime"
 				value='<s:date name="model.presetTime" format="yyyy-MM-dd HH:mm"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
 				class="Wdate required" /><font color="red">&nbsp;*</font></td>
 		</tr>
 		<tr>
-			<td align="right" width="180">任务描述：</td>
-			<td align="left" width="600"><s:textarea id="desc"
-				name="model.descn" 
-				cssStyle="width:600px; height:100px;" cssClass="required" /><font
-				color="red">&nbsp;*</font></td>
+			<td align="right">任务描述:</td>
+			<td align="left" >
+			    <s:textarea id="desc" name="model.descn" cols="55" rows="4" cssClass="required" />
+				<font color="red">&nbsp;*</font>
+			</td>
 		</tr>
 		<tr>
-			<td align="right" width="180">附件：</td>
+			<td align="right">附件:</td>
 			<td style="padding: 10 5 2 5;" width="500"><a href="#"
 				onclick='util.add("fileUpload");'> <img
 				src="${ctx}/images/icons/file_add.gif">增加附件</a></td>
@@ -119,9 +119,9 @@ function deleAtt(id) {
 	function preFckEditor() {
 		var fckEditor = new FCKeditor('desc');
 		fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
-		fckEditor.ToolbarSet = 'BasicA';
+		fckEditor.ToolbarSet = 'Basic';
 		fckEditor.Height = 200;
-		//fckEditor.width = 500;
+		fckEditor.Width = 600;
 		fckEditor.ReplaceTextarea();
 	}
 </script>
