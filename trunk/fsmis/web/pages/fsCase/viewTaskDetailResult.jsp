@@ -30,14 +30,14 @@
 
 	var ResultWindow = new Ext.Window( {
 		el : 'resultWindow',
-		width : 520,
-		height : 300,
+		width : 570,
+		height : 350,
 		layout : 'fit',
 		closeAction : 'hide',
 		buttonAlign : 'center',
 		modal : 'true',
 		buttons : [ {
-			text : '返回',
+			text : '关闭',
 			handler : function() {
 				ResultWindow.hide();
 				//ResultWindow.clear();
