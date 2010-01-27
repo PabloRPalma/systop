@@ -17,10 +17,10 @@
 	<s:hidden name="model.id"/>
 	<s:hidden name="isMultipleCase"/>
 	<s:hidden name="modelId" />
-	<table align="left" width="700px">	
+	<table align="center" width="700px">	
 	<tr>
 	<td>
-	<fieldset style="width:400px;height:360px;">
+	<fieldset style="width:400px;height:450px;">
     	<legend>处理结果</legend>
         <table width="400px" align="center">
         <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
@@ -39,26 +39,26 @@
           <tr>
             <td align="right">处理过程：</td>
             <td align="left">
-            	<s:textarea id="pass" name="model.process" cols="40" rows="5"></s:textarea>
+            	<s:textarea id="pass" name="model.process" cols="40" rows="6"></s:textarea>
             </td>
           </tr>
           <tr>
             <td align="right">处理依据：</td>
             <td align="left">
-            	<s:textarea id="yiju" name="model.basis" cols="40" rows="3"></s:textarea>
+            	<s:textarea id="yiju" name="model.basis" cols="40" rows="6"></s:textarea>
             </td>
           </tr>
           <tr>
             <td align="right">处理结果：</td>
             <td align="left">
-            	<s:textarea id="result" name="model.result" rows="5" cssStyle="width:300px"></s:textarea>
+            	<s:textarea id="result" name="model.result" rows="8" cssStyle="width:300px"></s:textarea>
             </td>
           </tr>
         </table> 
     </fieldset>
 	</td>
 	<td>
-	<fieldset style="width:390px;height:360px;">
+	<fieldset style="width:390px;height:450px;">
     	<legend>被处理单位信息</legend>
         <table width="390px"  align="center">
         <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
@@ -67,38 +67,38 @@
          		<font color="red" style="font-size:12px">【建议按"↓"键显示并选择企业信息】</font>
          	</td>
          </tr>
-          <tr>
+          <tr height="40">
              <td align="right" width="80">名称：</td>        
              <td align="left" width="270">
              	<s:hidden name="model.task.fsCase.corp.id" id="corpId"></s:hidden>
              	<s:textfield id="companyName" name="model.task.fsCase.corp.name" onblur="queryCompanyByCode()"  cssStyle="width:270px"/>
              </td>
           </tr>
-		  <tr>
+		  <tr height="40">
             <td align="right">企业编号：</td>
             <td align="left">
             	<s:textfield id="companyCode" name="model.task.fsCase.corp.code" cssStyle="width:270px"/>
             </td>
           </tr>		            
-          <tr>
+          <tr height="40">
             <td align="right">地址：</td>
             <td align="left">
             	<s:textfield id="companyAddress" name="model.task.fsCase.corp.address" cssStyle="width:270px"/>
             </td>
           </tr>
-          <tr>
+          <tr height="40">
             <td align="right">法人：</td>
             <td align="left">
             	<s:textfield id="legalPerson" name="model.task.fsCase.corp.legalPerson" cssStyle="width:270px"/>
             </td>
           </tr>          
-          <tr>
+          <tr height="40">
             <td align="right">生产许可证：</td>
             <td align="left">
             	<s:textfield id="produceLicense" name="model.task.fsCase.corp.produceLicense" cssStyle="width:270px"/>
             </td>
           </tr>         
-          <tr>
+          <tr height="40">
             <td align="right">卫生许可证：</td>
             <td align="left">
             	<s:textfield id="sanitationLicense" name="model.task.fsCase.corp.sanitationLicense" cssStyle="width:270px"/>
@@ -107,7 +107,7 @@
           <tr>
             <td align="right">经营范围：</td>
             <td align="left">
-            	<s:textarea id="operateDetails" name="model.task.fsCase.corp.operateDetails" cols="36" rows="5"></s:textarea>            	
+            	<s:textarea id="operateDetails" name="model.task.fsCase.corp.operateDetails" cols="36" rows="6"></s:textarea>            	
             </td>
           </tr>        
         </table> 
