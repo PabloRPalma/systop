@@ -148,7 +148,6 @@ $().ready(function(){
 		success:function(corps,textStatus){
 			if(corps.length > 0){
 			$('#companyName').autocomplete(corps,{
-				mustMatch : true,
 				matchContains:true,
 				minChars:0,
 				width :'200px',
