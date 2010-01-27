@@ -25,7 +25,7 @@ function caseRemove(caseId){
 </head>
 <body>
 <div class="x-panel">
-<div class="x-panel-header">协调指挥&nbsp;&gt;&nbsp;${isMultipleCase eq 0?'单体事件':'多体事件'}列表</div>
+<div class="x-panel-header"></div>
 <div class="x-toolbar">
 <table width="99%">
 	<tr>

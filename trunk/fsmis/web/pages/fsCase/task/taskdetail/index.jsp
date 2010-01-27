@@ -11,8 +11,7 @@
 <body>
 <div><%@ include file="/common/messages.jsp"%></div>
 <div class="x-panel">
-<div class="x-panel-header">协调指挥&nbsp;&gt;&nbsp;${isMultipleCase eq 0?'单体任务':'多体任务'}接收&nbsp;&gt;&nbsp;${isMultipleCase eq
-0?'单体任务':'多体任务'}列表</div>
+<div class="x-panel-header"></div>
 <div class="x-toolbar">
 <table width="99%">
 	<tr>

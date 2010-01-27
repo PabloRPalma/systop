@@ -10,7 +10,7 @@
 </head>
 <body>
 <div id="winDealWithTaskDetail" class="x-panel">
-<div class="x-panel-header">协调指挥&nbsp;&gt;&nbsp;任务处理</div>
+<div class="x-panel-header"></div>
 <div id="dealWithTaskDetail" class="x-toolbar"></div>
 <div>
 	<s:form  id="frmDealWithTaskDetail" action="doDealWithTaskDetail.do" method="post" theme="simple" enctype="multipart/form-data" onsubmit="return onCheckForm()">
