@@ -36,7 +36,7 @@ function deleAtt(id) {
 </head>
 <body onload="preFckEditor()">
 <div class="x-panel">
-<div class="x-panel-header">协调指挥&nbsp;&gt;&nbsp;${isMultipleCase eq '0' ? '一般':'综合'}案件管理&nbsp;&gt;&nbsp;事件列表&nbsp;&gt;&nbsp;事件查看&nbsp;&gt;&nbsp;派遣任务</div>
+<div class="x-panel-header"></div>
 <div><%@ include file="/common/messages.jsp"%></div>
 <div align="center"><s:form action="/task/save.do" method="post"
 	theme="simple" enctype="multipart/form-data" validate="true"
