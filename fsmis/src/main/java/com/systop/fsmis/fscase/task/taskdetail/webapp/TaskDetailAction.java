@@ -254,8 +254,8 @@ public class TaskDetailAction extends
      * if (getModel().getTask().getFsCase().getCorp().getId() == null) {
      * getModel().getTask().getFsCase().setCorp(null); }
      */
-    String isNewCorp = getRequest().getParameter("isNewCorp");
-    getManager().doCommitTaskDetail(getModel(),isNewCorp);
+    //String isNewCorp = getRequest().getParameter("isNewCorp");  
+    getManager().doCommitTaskDetail(getModel(),corpId);
 
     return SUCCESS;
 

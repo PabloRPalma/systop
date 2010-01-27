@@ -66,7 +66,7 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
    * @param isNewCorp 是否新添加企业
    */
   @Transactional
-  public void doCommitTaskDetail(TaskDetail taskDetail, String isNewCorp) {
+  public void doCommitTaskDetail(TaskDetail taskDetail, Integer corpId) {
     // 任务明细状态置为"已处理"
     taskDetail.setStatus(TaskConstants.TASK_DETAIL_PROCESSED);
     // 任务完成时间
@@ -77,7 +77,7 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
     FsCase fsCase = task.getFsCase();
     // 如果案件没有关联企业,而在完成任务中为案件指定了企业(创建新企业),则需要保存企业信息,
     //此功能究竟放到哪里经沟通尚未确定,待确定后调整下面这行代码
-    processCorp(taskDetail, fsCase, isNewCorp);
+    processCorp(taskDetail, fsCase, corpId);
     // 如果所有任务明细已全部处理（包括退回）,则把任务状态置为"已处理",完成时间为当前时间
     if (checkIsAllTaskDetailResolved(taskDetail)) {
       task.setStatus(TaskConstants.TASK_PROCESSED);
@@ -99,11 +99,11 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
    * @param taskDetail
    */
   private void processCorp(TaskDetail taskDetail, FsCase fsCase,
-      String isNewCorp) {
+      Integer corpId) {
     // 新添加加企业
-    if ("Y".equalsIgnoreCase(isNewCorp)) {
+    if (corpId == null) {
       Corp corp = taskDetail.getTask().getFsCase().getCorp();
-      corp.setId(null);
+      corp.setDept(fsCase.getCounty());
       getDao().save(corp);
       fsCase.setCorp(corp);
     } else {
