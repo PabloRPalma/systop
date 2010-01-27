@@ -285,6 +285,7 @@ public class GatherFsCaseManager extends BaseGenericsManager<FsCase> {
 	private int getFsCaseCityCount(Integer caseTypeId, GatherConfiger configerCity) {
 		StringBuffer hql = new StringBuffer("select count(*) from FsCase fe where 1=1 ");
 		List arg = new ArrayList();
+		//将汇总配置条件中的关键字串（以逗号隔开的形式），分别与单体事件标题进行模糊查询
 		if(StringUtils.isNotBlank(configerCity.getKeyWord())) {
 			hql.append("and (");
 			String [] keyWord = configerCity.getKeyWord().split(",");
@@ -298,10 +299,13 @@ public class GatherFsCaseManager extends BaseGenericsManager<FsCase> {
 			hql.append(keyHql.substring(0, keyHql.lastIndexOf("or") - 1));
 			hql.append(" ) ");
 		}
+		//单体事件状态为“已核实”
 		hql.append("and fe.status = ? ");
 		arg.add(CaseConstants.CASE_CLOSED);
+		//单体事件类别与当前核实的事件状态相同
 		hql.append("and fe.caseType.id = ? ");
 		arg.add(caseTypeId);
+		//不为多体事件
 		hql.append("and fe.isMultiple = ? ");
 		arg.add(FsConstants.N);
 		hql.append("and fe.caseTime between ? and ?");
@@ -323,6 +327,7 @@ public class GatherFsCaseManager extends BaseGenericsManager<FsCase> {
 	private List<FsCase> getCityFsCase(Integer caseTypeId, GatherConfiger configerCity) {
 		StringBuffer hql = new StringBuffer("from FsCase fe where 1=1 ");
 		List arg = new ArrayList();
+		//将汇总配置条件中的关键字串（以逗号隔开的形式），分别与单体事件标题进行模糊查询
 		if(StringUtils.isNotBlank(configerCity.getKeyWord())) {
 			hql.append("and (");
 			String [] keyWord = configerCity.getKeyWord().split(",");
@@ -336,10 +341,13 @@ public class GatherFsCaseManager extends BaseGenericsManager<FsCase> {
 			hql.append(keyHql.substring(0, keyHql.lastIndexOf("or") - 1));
 			hql.append(" ) ");
 		}
+		//单体事件状态为“已核实”
 		hql.append("and fe.status = ? ");
 		arg.add(CaseConstants.CASE_CLOSED);
+		//单体事件类别与当前核实的事件状态相同
 		hql.append("and fe.caseType.id = ? ");
 		arg.add(caseTypeId);
+		//不为多体事件
 		hql.append("and fe.isMultiple = ? ");
 		arg.add(FsConstants.N);
 		hql.append("and fe.caseTime between ? and ?");
@@ -390,6 +398,7 @@ public class GatherFsCaseManager extends BaseGenericsManager<FsCase> {
 			GatherConfiger configer) {
 		StringBuffer hql = new StringBuffer("from FsCase fe where 1=1 ");
 		List arg = new ArrayList();
+		//将汇总配置条件中的关键字串（以逗号隔开的形式），分别与单体事件标题进行模糊查询
 		if(StringUtils.isNotBlank(configer.getKeyWord())) {
 			hql.append("and (");
 			String [] keyWord = configer.getKeyWord().split(",");
@@ -403,12 +412,16 @@ public class GatherFsCaseManager extends BaseGenericsManager<FsCase> {
 			hql.append(keyHql.substring(0, keyHql.lastIndexOf("or") - 1));
 			hql.append(" ) ");
 		}
+		//单体事件状态为"已核实"
 		hql.append("and fe.status = ? ");
 		arg.add(CaseConstants.CASE_CLOSED);
+		//单体事件类别与当前核实的事件状态相同
 		hql.append("and fe.caseType.id = ? ");
 		arg.add(caseTypeId);
+		//单体事件的所属机构与核实事件相同
 		hql.append("and fe.county.id = ? ");
 		arg.add(country.getId());
+		//不为多体事件
 		hql.append("and fe.isMultiple = ? ");
 		arg.add(FsConstants.N);
 		hql.append("and fe.caseTime between ? and ?");
@@ -433,6 +446,7 @@ public class GatherFsCaseManager extends BaseGenericsManager<FsCase> {
 			GatherConfiger configer) {
 		StringBuffer hql = new StringBuffer("select count(*) from FsCase fe where 1=1 ");
 		List arg = new ArrayList();
+		//将汇总配置条件中的关键字串（以逗号隔开的形式），分别与单体事件标题进行模糊查询
 		if(StringUtils.isNotBlank(configer.getKeyWord())) {
 			hql.append("and (");
 			String [] keyWord = configer.getKeyWord().split(",");
@@ -446,12 +460,16 @@ public class GatherFsCaseManager extends BaseGenericsManager<FsCase> {
 			hql.append(keyHql.substring(0, keyHql.lastIndexOf("or") - 1));
 			hql.append(" ) ");
 		}
+		//单体事件状态为"已核实"
 		hql.append("and fe.status = ? ");
 		arg.add(CaseConstants.CASE_CLOSED);
+		//单体事件类别与当前核实的事件状态相同
 		hql.append("and fe.caseType.id = ? ");
 		arg.add(caseTypeId);
+		//单体事件的所属机构与核实事件相同
 		hql.append("and fe.county.id = ? ");
 		arg.add(country.getId());
+		//不为多体事件
 		hql.append("and fe.isMultiple = ? ");
 		arg.add(FsConstants.N);
 		hql.append("and fe.caseTime between ? and ?");
