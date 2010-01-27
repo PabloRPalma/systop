@@ -88,9 +88,9 @@
   function preFckEditor(){
 	var fckEditor = new FCKeditor( 'descn' ) ;
     fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
-    fckEditor.ToolbarSet = 'BasicA';
+    fckEditor.ToolbarSet = 'Basic';
     fckEditor.Height = 250;
-    fckEditor.Width = 500;
+    fckEditor.Width = 580;
     fckEditor.ReplaceTextarea();
   }
 </script>
@@ -120,7 +120,7 @@
 	<s:hidden id="twoId" name="twoId"/>
 	<fieldset style="width: 90%; padding:10px 10px 10px 10px;">
 	<legend>编辑事件</legend>
-	<table width="90%" align="left">
+	<table width="100%" align="left">
 		<tr>
 			<td align="right" width="150">事件标题：</td>
 			<td align="left"><s:textfield id="name"
@@ -180,7 +180,7 @@
 		<tr>
 			<td align="right">事件描述：</td>
 			<td align="left">
-				<textarea id="descn" name="model.descn" cols="45" rows="4" class="required" >${model.descn}</textarea>
+				<textarea id="descn" name="model.descn" cols="65" rows="4" class="required" >${model.descn}</textarea>
 				<font color="red">*</font>
 			</td>
 		</tr>
