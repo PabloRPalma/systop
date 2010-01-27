@@ -60,10 +60,10 @@
 		</ec:column>
 		<ec:column width="40" property="_no" value="${GLOBALROWCOUNT}" title="No." style="text-align:center"/>
 		<ec:column width="100" property="mobileNum" title="电话号码" style="text-align:center"/>
-		<ec:column width="250" property="content" title="短信内容" />
+		<ec:column width="300" property="content" title="短信内容" />
 		<ec:column width="120" property="receiveTime" title="系统接收时间"
 			cell="date" format="yyyy-MM-dd HH:mm" style="text-align:center"/>
-		<ec:column width="80" property="isReport" title="类别" style="text-align:center">
+		<ec:column width="40" property="isReport" title="类别" style="text-align:center">
 			<s:if test="#attr.item.isReport eq 1">
 				<font color="red" title="事件上报">报</font>
 			</s:if>
