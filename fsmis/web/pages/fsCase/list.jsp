@@ -174,7 +174,7 @@ function caseRemove(caseId){
 				    	| <a title="核实" href="addSendMsg.do?model.id=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">核</a>
 				    </c:when>	
 				     <c:when test="${item.msgCheckedFlag == '1'}">
-				    	| <a title="核实反馈" href="confirmBackMsg.do?model.id=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">核</a>
+				    	| <a title="核实反馈" href="confirmBackMsg.do?model.id=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}"><img src="${ctx}/images/icons/he.gif"  /></a>
 				    </c:when>		    
 				    <c:otherwise>
 				    	| <font color="silver" >核</font> 	
