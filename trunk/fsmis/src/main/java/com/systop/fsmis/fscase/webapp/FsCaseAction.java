@@ -41,6 +41,7 @@ import com.systop.fsmis.model.FsCase;
 import com.systop.fsmis.model.SendType;
 import com.systop.fsmis.model.SmsReceive;
 import com.systop.fsmis.model.SmsSend;
+import com.systop.fsmis.model.TaskDetail;
 import com.systop.fsmis.sms.SmsConstants;
 import com.systop.fsmis.sms.SmsReceiveManager;
 import com.systop.fsmis.supervisor.service.SupervisorManager;
@@ -468,6 +469,61 @@ public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
       jsonResult.put("verifySms", String.valueOf(getManager().getVerifySms(
           county).size()));
     }
+    return "jsonResult";
+  }
+  
+  /**
+   * 根据多体id得到单体信息,<br>
+   * 用于在查看页面中列出
+   * 
+   * @return
+   */
+  public String getGenericCaseByMultipleId() {
+	 page = PageUtil.getPage(getPageNo(), getPageSize());
+	 FsCase fscase = null;
+	 String id = getRequest().getParameter("fsCaseId");
+	 Assert.notNull(id);
+	 if (StringUtils.isNotBlank(id)) {
+	      Integer fsCaseId = Integer.parseInt(id);
+	      fscase = getManager().get(fsCaseId);
+	 }
+
+	 List genericCaseList = new ArrayList();
+     List mapGenericCases = new ArrayList();
+     genericCaseList.addAll(fscase.getGenericCases());
+     for (Iterator itr = genericCaseList.iterator(); itr.hasNext();) {
+       FsCase fs = (FsCase) itr.next();
+       Map mapGenericCase = ReflectUtil.toMap(fs, new String[] { "id",
+    		   "title","address"}, true);
+       mapGenericCase.put("caseTypeName", fs.getCaseType().getName());
+       mapGenericCase.put("caseTime", convertDate2String(fs.getCaseTime()));
+       mapGenericCases.add(mapGenericCase);
+     }
+     page.setData(mapGenericCases);
+    return JSON;
+  }
+  
+  /**
+   * <pre>
+   * 根据id得到单体信息,用于:
+   * 根据id得到单体事件信息,以在Ext弹出界面中显示
+   * </pre>
+   * 
+   * @return
+   */
+  public String viewGenericCaseById() {
+    jsonResult = Collections.synchronizedMap(new HashMap<String, String>());
+    String idStr = getRequest().getParameter("genericCaseId");
+
+    if (StringUtils.isNotBlank(idStr) && StringUtils.isNumeric(idStr)) {
+
+      FsCase fs = getManager().get(Integer.valueOf(idStr));
+      jsonResult = ReflectUtil.toMap(fs, new String[] { "title", "address",
+          "informer", "informerPhone", "descn"}, true);
+      jsonResult.put("caseTypeName", fs.getCaseType().getName());
+      jsonResult.put("caseTime", convertDate2String(fs.getCaseTime()));
+    }
+
     return "jsonResult";
   }
 
