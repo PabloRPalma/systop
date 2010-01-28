@@ -14,9 +14,9 @@
 <div class="x-toolbar">
 <table width="99%">
 	<tr>
-		<td style="padding: 5px 0px 3px 10px;"> 
+		<td> 
 			<form action="index.do" method="post" target="">
-				姓名：<s:textfield name="model.name"/>&nbsp;&nbsp;
+				&nbsp;&nbsp;姓名：<s:textfield name="model.name"/>&nbsp;&nbsp;
 				手机号：<s:textfield name="model.mobileNum"/>&nbsp;&nbsp;
 				最新：<input type="checkbox" style="border: 0px;" name="model.isNew" value="1" <s:if test="model.isNew != null">checked="checked"</s:if>>&nbsp;&nbsp;
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
