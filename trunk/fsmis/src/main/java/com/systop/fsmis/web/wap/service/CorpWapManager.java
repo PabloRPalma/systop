@@ -73,8 +73,7 @@ public class CorpWapManager extends BaseGenericsManager<Corp>{
 		Map map = new HashMap();
 		Corp corp = get(id);
 		if (corp != null) {
-      map = ReflectUtil.toMap(corp, 
-      		new String[]{"id"}, true);
+      map = ReflectUtil.toMap(corp, null, true);
   	}
 		return map;
 	}
