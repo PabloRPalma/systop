@@ -16,7 +16,7 @@
 	<tr>
 		<td>
 		  <s:form action="index" method="post">
-			事件标题：<s:textfield name="model.title"></s:textfield> &nbsp;&nbsp;
+			&nbsp;&nbsp;事件标题：<s:textfield name="model.title"></s:textfield> &nbsp;&nbsp;
 			事发时间：
 			<input type="text" name="beginTime" style="width: 120px"
 				value='<s:date name="beginTime" format="yyyy-MM-dd HH:mm"/>'
