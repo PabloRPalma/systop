@@ -62,8 +62,8 @@
 	<ec:row>
 		<ec:column width="30" property="_n" title="No."
 			value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center" />
-		<ec:column width="130" tipTitle="${item.task.title}" property="task.title" title="任务标题" />
-		<ec:column width="130" property="task" title="执行部门"
+		<ec:column width="130" tipTitle="${item.task.title}" ellipsis="true" property="task.title" title="任务标题" />
+		<ec:column width="120" property="task" title="执行部门"
 			cell="com.systop.fsmis.fscase.webapp.ec.DeptsCell">
 		</ec:column>
 		<ec:column width="120" property="task.dispatchTime" cell="date"
@@ -87,12 +87,12 @@
 		</ec:column>
 		<ec:column width="50" property="status" mappingItem="stateColorMap" style="text-align:center"
 			title="任务状态"/>
-		<ec:column width="45" property="_0" title="查看"
+		<ec:column width="50" property="_0" title="查看"
 			style="text-align:center" sortable="false">
 			<a title="查看任务" href="${ctx}/taskdetail/view.do?taskDetailId=${item.id}&fsCaseId=${item.task.fsCase.id}&modelId=${param['modelId']}&taskId=${item.task.id}">看</a>
 			<a title="地图" href="#">| 图</a>
 		</ec:column>
-		<ec:column width="110" property="_1" title="操作"style="text-align:center" sortable="false">
+		<ec:column width="120" property="_1" title="操作"style="text-align:center" sortable="false">
 		    <!-- 0未接收1已查看2已接收3已退回4已处理 -->
 			<c:if test="${empty item.status or item.status eq '0' or item.status eq '1'}">
 				<a title="接收任务" href="#" onclick="receive(${item.id})">收</a> |
