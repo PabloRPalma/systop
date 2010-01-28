@@ -20,6 +20,7 @@
 		   		<param name="root">page</param>
 			</result>
 			<result type="json" name="jsonResult">
+			    <param name="ignoreHierarchy">false</param>
 		   		<param name="root">jsonResult</param>
 			</result>
 		</action>
