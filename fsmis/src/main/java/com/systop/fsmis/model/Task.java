@@ -23,6 +23,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import com.systop.core.model.BaseModel;
 import com.systop.core.util.RemaindaysUtil;
@@ -133,7 +134,8 @@ public class Task extends BaseModel {
     this.title = title;
   }
 
-  @Column(name = "DESCN", length = 255)
+  @Type(type = "text")
+  @Column(name = "DESCN")
   public String getDescn() {
     return this.descn;
   }

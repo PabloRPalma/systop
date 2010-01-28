@@ -18,6 +18,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import com.systop.common.modules.dept.model.Dept;
 import com.systop.core.model.BaseModel;
@@ -147,7 +148,8 @@ public class TaskDetail extends BaseModel {
 		this.processor = processor;
 	}
 
-	@Column(name = "PROCESS", length = 1000)
+	@Type(type = "text")
+	@Column(name = "PROCESS")
 	public String getProcess() {
 		return this.process;
 	}
@@ -156,7 +158,8 @@ public class TaskDetail extends BaseModel {
 		this.process = process;
 	}
 
-	@Column(name = "BASIS", length = 255)
+	@Type(type = "text")
+	@Column(name = "BASIS")
 	public String getBasis() {
 		return this.basis;
 	}
@@ -165,7 +168,8 @@ public class TaskDetail extends BaseModel {
 		this.basis = basis;
 	}
 
-	@Column(name = "RESULT", length = 255)
+	@Type(type = "text")
+	@Column(name = "RESULT")
 	public String getResult() {
 		return this.result;
 	}
