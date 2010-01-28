@@ -41,7 +41,6 @@ import com.systop.fsmis.model.FsCase;
 import com.systop.fsmis.model.SendType;
 import com.systop.fsmis.model.SmsReceive;
 import com.systop.fsmis.model.SmsSend;
-import com.systop.fsmis.model.TaskDetail;
 import com.systop.fsmis.sms.SmsConstants;
 import com.systop.fsmis.sms.SmsReceiveManager;
 import com.systop.fsmis.supervisor.service.SupervisorManager;
