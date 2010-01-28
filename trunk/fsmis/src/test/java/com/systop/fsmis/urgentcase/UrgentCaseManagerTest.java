@@ -21,6 +21,7 @@ import com.systop.fsmis.model.UrgentCase;
 import com.systop.fsmis.model.UrgentGroup;
 import com.systop.fsmis.model.UrgentResult;
 import com.systop.fsmis.model.UrgentType;
+import com.systop.fsmis.sms.SmsSendManager;
 import com.systop.fsmis.urgentcase.service.UrgentCaseManager;
 import com.systop.fsmis.urgentcase.ucgroup.service.UcGroupManager;
 import com.systop.fsmis.urgentcase.uctype.service.UcTypeManager;
@@ -54,6 +55,11 @@ public class UrgentCaseManagerTest extends BaseTransactionalTestCase {
 	@Autowired
 	private UcTypeManager ucTypeManager;
 	/**
+	 * 短信发送管理类
+	 */
+	@Autowired
+	private SmsSendManager smsSendManager;
+	/**
 	 * 所属区县
 	 */
 	private Dept county;
@@ -69,6 +75,7 @@ public class UrgentCaseManagerTest extends BaseTransactionalTestCase {
 	/**
 	 * 准备数据
 	 */
+	@SuppressWarnings("unchecked")
 	protected void setUp() throws Exception {
 		UrgentCase urgentCase = new UrgentCase();
 		urgentCase.setCode("2010");
@@ -80,6 +87,13 @@ public class UrgentCaseManagerTest extends BaseTransactionalTestCase {
 				MatchMode.ANYWHERE.toMatchString("初级农产品环节"));
 		uc = urgentCaseManager.findObject("from UrgentCase uc where uc.code =?",
 				"2010");
+		List<UrgentGroup> ugList = ucGroupManager.getDao().query(
+				"from UrgentGroup ug where ug.isOriginal=? and ug.county.id=?",
+				FsConstants.Y, county.getId());
+		for (UrgentGroup ug : ugList) {
+			ug.setMobel("13315123999");
+			ucGroupManager.save(ug);
+		}
 	}
 
 	/**
@@ -253,5 +267,26 @@ public class UrgentCaseManagerTest extends BaseTransactionalTestCase {
 		urgentCaseManager.delRroupOfCase(gourpIds);
 		assertEquals(0, urgentCaseManager.getGroupIdsOfCase(ucId, county.getId())
 				.size());
+	}
+
+	/**
+	 * 测试向事件派遣的相关组的负责人发送短信
+	 */
+	public void testSendSms() {
+		urgentCaseManager.sendSms("13315123999;13273197023", "测试", county);
+		assertEquals("13315123999", smsSendManager.findObject(
+				"from SmsSend where content=?", "测试").getMobileNum());
+	}
+
+	/**
+	 * 测试取得事件派发结果中指挥组的负责人与操作人的手机号码 以分号分隔的手机号码字符串
+	 */
+	public void testGetOperatorOfGroupForCase() {
+		// 派遣应急事件
+		urgentCaseManager.sendUrgentCase(String.valueOf(uc.getId()), String
+				.valueOf(ut.getId()), county);
+		assertEquals(
+				"13315123999;13315123999;13315123999;13315123999;13315123999;13315123999;13315123999;13315123999;",
+				urgentCaseManager.getOperatorOfGroupForCase(uc.getId(), county.getId()));
 	}
 }
