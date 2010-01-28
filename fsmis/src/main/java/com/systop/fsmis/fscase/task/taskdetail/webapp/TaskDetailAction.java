@@ -58,8 +58,15 @@ public class TaskDetailAction extends
   private String[] corpNames;
 
   private String[] corpArry;
+  
+  //企业名称
+  private String corpName;
+  
+  // 对应的处理企业
+  private Corp corp;
 
-  @Autowired
+
+@Autowired
   private LoginUserService loginUserService;
 
   /**
@@ -237,8 +244,11 @@ public class TaskDetailAction extends
    */
   public String toDealWithTaskDetail() {
     // 设定默认的任务处理结果填写人为当前登录人员
-    getModel()
-        .setInputer(loginUserService.getLoginUser(getRequest()).getName());
+    getModel().setInputer(loginUserService.getLoginUser(getRequest()).getName());
+    if(getModel().getTask().getFsCase().getCorp() != null){
+    	corpName =  getModel().getTask().getFsCase().getCorp().getName();
+    	corp = getModel().getTask().getFsCase().getCorp();
+    }
     return "toDealWithTaskDetail";
   }
 
@@ -248,14 +258,8 @@ public class TaskDetailAction extends
    * @return
    */
   public String doDealWithTaskDetail() {
-    // 如果没有指定企业,则不设定企业关联---待修改后 的getManager().doCommitTaskDetail
-    // 测试通过后删除此注释
-    /*
-     * if (getModel().getTask().getFsCase().getCorp().getId() == null) {
-     * getModel().getTask().getFsCase().setCorp(null); }
-     */
     //String isNewCorp = getRequest().getParameter("isNewCorp");  
-    getManager().doCommitTaskDetail(getModel(),corpId);
+    getManager().doCommitTaskDetail(getModel(), corpName, corp);
 
     return SUCCESS;
 
@@ -475,6 +479,22 @@ public class TaskDetailAction extends
 
   public void setCorpId(Integer corpId) {
     this.corpId = corpId;
+  }
+  
+  public String getCorpName() {
+	return corpName;
+  }
+
+  public void setCorpName(String corpName) {
+	this.corpName = corpName;
+  }
+  
+  public Corp getCorp() {
+	return corp;
+  }
+
+  public void setCorp(Corp corp) {
+	this.corp = corp;
   }
 
 }

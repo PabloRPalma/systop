@@ -3,6 +3,8 @@ package com.systop.fsmis.fscase.task.taskdetail.service;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,21 +65,19 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
    * 完成提交任务明细(处理完毕)方法
    * 
    * @param taskDetail 要提交的任务明细
-   * @param isNewCorp 是否新添加企业
    */
   @Transactional
-  public void doCommitTaskDetail(TaskDetail taskDetail, Integer corpId) {
+  public void doCommitTaskDetail(TaskDetail taskDetail, String corpName, Corp corp) {
     // 任务明细状态置为"已处理"
     taskDetail.setStatus(TaskConstants.TASK_DETAIL_PROCESSED);
     // 任务完成时间
     taskDetail.setCompletionTime(new Date());
-    save(taskDetail);
     Task task = taskDetail.getTask();
     // 作为当前案件的唯一有效任务,当前任务已处理(对应所有任务明细都已处理),则修改案件的状态为"已处理"
     FsCase fsCase = task.getFsCase();
-    // 如果案件没有关联企业,而在完成任务中为案件指定了企业(创建新企业),则需要保存企业信息,
-    //此功能究竟放到哪里经沟通尚未确定,待确定后调整下面这行代码
-    processCorp(taskDetail, fsCase, corpId);
+    // 如果案件没有关联企业,而在完成任务中为案件指定了企业(创建新企业),则需要保存企业信息
+    processCorp(fsCase, corpName, corp);
+    save(taskDetail);
     // 如果所有任务明细已全部处理（包括退回）,则把任务状态置为"已处理",完成时间为当前时间
     if (checkIsAllTaskDetailResolved(taskDetail)) {
       task.setStatus(TaskConstants.TASK_PROCESSED);
@@ -92,42 +92,52 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
   }
 
   /**
-   * <pre>
-   * 
-   * </pre>
+   * 完成企业的添加并事件关联
    * 
    * @param taskDetail
+   * @param fsCase
+   * @param corpName
+   * @param corp
    */
-  private void processCorp(TaskDetail taskDetail, FsCase fsCase,
-      Integer corpId) {
-    // 新添加加企业
-    if (corpId == null) {
-      Corp corp = taskDetail.getTask().getFsCase().getCorp();
-      corp.setDept(fsCase.getCounty());
-      getDao().save(corp);
-      fsCase.setCorp(corp);
-    } else {
-      // 选择得到企业
-      if (taskDetail.getTask().getFsCase().getCorp() != null
-          && taskDetail.getTask().getFsCase().getCorp().getId() != null) {
-        FsCase fsCaseDb = (FsCase) getDao().findObject(
-            "from FsCase fc where fc.id = ?", fsCase.getId());
-        // 客户端传递的企业不eq数据库中原有企业
-        if (!taskDetail.getTask().getFsCase().getCorp().equals(
-            fsCaseDb.getCorp())) {
-          //Corp corp = (Corp) getDao().findObject("from Corp c where c.id = ?", taskDetail.getTask().getFsCase().getCorp().getId());
-          getDao().getHibernateTemplate().clear();
-          //getDao().evict(fsCaseDb.getCorp());
-          //fsCase.setCorp(corp);
-          //getDao().update(fsCase);// 让事件关联选择的企业
-          getDao().save(fsCase);
-        }
-      } else {// 没有选择也没有录入企业,企业空缺
-        fsCase.setCorp(null);
-      }
+  private void processCorp(FsCase fsCase, String corpName,
+		  Corp corp) {
+	//根据页面输入的名字查找企业
+	Corp oldCorp = getCorpByName(corpName, fsCase.getCounty().getId());
+    if (oldCorp != null) {
+    	fsCase.setCorp(oldCorp);
+    // 新添加企业
+    }else {
+    	if(StringUtils.isNotBlank(corpName)){
+        	 corp.setName(corpName);
+             corp.setDept(fsCase.getCounty());
+             getDao().save(corp);
+             fsCase.setCorp(corp);
+    	}else{// 没有选择也没有录入企业,企业空缺
+    		 fsCase.setCorp(null);
+    	}
+    	
     }
   }
 
+	/**
+	 * 根据企业名称和区县ID取得企业信息
+	 * 
+	 * @param corpName
+	 *            企业名称
+	 * @param countyId
+	 *            区县ID
+	 */
+	@SuppressWarnings("unchecked")
+	private Corp getCorpByName(String corpName, Integer countyId) {
+		Corp corp = null;
+		String hql = "from Corp c where c.name = ? and c.dept.id = ?";
+		List<Corp> corpList = getDao().query(hql, corpName, countyId);
+		if (CollectionUtils.isNotEmpty(corpList)) {
+			corp = (Corp) corpList.get(0);
+		}
+		return corp;
+	}
+  
   /**
    * 检查是否所有任务明细已经处理
    * 
