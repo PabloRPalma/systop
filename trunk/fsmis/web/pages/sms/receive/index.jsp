@@ -14,9 +14,9 @@
 <div class="x-toolbar">
 <table width="99%">
 	<tr>
-		<td style="padding: 5px 0px 3px 10px;"> 
+		<td> 
 			<form action="index.do" method="post" target="">
-				手机号：<s:textfield name="model.mobileNum"/>&nbsp;&nbsp;
+				&nbsp;&nbsp;手机号：<s:textfield name="model.mobileNum"/>&nbsp;&nbsp;
 				最新：<input type="checkbox" style="border: 0px;" name="model.isNew" value="1" <s:if test="model.isNew != null">checked="checked"</s:if> />&nbsp;&nbsp;
 				上报：<input type="checkbox" style="border: 0px;" name="model.isReport" value="1" <s:if test="model.isReport != null">checked="checked"</s:if> />&nbsp;&nbsp;
 				核实：<input type="checkbox" style="border: 0px;" name="model.isVerify" value="1" <s:if test="model.isVerify != null">checked="checked"</s:if> />&nbsp;&nbsp;
@@ -27,8 +27,7 @@
 		<td align="right">
 		<table>
 			<tr>
-				<td><a href="#" onclick="remove()"><img src="${ctx}/images/icons/delete.gif" /></a></td>
-				<td><a href="#" onclick="remove()">删除</a></td>
+				<td><a href="#" onclick="remove()"><img src="${ctx}/images/icons/delete.gif" />删除</a></td>
 			</tr>
 		</table>
 		</td>
