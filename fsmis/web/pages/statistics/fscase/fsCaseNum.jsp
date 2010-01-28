@@ -9,35 +9,32 @@
 <script type="text/javascript" src="${ctx}/amcharts/swfobject.js"></script>
 <link href="${ctx}/styles/treeSelect.css" type='text/css'
 	rel='stylesheet'>
-<style type="text/css">
-	input[type="text"]{
-	width:180px;
-}
-</style>
+
 </head>
 <body>
-<div class="x-panel-header">事件数量同比环比统计图</div>
-<div class="x-toolbar" style="height:25px;padding:3px;">
+<div class="x-panel-header">事件数量统计图</div>
+<div class="x-toolbar">
 <table width="99%">
   <tr>
-    <td>
-      <form id="fscaseStaticForm" action="${ctx}/statistics/fscase/statisticByNum.do" method="post">
-        时间:
-			<input type="text" name="beginDate" style="width: 90px"
+   <td>
+   
+   <form id="fscaseStaticForm" action="${ctx}/statistics/fscase/statisticByNum.do" method="post">
+ <table> <tr><td>
+   时间:</td><td><input type="text" name="beginDate" style="width: 90px"
 				value='<s:date name="beginDate" format="yyyy-MM-dd"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"
-				class="Wdate" />
-				统计单位:<s:select id="yearOrMonth" list="yearOrMonthMap" cssStyle="width:40px" name="yearOrMonth"/>
-				<!--  <table id="tb_1">
-					<tr>
-						<td>-->
+				class="Wdate" /></td>
+		<td>统计单位:<s:select id="yearOrMonth" list="yearOrMonthMap" cssStyle="width:40px" name="yearOrMonth" onchange="yearOrMonthChange()"/></td>
+	<td>
+				  <div id="tb_1">
 							比较类型:<s:select id="compareSort" list="compareMap" cssStyle="width:50px" name="compareSort"/>
-						<!-- </td>
-					</tr>
-				</table> -->
-      <input type="submit" value="查询" class="button" />      
-    </form>
-    </td>    
+						</div></td>		
+    <td><input type="submit" value="查询" class="button" /></td> 
+    </tr>
+    </table>
+    </form>    
+    </td> 
+      
   </tr>
 </table>
 </div>
@@ -62,9 +59,9 @@
 	
 </script>
 <script type="text/javascript">
+
 function yearOrMonthChange() { 
-	alert(document.fscaseStaticForm.yearOrMonth.value);
-	if(document.fscaseStaticForm.yearOrMonth.value=='2'){
+	if(document.getElementById("yearOrMonth").value=='2'){
 		document.all("tb_1").style.display="block"; 
 	}else{
 		document.all("tb_1").style.display="none"; 
