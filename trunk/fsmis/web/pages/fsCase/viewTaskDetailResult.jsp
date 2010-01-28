@@ -71,21 +71,21 @@
 				<td align="left"><div id="processor" ></div></td>
 			</tr>
 			<tr>
-				<td align="right">处理过程：</td>
+				<td align="right" valign="top">处理过程：</td>
 				<td align="left">
-				<div style="overflow: auto;" id="process"></div>
+				<div style="overflow: auto; height: 60px;" id="process"></div>
 				</td>
 			</tr>
 			<tr>
-				<td align="right">处理依据：</td>
+				<td align="right" valign="top">处理依据：</td>
 				<td align="left">
-				<div style="overflow: auto;" id="basis"></div>
+				<div style="overflow: auto; height: 60px;" id="basis"></div>
 				</td>
 			</tr>
 			<tr>
-				<td align="right">处理结果：</td>
+				<td align="right" valign="top">处理结果：</td>
 				<td align="left">
-				<div style="overflow: auto;" id="result"></div>
+				<div style="overflow: auto; height: 60px;" id="result"></div>
 				</td>
 			</tr>
 		</table>
