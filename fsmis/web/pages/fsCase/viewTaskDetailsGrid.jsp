@@ -43,7 +43,7 @@
 		       },{
 			       header : '处理时间',
 		           dataIndex : 'completionTime',
-		           width : 100,
+		           width : 150,
 		           sortable : true,
 		           renderer: function(value, cellmeta, record, rowIndex, columnIndex, store) {
 		               /*已退回或者已处理显示完成时间*/
