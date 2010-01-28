@@ -1,6 +1,7 @@
 package com.systop.fsmis.web.wap.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.systop.cms.utils.PageUtil;
 import com.systop.core.dao.support.Page;
 import com.systop.core.service.BaseGenericsManager;
+import com.systop.core.util.ReflectUtil;
 import com.systop.fsmis.model.Corp;
 
 /**
@@ -68,7 +70,12 @@ public class CorpWapManager extends BaseGenericsManager<Corp>{
 	 */
 	@SuppressWarnings("unchecked")
   public Map viewCorp(Integer id) {
-		String sql = "select * from corps where id = ?";		
-		return jdbcTemplate.queryForMap(sql, new Object[] { id });
+		Map map = new HashMap();
+		Corp corp = get(id);
+		if (corp != null) {
+      map = ReflectUtil.toMap(corp, 
+      		new String[]{"id"}, true);
+  	}
+		return map;
 	}
 }
