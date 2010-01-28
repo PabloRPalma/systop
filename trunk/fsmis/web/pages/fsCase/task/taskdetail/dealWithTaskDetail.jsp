@@ -70,44 +70,43 @@
           <tr height="40">
              <td align="right" width="80">名称：</td>        
              <td align="left" width="270">
-             	<s:hidden name="model.task.fsCase.corp.id" id="corpId"></s:hidden>
-             	<s:textfield id="companyName" name="model.task.fsCase.corp.name" onblur="queryCompanyByCode()"  cssStyle="width:270px"/>
+             	<s:textfield id="companyName" name="corpName" onblur="queryCompanyByCode()"  cssStyle="width:270px"/>
              </td>
           </tr>
 		  <tr height="40">
             <td align="right">企业编号：</td>
             <td align="left">
-            	<s:textfield id="companyCode" name="model.task.fsCase.corp.code" cssStyle="width:270px"/>
+            	<s:textfield id="companyCode" name="corp.code" cssStyle="width:270px"/>
             </td>
           </tr>		            
           <tr height="40">
             <td align="right">地址：</td>
             <td align="left">
-            	<s:textfield id="companyAddress" name="model.task.fsCase.corp.address" cssStyle="width:270px"/>
+            	<s:textfield id="companyAddress" name="corp.address" cssStyle="width:270px"/>
             </td>
           </tr>
           <tr height="40">
             <td align="right">法人：</td>
             <td align="left">
-            	<s:textfield id="legalPerson" name="model.task.fsCase.corp.legalPerson" cssStyle="width:270px"/>
+            	<s:textfield id="legalPerson" name="corp.legalPerson" cssStyle="width:270px"/>
             </td>
           </tr>          
           <tr height="40">
             <td align="right">生产许可证：</td>
             <td align="left">
-            	<s:textfield id="produceLicense" name="model.task.fsCase.corp.produceLicense" cssStyle="width:270px"/>
+            	<s:textfield id="produceLicense" name="corp.produceLicense" cssStyle="width:270px"/>
             </td>
           </tr>         
           <tr height="40">
             <td align="right">卫生许可证：</td>
             <td align="left">
-            	<s:textfield id="sanitationLicense" name="model.task.fsCase.corp.sanitationLicense" cssStyle="width:270px"/>
+            	<s:textfield id="sanitationLicense" name="corp.sanitationLicense" cssStyle="width:270px"/>
             </td>
           </tr>
           <tr>
             <td align="right">经营范围：</td>
             <td align="left">
-            	<s:textarea id="operateDetails" name="model.task.fsCase.corp.operateDetails" cols="36" rows="6"></s:textarea>            	
+            	<s:textarea id="operateDetails" name="corp.operateDetails" cols="36" rows="6"></s:textarea>            	
             </td>
           </tr>        
         </table> 
