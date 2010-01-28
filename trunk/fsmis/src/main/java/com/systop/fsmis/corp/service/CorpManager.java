@@ -58,7 +58,7 @@ public class CorpManager extends BaseGenericsManager<Corp> {
 	 */
 	@Transactional
 	public void remove(Corp corp, String realPath) {
-		if (corp != null && !corp.getPhotoUrl().isEmpty()) {
+		if (corp != null && StringUtils.isNotBlank(corp.getPhotoUrl())) {
 			File file = new File(realPath);
 			if (file.exists()) {
 				file.delete();
