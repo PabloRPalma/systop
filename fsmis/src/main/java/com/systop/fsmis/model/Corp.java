@@ -16,6 +16,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import com.systop.common.modules.dept.model.Dept;
 import com.systop.core.model.BaseModel;
@@ -255,7 +256,8 @@ public class Corp extends BaseModel {
 		this.zip = zip;
 	}
 
-	@Column(name = "OPERATE_DETAILS", length = 255)
+	@Type(type = "text")
+	@Column(name = "OPERATE_DETAILS")
 	public String getOperateDetails() {
 		return this.operateDetails;
 	}
