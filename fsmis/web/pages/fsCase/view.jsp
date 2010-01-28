@@ -77,15 +77,15 @@
 			<table width="100%">		
 				<tr><td>&nbsp;</td><td>&nbsp;</td></tr>
 				<tr>
-					<td  width="10%"align="right">案件标题：</td>
+					<td  width="10%"align="right">事件标题：</td>
 					<td  align="left" >${model.title}</td>
 				</tr>
 				<tr>
-					<td width="10%"  align="right">案件类别：</td>
+					<td width="10%"  align="right">事件类别：</td>
 					<td align="left" >${model.caseType.name}</td>
 				</tr>
 				<tr>
-					<td width="10%"  align="right">案件地点：</td>
+					<td width="10%"  align="right">事件地点：</td>
 					<td align="left" >${model.address}</td>
 				</tr>
 				<tr>
@@ -93,7 +93,7 @@
 					<td align="left" ><s:date name="model.caseTime"format="yyyy-MM-dd" /></td>
 				</tr>
 				<tr>
-					<td width="10%"  align="right">案件报告人：</td>
+					<td width="10%"  align="right">事件报告人：</td>
 					<td  align="left">${model.informer}</td>
 				</tr>
 				<tr>
@@ -101,7 +101,7 @@
 					<td  align="left">${model.informerPhone}</td>
 				</tr>
 				<tr>
-					<td width="10%"  align="right">案件描述：</td>
+					<td width="10%"  align="right" valign="top">事件描述：</td>
 					<td  align="left">${model.descn}</td>
 				</tr>						
 			</table>

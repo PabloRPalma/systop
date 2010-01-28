@@ -83,9 +83,9 @@
 				</td>
 			</tr>
 			<tr>
-				<td align="right">事件描述：</td>
+				<td align="right" valign="top">事件描述：</td>
 				<td align="left">
-				<div  id="descn"></div>
+				<div  style="overflow: auto; height: 60px;" id="descn"></div>
 				</td>
 			</tr>
 		</table>
