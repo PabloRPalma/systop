@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.hibernate.criterion.MatchMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -127,9 +128,10 @@ public class TaskDetailAction extends
     for (Iterator itr = taskDetails.iterator(); itr.hasNext();) {
       TaskDetail td = (TaskDetail) itr.next();
       Map mapTaskDetail = ReflectUtil.toMap(td, new String[] { "id",
-          "completionTime", "remainDays", "status" }, true);
+           "remainDays", "status" }, true);
       mapTaskDetail.put("deptName", td.getDept().getName());
       mapTaskDetail.put("taskTitle", td.getTask().getTitle());
+      mapTaskDetail.put("completionTime", convertDate2String(td.getTask().getClosedTime()));
       mapTaskDetails.add(mapTaskDetail);
     }
     page.setData(mapTaskDetails);
@@ -401,6 +403,19 @@ public class TaskDetailAction extends
     return true;
   }
 
+  /**
+   * 转换日期为字符串类型,以解决在Ext的GridPanel中显示不正确问题
+   * 
+   * @param date
+   * @return
+   */
+  private String convertDate2String(Date date) {
+    if (date != null) {
+      return DateFormatUtils.format(date, "yyyy-MM-dd HH:mm:ss");
+    }
+    return "";
+  }
+  
   public Date getTaskEndTime() {
     return taskEndTime;
   }
