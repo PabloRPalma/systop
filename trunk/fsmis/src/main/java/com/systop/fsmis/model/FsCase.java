@@ -266,7 +266,8 @@ public class FsCase extends BaseModel {
     this.code = code;
   }
 
-  @Column(name = "DESCN", length = 255)
+  @Type(type = "text")
+  @Column(name = "DESCN")
   public String getDescn() {
     return this.descn;
   }
