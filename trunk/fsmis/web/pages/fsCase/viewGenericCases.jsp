@@ -1,70 +1,74 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@include file="/common/taglibs.jsp"%>
-<div id="genericCasesDiv" style="margin: -1;">
-<c:forEach items="${model.genericCases}"
-	var="genericCase" varStatus="varStatus">
-	<div id="genericCasesDiv${varStatus.index+1}" class="x-hide-display">
-	<table class="mytable" align="left">
-		<tr>
-			<td>
-			<table width="800px" align="left">
-				<tr>
-					<td align="right" width="15%">事件标题：</td>
-					<td colspan="4" align="left">${genericCase.title }</td>
-				</tr>
-				<tr>
-					<td align="right" width="15%">事件类别：</td>
-					<td colspan="4" align="left">${genericCase.caseType.name }</td>
-				</tr>
-				<tr>
-					<td align="right" width="15%">事件地点：</td>
-					<td colspan="4" align="left">${genericCase.address }</td>
-				</tr>
-				<tr>
-					<td align="right" width="15%">事件时间：</td>
-					<td colspan="4" align="left">${genericCase.caseTime }</td>
-				</tr>
-				<tr>
-					<td align="right" width="15%">事件报告人：</td>
-					<td colspan="4" align="left">${genericCase.informer }</td>
-				</tr>
-				<tr>
-					<td align="right" width="15%">报告人电话：</td>
-					<td colspan="4" align="left">${genericCase.informerPhone }</td>
-				</tr>
-				<tr>
-					<td align="right" width="15%">事件描述：</td>
-					<td colspan="4" align="left">${genericCase.descn}					
-						</td>
-				</tr>				
-			</table>
-			</td>
-		</tr>		
-	</table>	
-	</div>
-</c:forEach></div>
 <script type="text/javascript">
-<c:if test="${model.isMultiple eq '1'}">	
-	Ext.onReady(function() {
-		var tabs3 = new Ext.TabPanel( {
-			renderTo : 'genericCasesDiv',
-			anchor : '100% 100%',
-			activeTab : 0,
-			frame : false,
-			defaults : {
-				autoHeight : false
-			},
-			items : [ 
-			
-					<c:forEach items="${model.genericCases}" var="genericCase" varStatus="varStatus">
-						<c:if test="${varStatus.index>0}">,</c:if>
-						{		contentEl : 'genericCasesDiv${varStatus.index+1}',
-							title : '事件${varStatus.index+1}'
-						} 
-					</c:forEach>					
-					]
-		});
-	});	
-</c:if>
-</script>
+	Ext.onReady(function(){
+		var store = new Ext.data.Store({
+			autoLoad :{params : {start : 0,limit : 10}},
+			reader: new Ext.data.JsonReader({
+				root : 'root',
+				totalProperty : 'totalProperty',
+			      id : 'id',
+			      fields : [
+			        {name:'id'},			
+					{name : 'title'},
+					{name : 'caseTypeName'},
+					{name : 'address'},
+					{name : 'caseTime'}]
+			}),
+			proxy : new Ext.data.HttpProxy({
+				url:'${ctx}/fscase/getGenericCaseByMultipleId.do?fsCaseId=${model.id}' 
+			})
+		})
+		var cm = new Ext.grid.ColumnModel([
+		       {
+			       header : '事件标题',
+				   dataIndex : 'title',
+		           width : 400,
+		           sortable : true,
+		           renderer: function(value, cellmeta, record, rowIndex, columnIndex, store) {
+			           	   return '<a href="#" onclick = "showGenericWindow('+record.data["id"]+')"><font color="blue" title="点击查看事件详情">'+record.data["title"]+'</font></a>';			           	        	
+		            }
+		       },{
+			       header : '事件类别',
+		           dataIndex : 'caseTypeName',
+		           width : 100,
+		           sortable : true				     
+		       },{
+			       header : '事件地点',
+		           dataIndex : 'address',
+		           width : 150,
+		           sortable : true				     
+		       },{
+			       header : '事件时间',
+		           dataIndex : 'caseTime',
+		           width : 150,
+		           sortable : true
+		       }
+		              				     
+		  ]);
+		//创建Grid表格组件
+		var genericCaseGrid${genericStatus.index} = new Ext.grid.GridPanel({			
+			title : '单体事件',
+			applyTo : 'genericCaseGridDiv${genericStatus.index+1}',
+			bodyStyle:'width:100%',
+			autoWidth : true,  
+			autoScroll : true,  
+			height:150,			
+			frame:true,
+	
+			store: store,
+			loadMask:true,
+			layout:'fit', 
+
+			cm : cm,
+			bbar : new Ext.PagingToolbar({
+				  pageSize : 10,
+				  store : store,
+				  displayInfo : true,
+				  displayMsg : '共{2}条记录,显示{0}到{1}',
+				  emptyMsg : "没有记录"
+			  })
+		})
+	});
+  </script>
+  <div id='genericCaseGridDiv${genericStatus.index+1}' style="width:100%;"></div>

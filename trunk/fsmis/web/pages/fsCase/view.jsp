@@ -159,6 +159,7 @@
 	</div>
 </div>
 <%@include file="chooseSendType.jsp"%>
+<%@include file="viewGenericCaseResult.jsp"%>
 <%@include file="viewTaskDetailResult.jsp"%>
 <%@include file="viewTaskDetailReturn.jsp"%>
 <script type="text/javascript">

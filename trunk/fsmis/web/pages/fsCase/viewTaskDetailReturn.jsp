@@ -32,7 +32,7 @@
 		buttonAlign : 'center',
 		modal : 'true',
 		buttons : [ {
-			text : '返回',
+			text : '关闭',
 			handler : function() {
 			ReturnWindow.hide();
 				//ResultWindow.clear();
