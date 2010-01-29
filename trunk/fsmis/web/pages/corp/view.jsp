@@ -83,7 +83,7 @@ Ext.onReady(function(){
 			<tr>
 				<td width="117" align="right">营业执照：</td>
 				<td width="139" align="left"><s:textfield
-					id="businessLicenseCode" name="model.businessLicenseCode"
+					id="businessLicense" name="model.businessLicense"
 					cssClass="inputBorder" readonly="true" /></td>
 				<td align="right" width="71">有效期：</td>
 				<td width="203" align="left"><input type="text"
@@ -95,7 +95,7 @@ Ext.onReady(function(){
 			<tr>
 				<td width="117" align="right">生产许可证：</td>
 				<td width="139" align="left"><s:textfield
-					id="produceLicenseCode" name="model.produceLicenseCode"
+					id="produceLicenseCode" name="model.produceLicense"
 					cssClass="inputBorder" readonly="true" /></td>
 				<td align="right" width="71">有效期：</td>
 				<td width="203" align="left"><input type="text"
@@ -107,7 +107,7 @@ Ext.onReady(function(){
 			<tr>
 				<td width="117" align="right">卫生许可证：</td>
 				<td width="139" align="left"><s:textfield
-					id="sanitationLicenseCode" name="model.sanitationLicenseCode"
+					id="sanitationLicenseCode" name="model.sanitationLicense"
 					cssClass="inputBorder" readonly="true" /></td>
 				<td align="right" width="71">有效期：</td>
 				<td width="203" align="left"><input type="text"
