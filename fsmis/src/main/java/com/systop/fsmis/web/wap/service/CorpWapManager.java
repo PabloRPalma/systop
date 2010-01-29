@@ -7,8 +7,6 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.criterion.MatchMode;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import com.systop.cms.utils.PageUtil;
@@ -24,9 +22,6 @@ import com.systop.fsmis.model.Corp;
  */
 @Service
 public class CorpWapManager extends BaseGenericsManager<Corp>{
-
-	@Autowired
-	private JdbcTemplate jdbcTemplate;
 	
 	/**
 	 * 根据企业名称列出企业信息
@@ -55,13 +50,13 @@ public class CorpWapManager extends BaseGenericsManager<Corp>{
 	 * @return 符合条件的记录数量
 	 */
 	public int getCorpCount(String corpName) {
-		String sql = "select count(*) from corps c where 1=1";
+		String sql = "from Corp c where 1=1";
 		List<Object> args = new ArrayList<Object>();
 		if (StringUtils.isNotBlank(corpName)) {
 			sql += " and c.name like ?";
 			args.add(MatchMode.ANYWHERE.toMatchString(corpName));
 		}
-		return jdbcTemplate.queryForInt(sql, args.toArray());
+		return query(sql, args.toArray()).size();
 	}
 	
 	/**
