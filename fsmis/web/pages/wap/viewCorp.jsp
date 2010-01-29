@@ -16,19 +16,19 @@
 	</tr>
 	<tr>
 		<td><b>［企业法人］:</b></td>
-		<td>${company.legal_person}</td>
+		<td>${company.legalPerson}</td>
 	</tr>
 	<tr>
 		<td><b>［营业执照］:</b></td>		
-		<td>${company.business_license}</td>
+		<td>${company.businessLicense}</td>
 	</tr>
 	<tr>
 		<td><b>［生产许可证］:</b></td>
-		<td>${company.produce_license }</td>
+		<td>${company.produceLicense }</td>
 	</tr>
 	<tr>
 		<td><b>［卫生许可证］:</b></td>		
-		<td>${company.sanitation_license }</td>
+		<td>${company.sanitationLicense }</td>
 	</tr>
 	<tr>
 		<td><b>［企业编号］:</b></td>
@@ -40,11 +40,11 @@
 	</tr>
 	<tr>
 		<td><b>［诚信等级］:</b></td>
-		<td>${company.integrity_grade}</td>
+		<td>${company.integrityGrade}</td>
 	</tr>
 	<tr>
 		<td><b>［经营范围］:</b></td>
-		<td>${company.operate_details }</td>
+		<td>${company.operateDetails }</td>
 	</tr>
 </table>
 <table columns="2">
