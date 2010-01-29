@@ -52,6 +52,7 @@ public class CorpWapManagerTest extends BaseTransactionalTestCase {
 		int corps = corpWapManager.getCorpCount("EMS");
 		
 		assertNotNull(corps);
+		assertTrue(corps >= 2);
 	}
 	
 	/**
