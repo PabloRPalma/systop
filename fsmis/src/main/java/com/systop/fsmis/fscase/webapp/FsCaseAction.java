@@ -479,7 +479,7 @@ public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
    */
   public String getGenericCaseByMultipleId() {
 	 page = PageUtil.getPage(getPageNo(), getPageSize());
-	 FsCase fscase = null;
+	 FsCase fscase = new FsCase();
 	 String id = getRequest().getParameter("fsCaseId");
 	 Assert.notNull(id);
 	 if (StringUtils.isNotBlank(id)) {
