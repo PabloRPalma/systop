@@ -67,8 +67,7 @@ Ext.onReady(function(){
     <table width="100%">
       <tr>
         <td align="right">
-          <a href="${ctx}/assessment/index.do">
-             <img src="${ctx}/images/icons/building_go.png" class="icon" border="0">评估列表&nbsp;&nbsp;
+          <a href="${ctx}/assessment/index.do">评估列表&nbsp;&nbsp;
           </a>
         </td>
       </tr>
