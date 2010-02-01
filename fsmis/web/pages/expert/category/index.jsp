@@ -26,7 +26,7 @@ function removeCategory(cID){
 	      <input type="submit" value="查询" class="button" />
 	    </td>
 	    <td style=" padding-left:5px; padding-top:5px;" align="right">   
-	        <a href="${ctx}/expert/category/edit.do"><img src="${ctx}/images/icons/add.gif"/>新建类别</a>
+	        <a href="${ctx}/expert/category/edit.do">新建类别</a>
 	    </td>
     </s:form>
   </tr>

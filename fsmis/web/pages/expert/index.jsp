@@ -34,7 +34,7 @@ function removeExpert(eID){
 						headerKey="" headerValue="--请选择--" cssStyle="width:120px" /></td>	      
 	    <td width="8%"><input type="submit" value="查询" class="button" /></td>
 	    <td style=" padding-left:5px; padding-top:5px;" align="right">   
-	        <a href="${ctx}/expert/edit.do"><img src="${ctx}/images/icons/add.gif"/>添加专家</a>
+	        <a href="${ctx}/expert/edit.do">添加专家</a>
 	    </td>
     </s:form>
   </tr>
