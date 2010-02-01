@@ -18,7 +18,7 @@
 <div align="center">
 <s:form action="save.do" id="save" method="post" theme="simple" validate="true">
 <fieldset style="width: 700px; padding-top: 2px">
-  <legend>添加通知信息</legend>
+  <legend>编辑通知信息</legend>
 	<s:hidden name="model.id"/>
 	<table width="700px" align="center" border="0" cellpadding="3" cellspacing="3">
 		<tr>
