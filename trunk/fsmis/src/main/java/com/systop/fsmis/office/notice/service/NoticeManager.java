@@ -36,7 +36,6 @@ public class NoticeManager extends BaseGenericsManager<Notice> {
 		if (CollectionUtils.isNotEmpty(receiveRecords)) {
 			for (ReceiveRecord r : receiveRecords) {
 				receiveRecordManager.remove(r);
-				//notice.getRecRecordses().remove(r);
 			}
 		}
 		save(notice);
