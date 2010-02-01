@@ -67,7 +67,7 @@
 	<ec:row>
 	    <ec:column width="40" property="_s" title="No." value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center"/>
 		<ec:column width="180" property="title" title="事件名称" >
-		  <c:if test="${item.status == null || item.status eq '0' || item.status eq '1'}">
+		  <c:if test="${item.status == '' || item.status eq '0' || item.status eq '1'}">
 			<a href="${ctx}/urgentcase/view.do?model.id=${item.id}&actId=0" title="查看事件"><font color="blue">${item.title}</font></a>
 		  </c:if>
 		  <c:if test="${item.status eq '2' || item.status eq '3' || item.status eq '4'}">
@@ -76,24 +76,17 @@
 		</ec:column>
 		<ec:column width="180" property="address" title="事发地点"/>
 		<ec:column width="110" property="caseTime" title="事发时间" style="text-align:center" format="yyyy-MM-dd HH:mm" cell="date"/>
-		<ec:column width="60" property="status" title="状态" style="text-align:center">
-		    <c:if test="${item.status == null}"><font color="#990099">未审核</font></c:if>
-		    <c:if test="${item.status == '0'}"> <font color="red">未通过</font></c:if>
-			<c:if test="${item.status == '1'}"> <font color="blue">未派遣</font></c:if>
-			<c:if test="${item.status == '2'}"> <font color="green">已派遣</font></c:if>
-			<c:if test="${item.status == '3'}"> <font color="green">已处理</font></c:if>
-			<c:if test="${item.status == '4'}"> <font color="green">已核实</font></c:if>
-		</ec:column>
+		<ec:column width="60" property="status" title="状态" mappingItem="ucStatusMap" style="text-align:center"/>
 		<ec:column width="60" property="_v" title="查看" style="text-align:center">
-			<c:if test="${item.status != null}">
+			<c:if test="${item.status != ''}">
 				<a href="${ctx}/urgentcase/listCheckResult.do?model.id=${item.id}">审核记录</a>
 			</c:if>
-			<c:if test="${item.status == null}">
+			<c:if test="${item.status == ''}">
 				<font color="silver">无记录</font>
 			</c:if>
 		</ec:column>
 		<ec:column width="210" property="_0" title="操作" style="text-align:center" sortable="false">
-		  <c:if test="${item.status == null || item.status eq '0'}">
+		  <c:if test="${item.status == '' || item.status eq '0'}">
 			<a href="${ctx}/urgentcase/edit.do?model.id=${item.id}" title="修改事件">改</a> | 
 			<a href="#" onclick="showCheckWindow('${item.id}')" title="审核事件">审</a> | 
 			<font color="silver">派</font> |
@@ -108,7 +101,7 @@
 		  	<font color="silver">审</font> | 
 			<font color="silver">派</font> | 
 		  </c:if>
-		  <c:if test="${item.status == null || item.status eq '0' || item.status eq '1'}">
+		  <c:if test="${item.status == '' || item.status eq '0' || item.status eq '1'}">
 			<a href="${ctx}/urgentcase/view.do?model.id=${item.id}&actId=0" title="查看事件">看</a> | 
 		  </c:if>
 		  <c:if test="${item.status == '2' || item.status eq '3' || item.status eq '4'}">
