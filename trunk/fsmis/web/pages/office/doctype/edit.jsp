@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="x-panel">
-<div class="x-panel-header">添加栏目信息</div>
+<div class="x-panel-header">编辑栏目信息</div>
 <div class="x-toolbar">
  <table width="100%">
      <tr>
@@ -25,7 +25,7 @@
 <div align="center">
 <s:form action="save.do" id="save" method="post" theme="simple" validate="true">
 <fieldset style="width: 500px; padding-top: 10px">
-  <legend>添加栏目信息</legend>
+  <legend>编辑栏目信息</legend>
 	<s:hidden name="model.id"/>
 	<s:hidden name="parentId"/>
 	<table width="600px" align="center" border="0" cellpadding="3" cellspacing="3">
