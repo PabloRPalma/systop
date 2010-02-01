@@ -60,7 +60,9 @@
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	<ec:row>
 		<ec:column width="40" property="_s" title="No." style="text-align:center" value="${GLOBALROWCOUNT}" sortable="false" />
-		<ec:column width="280" property="title" title="事件标题" sortable="false" />
+		<ec:column width="280" property="title" title="事件标题" sortable="false" >
+			<a href="${ctx}/casereport/view.do?model.id=${item.id}" title="查看事件详情"><font color="blue">${item.title}</font></a>
+		</ec:column>
 		<ec:column width="100" property="caseType.name" title="事件类别" style="text-align:center" sortable="false"/>
 		<ec:column width="110" property="caseTime" title="事发时间" style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm" />
 		<ec:column width="80" property="reportDept.name" title="上报部门" sortable="false" style="text-align:center" />
