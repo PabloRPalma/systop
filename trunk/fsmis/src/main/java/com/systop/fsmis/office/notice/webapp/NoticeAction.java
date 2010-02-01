@@ -108,12 +108,12 @@ public class NoticeAction extends ExtJsCrudAction<Notice, NoticeManager> {
 			addActionError("未找到登录用户的所在部门，请使用正确用户访问本页面。");
 			return INPUT;
 		}
-		if (CollectionUtils.isEmpty(deptIds) && getModel().getId() == null)  {
-			addActionError("请选择接收部门。");
-			return INPUT;
-		}
 		if (StringUtils.isBlank(getModel().getTitle())) {
 			addActionError("请输入标题。");
+			return INPUT;
+		}
+		if (CollectionUtils.isEmpty(deptIds) && getModel().getId() == null)  {
+			addActionError("请选择接收部门。");
 			return INPUT;
 		}
 		getModel().setPublisher(user);
