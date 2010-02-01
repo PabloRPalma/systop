@@ -56,7 +56,7 @@
 		<td align="right">
 		<table>
 			<tr>
-				<td align="right"><a href="${ctx}/urgentcase/index.do"> 应急事件列表</a></td>
+				<td align="right" height="20"><a href="${ctx}/urgentcase/index.do"> 应急事件列表</a></td>
 			</tr>
 		</table>
 		</td>
