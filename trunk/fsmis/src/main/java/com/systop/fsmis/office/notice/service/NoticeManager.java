@@ -2,8 +2,10 @@ package com.systop.fsmis.office.notice.service;
 
 import java.io.File;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +23,8 @@ import com.systop.fsmis.model.ReceiveRecord;
 @Service
 public class NoticeManager extends BaseGenericsManager<Notice> {
 
+	@Autowired
+	private ReceiveRecordManager receiveRecordManager;
 	/**
 	 * 保存各部门通知记录
 	 * @param notice
@@ -28,6 +32,13 @@ public class NoticeManager extends BaseGenericsManager<Notice> {
 	 */
 	@Transactional
 	public void saveDeptRecord(Notice notice, List<Integer> deptIds) {
+		Set<ReceiveRecord> receiveRecords = notice.getRecRecordses();
+		if (CollectionUtils.isNotEmpty(receiveRecords)) {
+			for (ReceiveRecord r : receiveRecords) {
+				receiveRecordManager.remove(r);
+				//notice.getRecRecordses().remove(r);
+			}
+		}
 		save(notice);
 		if (CollectionUtils.isNotEmpty(deptIds)) {
 			for (Integer deptId : deptIds) {
