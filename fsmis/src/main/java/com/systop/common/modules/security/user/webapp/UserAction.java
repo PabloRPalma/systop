@@ -286,7 +286,6 @@ public class UserAction extends ExtJsCrudAction<User, UserManager> {
 	/**
 	 * 2010-1-13 yj 用户登录记录查询
 	 */
-	@SuppressWarnings("unchecked")
 	public String userHistoryList() {
 		Dept county = loginUserService.getLoginUserCounty(getRequest());
 		Page page = PageUtil.getPage(getPageNo(), getPageSize());
