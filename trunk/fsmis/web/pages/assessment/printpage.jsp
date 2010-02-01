@@ -64,10 +64,10 @@ td{
     <td>&nbsp;${model.fsCase.title}</td>
     <td align="right">事件类型：</td>
     <td>&nbsp;&nbsp;
-        <c:if test="${empty model.fsCase.isMultiple}">
+        <c:if test="${model.fsCase.isMultiple eq '0'}">
                                           单体事件
         </c:if>
-        <c:if test="${!empty model.fsCase.isMultiple}">
+        <c:if test="${model.fsCase.isMultiple eq '1'}">
                                           多体事件
         </c:if> 	
     </td>
