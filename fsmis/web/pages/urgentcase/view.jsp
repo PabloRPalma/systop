@@ -333,29 +333,24 @@
 	</td>
   </tr>
   <tr>
-    <td><img src="${ctx}/images/choosesendtype/table_top.gif" width="567" height="13" /></td>
+    <td style="margin-top: -1;margin-left: -2;"></td>
   </tr>
 </table>
 <table align="center" width="567" height="199" border="0" cellpadding="0" cellspacing="0">
   <tr>
-    <td background="${ctx}/images/choosesendtype/table_bg.gif">
+    <td>
     	<table align="center" width="567" height="35" border="0" cellpadding="0" cellspacing="0">
         	<tr><td>&nbsp;</td></tr>
         	<c:forEach items="${ucTypeList}" var="type">
        		<tr>
 	       		<td>
-	       			<input onclick="DispatchWindow.selectType('${type.id }')" type="button" value="${type.name}" style="width:555px; height:35px; border: 0px; background-image: url(${ctx}/images/choosesendtype/01.gif);font-size:16px;color:#000"/>
+	       			<input onclick="DispatchWindow.selectType('${type.id }')" type="button" value="${type.name}" style="width:560px; height:40px;  border: 0px; background-image: url(${ctx}/images/choosesendtype/bg.gif);font-size:12px;color:#000;font-weight:bold"/>
 	       		</td>
        		</tr>
        		</c:forEach>
        		<tr><td>&nbsp;</td></tr>
     	</table>
     </td>
-  </tr>
-</table>
-<table align="center" width="567" border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><img src="${ctx}/images/choosesendtype/table_botom.gif" width="567" height="18" /></td>
   </tr>
 </table>
 </div>
