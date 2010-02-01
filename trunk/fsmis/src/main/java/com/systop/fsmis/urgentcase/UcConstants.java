@@ -27,6 +27,9 @@ public final class UcConstants {
 	/** 事件状态：已核实完成 */
 	public static final String CASE_STATUS_VERIFYED = "4";
 
+	/** 事件状态：未审核 */
+	public static final String CASE_STATUS_UNCHECK = "";
+	
 	/** 指挥部 */
 	public static final String LEADERSHIP = "Leadership";
 	
@@ -72,6 +75,12 @@ public final class UcConstants {
 	public static final String GROUP_ORIGINAL_YES = "1";
 	/** 前台提交排序时使用*/
 	public static final int LENGTH = 2;
+	
+	/** 应急预案等级 三级*/
+	public static final String UC_PLANS_LEVEL_THREE = "III级预案";
+	/** 应急预案等级 四级*/
+	public static final String UC_PLANS_LEVEL_FOUR = "IV 级预案";
+	
 	/**
 	 * 组类别
 	 */
@@ -88,5 +97,19 @@ public final class UcConstants {
 		GROUP_CATEGORY_MAP.put(NEWS_REPORT, "新闻报道");
 		GROUP_CATEGORY_MAP.put(EXPERT_TECHNOLOGY, "技术专家");
 		GROUP_CATEGORY_MAP.put(RECEIVE, "接待");
+	}
+	
+	/**
+	 * 事件状态
+	 */
+	public static final Map<String, String> UC_STATUS_MAP = Collections
+			.synchronizedMap(new LinkedHashMap<String, String>());
+	static {
+		UC_STATUS_MAP.put(CASE_STATUS_UNCHECK, "<font color='#990099'>未审核</font>");
+		UC_STATUS_MAP.put(CASE_STATUS_PASSED, "<font color='red'>未通过</font>");
+		UC_STATUS_MAP.put(CASE_STATUS_UNSEND, "<font color='blue'>未派遣</font>");
+		UC_STATUS_MAP.put(CASE_STATUS_SENDDED, "<font color='green'>已派遣</font>");
+		UC_STATUS_MAP.put(CASE_STATUS_RESOLVEED, "<font color='green'>已处理</font>");
+		UC_STATUS_MAP.put(CASE_STATUS_VERIFYED, "<font color='green'>已核实</font>");
 	}
 }

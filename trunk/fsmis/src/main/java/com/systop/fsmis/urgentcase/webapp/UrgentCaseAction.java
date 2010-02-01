@@ -123,6 +123,8 @@ public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseMana
 			}
 			getModel().setCounty(county);
 			getModel().setCreateTime(Calendar.getInstance().getTime());
+			//新添加的事件状态为‘未审核’
+			getModel().setStatus(UcConstants.CASE_STATUS_UNCHECK);
 			getManager().save(getModel());
 			return SUCCESS;
 		} catch (Exception e) {
@@ -325,6 +327,13 @@ public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseMana
 	}
 	
 	/**
+	 * 取得事件状态Map
+	 */
+	public Map<String, String> getUcStatusMap() {
+		return UcConstants.UC_STATUS_MAP;
+	}
+	
+	/**
 	 * 取得预案等级
 	 */
 	public Map<String, String> getPlansLevelMap() {
@@ -332,9 +341,9 @@ public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseMana
 		Dept county = loginUserService.getLoginUserCounty(getRequest());
 		if (county != null) {
 			if (county.getParentDept() != null) {
-				categoryMap.put("IV 级预案", "IV 级预案");
+				categoryMap.put(UcConstants.UC_PLANS_LEVEL_FOUR, UcConstants.UC_PLANS_LEVEL_FOUR);
 			} else {
-				categoryMap.put("III级预案", "III级预案");
+				categoryMap.put(UcConstants.UC_PLANS_LEVEL_THREE, UcConstants.UC_PLANS_LEVEL_THREE);
 			}
 		}
 		return categoryMap;
