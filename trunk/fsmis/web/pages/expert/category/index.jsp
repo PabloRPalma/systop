@@ -16,7 +16,7 @@ function removeCategory(cID){
 </head>
 <body>
 <div class="x-panel">
-<div class="x-panel-header">专家信息&nbsp;&gt;&nbsp;专家类别管理</div>
+<div class="x-panel-header">专家类别管理</div>
 <div class="x-toolbar">
 <table width="99%">
   <tr>

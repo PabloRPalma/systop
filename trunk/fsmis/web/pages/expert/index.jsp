@@ -16,7 +16,7 @@ function removeExpert(eID){
 </head>
 <body>
 <div class="x-panel">
-<div class="x-panel-header">专家信息</div>
+<div class="x-panel-header">专家管理</div>
 <div class="x-toolbar">
 <table width="99%">
   <tr>
