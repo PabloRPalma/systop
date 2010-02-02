@@ -5,8 +5,8 @@
 <html>
 <head>
 <title></title>
-<%@include file="/common/meta.jsp"%>
 <%@include file="/common/extjs.jsp" %>
+<%@include file="/common/meta.jsp"%>
 <%@include file="/common/validator.jsp"%>
 </head>
 <body >
@@ -27,7 +27,7 @@ Ext.onReady(function(){
 });
 </script>
 <div class="x-panel">
-<div class="x-panel-header">评估信息</div>
+<div class="x-panel-header">评估管理</div>
 <div class="x-toolbar">
     <table width="100%">
       <tr>
