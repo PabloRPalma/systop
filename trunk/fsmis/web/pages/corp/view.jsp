@@ -40,7 +40,7 @@ Ext.onReady(function(){
 </style>
 </head>
 <body>
-<div class="x-panel">
+<div class="x-panel" style="width: 99.99%">
 <div class="x-panel-header">查看企业信息</div>
 <div class="x-toolbar">
     <table width="100%">
@@ -49,13 +49,12 @@ Ext.onReady(function(){
         <td align="left">&nbsp;<font color="#15428B"><b>所属单位：${model.dept.name}</b></font></td>
         -->
         <td align="right">
-          <a href="${ctx}/corp/index.do">企业列表&nbsp;&nbsp;
-          </a>
+          <a href="${ctx}/corp/index.do">企业列表&nbsp;&nbsp;</a>
         </td>
       </tr>
     </table>
 </div>
-<div id="tabs" style="margin-top: -1px;margin-left: -1px;margin-right: 0px;">
+<div id="tabs" style="margin-top: -1px;margin-left: -1px;margin-right: -1px;">
 <div id="basic" class="x-hide-display">
   <table id="mytable" height="320">
 	<tr>
@@ -196,17 +195,9 @@ Ext.onReady(function(){
   </table>
 </div>
 <div id="punish" class="x-hide-display">
-  <table id="mytable" height="320">
-	<tr>
-	  <td height="200" align="left" valign="top">
-		<div style="line-height: 20px; padding: 10px 10px 10px 10px;"></div>
-	  </td>
-	</tr>
-  </table>
+  <%@include file="viewPunishRecords.jsp" %>
 </div>
 </div>
 </div>
-<s:hidden id="psRecordSize" name="psRecordSize" />
-<s:hidden id="rewardContent" name="model.integrityRecord" />
 </body>
 </html>
