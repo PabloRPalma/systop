@@ -1,12 +1,16 @@
 package com.systop.fsmis.corp.webapp;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
@@ -19,11 +23,13 @@ import com.systop.cms.utils.PageUtil;
 import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.core.dao.support.Page;
+import com.systop.core.util.ReflectUtil;
 import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
 import com.systop.core.webapp.upload.UpLoadUtil;
 import com.systop.fsmis.FsConstants;
 import com.systop.fsmis.corp.service.CorpManager;
 import com.systop.fsmis.model.Corp;
+import com.systop.fsmis.model.FsCase;
 
 /**
  * 企业信息管理的struts2 Action。
@@ -52,14 +58,6 @@ public class CorpAction extends ExtJsCrudAction<Corp, CorpManager> {
 	 * json返回结果
 	 */
 	private Map<String, String> delResult;
-	/**
-	 * 处罚记录
-	 */
-	private List punishRecords;
-	/**
-	 * 处罚记录数
-	 */
-	private Integer psRecordSize;
 
 	@Autowired
 	private LoginUserService loginUserService;
@@ -184,19 +182,41 @@ public class CorpAction extends ExtJsCrudAction<Corp, CorpManager> {
 	}
 
 	/**
-	 * 查看企业信息
+	 * 取得企业的处罚记录
 	 */
-	public String view() {
-		punishRecords = Collections.EMPTY_LIST;
-		/*
-		 * 取得企业的处罚记录 处罚记录的取得依赖于其他模块的完成，暂时测试用，有待完善。
-		 */
-		/* punishRecords = queryPunishRecords(); */
-		getRequest().setAttribute("psRecords", punishRecords);
-		psRecordSize = 2; // punishRecords.size();
-		return super.view();
+	public String getPunishRecordsOfCorp() {
+		page = PageUtil.getPage(getPageNo(), getPageSize());
+		List mapFsCases = new ArrayList();
+		String corpId = getRequest().getParameter("corpId");
+		if (StringUtils.isNotBlank(corpId) && StringUtils.isNumeric(corpId)) {
+			Corp corp = getManager().get(Integer.valueOf(corpId));
+			FsCase[] cases = new FsCase[]{};
+			Set<FsCase> fsCases = corp.getFsCases();
+			cases = fsCases.toArray(cases);
+			for (FsCase fsCase : cases) {
+				Map mapFsCase = ReflectUtil.toMap(fsCase, new String[] { "id",
+	    		   "title","address"}, true);
+				mapFsCase.put("caseTypeName", fsCase.getCaseType().getName());
+				mapFsCase.put("caseTime", convertDate2String(fsCase.getCaseTime()));
+				mapFsCases.add(mapFsCase);
+			}
+		}
+		page.setData(mapFsCases);
+		
+		return JSON;
 	}
-
+	
+	/**
+	 * 将日期转换成字符串
+	 * @param date
+	 */
+	private String convertDate2String(Date date) {
+    if (date != null) {
+      return DateFormatUtils.format(date, "yyyy-MM-dd HH:mm");
+    }
+    return "";
+  }
+	
 	public File getPhoto() {
 		return photo;
 	}
@@ -227,21 +247,5 @@ public class CorpAction extends ExtJsCrudAction<Corp, CorpManager> {
 
 	public void setCorpId(Integer corpId) {
 		this.corpId = corpId;
-	}
-
-	public List getPunishRecords() {
-		return punishRecords;
-	}
-
-	public void setPunishRecords(List punishRecords) {
-		this.punishRecords = punishRecords;
-	}
-
-	public Integer getPsRecordSize() {
-		return psRecordSize;
-	}
-
-	public void setPsRecordSize(Integer psRecordSize) {
-		this.psRecordSize = psRecordSize;
 	}
 }
