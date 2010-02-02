@@ -59,13 +59,11 @@ Ext.onReady(function(){
 <div id="tabs" style="margin-top: -1px;margin-left: -1px;margin-right: 0px;">
 <div id="basic" class="x-hide-display">
 	<s:hidden id="corpId" name="model.id" />
-	<table id="mytable" height="340">
+	<table id="mytable" height="380">
 	  <tr>
-		<td width="520">
+		<td width="520" valign="top">
 		  <table width="562" align="left" border="0" cellspacing="2">
-		  <tr>
-            <td height="3" colspan="4"></td>
-          </tr>
+		  <tr><td height="5" colspan="4"></td></tr>
           <tr>
             <td width="112" align="right" height="22">企业名称：</td>
             <td align="left" colspan="3">
