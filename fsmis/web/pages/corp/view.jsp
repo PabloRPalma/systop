@@ -87,10 +87,9 @@ Ext.onReady(function(){
 					cssClass="inputBorder" readonly="true" /></td>
 				<td align="right" width="71">有效期：</td>
 				<td width="203" align="left"><input type="text"
-					name="model.businessLicenseDate"
-					value='<s:date name="model.businessLicenseDate" format="yyyy-MM-dd"/>'
-					class="inputBorder" style="height: 16px"
-					readonly="readonly" /></td>
+					name="model.businessLicenseIndate"
+					value='<s:date name="model.businessLicenseIndate" format="yyyy-MM-dd"/>'
+					class="inputBorder" style="height: 16px" readonly="readonly"/></td>
 			</tr>
 			<tr>
 				<td width="117" align="right">生产许可证：</td>
@@ -99,8 +98,8 @@ Ext.onReady(function(){
 					cssClass="inputBorder" readonly="true" /></td>
 				<td align="right" width="71">有效期：</td>
 				<td width="203" align="left"><input type="text"
-					name="model.produceLicenseDate"
-					value='<s:date name="model.produceLicenseDate" format="yyyy-MM-dd"/>'
+					name="model.produceLicenseIndate"
+					value='<s:date name="model.produceLicenseIndate" format="yyyy-MM-dd"/>'
 					class="inputBorder" style="height: 16px"
 					readonly="readonly" /></td>
 			</tr>
@@ -111,8 +110,8 @@ Ext.onReady(function(){
 					cssClass="inputBorder" readonly="true" /></td>
 				<td align="right" width="71">有效期：</td>
 				<td width="203" align="left"><input type="text"
-					name="model.sanitationLicenseDate"
-					value='<s:date name="model.sanitationLicenseDate" format="yyyy-MM-dd"/>'
+					name="model.sanitationLicenseIndate"
+					value='<s:date name="model.sanitationLicenseIndate" format="yyyy-MM-dd"/>'
 					class="inputBorder" style="height: 16px"
 					readonly="readonly" /></td>
 			</tr>
