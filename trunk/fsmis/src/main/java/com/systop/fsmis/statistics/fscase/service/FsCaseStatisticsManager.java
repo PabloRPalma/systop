@@ -66,17 +66,18 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 			dept = county;
 		}
 		StringBuffer sql = new StringBuffer(
-				"select fc.status,count(fc.status) from FsCase fc where 1=1");
+				"select fc.status,count(fc.id) from FsCase fc where 1=1");
 		List args = new ArrayList();
 		if (dept.getParentDept() != null) {// 部门是否为市级
 			sql.append("and fc.county.id = ? ");
 			args.add(dept.getId());
 		}
 		if (beginDate != null && endDate != null) {
-			sql.append(" and fc.caseTime between ? and ?  group by fc.status");
+			sql.append(" and fc.caseTime between ? and ?  ");
 			args.add(beginDate);
 			args.add(endDate);
 		}
+		sql.append(" group by fc.status");
 		result = getDao().query(sql.toString(), args.toArray());
 		StringBuffer cvsData = new StringBuffer();
 		if (CollectionUtils.isNotEmpty(result)) {
@@ -121,10 +122,11 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 				args.add(status);
 			}
 			if (beginDate != null && endDate != null) {
-				sqlTemp.append(" and fc.caseTime between ? and ?  group by fc.status");
+				sqlTemp.append(" and fc.caseTime between ? and ? ");
 				args.add(beginDate);
 				args.add(endDate);
 			}
+			sqlTemp.append(" group by fc.status");
 			List<Object[]> result = getDao()
 					.query(sqlTemp.toString(), args.toArray());
 			if (CollectionUtils.isNotEmpty(result)) {
@@ -852,10 +854,11 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 		}
 		if (beginDate != null && endDate != null) {
 			sql
-					.append(" and fc.caseTime between ? and ?  group by fc.caseSourceType");
+					.append(" and fc.caseTime between ? and ?  ");
 			args.add(beginDate);
 			args.add(endDate);
 		}
+		sql.append(" group by fc.caseSourceType");
 		List<Object[]> result = getDao().query(sql.toString(), args.toArray());
 
 		StringBuffer cvsData = new StringBuffer();
