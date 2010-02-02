@@ -12,7 +12,7 @@
 </head>
 <body>
 <div class="x-panel">
-<div class="x-panel-header">联合整治&nbsp;&gt;&nbsp;逾期未处理任务列表</div>
+<div class="x-panel-header">联合整治逾期未处理任务列表</div>
 <div class="x-toolbar">
 <table width="99%">
   <tr>

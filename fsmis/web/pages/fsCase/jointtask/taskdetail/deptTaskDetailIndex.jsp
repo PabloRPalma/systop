@@ -32,7 +32,7 @@ function result(id, jointTaskId){
 </head>
 <body>
 <div class="x-panel">
-<div class="x-panel-header">联合整治&nbsp;&gt;&nbsp;任务列表</div>
+<div class="x-panel-header">联合整治任务列表</div>
 <div class="x-toolbar">
 <table width="99%">
   <tr>

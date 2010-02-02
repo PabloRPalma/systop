@@ -30,13 +30,12 @@ Ext.onReady(function(){
 });
 </script>
 <div class="x-panel">
-<div class="x-panel-header">联合整治&nbsp;&gt;&nbsp;任务处理</div>
+<div class="x-panel-header">联合整治任务处理</div>
 <div class="x-toolbar">
     <table width="100%">
       <tr>
         <td align="right">
-          <a href="${ctx}/jointTask/deptTaskDetail/deptTaskDetailIndex.do">
-             <img src="${ctx}/images/icons/building_go.png" class="icon" border="0">任务列表&nbsp;&nbsp;
+          <a href="${ctx}/jointTask/deptTaskDetail/deptTaskDetailIndex.do">任务列表&nbsp;&nbsp;
           </a>
         </td>
       </tr>

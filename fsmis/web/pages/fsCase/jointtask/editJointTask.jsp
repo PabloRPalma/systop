@@ -29,7 +29,7 @@ Ext.onReady(function(){
 });
 </script>
 <div class="x-panel">
-<div class="x-panel-header">联合整治&nbsp;&gt;&nbsp;任务申请管理</div>
+<div class="x-panel-header">联合整治任务申请</div>
 <c:if test="${model.id != null}">
 <div class="x-toolbar">
     <table width="100%">

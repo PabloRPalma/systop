@@ -52,7 +52,7 @@ Ext.onReady(function(){
 });
 </script>
 <div class="x-panel">
-<div class="x-panel-header">联合整治&nbsp;&gt;&nbsp;任务明细查看</div>
+<div class="x-panel-header">联合整治任务明细查看</div>
 <!--  
 <div class="x-toolbar">
     <table width="100%">
