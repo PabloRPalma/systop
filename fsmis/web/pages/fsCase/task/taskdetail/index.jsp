@@ -11,7 +11,7 @@
 <body>
 <div><%@ include file="/common/messages.jsp"%></div>
 <div class="x-panel">
-<div class="x-panel-header"></div>
+<div class="x-panel-header">${isMultipleCase eq 0?'单体任务':'多体任务'}接收</div>
 <div class="x-toolbar">
 <table width="99%">
 	<tr>
