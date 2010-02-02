@@ -35,7 +35,7 @@ window.onload = function(){
 </head>
 <body>
 <div class="x-panel">
-<div class="x-panel-header">风险评估&nbsp;&gt;&nbsp;评估申请管理</div>
+<div class="x-panel-header">评估管理</div>
 <div class="x-toolbar">
 <table width="99%">
   <tr>

@@ -27,7 +27,7 @@ Ext.onReady(function(){
 });
 </script>
 <div class="x-panel">
-<div class="x-panel-header">风险评估&nbsp;&gt;&nbsp;评估审核管理</div>
+<div class="x-panel-header">评估审核</div>
 <div class="x-toolbar">
     <table width="100%">
       <tr>
