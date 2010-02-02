@@ -11,7 +11,10 @@
 			<result name="view">/pages/corp/view.jsp</result>
 			<result type="json" name="jsonRst">
 		   		<param name="root">delResult</param>
-			</result>			
+			</result>
+			<result type="json" name="json">
+		   		<param name="root">page</param>
+			</result>		
 		</action>
 	</package>
 </struts>
