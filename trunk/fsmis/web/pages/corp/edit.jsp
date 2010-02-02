@@ -63,7 +63,7 @@ Ext.onReady(function(){
 	  <tr>
 		<td width="520" valign="top">
 		  <table width="562" align="left" border="0" cellspacing="2">
-		  <tr><td height="5" colspan="4"></td></tr>
+		  <tr><td height="8" colspan="4"></td></tr>
           <tr>
             <td width="112" align="right" height="22">企业名称：</td>
             <td align="left" colspan="3">
