@@ -12,10 +12,12 @@
 <body >
 <script type="text/javascript">
 function receive(){
-	if(confirm("确实要接收此任务吗？")){
-	    var id = document.getElementById('id').value;
-	    location.href="${ctx}/jointTask/deptTaskDetail/receive.do?model.id=" + id;
-     }
+    var id = document.getElementById('id').value;
+    Ext.MessageBox.confirm('提示','确实要接收此任务吗？', function(btn){
+        if (btn == 'yes') {
+           window.location.href="${ctx}/jointTask/deptTaskDetail/receive.do?model.id=" + id;
+        }
+    });	
 }
 function result(id, jointTaskId){  
     $.ajax({
@@ -25,7 +27,7 @@ function result(id, jointTaskId){
 		data: {jointTaskId : jointTaskId},
 		success: function(rst, textStatus){
 	  		if(rst.result != null){
-		  	   alert(rst.result + "还没有查看任务，不能进行任务处理！");	    	  		
+	  		  Ext.Msg.alert('', rst.result + '还没有查看任务，不能进行任务处理！');		   	  		   	  		
 	  	  	}else{
 	  	  	  window.location.href='${ctx}/jointTask/deptTaskDetail/result.do?model.id=' + id;
 	  	  	}

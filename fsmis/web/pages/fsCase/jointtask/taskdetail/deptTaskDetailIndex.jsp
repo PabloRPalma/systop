@@ -13,9 +13,11 @@ function view(id){
 }
 
 function receive(id){
-	if(confirm("确实要接收此任务吗？")){
-	    location.href="${ctx}/jointTask/deptTaskDetail/receive.do?model.id=" + id;
-     }
+    Ext.MessageBox.confirm('提示','确实要接收此任务吗？', function(btn){
+        if (btn == 'yes') {
+           window.location.href="${ctx}/jointTask/deptTaskDetail/receive.do?model.id=" + id;
+        }
+    });	
 }
 
 function result(id, jointTaskId){  
