@@ -131,7 +131,7 @@ public class TaskDetailAction extends
            "remainDays", "status" }, true);
       mapTaskDetail.put("deptName", td.getDept().getName());
       mapTaskDetail.put("taskTitle", td.getTask().getTitle());
-      mapTaskDetail.put("completionTime", convertDate2String(td.getTask().getClosedTime()));
+      mapTaskDetail.put("completionTime", convertDate2String(td.getCompletionTime()));
       mapTaskDetails.add(mapTaskDetail);
     }
     page.setData(mapTaskDetails);
