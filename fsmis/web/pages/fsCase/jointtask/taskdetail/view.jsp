@@ -216,13 +216,15 @@ Ext.onReady(function(){
 		test="${(model.status == '1' || model.status == '0')&&(model.isLeader == '1')}">
 		<tr>
 			<td style="text-align: center;">
-			<input type="button" class="button" value="任务接收" onclick="receive()" /></td>
+			<input type="button" class="button" value="接收" onclick="receive()" />
+			<input type="button" class="button" value="返回" onclick="javascript:location.href='${ctx}/jointTask/deptTaskDetail/deptTaskDetailIndex.do;'" /></td>			
 		</tr>
 	</c:if>
 	<c:if test="${model.status == '2' && model.isLeader =='1'}">
 		<tr>
 			<td style="text-align: center;">
-			<input type="button" class="button" value="任务处理" onclick="result(${model.id},${model.jointTask.id})" /></td>
+			<input type="button" class="button" value="处理" onclick="result(${model.id},${model.jointTask.id})" />
+			<input type="button" class="button" value="返回" onclick="javascript:location.href='${ctx}/jointTask/deptTaskDetail/deptTaskDetailIndex.do;'" /></td>
 		</tr>
 	</c:if>
     <c:if test="${model.status == '4' && model.isLeader =='1'}">
