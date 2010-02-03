@@ -30,10 +30,6 @@
 	<s:hidden name="parentId"/>
 	<table width="600px" align="center" border="0" cellpadding="3" cellspacing="3">
 		<tr>
-			<td colspan="2"><%@ include file="/common/messages.jsp"%>
-			</td>
-		</tr>
-		<tr>
 			<td align="right" width="100">栏目名称：</td>
 			<td align="left">
 				<s:textfield id="name" name="model.name" cssStyle="width:350px" cssClass="required" /><font color="red">*</font>
