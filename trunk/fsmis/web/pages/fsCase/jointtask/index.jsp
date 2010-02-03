@@ -3,14 +3,17 @@
 <%@include file="/common/taglibs.jsp"%>
 <html>
 <head>
-<%@include file="/common/meta.jsp"%>
 <%@include file="/common/ec.jsp" %>
+<%@include file="/common/extjs.jsp" %>
+<%@include file="/common/meta.jsp"%>
 <%@include file="/common/autocomplete.jsp"%>
 <script type="text/javascript">
 function removeJointTask(eID){
-	if(confirm("确实要删除该联合整治任务信息吗？")){
-		location.href="remove.do?model.id="+ eID;
-	}
+    Ext.MessageBox.confirm('提示','确实要删除该联合整治任务信息吗？', function(btn){
+        if (btn == 'yes') {
+    		location.href="remove.do?model.id="+ eID;
+        }
+    });	
 }
 </script>
 <title>联合任务管理</title>
@@ -115,7 +118,7 @@ function removeJointTask(eID){
 		     <c:otherwise>
 	           <font color="#999999">删</font> | 	       
 		     </c:otherwise>
-		   </c:choose>			       
+		   </c:choose> 	       
 		    <a href="print.do?model.id=${item.id}" target="_blank">印</a>
 		</ec:column>
 	</ec:row>
