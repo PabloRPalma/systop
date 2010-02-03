@@ -115,7 +115,7 @@ function removeJointTask(eID){
 		     <c:otherwise>
 	           <font color="#999999">删</font> | 	       
 		     </c:otherwise>
-		   </c:choose>			   	       
+		   </c:choose>			       
 		    <a href="print.do?model.id=${item.id}" target="_blank">印</a>
 		</ec:column>
 	</ec:row>

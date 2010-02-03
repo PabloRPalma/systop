@@ -80,7 +80,7 @@ Ext.onReady(function(){
 			<td align="left"><input id="date" type="text"   name="model.presetTime"
 				value='<s:date name="model.presetTime" format="yyyy-MM-dd HH:mm:ss"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
-				class="Wdate" style="width:120px;height:18px"/><font color="red">&nbsp;*</font></td>
+				class="Wdate" style="width:120px;height:18px" readonly="readonly" class="required"/><font color="red">&nbsp;*</font></td>
 		</tr>	
         <tr>
 			<td align="right" width="100px">牵头部门：</td>
