@@ -4,9 +4,9 @@
 <html>
 <head>
 <title>${model.title} 的详细内容 </title>
-<%@include file="/common/meta.jsp"%>
+<%@include file="/common/ec.jsp" %>
 <%@include file="/common/extjs.jsp" %>
-<%@include file="/common/ec.jsp"%>
+<%@include file="/common/meta.jsp"%>
 <script type="text/javascript">
   //关闭当前页面
   function goBack(){
@@ -34,7 +34,7 @@ Ext.onReady(function(){
 <div id="tabs">
 <div id="basic" class="x-hide-display">
 <div align="center">
-	<table width="700px" align="center" cellpadding="3" cellspacing="4">
+	<table width="100%" align="center" cellpadding="3" cellspacing="4">
 		<tr>
 			<td align="center" style="border-bottom: solid 1px black; font-size:25px; font-weight: bold;">
 				${model.title}
