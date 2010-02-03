@@ -146,7 +146,7 @@ function caseRemove(caseId){
 				     | <font color="silver" >核</font>	
 				    </c:if>		    
 	            </c:if>
-	            <c:if test="${item.status eq '1' }">
+	            <c:if test="${item.status eq '1' || item.status eq '2'}">
 		            <font color="silver" >改</font> |
 				    <font color="silver" >派</font> |
 				    <font color="silver" >删</font> 
