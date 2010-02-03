@@ -26,7 +26,7 @@ function init(){
 </head>
 <body onload="init()">
 <div class="x-panel">
-<div class="x-panel-header"></div>
+<div class="x-panel-header">核实短信发送</div>
 <div class="x-toolbar">
 <table width="100%">
    <tr>
@@ -53,15 +53,17 @@ function init(){
 				<td align="right" width="120">接收人姓名：</td>
 				<td align="left" >
 				   <s:textfield name="supervisorName" id="supervisorName" cssClass="required" value="%{supervisorName}"/>
+				   <font color="red">&nbsp;*</font>
 				</td>
 				<td align="right">电&nbsp;&nbsp;&nbsp;&nbsp;话：</td>
 				<td align="left">
 		           <s:textfield name="supervisorMobile" id="supervisorMobile" cssClass="required" value="%{supervisorMobile}"/>
+		           <font color="red">&nbsp;*</font>
 		        </td>
 			</tr>
 			<tr>
 				<td align="right">短信内容：</td>
-				<td colspan="4" align="left" width="650px"><s:textarea id="msgContent" name="msgContent" cssClass="required" cssStyle="width:500px;height:50px;"/></td>
+				<td colspan="4" align="left" width="650px"><s:textarea id="msgContent" name="msgContent" cssClass="required" cssStyle="width:500px;height:50px;"/><font color="red">&nbsp;*</font></td>
 			</tr>
 		</table>
 		</fieldset>
