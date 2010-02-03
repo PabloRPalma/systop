@@ -90,7 +90,7 @@
     fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
     fckEditor.ToolbarSet = 'Basic';
     fckEditor.Height = 250;
-    fckEditor.Width = 580;
+    fckEditor.Width = 600;
     fckEditor.ReplaceTextarea();
   }
 </script>
