@@ -121,7 +121,7 @@ function deleAtt(id) {
 		fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
 		fckEditor.ToolbarSet = 'Basic';
 		fckEditor.Height = 200;
-		fckEditor.Width = 600;
+		fckEditor.Width = 610;
 		fckEditor.ReplaceTextarea();
 	}
 </script>
