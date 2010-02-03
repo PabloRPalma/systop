@@ -50,9 +50,7 @@ public class DocumentTypeAction extends ExtJsCrudAction<DocumentType, DocumentTy
 		DetachedCriteria criteria = DetachedCriteria.forClass(DocumentType.class);
 		if(getModel().getId() != null) {
 			criteria.add(Restrictions.eq("parentDocumentType.id", getModel().getId()));
-		} else {
-			criteria.add(Restrictions.isNull("parentDocumentType"));
-		}
+		} 
 		if (StringUtils.isNotBlank(typeName)) {
 			criteria.add(Restrictions.like("name", typeName, MatchMode.ANYWHERE));			
 		}
@@ -75,6 +73,12 @@ public class DocumentTypeAction extends ExtJsCrudAction<DocumentType, DocumentTy
 						getManager().get(getModel().getParentDocumentType().getId()));
 			} else {
 				getModel().setParentDocumentType(null);
+			}
+			if(getModel().getId() != null) {
+				if(getModel().getId().equals(getModel().getParentDocumentType().getId())) {
+					addActionError("当前栏目不能设置自己为所属栏目，请重新选择！");
+					return INPUT;
+				}
 			}
 			getManager().save(getModel());
 			return SUCCESS;
