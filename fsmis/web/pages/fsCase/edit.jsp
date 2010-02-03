@@ -122,7 +122,7 @@
 	<legend>编辑事件</legend>
 	<table width="100%" align="left">
 		<tr>
-			<td align="right" width="150">事件标题：</td>
+			<td align="right" width="100">事件标题：</td>
 			<td align="left"><s:textfield id="name"
 				name="model.title" cssStyle="width:380px" cssClass="required"/><font color="red">&nbsp;*</font>
 			</td>
