@@ -51,7 +51,7 @@ function deleAtt(id) {
 	<legend> 派遣信息</legend>
 	<table width="100%" align="left">
 		<tr>
-			<td align="right" width="110">任务标题:</td>
+			<td align="right" width="80">任务标题:</td>
 			<td align="left"><input type="text" name="model.title"
 				value="${model.fsCase.title }" style="width: 400px;"
 				class="required"></input> <font color="red">&nbsp;*</font></td>
@@ -121,7 +121,7 @@ function deleAtt(id) {
 		fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
 		fckEditor.ToolbarSet = 'Basic';
 		fckEditor.Height = 200;
-		fckEditor.Width = 610;
+		fckEditor.Width = 570;
 		fckEditor.ReplaceTextarea();
 	}
 </script>
