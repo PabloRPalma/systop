@@ -24,7 +24,7 @@
 		       {
 			       header : '任务标题',
 				   dataIndex : 'taskTitle',
-		           width : 400,
+		           width : 380,
 		           sortable : true,
 		           renderer: function(value, cellmeta, record, rowIndex, columnIndex, store) {
 		           	   if(record.data["status"] == '4'){
