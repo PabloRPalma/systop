@@ -72,8 +72,8 @@ function remove(aID){
 	<ec:row>
 		<ec:column width="35" property="_No" title="No." value="${GLOBALROWCOUNT}" style="text-align:center" sortable="false"/>
 		<ec:column width="100" property="receiver.name" title="收信人" sortable="false" style="text-align:center"/>
-		<ec:column width="250" property="content" title="内容" sortable="false"/>
-		<ec:column width="120" property="receiveTime" title="接收时间" sortable="false" style="text-align:center" format="yyyy-MM-dd HH:mm:ss" cell="date"/>
+		<ec:column width="250" property="content" title="内容" sortable="false" ellipsis="true"/>
+		<ec:column width="130" property="receiveTime" title="接收时间" sortable="false" style="text-align:center" format="yyyy-MM-dd HH:mm:ss" cell="date"/>
 		<ec:column width="60" property="isNew" title="状态" sortable="false" style="text-align:center">
 			 <c:if test="${item.isNew == '0'}"> <font color="green">已读</font></c:if>
 			<c:if test="${item.isNew == '1'}"> <font color="red">未读</font></c:if>

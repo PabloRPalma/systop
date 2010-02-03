@@ -77,8 +77,8 @@ function view(aID){
 	<ec:row>
 		<ec:column width="35" property="_No" title="No." value="${GLOBALROWCOUNT}" style="text-align:center" sortable="false"/>
 		<ec:column width="100" property="sender.name" title="发信人" sortable="false" style="text-align:center"/>
-		<ec:column width="250" property="content" title="内容" sortable="false"/>
-		<ec:column width="120" property="createTime" title="发送时间" sortable="false" style="text-align:center" format="yyyy-MM-dd HH:mm:ss" cell="date"/>
+		<ec:column width="250" property="content" title="内容" sortable="false" ellipsis="true"/>
+		<ec:column width="130" property="createTime" title="发送时间" sortable="false" style="text-align:center" format="yyyy-MM-dd HH:mm:ss" cell="date"/>
 		<ec:column width="60" property="isNew" title="状态" sortable="false" style="text-align:center">
 			 <c:if test="${item.isNew == '0'}"> <font color="green">已读</font></c:if>
 			<c:if test="${item.isNew == '1'}"> <font color="red">未读</font></c:if>
