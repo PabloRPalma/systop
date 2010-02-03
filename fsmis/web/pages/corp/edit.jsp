@@ -61,113 +61,113 @@ Ext.onReady(function(){
 	<s:hidden id="corpId" name="model.id" />
 	<table id="mytable" height="380">
 	  <tr>
-		<td width="520" valign="top">
-		  <table width="562" align="left" border="0" cellspacing="2">
+		<td width="577" valign="top">
+		  <table width="553" align="left" border="0" cellspacing="2">
 		  <tr><td height="8" colspan="4"></td></tr>
           <tr>
-            <td width="112" align="right" height="22">企业名称：</td>
+            <td width="97" align="right" height="22">企业名称：</td>
             <td align="left" colspan="3">
             	<s:textfield id="name" name="model.name" cssClass="required" cssStyle="width:365px" />
                 <font color="red">&nbsp;*</font> 
             </td>
           </tr>
           <tr>
-            <td width="112" align="right" height="22">地　址：</td>
+            <td width="97" align="right" height="22">地　址：</td>
             <td align="left" colspan="3">
             	<s:textfield id="address" name="model.address" cssClass="required" cssStyle="width:365px" />
                 <font color="red">&nbsp;*</font> </td>
           </tr>
           <tr>
-            <td width="112" align="right" height="22">法　人：</td>
+            <td width="97" align="right" height="22">法　人：</td>
             <td align="left" colspan="3">
             	<s:textfield id="legalPerson" name="model.legalPerson" cssStyle="width:365px" />
             </td>
           </tr>
           <tr>
-            <td width="112" align="right" height="22">营业执照：</td>
-            <td width="129" align="left">
+            <td width="97" align="right" height="22">营业执照：</td>
+            <td width="122" align="left">
             	<s:textfield id="businessLicense" name="model.businessLicense" />
             </td>
-            <td align="right" width="90" height="22">有效期：</td>
-            <td width="213" align="left">
+            <td align="right" width="93" height="22">有效期：</td>
+            <td width="223" align="left">
             	<input type="text" name="model.businessLicenseIndate" value='<s:date name="model.businessLicenseIndate" format="yyyy-MM-dd"/>'
-				  onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})" class="Wdate" style="width:115px;height:16px" readonly="readonly"/>
+				  onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})" class="Wdate" style="width:137px;height:16px" readonly="readonly"/>
             </td>
           </tr>
           <tr>
-            <td width="112" align="right" height="22">生产许可证：</td>
-            <td width="129" align="left">
+            <td width="97" align="right" height="22">生产许可证：</td>
+            <td width="122" align="left">
             	<s:textfield id="produceLicense" name="model.produceLicense"/>
             </td>
-            <td align="right" width="90" height="22">有效期：</td>
-            <td width="213" align="left">
+            <td align="right" width="93" height="22">有效期：</td>
+            <td width="223" align="left">
             	<input type="text" name="model.produceLicenseIndate" value='<s:date name="model.produceLicenseIndate" format="yyyy-MM-dd"/>'
-				  onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})" class="Wdate" style="width:115px;height:16px" readonly="readonly"/>
+				  onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})" class="Wdate" style="width:137px;height:16px" readonly="readonly"/>
             </td>
           </tr>
           <tr>
-            <td width="112" align="right" height="22">卫生许可证：</td>
-            <td width="129" align="left">
+            <td width="97" align="right" height="22">卫生许可证：</td>
+            <td width="122" align="left">
             	<s:textfield id="sanitationLicense" name="model.sanitationLicense" />
             </td>
-            <td align="right" width="90" height="22">有效期：</td>
-            <td width="213" align="left">
+            <td align="right" width="93" height="22">有效期：</td>
+            <td width="223" align="left">
             	<input type="text" name="model.sanitationLicenseIndate" value='<s:date name="model.sanitationLicenseIndate" format="yyyy-MM-dd"/>'
-				  onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})" class="Wdate" style="width:115px;height:16px" readonly="readonly"/>
+				  onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})" class="Wdate" style="width:137px;height:16px" readonly="readonly"/>
             </td>
           </tr>
           <tr>
-            <td width="112" align="right" height="22">企业编号：</td>
-            <td width="129" align="left">
+            <td width="97" align="right" height="22">企业编号：</td>
+            <td width="122" align="left">
             	<s:textfield id="code" name="model.code" />
             </td>
-            <td width="90" align="right">部　门：</td>
-            <td width="213" align="left">
+            <td width="93" align="right">部　门：</td>
+            <td width="223" align="left">
             	<div id="comboxWithTree" class="required" style="float: left;margin-left:0px;" ></div>
 				<s:hidden name="model.dept.id" id="deptId"></s:hidden>
             </td>
           </tr>
           <tr>
-            <td width="112" align="right" height="22" >固　话：</td>
-            <td width="129" align="left">
+            <td width="97" align="right" height="22" >固　话：</td>
+            <td width="122" align="left">
             	<s:textfield id="phone" name="model.phone"/>
             </td>
-            <td width="90" align="right" height="22">手　机：</td>
-            <td width="213" align="left">
+            <td width="93" align="right" height="22">手　机：</td>
+            <td width="223" align="left">
             	<s:textfield id="mobile" name="model.mobile" cssStyle="width:135px"/>
             </td>
           </tr>
           <tr>
-            <td width="112" align="right" height="22">诚信等级：</td>
-            <td width="129" align="left">
+            <td width="97" align="right" height="22">诚信等级：</td>
+            <td width="122" align="left">
             	<s:select id="integrityGrade" name="model.integrityGrade" list="{'A','B','C','D'}" headerKey="" headerValue="诚信等级..."/>
             </td>
-            <td width="90" align="right">邮　编：</td>
-            <td width="213" align="left">
+            <td width="93" align="right">邮　编：</td>
+            <td width="223" align="left">
             	<s:textfield id="zip" name="model.zip" cssStyle="width:135px"/>
             </td>
           </tr>
           <tr>
-            <td width="112" align="right" height="22">经营范围：</td>
+            <td width="97" align="right" height="22">经营范围：</td>
             <td align="left" colspan="3">
             	<s:textfield id="operateDetails" name="model.operateDetails" cssStyle="width:362px;"/>
             </td>
           </tr>
           <tr>
-            <td width="112" align="right" height="22">备　注：</td>
+            <td width="97" align="right" height="22">备　注：</td>
             <td align="left" colspan="3">
             	<s:textfield id="remark" name="model.remark" cssStyle="width:362px;"/>
             </td>
           </tr>
           <tr>
-            <td width="112" align="right" height="22">企业简介：</td>
+            <td width="97" align="right" height="22">企业简介：</td>
             <td align="left" colspan="3">
             	<s:textarea id="descn" name="model.descn" cssStyle="width:362px; height:70px"/>
             </td>
           </tr>
         </table></td>
-		<td width="300" valign="top" style="border-left: 1px dotted #099EBD;">
-			<table width="300" border="0" >
+		<td width="370" valign="top" style="border-left: 1px dotted #099EBD;">
+			<table width="100%" border="0" >
 				<tr>
 					<td id="photoOperSpan1">
 					<img alt="照片" align="middle" width="300" height="225"	id="imgphoto"
@@ -176,7 +176,7 @@ Ext.onReady(function(){
 					</td>
 				</tr>
 				<tr>
-		            <td align="center"  id="photoOperSpan2" style="border-top: 1px dotted #099EBD; padding-top: 10px">
+		            <td align="left" id="photoOperSpan2" style="border-top: 1px dotted #099EBD; padding-top: 10px">
 			            <c:choose>
 							<c:when test="${empty model.photoUrl}">
 								<s:file id="photo" name="photo" cssClass="FileText"
