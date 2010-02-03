@@ -6,6 +6,7 @@
 <head>
 <%@include file="/common/meta.jsp"%>
 <title>单体事件核实信息确认</title>
+<%@include file="/common/ec.jsp"%>
 <%@include file="/common/extjs.jsp" %>
 <%@include file="/common/validator.jsp"%>
 <script type="text/javascript">
@@ -17,7 +18,7 @@
 </head>
 <body>
 <div class="x-panel">
-<div class="x-panel-header"></div>
+<div class="x-panel-header">核实信息审查</div>
 <div align="center" style="margin-top:90px">
 <s:form action="confirmCheckedMsg.do" id="confirmCheckedMsg" method="post" validate="true" >  
   <s:hidden name="model.id"/>
@@ -40,7 +41,7 @@
   				<c:if test="${empty param.operType}">请填写</c:if>核实意见：
   			</td>
   			<td width="400px">  				
-  				<s:textarea id="checkedConfirmMsg" name="model.checkedConfirmMsg" cssClass="required" cssStyle="width:400px;height:80px" value="%{checkedConfirmMsg}"/>
+  				<s:textarea id="checkedConfirmMsg" name="model.checkedConfirmMsg" cssClass="required" cssStyle="width:400px;height:80px" value="%{checkedConfirmMsg}"/><font color="red">&nbsp;*</font>
   			</td>
 			<td width="100px" align="right">核实结果：</td>
 			<td align="left">	
