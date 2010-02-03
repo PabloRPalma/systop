@@ -47,8 +47,7 @@ Ext.onReady(function(){
     <table width="100%">
       <tr>
         <td align="right">
-          <a href="${ctx}/expert/index.do">
-             <img src="${ctx}/images/icons/building_go.png" class="icon" border="0">专家列表&nbsp;&nbsp;
+          <a href="${ctx}/expert/index.do">专家列表&nbsp;&nbsp;
           </a>
         </td>
       </tr>

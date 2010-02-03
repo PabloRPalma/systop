@@ -72,8 +72,8 @@ Ext.onReady(function(){
             </td>
             <td align="right" width="90">手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;机：</td>
             <td width="213" align="left">
-            	<s:textfield id="mobile" name="model.mobile" cssClass="required"/><font color="red">&nbsp;*</font>
-            </td>
+            	<s:textfield id="mobile" name="model.mobile" cssClass="mobileCheck required" onkeyup="this.value=this.value.replace(/\D/g,'')" onblur="this.value=this.value.replace(/\D/g,'')"/><font color="red">&nbsp;*</font>
+            </td><td width="80" id="numInfo" style="display: none;"></td>
           </tr>
           <tr>
             <td width="112" align="right">专家级别：</td>
@@ -102,7 +102,7 @@ Ext.onReady(function(){
           <tr>
             <td width="112" align="right">电子邮件：</td>
             <td width="139" align="left">
-            	<s:textfield id="email" name="model.email" />
+            	<s:textfield id="email" name="model.email" cssClass="email"/>
             </td>
             <td align="right" width="90">出生日期：</td>
             <td width="213" align="left">
@@ -190,7 +190,7 @@ Ext.onReady(function(){
 		</tr>
 		<tr>
 			<td style="text-align: center;">
-				<s:submit value="保存" cssClass="button"/>&nbsp;&nbsp;
+				<s:submit value="保存" cssClass="button" />&nbsp;&nbsp;
 				<s:reset value="重置" cssClass="button"/>
 			</td>
 		</tr>
@@ -228,9 +228,26 @@ Ext.onReady(function(){
   }
 </script>
 <script type="text/javascript">
-	$(document).ready(function() {
+$(document).ready(function() {
 	$("#save").validate();
 });
+
+$(function() {
+	//验证手机号码
+	$.validator.addMethod("mobileCheck", function(value, element) {
+		var mobiles = document.getElementById("mobile").value;
+		if (mobiles.length != 11){
+			document.getElementById("numInfo").style.display = "";			
+			document.getElementById('numInfo').innerHTML = '<font color="red">'+'号码错误'+'</font>';
+			return false;
+		}else {
+			document.getElementById("numInfo").style.display = "none";					
+			//document.getElementById('numInfo').innerHTML = "";
+			return true;
+		}
+    },"");
+}); 
+
 </script>
 </body>
 </html>
