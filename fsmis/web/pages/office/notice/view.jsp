@@ -48,7 +48,7 @@ Ext.onReady(function(){
 		</tr>
 		<tr>
 			<td align="left" style="padding: 10 30 10 30;" valign="top">
-				<div style="line-height: 20px; word-spacing: 50px; overflow:auto; width:660px; height:210px">
+				<div style="line-height: 20px; word-spacing: 50px; overflow:auto; width:800px; height:210px">
 					${model.content}
 				</div>
 			</td>
