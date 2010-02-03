@@ -53,7 +53,7 @@ function deleAtt(id) {
 		<tr>
 			<td align="right" width="80">任务标题:</td>
 			<td align="left"><input type="text" name="model.title"
-				value="${model.fsCase.title }" style="width: 400px;"
+				value="${model.fsCase.title}" style="width: 400px;"
 				class="required"></input> <font color="red">&nbsp;*</font></td>
 		</tr>
 		<tr>
