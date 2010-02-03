@@ -159,12 +159,15 @@
 				method : 'POST',
 				success : function(xhr, textStatus) {
 					if (xhr.responseText != '0'){
-						var message = "您有新的短消息，请注意<a href='${ctx}/office/message/received.do' target='main'><font color='red'>查收</font></a>";
+						var message = "您有"
+							message += " <font color='red'>";
+							message += xhr.responseText;
+							message += "</font> 条新的短消息，请注意<a href='${ctx}/office/message/received.do' target='main'><font color='red'>查收</font></a>";
 						Ext.my().msg('', message);
 					}
 				}
 			});
-			setTimeout("checkNewMsg()", 150000);
+			setTimeout("checkNewMsg()", 15000);
 		}
 		
 		checkNewMsg();
@@ -175,7 +178,10 @@
 				method : 'POST',
 				success : function(xhr, textStatus) {
 					if (xhr.responseText != '0'){
-						var message = "您有新的通知，请注意<a href='${ctx}/office/receiverecord/index.do' target='main'><font color='red'>查收</font></a>";
+						var message = "您有";
+							message += " <font color='red'>";
+							message += xhr.responseText;
+							message += "</font> 新的通知，请注意<a href='${ctx}/office/receiverecord/index.do' target='main'><font color='red'>查收</font></a>";
 						Ext.my().msg('', message);
 					}
 				}
