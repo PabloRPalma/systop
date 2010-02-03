@@ -16,7 +16,7 @@
 <div class="x-panel-header">编辑通知</div>
 <div><%@ include file="/common/messages.jsp"%></div>
 <div align="center">
-<s:form action="save.do" id="save" method="post" theme="simple" validate="true">
+<s:form action="save.do" id="save" method="post" theme="simple" validate="true" enctype="multipart/form-data">
 <fieldset style="width: 700px; padding-top: 2px">
   <legend>编辑通知信息</legend>
 	<s:hidden name="model.id"/>
