@@ -50,7 +50,9 @@ public class DocumentTypeAction extends ExtJsCrudAction<DocumentType, DocumentTy
 		DetachedCriteria criteria = DetachedCriteria.forClass(DocumentType.class);
 		if(getModel().getId() != null) {
 			criteria.add(Restrictions.eq("parentDocumentType.id", getModel().getId()));
-		} 
+		} else {
+			criteria.add(Restrictions.isNull("parentDocumentType"));
+		}
 		if (StringUtils.isNotBlank(typeName)) {
 			criteria.add(Restrictions.like("name", typeName, MatchMode.ANYWHERE));			
 		}
