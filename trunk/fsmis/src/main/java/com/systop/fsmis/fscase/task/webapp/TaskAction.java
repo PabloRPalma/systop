@@ -71,13 +71,16 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
   private Date taskBeginTime;
   // 查询截至时间
   private Date taskEndTime;
+  
 
-  /**
+/**
    * 保存派遣的任务方法
    */
   @Override
   public String save() {
     if (ArrayUtils.isEmpty(deptIds)) {
+      fsCase = getManager().getDao().get(FsCase.class, getModel().getFsCase().getId());
+      getModel().setFsCase(fsCase);
       addActionError("请至少选择一个部门!");
       return INPUT;
     }
@@ -193,7 +196,6 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
   public String edit() {
     fsCase = getManager().getDao().get(FsCase.class, caseId);
     getModel().setFsCase(fsCase);
-
     return INPUT;
   }
 
