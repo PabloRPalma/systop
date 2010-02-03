@@ -4,8 +4,9 @@
 <html>
 <head>
 <title></title>
-<%@include file="/common/meta.jsp"%>
 <%@include file="/common/extjs.jsp"%>
+<%@include file="/common/meta.jsp"%>
+<%@include file="/common/validator.jsp"%>
 <%@include file="/common/autocomplete.jsp"%>
 </head>
 <body>
@@ -13,7 +14,7 @@
 <div class="x-panel-header"></div>
 <div id="dealWithTaskDetail" class="x-toolbar"></div>
 <div>
-	<s:form  id="frmDealWithTaskDetail" action="doDealWithTaskDetail.do" method="post" theme="simple" enctype="multipart/form-data" onsubmit="return onCheckForm()">
+	<s:form  id="frmDealWithTaskDetail" action="doDealWithTaskDetail.do" method="post" theme="simple" validate="true">
 	<s:hidden name="model.id"/>
 	<s:hidden name="isMultipleCase"/>
 	<s:hidden name="modelId" />
@@ -27,31 +28,31 @@
           <tr>
              <td align="right" width="80">填写人：</td>
              <td align="left" width="150">
-             	<s:textfield id="name" name="model.inputer" cssStyle="width:150px"/>
+             	<s:textfield id="name" name="model.inputer" cssStyle="width:150px" cssClass="required"/><font color="red">&nbsp;*</font>
              </td>
           </tr>
           <tr>
              <td align="right">处理人：</td>
 	         <td align="left">
-	            <s:textfield id="people" name="model.processor" cssStyle="width:150px"/>
+	            <s:textfield id="people" name="model.processor" cssStyle="width:150px" cssClass="required"/><font color="red">&nbsp;*</font>
 	         </td>
 	      </tr>
           <tr>
             <td align="right">处理过程：</td>
             <td align="left">
-            	<s:textarea id="pass" name="model.process" cols="40" rows="6"></s:textarea>
+            	<s:textarea id="pass" name="model.process" cols="40" rows="6" cssClass="required"></s:textarea><font color="red">&nbsp;*</font>
             </td>
           </tr>
           <tr>
             <td align="right">处理依据：</td>
             <td align="left">
-            	<s:textarea id="yiju" name="model.basis" cols="40" rows="6"></s:textarea>
+            	<s:textarea id="yiju" name="model.basis" cols="40" rows="6" cssClass="required"></s:textarea><font color="red">&nbsp;*</font>
             </td>
           </tr>
           <tr>
             <td align="right">处理结果：</td>
             <td align="left">
-            	<s:textarea id="result" name="model.result" rows="8" cssStyle="width:300px"></s:textarea>
+            	<s:textarea id="result" name="model.result" cols="40" rows="8"  cssClass="required"></s:textarea><font color="red">&nbsp;*</font>
             </td>
           </tr>
         </table> 
@@ -190,6 +191,11 @@ function queryCompanyByCode(){
 	
 	});
 }
+</script>
+<script type="text/javascript">
+	$(document).ready(function() {
+	$("#frmDealWithTaskDetail").validate();
+});
 </script>
 </body>
 </html>
