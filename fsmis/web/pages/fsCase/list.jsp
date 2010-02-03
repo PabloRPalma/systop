@@ -8,13 +8,13 @@
 <%@include file="/common/extjs.jsp"%>
 <%@include file="/common/meta.jsp"%>
 <script type="text/javascript">
-function remove(id){
-	if (confirm("确认要删除事件信息吗?")){
-		window.location.href="${ctx}/fscase/remove.do?model.id=" + id+"&modelId=0&isMultipleCase="+${isMultipleCase};
-		
-	}
-}
-
+function remove(id) {
+    Ext.MessageBox.confirm('提示','确认要删除此事件吗？删除后不能恢复！', function(btn){
+        if (btn == 'yes') {
+          window.location = "${ctx}/fscase/remove.do?model.id=" + id+"&modelId=0&isMultipleCase="+${isMultipleCase};
+        }
+    });
+  }
 function caseRemove(caseId){
 	if (confirm("确认要删除联合整治事件信息吗?")){
 		window.location.href="${ctx}/jointTask/caseRemove.do?model.fsCase.id=" + caseId;
