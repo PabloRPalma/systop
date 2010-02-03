@@ -63,6 +63,7 @@ public class JointTaskDetailManager extends BaseGenericsManager<JointTaskDetail>
 			}else{
 				//协办部门没有处理权限,只有查看
 				jointTaskDetail.setStatus(JointTaskConstants.TASK_DETAIL_RECEIVEED);
+				jointTaskDetail.setReceiveTime(new Date());
 			}
 		}
 		save(jointTaskDetail);
@@ -84,7 +85,7 @@ public class JointTaskDetailManager extends BaseGenericsManager<JointTaskDetail>
 	@Transactional
 	public void saveResult(JointTaskDetail jointTaskDetail){
 		jointTaskDetail.setStatus(JointTaskConstants.TASK_DETAIL_RESOLVEED);
-		jointTaskDetail.setCompletionTime(new Date());
+		//jointTaskDetail.setCompletionTime(new Date());
 		save(jointTaskDetail);
 		//处理后将FsCase中的事件状态设置为"已处理"
 		jointTaskDetail.getJointTask().getFsCase().setStatus(CaseConstants.CASE_PROCESSED);
@@ -92,6 +93,12 @@ public class JointTaskDetailManager extends BaseGenericsManager<JointTaskDetail>
 		//处理后将JointTask中的事件状态设置为"已处理"
 		jointTaskDetail.getJointTask().setStatus(JointTaskConstants.TASK_DETAIL_RESOLVEED);
 		getDao().save(jointTaskDetail.getJointTask());		
+		//处理完成后，将更新所有协办部门的任务完成时间
+		Set<JointTaskDetail> taskDetails = jointTaskDetail.getJointTask().getTaskDetailses();
+		for (JointTaskDetail taskDetail : taskDetails) {
+			taskDetail.setCompletionTime(new Date());
+			save(taskDetail);
+		}
 	}
 	
 	/**
