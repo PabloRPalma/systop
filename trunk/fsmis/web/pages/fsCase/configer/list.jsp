@@ -65,15 +65,21 @@ function start(id){
 			<a href="edit.do?model.id=${item.id}">
 			           编辑
 			</a>|
-			<a href="#" onclick="start(${item.id})">
-			            启用
-			</a>
-			|
-			<a href="#" onclick="remove(${item.id})">
-			             废止
-			</a>
+			<c:if test="${item.isUse eq '0'}">
+				<a href="#" onclick="start(${item.id})">
+				            启用
+				</a>
+				|
+				<font color="silver">废止</font>
+			</c:if>
+			<c:if test="${item.isUse eq '1'}">
+				<font color="silver">启用</font>
+				|
+				<a href="#" onclick="remove(${item.id})">
+				             废止
+				</a>
+			</c:if>
 			</ec:column>
- 		
 	  </ec:row>
     </ec:table>
     </div>
