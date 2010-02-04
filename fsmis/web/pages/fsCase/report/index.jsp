@@ -32,7 +32,6 @@
 		<td align="right">
 		  <table>
 			<tr>
-				<td><a href="edit.do"><img src="${ctx}/images/icons/add.gif" /></a></td>
 				<td><a href="edit.do">添加</a></td>
 			</tr>
 		  </table>

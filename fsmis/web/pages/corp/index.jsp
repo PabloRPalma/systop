@@ -45,8 +45,6 @@ function removeCompany(corpId) {
 		<td width="398" align="right">
 		<table>
 			<tr>
-				<td><a href="edit.do" title="添加企业信息"><img
-					src="${ctx}/images/icons/add.gif" /></a></td>
 				<td valign="middle"><a href="edit.do" title="添加企业信息">添加</a></td>
 				<!--
 				<td><span class="ytb-sep"></span></td>
