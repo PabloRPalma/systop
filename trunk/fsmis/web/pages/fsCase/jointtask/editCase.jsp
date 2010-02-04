@@ -128,7 +128,7 @@
 			<td align="left" width="40%"><input type="text" name="model.fsCase.caseTime"  style="width: 158px" 
 				value='<s:date name="model.fsCase.caseTime" format="yyyy-MM-dd HH:mm:ss"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})"
-				class="Wdate" readonly="readonly" class="required"/><font color="red">&nbsp;*</font></td>
+				class="Wdate required" readonly="readonly" /><font color="red">&nbsp;*</font></td>
 		</tr>
 		<tr>
 			<td align="right" >案发地点：</td>

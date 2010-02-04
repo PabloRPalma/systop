@@ -43,20 +43,26 @@ function result(id){
 			协办
         </c:if>
     </ec:column>
-	<ec:column width="140" property="dept.name" title="部门名称" style="text-align:center"/> 
-	<ec:column width="80" property="jointTask.createDate" title="创建时间" cell="date" style="text-align:center"/>
+	<ec:column width="150" property="dept.name" title="部门名称" style="text-align:center"/> 
+	<ec:column width="100" property="jointTask.createDate" title="创建时间" cell="date" style="text-align:center"/>
 	<ec:column width="100" property="receiveTime" title="接收时间" cell="date" style="text-align:center"/>		
-	<ec:column width="100" property="completionTime" title="完成时间" cell="date" style="text-align:center"/>	
-	<ec:column width="130" property="status" title="任务状态" style="text-align:center">
+	<ec:column width="100" property="completionTime" title="完成时间" style="text-align:center" cell="date" >
+	   <c:if test="${item.status eq '4'}">
+	      ${item.completionTime}
+	   </c:if>
+	   <c:if test="${item.isLeader eq '1' && item.status eq '2'}">
+			<c:choose>
+				<c:when test="${item.jointTask.remainDays >= 0}">剩余${item.jointTask.remainDays}天</c:when>
+				<c:otherwise>逾期${-item.jointTask.remainDays}天</c:otherwise>
+			</c:choose>	   
+	   </c:if>
+	</ec:column>   
+	<ec:column width="120" property="status" title="任务状态" style="text-align:center">
 			<c:if test="${item.status == '0'}"><font color="red">未接收</font></c:if>
 			<c:if test="${item.status == '1'}"><font color="blue">已查看</font></c:if>
 			<c:if test="${item.status == '2'}">
 		      <c:if test="${item.isLeader eq '1'}">
-				   <font color="#FF9D07">处理中...</font>
-				   	<c:choose>
-						<c:when test="${item.jointTask.remainDays >= 0}">剩余${item.jointTask.remainDays}天</c:when>
-						<c:otherwise>逾期${-item.jointTask.remainDays}天</c:otherwise>
-					</c:choose>
+				   <font color="#FF9D07">处理中</font>
 			   </c:if>
 			   <c:if test="${item.isLeader eq '0'}">
 			         <font color="blue">已查看</font>
@@ -64,7 +70,7 @@ function result(id){
 			</c:if>			
 			<c:if test="${item.status == '4'}"><font color="green">已处理</font></c:if>	
 	</ec:column>	
-	    <ec:column width="150" property="result" style="text-align:center" title="任务结果" >
+	    <ec:column width="120" property="result" style="text-align:center" title="任务结果" >
 		  <c:if test="${item.status == '4' && item.isLeader eq '1'}">
 		    <a href="#" onclick="result(${item.id})">查看</a>
 		  </c:if>
