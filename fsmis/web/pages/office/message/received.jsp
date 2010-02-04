@@ -31,14 +31,14 @@ function view(aID){
 		<td>
 			<s:form action="received.do" method="post">
 				 从：
-			 	 <input type="text" name="createTimeBegin" style="width: 140px"
+			 	 <input type="text" id="createTimeBegin" name="createTimeBegin" style="width: 140px"
 					value='<s:date name="createTimeBegin" format="yyyy-MM-dd HH:mm:ss"/>'
-					onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})"
+					onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'createTimeEnd\')}',skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss',readOnly:true,alwaysUseStartDate:true})"
 					class="Wdate" /> 
 			 	 至：
-			 	 <input type="text" name="createTimeEnd" style="width: 140px"
+			 	 <input type="text" id="createTimeEnd" name="createTimeEnd" style="width: 140px"
 					value='<s:date name="createTimeEnd" format="yyyy-MM-dd HH:mm:ss"/>'
-					onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})"
+					onfocus="WdatePicker({minDate:'#F{$dp.$D(\'createTimeBegin\')}',skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss',readOnly:true,alwaysUseStartDate:true})"
 					class="Wdate" />
 				<s:submit value="查询" cssClass="button"></s:submit>
 			</s:form>
