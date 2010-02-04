@@ -487,8 +487,8 @@ public class GatherFsCaseManager extends BaseGenericsManager<FsCase> {
 	 */
 	@SuppressWarnings("unchecked")
 	private List<GatherConfiger> getConfigerList(String flag) {
-		String configerHql = "from GatherConfiger gc where gc.level = ?";
-		List<GatherConfiger> configerList = getDao().query(configerHql, flag);
+		String configerHql = "from GatherConfiger gc where gc.level = ? and gc.isUse = ?";
+		List<GatherConfiger> configerList = getDao().query(configerHql, new Object[]{flag, FsConstants.Y});
 		return configerList;
 	}
 }
