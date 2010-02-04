@@ -9,9 +9,17 @@
 <title>多体事件汇总配置列表</title>
 <script type="text/javascript">
 function remove(id){
-	Ext.MessageBox.confirm('提示','确认要删除所选择的配置信息吗？删除后不能恢复！', function(btn){
+	Ext.MessageBox.confirm('提示','确认要废止所选择的配置信息吗？', function(btn){
         if (btn == 'yes') {
-        	location.href = "remove.do?model.id=" + id;
+        	location.href = "abolish.do?model.id=" + id;
+        }
+    });
+}
+
+function start(id){
+	Ext.MessageBox.confirm('提示','确认要启用所选择的配置信息吗？', function(btn){
+        if (btn == 'yes') {
+        	location.href = "start.do?model.id=" + id;
         }
     });
 }
@@ -24,9 +32,9 @@ function remove(id){
      <table width="100%">
        <tr>
              <td style=" padding-left:5px; padding-top:5px;" align="right">   
-               <a href="${ctx}/configuration/edit.do"> 添加</a>
+               <a href="${ctx}/configuration/edit.do"> 添加</a>&nbsp;&nbsp;
              </td>
-       </tr>
+        </tr>
      </table>
    </div>
    <div class="x-panel-body">
@@ -52,12 +60,17 @@ function remove(id){
 		<ec:column width="150" property="keyWord" title="关键字" />
 		<ec:column width="60" property="records" title="记录数" style="text-align:center" />
 		<ec:column width="60" property="days" title="天数" style="text-align:center"/>
-		<ec:column width="120" property="_0" title="操作" style="text-align:center" sortable="false">
+		<ec:column width="80" property="isUse" title="是否可用" mappingItem="useMap" style="text-align:center"/>
+		<ec:column width="140" property="_0" title="操作" style="text-align:center" sortable="false">
 			<a href="edit.do?model.id=${item.id}">
 			           编辑
 			</a>|
+			<a href="#" onclick="start(${item.id})">
+			            启用
+			</a>
+			|
 			<a href="#" onclick="remove(${item.id})">
-			             删除
+			             废止
 			</a>
 			</ec:column>
  		
