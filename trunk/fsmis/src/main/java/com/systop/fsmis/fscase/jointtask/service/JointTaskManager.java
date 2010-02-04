@@ -113,13 +113,13 @@ public class JointTaskManager extends BaseGenericsManager<JointTask> {
 		CheckResult cResult = new CheckResult();
 		//判断审核是否通过
 		if (checkResult.getJointTask() != null) {
-			//如果选择"是",则更新联合整治的任务状态为已审核("1"),否则为待审核("0")。
-			if (checkResult.getIsAgree().equals(FsConstants.Y)) {
-				checkResult.getJointTask().setStatus(FsConstants.Y);
+			//如果选择"是",则更新联合整治的任务状态为审核通过("1"),否则为审核未通过("2")。
+			if (checkResult.getIsAgree().equals(JointTaskConstants.AUDITING_PASSED_STATE)) {
+				checkResult.getJointTask().setStatus(JointTaskConstants.AUDITING_PASSED_STATE);
 			  //给该联合整治任务明细中所选择的部门负责人发送短信
 				jointTaskDetailManager.sendTaskMessage(checkResult.getJointTask());
 			} else {
-				checkResult.getJointTask().setStatus(FsConstants.N);
+				checkResult.getJointTask().setStatus(JointTaskConstants.AUDITING_REJECT_STATE);
 			}
 			super.save(checkResult.getJointTask());
 			cResult.setJointTask(checkResult.getJointTask());

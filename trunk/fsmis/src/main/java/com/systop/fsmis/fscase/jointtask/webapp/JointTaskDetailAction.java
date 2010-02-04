@@ -101,8 +101,9 @@ public class JointTaskDetailAction extends
 		hql.append("from JointTaskDetail jtd where 1=1 ");
 		List<Object> args = new ArrayList<Object>();
 		//联合整治任务必须已审核
-		hql.append(" and jtd.jointTask.status <> ?");
-		args.add(FsConstants.N);
+		hql.append(" and jtd.jointTask.status in (?, ?)");
+		args.add(JointTaskConstants.AUDITING_PASSED_STATE);
+		args.add(JointTaskConstants.TASK_DETAIL_RESOLVEED);
 		//根据用户登录部门查询
 		if((user.getDept() != null) && (user.getDept().getId() != null)){
 			hql.append(" and jtd.dept.id = ?");
@@ -139,7 +140,7 @@ public class JointTaskDetailAction extends
 		args.add(FsConstants.Y);
 		//联合整治任务必须已审核
 		hql.append(" and jtd.jointTask.status = ?");
-		args.add(FsConstants.Y);
+		args.add(JointTaskConstants.AUDITING_PASSED_STATE);
 		//联合整治任务明细状态不等于"已处理"
 		hql.append(" and jtd.status <> ? ");
 		args.add(JointTaskConstants.TASK_DETAIL_RESOLVEED);

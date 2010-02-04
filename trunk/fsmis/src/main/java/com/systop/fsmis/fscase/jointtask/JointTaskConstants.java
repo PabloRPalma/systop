@@ -25,6 +25,12 @@ public final class JointTaskConstants {
 	/** 任务详细状态：已处理 */
 	public static final String TASK_DETAIL_RESOLVEED = "4";
 	
+	/** 审核通过状态 */
+	public static final String AUDITING_PASSED_STATE = "1";
+
+	/** 审核未通过状态 */
+	public static final String AUDITING_REJECT_STATE = "2";
+	
 	public static final String MSG_JOINT_TASK_SMSSEND = ResourceBundleUtil.getString(ResourceBundle.getBundle("application"),
 			"joint_task_smsSend","您好！您有一条联合整治任务！");
 	
