@@ -49,6 +49,11 @@ public class GatherConfiger extends BaseModel {
 	private String level; 
 	
 	/**
+	 * 标志位
+	 */
+	private String isUse;
+	
+	/**
 	 * 所包含的多体事件
 	 */
 	private Set<FsCase> fsCases = new HashSet<FsCase>(0);
@@ -110,4 +115,12 @@ public class GatherConfiger extends BaseModel {
 		this.fsCases = fsCases;
 	}
 
+	@Column(name = "IS_USE", length = 1)
+	public String getIsUse() {
+	  return this.isUse;
+	}
+
+	public void setIsUse(String isUse) {
+	  this.isUse = isUse;
+	}
 }
