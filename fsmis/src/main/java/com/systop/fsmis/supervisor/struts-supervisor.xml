@@ -9,7 +9,6 @@
 			<result name="input">/pages/supervisor/edit.jsp</result> 
 			<result name="success" type="redirect">index.do</result>
 			<result name="view">/pages/supervisor/view.jsp</result>
-			<result name="exportmobilenum">/pages/supervisor/exportMobileNum.jsp</result>
 			<result type="json" name="jsonRst">
 		   		<param name="root">delResult</param>
 			</result>  
