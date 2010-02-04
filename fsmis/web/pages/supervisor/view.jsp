@@ -15,10 +15,19 @@
 </head>
 <body>
 <div class="x-panel">
-<div class="x-panel-header">监管员管理&nbsp;>&nbsp;监管员列表&nbsp;>&nbsp;监管员信息：</div>
+<div class="x-panel-header">查看信息员信息</div>
+<div class="x-toolbar">
+	<table width="100%">
+		<tr>
+			<td align="right" height="22">
+				<a href="${ctx}/supervisor/index.do">信息员列表</a>
+			</td>
+		</tr>
+	</table>
+</div>
 <div align="center">
   <fieldset style="width: 600px; padding: 50px 10px 10px 10px;">
-	<legend>监管员信息</legend>
+	<legend>信息员信息</legend>
 		<table width="532" align="center" border="0" cellpadding="2" cellspacing="1">
 		<tr>
 			<td width="100" align="right">编　　号：</td>

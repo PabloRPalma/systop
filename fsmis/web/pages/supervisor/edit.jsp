@@ -9,7 +9,28 @@
 <link href="${ctx}/styles/treeSelect.css" type='text/css' rel='stylesheet'>
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/validator.jsp"%>
+<style type="text/css">
+#mytable {
+	border: 0px solid #A6C9E2;
+	margin-left: 0px;
+	margin-top: 0px;
+	width: 100%;
+	border-collapse: collapse;
+}
+
+#mytable td {
+	border: 0px solid #A6C9E2;
+	height: 22;
+}
+</style>
 <script type="text/javascript">
+  function validate(){
+	  if(checkCode()&&checkmobile()){
+		  return true;
+	  }
+	  return false;
+  }
+
   //异步删除照片
    function deletePhoto(){
     if(confirm("确定要删除该信息员的照片吗?")){           
@@ -36,14 +57,50 @@
   	var imgphoto = document.getElementById("imgphoto");
   	imgphoto.src = img.value;
   }
-  
+
+  function checkCode(){
+	  var code = document.getElementById("code").value;
+	  if(isNaN(code)){
+		  document.getElementById("codeinfo").innerHTML = '<font color="red">'+'<I>'+'必须是数字'+'</I>'+'</font>';
+		  return false;
+	  }
+	  document.getElementById("codeinfo").innerHTML = '';
+	  return true;
+  }
+
+  function checkmobile(){
+	  var mobile = document.getElementById("mobile").value;
+	  if(mobile == ""){
+		  return true;
+	  }
+	  if(isNaN(mobile)){
+		  document.getElementById("mobileinfo").innerHTML = '<font color="red">'+'<I>'+'必须是数字'+'</I>'+'</font>';
+		  return false;
+	  }else{
+		  if(mobile.lenght != 11){
+			  document.getElementById("mobileinfo").innerHTML = '<font color="red">'+'<I>'+'位数不正确'+'</I>'+'</font>';
+			  return false;
+		  }
+	  }
+	  document.getElementById("mobileinfo").innerHTML = '';
+	  return true;
+  }
 </script>
 </head>
 <body>
 <div class="x-panel">
 <div class="x-panel-header">信息员添加</div>
+<div class="x-toolbar">
+	<table width="100%">
+		<tr>
+			<td align="right" height="22">
+				<a href="${ctx}/supervisor/index.do">信息员列表</a>				
+			</td>
+		</tr>
+	</table>
+</div>
 <div align="center">
-  <s:form id="supervisorForm" action="save.do" method="post" theme="simple" validate="true" enctype="multipart/form-data" onsubmit="return checkPhotoPath()" >
+  <s:form id="supervisorForm" action="save.do" method="post" theme="simple" validate="true" enctype="multipart/form-data" onsubmit="return validate()" >
   <fieldset style="width: 600px; padding: 50px 10px 10px 10px;">
 	<legend>信息员信息</legend>
 		<s:hidden id="spId" name="model.id" />
@@ -52,11 +109,13 @@
 			<td colspan="4"><%@ include file="/common/messages.jsp"%></td>
 		  </tr>
 		</table>
-		<table width="532" align="center" border="0" cellpadding="2" cellspacing="1">
+		<table id="mytable" width="532" align="center">
 		  <tr>
 			<td width="100" align="right">编　　号：</td>
-			<td colspan="2" align="left">
-		  <s:textfield id="mobile" name="model.code" cssStyle="width:100px" cssClass="required"/><font color="red">&nbsp;*</font>			</td>
+			<td align="left">
+		  		<s:textfield id="code" name="model.code" cssStyle="width:100px" cssClass="required" onblur="checkCode()"/><font color="red">&nbsp;*</font>
+		  	</td>
+		  	<td id="codeinfo" align="left" valign="bottom"></td>
 	      </tr>
 		  <tr>
 			<td width="100" align="right">姓　　名：</td>
@@ -97,15 +156,15 @@
 		 </tr>
 		<tr>
 			<td width="100" align="right">单　　位：</td>
-			<td colspan="2" align="left"><s:textfield id="unit" name="model.unit" cssStyle="width:180px"/></td>
+			<td colspan="3" align="left"><s:textfield id="unit" name="model.unit" cssStyle="width:180px"/></td>
 	    </tr>
 		<tr>
 			<td width="100" align="right">职　　务：</td>
-			<td colspan="2" align="left"><s:textfield id="duty" name="model.duty" cssStyle="width:180px" /></td>
+			<td colspan="3" align="left"><s:textfield id="duty" name="model.duty" cssStyle="width:180px" /></td>
 	      </tr>
 		<tr>
 			<td width="100" align="right">所属部门：</td>
-			<td class="simple" align="left">			
+			<td class="simple" align="left" colspan="3">			
 				<div id="comboxWithTree"  style="float: left"></div><font color="red" style="margin-left:2px;">*</font>
 				<s:hidden name="model.dept.id" id="deptId" cssClass="required"></s:hidden>
 			</td>
@@ -123,9 +182,10 @@
 	    </tr>
 		<tr>
 			<td width="100" align="right">移动电话：</td>
-			<td colspan="3" align="left">
-		  		<s:textfield id="mobile" name="model.mobile" cssStyle="width:180px" />			
+			<td colspan="2" align="left">
+		  		<s:textfield id="mobile" name="model.mobile" cssStyle="width:180px" onblur="checkmobile()"/>			
 		  	</td>
+		  	<td	id="mobileinfo" align="left"></td>
 		 </tr>
 		 <tr>
 			<td width="100" align="right">固定电话：</td>
