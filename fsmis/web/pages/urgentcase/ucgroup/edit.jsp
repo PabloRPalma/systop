@@ -52,50 +52,45 @@ function showWin() {
     	<legend>编辑指挥组</legend>
         <table width="600px" align="center">
         <tr>
-             <td align="right" width="140">组类型:</td>
+             <td align="right" width="140">组类型：</td>
              <td align="left" width="520">
              	<s:select id="category" name="model.category" list="categoryMap" headerKey="" headerValue="请选择"  cssClass="required" onchange="categoryChange()"/><font color="red">&nbsp;*</font>
              </td>
           </tr>
           <tr>
-             <td align="right" width="80">组名:</td>
+             <td align="right" width="140">组名：</td>
              <td align="left" width="520">
              	<s:textfield id="name" name="model.name" cssStyle="width:330px" readonly="true"/>
              </td>
           </tr>
            <tr>
-             <td align="right" width="80">负责人:</td>
+             <td align="right" width="140">负责人：</td>
              <td align="left" width="520">
              	<s:textfield id="principal" name="model.principal" cssStyle="width:330px" cssClass="required"/><font color="red">&nbsp;*</font>
              </td>
           </tr>
           <tr>
-			<td align="right" width="80">操作人:</td>
+			<td align="right" width="140">操作人：</td>
 			<td align="left">
-					<s:textfield id="person" name="person" cssStyle="width:330px" />
+					<s:textfield id="person" name="person" cssStyle="width:275px" />
+					<input onclick="showWin()" value="添加人员" type="button">
 					<s:hidden name="userIds"/>
 			</td>
 		</tr> 
-		<tr>
-			<td align="right" width="80"></td>
-			<td align="left">
-					<input onclick="showWin()" value="添加人员" type="button">
-			</td>
-		</tr> 
            <tr>
-             <td align="right" width="80">手机号:</td>
+             <td align="right" width="140">手机号：</td>
              <td align="left" width="520">
              	<s:textfield id="mobel" name="model.mobel" cssStyle="width:330px" cssClass="required"/><font color="red">&nbsp;*</font>
              </td>
           </tr>
            <tr>
-             <td align="right" width="80">固话:</td>
+             <td align="right" width="140">固话：</td>
              <td align="left" width="520">
              	<s:textfield id="phone" name="model.phone" cssStyle="width:330px" cssClass="required"/><font color="red">&nbsp;*</font>
              </td>
           </tr>
           <tr>
-             <td align="right" width="80">描述：</td>
+             <td align="right" width="140">描述：</td>
              <td align="left" width="520">
              	<s:textarea id="descr" name="model.descr" cssStyle="width:330px;height:80px"/>
              </td>
