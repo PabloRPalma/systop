@@ -225,7 +225,10 @@
 				method : 'POST',
 				success : function(xhr, textStatus) {
 					if (xhr.responseText != '0'){
-						var message = "您有联合整治任务，请注意<a href='${ctx}/jointTask/deptTaskDetail/deptTaskDetailIndex.do' target='main'><font color='red'>查收</font></a>";
+						var message = "您有";
+						message += "<font color='red'>";
+						message += xhr.responseText;
+						message += "</font>条联合整治任务，请注意<a href='${ctx}/jointTask/deptTaskDetail/deptTaskDetailIndex.do' target='main'><font color='red'>查收</font></a>";
 						Ext.my().msg('', message);			
 					}
 				}
