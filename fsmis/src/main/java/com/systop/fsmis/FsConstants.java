@@ -49,6 +49,14 @@ public final class FsConstants {
     YN_MAP.put(Y, "是");
     YN_MAP.put(N, "否");
   }
+  
+  /** 是否状态Map 带颜色 */
+  public static final Map<String, String> YN_COLOR_MAP = Collections
+      .synchronizedMap(new LinkedHashMap<String, String>());
+  static {
+    YN_MAP.put(Y, "<font color='green'>是</font>");
+    YN_MAP.put(N, "<font color='red'>否</font>");
+  }
 
   /** 管理员角色 */
   public static final String ROLE_ADMIN = "ROLE_ADMIN";
