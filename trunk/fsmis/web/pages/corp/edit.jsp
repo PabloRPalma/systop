@@ -134,7 +134,7 @@ Ext.onReady(function(){
             </td>
             <td width="93" align="right" height="22">手　机：</td>
             <td width="223" align="left">
-            	<s:textfield id="mobile" name="model.mobile" cssStyle="width:135px"/>
+            	<s:textfield id="mobile" name="model.mobile" cssClass="mobileCheck" cssStyle="width:135px"/>
             </td>
           </tr>
           <tr>
@@ -274,8 +274,19 @@ Ext.onReady(function() {
 </script>
 <script type="text/javascript">
 	$(document).ready(function() {
-	$("#companyForm").validate();
-});
+		$("#companyForm").validate();
+	});
+	$(function() {
+		//验证手机号码
+		$.validator.addMethod("mobileCheck", function(value, element) {
+			var mobiles = document.getElementById("mobile").value;
+			if (mobiles.length != 11){
+				return false;
+			}else {
+				return true;
+			}
+	    },"号码错误");
+	}); 
 </script>
 </body>
 </html>
