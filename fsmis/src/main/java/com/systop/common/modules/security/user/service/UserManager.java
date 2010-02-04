@@ -178,10 +178,10 @@ public class UserManager extends BaseGenericsManager<User> {
       throw new ApplicationException("您输入的登录名'" 
           + oldUser.getLoginId() + "'已经存在.");
     }
-    //验证重复的email
-    if(getDao().exists(user, new String[]{"email"})) {
-      throw new ApplicationException("您的E-mail地址已经注册了,请更换一个.");
-    }
+    //验证重复的email.邮件重复验证暂时不需要,郭红亮2010-02-04
+    //if(getDao().exists(user, new String[]{"email"})) {
+    //  throw new ApplicationException("您的E-mail地址已经注册了,请更换一个.");
+    //}
     //如果是修改，并且输入的密码为空或UserConstants.DEFAULT_PASSWORD，则表示使用原来的密码
     if (user.getId() != null
         && (user.getPassword().equals(UserConstants.DEFAULT_PASSWORD) 
