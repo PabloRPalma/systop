@@ -1,6 +1,7 @@
 package com.systop.fsmis.supervisor.webapp;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Controller;
 
 import com.systop.cms.utils.PageUtil;
 import com.systop.common.modules.dept.model.Dept;
+import com.systop.common.modules.dept.service.DeptManager;
 import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.core.dao.support.Page;
 import com.systop.core.webapp.struts2.action.DefaultCrudAction;
@@ -49,6 +51,8 @@ public class SupervisorAction extends DefaultCrudAction<Supervisor, SupervisorMa
 	 */
 	private Map<String, String> delResult;
 	
+	@Autowired
+	private DeptManager deptManager;
 	/**
 	 * 
 	 */
@@ -56,27 +60,15 @@ public class SupervisorAction extends DefaultCrudAction<Supervisor, SupervisorMa
 	private LoginUserService loginUserService;
 	
 	/** 按姓名、监管区域、所属部门查询信息员信息*/
+	@SuppressWarnings("unchecked")
 	public String index(){
-		indexSuperviosr();
-		return INDEX;
-	}
-	
-	/**
-	 * 导出手机号码
-	 */
-	public String exportMobileNum(){
-		indexSuperviosr();
-		return "exportmobilenum";
-	}
-	
-	/**
-	 * 抽取出来的查询方法
-	 */
-	public void indexSuperviosr(){
-		//创建分页查询的Page对象
+	//创建分页查询的Page对象
 		Page page = PageUtil.getPage(getPageNo(), getPageSize());
 		getManager().pageQuery(page, setupDetachedCriteria());
+		items = page.getData();
+		generatMobileNum(items);
 		restorePageData(page);
+		return INDEX;
 	}
 	
   /**
@@ -87,6 +79,9 @@ public class SupervisorAction extends DefaultCrudAction<Supervisor, SupervisorMa
     //设定用户所属部门及子部门作为查询条件
     criteria.createAlias("dept", "dept");
     Dept dept = loginUserService.getLoginUserDept(getRequest());
+    if (getModel().getDept() != null && getModel().getDept().getId() != null) {
+    	dept = deptManager.get(getModel().getDept().getId());
+		}
 		if (dept != null) {
 			if (dept.getChildDepts().size() > 0) {
 				criteria.add(Restrictions.like("dept.serialNo", MatchMode.START
@@ -107,10 +102,6 @@ public class SupervisorAction extends DefaultCrudAction<Supervisor, SupervisorMa
 		if (StringUtils.isNotBlank(getModel().getMobile())) {
 			criteria.add(Restrictions.like("mobile", MatchMode.ANYWHERE
 					.toMatchString(getModel().getMobile())));
-		}
-		if (getModel().getDept() != null && StringUtils.isNotBlank(getModel().getDept().getName())) {
-			criteria.add(Restrictions.like("dept.name", MatchMode.ANYWHERE
-					.toMatchString(getModel().getDept().getName())));
 		}
 		if(StringUtils.isNotBlank(getModel().getIsLeader())){
 			criteria.add(Restrictions.eq("isLeader", getModel().getIsLeader()));
@@ -180,6 +171,31 @@ public class SupervisorAction extends DefaultCrudAction<Supervisor, SupervisorMa
 			delResult.put("result", "error");
 		}
 		return "jsonRst";
+	}
+	/**
+	 * 取得信息员的手机号码
+	 * @param items
+	 */
+	private void generatMobileNum(Collection<Supervisor> items) {
+		StringBuffer nums = new StringBuffer();
+		int hasNum = 0;
+		int noNum = 0;
+		if (items != null && items.size() > 0) {
+			for (Supervisor supervisor : items) {
+				if (StringUtils.isNotEmpty(supervisor.getMobile())) {
+					nums.append(supervisor.getMobile()).append(";");
+					hasNum++;
+					if (hasNum % 5 == 0) {
+						nums.append("<br/>");
+					}
+				} else {
+					noNum++;
+				}
+			}
+		}
+		getRequest().setAttribute("mobileNums", nums.toString());
+		getRequest().setAttribute("hasNum", hasNum);
+		getRequest().setAttribute("noNum", noNum);
 	}
 	
 	public String editNew(){
