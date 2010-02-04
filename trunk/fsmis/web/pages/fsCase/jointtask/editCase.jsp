@@ -115,7 +115,7 @@
 		<tr>
 			<td align="right" width="15%">案件标题：</td>
 			<td align="left" colspan="3"><s:textfield id="title"
-				name="model.fsCase.title" cssStyle="width:515px" cssClass="required"/><font color="red">&nbsp;*</font>
+				name="model.fsCase.title" cssStyle="width:514px" cssClass="required"/><font color="red">&nbsp;*</font>
 			</td>
 		</tr>
 		
@@ -124,7 +124,7 @@
 			<td align="left" width="40%"><s:textfield id="code"
 				name="model.fsCase.code" cssStyle="width: 135px" cssClass="required"/><font color="red">&nbsp;*</font></td>		
 			
-			<td align="right">案发时间：</td>
+			<td align="right" width="11%">案发时间：</td>
 			<td align="left" width="40%"><input type="text" name="model.fsCase.caseTime"  style="width: 158px" 
 				value='<s:date name="model.fsCase.caseTime" format="yyyy-MM-dd HH:mm:ss"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})"
@@ -133,7 +133,7 @@
 		<tr>
 			<td align="right" >案发地点：</td>
 			<td align="left" colspan="3"><s:textfield id="address"
-				name="model.fsCase.address" cssStyle="width:515px" cssClass="required"/><font color="red">&nbsp;*</font></td>
+				name="model.fsCase.address" cssStyle="width:514px" cssClass="required"/><font color="red">&nbsp;*</font></td>
 		</tr>
 
 		<tr>
@@ -141,7 +141,7 @@
 			<td align="left" width="40%"><s:textfield id="informer"
 				name="model.fsCase.informer" cssStyle="width: 135px" cssClass="required"/><font color="red">&nbsp;*</font></td>		
 			
-			<td align="right">报告人电话：</td>
+			<td align="right" width="11%">报告人电话：</td>
             <td align="left" width="40%"><s:textfield id="informerPhone"
 				name="model.fsCase.informerPhone" cssStyle="width:158px" cssClass="required"/><font color="red">&nbsp;*</font></td>
 		</tr>					
@@ -163,7 +163,7 @@
 		<tr>
 			<td align="right">案件描述：</td>
 			<td align="left" colspan="3">
-				<textarea id="descn" name="model.fsCase.descn" cols="45" rows="3" class="required" >${model.fsCase.descn}</textarea>
+				<textarea id="descn" name="model.fsCase.descn" cols="41" rows="3" class="required" >${model.fsCase.descn}</textarea>
 				<font color="red">*</font>
 			</td>
 		</tr>								
