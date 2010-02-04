@@ -6,26 +6,13 @@
 <title>信息员管理</title>
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/ec.jsp"%>
+<%@include file="/common/extjs.jsp" %>
+<link href="${ctx}/styles/treeSelect.css" type='text/css' rel='stylesheet'>
 <script type="text/javascript">
-
 function removeSupervisor(sID){
 	if(confirm("确实要删除该信息员的信息吗？")){
 		location.href = "remove.do?model.id="+sID;
 	}
-}
-
-function index(){
-	var superVisorForm = document.getElementById('superVisorForm');
-	superVisorForm.setAttribute('action','index.do','0');
-	superVisorForm.setAttribute('target','_self','0');
-	superVisorForm.submit();
-}
-
-function exportMobileNum(){
-	var superVisorForm = document.getElementById('superVisorForm');
-	superVisorForm.setAttribute('action','exportMobileNum.do','0');
-	superVisorForm.setAttribute('target','_blank','0');
-	superVisorForm.submit();
 }
 </script>
 </head>
@@ -36,27 +23,29 @@ function exportMobileNum(){
 <div class="x-toolbar">
 <table width="100%" border="0">
 	<tr>
-		<s:form id="superVisorForm" action="" method="post" target="">
+		<s:form id="superVisorForm" action="index.do" method="post" target="main">
 			<td width="40" align="left">姓名：</td>
-			<td width="80"><s:textfield name="model.name"
-				cssStyle="width:80px" /></td>
+			<td width="60"><s:textfield name="model.name"
+				cssStyle="width:60px" /></td>
 			<td width="40" align="right">手机：</td>
-			<td width="80"><s:textfield name="model.mobile"
-				cssStyle="width:80px" /></td>
+			<td width="60"><s:textfield name="model.mobile"
+				cssStyle="width:60px" /></td>
 			<td width="60" align="right">所属部门：</td>
-			<td width="80"><s:textfield name="model.dept.name"
-				cssStyle="width:80px" /></td>
+			<td class="simple" align="left">			
+				<div id="comboxWithTree"  style="float: left"></div>
+				<s:hidden name="model.dept.id" id="deptId"></s:hidden>
+			</td>
 			<td width="60" align="right">监管区域：</td>
-			<td width="80"><s:textfield name="model.superviseRegion" 
-				cssStyle="width:80px" /></td>
+			<td width="60"><s:textfield name="model.superviseRegion" 
+				cssStyle="width:60px" /></td>
 			<td width="60" align="right">负责人：</td>
 			<td width="80" valign="top">是<input type="radio" value="1" name="isLeader" id="model.isLeader" style="border: 0"/>
 						                                           否<input type="radio" value="0" name="isLeader" id="model.isLeader" style="border: 0"/>
 			</td>
+			<td align="left">
+				<input type="submit" value="查询" class="button" style="width: 40px"/>
+			</td>
 		</s:form>
-		<td align="left">
-			<input type="button" value="查询" class="button" onclick="index()" style="width: 40px"/>
-		</td>
 		<td align="right">
 		<table>
 			<tr>
@@ -83,10 +72,10 @@ function exportMobileNum(){
 	resizeColWidth="false" 
 	classic="false" 
 	width="100%" 
-	height="460px"
-	minHeight="460"
+	height="380px"
+	minHeight="380"
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
-	<ec:extend><td align="left"><input type="button" value="导出手机号" class="button" onclick="exportMobileNum()" style="width:70px"/></td></ec:extend>
+	<ec:extend><td align="left"><input type="button" value="导出手机号" class="button" onclick="NumWindow.show()" style="width:70px"/></td></ec:extend>
 	<ec:row>
 		<ec:column width="35" property="_No" title="No." value="${GLOBALROWCOUNT}" style="text-align:center" />
 		<ec:column width="70" property="name" title="姓名">
@@ -95,12 +84,13 @@ function exportMobileNum(){
 		<ec:column width="35" property="gender" title="性别" style="text-align:center"/>
 		<ec:column width="55" property="code" title="编号" style="text-align:center"/>
 		<ec:column width="95" property="mobile" title="手机号码" style="text-align:center"/>
-		<ec:column width="120" property="dept.name" title="所属街道"/>
+		<ec:column width="120" property="dept.name" title="所属部门"/>
 		<ec:column width="250" property="superviseRegion" title="监管区域" />
 		<ec:column width="120" property="_0" title="操作" style="text-align:center" sortable="false">
 			<a href="edit.do?model.id=${item.id}">编辑</a>|
-			<a href="view.do?model.id=${item.id}" target="_blank">查看</a>|
-			<a href="#" onclick="removeSupervisor(${item.id})">删除</a>				
+			<a href="view.do?model.id=${item.id}" target="main">查看</a>|
+			<c:if test="${not empty item.fsCase}"><font color="silver" >删除</font></c:if>
+			<c:if test="${empty item.fsCase}"><a href="#" onclick="removeSupervisor(${item.id})">删除</a></c:if>
 		</ec:column>
 	</ec:row>
 </ec:table></div>
@@ -137,5 +127,73 @@ function exportMobileNum(){
 	</tr>
 </table>	
 </div>
+<script type="text/javascript" src="${ctx}/pages/admin/dept/edit.js"></script>
+<script type="text/javascript">
+Ext.onReady(function() {
+	var dtree = new DeptTree({
+		url : '/admin/dept/deptTree.do',
+		parent : '<stc:loginUserDept showPath="false" propertyName="id" showTopDept="true"></stc:loginUserDept>',
+		initValue : '${model.dept.name}',
+		el : 'comboxWithTree',
+		innerTree :'inner-tree',
+		onclick : function(nodeId) {
+		  Ext.get('deptId').dom.value = nodeId;
+		}
+	});
+	dtree.init();	
+});
+</script>
+<!-- 查看手机号码 -->
+<div id="numWindow" class="x-hidden">
+<div class="x-window-header">手机号码</div>
+<div class="x-window-body">
+	<table width="550" cellspacing="6">
+	  <tr>
+	    <td align="right"><font color="green">有号码成员数：</font></td>
+		<td align="left" colspan="3">
+		  ${hasNum}&nbsp;&nbsp;&nbsp;&nbsp;<font color="red">无号码成员数：</font>${noNum}
+	    </td>
+	  </tr>
+	  <tr>
+	    <td height="5" colspan="4"></td>
+	  </tr>
+	  <tr>
+	    <td width="90px" align="right"><font color="green">成员手机号码：</font></td>
+	    <td width="320px">${mobileNums}</td>
+        <td colspan="2">
+        	<input type="button" class="button" onclick="copyNum('${mobileNums}')" style="text-align: center;width: 90px;" value="复制到剪切板" />
+        </td>
+	  </tr>
+	</table>
+	
+ </div>
+</div>
+<!-- 查看手机号码 -->
+<script type="text/javascript">
+  var NumWindow = new Ext.Window({
+      el: 'numWindow',
+      width: 550,
+      height: 250,
+      layout : 'fit',
+      closeAction:'hide',
+      buttonAlign:'center',
+      modal:'false',
+      buttons:[
+        {text:'关闭',
+        	handler:function(){
+        	NumWindow.hide();
+        }
+      }]
+  });
+</script>
+<script type="text/javascript">
+  function copyNum(copyText) {
+	var reg = new RegExp(/\<br\/>/ig);
+	copyText = copyText.replace(reg, "");
+    if (window.clipboardData) {
+        window.clipboardData.setData("Text", copyText);
+    } 
+  }
+</script>
 </body>
 </html>
