@@ -6,6 +6,7 @@
 <head>
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/ec.jsp"%>
+<%@include file="/common/extjs.jsp"%>
 <%@include file="/common/dwr.jsp" %>
 <script type="text/javascript" src="${ctx}/dwr/interface/SendTypeDwrAction.js"></script>
 <title>派遣环节管理</title>
@@ -123,9 +124,11 @@
 	
 	//删除
 	function remove(id){
-		if (confirm("确认重删除本条记录吗？")){
-			window.location.href = "${ctx}/sendType/remove.do?model.id=" + id;
-		}
+		 Ext.MessageBox.confirm('提示','确认重删除本条记录吗？删除后不能恢复！', function(btn){
+		        if (btn == 'yes') {
+		          window.location = "${ctx}/sendType/remove.do?model.id=" + id;
+		        }
+		    });
 	}
 </script>
 </body>
