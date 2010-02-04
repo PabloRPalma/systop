@@ -2,6 +2,7 @@ package com.systop.common.modules.security.user.webapp;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -52,15 +53,20 @@ public class UserAction extends ExtJsCrudAction<User, UserManager> {
 	 * 对应页面查询条件
 	 */
 	private String queryUsername;
+	
 	/**
 	 * 对应页面查询条件:部门名称
 	 */
 	private String deptId;
 
-	/** 查询起始时间 */
+	/** 
+	 * 查询起始时间 
+	 */
 	private Date beginDate;
 
-	/** 查询结束时间 */
+	/** 
+	 * 查询结束时间 
+	 */
 	private Date endDate;
 
 	/**
@@ -69,7 +75,7 @@ public class UserAction extends ExtJsCrudAction<User, UserManager> {
 	private String oldPassword;
 
 	/**
-	 * 标识是否是用户自行修改个人信息，如果为<code>null</code>则表示 由管理员修改，否则，表示由用户自己修改
+	 * 标识是否是用户自行修改个人信息，如果为<code>null</code>则表示 由管理员修改。否则，表示由用户自己修改
 	 */
 	private String selfEdit;
 
@@ -77,9 +83,11 @@ public class UserAction extends ExtJsCrudAction<User, UserManager> {
 	 * 当前登录用户
 	 */
 	private User user;
-
-	@Autowired
-	private DeptAction deptAction;
+	
+  /**
+   * 检测用户返回的结果
+   */
+  private Map<String, String> checkResult;
 
 	/**
 	 * 保存用户树形列表
@@ -94,6 +102,25 @@ public class UserAction extends ExtJsCrudAction<User, UserManager> {
 	 * 角色名称，用于员工选择器
 	 */
 	private String roleName;
+	
+	/**
+   * 注册用户登陆名,用于ajax验证.userName:loginId
+   */
+  private String userName;
+  
+  /**
+   * 注册用户ID,用于ajax验证 userId:主键
+   */
+  private String userId;
+  
+  /**
+   * 注册用户email,用于ajax验证
+   */
+  private String emailStr;
+	
+
+	@Autowired
+	private DeptAction deptAction;
 
 	/**
 	 * 部门管理
@@ -329,6 +356,34 @@ public class UserAction extends ExtJsCrudAction<User, UserManager> {
 	}
 
 	/**
+	 * ajax请求，检测登录名是否已存在
+	 */
+	public String checkName() {
+		List<User> list = getManager().getUserByName(getUserId(), getUserName());
+		checkResult = Collections.synchronizedMap(new HashMap<String, String>());
+		if (list != null && list.size() > 0) {
+			checkResult.put("result", "exist");
+		} else {
+			checkResult.put("result", "notExist");
+		}
+		return "jsonRst";
+	}
+
+	/**
+	 * ajax请求，检测用户邮箱是否已存在
+	 */
+	public String checkEmail() {
+		List<User> list = getManager().getUserByEmail(getUserId(), getEmailStr());
+		checkResult = Collections.synchronizedMap(new HashMap<String, String>());
+		if (list != null && list.size() > 0) {
+			checkResult.put("result", "exist");
+		} else {
+			checkResult.put("result", "notExist");
+		}
+		return "jsonRst";
+	}
+
+	/**
 	 * 取得用户登陆后的信息
 	 */
 	public String userInfo() {
@@ -463,5 +518,37 @@ public class UserAction extends ExtJsCrudAction<User, UserManager> {
 
 	public void setDeptId(String deptId) {
 		this.deptId = deptId;
+	}
+
+	public Map<String, String> getCheckResult() {
+		return checkResult;
+	}
+
+	public void setCheckResult(Map<String, String> checkResult) {
+		this.checkResult = checkResult;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getEmailStr() {
+		return emailStr;
+	}
+
+	public void setEmailStr(String emailStr) {
+		this.emailStr = emailStr;
 	}
 }
