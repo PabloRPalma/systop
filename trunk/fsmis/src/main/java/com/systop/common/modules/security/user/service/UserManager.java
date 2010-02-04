@@ -3,6 +3,7 @@ package com.systop.common.modules.security.user.service;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -411,6 +412,41 @@ public class UserManager extends BaseGenericsManager<User> {
       }
     }
   }
+  
+  /**
+   * 根据登陆名称取得用户
+   * @param uId
+   * @param uName
+   */
+  public List<User> getUserByName(String uId, String uName) {
+    List<User> list = Collections.EMPTY_LIST;
+    StringBuffer hql = new StringBuffer("from User u where u.loginId = ?");
+    if (StringUtils.isNotBlank(uId)) {
+      hql.append(" and u.id != ?");
+      list = query(hql.toString(), new Object[]{uName, Integer.valueOf(uId)});
+    } else {
+      list = query(hql.toString(), uName);
+    }
+    return list;
+  }
+  
+  /**
+   * 根据email取得用户
+   * @param uId
+   * @param email
+   */
+  public List<User> getUserByEmail(String uId, String email) {
+    List<User> list = Collections.EMPTY_LIST;
+    StringBuffer hql = new StringBuffer("from User u where u.email = ?");
+    if (StringUtils.isNotBlank(uId)) {
+      hql.append(" and u.id != ?");
+      list = query(hql.toString(), new Object[]{email, Integer.valueOf(uId)});
+    } else {
+      list = query(hql.toString(), email);
+    }
+    return list;
+  }
+  
   
   /**
    * 执行监听器
