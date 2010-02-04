@@ -27,14 +27,14 @@ function remove(id){
 			事件编号：
 			<s:textfield name="model.fsCase.code" cssStyle="width:70px"></s:textfield>&nbsp;
 			事发时间：
-			<input type="text" name="caseBeginTime" style="width: 120px"
+			<input type="text" id="caseBeginTime" name="caseBeginTime" style="width: 120px"
 				value='<s:date name="caseBeginTime" format="yyyy-MM-dd HH:mm"/>'
-				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
+				onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'caseEndTime\')}',skin:'whyGreen',readOnly:true,dateFmt:'yyyy-MM-dd HH:mm'})"
 				class="Wdate" />&nbsp;
 			至
-			<input type="text" name="caseEndTime" style="width: 120px"
+			<input type="text" id="caseEndTime" name="caseEndTime" style="width: 120px"
 				value='<s:date name="caseEndTime" format="yyyy-MM-dd HH:mm"/>'
-				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
+				onfocus="WdatePicker({minDate:'#F{$dp.$D(\'caseBeginTime\')}',skin:'whyGreen',readOnly:true,dateFmt:'yyyy-MM-dd HH:mm'})"
 				class="Wdate" />	
 			<s:submit value="查询" cssClass="button"></s:submit>
 		</s:form></td>
