@@ -22,11 +22,10 @@
 <div class="x-toolbar">
 <table width="99%">
 	<tr>
-		<td align="right" height="22">
+		<td align="right">
 		<table>
 			<tr>
-				<td height="22"><a href="edit.do"><img
-					src="${ctx}/images/icons/add.gif" />添加</a></td>
+				<td><a href="edit.do">添加</a></td>
 			</tr>
 		</table>
 		</td>
@@ -46,8 +45,8 @@
 	generateScript="true"
 	resizeColWidth="false" 
 	classic="false" 
-	width="100%" height="460px"
-	minHeight="460"
+	width="100%" height="458px"
+	minHeight="458"
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	<ec:row>
 		<ec:column width="30" property="_s" title="No." value="${GLOBALROWCOUNT}" sortable="false" style="text-align: center" />
