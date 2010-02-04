@@ -19,14 +19,14 @@
     <td><s:form action="expiredIndex.do" method="post"> 
               任务标题：<s:textfield id="taskTitle" name="model.jointTask.title" size="30"></s:textfield>&nbsp;&nbsp; 
 	   规定完成时间：
-			<input type="text" name="presetBeginTime" style="width: 120px"
+			<input type="text" id="presetBeginTime" name="presetBeginTime" style="width: 120px"
 				value='<s:date name="presetBeginTime" format="yyyy-MM-dd HH:mm"/>'
-				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
+				onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'presetEndTime\')}',skin:'whyGreen',readOnly:true,dateFmt:'yyyy-MM-dd HH:mm'})"
 				class="Wdate" /> 
 	   &nbsp;至
-			<input type="text" name="presetEndTime" style="width: 120px"
+			<input type="text" id="presetEndTime" name="presetEndTime" style="width: 120px"
 				value='<s:date name="presetEndTime" format="yyyy-MM-dd HH:mm"/>'
-				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
+				onfocus="WdatePicker({minDate:'#F{$dp.$D(\'presetBeginTime\')}',skin:'whyGreen',readOnly:true,dateFmt:'yyyy-MM-dd HH:mm'})"
 				class="Wdate" />				       
       <input type="submit" value="查询" class="button" />
     </s:form>

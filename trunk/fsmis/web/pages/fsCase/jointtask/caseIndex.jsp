@@ -17,7 +17,7 @@ function remove(id){
 </head>
 <body>
 <div class="x-panel">
-<div class="x-panel-header">联合整治&nbsp;&gt;&nbsp;事件列表</div>
+<div class="x-panel-header">联合整治事件列表</div>
 <div class="x-toolbar">
 <table width="99%">
 	<tr>
@@ -70,7 +70,7 @@ function remove(id){
 			style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm" sortable="false"/>
 		<ec:column width="80" property="status" title="事件状态"  mappingItem="stateColorMap" style="text-align:center" sortable="false"/>
 	
-		<ec:column width="80" property="_6" title="查看" style="text-align:center" sortable="false">
+		<ec:column width="70" property="_6" title="查看" style="text-align:center" sortable="false">
 	       <c:choose>
 		     <c:when test="${!empty item.jointTaskses}"> 
                 <a title="查看事件" href="${ctx}/jointTask/view.do?model.id=<c:forEach items='${item.jointTaskses}' var='jointTask'>${jointTask.id}</c:forEach>">看 </a> |       
@@ -81,7 +81,15 @@ function remove(id){
 		   </c:choose> 
 			<a title="地图" href="#">图</a>
 		</ec:column>	
-		<ec:column width="80" property="_7" title="操作" style="text-align:center" sortable="false">
+		<ec:column width="90" property="_7" title="操作" style="text-align:center" sortable="false">
+			<c:choose>
+		     <c:when test="${item.status eq '0'}"> 
+	 	       <a href="${ctx}/jointTask/addCase.do?model.fsCase.id=${item.id}">改</a> |		        
+		     </c:when>
+		     <c:otherwise>
+	           <font color="#999999">改</font> | 	       
+		     </c:otherwise>
+		   </c:choose> 	
 	       <c:choose>
 		     <c:when test="${item.status eq '0'}"> 
 	 	       <a href="${ctx}/jointTask/edit.do?model.fsCase.id=${item.id}">派</a> |		        
