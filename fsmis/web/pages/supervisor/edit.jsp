@@ -71,6 +71,7 @@
   function checkmobile(){
 	  var mobile = document.getElementById("mobile").value;
 	  if(mobile == ""){
+		  document.getElementById("mobileinfo").innerHTML = '';
 		  return true;
 	  }
 	  if(isNaN(mobile)){
@@ -113,9 +114,10 @@
 		  <tr>
 			<td width="100" align="right">编　　号：</td>
 			<td align="left">
-		  		<s:textfield id="code" name="model.code" cssStyle="width:100px" cssClass="required" onblur="checkCode()"/><font color="red">&nbsp;*</font>
+		  		<s:textfield id="code" name="model.code" cssStyle="width:100px" cssClass="required" onblur="checkCode()"/>
+		  		<span id="codeinfo"></span>
+		  		<font color="red">&nbsp;*</font>
 		  	</td>
-		  	<td id="codeinfo" align="left" valign="bottom"></td>
 	      </tr>
 		  <tr>
 			<td width="100" align="right">姓　　名：</td>
@@ -165,8 +167,8 @@
 		<tr>
 			<td width="100" align="right">所属部门：</td>
 			<td class="simple" align="left" colspan="3">			
-				<div id="comboxWithTree"  style="float: left"></div><font color="red" style="margin-left:2px;">*</font>
-				<s:hidden name="model.dept.id" id="deptId" cssClass="required"></s:hidden>
+				<div id="comboxWithTree"  style="float: left"></div>
+				<s:hidden name="model.dept.id" id="deptId" cssClass="required"></s:hidden><font color="red" style="margin-left:2px;">*</font>
 			</td>
 	    </tr>
 	    <tr>
@@ -183,9 +185,9 @@
 		<tr>
 			<td width="100" align="right">移动电话：</td>
 			<td colspan="2" align="left">
-		  		<s:textfield id="mobile" name="model.mobile" cssStyle="width:180px" onblur="checkmobile()"/>			
+		  		<s:textfield id="mobile" name="model.mobile" cssStyle="width:180px" onblur="checkmobile()"/>
+		  		<span id="mobileinfo"></span>
 		  	</td>
-		  	<td	id="mobileinfo" align="left"></td>
 		 </tr>
 		 <tr>
 			<td width="100" align="right">固定电话：</td>
