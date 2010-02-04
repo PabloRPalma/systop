@@ -41,10 +41,10 @@ function showWin() {
 }
 
 </script>
-<div class="x-panel">
-    <div class="x-panel-header">应急指挥指挥组维护</div>
-	<div><%@ include file="/common/messages.jsp"%></div> 
-	<div align="center">
+<div class="x-panel" style="margin-top: -1px; margin-left: -1px;">
+<div class="x-panel-header">编辑指挥组</div>
+<div><%@ include file="/common/messages.jsp"%></div> 
+<div align="center" >
 	<s:form id="ucGroupForm" action="save.do" method="post"  validate="true" >
 	<s:hidden name="model.id"/>
 	<s:hidden name="ucTypeId"/>
@@ -52,7 +52,7 @@ function showWin() {
     	<legend>编辑指挥组</legend>
         <table width="600px" align="center">
         <tr>
-             <td align="right" width="80">组类型:</td>
+             <td align="right" width="140">组类型:</td>
              <td align="left" width="520">
              	<s:select id="category" name="model.category" list="categoryMap" headerKey="" headerValue="请选择"  cssClass="required" onchange="categoryChange()"/><font color="red">&nbsp;*</font>
              </td>
@@ -60,19 +60,19 @@ function showWin() {
           <tr>
              <td align="right" width="80">组名:</td>
              <td align="left" width="520">
-             	<s:textfield id="name" name="model.name" cssStyle="width:300px" readonly="true"/>
+             	<s:textfield id="name" name="model.name" cssStyle="width:330px" readonly="true"/>
              </td>
           </tr>
            <tr>
              <td align="right" width="80">负责人:</td>
              <td align="left" width="520">
-             	<s:textfield id="principal" name="model.principal" cssStyle="width:300px" cssClass="required"/><font color="red">&nbsp;*</font>
+             	<s:textfield id="principal" name="model.principal" cssStyle="width:330px" cssClass="required"/><font color="red">&nbsp;*</font>
              </td>
           </tr>
           <tr>
 			<td align="right" width="80">操作人:</td>
 			<td align="left">
-					<s:textfield id="person" name="person" cssStyle="width:300px" />
+					<s:textfield id="person" name="person" cssStyle="width:330px" />
 					<s:hidden name="userIds"/>
 			</td>
 		</tr> 
@@ -85,27 +85,28 @@ function showWin() {
            <tr>
              <td align="right" width="80">手机号:</td>
              <td align="left" width="520">
-             	<s:textfield id="mobel" name="model.mobel" cssStyle="width:300px" cssClass="required"/><font color="red">&nbsp;*</font>
+             	<s:textfield id="mobel" name="model.mobel" cssStyle="width:330px" cssClass="required"/><font color="red">&nbsp;*</font>
              </td>
           </tr>
            <tr>
              <td align="right" width="80">固话:</td>
              <td align="left" width="520">
-             	<s:textfield id="phone" name="model.phone" cssStyle="width:300px" cssClass="required"/><font color="red">&nbsp;*</font>
+             	<s:textfield id="phone" name="model.phone" cssStyle="width:330px" cssClass="required"/><font color="red">&nbsp;*</font>
              </td>
           </tr>
           <tr>
              <td align="right" width="80">描述：</td>
              <td align="left" width="520">
-             	<s:textarea id="descr" name="model.descr" cssStyle="width:300px;height:50px"/>
+             	<s:textarea id="descr" name="model.descr" cssStyle="width:330px;height:80px"/>
              </td>
           </tr>
           </table>  
     </fieldset>
-     <table width="600px" style="margin-bottom:10px;">
+     <table width="600px" >
+     	<tr><td height="8"></td></tr>
 		<tr>
 			<td style="text-align:center;">
-				<s:submit value="保存" cssClass="button" />
+				<s:submit value="保存" cssClass="button" />&nbsp;&nbsp;
 				<s:reset value="重置" cssClass="button"/>
 		   </td>
 		</tr>

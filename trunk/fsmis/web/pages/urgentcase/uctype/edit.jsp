@@ -2,24 +2,35 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@include file="/common/taglibs.jsp" %>
-
 <html>
 <head>
-
 <%@include file="/common/meta.jsp" %>
 <%@include file="/common/validator.jsp"%>
 </head>
 
 <body>
 <div class="x-panel">
-<div class="x-panel-header">应急指挥派遣类别维护</div>
+<div class="x-panel-header">编辑派遣类别</div>
+<div class="x-toolbar">
+<table width="99%">
+	<tr>
+		<td align="right">
+		<table>
+			<tr>
+				<td align="right"><a href="${ctx}/uctype/index.do"> 派遣类别列表</a></td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+</table>
+</div>
 <div><%@ include file="/common/messages.jsp"%></div> 
 	<div align="center">
 	<s:form  action="save.do" id="ucTypeForm" method="post" theme="simple" validate="true">
 	<s:hidden name="model.id"/>
 	<s:hidden name="model.caseType.id"/>
 	<fieldset style="width:510px; padding:10px 10px 10px 10px;">
-    	<legend>编辑类别</legend>
+    	<legend>编辑派遣类别</legend>
         <table width="510px" align="center" >
      
           <tr>

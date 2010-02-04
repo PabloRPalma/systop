@@ -3,7 +3,7 @@
 <%@include file="/common/taglibs.jsp"%>
 <html>
 <head>
-<title>应急指挥派遣类别维护</title>
+<title>派遣类别管理</title>
 <style type="text/css">
 	.newBorder{
 		width:25px; 
@@ -18,15 +18,14 @@
 </head>
 <body>
 <div class="x-panel">
-<div class="x-panel-header">应急指挥派遣类别维护</div>
+<div class="x-panel-header">派遣类别管理</div>
 <div class="x-toolbar">
 <table width="99%">
 	<tr>
-		<td></td>
-		<td align="right">
+		<td align="right" height="22">
 		<table>
 			<tr>
-				<td><a href="edit.do"><img
+				<td height="22"><a href="edit.do"><img
 					src="${ctx}/images/icons/add.gif" />添加</a></td>
 			</tr>
 		</table>
@@ -52,9 +51,9 @@
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	<ec:row>
 		<ec:column width="30" property="_s" title="No." value="${GLOBALROWCOUNT}" sortable="false" style="text-align: center" />
-		<ec:column width="300" property="name" title="名称" />
-		<ec:column width="200" property="remark" title="备注" />
-		<ec:column width="50" property="_sortId" title="排序" style="text-align:center">
+		<ec:column width="200" property="name" title="名称" />
+		<ec:column width="300" property="remark" title="备注" />
+		<ec:column width="50" property="_sortId" title="序号" style="text-align:center">
 					<input type="text" name="itemSortId" id="${item.id}" value="${item.sortId}" style="width:25px;" disabled="disabled">
 				</ec:column>
 		<ec:column width="150" property="_0" title="操作" style="text-align:center" sortable="false">

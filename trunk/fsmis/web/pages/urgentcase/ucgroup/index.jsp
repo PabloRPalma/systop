@@ -3,7 +3,7 @@
 <%@include file="/common/taglibs.jsp"%>
 <html>
 <head>
-<title>应急指挥组维护</title>
+<title>应急指挥组管理</title>
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/ec.jsp"%>
 <script type="text/javascript">
@@ -21,7 +21,7 @@ function removeUcGroup(id){
 </head>
 <body>
 <div class="x-panel">
-<div class="x-panel-header">应急指挥组维护</div>
+<div class="x-panel-header">应急指挥组管理</div>
 <div class="x-toolbar">
 <table width="99%">
 	<tr>
@@ -35,9 +35,13 @@ function removeUcGroup(id){
 			<tr>
 				<td>
 					<s:if test="#attr.msg!= ''">
-						<a href="${ctx}/ucgroup/edit.do?ucTypeId=${ucTypeId}"><img src="${ctx}/images/icons/add.gif" />添加</a>
+						<a href="${ctx}/ucgroup/edit.do?ucTypeId=${ucTypeId}">添加</a>
 					</s:if>
 				</td>
+				<s:if test="#attr.ucTypeId != null">
+					<td><span class="ytb-sep"></span></td>
+					<td><a href="${ctx}/uctype/index.do"> 派遣类别列表</a></td>
+				</s:if>
 			</tr>
 		</table>
 		</td>
@@ -64,7 +68,7 @@ function removeUcGroup(id){
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	<ec:row>
 		<ec:column width="40" property="_no" value="${GLOBALROWCOUNT}" title="No." style="text-align:center"/>
-		<ec:column width="80" property="name" title="名称"/>
+		<ec:column width="120" property="name" title="名称"/>
 		<s:if test="#attr.ucTypeId != null">	
 			<ec:column width="30" property="-0" title="公用" style="text-align:center;">
 				<c:if test="${item.isPublic eq '1'}">是</c:if>
@@ -72,22 +76,21 @@ function removeUcGroup(id){
 			</ec:column>
 		</s:if>
 		<ec:column width="80" property="principal" title="负责人" style="text-align:center"/>
-		<ec:column width="160" property="_per" title="操作人" sortable="false">
+		<ec:column width="180" property="_per" title="操作人" sortable="false">
 			<c:forEach var="per" items="${item.users}">
 				${per.name}&nbsp;
 			</c:forEach>
 		</ec:column>
-		<ec:column width="80" property="phone" title="固话" style="text-align:center"/>
-		<ec:column width="80" property="mobel" title="手机号" style="text-align:center"/>
-		<ec:column width="200" property="descr" title="描述" style="text-align:center"/>
+		<ec:column width="100" property="phone" title="固话" style="text-align:center"/>
+		<ec:column width="100" property="mobel" title="手机号" style="text-align:center"/>
 		<ec:column width="100" property="_0" title="操作" style="text-align:center" sortable="false">
 			<s:if test="#attr.ucTypeId == null">
-				<a href="edit.do?model.id=${item.id}">编辑</a>|
+				<a href="edit.do?model.id=${item.id}">编辑</a> |
 				<a href="#" onClick="removeUcGroup(${item.id})">删除</a>
 			</s:if>
 			<s:if test="#attr.ucTypeId != null">
 				<c:if test="${item.isPublic eq '0'}">	
-					<a href="edit.do?model.id=${item.id}&ucTypeId=${ucTypeId}">编辑</a>|
+					<a href="edit.do?model.id=${item.id}&ucTypeId=${ucTypeId}">编辑</a> |
 					<a href="#" onClick="removeUcGroupTypeId(${item.id},${ucTypeId})">删除</a>
 				</c:if>
 			</s:if>
