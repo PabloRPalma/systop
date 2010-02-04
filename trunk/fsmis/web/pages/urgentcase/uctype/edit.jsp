@@ -54,9 +54,10 @@
         </table> 
     </fieldset>
     <table width="510px" style="margin-bottom:10px;">
+    	<tr><td height="8"></td></tr>
 		<tr>
 			<td style="text-align:center;">
-				<s:submit value="保存" cssClass="button" />
+				<s:submit value="保存" cssClass="button" />&nbsp;&nbsp;
 				<s:reset value="重置" cssClass="button"/>
 		   </td>
 		</tr>
