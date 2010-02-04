@@ -73,7 +73,7 @@ Ext.onReady(function(){
             <td align="right" width="90">手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;机：</td>
             <td width="213" align="left">
             	<s:textfield id="mobile" name="model.mobile" cssClass="mobileCheck required" onkeyup="this.value=this.value.replace(/\D/g,'')" onblur="this.value=this.value.replace(/\D/g,'')"/><font color="red">&nbsp;*</font>
-            </td><td width="80" id="numInfo" style="display: none;"></td>
+            </td>
           </tr>
           <tr>
             <td width="112" align="right">专家级别：</td>
@@ -237,15 +237,11 @@ $(function() {
 	$.validator.addMethod("mobileCheck", function(value, element) {
 		var mobiles = document.getElementById("mobile").value;
 		if (mobiles.length != 11){
-			document.getElementById("numInfo").style.display = "";			
-			document.getElementById('numInfo').innerHTML = '<font color="red">'+'号码错误'+'</font>';
 			return false;
 		}else {
-			document.getElementById("numInfo").style.display = "none";					
-			//document.getElementById('numInfo').innerHTML = "";
 			return true;
 		}
-    },"");
+    },"号码错误");
 }); 
 
 </script>
