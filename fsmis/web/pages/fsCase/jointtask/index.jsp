@@ -87,16 +87,17 @@ function removeJointTask(eID){
 				</c:if>				
 			</c:forEach>
 		</ec:column>
-		<ec:column width="70" property="status"  title="任务状态" style="text-align:center" >
+		<ec:column width="80" property="status"  title="任务状态" style="text-align:center" >
 		  <c:if test="${item.status == '0'}"><font color="red">待审核</font></c:if>
 		  <c:if test="${item.status == '1'}"><font color="blue">审核通过</font></c:if>
+		  <c:if test="${item.status == '2'}"><font color="#CC6600">审核未通过</font></c:if>		  
 		  <c:if test="${item.status == '4'}"><font color="green">处理完毕</font></c:if>		  
 		</ec:column>
 		<ec:column width="80" property="createDate" title="创建日期" style="text-align:center" cell="date" />
-		<ec:column width="95" property="presetTime" title="规定完成日期" style="text-align:center" cell="date" />
+		<ec:column width="85" property="presetTime" title="规定完成日期" style="text-align:center" cell="date" />
 		<ec:column width="135" property="_0" title="操作" style="text-align:center" sortable="false">
 	       <c:choose>
-		     <c:when test="${item.status eq '0'}"> 
+		     <c:when test="${item.status eq '0' || item.status eq '2'}"> 
 	 	       <a href="edit.do?model.id=${item.id}">改</a> |		        
 		     </c:when>
 		     <c:otherwise>
@@ -104,7 +105,7 @@ function removeJointTask(eID){
 		     </c:otherwise>
 		   </c:choose>  
 	       <c:choose>
-		     <c:when test="${item.status eq '0'}"> 
+		     <c:when test="${item.status eq '0' || item.status eq '2'}"> 
 		       <a href="audit.do?model.id=${item.id}">审</a> |			        
 		     </c:when>
 		     <c:otherwise>
@@ -112,7 +113,7 @@ function removeJointTask(eID){
 		     </c:otherwise>
 		   </c:choose>	
 	       <c:choose>
-		     <c:when test="${item.status eq '0'}"> 
+	         <c:when test="${empty item.checkResults}"> 
 		       <a href="#" onclick="removeJointTask(${item.id})">删</a> |        
 		     </c:when>
 		     <c:otherwise>

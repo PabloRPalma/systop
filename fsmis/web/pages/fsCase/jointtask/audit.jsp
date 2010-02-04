@@ -28,6 +28,48 @@ Ext.onReady(function(){
         ]
     });
 });
+
+var agreeVal = null;
+function setAgreeValue(aValue) {
+	agreeVal = aValue;
+}
+
+function auditSave(){
+	var result = document.getElementById('result').value;
+	var info = null;
+    if (agreeVal == null || agreeVal == '') {
+        Ext.MessageBox.show({
+             title:'提示',
+             minWidth:220,
+             msg:'<div style=\'width:180\';><br/>请选择审核是否通过！</div>',
+             buttons:Ext.MessageBox.OK,
+             icon:Ext.MessageBox.INFO
+        });
+        return false;
+    }
+    if (result == null || result == '') {
+        Ext.MessageBox.show({
+             title:'提示',
+             minWidth:220,
+             msg:'<div style=\'width:180\';><br/>请填写审核具体意见！</div>',
+             buttons:Ext.MessageBox.OK,
+             icon:Ext.MessageBox.INFO
+        });
+        return false;
+    }
+    if (agreeVal == '1') {
+       info = '确定此任务审核【<font color=\'green\';>通过</font>】吗？'; 
+    } else {
+       info = '确定此任务审核【<font color=\'red\';>不通过</font>】吗？';    
+    }
+    Ext.MessageBox.confirm('提示', info, function(btn){
+        if (btn == 'yes') {
+           var frm = document.getElementById('auditForm');
+           frm.action = 'auditSave.do';
+           frm.submit();
+        }
+    });	
+}
 </script>
 <div class="x-panel">
 <div class="x-panel-header">联合整治任务审核</div>
@@ -44,7 +86,7 @@ Ext.onReady(function(){
 </div>
 </c:if>
 <div><%@ include file="/common/messages.jsp"%></div>
-<s:form action="auditSave.do" id="auditForm" validate="true" method="post" enctype="multipart/form-data">
+<s:form  id="auditForm" validate="true" method="post" enctype="multipart/form-data">
 <div id="tabs">
 <div id="audit" class="x-hide-display">
 	<s:hidden id="id" name="model.id" />
@@ -59,14 +101,14 @@ Ext.onReady(function(){
 	     <tr>
 			<td  align="right">是否通过：</td>
 			<td colspan="3" align="left">
-				<s:radio list="#{'1':'是', '0':'否'}" id="isAgree" name="checkResult.isAgree"  cssClass="required" cssStyle="border:0;"></s:radio>
+				<s:radio list="#{'1':'是', '0':'否'}" id="isAgree" name="checkResult.isAgree" onchange="setAgreeValue(this.value)" cssStyle="border:0;"></s:radio>
 				<font color="red">*</font>
 			</td>
 	     </tr>          
           <tr>
 	          <td align="right"  >审核意见：</td>
 	          <td align="left" colspan="3">
-	          	<s:textarea id="askCause" name="checkResult.result" cssStyle="width:400px; height:140px" cssClass="required"/>
+	          	<s:textarea id="result" name="checkResult.result" cssStyle="width:400px; height:140px" cssClass="required"/>
                 <font color="red">&nbsp;*</font>	          
 	          </td>
           </tr>       
@@ -186,7 +228,8 @@ Ext.onReady(function(){
 		</tr>
 		<tr>
 			<td style="text-align: center;">
-			    <s:submit value="保存" cssClass="button" />&nbsp;&nbsp;
+			    <input class="button" type="button" value="保存" onclick="return auditSave()">&nbsp;
+			    <!--<s:submit value="保存" cssClass="button" onclick="return auditSave()"/>&nbsp;&nbsp;-->
 				<s:reset value="重置" cssClass="button"/>
 			</td>
 		</tr>
@@ -195,9 +238,9 @@ Ext.onReady(function(){
 </div>
 <script type="text/javascript" src="${ctx}/scripts/fsmis/ShowDeptName.js"></script> 
 <script type="text/javascript">
-	$(document).ready(function() {
-	$("#auditForm").validate();
-    });
+$(document).ready(function() {
+$("#auditForm").validate();
+});
 </script>
 </body>
 </html>
