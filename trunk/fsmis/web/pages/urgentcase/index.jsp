@@ -35,8 +35,6 @@
 		<td align="right">
 		  <table>
 			<tr>
-				<td><a href="edit.do" title="添加应急事件"><img
-					src="${ctx}/images/icons/add.gif" /></a></td>
 				<td valign="middle"><a href="edit.do" title="添加应急事件">添加</a></td>
 			</tr>
 		  </table>
