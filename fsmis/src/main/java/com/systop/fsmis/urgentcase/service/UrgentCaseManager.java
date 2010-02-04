@@ -114,7 +114,8 @@ public class UrgentCaseManager extends BaseGenericsManager<UrgentCase> {
   					UrgentGroup utGroupNotOrg = new UrgentGroup();
   					utGroupNotOrg.setName(urgentGroup.getName());
   					utGroupNotOrg.setDescr(urgentGroup.getDescr());
-  					utGroupNotOrg.setUrgentType(urgentGroup.getUrgentType());
+  					//新的组实例不再跟派遣类型关联
+  					//utGroupNotOrg.setUrgentType(urgentGroup.getUrgentType());
   					utGroupNotOrg.setCategory(urgentGroup.getCategory());
   					utGroupNotOrg.setCounty(urgentGroup.getCounty());
   					//设置指挥组登录人员
