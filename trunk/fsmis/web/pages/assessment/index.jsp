@@ -3,16 +3,18 @@
 <%@include file="/common/taglibs.jsp"%>
 <html>
 <head>
+<%@include file="/common/ec.jsp"%>
+<%@include file="/common/extjs.jsp" %>
 <%@include file="/common/meta.jsp"%>
-<%@include file="/common/ec.jsp" %>
 <%@include file="/common/autocomplete.jsp"%>
 <script type="text/javascript">
 function removeAssessment(eID){
-	if(confirm("确实要删除该评估信息吗？")){
-		location.href="remove.do?model.id="+ eID;
-	}
+    Ext.MessageBox.confirm('提示','确实要删除此评估信息吗？', function(btn){
+        if (btn == 'yes') {
+           window.location.href="remove.do?model.id="+ eID;
+        }
+    });	
 }
-
 window.onload = function(){
     // jQuery自动装配    
     $.ajax({
@@ -115,11 +117,11 @@ window.onload = function(){
   	      <a href="result.do?model.id=${item.id}">上报</a>|	  
        </c:if>                 
 	   <c:choose>
-	     <c:when test="${!empty item.checkResults}"> 
-	        <font color="#999999">删除</font>|
+	     <c:when test="${empty item.checkResults}"> 
+	        <a href="#" onClick="removeAssessment(${item.id})">删除|</a>  	     
 	     </c:when>
 	     <c:otherwise>
-	        <a href="#" onClick="removeAssessment(${item.id})">删除|</a>  
+	        <font color="#999999">删除</font>|
 	     </c:otherwise>
 	   </c:choose> 
 	   </c:if>  
