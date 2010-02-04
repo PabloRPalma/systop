@@ -280,8 +280,12 @@ Ext.onReady(function() {
 		//验证手机号码
 		$.validator.addMethod("mobileCheck", function(value, element) {
 			var mobiles = document.getElementById("mobile").value;
-			if (mobiles.length != 11){
-				return false;
+			if (mobiles != null && mobiles != "") {
+				if (mobiles.length != 11){
+					return false;
+				}else {
+					return true;
+				}
 			}else {
 				return true;
 			}
