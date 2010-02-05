@@ -206,7 +206,8 @@ public class TaskDetail extends BaseModel {
 		this.returnPeople = returnPeople;
 	}
 
-	@Column(name = "RETURN_REASON", length = 255)
+	@Column(name = "RETURN_REASON")
+	@Type(type = "text")
 	public String getReturnReason() {
 		return this.returnReason;
 	}
