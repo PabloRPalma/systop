@@ -78,7 +78,7 @@
 		  document.getElementById("mobileinfo").innerHTML = '<font color="red">'+'<I>'+'必须是数字'+'</I>'+'</font>';
 		  return false;
 	  }else{
-		  if(mobile.lenght != 11){
+		  if(mobile.length != 11){
 			  document.getElementById("mobileinfo").innerHTML = '<font color="red">'+'<I>'+'位数不正确'+'</I>'+'</font>';
 			  return false;
 		  }
@@ -126,7 +126,7 @@
 			</td>
 		    <td width="150" rowspan="8" id="photoOperSpan1">
 		    	<div align="left"> 
-		    		<img alt="照片"  align="center" width="106" height="142" id="imgphoto" 
+		    		<img alt="照片"  width="106" height="142" id="imgphoto" 
 						src="<c:if test='${not empty model.photoUrl}'>${ctx}${model.photoUrl}</c:if>
 							 <c:if test='${empty model.photoUrl}'> ${ctx}/images/noSupervisor.gif</c:if>"/>
 	                  <c:choose>
