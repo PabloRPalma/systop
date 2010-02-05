@@ -17,13 +17,31 @@
     var informer = document.getElementById("informer").value;
    
     if(isNaN(code)){
-      alert("事件编号必须为数字！");
+      Ext.MessageBox.show({
+          title:'提示',
+          minWidth:220,
+          msg:'<div style=\'width:220\';><br/>对不起，事件编号必须为数字！</div>',
+          buttons:Ext.MessageBox.OK,
+          icon:Ext.MessageBox.INFO
+      });
       return false;
     }else if(isNaN(informerPhone)){
-      alert("报告人电话必须为数字！");
+      Ext.MessageBox.show({
+          title:'提示',
+          minWidth:220,
+          msg:'<div style=\'width:220\';><br/>对不起，报告人电话必须为数字！</div>',
+          buttons:Ext.MessageBox.OK,
+          icon:Ext.MessageBox.INFO
+      });
       return false;
     }else if(parseInt(informer.length)>=10){
-      alert("报告人字数太多！");
+      Ext.MessageBox.show({
+          title:'提示',
+          minWidth:220,
+          msg:'<div style=\'width:220\';><br/>对不起，报告人字数太多！</div>',
+          buttons:Ext.MessageBox.OK,
+          icon:Ext.MessageBox.INFO
+      });
       return false;
     }
 	
