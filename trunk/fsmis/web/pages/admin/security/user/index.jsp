@@ -94,10 +94,8 @@
 		<ec:column width="70" property="_1" title="角色" style="text-align:center" sortable="false">
 		 	<a href="#" onclick="javascript:assignRoles(${item.id})">分配</a>
 		</ec:column>
-		<ec:column width="150" property="_2" title="操作" style="text-align:center"  sortable="false">
+		<ec:column width="70" property="_2" title="操作" style="text-align:center"  sortable="false">
 		   <a href="edit.do?model.id=${item.id}">编辑</a>
-		   <a href="edit.do?model.id=${item.id}">禁用</a>
-		   <a href="edit.do?model.id=${item.id}">启用</a>	  
 		</ec:column>
 	</ec:row>
 	</ec:table>
