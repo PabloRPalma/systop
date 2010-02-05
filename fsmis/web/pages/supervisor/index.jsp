@@ -24,36 +24,34 @@ function removeSupervisor(sID){
 <table width="100%" border="0">
 	<tr>
 		<s:form id="superVisorForm" action="index.do" method="post" target="main">
-			<td width="40" align="left">姓名：</td>
-			<td width="60"><s:textfield name="model.name"
+			<td width="42" align="left">姓名：</td>
+		  <td width="33"><s:textfield name="model.name"
 				cssStyle="width:60px" /></td>
-			<td width="40" align="right">手机：</td>
-			<td width="60"><s:textfield name="model.mobile"
+			<td width="45" align="right">手机：</td>
+		  <td width="33"><s:textfield name="model.mobile"
 				cssStyle="width:60px" /></td>
-			<td width="60" align="right">所属部门：</td>
-			<td class="simple" align="left">			
+			<td width="80" align="right">所属部门：</td>
+			<td width="80" align="left" class="simple">			
 				<div id="comboxWithTree"  style="float: left"></div>
 				<s:hidden name="model.dept.id" id="deptId"></s:hidden>
-			</td>
-			<td width="60" align="right">监管区域：</td>
-			<td width="60"><s:textfield name="model.superviseRegion" 
+		  </td>
+			<td width="80" align="right">监管区域：</td>
+		  <td width="50"><s:textfield name="model.superviseRegion" 
 				cssStyle="width:60px" /></td>
-			<td width="60" align="right">负责人：</td>
-			<td width="80" valign="top">是<input type="radio" value="1" name="isLeader" id="model.isLeader" style="border: 0"/>
-						                                           否<input type="radio" value="0" name="isLeader" id="model.isLeader" style="border: 0"/>
-			</td>
-			<td align="left">
-				<input type="submit" value="查询" class="button" style="width: 40px"/>
-			</td>
+		  <td width="60" align="right">负责人：</td>
+		  <td width="45" valign="top">
+		  	是 <input type="radio" value="1" name="isLeader" id="model.isLeader" style="border: 0"/>
+          </td>
+          <td width="45" valign="top" >
+          	否<input type="radio" value="0" name="isLeader" id="model.isLeader" style="border: 0"/>
+          </td>
+			<td width="72" align="left">
+				<input type="submit" value="查询" class="button"/>
+		  </td>
 		</s:form>
-		<td align="right">
-		<table>
-			<tr>
-				<td><span class="ytb-sep"></span></td>
-				<td><a href="editNew.do"><img
-					src="${ctx}/images/icons/add.gif" />添加</a></td>
-		</table>
-		</td>
+		<td><a href="editNew.do">添加</a></td>
+		<td><span class="ytb-sep"></span></td>
+		<td><a href="#" onClick="NumWindow.show()">导出手机号</a></td>
 	</tr>
 </table>
 </div>
@@ -75,7 +73,7 @@ function removeSupervisor(sID){
 	height="380px"
 	minHeight="380"
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
-	<ec:extend><td align="left"><input type="button" value="导出手机号" class="button" onclick="NumWindow.show()" style="width:70px"/></td></ec:extend>
+	<ec:extend><td align="left"><input type="button" value="导出手机号" class="button" onClick="NumWindow.show()" style="width:70px"/></td></ec:extend>
 	<ec:row>
 		<ec:column width="35" property="_No" title="No." value="${GLOBALROWCOUNT}" style="text-align:center" />
 		<ec:column width="70" property="name" title="姓名">
@@ -90,7 +88,7 @@ function removeSupervisor(sID){
 			<a href="edit.do?model.id=${item.id}">编辑</a>|
 			<a href="view.do?model.id=${item.id}" target="main">查看</a>|
 			<c:if test="${not empty item.fsCase}"><font color="silver" >删除</font></c:if>
-			<c:if test="${empty item.fsCase}"><a href="#" onclick="removeSupervisor(${item.id})">删除</a></c:if>
+			<c:if test="${empty item.fsCase}"><a href="#" onClick="removeSupervisor(${item.id})">删除</a></c:if>
 		</ec:column>
 	</ec:row>
 </ec:table></div>
@@ -161,7 +159,7 @@ Ext.onReady(function() {
 	    <td width="90px" align="right"><font color="green">成员手机号码：</font></td>
 	    <td width="320px">${mobileNums}</td>
         <td colspan="2">
-        	<input type="button" class="button" onclick="copyNum('${mobileNums}')" style="text-align: center;width: 90px;" value="复制到剪切板" />
+        	<input type="button" class="button" onClick="copyNum('${mobileNums}')" style="text-align: center;width: 90px;" value="复制到剪切板" />
         </td>
 	  </tr>
 	</table>
