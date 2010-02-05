@@ -42,7 +42,7 @@
 			</td>
 		    <td width="150" rowspan="8" id="photoOperSpan">
 		    	<div align="left"> 
-		    		<img alt="照片"  align="center" width="106" height="142" id="imgphoto" 
+		    		<img alt="照片" width="106" height="142" id="imgphoto" 
 						src="<c:if test='${not empty model.photoUrl}'>${ctx}${model.photoUrl}</c:if>
 							 <c:if test='${empty model.photoUrl}'> ${ctx}/images/noSupervisor.gif</c:if>"/>
 		    	</div>
@@ -58,7 +58,7 @@
 		  <td align="right">出生日期：</td>
 		  <td colspan="2" align="left">
 		  	<input type="text" name="model.birthday2" value='<s:date name="model.birthday" format="yyyy-MM-dd"/>'
-				  class="inputBorder" style="width:100px;height:16px" readonly="true"/></td>
+				  class="inputBorder" style="width:100px;height:16px" readonly="readonly"/></td>
 		</tr>
 		<tr>
 			<td width="100" align="right">单　　位：</td>
