@@ -31,8 +31,8 @@ function removeSupervisor(sID){
 		  <td width="33"><s:textfield name="model.mobile"
 				cssStyle="width:60px" /></td>
 			<td width="80" align="right">所属部门：</td>
-			<td width="80" align="left" class="simple">			
-				<div id="comboxWithTree"  style="float: left"></div>
+			<td align="left" class="simple">			
+				<div id="comboxWithTree"></div>
 				<s:hidden name="model.dept.id" id="deptId"></s:hidden>
 		  </td>
 			<td width="80" align="right">监管区域：</td>
