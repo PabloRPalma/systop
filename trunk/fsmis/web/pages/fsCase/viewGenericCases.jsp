@@ -53,7 +53,7 @@
 			bodyStyle:'width:100%',
 			autoWidth : true,  
 			autoScroll : true,  
-			height:150,			
+			height:400,			
 			frame:true,
 	
 			store: store,
