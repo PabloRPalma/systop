@@ -107,8 +107,9 @@
 		<tr>
 			<td align="right" bgcolor="#E6F4F7"><b>手　　机：</b></td>
 			<td class="simple">&nbsp;
-				<s:textfield name="model.mobile" cssClass="required" size="25"/>&nbsp;<font color="red">*</font>
-				<span>&nbsp;用于短信接收</span>
+				<s:textfield name="model.mobile" id="mobile" cssClass="mobileCheck" size="25"/>
+				<font color="red" style="margin-left:0px;">*</font>
+				<span id="mobileTip">用于短信接收</span>
 			</td>
 		</tr>
 		<tr>
@@ -122,8 +123,7 @@
 			<td align="right" bgcolor="#E6F4F7"><b>电子邮箱：</b></td>
 			<td class="simple">&nbsp;
 				<s:textfield name="model.email" id="email" size="25" cssClass="regEmail"/>
-				<span id="usemail"></span>
-				<span>&nbsp;&nbsp;常用的电子邮箱</span>
+				<span id="usemail">&nbsp;&nbsp;常用的电子邮箱</span>
 			</td>
 		</tr>
 		<tr>
@@ -167,7 +167,7 @@ $(function() {
   		if(pwd1 != null & pwd2 != null & pwd1 != '' & pwd2 != '') {
   			if(pwd1 != pwd2) {
   				res = "err";
-  				document.getElementById('pswd').innerHTML = '&nbsp;<font color="red">'+'两次输入的密码不一致。'+'</font>';
+  				document.getElementById('pswd').innerHTML = '<font color="red">'+'两次密码不一致。'+'</font>';
   			}else{
   				res = "ok";
   				document.getElementById('pswd').innerHTML = '&nbsp;请再次输入密码';
@@ -235,31 +235,62 @@ $(function() {
   		}
         return res != "err";
     },"");
+
+	//手机验证
+	$.validator.addMethod("mobileCheck", function(value, element) {
+        var res;
+        var mobile = document.getElementById('mobile').value;
+  		if(mobile != null && mobile.length > 0) {
+  	  	  	if(isNaN(mobile)){
+	  	  	  	res = "err";
+				document.getElementById('mobileTip').innerHTML = '<font color="red">手机号格式错误</font>';
+  	  	  	}else{
+	  	  		if (mobile.length != 11){
+					res = "err";
+					document.getElementById('mobileTip').innerHTML = '<font color="red">手机号长度错误:</font>' + mobile.length;
+	  	  	  	}else {
+	  	  	  		res = "ok";
+		  	  		document.getElementById('mobileTip').innerHTML = '用于短信接收';
+	  	  	  	} 
+  	  	  	}
+  		}else{
+  			res = "err";
+			document.getElementById('mobileTip').innerHTML = '<font color="red">请填写手机号!</font>';
+  		}
+        return res != "err";
+    },"");
+    
   	  //验证用户邮箱
 	$.validator.addMethod("regEmail", function(value, element) {
         var res;
         var emailStr = document.getElementById('email').value;
         var userId = document.getElementById('uId').value;
 		var r = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-		if (emailStr.length > 0 && !r.test(emailStr)) {
-			document.getElementById('usemail').innerHTML = '<font color="red">'+'请输入正确的邮箱地址!'+'</font>';
-		}else if (r.test(emailStr)) {
-			document.getElementById('usemail').innerHTML = '请输入您常用的电子邮箱';
-	      		$.ajax({
-				url: '${ctx}/security/user/checkEmail.do',
-				type: 'post',
-				async : false,
-				dataType: 'json',
-				data: {emailStr : emailStr, userId : userId},
-				success: function(rst, textStatus){
-					res = rst.result;
-					if (rst.result == "exist") {
-	      	   		  		document.getElementById('usemail').innerHTML = '<font color="red"><b>' + emailStr + '</b></font>已存在!';
-	      	   			}
-				}
-			});
+		if (emailStr != null && emailStr.length > 0){
+			if (r.test(emailStr)) {
+				document.getElementById('usemail').innerHTML = '&nbsp;&nbsp;常用的电子邮箱';
+		      		$.ajax({
+					url: '${ctx}/security/user/checkEmail.do',
+					type: 'post',
+					async : false,
+					dataType: 'json',
+					data: {emailStr : emailStr, userId : userId},
+					success: function(rst, textStatus){
+						res = rst.result;
+						if (rst.result == "exist") {
+		      	   		  		document.getElementById('usemail').innerHTML = '<b><font color="red">' + emailStr + '</font>已存在!</b>';
+		      	   		}
+					}
+				});//异步调用结束
+				return res != "exist";
+			} else {
+				document.getElementById('usemail').innerHTML = '<font color="red">邮件地址格式错误!</font>';
+				return false;
+			}
+		}else{
+			document.getElementById('usemail').innerHTML = '&nbsp;&nbsp;常用的电子邮箱';
 		}
-		return res != "exist";
+		return true;
   	  },"");
 	}); 
 	<c:if test="${model.id != null}">
