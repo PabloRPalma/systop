@@ -20,12 +20,12 @@
 			事发时间：
 			<input type="text" name="beginTime" style="width: 120px"
 				value='<s:date name="beginTime" format="yyyy-MM-dd HH:mm"/>'
-				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
+				onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')}',skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
 				class="Wdate" />
 			至
 			<input type="text" name="endTime" style="width: 120px"
 				value='<s:date name="endTime" format="yyyy-MM-dd HH:mm"/>'
-				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
+				onfocus="WdatePicker({minDate:'#F{$dp.$D(\'beginTime\')}',skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
 				class="Wdate" />
 		  	<s:submit value="查询" cssClass="button"></s:submit>
 		  </s:form></td>
