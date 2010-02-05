@@ -122,12 +122,12 @@ function isSubmited(caseId) {
 		</div>
 		</c:if>
 		<c:if test="${not empty model.taskses }">	
-		<div id="tasks" class="x-hide-display" style="width: 100%">	
+		<div id="tasks" class="x-hide-display" style="z-index: 100;">	
 			<!-- include进来二级Tab以现实一个食品安全案件下的多个任务 -->		
 			<%@include file="viewTasks.jsp"%>
 		</div>
 		</c:if>
-		<div id="sms" class="x-hide-display" style="width: 100%; margin: -1;">
+		<div id="sms" class="x-hide-display" style="z-index: 100;">
 		<%@include file="viewSmsGrid.jsp" %>
 		</div>
 		<c:if test="${not empty model.corp}">
