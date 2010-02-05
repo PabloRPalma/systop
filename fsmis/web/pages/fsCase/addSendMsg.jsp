@@ -9,15 +9,29 @@
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/validator.jsp"%>
 <script type="text/javascript">
-function valileader(){
-	
+
+function valileader() {
 	var supervisorMobile = document.getElementById("supervisorMobile").value;     
     if (supervisorMobile.length != 11){ 
-         alert("对不起，您输入的电话号码格式有错误。"); 
-          return false; 
-    } 
-	
-}
+       Ext.MessageBox.show({
+           title:'提示',
+           minWidth:220,
+           msg:'<div style=\'width:220\';><br/>对不起，您输入的电话号码格式有错误。</div>',
+           buttons:Ext.MessageBox.OK,
+           icon:Ext.MessageBox.INFO
+       });
+       return false; 
+    }else if(isNaN(supervisorMobile)){
+       Ext.MessageBox.show({
+           title:'提示',
+           minWidth:220,
+           msg:'<div style=\'width:180\';><br/>对不起，电话必须为数字！</div>',
+           buttons:Ext.MessageBox.OK,
+           icon:Ext.MessageBox.INFO
+       });
+       return false;
+    }
+  }
 function init(){
 	document.getElementById("supervisorName").value = "${supervisorName}";
 	document.getElementById("supervisorMobile").value = "${supervisorMobile}";
