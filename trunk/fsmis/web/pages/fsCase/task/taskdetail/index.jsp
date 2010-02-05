@@ -13,7 +13,7 @@
 <div class="x-panel">
 <div class="x-panel-header">${isMultipleCase eq 0?'单体任务':'多体任务'}接收</div>
 <div class="x-toolbar">
-<table width="99%">
+<table width="100%">
 	<tr>
 		<td><s:form action="index" method="post">
 			<s:hidden name="isMultipleCase"></s:hidden>
@@ -60,7 +60,7 @@
 	minHeight="460"
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	<ec:row>
-		<ec:column width="30" property="_n" title="No."
+		<ec:column width="20" property="_n" title="No."
 			value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center" />
 		<ec:column width="140" tipTitle="${item.task.title}" ellipsis="true" property="task.title" title="任务标题" />
 		<ec:column width="140" property="task" title="执行部门"
@@ -92,7 +92,7 @@
 			<a title="查看任务" href="${ctx}/taskdetail/view.do?taskDetailId=${item.id}&fsCaseId=${item.task.fsCase.id}&modelId=${param['modelId']}&taskId=${item.task.id}">看</a>
 			<a title="地图" href="#">| 图</a>
 		</ec:column>
-		<ec:column width="120" property="_1" title="操作"style="text-align:center" sortable="false">
+		<ec:column width="125" property="_1" title="操作"style="text-align:center" sortable="false">
 		    <!-- 0未接收1已查看2已接收3已退回4已处理 -->
 			<c:if test="${empty item.status or item.status eq '0' or item.status eq '1'}">
 				<a title="接收任务" href="#" onclick="receive(${item.id})">收</a> |
