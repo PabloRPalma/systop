@@ -26,7 +26,7 @@
 		       {
 			       header : '短信内容',
 				   dataIndex : 'content',
-		           width : 333,
+		           width : 330,
 		           sortable : true,
 		           renderer: function(value, cellmeta, record, rowIndex, columnIndex, store) {
 		           	   return '<font title="'+value+'">'+value+'</font>';		           	  
@@ -75,9 +75,9 @@
 		var gridSend = new Ext.grid.GridPanel({
 			title : '发送的短信',
 			applyTo : 'smsSendDiv',
-			//width:855,
+			width:854,
 			bodyStyle:'width:100%',
-			height:200,
+			height:190,
 			frame:true,			
 			store: storeSend,
 			loadMask:true,
@@ -196,9 +196,9 @@
 		var gridReceive = new Ext.grid.GridPanel({
 			title : '接收的短信',
 			applyTo : 'smsReceiveSmsDiv',
-			//width:855,
+			width:854,
 			bodyStyle:'width:100%',
-			height:203,
+			height:190,
 			frame:true,			
 			store: storeReceive,
 			cm : cmReceive,
