@@ -41,11 +41,11 @@
 				<td width="90%" align="left"></td>
 				<td align="right"> <a href="#">地理位置</a></td>
 				<c:if test="${model.caseSourceType eq 'generic'}">				
-					<c:if test="${model.status eq '0' || model.status eq '3'}">
+					<c:if test="${model.status eq '0' || model.status eq '2' || model.status eq '3'}">
 					<td><span class="ytb-sep"></span></td>
 					    <td align="right"><a href="#"> 上报市级</a></td>
 					</c:if>
-					<c:if test="${model.status eq '0'}">
+					<c:if test="${model.status eq '0' || model.status eq '2' || model.status eq '3'}">
 					<td><span class="ytb-sep"></span></td>
 						<td align="right"><a href="#" onclick="showChooseSendTypeWindow(${model.id},'${model.title}')"> 任务派遣</a></td>
 					</c:if>
@@ -58,13 +58,13 @@
 					    <td align="right"><a href="${ctx}/assessment/view.do?model.id=<c:forEach items='${model.assessmentses}' var='assessment'>${assessment.id}</c:forEach>"> 查看风险评估</a></td>
 					    </c:if>
 					</c:if>
-					<c:if test="${empty model.jointTaskses && (model.status eq '0' || model.status eq '3')}">
+					<c:if test="${empty model.jointTaskses && (model.status eq '0' || model.status eq '2' || model.status eq '3')}">
 					<td><span class="ytb-sep"></span></td>
 					    <td align="right"><a href="${ctx}/jointTask/edit.do?model.fsCase.id=${model.id}"> 联合整治</a></td>
 					</c:if>					
 				</c:if>
 				<c:if test="${model.caseSourceType eq 'jointask'}">		
-					<c:if test="${empty model.jointTaskses && (model.status eq '0' || model.status eq '3')}">
+					<c:if test="${empty model.jointTaskses && (model.status eq '0' || model.status eq '2' || model.status eq '3')}">
 					<td><span class="ytb-sep"></span></td>
 					    <td align="right"><a href="${ctx}/jointTask/edit.do?model.fsCase.id=${model.id}"> 联合整治</a></td>
 					</c:if>					
