@@ -106,7 +106,7 @@
 	</tr>
 	<tr>
 		<td align="right">退回原因：</td>
-		<td><textarea rows="6" cols="50" style="widows: 300px;" id="returnReason"
+		<td><textarea rows="6" cols="50" style="widows: 300px; height: 100px;" id="returnReason"
 			name="model.returnReason"></textarea><font color="red">*</font></td>
 	</tr>
 </table>
