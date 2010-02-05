@@ -41,19 +41,19 @@
           <tr>
             <td align="right">处理过程：</td>
             <td align="left">
-            	<s:textarea id="pass" name="model.process" cols="32" rows="6" cssClass="required"></s:textarea><font color="red">&nbsp;*</font>
+            	<s:textarea id="pass" name="model.process" cols="31" rows="6" cssClass="required"></s:textarea><font color="red">&nbsp;*</font>
             </td>
           </tr>
           <tr>
             <td align="right">处理依据：</td>
             <td align="left">
-            	<s:textarea id="yiju" name="model.basis" cols="32" rows="6" cssClass="required"></s:textarea><font color="red">&nbsp;*</font>
+            	<s:textarea id="yiju" name="model.basis" cols="31" rows="6" cssClass="required"></s:textarea><font color="red">&nbsp;*</font>
             </td>
           </tr>
           <tr>
             <td align="right">处理结果：</td>
             <td align="left">
-            	<s:textarea id="result" name="model.result" cols="32" rows="8"  cssClass="required"></s:textarea><font color="red">&nbsp;*</font>
+            	<s:textarea id="result" name="model.result" cols="31" rows="8"  cssClass="required"></s:textarea><font color="red">&nbsp;*</font>
             </td>
           </tr>
         </table> 
