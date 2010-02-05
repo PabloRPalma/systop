@@ -17,9 +17,16 @@
 		  }
 		  }]
 });
-  ChooseSendTypeWindow.selectType = function(sendtypeId){	  	 
-	  window.location = "${ctx}/task/edit.do?sendTypeId=" + sendtypeId + "&caseId=" + faCaseId + "&isMultipleCase=${isMultipleCase}&modelId=${modelId}";
-	  ChooseSendTypeWindow.hide();
+  ChooseSendTypeWindow.selectType = function(sendtypeId){
+	  Ext.MessageBox.confirm('提示','确定要选择该派遣环节吗？派遣后不能撤销！', function(btn){
+	         if (btn == 'yes') {
+	      
+	    		window.location = "${ctx}/task/edit.do?sendTypeId=" + sendtypeId + "&caseId=" + faCaseId + "&isMultipleCase=${isMultipleCase}&modelId=${modelId}";
+	    	  };
+	          ChooseSendTypeWindow.hide();
+	      
+	    });	  	 
+	 
   }
   function showChooseSendTypeWindow(faCaseId,caseTitle){
 		this.faCaseId = faCaseId;
