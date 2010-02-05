@@ -124,13 +124,13 @@
 		<tr>
 			<td align="right" width="100">事件标题：</td>
 			<td align="left" colspan="3"><s:textfield id="name"
-				name="model.title" cssStyle="width:380px" cssClass="required"/><font color="red">&nbsp;*</font>
+				name="model.title" cssStyle="width:600px" cssClass="required"/><font color="red">&nbsp;*</font>
 			</td>
 		</tr>
 		
 		<tr>
 			<td align="right">事发时间：</td>
-			<td align="left" colspan="3"><input type="text" name="model.caseTime"  style="width: 160px" 
+			<td align="left" colspan="3"><input type="text" name="model.caseTime"  style="width: 135px" 
 				value='<s:date name="model.caseTime" format="yyyy-MM-dd HH:mm"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
 				class="Wdate required" /><font color="red">&nbsp;*</font></td>
@@ -138,12 +138,12 @@
 		<tr>
 			<td align="right">事发地点：</td>
 			<td align="left" colspan="3"><s:textfield id="softVersion"
-				name="model.address" cssStyle="width:380px" cssClass="required"/><font color="red">&nbsp;*</font></td>
+				name="model.address" cssStyle="width:600px" cssClass="required"/><font color="red">&nbsp;*</font></td>
 		</tr>
 		<tr>
 			<td align="right">事件编号：</td>
 			<td align="left" colspan="3"><s:textfield id="code"
-				name="model.code" cssStyle="width:380px" cssClass="required"/><font color="red">&nbsp;*</font></td>
+				name="model.code" cssStyle="width:600px" cssClass="required"/><font color="red">&nbsp;*</font></td>
 		</tr>
 		<tr>
 			<td align="right">事件类别：</td>
@@ -164,17 +164,17 @@
 			<td align="right">所属区县：</td>
 			<td align="left" colspan="3">		
 				<div id="comboxWithTree"  style="float: left;margin-left:2px;" class="required"></div><font color="red" style="margin-left:2px;">*</font>
-				<s:hidden name="model.county.id" id="deptId"></s:hidden>
+				<s:hidden name="model.county.id" id="deptId" cssClass="required"></s:hidden>
 			</td>
 		</tr>
 		<tr>
 			<td align="right">报告人：</td>
-			<td align="left"><s:textfield id="informer"
-				name="model.informer" cssStyle="width:120px" />
+			<td align="left" width="350px"><s:textfield id="informer"
+				name="model.informer" cssStyle="width:140px" />
 			</td>
-			<td align="right">报告人电话：</td>
+			<td align="right" width="100px">报告人电话：</td>
 			<td align="left"><s:textfield id="informerPhone"
-				name="model.informerPhone" cssStyle="width:120px" /></td>
+				name="model.informerPhone" cssStyle="width:140px" /></td>
 		</tr>
 		<tr>
 			<td align="right">事件描述：</td>
