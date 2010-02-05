@@ -102,7 +102,7 @@
  <table width="100%">
      <tr>
         <td  align="right">
-               <a href="${ctx}/fscase/index.do">首页</a>
+               <a href="${ctx}/fscase/index.do">事件列表</a>
         </td>
      </tr>
  </table>
