@@ -83,10 +83,9 @@ function isSubmited(caseId) {
 	</div>
 	<div id="tabs" style="width: 100%;">
 		<div id="fsCaseDiv" class="x-hide-display" style="width: 100%">			
-			<table width="100%">		
-				<tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+			<table width="100%" height="450px">		
 				<tr>
-					<td  width="10%"align="right">事件标题：</td>
+					<td  width="10%" align="right">事件标题：</td>
 					<td  align="left" >${model.title}</td>
 				</tr>
 				<tr>
@@ -109,9 +108,9 @@ function isSubmited(caseId) {
 					<td width="10%"  align="right">报告人电话：</td>
 					<td  align="left">${model.informerPhone}</td>
 				</tr>
-				<tr>
+				<tr height="220px">
 					<td width="10%"  align="right" valign="top">事件描述：</td>
-					<td  align="left">${model.descn}</td>
+					<td  align="left" valign="top">${model.descn}</td>
 				</tr>						
 			</table>
 		</div>
@@ -132,8 +131,7 @@ function isSubmited(caseId) {
 		</div>
 		<c:if test="${not empty model.corp}">
 			<div id="corp" class="x-hide-display" style="width: 100%;">		
-				<table width="100%">	
-					<tr><td>&nbsp;</td><td>&nbsp;</td></tr>	
+				<table width="100%" height="450px">	
 					<tr>
 						<td  width="10%"align="right">企业名称：</td>
 						<td  align="left" >${model.corp.name}</td>
@@ -158,9 +156,9 @@ function isSubmited(caseId) {
 						<td width="10%"  align="right">卫生许可证：</td>
 						<td  align="left">${model.corp.sanitationLicense}</td>
 					</tr>
-					<tr>
-						<td width="10%"  align="right">经营范围：</td>
-						<td  align="left">${model.corp.operateDetails}</td>
+					<tr height="220px">
+						<td width="10%"  align="right" valign="top">经营范围：</td>
+						<td  align="left" valign="top">${model.corp.operateDetails}</td>
 					</tr>						
 			</table>			
 	</div>
