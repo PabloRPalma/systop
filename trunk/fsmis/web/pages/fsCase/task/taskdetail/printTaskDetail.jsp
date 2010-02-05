@@ -29,7 +29,7 @@
 <input type=button value=预览 onClick="document.all.WebBrowser.ExecWB(7,1)" class="button noprint">
 </p>
 <br/>
-<table width="650" border="0" align="center" cellpadding="0" cellspacing="0">
+<table width="650" border="0" align="center" cellpadding="0" cellspacing="0" >
   <tr>
     <td colspan="4" align="center"><h2>食品安全问题投诉登记表</h2></td>
   </tr>
@@ -49,7 +49,7 @@
     <td width="270" class="tdBottom">
 		&nbsp;&nbsp;
 		报告、通报、举报时间：</td>
-    <td width="200" class="tdBottom"><s:date name="model.task.fsCase.caseTime" format="yyyy-MM-dd HH:mm"/></td>
+    <td width="300" class="tdBottom"><s:date name="model.task.fsCase.caseTime" format="yyyy-MM-dd HH:mm"/></td>
     <td width="50" align="right" class="tdBottom">方式：</td>
     <td width="50" class="tdBottom">&nbsp;</td>
    </tr>
@@ -60,7 +60,10 @@
     <td colspan="4" style="padding:7px 5px 6px 5px;" height="200">&nbsp;&nbsp;&nbsp;&nbsp;${model.task.fsCase.descn}</td>
   </tr>
    <tr>
-    <td colspan="4" class="tdBottom" align="right">受理人：　　　　&nbsp;&nbsp;</td>
+     <td width="270" class="tdBottom">&nbsp;</td>
+     <td width="250" class="tdBottom">&nbsp;</td>
+    <td width="100"  class="tdBottom" align="right">受理人：</td>
+    <td width="50" class="tdBottom">&nbsp;</td>
   </tr>
    <tr>
     <td width="211" class="tdBottom">

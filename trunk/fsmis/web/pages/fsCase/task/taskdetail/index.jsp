@@ -62,15 +62,15 @@
 	<ec:row>
 		<ec:column width="30" property="_n" title="No."
 			value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center" />
-		<ec:column width="130" tipTitle="${item.task.title}" ellipsis="true" property="task.title" title="任务标题" />
-		<ec:column width="120" property="task" title="执行部门"
+		<ec:column width="140" tipTitle="${item.task.title}" ellipsis="true" property="task.title" title="任务标题" />
+		<ec:column width="140" property="task" title="执行部门"
 			cell="com.systop.fsmis.fscase.webapp.ec.DeptsCell">
 		</ec:column>
-		<ec:column width="120" property="task.dispatchTime" cell="date"
+		<ec:column width="110" property="task.dispatchTime" cell="date"
 			title="发布时间" format="yyyy-MM-dd HH:mm" style="text-align:center" />
-		<ec:column width="120" property="task.presetTime" cell="date"
+		<ec:column width="110" property="task.presetTime" cell="date"
 			title="规定完成时间" format="yyyy-MM-dd HH:mm" style="text-align:center" />
-		<ec:column width="120" property="completionTime" cell="date"
+		<ec:column width="110" property="completionTime" cell="date"
 			title="完成时间" format="yyyy-MM-dd HH:mm" style="text-align:center">
 			<c:choose>
 				<c:when test="${item.status == '3' or item.status == '4'}">
