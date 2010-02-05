@@ -4,9 +4,9 @@
 <html>
 <head>
 <title>信息员管理</title>
-<%@include file="/common/meta.jsp"%>
 <%@include file="/common/ec.jsp"%>
 <%@include file="/common/extjs.jsp" %>
+<%@include file="/common/meta.jsp"%>
 <link href="${ctx}/styles/treeSelect.css" type='text/css' rel='stylesheet'>
 <script type="text/javascript">
 function removeSupervisor(sID){
@@ -73,7 +73,6 @@ function removeSupervisor(sID){
 	height="380px"
 	minHeight="380"
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
-	<ec:extend><td align="left"><input type="button" value="导出手机号" class="button" onClick="NumWindow.show()" style="width:70px"/></td></ec:extend>
 	<ec:row>
 		<ec:column width="35" property="_No" title="No." value="${GLOBALROWCOUNT}" style="text-align:center" />
 		<ec:column width="70" property="name" title="姓名">
@@ -87,7 +86,7 @@ function removeSupervisor(sID){
 		<ec:column width="120" property="_0" title="操作" style="text-align:center" sortable="false">
 			<a href="edit.do?model.id=${item.id}">编辑</a>|
 			<a href="view.do?model.id=${item.id}" target="main">查看</a>|
-			<c:if test="${not empty item.fsCase}"><font color="silver" >删除</font></c:if>
+			<c:if test="${not empty item.fsCase}"><font color="silver" title="该信息员已举报过案件，无法删除">删除</font></c:if>
 			<c:if test="${empty item.fsCase}"><a href="#" onClick="removeSupervisor(${item.id})">删除</a></c:if>
 		</ec:column>
 	</ec:row>
@@ -159,7 +158,6 @@ Ext.onReady(function() {
 	    <td width="90px" align="right"><font color="green">成员手机号码：</font></td>
 	    <td width="320px">${mobileNums}</td>
         <td colspan="2">
-        	<input type="button" class="button" onClick="copyNum('${mobileNums}')" style="text-align: center;width: 90px;" value="复制到剪切板" />
         </td>
 	  </tr>
 	</table>
@@ -177,11 +175,16 @@ Ext.onReady(function() {
       buttonAlign:'center',
       modal:'false',
       buttons:[
-        {text:'关闭',
+        {text:'复制',
         	handler:function(){
-        	NumWindow.hide();
-        }
-      }]
+        	copyNum('${mobileNums}');
+        	}
+      	},
+        {text:'关闭',
+			handler:function(){
+			NumWindow.hide();
+			}
+		}]
   });
 </script>
 <script type="text/javascript">
