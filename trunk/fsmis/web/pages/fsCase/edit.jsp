@@ -189,6 +189,7 @@
 		<tr>
 			<td style="text-align: center;">
 			  <s:submit value="保存" 	cssClass="button" /> 
+			  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			  <s:reset value="重置" cssClass="button" />
 			</td>
 		</tr>
