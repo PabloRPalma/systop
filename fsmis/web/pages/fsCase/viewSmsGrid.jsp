@@ -75,7 +75,7 @@
 		var gridSend = new Ext.grid.GridPanel({
 			title : '发送的短信',
 			applyTo : 'smsSendDiv',
-			width:854,
+
 			bodyStyle:'width:100%',
 			height:190,
 			frame:true,			
@@ -196,7 +196,7 @@
 		var gridReceive = new Ext.grid.GridPanel({
 			title : '接收的短信',
 			applyTo : 'smsReceiveSmsDiv',
-			width:854,
+
 			bodyStyle:'width:100%',
 			height:190,
 			frame:true,			
