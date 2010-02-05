@@ -118,7 +118,7 @@
 	<s:hidden name="mesId"/>
 	<s:hidden id="oneId" name="oneId"/>
 	<s:hidden id="twoId" name="twoId"/>
-	<fieldset style="width: 90%; padding:10px 10px 10px 10px;">
+	<fieldset style="width: 95%; padding:10px 10px 10px 10px;">
 	<legend>编辑事件</legend>
 	<table width="100%" align="left">
 		<tr>
