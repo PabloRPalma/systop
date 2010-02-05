@@ -4,6 +4,7 @@ import java.security.Principal;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.acegisecurity.Authentication;
 import org.acegisecurity.providers.UsernamePasswordAuthenticationToken;
 
 import com.systop.common.modules.security.user.model.User;
@@ -24,7 +25,7 @@ public final class UserUtil {
   public static User getPrincipal(final HttpServletRequest request) {
     Principal principal = request.getUserPrincipal();
     if (principal != null) {
-      if (principal instanceof UsernamePasswordAuthenticationToken) {
+      if (principal instanceof Authentication) {
         Object p = ((UsernamePasswordAuthenticationToken) principal)
             .getPrincipal();
         if (p instanceof User) {
