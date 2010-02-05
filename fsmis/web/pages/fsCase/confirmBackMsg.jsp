@@ -45,7 +45,7 @@
   				<s:textarea id="checkedConfirmMsg" name="model.checkedConfirmMsg" cssClass="required" cssStyle="width:320px;height:80px" value="%{checkedConfirmMsg}"/><font color="red">&nbsp;*</font>
   			</c:if> 
   			<c:if test="${param.operType == 'V'}">	
-  			    <s:textarea id="checkedConfirmMsg" name="model.checkedConfirmMsg" cssClass="required" cssStyle="width:320px;height:80px" value="%{checkedConfirmMsg}" readonly="true"/>
+  			    ${model.checkedConfirmMsg}
   			</c:if>
   			</td>
 			<td width="60px" align="right">核实结果：</td>
