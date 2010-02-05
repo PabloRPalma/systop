@@ -85,7 +85,7 @@
 			<tr>
 				<td align="right" valign="top">事件描述：</td>
 				<td align="left">
-				<div  style="overflow: auto; height: 60px;" id="descn"></div>
+				<div  style="overflow: auto; height: 100px;" id="descn"></div>
 				</td>
 			</tr>
 		</table>
