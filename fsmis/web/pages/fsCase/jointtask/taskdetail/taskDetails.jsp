@@ -58,7 +58,7 @@ function result(id){
 	   </c:if>
 	</ec:column>   
 	<ec:column width="120" property="status" title="任务状态" style="text-align:center">
-			<c:if test="${item.status == '0'}"><font color="red">未接收</font></c:if>
+			<c:if test="${item.status == '0'}"><font color="red">未查看</font></c:if>
 			<c:if test="${item.status == '1'}"><font color="blue">已查看</font></c:if>
 			<c:if test="${item.status == '2'}">
 		      <c:if test="${item.isLeader eq '1'}">
