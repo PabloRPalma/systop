@@ -40,15 +40,25 @@
   			<td width="150px" align="right"> 
   				<c:if test="${empty param.operType}">请填写</c:if>核实意见：
   			</td>
-  			<td width="400px">  				
+  			<td width="400px">  
+  			<c:if test="${param.operType != 'V'}">				
   				<s:textarea id="checkedConfirmMsg" name="model.checkedConfirmMsg" cssClass="required" cssStyle="width:400px;height:80px" value="%{checkedConfirmMsg}"/><font color="red">&nbsp;*</font>
+  			</c:if> 
+  			<c:if test="${param.operType == 'V'}">	
+  			    <s:textarea id="checkedConfirmMsg" name="model.checkedConfirmMsg" cssClass="required" cssStyle="width:400px;height:80px" value="%{checkedConfirmMsg}" readonly="true"/>
+  			</c:if>
   			</td>
 			<td width="100px" align="right">核实结果：</td>
-			<td align="left">	
+			<td align="left" >	
+			        <c:if test="${param.operType != 'V'}">	
 					<select name="checked">
 						<option value="1">同意</option>
 						<option value="0">不同意</option>
 					</select>
+					</c:if> 
+					<c:if test="${param.operType == 'V'}">	
+					           同意
+					</c:if>
 			</td>
   		</tr>
   		<tr>
