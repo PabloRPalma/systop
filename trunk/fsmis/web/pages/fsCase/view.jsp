@@ -47,7 +47,7 @@
 					</c:if>
 					<c:if test="${model.status eq '0'}">
 					<td><span class="ytb-sep"></span></td>
-						<td align="right"><a href="#" onclick="showChooseSendTypeWindow(${model.id})"> 任务派遣</a></td>
+						<td align="right"><a href="#" onclick="showChooseSendTypeWindow(${model.id},'${model.title}')"> 任务派遣</a></td>
 					</c:if>
 					<c:if test="${model.status eq '0' || model.status eq '3'}">	
 					<td><span class="ytb-sep"></span></td>	
