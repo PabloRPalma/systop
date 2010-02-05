@@ -188,7 +188,7 @@ function caseRemove(caseId) {
 			    <font color="silver" >派</font> |
 			    <font color="silver" >删</font> 
 			    <c:if test="${param['isMultipleCase'] eq 0}">
-			     | <a title="查看核实反馈" href="confirmBackMsg.do?model.id=${item.id}&operType='v'&modelId=0&isMultipleCase=${isMultipleCase}">核</a>
+			     | <a title="查看核实反馈" href="confirmBackMsg.do?model.id=${item.id}&operType=V&modelId=0&isMultipleCase=${isMultipleCase}">核</a>
 			    </c:if>	
             </c:if>
             <%--
