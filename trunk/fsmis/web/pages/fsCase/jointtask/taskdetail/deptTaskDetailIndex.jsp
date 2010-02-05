@@ -105,7 +105,7 @@ function result(id, jointTaskId){
 		</ec:column>   
 
 		<ec:column width="60" property="status" style="text-align:center" title="任务状态" >
-			<c:if test="${item.status eq '0'}"><font color="red">未接收</font></c:if>
+			<c:if test="${item.status eq '0'}"><font color="red">未查看</font></c:if>
 			<c:if test="${item.status eq '1'}"><font color="blue">已查看</font></c:if>
 			<c:if test="${item.status eq '2'}">
 		      <c:if test="${item.isLeader eq '1'}">
@@ -119,13 +119,19 @@ function result(id, jointTaskId){
 		</ec:column>
 		 <ec:column width="80" property="_0" title="操作" style="text-align:center" sortable="false">
 		 <c:if test="${item.isLeader eq '1'}">
-		   <c:if test="${item.status eq '1'}">
+		   <c:if test="${item.status eq '0' || item.status eq '1'}">
 		   	    <a href="javascript:receive(${item.id})">接收</a> |
 		   </c:if>
 		   <c:if test="${item.status eq '2'}">
                 <a href="javascript:result(${item.id},${item.jointTask.id})">处理</a> |	   
 		   </c:if>		 
+		   <c:if test="${item.status eq '4'}">
+                <font color="#999999">处理</font> | 	  	   
+		   </c:if>				   
 		 </c:if>
+		 <c:if test="${item.isLeader eq '0'}">	
+		        <font color="#999999">接收</font> | 	  	
+		 </c:if> 
 		 <a href="javascript:view(${item.id})">查看</a>
 		</ec:column>
 	</ec:row>

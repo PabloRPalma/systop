@@ -124,7 +124,7 @@
 			<td align="left" width="40%"><s:textfield id="code"
 				name="model.fsCase.code" cssStyle="width: 135px" cssClass="required"/><font color="red">&nbsp;*</font></td>		
 			
-			<td align="right" width="11%">案发时间：</td>
+			<td align="right" width="12%">案发时间：</td>
 			<td align="left" width="40%"><input type="text" name="model.fsCase.caseTime"  style="width: 158px" 
 				value='<s:date name="model.fsCase.caseTime" format="yyyy-MM-dd HH:mm:ss"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})"
@@ -141,7 +141,7 @@
 			<td align="left" width="40%"><s:textfield id="informer"
 				name="model.fsCase.informer" cssStyle="width: 135px" cssClass="required"/><font color="red">&nbsp;*</font></td>		
 			
-			<td align="right" width="11%">报告人电话：</td>
+			<td align="right" width="12%">报告人电话：</td>
             <td align="left" width="40%"><s:textfield id="informerPhone"
 				name="model.fsCase.informerPhone" cssStyle="width:158px" cssClass="required"/><font color="red">&nbsp;*</font></td>
 		</tr>					
