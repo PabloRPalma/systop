@@ -86,6 +86,7 @@ function init(){
 				<td align="right">
 					<s:submit value="发送" cssClass="button"></s:submit>
 				</td>
+				<td>&nbsp;</td>
 				<td align="left">
 					<s:reset value="重置" cssClass="button"></s:reset>
 				</td>
