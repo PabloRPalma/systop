@@ -25,7 +25,7 @@
 </style>
 <script type="text/javascript">
   function validate(){
-	  if(checkCode()&&checkmobile()){
+	  if(checkCode()&&checkmobile()&&checkidNumber()){
 		  return true;
 	  }
 	  return false;
@@ -86,6 +86,20 @@
 	  document.getElementById("mobileinfo").innerHTML = '';
 	  return true;
   }
+
+  function checkidNumber(){
+	  var idNumber = document.getElementById("idNumber").value;
+	  if(idNumber == ""){
+		  document.getElementById("idNumberInfo").innerHTML = '';
+		  return true;
+	  }
+	  if(idNumber.length != 15 && idNumber.length != 18){
+			  document.getElementById("idNumberInfo").innerHTML = '<font color="red">'+'<I>'+'位数不正确'+'</I>'+'</font>';
+			  return false;
+		  }
+	  document.getElementById("idNumberInfo").innerHTML = '';
+	  return true;
+  }
 </script>
 </head>
 <body>
@@ -144,7 +158,9 @@
 			<tr>
 			  <td align="right">身份证号：</td>
 			  <td colspan="2" align="left">
-			  	    <s:textfield id="idNumber" name="model.idNumber" cssStyle="width:180px" /></td>
+			  	    <s:textfield id="idNumber" name="model.idNumber" cssStyle="width:180px" onblur="checkidNumber()"/>
+			  	    <span id="idNumberInfo"></span>
+			  </td>
 			 </tr>
 		 </c:if>
 		  <tr>
