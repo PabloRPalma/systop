@@ -14,6 +14,7 @@
 <div id="winDealWithTaskDetail" class="x-panel">
 <div class="x-panel-header"></div>
 <div id="dealWithTaskDetail" class="x-toolbar"></div>
+<div><%@ include file="/common/messages.jsp"%></div>
 <div>
 	<s:form  id="frmDealWithTaskDetail" action="doDealWithTaskDetail.do" method="post" theme="simple" validate="true">
 	<s:hidden name="model.id"/>
