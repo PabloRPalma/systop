@@ -45,6 +45,17 @@
 					</td>
 				</tr>
 				<tr>
+					<td align="right" valign="top">任务附件：</td>
+					<td colspan="5">
+					<c:forEach var="att" items="${task.taskAtts}">
+					<a href="${ctx}${att.path}" target="_blank">
+	  	      		  <img src="${ctx}/images/icons/attachment.gif" />&nbsp;<font size="2">${att.title}</font>
+					</a>
+					<br>
+					</c:forEach>
+					</td>
+				</tr>
+				<tr>
 					<td align="right" valign="top">任务描述：</td>
 					<td colspan="5"><div style="overflow: auto; width:780px; height: 150px;">	${task.descn}	</div>			</td>
 				</tr>		
