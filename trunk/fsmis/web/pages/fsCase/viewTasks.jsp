@@ -46,7 +46,7 @@
 				</tr>
 				<tr>
 					<td align="right" valign="top">任务描述：</td>
-					<td colspan="5"><div style="overflow: auto;">	${task.descn}	</div>			</td>
+					<td colspan="5"><div style="overflow: auto; width:780px; height: 150px;">	${task.descn}	</div>			</td>
 				</tr>		
 				<%--		
 				<tr>
