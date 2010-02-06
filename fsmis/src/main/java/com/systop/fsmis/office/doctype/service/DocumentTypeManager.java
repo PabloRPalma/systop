@@ -28,7 +28,7 @@ public class DocumentTypeManager extends BaseGenericsManager<DocumentType> {
 	 * 
 	 */
 	@SuppressWarnings( { "unchecked" })
-	public ArrayList getDocumentTypesList(int signNumber) {
+	public ArrayList getDocumentTypesList(int signNumber, Integer typeId) {
 		// 栏目树
 		ArrayList list = new ArrayList();
 
@@ -37,7 +37,7 @@ public class DocumentTypeManager extends BaseGenericsManager<DocumentType> {
 		parent.put("id", null);
 		parent.put("name", null);
 		// 查询子栏目
-		getChildCatalog(list, parent, 0);
+		getChildCatalog(list, parent, 0, typeId);
 		return list;
 	}
 
@@ -50,12 +50,12 @@ public class DocumentTypeManager extends BaseGenericsManager<DocumentType> {
 	 *            符号的个数,用于区别栏目的级别.
 	 */
 	@SuppressWarnings("unchecked")
-	public void getChildCatalog(ArrayList list, Map parent, int signNumber) {
+	public void getChildCatalog(ArrayList list, Map parent, int signNumber, Integer typeId) {
 		// 栏目级别的符号
 		String sign = null;
 		// 得到子栏目
 		List<DocumentType> documentTypes = getByParentId((Integer) parent
-				.get("id"));
+				.get("id"), typeId);
 
 		// 若查询结果为空,说明此栏目下没有子栏,退出.
 		if (documentTypes.isEmpty() || documentTypes.size() == 0) {
@@ -81,7 +81,7 @@ public class DocumentTypeManager extends BaseGenericsManager<DocumentType> {
 			// 子栏目的级别加1
 			int number = signNumber + 1;
 			// 递归查询子栏目
-			getChildCatalog(list, child, number);
+			getChildCatalog(list, child, number, typeId);
 		}
 	}
 
@@ -91,17 +91,17 @@ public class DocumentTypeManager extends BaseGenericsManager<DocumentType> {
 	 * @parentCatalogId 父栏的id
 	 */
 	@SuppressWarnings("unchecked")
-	private List<DocumentType> getByParentId(Integer parentCatalogId) {
+	private List<DocumentType> getByParentId(Integer parentCatalogId, Integer typeId) {
 		List list = Collections.EMPTY_LIST;
-		if (parentCatalogId == null) {
+		if (parentCatalogId == null ) {
 			// 查询二级栏目
 			list = getDao().query(
-					"from DocumentType d where parentDocumentType is null");
+					"from DocumentType d where parentDocumentType is null and d.id != ?", typeId);
 		} else {
 			// 查询子栏目
 			list = getDao().query(
-					"from DocumentType d where d.parentDocumentType.id = ?",
-					parentCatalogId);
+					"from DocumentType d where d.parentDocumentType.id = ? and d.id != ?",
+					new Object[]{parentCatalogId, typeId});
 		}
 		return list;
 	}

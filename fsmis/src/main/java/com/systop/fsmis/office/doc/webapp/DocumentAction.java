@@ -73,7 +73,7 @@ public class DocumentAction extends ExtJsCrudAction<Document, DocumentManager> {
 	/** 获取栏目列表 */
 	@SuppressWarnings("unchecked")
 	public List getDocumentTypeMap() {
-		return documentTypeManager.getDocumentTypesList(0);
+		return documentTypeManager.getDocumentTypesList(0, 0);
 	}
 
 	/**
