@@ -5,11 +5,14 @@ import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.systop.common.modules.dept.model.Dept;
+import com.systop.core.ApplicationException;
 import com.systop.core.service.BaseGenericsManager;
+import com.systop.fsmis.corp.service.CorpManager;
 import com.systop.fsmis.fscase.CaseConstants;
 import com.systop.fsmis.fscase.task.TaskConstants;
 import com.systop.fsmis.model.Corp;
@@ -25,6 +28,11 @@ import com.systop.fsmis.model.TaskDetail;
  */
 @Service
 public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
+	
+	@Autowired
+    private CorpManager corpManager;
+	
+	
   /**
    * 完成任务明细退回操作
    * 
@@ -76,7 +84,12 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
     // 作为当前案件的唯一有效任务,当前任务已处理(对应所有任务明细都已处理),则修改案件的状态为"已处理"
     FsCase fsCase = task.getFsCase();
     // 如果案件没有关联企业,而在完成任务中为案件指定了企业(创建新企业),则需要保存企业信息
-    processCorp(fsCase, corpName, corp);
+    try {
+    	processCorp(fsCase, corpName, corp);
+    }
+    catch (Exception e) {
+		throw new ApplicationException(e.getMessage());
+	}
     save(taskDetail);
     // 如果所有任务明细已全部处理（包括退回）,则把任务状态置为"已处理",完成时间为当前时间
     if (checkIsAllTaskDetailResolved(taskDetail)) {
@@ -108,6 +121,29 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
     // 新添加企业
     }else {
     	if(StringUtils.isNotBlank(corpName)){
+    		if (corpManager.getDao().exists(corp, "name")) {
+				throw new ApplicationException("企业'" + corp.getName() + "'已存在。");
+			}
+    		if (StringUtils.isNotEmpty(corp.getBusinessLicense())) {
+    			if (corpManager.getDao().exists(corp, "businessLicense")) {
+    				throw new ApplicationException("添加的营业执照号已存在。");
+    			}
+    		}
+    		if (StringUtils.isNotEmpty(corp.getProduceLicense())) {
+    			if (corpManager.getDao().exists(corp, "produceLicense")) {
+    				throw new ApplicationException("添加的生产许可证号已存在。");
+    			}
+    		}
+    		if (StringUtils.isNotEmpty(corp.getSanitationLicense())) {
+    			if (corpManager.getDao().exists(corp, "sanitationLicense")) {
+    				throw new ApplicationException("添加的卫生许可证号已存在。");
+    			}
+    		}
+    		if (StringUtils.isNotEmpty(corp.getCode())) {
+    			if (corpManager.getDao().exists(corp, "code")) {
+    				throw new ApplicationException("添加的企业编号已存在。");
+    			}
+    		}
         	 corp.setName(corpName);
              corp.setDept(fsCase.getCounty());
              getDao().save(corp);

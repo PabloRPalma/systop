@@ -260,9 +260,14 @@ public class TaskDetailAction extends
    * @return
    */
   public String doDealWithTaskDetail() {
-    //String isNewCorp = getRequest().getParameter("isNewCorp");  
-    getManager().doCommitTaskDetail(getModel(), corpName, corp);
-
+    //String isNewCorp = getRequest().getParameter("isNewCorp"); 
+	  try {
+		  getManager().doCommitTaskDetail(getModel(), corpName, corp);
+	    }
+	    catch (Exception e) {
+			addActionError(e.getMessage());
+			return "toDealWithTaskDetail";
+		}
     return SUCCESS;
 
   }
