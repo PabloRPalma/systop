@@ -65,7 +65,7 @@
 			<tr>
 				<td align="right" valign="top">退回原因：</td>
 				<td align="left">
-				<div style="overflow: auto; height: 60px;" id="returnReason"></div>
+				<div style="overflow: auto; width:350px; height: 100px;" id="returnReason"></div>
 				</td>
 			</tr>
 		</table>
