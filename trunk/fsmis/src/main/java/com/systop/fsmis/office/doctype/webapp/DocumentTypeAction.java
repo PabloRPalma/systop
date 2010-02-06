@@ -25,13 +25,14 @@ import com.systop.fsmis.office.doctype.service.DocumentTypeManager;
 @SuppressWarnings("serial")
 @Controller
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-public class DocumentTypeAction extends ExtJsCrudAction<DocumentType, DocumentTypeManager> {
+public class DocumentTypeAction extends
+		ExtJsCrudAction<DocumentType, DocumentTypeManager> {
 
 	/**
 	 * 查询栏目名称
 	 */
 	private String typeName;
-	
+
 	/**
 	 * 栏目查询列表
 	 */
@@ -47,18 +48,21 @@ public class DocumentTypeAction extends ExtJsCrudAction<DocumentType, DocumentTy
 	 * 设定查询条件
 	 */
 	private DetachedCriteria setupDetachedCriteria() {
-		DetachedCriteria criteria = DetachedCriteria.forClass(DocumentType.class);
-		if(getModel().getId() != null) {
-			criteria.add(Restrictions.eq("parentDocumentType.id", getModel().getId()));
+		DetachedCriteria criteria = DetachedCriteria
+				.forClass(DocumentType.class);
+		if (getModel().getId() != null) {
+			criteria.add(Restrictions.eq("parentDocumentType.id", getModel()
+					.getId()));
 		} else {
 			criteria.add(Restrictions.isNull("parentDocumentType"));
 		}
 		if (StringUtils.isNotBlank(typeName)) {
-			criteria.add(Restrictions.like("name", typeName, MatchMode.ANYWHERE));			
+			criteria.add(Restrictions
+					.like("name", typeName, MatchMode.ANYWHERE));
 		}
 		return criteria;
 	}
-	
+
 	/**
 	 * 保存栏目信息，其中栏目名称为必填
 	 */
@@ -71,29 +75,22 @@ public class DocumentTypeAction extends ExtJsCrudAction<DocumentType, DocumentTy
 			}
 			if (getModel().getParentDocumentType() != null
 					&& getModel().getParentDocumentType().getId() != null) {
-				getModel().setParentDocumentType(
-						getManager().get(getModel().getParentDocumentType().getId()));
+				getModel().setParentDocumentType(getManager().get(getModel().getParentDocumentType().getId()));
 			} else {
 				getModel().setParentDocumentType(null);
 			}
-			if(getModel().getId() != null) {
-				if(getModel().getId().equals(getModel().getParentDocumentType().getId())) {
-					addActionError("当前栏目不能设置自己为所属栏目，请重新选择！");
-					return INPUT;
-				}
-			}
-			getManager().save(getModel());
-			return SUCCESS;
-		}catch (Exception e) {
+			getManager().getDao().clear();
+			return super.save();
+		} catch (Exception e) {
 			addActionError(e.getMessage());
 			return INPUT;
 		}
 	}
-	
+
 	public String view() {
 		return "view";
 	}
-	
+
 	/**
 	 * 获取栏目列表
 	 * 
@@ -101,7 +98,10 @@ public class DocumentTypeAction extends ExtJsCrudAction<DocumentType, DocumentTy
 	 */
 	@SuppressWarnings("unchecked")
 	public List getDocumentTypeMap() {
-		return getManager().getDocumentTypesList(0);
+		if (getModel().getId() != null) {
+			return getManager().getDocumentTypesList(0, getModel().getId());
+		}
+		return getManager().getDocumentTypesList(0, 0);
 	}
 
 	/**
@@ -113,7 +113,7 @@ public class DocumentTypeAction extends ExtJsCrudAction<DocumentType, DocumentTy
 			addActionError("该栏目有文章，无法删除，请先删除文章！");
 			return "error";
 		}
-		if(!getModel().getChildDocumentTypes().isEmpty()){
+		if (!getModel().getChildDocumentTypes().isEmpty()) {
 			addActionError("该栏目有子栏目，无法删除，请先删除子栏目！");
 			return "error";
 		}
@@ -134,7 +134,7 @@ public class DocumentTypeAction extends ExtJsCrudAction<DocumentType, DocumentTy
 		restorePageData(page);
 		return "indexArticles";
 	}
-	
+
 	public String getTypeName() {
 		return typeName;
 	}
