@@ -217,6 +217,30 @@
 			setTimeout("checkNewTaskDetail()", 20000);
 		}
 		checkNewTaskDetail();
+
+		//提示新任务信息
+		function checkNewMutilCase(){
+			Ext.Ajax.request({
+				url: '${ctx}/fscase/getMutilCaseMsg.do',
+				methos :'POST',
+				success : function(response,textStatus){
+					 var respText = Ext.util.JSON.decode(response.responseText);
+					 var message = '';
+					 if(respText.single != 0 && respText.single != undefined || respText.multiple != undefined && respText.multiple != 0){
+						 message+= "有";
+						 if(respText.multiple != 0 && respText.multiple != 'undefined'){
+							 message+=respText.multiple;
+							 message+="条<a href='${ctx}/fscase/index.do?isMultipleCase=1&modelId=1' target='main'><font color='red'>新多体事件</font></a>,";
+						 }
+						 message+="请注意查看";
+
+						 Ext.my().msg('', message);
+					 }					
+				}
+			});
+			setTimeout("checkNewMutilCase()", 20000);
+		}
+		checkNewMutilCase();
 		
 		//提示新联合整治任务信息
 		function checkNewJointTaskDetail(){
