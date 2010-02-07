@@ -272,6 +272,7 @@ public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
     String id = getRequest().getParameter("fsCaseId");
     // 将从界面传递过来的用户点击的任务的id放入request作用域,以在查看界面中默认选中
     String taskId = getRequest().getParameter("taskId");
+    String isMulti = getRequest().getParameter("isMultipleCase");
     getRequest().setAttribute("taskId", taskId);
     if (StringUtils.isNotBlank(id)) {
       Integer fsCaseId = Integer.parseInt(id);
@@ -282,7 +283,11 @@ public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
 
       getRequest().setAttribute("sendTypes", list);
     }
-
+    //如果是多体事件查看后，把IsRead置成已读
+    if(StringUtils.isNotBlank(isMulti) && FsConstants.Y.equals(isMulti)){
+    	getModel().setIsRead(FsConstants.Y);
+    	getManager().save(getModel());
+    }
     return VIEW;
   }
 
@@ -466,6 +471,23 @@ public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
       jsonResult.put("reportSms", String.valueOf(getManager().getReportSms(
           county).size()));
       jsonResult.put("verifySms", String.valueOf(getManager().getVerifySms(
+          county).size()));
+    }
+    return "jsonResult";
+  }
+  
+  /**
+   * 得到当前登录人员所在区县的多体事件,<br>
+   * 以被客户端Ajax访问,形成提示信息
+   * 
+   * @return
+   */
+  public String getMutilCaseMsg() {
+    jsonResult = Collections.synchronizedMap(new HashMap<String, String>());
+    // 得到当前登录人员的区县----问题:谁有权力来处理短信,需要再讨论加以角色限制
+    Dept county = loginUserService.getLoginUserCounty(getRequest());
+    if (county != null && county.getId() != null) {
+      jsonResult.put("multiple", String.valueOf(getManager().getMutilcaseMsg(
           county).size()));
     }
     return "jsonResult";
