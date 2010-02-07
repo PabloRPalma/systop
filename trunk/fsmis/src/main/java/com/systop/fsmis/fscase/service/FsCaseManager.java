@@ -88,7 +88,7 @@ public class FsCaseManager extends BaseGenericsManager<FsCase> {
    */
   @SuppressWarnings("unchecked")
   public List<FsCase> getMutilcaseMsg(Dept county) {
-    String hql = "from FsCase g where g.isRead = ? ";
-    return getDao().query(hql, new Object[] { FsConstants.N });
+    String hql = "from FsCase g where g.isMultiple = ? and g.isRead = ? ";
+    return getDao().query(hql, new Object[] { FsConstants.Y, FsConstants.N });
   }
 }
