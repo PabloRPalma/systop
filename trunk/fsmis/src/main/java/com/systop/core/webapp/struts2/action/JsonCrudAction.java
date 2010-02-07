@@ -1,17 +1,27 @@
 package com.systop.core.webapp.struts2.action;
 
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang.xwork.StringUtils;
 
+import com.opensymphony.xwork2.util.ArrayUtils;
 import com.systop.core.model.BaseModel;
 import com.systop.core.service.BaseGenericsManager;
 import com.systop.core.util.RequestUtil;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
+import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
+import com.thoughtworks.xstream.io.json.JsonHierarchicalStreamDriver;
+import com.thoughtworks.xstream.io.json.JsonWriter;
 /**
  * 继承JsonCrudAction的类可以返回json数据，前提是RequestHeader中的Accept属性必须
  * 包含x-json。
@@ -179,5 +189,138 @@ public abstract class JsonCrudAction<T extends BaseModel, M extends BaseGenerics
    */
   protected static interface BeanToMap {
     Map toMap(Object bean); 
+  }
+  
+  /**
+   * 使用XStream，将一个对象转变为json字符串，例如：<br>
+   * <pre>
+   * //输出{"user":{"loginId":"sss","isOpen":1,"createTime":"2010-02-06 22:29:44.156 CST","photos":[""]}}
+   * toJson("user", user, new String[]{"roles", "articles"});
+   * </pre>
+   * @param alias 别名，被转换的类型在json对象中的属性名称。
+   * @param target 被转换的对象
+   * @param omitFields 需要忽略的、位于<code>target</code>中的字段名称。也可以用@XStreamOmitField在字段上做标注。
+   * @return 如果<code>target</code>为<code>null</code>，返回'{"null":""}'字符串，否则返回json字符串。
+   */
+  protected String toJson(String alias, Object target, String...omitFields) {
+    XStream xstream = new XStream(new JettisonMappedXmlDriver());
+    xstream.setMode(XStream.NO_REFERENCES);
+    xstream.autodetectAnnotations(true); //自动处理XStream Annotations
+    if(target == null) {
+      xstream.toXML(null);
+    }
+    //别名
+    if(StringUtils.isNotBlank(alias)) {
+      xstream.alias(alias, target.getClass());
+    }
+    //忽略的字段
+    if(ArrayUtils.isNotEmpty(omitFields)) {
+      for(String omitField : omitFields) {
+        xstream.omitField(target.getClass(), omitField);
+      }
+    }
+    return xstream.toXML(target);
+  }
+  
+  /**
+   * 使用XStream，将一个对象转变为json字符串，例如：<br>
+   * <pre>
+   * //输出{"user":{"loginId":"sss","isOpen":1,"createTime":"2010-02-06 22:29:44.156 CST","photos":[""]}}
+   * toJson("user", user, new String[]{"roles", "articles"});
+   * </pre>
+   * @param aliasMap Class和别名Map，被转换的类型在json对象中的属性名称。
+   * @param target 被转换的对象
+   * @param omitFieldsMap 需要忽略的字段名称，Key值为字段所在的Class,
+   * value为该Class中被忽略的字段。也可以用@XStreamOmitField在字段上做标注。
+   * @return 如果<code>target</code>为<code>null</code>，返回'{"null":""}'字符串，否则返回json字符串。
+   */
+  protected String toJson(Map<Class, String> aliasMap, Object target, Map<Class, String[]> omitFieldsMap ) {
+    XStream xstream = new XStream(new JettisonMappedXmlDriver());
+    xstream.setMode(XStream.NO_REFERENCES);
+    xstream.autodetectAnnotations(true); //自动处理XStream Annotations
+    if(target == null) {
+      xstream.toXML(null);
+    }
+    //别名
+    if(MapUtils.isNotEmpty(aliasMap)) {
+      Set<Class> keys = aliasMap.keySet();
+      for(Class clazz : keys) {
+        xstream.alias(aliasMap.get(clazz), clazz);
+      }
+    }
+    //忽略的字段
+    if(MapUtils.isNotEmpty(omitFieldsMap)) {
+      Set<Class> keys = omitFieldsMap.keySet();
+      for(Class clazz : keys) {
+        String[] fields = omitFieldsMap.get(clazz);
+        for(String field : fields) {
+          xstream.omitField(clazz, field);  
+        }
+        
+      }
+    }
+    return xstream.toXML(target);
+  }
+  /**
+   * 使用XStream，将一个对象转变为json字符串，例如：<br>
+   * <pre>
+   * //输出{"loginId":"sss","isOpen":1,"createTime":"2010-02-06 22:29:44.156 CST","photos":[""]}
+   * toJson(user);
+   * </pre>
+   * @param target 被转换的对象
+   * @param omitFields 需要忽略的、位于<code>target</code>中的字段名称。也可以用@XStreamOmitField在字段上做标注。
+   * @return 如果<code>target</code>为<code>null</code>，返回'{}'字符串，否则返回json字符串。
+   */
+  protected String toJson(Object target, String...omitFields) {
+    XStream xstream = new XStream(new JsonHierarchicalStreamDriver() {
+      public HierarchicalStreamWriter createWriter(Writer writer) {
+        return new JsonWriter(writer, JsonWriter.DROP_ROOT_MODE);
+      }
+    });
+    if(target == null) {
+      xstream.toXML(target);
+    }
+    xstream.autodetectAnnotations(true); //自动处理XStream Annotations
+    //忽略的字段
+    if(ArrayUtils.isNotEmpty(omitFields)) {
+      for(String omitField : omitFields) {
+        xstream.omitField(target.getClass(), omitField);
+      }
+    }
+    return xstream.toXML(target);
+  }
+  
+  /**
+   * 使用XStream，将一个对象转变为json字符串，例如：<br>
+   * <pre>
+   * //输出{"loginId":"sss","isOpen":1,"createTime":"2010-02-06 22:29:44.156 CST","photos":[""]}
+   * toJson(user);
+   * </pre>
+   * @param target 被转换的对象
+   * @param omitFields @param omitFieldsMap 需要忽略的字段名称，Key值为字段所在的Class,
+   * value为该Class中被忽略的字段。也可以用@XStreamOmitField在字段上做标注。
+   * @return 如果<code>target</code>为<code>null</code>，返回'{}'字符串，否则返回json字符串。
+   */
+  protected String toJson(Object target,  Map<Class, String[]> omitFieldsMap) {
+    XStream xstream = new XStream(new JsonHierarchicalStreamDriver() {
+      public HierarchicalStreamWriter createWriter(Writer writer) {
+        return new JsonWriter(writer, JsonWriter.DROP_ROOT_MODE);
+      }
+    });
+    if(target == null) {
+      xstream.toXML(target);
+    }
+    xstream.autodetectAnnotations(true); //自动处理XStream Annotations
+    //忽略的字段
+    if(MapUtils.isNotEmpty(omitFieldsMap)) {
+      Set<Class> keys = omitFieldsMap.keySet();
+      for(Class clazz : keys) {
+        String[] fields = omitFieldsMap.get(clazz);
+        for(String field : fields) {
+          xstream.omitField(clazz, field);  
+        }        
+      }
+    }
+    return xstream.toXML(target);
   }
 }
