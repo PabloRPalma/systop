@@ -51,13 +51,13 @@ Ext.onReady(function(){
 <div id="fsCase" class="x-hide-display">
 <table id="mytable" >
           <tr>
-             <td align="right" style="height:20px">事件标题：</td>
+             <td align="right" >事件标题：</td>
              <td align="left" >
              	<s:property value="model.fsCase.title" />
              </td>
           </tr>
           <tr>
-             <td align="right" style="height:20px">事件类型：</td>
+             <td align="right" >事件类型：</td>
              <td align="left" >
                 <c:if test="${model.fsCase.isMultiple eq '0'}">
                                                   单体事件
@@ -68,40 +68,40 @@ Ext.onReady(function(){
              </td>
           </tr>
           <tr>
-             <td align="right" style="height:20px">事件类别：</td>
+             <td align="right" >事件类别：</td>
              <td align="left" >
              	<s:property value="model.fsCase.caseType.name" />
              </td>
           </tr> 
           <tr>
-             <td align="right" style="height:20px">事发地点：</td>
+             <td align="right" >事发地点：</td>
              <td align="left" >
              	<s:property value="model.fsCase.address" />
              </td>
           </tr>                    
           <tr>
-             <td align="right" width="90" style="height:20px">事发时间：</td>
+             <td align="right" width="90" >事发时间：</td>
              <td align="left">
                  <s:date name="model.fsCase.caseTime" format="yyyy-MM-dd" />
              </td>    
           </tr>
           <tr>
-             <td align="right" style="height:20px">事件报告人：</td>
+             <td align="right" >事件报告人：</td>
              <td align="left" >
              	<s:property value="model.fsCase.informer" />
              </td>
           </tr> 
           <tr>
-             <td align="right" style="height:20px">报告人电话：</td>
+             <td align="right" >报告人电话：</td>
              <td align="left" >
              	<s:property value="model.fsCase.informerPhone" />
              </td>
           </tr>                       
           <tr>
-	          <td align="right" style="height:20px">事件描述：</td>
+	          <td align="right">事件描述：</td>
 	          <td align="left" colspan="3">
-	          	<div style="width:700px;word-break:break-all;">
-		          	${model.fsCase.descn}
+	          	<div style="width:700px;word-break:break-all;"> 	
+		          	<pre>${model.fsCase.descn}</pre>
 	          	</div>
 	          </td>
           </tr>     
