@@ -169,12 +169,12 @@ $().ready(function(){
 //根据企业编号查询企业信息
 function queryCompanyByCode(){
   var companyInfo = $("#companyName").val();
-  var code = companyInfo.substring(0,companyInfo.indexOf(":"));
+  //var code = companyInfo.substring(0,companyInfo.indexOf(":"));
 	$.ajax({
 		url:'${ctx}/taskdetail/getCorpByCode.do',
 		type:'post',
 		dataType:'json',
-		data:{corpId:code},
+		data:{corpName:companyInfo},
 		success:function(corp,textStatus){
 		  if(corp){            
 	          $("#companyName").val(corp.name);              
@@ -185,6 +185,24 @@ function queryCompanyByCode(){
 	          $("#sanitationLicense").val(corp.sanitationLicense);
 	          $("#corpId").val(corp.id);
 	          $("#operateDetails").val(corp.operateDetails);
+	          
+
+	          if(corp.id != null){
+		          $("#companyCode").attr('readonly', true);
+		          $("#companyAddress").attr('readonly', true);
+		          $("#legalPerson").attr('readonly', true);
+		          $("#produceLicense").attr('readonly', 'readonly');
+		          $("#sanitationLicense").attr('readonly', 'readonly');
+		          $("#operateDetails").attr('readonly', 'readonly');  
+	          }else{
+		          $("#companyCode").attr('readonly', '');
+		          $("#companyAddress").attr('readonly', '');
+		          $("#legalPerson").attr('readonly', '');
+		          $("#produceLicense").attr('readonly', '');
+		          $("#sanitationLicense").attr('readonly', '');
+		          $("#operateDetails").attr('readonly', ''); 
+	          }
+
 	       }  
 	},
 		failure: function() {
