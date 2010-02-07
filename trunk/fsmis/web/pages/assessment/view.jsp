@@ -181,12 +181,18 @@ Ext.onReady(function(){
         <td align="left" >
         	<s:property value="model.fsCase.informer" />
         </td>
-     </tr>  	                     
+     </tr>  
+     <tr>
+        <td align="right" style="height:20px"><span style="font-weight:bold">报告人电话：</span></td>
+        <td align="left" >
+        	<s:property value="model.fsCase.informerPhone" />
+        </td>
+     </tr>       	                     
      <tr>
       <td align="right" style="height:20px"><span style="font-weight:bold">事件描述：</span></td>
       <td align="left" colspan="2">
       	<div style="width:700px;word-break:break-all;">
-       	${model.fsCase.descn}
+       	  <pre>${model.fsCase.descn}</pre>
       	</div>
       </td>
      </tr>
