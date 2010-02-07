@@ -126,8 +126,8 @@
 			
 			<td align="right" width="12%">案发时间：</td>
 			<td align="left" width="40%"><input type="text" name="model.fsCase.caseTime"  style="width: 158px" 
-				value='<s:date name="model.fsCase.caseTime" format="yyyy-MM-dd HH:mm:ss"/>'
-				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})"
+				value='<s:date name="model.fsCase.caseTime" format="yyyy-MM-dd HH:mm"/>'
+				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
 				class="Wdate required" readonly="readonly" /><font color="red">&nbsp;*</font></td>
 		</tr>
 		<tr>
@@ -148,16 +148,16 @@
 		<tr>
 			<td align="right" >案件类别：</td>
 			<td align="left" colspan="3">
-				 <select id="levelOne" name="typeOneId" style="width:141px;" class="required">
+				 <select id="levelOne" name="typeOneId" style="width:139px;" class="required">
 					    <option value="">请选择...</option>
 						<c:forEach items="${levelOne}" var="item">
 					       <option value="${item.id}" >${item.name}</option>
 					    </c:forEach>
 			      </select>
-			     <select id="itemId" name="typeTwoId" style="width:141px;">
+			      <font color="red">*</font>
+			     <select id="itemId" name="typeTwoId" style="width:139px;">
 					    <option value="">请选择...</option>
 				 </select>
-				 <font color="red">&nbsp;*</font>
 			</td>
 		</tr>	
 		<tr>
