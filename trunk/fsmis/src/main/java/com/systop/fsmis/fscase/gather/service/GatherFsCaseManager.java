@@ -111,6 +111,7 @@ public class GatherFsCaseManager extends BaseGenericsManager<FsCase> {
 				multiCase.setGatherConfiger(configerCity);
 				multiCase.setCaseTime(fsCityList.get(0).getCaseTime());
 				multiCase.setIsSubmited(FsConstants.N);
+				multiCase.setIsRead(FsConstants.N);
 				multiCase.setStatus(CaseConstants.CASE_UN_RESOLVE);
 				multiCase.setCaseSourceType(CaseConstants.CASE_SOURCE_TYPE_GENERIC);
 				multiCase.setTitle(MessageFormat.format(CaseConstants.COUNTY_MULTCASE_FOLDER, 
@@ -180,6 +181,7 @@ public class GatherFsCaseManager extends BaseGenericsManager<FsCase> {
 				multiCase.setGatherConfiger(configer);
 				multiCase.setCaseTime(fsList.get(0).getCaseTime());
 				multiCase.setIsSubmited(FsConstants.N);
+				multiCase.setIsRead(FsConstants.N);
 				multiCase.setStatus(CaseConstants.CASE_UN_RESOLVE);
 				multiCase.setCaseSourceType(CaseConstants.CASE_SOURCE_TYPE_GENERIC);
 				multiCase.setTitle(MessageFormat.format(CaseConstants.COUNTY_MULTCASE_FOLDER, 
