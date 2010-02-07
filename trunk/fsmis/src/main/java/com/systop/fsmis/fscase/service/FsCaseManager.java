@@ -80,4 +80,15 @@ public class FsCaseManager extends BaseGenericsManager<FsCase> {
     String hql = "from SmsReceive sr where sr.isReport = ? and sr.isNew = ?";
     return getDao().query(hql, new Object[] { FsConstants.Y, FsConstants.Y });
   }
+  
+  /**
+   * 得到当前是否有新的多体事件
+   * 
+   * @return
+   */
+  @SuppressWarnings("unchecked")
+  public List<FsCase> getMutilcaseMsg(Dept county) {
+    String hql = "from FsCase g where g.isRead = ? ";
+    return getDao().query(hql, new Object[] { FsConstants.N });
+  }
 }
