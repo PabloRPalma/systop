@@ -191,9 +191,9 @@ function queryCompanyByCode(){
 		          $("#companyCode").attr('readonly', true);
 		          $("#companyAddress").attr('readonly', true);
 		          $("#legalPerson").attr('readonly', true);
-		          $("#produceLicense").attr('readonly', 'readonly');
-		          $("#sanitationLicense").attr('readonly', 'readonly');
-		          $("#operateDetails").attr('readonly', 'readonly');  
+		          $("#produceLicense").attr('readonly', true);
+		          $("#sanitationLicense").attr('readonly', true);
+		          $("#operateDetails").attr('readonly', true);  
 	          }else{
 		          $("#companyCode").attr('readonly', '');
 		          $("#companyAddress").attr('readonly', '');
