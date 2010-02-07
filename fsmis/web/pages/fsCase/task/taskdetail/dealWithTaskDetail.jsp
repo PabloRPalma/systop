@@ -79,37 +79,37 @@
 		  <tr height="40">
             <td align="right">企业编号：</td>
             <td align="left">
-            	<s:textfield id="companyCode" name="corp.code" cssStyle="width:270px"/>
+            	<s:textfield id="companyCode" name="corp.code" cssStyle="width:270px" readonly="true"/>
             </td>
           </tr>		            
           <tr height="40">
             <td align="right">地址：</td>
             <td align="left">
-            	<s:textfield id="companyAddress" name="corp.address" cssStyle="width:270px"/>
+            	<s:textfield id="companyAddress" name="corp.address" cssStyle="width:270px" readonly="true"/>
             </td>
           </tr>
           <tr height="40">
             <td align="right">法人：</td>
             <td align="left">
-            	<s:textfield id="legalPerson" name="corp.legalPerson" cssStyle="width:270px"/>
+            	<s:textfield id="legalPerson" name="corp.legalPerson" cssStyle="width:270px" readonly="true"/>
             </td>
           </tr>          
           <tr height="40">
             <td align="right">生产许可证：</td>
             <td align="left">
-            	<s:textfield id="produceLicense" name="corp.produceLicense" cssStyle="width:270px"/>
+            	<s:textfield id="produceLicense" name="corp.produceLicense" cssStyle="width:270px" readonly="true"/>
             </td>
           </tr>         
           <tr height="40">
             <td align="right">卫生许可证：</td>
             <td align="left">
-            	<s:textfield id="sanitationLicense" name="corp.sanitationLicense" cssStyle="width:270px"/>
+            	<s:textfield id="sanitationLicense" name="corp.sanitationLicense" cssStyle="width:270px" readonly="true"/>
             </td>
           </tr>
           <tr>
             <td align="right">经营范围：</td>
             <td align="left">
-            	<s:textarea id="operateDetails" name="corp.operateDetails" cols="36" rows="6"></s:textarea>            	
+            	<s:textarea id="operateDetails" name="corp.operateDetails" cols="36" rows="6" readonly="true"></s:textarea>            	
             </td>
           </tr>        
         </table> 
@@ -175,19 +175,17 @@ function queryCompanyByCode(){
 		type:'post',
 		dataType:'json',
 		data:{corpName:companyInfo},
-		success:function(corp,textStatus){
-		  if(corp){            
-	          $("#companyName").val(corp.name);              
-	          $("#companyCode").val(corp.code);
-	          $("#companyAddress").val(corp.address);
-	          $("#legalPerson").val(corp.legalPerson);
-	          $("#produceLicense").val(corp.produceLicense);
-	          $("#sanitationLicense").val(corp.sanitationLicense);
-	          $("#corpId").val(corp.id);
-	          $("#operateDetails").val(corp.operateDetails);
-	          
-
+		success:function(corp,textStatus){           
+	         
 	          if(corp.id != null){
+	        	  $("#companyName").val(corp.name);              
+		          $("#companyCode").val(corp.code);
+		          $("#companyAddress").val(corp.address);
+		          $("#legalPerson").val(corp.legalPerson);
+		          $("#produceLicense").val(corp.produceLicense);
+		          $("#sanitationLicense").val(corp.sanitationLicense);
+		          $("#operateDetails").val(corp.operateDetails);
+		          
 		          $("#companyCode").attr('readonly', true);
 		          $("#companyAddress").attr('readonly', true);
 		          $("#legalPerson").attr('readonly', true);
@@ -201,9 +199,7 @@ function queryCompanyByCode(){
 		          $("#produceLicense").attr('readonly', '');
 		          $("#sanitationLicense").attr('readonly', '');
 		          $("#operateDetails").attr('readonly', ''); 
-	          }
-
-	       }  
+	          } 
 	},
 		failure: function() {
     		alert('错误');
