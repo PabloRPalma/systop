@@ -298,8 +298,7 @@ public class TaskDetailAction extends
      */
 
     for (int i = 0; i < list.size(); i++) {
-      StringBuffer buf = new StringBuffer(list.get(i).getCode()).append(":")
-          .append(list.get(i).getName());
+      StringBuffer buf = new StringBuffer(list.get(i).getName());
       corpNames[i] = buf.toString();
     }
 
@@ -353,7 +352,7 @@ public class TaskDetailAction extends
   public String getCorpByCode() {
     jsonResult = Collections.synchronizedMap(new HashMap<String, String>());
     Corp corp = (Corp) getManager().getDao().findObject(
-        "from Corp c where c.code = ?", String.valueOf(corpId));
+        "from Corp c where c.name = ?", corpName);
     if (corp != null) {
       jsonResult = ReflectUtil.toMap(corp, new String[] { "id", "name", "code",
           "address", "legalPerson", "produceLicense", "sanitationLicense",
