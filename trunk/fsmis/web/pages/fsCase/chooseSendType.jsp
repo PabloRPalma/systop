@@ -11,7 +11,7 @@
 	  buttonAlign:'center',
 	  modal:'true',
 	  buttons:[{
-		  text:'取消',
+		  text:'关闭',
 		  handler:function(){
 		  ChooseSendTypeWindow.hide();
 		  }
