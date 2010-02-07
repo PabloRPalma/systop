@@ -70,7 +70,7 @@ function result(id){
 			</c:if>			
 			<c:if test="${item.status == '4'}"><font color="green">已处理</font></c:if>	
 	</ec:column>	
-	    <ec:column width="120" property="result" style="text-align:center" title="任务结果" >
+	    <ec:column width="120" property="result" style="text-align:center" title="操作" >
 		  <c:if test="${item.status == '4' && item.isLeader eq '1'}">
 		    <a href="#" onclick="result(${item.id})">查看</a>
 		  </c:if>
