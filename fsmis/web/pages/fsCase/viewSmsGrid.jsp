@@ -212,5 +212,5 @@
 		});
 	});
   </script>
-  <div id='smsSendDiv' style=" width: 100%; "></div>
-  <div id='smsReceiveSmsDiv' style="width: 100%; " ></div>
+  <div id='smsSendDiv' style=" width: 100%; margin: -1;"></div>
+  <div id='smsReceiveSmsDiv' style="width: 100%; margin: -1; " ></div>
