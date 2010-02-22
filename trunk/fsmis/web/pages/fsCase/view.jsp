@@ -132,35 +132,63 @@ function isSubmited(caseId) {
 		</div>
 		<c:if test="${not empty model.corp}">
 			<div id="corp" class="x-hide-display" style="width: 100%;">		
-				<table width="100%" height="450px">	
+				<table  class="mytable" align="center" cellpadding="0" cellspacing="0">	
 					<tr>
-						<td  width="10%"align="right">企业名称：</td>
-						<td  align="left" >${model.corp.name}</td>
+						<td class="title">企业名称：</td>
+						<td class="content" colspan="3" >${model.corp.name}</td>
 					</tr>
 					<tr>
-						<td width="10%"  align="right">企业编号：</td>
-						<td align="left" >${model.corp.code} </td>
+						<td class="title">企业编号：</td>
+						<td class="content">${model.corp.code} </td>
+						<td class="title">法人：</td>
+						<td class="content"  >${model.corp.legalPerson}</td>
 					</tr>
 					<tr>
-						<td width="10%"  align="right">地址：</td>
-						<td align="left" >${model.corp.address}</td>
+						<td class="title">地址：</td>
+						<td class="content" colspan="3" >${model.corp.address}</td>
 					</tr>
 					<tr>
-						<td width="10%"  align="right">法人：</td>
-						<td align="left" >${model.corp.legalPerson}</td>
+						<td class="title">营业执照：</td>
+						<td class="content">${model.corp.businessLicense}</td>
+						<td class="title">有效期：</td>
+						<td class="content"><s:date name="model.corp.businessLicenseIndate" format="yyyy-MM-dd HH:mm"/></td>
+					</tr>					
+					<tr>
+						<td class="title">生产许可证：</td>
+						<td class="content" >${model.corp.produceLicense}</td>
+						<td class="title">有效期：</td>
+						<td class="content"><s:date name="model.corp.produceLicenseIndate" format="yyyy-MM-dd HH:mm"/></td>
 					</tr>
 					<tr>
-						<td width="10%"  align="right">生产许可证：</td>
-						<td  align="left">${model.corp.produceLicense}</td>
+						<td class="title"  align="right">卫生许可证：</td>
+						<td  class="content">${model.corp.sanitationLicense}</td>
+						<td class="title">有效期：</td>
+						<td class="content"><s:date name="model.corp.sanitationLicenseIndate" format="yyyy-MM-dd HH:mm"/></td>
 					</tr>
 					<tr>
-						<td width="10%"  align="right">卫生许可证：</td>
-						<td  align="left">${model.corp.sanitationLicense}</td>
+						<td class="title"  align="right">固话：</td>
+						<td  class="content">${model.corp.phone}</td>
+						<td class="title">手机：</td>
+						<td class="content">${model.corp.mobile}</td>
 					</tr>
-					<tr height="220px">
-						<td width="10%"  align="right" valign="top">经营范围：</td>
-						<td  align="left" valign="top">${model.corp.operateDetails}</td>
-					</tr>						
+						<tr>
+						<td class="title"  align="right">诚信等级：</td>
+						<td  class="content">${model.corp.integrityGrade}</td>
+						<td class="title">邮编：</td>
+						<td class="content">${model.corp.zip}</td>
+					</tr>
+					<tr>
+						<td class="title" valign="top">经营范围：</td>
+						<td class="content" valign="top"colspan="3"><div style="overflow: auto; width:100%; height: 20px;">${model.corp.operateDetails}</div></td>
+					</tr>			
+					<tr>
+						<td class="title" valign="top">备注：</td>
+						<td class="content" valign="top"colspan="3"><div style="overflow: auto; width:100%; height: 20px;">${model.corp.remark}</div></td>
+					</tr>	
+					<tr>
+						<td class="title" valign="top">企业简介：</td>
+						<td class="content" valign="top"colspan="3"><div style="overflow: auto; width:100%; height: 20px;">${model.corp.descn}</div></td>
+					</tr>				
 			</table>			
 	</div>
 		</c:if>
