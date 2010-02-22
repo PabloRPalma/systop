@@ -846,10 +846,10 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 			dept = county;
 		}
 		StringBuffer sql = new StringBuffer(
-				"select fc.caseSourceType,count(fc.id) from FsCase fc where 1=1");
+				"select fc.caseSourceType,count(fc.id) from FsCase fc where 1=1 ");
 		List args = new ArrayList();
 		if (dept.getParentDept() != null) {
-			sql.append("and fc.county.id = ? ");
+			sql.append(" and fc.county.id = ? ");
 			args.add(dept.getId());
 		}
 		if (beginDate != null && endDate != null) {
