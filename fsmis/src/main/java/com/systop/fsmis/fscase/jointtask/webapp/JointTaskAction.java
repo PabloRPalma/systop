@@ -39,6 +39,7 @@ import com.systop.fsmis.model.JointTask;
 import com.systop.fsmis.model.JointTaskAttach;
 import com.systop.fsmis.model.JointTaskDetail;
 import com.systop.fsmis.model.JointTaskDetailAttach;
+import com.systop.fsmis.supervisor.service.SupervisorManager;
 
 /**
  * 联合整治任务Action
@@ -90,6 +91,12 @@ public class JointTaskAction extends
 	 */
   @Autowired
   private LoginUserService loginUserService;
+  
+	/**
+	 * 当前登录用户管理
+	 */
+  @Autowired
+  private SupervisorManager supervisorManager;
 	
 	/**
 	 * 案件一级类型
@@ -302,6 +309,8 @@ public class JointTaskAction extends
 			if (StringUtils.isBlank(getModel().getFsCase().getIsMultiple())) {
 				getModel().getFsCase().setIsMultiple(FsConstants.N);
 			}
+			//通过举报人电话判断是不是信息员，如果是事件信息需关联信息员表
+			getModel().getFsCase().setSupervisor(supervisorManager.getSupervisorByMobile(getModel().getFsCase().getInformerPhone()));
 			fsCaseManager.save(getModel().getFsCase());
 		}
 		return "addJointTask";
