@@ -75,8 +75,8 @@ window.onload = function(){
   	   <a href="view.do?model.id=${item.id}"><font color="blue">${item.fsCase.title}</font></a> 
     </ec:column> 
     <ec:column width="60" property="proposer.name" title="申请人" style="text-align:center"/>  
-    <ec:column width="120" property="asseMemberse" alias="leaders" title="专家组组长" cell="com.systop.fsmis.assessment.converter.ExpertsConverter"/>
-    <ec:column width="160" property="asseMemberse" alias="members" title="专家组成员" cell="com.systop.fsmis.assessment.converter.ExpertsConverter"/>
+    <ec:column width="100" property="asseMemberse" alias="leaders" title="专家组组长" cell="com.systop.fsmis.assessment.converter.ExpertsConverter"/>
+    <ec:column width="180" property="asseMemberse" alias="members" title="专家组成员" cell="com.systop.fsmis.assessment.converter.ExpertsConverter"/>
     <ec:column width="70" property="askDate" title="申请日期"  style="text-align:center" cell="date" />     
     <ec:column width="70" property="state" title="评估状态" style="text-align:center">
        <c:choose>
@@ -97,35 +97,38 @@ window.onload = function(){
         </c:when>
       </c:choose>
     </ec:column>    
-    <ec:column width="150" property="_0" title="操作" style="text-align:center" sortable="false">
+	<ec:column width="30" property="_view" title="查看" style="text-align:center" sortable="false">
+  	   <a href="view.do?model.id=${item.id}">看</a> 
+	</ec:column>	    
+    <ec:column width="120" property="_0" title="操作" style="text-align:center" sortable="false">
        <c:if test="${item.state ne '4'}">
        <c:choose>
 	     <c:when test="${item.state eq '0' or item.state eq '2'}"> 
- 	       <a href="edit.do?model.id=${item.id}">编辑</a>|		        
+ 	       <a href="edit.do?model.id=${item.id}">改</a> |		        
 	     </c:when>
 	     <c:otherwise>
-           <font color="#999999">编辑</font>| 	       
+           <font color="#999999">改</font> | 	       
 	     </c:otherwise>
 	   </c:choose>  
        <c:if test="${item.state eq '0' or item.state eq '2'}">  
-	      <a href="audit.do?model.id=${item.id}">审核</a>|       
+	      <a href="audit.do?model.id=${item.id}">审</a> |       
        </c:if>   
        <c:if test="${item.state eq '1'}">
-  	      <a href="start.do?model.id=${item.id}">启动</a>|	    
+  	      <a href="start.do?model.id=${item.id}">启</a> |	    
        </c:if>
        <c:if test="${item.state eq '3'}">
-  	      <a href="result.do?model.id=${item.id}">上报</a>|	  
+  	      <a href="result.do?model.id=${item.id}">报</a> |	  
        </c:if>                 
 	   <c:choose>
 	     <c:when test="${empty item.checkResults}"> 
-	        <a href="#" onClick="removeAssessment(${item.id})">删除|</a>  	     
+	        <a href="#" onClick="removeAssessment(${item.id})">删</a> | 	     
 	     </c:when>
 	     <c:otherwise>
-	        <font color="#999999">删除</font>|
+	        <font color="#999999">删</font> |
 	     </c:otherwise>
 	   </c:choose> 
 	   </c:if>  
-       <a href="print.do?model.id=${item.id}" target="_blank">打印</a>	   
+       <a href="print.do?model.id=${item.id}" target="_blank"> 印</a>	   
 	</ec:column>    
   </ec:row>
 </ec:table>
