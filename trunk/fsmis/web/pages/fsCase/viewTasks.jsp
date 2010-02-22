@@ -17,11 +17,10 @@
   </c:choose>
 	<div id="taskDiv${taskStatus.index+1}" class="x-hide-display" style="width: 100%">
 		<div style="width: 100%">
-		<table style="width:600px;" align="center" >
-			 <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+		<table class="mytable" align="center"  cellpadding="0" cellspacing="0">	
 				<tr>
 					<td class="title">任务标题：</td>
-					<td colspan="5" class="content" ><b>${task.title }</b></td>
+					<td colspan="5" class="content" >${task.title }</td>
 				</tr>
 				<tr>
 					<td class="title">派遣时间：</td>
@@ -58,7 +57,7 @@
 				</tr>
 				 --%>
 				<tr>					
-					<td class="content" colspan="6" style="border-top:1px dashed #99BBE8; padding: 4 10 4 10;"><div style="overflow: auto; width:780px; height: 60px;">	${task.descn}	</div>			</td>
+					<td class="content" colspan="6" style="border-top:1px dashed #99BBE8; padding: 4 10 4 10;"><div style="overflow: auto; width:100%; height: 150px;">	${task.descn}	</div>			</td>
 				</tr>		
 				<%--		
 				<tr>
