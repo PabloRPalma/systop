@@ -15,7 +15,7 @@
 <div><%@ include file="/common/messages.jsp"%></div>
 <div align="center">
 <s:form action="save.do" id="save" method="post" theme="simple" validate="true">
-<fieldset style="width: 820px; padding-top: 2px">
+<fieldset style="width: 820px; padding-top: 10px">
   <legend>添加文章信息</legend>
 	<s:hidden name="model.id"/>
 	<table width="800px" align="center" border="0" cellpadding="3" cellspacing="3">
