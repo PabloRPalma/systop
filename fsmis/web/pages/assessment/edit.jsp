@@ -1,13 +1,35 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglibs.jsp"%>
 <html>
 <head>
 <title></title>
+<link rel="stylesheet" type="text/css" href="${ctx}/styles/ec/ecside_style.css" />
 <%@include file="/common/extjs.jsp" %>
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/validator.jsp"%>
+<style type="text/css">
+.mytable{
+	width:600px;
+	margin-top:10px;
+}
+.title {
+	padding:6 5 3 5;
+	width:100px;
+	font-size:12px;
+	font-weight: bold;
+	text-align: right;
+}
+.content {
+	padding:6 5 3 5;
+	font-size:12px;
+	text-align: left;
+}
+/*去掉粗边框的样式*/
+.x-tab-panel{
+  margin: -1;
+}
+</style>
 </head>
 <body >
 <script type="text/javascript">
@@ -39,15 +61,15 @@ Ext.onReady(function(){
     </table>
 </div>
 <div><%@ include file="/common/messages.jsp"%></div>
-<s:form  action="save.do" id="save" method="post" theme="simple" validate="true" enctype="multipart/form-data">
-<div id="tabs">
+<s:form action="save.do" id="save" method="post" theme="simple" validate="true" enctype="multipart/form-data">
+<div id="tabs" style="width: 100%;">
 <div id="basic" class="x-hide-display">
 	<s:hidden id="id" name="model.id" />
 	<s:hidden id="fsCaseId" name="model.fsCase.id" />	
 	<table id="mytable" >
 	      <tr><td>&nbsp;</td></tr>
           <tr>
-             <td align="right" >申&nbsp;&nbsp;请&nbsp;&nbsp;人：</td>
+             <td align="right" >申&nbsp;请&nbsp;人：</td>
              <td align="left" >
              	<stc:username></stc:username>
              </td>
@@ -56,7 +78,7 @@ Ext.onReady(function(){
              <td align="right" width="90">申请日期：</td>
              <td align="left">
             	<input type="text" name="model.askDate" value='<s:date name="model.askDate" format="yyyy-MM-dd"/>'
-				  onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})" class="Wdate" style="width:127px;height:16px" readonly="readonly"/>
+				  onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})" class="Wdate" style="width:127px;height:18px" readonly="readonly"/>
                 <font color="red">*</font>
              </td>    
           </tr>
@@ -69,58 +91,47 @@ Ext.onReady(function(){
           </tr>          
 	</table>
 </div>
-<div id="fsCase" class="x-hide-display">
-<table id="mytable" >
-          <tr>
-             <td align="right" style="height:20px"><span style="font-weight:bold">事件标题：</span></td>
-             <td align="left" >
-             	<s:property value="model.fsCase.title" />
-             </td>
-          </tr>
-          <tr>
-             <td align="right" style="height:20px"><span style="font-weight:bold">事件类型：</span></td>
-             <td align="left" >
-                <c:if test="${model.fsCase.isMultiple eq '0'}">
+<div id="fsCase" class="x-hide-display" style="width: 100%">			
+	<table class="mytable" align="center" cellpadding="0" cellspacing="0">		
+		<tr>
+			<td class="title">事件标题:</td>
+			<td class="content" colspan="3"><b>${model.fsCase.title}</b></td>
+		</tr>
+        <tr>
+            <td class="title" >事件类型:</td>
+            <td class="content">
+               <c:if test="${model.fsCase.isMultiple eq '0'}">
                                                   单体事件
-                </c:if>
-                <c:if test="${model.fsCase.isMultiple eq '1'}">
+               </c:if>
+               <c:if test="${model.fsCase.isMultiple eq '1'}">
                                                   多体事件
-                </c:if>
-             </td>
-          </tr>
-          <tr>
-             <td align="right" style="height:20px"><span style="font-weight:bold">事件类别：</span></td>
-             <td align="left" >
-             	<s:property value="model.fsCase.caseType.name" />
-             </td>
-          </tr> 
-          <tr>
-             <td align="right" style="height:20px"><span style="font-weight:bold">事发地点：</span></td>
-             <td align="left" >
-             	<s:property value="model.fsCase.address" />
-             </td>
-          </tr>                    
-          <tr>
-             <td align="right" width="90" style="height:20px"><span style="font-weight:bold">事发时间：</span></td>
-             <td align="left">
-                 <s:date name="model.fsCase.caseTime" format="yyyy-MM-dd" />
-             </td>    
-          </tr>
-          <tr>
-             <td align="right" style="height:20px"><span style="font-weight:bold">事件报告人：</span></td>
-             <td align="left" >
-             	<s:property value="model.fsCase.informer" />
-             </td>
-          </tr>  	                     
-          <tr>
-	          <td align="right" style="height:20px"><span style="font-weight:bold">事件描述：</span></td>
-	          <td align="left" colspan="3">
-	          	<div style="width:700px;word-break:break-all;">
-		          	${model.fsCase.descn}
-	          	</div>
-	          </td>
-          </tr>     
-</table>
+               </c:if>
+            </td>
+        </tr>				
+		<tr>
+			<td class="title">事件类别:</td>
+			<td class="content" colspan="3">${model.fsCase.caseType.name}</td>
+		</tr>
+		<tr>
+			<td class="title">事发时间:</td>
+			<td class="content" width="100"><s:date name="model.fsCase.caseTime"format="yyyy-MM-dd" /></td>
+			
+			<td class="title" width="300">事件地点:</td>
+			<td class="content">${model.fsCase.address}</td>
+		</tr>
+		<tr>
+			<td class="title">事件报告人:</td>
+			<td class="content">${model.fsCase.informer}&nbsp;</td>
+			
+			<td class="title">报告人电话:</td>
+			<td class="content">${model.fsCase.informerPhone}&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="content" colspan="4" style="border-top:1px dashed #99BBE8; padding: 4 10 4 10;">
+				${model.fsCase.descn}
+			</td>
+		</tr>						
+	</table>
 </div>
 </div>
 <table width="100%" style="margin-bottom: 0px;">
