@@ -24,11 +24,11 @@
 <div><%@ include file="/common/messages.jsp"%></div>
 <div align="center">
 <s:form action="save.do" id="save" method="post" theme="simple" validate="true">
-<fieldset style="width: 500px; padding-top: 10px">
+<fieldset style="width: 600px; padding-top: 10px">
   <legend>编辑栏目信息</legend>
 	<s:hidden name="model.id"/>
 	<s:hidden name="parentId"/>
-	<table width="600px" align="center" border="0" cellpadding="3" cellspacing="3">
+	<table width="550px" align="center" border="0" cellpadding="3" cellspacing="3">
 		<tr>
 			<td align="right" width="100">栏目名称：</td>
 			<td align="left">
