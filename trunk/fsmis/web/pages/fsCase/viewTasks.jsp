@@ -17,20 +17,20 @@
   </c:choose>
 	<div id="taskDiv${taskStatus.index+1}" class="x-hide-display" style="width: 100%">
 		<div style="width: 100%">
-		<table style="100%" >
+		<table style="width:600px;" align="center" >
 			 <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
 				<tr>
-					<td align="right" width="6%" >任务标题：</td>
-					<td colspan="5" align="left" >${task.title }</td>
+					<td class="title">任务标题：</td>
+					<td colspan="5" class="content" ><b>${task.title }</b></td>
 				</tr>
 				<tr>
-					<td align="right" width="6%">派遣时间：</td>
-					<td width="12%"><fmt:formatDate value="${task.dispatchTime}"pattern="yyyy-MM-dd HH:mm" /></td>
+					<td class="title">派遣时间：</td>
+					<td class="content" ><fmt:formatDate value="${task.dispatchTime}"pattern="yyyy-MM-dd HH:mm" /></td>
 
-					<td align="right" width="12%">规定完成时间：</td>
-					<td width="12%"><fmt:formatDate value="${task.presetTime}"pattern="yyyy-MM-dd HH:mm" /></td>
-					<td align="right" width="8%">任务状态：</td>
-					<td width="15%">
+					<td class="title">规定完成时间：</td>
+					<td class="content" ><fmt:formatDate value="${task.presetTime}"pattern="yyyy-MM-dd HH:mm" /></td>
+					<td class="title">任务状态：</td>
+					<td class="content" >
 					<c:if test="${task.status == '0'}">
 						<font color="red">未接收</font>
 					</c:if> <c:if test="${task.status == '1'}">
@@ -44,6 +44,7 @@
 					</c:if>
 					</td>
 				</tr>
+				<%-- 由于页面下方有任务附件的GridPanel,这里就不列出任务附件了.
 				<tr>
 					<td align="right" valign="top">任务附件：</td>
 					<td colspan="5">
@@ -55,9 +56,9 @@
 					</c:forEach>
 					</td>
 				</tr>
-				<tr>
-					<td align="right" valign="top">任务描述：</td>
-					<td colspan="5"><div style="overflow: auto; width:780px; height: 150px;">	${task.descn}	</div>			</td>
+				 --%>
+				<tr>					
+					<td class="content" colspan="6" style="border-top:1px dashed #99BBE8; padding: 4 10 4 10;"><div style="overflow: auto; width:780px; height: 60px;">	${task.descn}	</div>			</td>
 				</tr>		
 				<%--		
 				<tr>
