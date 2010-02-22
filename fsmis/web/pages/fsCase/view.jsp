@@ -8,17 +8,21 @@
 <%@include file="/common/extjs.jsp"%>
 <%@include file="/common/meta.jsp"%>
 <style type="text/css">
-.mytable {
-  border:2;
-	width: 100%;
-	margin-top: 5px;
-	margin-bottom: 5px;
+.mytable{
+	width:600px;
+	margin-top:10px;
 }
-.mytable td {
-	border: 0px solid #A6C9E2;
-	margin-top: 2;
-	margin-bottom: 2;
-	padding: 2px 2px 2px 2px;
+.title {
+	padding:6 5 3 5;
+	width:100px;
+	font-size:12px;
+	font-weight: bold;
+	text-align: right;
+}
+.content {
+	padding:6 5 3 5;
+	font-size:12px;
+	text-align: left;
 }
 /*去掉粗边框的样式*/
 .x-tab-panel{
@@ -44,7 +48,7 @@ function isSubmited(caseId) {
 <!-- 事件信息 -->
 <div class="x-panel" style="width: 100%">
 	<div class="x-panel-header">事件信息</div>
-	<div class="x-toolbar">
+	<div class="x-toolbar" style="padding: 5 5 0 5;">
 		<table width="100%">
 			<tr>
 				<td width="90%" align="left"></td>
@@ -83,34 +87,31 @@ function isSubmited(caseId) {
 	</div>
 	<div id="tabs" style="width: 100%;">
 		<div id="fsCaseDiv" class="x-hide-display" style="width: 100%">			
-			<table width="100%" height="450px">		
+			<table class="mytable" align="center" cellpadding="0" cellspacing="0">		
 				<tr>
-					<td  width="10%" align="right">事件标题：</td>
-					<td  align="left" >${model.title}</td>
+					<td class="title">事件标题:</td>
+					<td class="content" colspan="3"><b>${model.title}</b></td>
 				</tr>
 				<tr>
-					<td width="10%"  align="right">事件类别：</td>
-					<td align="left" >${model.caseType.name}</td>
+					<td class="title">事件类别:</td>
+					<td class="content" colspan="3">${model.caseType.name}</td>
 				</tr>
 				<tr>
-					<td width="10%"  align="right">事件地点：</td>
-					<td align="left" >${model.address}</td>
+					<td class="title">事发时间:</td>
+					<td class="content" width="100"><s:date name="model.caseTime"format="yyyy-MM-dd" /></td>
+					<td class="title" width="300">事件地点:</td>
+					<td class="content">${model.address}</td>
 				</tr>
 				<tr>
-					<td width="10%"  align="right">事发时间：</td>
-					<td align="left" ><s:date name="model.caseTime"format="yyyy-MM-dd" /></td>
+					<td class="title">事件报告人:</td>
+					<td class="content">${model.informer}&nbsp;</td>
+					<td class="title">报告人电话:</td>
+					<td class="content">${model.informerPhone}&nbsp;</td>
 				</tr>
 				<tr>
-					<td width="10%"  align="right">事件报告人：</td>
-					<td  align="left">${model.informer}</td>
-				</tr>
-				<tr>
-					<td width="10%"  align="right">报告人电话：</td>
-					<td  align="left">${model.informerPhone}</td>
-				</tr>
-				<tr height="220px">
-					<td width="10%"  align="right" valign="top">事件描述：</td>
-					<td  align="left" valign="top">${model.descn}</td>
+					<td class="content" colspan="4" style="border-top:1px dashed #99BBE8; padding: 4 10 4 10;">
+						${model.descn}
+					</td>
 				</tr>						
 			</table>
 		</div>
