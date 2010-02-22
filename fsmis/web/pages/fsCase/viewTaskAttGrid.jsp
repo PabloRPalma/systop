@@ -23,12 +23,12 @@
 		       {
 			       header : '任务标题',
 				   dataIndex : 'taskTitle',
-		           width : 400,
+		           width : 380,
 		           sortable : true
 		       },{
 			       header : '附件标题',
 		           dataIndex : 'title',
-		           width : 200,
+		           width : 180,
 		           sortable : true,
 		           renderer: function(value, cellmeta, record, rowIndex, columnIndex, store) {		           	   
 			           return '<a href="${ctx}'+ record.data['path'] + '" target="_blank" title="下载附件"> <font color="blue" >' + record.data["title"] + '</font></a>';			           			           	 	           
@@ -54,7 +54,7 @@
 			 viewConfig: {
 			       forceFit: true
 			   },						
-			height:150,
+			height:119,
 			frame:true,			
 			store: store,
 			cm : cm,
