@@ -126,7 +126,7 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 				args.add(beginDate);
 				args.add(endDate);
 			}
-			sqlTemp.append(" group by fc.status");
+			sqlTemp.append(" group by fc.county.id");
 			List<Object[]> result = getDao()
 					.query(sqlTemp.toString(), args.toArray());
 			if (CollectionUtils.isNotEmpty(result)) {
@@ -319,7 +319,7 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 			String yearOrMonth, Dept county) {
 		String dataString = null;
 		if (beginDate == null && endDate == null) {
-			beginDate=new Date();
+			beginDate = new Date();
 			beginDate = DateUtil.add(beginDate, Calendar.YEAR, -1);
 			endDate = new Date();
 		}
@@ -853,8 +853,7 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 			args.add(dept.getId());
 		}
 		if (beginDate != null && endDate != null) {
-			sql
-					.append(" and fc.caseTime between ? and ?  ");
+			sql.append(" and fc.caseTime between ? and ?  ");
 			args.add(beginDate);
 			args.add(endDate);
 		}
