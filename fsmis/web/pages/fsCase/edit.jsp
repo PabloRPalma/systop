@@ -1,12 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" import="java.util.List"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@include file="/common/taglibs.jsp"%>
 <html>
 <head>
 <title></title>
-<%@include file="/common/extjs.jsp" %>
 <%@include file="/common/meta.jsp"%>
+<link rel="stylesheet" type="text/css" href="${ctx}/styles/ec/ecside_style.css" />
+<%@include file="/common/extjs.jsp" %>
 <%@include file="/common/validator.jsp"%>
 <script type="text/javascript" src="${ctx}/scripts/fckeditor/fckeditor.js"></script>
 <link href="${ctx}/styles/treeSelect.css" type='text/css' rel='stylesheet'>
