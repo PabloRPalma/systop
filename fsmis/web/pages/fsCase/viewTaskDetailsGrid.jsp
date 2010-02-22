@@ -82,7 +82,7 @@
 			bodyStyle:'width:100%',
 			autoWidth : true,  
 			autoScroll : true,  
-			height:106,			
+			height:108,			
 			frame:true,
 			//width:this.getComputedWidth(),--不支持			
 			store: store,
