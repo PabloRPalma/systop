@@ -77,7 +77,7 @@
 			applyTo : 'smsSendDiv',
 
 			bodyStyle:'width:100%',
-			height:190,
+			height:185,
 			frame:true,			
 			store: storeSend,
 			loadMask:true,
@@ -198,7 +198,7 @@
 			applyTo : 'smsReceiveSmsDiv',
 
 			bodyStyle:'width:100%',
-			height:190,
+			height:185,
 			frame:true,			
 			store: storeReceive,
 			cm : cmReceive,
