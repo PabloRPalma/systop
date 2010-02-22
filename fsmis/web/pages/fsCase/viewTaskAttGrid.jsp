@@ -31,7 +31,7 @@
 		           width : 200,
 		           sortable : true,
 		           renderer: function(value, cellmeta, record, rowIndex, columnIndex, store) {		           	   
-			           return '<a href="'+ ${ctx}record.data['path'] +'" target="_blank" title="下载附件"> <font color="blue" >'+record.data["title"]+'</font></a>';			           			           	 	           
+			           return '<a href="${ctx}'+ record.data['path'] + '" target="_blank" title="下载附件"> <font color="blue" >' + record.data["title"] + '</font></a>';			           			           	 	           
 		            }				     
 		       },{
 			       header : '附件路径',
