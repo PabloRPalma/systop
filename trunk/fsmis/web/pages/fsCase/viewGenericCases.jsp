@@ -71,4 +71,4 @@
 		})
 	});
   </script>
-  <div id='genericCaseGridDiv${genericStatus.index+1}' style="width:100%;"></div>
+  <div id='genericCaseGridDiv${genericStatus.index+1}' style="width:100%; margin: -1;"></div>
