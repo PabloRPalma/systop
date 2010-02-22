@@ -32,7 +32,7 @@
 		<tr>
 			<td align="right" width="100">栏目名称：</td>
 			<td align="left">
-				<s:textfield id="name" name="model.name" cssStyle="width:350px" cssClass="required" /><font color="red">*</font>
+				<s:textfield id="name" name="model.name" cssStyle="width:350px" cssClass="required" />&nbsp;<font color="red">*</font>
 			</td>
 		</tr>
 		<tr>
