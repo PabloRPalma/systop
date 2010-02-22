@@ -4,10 +4,32 @@
 <html>
 <head>
 <title></title>
-<%@include file="/common/ec.jsp"%>
+<link rel="stylesheet" type="text/css" href="${ctx}/styles/ec/ecside_style.css" />
 <%@include file="/common/extjs.jsp" %>
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/validator.jsp"%>
+<style type="text/css">
+.mytable{
+	width:600px;
+	margin-top:10px;
+}
+.title {
+	padding:6 5 3 5;
+	width:100px;
+	font-size:12px;
+	font-weight: bold;
+	text-align: right;
+}
+.content {
+	padding:6 5 3 5;
+	font-size:12px;
+	text-align: left;
+}
+/*去掉粗边框的样式*/
+.x-tab-panel{
+  margin: -1;
+}
+</style>
 </head>
 <body >
 <script type="text/javascript">
@@ -43,7 +65,7 @@ Ext.onReady(function(){
 </div>
 <div><%@ include file="/common/messages.jsp"%></div>
 <s:form action="resultSave.do" id="resultForm" validate="true" method="post" enctype="multipart/form-data">
-<div id="tabs">
+<div id="tabs" style="width: 100%;">
 <div id="result" class="x-hide-display">
 	<s:hidden id="id" name="model.id" />
 	<s:hidden id="jointTaskId" name="model.jointTask.id" />
@@ -121,64 +143,47 @@ Ext.onReady(function(){
 <iframe  height="450" src="${ctx}/jointTaskDetail/attaches/index.do?jointTaskDetailId=${param['model.id']}" width="100%" name="taskDetailAttachs" frameborder="0"></iframe>
 </div>
 
-<div id="fsCase" class="x-hide-display">
-<table id="mytable" >
-          <tr>
-             <td align="right" style="height:20px"><span style="font-weight:bold">事件标题：</span></td>
-             <td align="left" >
-             	<s:property value="model.jointTask.fsCase.title" />
-             </td>
-          </tr>
-          <tr>
-             <td align="right" style="height:20px"><span style="font-weight:bold">事件类型：</span></td>
-             <td align="left" >
-                <c:if test="${model.jointTask.fsCase.isMultiple eq '0'}">
+<div id="fsCase" class="x-hide-display" style="width: 100%">			
+	<table class="mytable" align="center" cellpadding="0" cellspacing="0">		
+		<tr>
+			<td class="title">事件标题:</td>
+			<td class="content" colspan="3"><b>${model.jointTask.fsCase.title}</b></td>
+		</tr>
+        <tr>
+            <td class="title" >事件类型:</td>
+            <td class="content" >
+               <c:if test="${model.jointTask.fsCase.isMultiple eq '0'}">
                                                   单体事件
-                </c:if>
-                <c:if test="${model.jointTask.fsCase.isMultiple eq '1'}">
+               </c:if>
+               <c:if test="${model.jointTask.fsCase.isMultiple eq '1'}">
                                                   多体事件
-                </c:if>
-             </td>
-          </tr>
-          <tr>
-             <td align="right" style="height:20px"><span style="font-weight:bold">事件类别：</span></td>
-             <td align="left" >
-             	<s:property value="model.jointTask.fsCase.caseType.name" />
-             </td>
-          </tr> 
-          <tr>
-             <td align="right" style="height:20px"><span style="font-weight:bold">事发地点：</span></td>
-             <td align="left" >
-             	<s:property value="model.jointTask.fsCase.address" />
-             </td>
-          </tr>                    
-          <tr>
-             <td align="right" width="90" style="height:20px"><span style="font-weight:bold">事发时间：</span></td>
-             <td align="left">
-                 <s:date name="model.jointTask.fsCase.caseTime" format="yyyy-MM-dd" />
-             </td>    
-          </tr>
-          <tr>
-             <td align="right" style="height:20px"><span style="font-weight:bold">事件报告人：</span></td>
-             <td align="left">
-             	<s:property value="model.jointTask.fsCase.informer" />
-             </td>
-          </tr> 
-          <tr>
-             <td align="right" style="height:20px"><span style="font-weight:bold">报告人电话：</span></td>
-             <td align="left" >
-             	<s:property value="model.jointTask.fsCase.informerPhone" />
-             </td>
-          </tr>                       
-          <tr>
-	          <td align="right" style="height:20px"><span style="font-weight:bold">事件描述：</span></td>
-	          <td align="left" colspan="3">
-	          	<div style="width:700px;word-break:break-all;">
-		          	${model.jointTask.fsCase.descn}
-	          	</div>
-	          </td>
-          </tr>     
-</table>
+               </c:if>
+            </td>
+        </tr>				
+		<tr>
+			<td class="title">事件类别:</td>
+			<td class="content" colspan="3">${model.jointTask.fsCase.caseType.name}</td>
+		</tr>
+		<tr>
+			<td class="title">事发时间:</td>
+			<td class="content" width="100"><s:date name="model.jointTask.fsCase.caseTime"format="yyyy-MM-dd" /></td>
+			
+			<td class="title" width="300">事件地点:</td>
+			<td class="content">${model.jointTask.fsCase.address}</td>
+		</tr>
+		<tr>
+			<td class="title">事件报告人:</td>
+			<td class="content">${model.jointTask.fsCase.informer}&nbsp;</td>
+			
+			<td class="title">报告人电话:</td>
+			<td class="content">${model.jointTask.fsCase.informerPhone}&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="content" colspan="4" style="border-top:1px dashed #99BBE8; padding: 4 10 4 10;">
+				${model.jointTask.fsCase.descn}
+			</td>
+		</tr>						
+	</table>
 </div>
 </div>
 <table width="100%" style="margin-bottom: 0px;">

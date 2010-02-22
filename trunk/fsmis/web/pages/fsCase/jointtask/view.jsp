@@ -4,10 +4,32 @@
 <html>
 <head>
 <title></title>
-<%@include file="/common/ec.jsp"%>
+<link rel="stylesheet" type="text/css" href="${ctx}/styles/ec/ecside_style.css" />
 <%@include file="/common/extjs.jsp" %>
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/validator.jsp"%>
+<style type="text/css">
+.mytable{
+	width:600px;
+	margin-top:10px;
+}
+.title {
+	padding:6 5 3 5;
+	width:100px;
+	font-size:12px;
+	font-weight: bold;
+	text-align: right;
+}
+.content {
+	padding:6 5 3 5;
+	font-size:12px;
+	text-align: left;
+}
+/*去掉粗边框的样式*/
+.x-tab-panel{
+  margin: -1;
+}
+</style>
 </head>
 <body >
 <script type="text/javascript">
@@ -47,66 +69,49 @@ Ext.onReady(function(){
 </c:if>
 <div><%@ include file="/common/messages.jsp"%></div>
 <s:form action="auditSave.do" id="auditForm" validate="true" method="post" enctype="multipart/form-data">
-<div id="tabs">
-<div id="fsCase" class="x-hide-display">
-<table id="mytable" >
-          <tr>
-             <td align="right" >事件标题：</td>
-             <td align="left" >
-             	<s:property value="model.fsCase.title" />
-             </td>
-          </tr>
-          <tr>
-             <td align="right" >事件类型：</td>
-             <td align="left" >
-                <c:if test="${model.fsCase.isMultiple eq '0'}">
+<div id="tabs" style="width: 100%;">
+<div id="fsCase" class="x-hide-display" style="width: 100%">			
+	<table class="mytable" align="center" cellpadding="0" cellspacing="0">		
+		<tr>
+			<td class="title">事件标题:</td>
+			<td class="content" colspan="3"><b>${model.fsCase.title}</b></td>
+		</tr>
+        <tr>
+            <td class="title" >事件类型:</td>
+            <td class="content">
+               <c:if test="${model.fsCase.isMultiple eq '0'}">
                                                   单体事件
-                </c:if>
-                <c:if test="${model.fsCase.isMultiple eq '1'}">
+               </c:if>
+               <c:if test="${model.fsCase.isMultiple eq '1'}">
                                                   多体事件
-                </c:if>
-             </td>
-          </tr>
-          <tr>
-             <td align="right" >事件类别：</td>
-             <td align="left" >
-             	<s:property value="model.fsCase.caseType.name" />
-             </td>
-          </tr> 
-          <tr>
-             <td align="right" >事发地点：</td>
-             <td align="left" >
-             	<s:property value="model.fsCase.address" />
-             </td>
-          </tr>                    
-          <tr>
-             <td align="right" width="90" >事发时间：</td>
-             <td align="left">
-                 <s:date name="model.fsCase.caseTime" format="yyyy-MM-dd" />
-             </td>    
-          </tr>
-          <tr>
-             <td align="right" >事件报告人：</td>
-             <td align="left" >
-             	<s:property value="model.fsCase.informer" />
-             </td>
-          </tr> 
-          <tr>
-             <td align="right" >报告人电话：</td>
-             <td align="left" >
-             	<s:property value="model.fsCase.informerPhone" />
-             </td>
-          </tr>                       
-          <tr>
-	          <td align="right">事件描述：</td>
-	          <td align="left" colspan="3">
-	          	<div style="width:700px;word-break:break-all;"> 	
-		          	<pre>${model.fsCase.descn}</pre>
-	          	</div>
-	          </td>
-          </tr>     
-</table>
-</div>
+               </c:if>
+            </td>
+        </tr>				
+		<tr>
+			<td class="title">事件类别:</td>
+			<td class="content" colspan="3">${model.fsCase.caseType.name}</td>
+		</tr>
+		<tr>
+			<td class="title">事发时间:</td>
+			<td class="content" width="100"><s:date name="model.fsCase.caseTime"format="yyyy-MM-dd" /></td>
+			
+			<td class="title" width="300">事件地点:</td>
+			<td class="content">${model.fsCase.address}</td>
+		</tr>
+		<tr>
+			<td class="title">事件报告人:</td>
+			<td class="content">${model.fsCase.informer}&nbsp;</td>
+			
+			<td class="title">报告人电话:</td>
+			<td class="content">${model.fsCase.informerPhone}&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="content" colspan="4" style="border-top:1px dashed #99BBE8; padding: 4 10 4 10;">
+				${model.fsCase.descn}
+			</td>
+		</tr>						
+	</table>
+</div>	
 <div id="task" class="x-hide-display">
 <table id="mytable" border="0" cellpadding="1" cellspacing="1"> 
   <tr>
