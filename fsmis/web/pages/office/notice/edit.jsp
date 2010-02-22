@@ -6,7 +6,7 @@
 <title>通知管理</title>
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/dwr.jsp"%>
-<%@include file="/common/ec.jsp"%>
+<link rel="stylesheet" type="text/css" href="${ctx}/styles/ec/ecside_style.css" />
 <script type="text/javascript" src="${ctx}/scripts/fckeditor/fckeditor.js"></script>
 <script type="text/javascript" src="${ctx}/scripts/fsmis/ShowDeptName.js"></script>
 <script type="text/javascript" src="${ctx}/dwr/interface/NoticeDwrAction.js"></script>
