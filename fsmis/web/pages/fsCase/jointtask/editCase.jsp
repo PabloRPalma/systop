@@ -88,7 +88,7 @@
   function preFckEditor(){
 	var fckEditor = new FCKeditor( 'descn' ) ;
     fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
-    fckEditor.ToolbarSet = 'BasicA';
+    fckEditor.ToolbarSet = 'Basic';
     fckEditor.Height = 300;
     fckEditor.Width = 520;
     fckEditor.ReplaceTextarea();
