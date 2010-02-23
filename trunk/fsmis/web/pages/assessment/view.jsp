@@ -66,10 +66,10 @@ Ext.onReady(function(){
     var tabs = new Ext.TabPanel({
         renderTo: 'tabs',
         anchor : '100% 100%',
-        height : 270,
+        //height : 270,
         activeTab: 0,
         frame:false,
-        defaults:{autoHeight: false},
+        defaults:{autoHeight: true},
         items:[
             {contentEl:'fsCase', title: '事件信息'},
             {contentEl:'result', title: '评估结果'}
@@ -140,7 +140,7 @@ Ext.onReady(function(){
 		</tr>						
 	</table>
 </div>
-<div id="result" class="x-hide-display">
+<div id="result" class="x-hide-display" align="center">
 	<s:hidden id="id" name="model.id" />
 	<s:hidden id="fsCaseId" name="model.fsCase.id" />	
 	<table id="mytable" >
@@ -151,23 +151,26 @@ Ext.onReady(function(){
             <td colspan="2"></td>
           </tr>
           <tr>
-             <td align="right" width="90">申&nbsp;请&nbsp;人：</td>
+             <td align="right" width="90" height="20">申&nbsp;请&nbsp;人：</td>
              <td align="left" >
              	<stc:username></stc:username>
              </td>
-          </tr>         
+          </tr>       
           <tr>
-             <td align="right" width="90">申请日期：</td>
+             <td align="right" width="90" height="20">申请日期：</td>
              <td align="left">
                 <s:date name="model.askDate" format="yyyy-MM-dd" />
              </td>    
-          </tr>          
+          </tr> 
           <tr>
-	          <td align="right" width="90">申请原因：</td>
-	          <td align="left" colspan="3">
-	            <pre>${model.askCause}</pre>
-	          </td>
-          </tr>    
+	         <td align="right" width="90" height="20">申请原因：</td>    
+	         <td align="left" height="20">见下</td>    	         
+          </tr>                 
+          <tr>
+			<td class="content" colspan="4" style="border-top:1px dashed #99BBE8; padding: 4 10 4 10;">
+                ${model.askCause}
+			</td>	          
+          </tr>  
           <tr>
              <td align="right" width="90" >专家组长：</td>
              <td>

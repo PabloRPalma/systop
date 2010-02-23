@@ -8,6 +8,7 @@
 <%@include file="/common/extjs.jsp" %>
 <%@include file="/common/meta.jsp"%>
 <%@include file="/common/validator.jsp"%>
+<script type="text/javascript" src="${ctx}/scripts/fckeditor/fckeditor.js"></script>
 <style type="text/css">
 .mytable{
 	width:600px;
@@ -30,17 +31,27 @@
   margin: -1;
 }
 </style>
+<script type="text/javascript">
+function preFckEditor(){
+  var fckEditor = new FCKeditor( 'askCause' ) ;
+  fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
+  fckEditor.ToolbarSet = 'Basic';
+  fckEditor.Height = 300;
+  fckEditor.Width = 520;
+  fckEditor.ReplaceTextarea();
+}
+</script>
 </head>
-<body >
+<body onload="preFckEditor()">
 <script type="text/javascript">
 Ext.onReady(function(){
     var tabs = new Ext.TabPanel({
         renderTo: 'tabs',
         anchor : '100% 100%',
-        height : 270,
+        //height : 370,
         activeTab: 0,
         frame:false,
-        defaults:{autoHeight: false},
+        defaults:{autoHeight: true},
         items:[
             {contentEl:'basic', title: '评估申请'},
             {contentEl:'fsCase', title: '事件信息'}
@@ -63,7 +74,7 @@ Ext.onReady(function(){
 <div><%@ include file="/common/messages.jsp"%></div>
 <s:form action="save.do" id="save" method="post" theme="simple" validate="true" enctype="multipart/form-data">
 <div id="tabs" style="width: 100%;">
-<div id="basic" class="x-hide-display">
+<div id="basic" class="x-hide-display" align="center">
 	<s:hidden id="id" name="model.id" />
 	<s:hidden id="fsCaseId" name="model.fsCase.id" />	
 	<table id="mytable" >
@@ -73,20 +84,19 @@ Ext.onReady(function(){
              <td align="left" >
              	<stc:username></stc:username>
              </td>
-          </tr>
-          <tr>
-             <td align="right" width="90">申请日期：</td>
+             <td align="right">申请日期：</td>
              <td align="left">
             	<input type="text" name="model.askDate" value='<s:date name="model.askDate" format="yyyy-MM-dd"/>'
-				  onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})" class="Wdate" style="width:127px;height:18px" readonly="readonly"/>
+				  onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})" class="Wdate required" style="width:127px;height:18px" readonly="readonly"/>
                 <font color="red">*</font>
-             </td>    
+             </td>               
           </tr>
           <tr>
 	          <td align="right" >申请原因：</td>
 	          <td align="left" colspan="3">
-	          	<s:textarea id="askCause" name="model.askCause" cssStyle="width:400px; height:160px" cssClass="required"/>
-                <font color="red">&nbsp;*</font>	          
+				<textarea id="askCause" name="model.askCause" cols="65" rows="4" class="required" >${model.askCause}</textarea>
+				<font color="red">*</font>	          
+       
 	          </td>
           </tr>          
 	</table>

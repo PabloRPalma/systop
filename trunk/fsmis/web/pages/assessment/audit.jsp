@@ -37,10 +37,10 @@ Ext.onReady(function(){
     var tabs = new Ext.TabPanel({
         renderTo: 'tabs',
         anchor : '100% 100%',
-        height : 270,
+        //height : 370,
         activeTab: 0,
         frame:false,
-        defaults:{autoHeight: false},
+        defaults:{autoHeight: true},
         items:[
             {contentEl:'basic', title: '评估审核'},
             {contentEl:'fsCase', title: '事件信息'}
@@ -55,6 +55,8 @@ function setAgreeValue(aValue) {
 
 function auditSave(){
 	var result = document.getElementById('result').value;
+	//var oEditor = FCKeditorAPI.GetInstance('result') ; 
+	//var result = oEditor.GetXHTML( true ); 
 	var info = null;
     if (agreeVal == null || agreeVal == '') {
         Ext.MessageBox.show({
@@ -105,7 +107,7 @@ function auditSave(){
 <div><%@ include file="/common/messages.jsp"%></div>
 <s:form id="auditForm" method="post" theme="simple" validate="true" enctype="multipart/form-data">
 <div id="tabs" style="width: 100%;">
-<div id="basic" class="x-hide-display">
+<div id="basic" class="x-hide-display" align="center">
 	<s:hidden id="id" name="model.id" />
 	<table id="mytable" >
 	      <tr><td>&nbsp;</td></tr>
@@ -115,16 +117,6 @@ function auditSave(){
              	<stc:username></stc:username>
              </td>
           </tr>
-          <!--  
-          <tr>
-             <td align="right" width="90">审核日期：</td>
-             <td align="left">
-            	<input type="text" name="checkResult.checkTime" class="required" value='<s:date name="checkResult.checkTime" format="yyyy-MM-dd"/>'
-				  onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})" class="Wdate" style="width:127px;height:16px" readonly="readonly"/>
-                <font color="red">*</font>
-             </td>    
-          </tr>
-          -->
 	     <tr>
 			<td width="90" align="right">是否通过：</td>
 			<td colspan="3" align="left">
@@ -135,7 +127,7 @@ function auditSave(){
           <tr>
 	          <td align="right"  >审核意见：</td>
 	          <td align="left" colspan="3">
-	          	<s:textarea id="result" name="checkResult.result" cssStyle="width:400px; height:140px" cssClass="required"/>
+	          	<s:textarea id="result" name="checkResult.result" cssStyle="width:550px; height:280px" cssClass="required"/>
                 <font color="red">&nbsp;*</font>	          
 	          </td>
           </tr>       

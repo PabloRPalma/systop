@@ -128,6 +128,11 @@ window.onload = function(){
 	     </c:otherwise>
 	   </c:choose> 
 	   </c:if>  
+	   <c:if test="${item.state eq '4'}">
+	        <font color="#999999">改</font> |
+	        <font color="#999999">报</font> |
+	        <font color="#999999">删</font> |	        	        	   
+	   </c:if>
        <a href="print.do?model.id=${item.id}" target="_blank"> 印</a>	   
 	</ec:column>    
   </ec:row>
