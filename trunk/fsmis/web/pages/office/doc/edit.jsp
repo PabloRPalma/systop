@@ -34,7 +34,7 @@
 		<tr>
 			<td align="right" width="70">所属栏目：</td>
 			<td align="left">
-				<s:select name="model.documentType.id" listKey="id" listValue="name" list="DocumentTypeMap" headerKey=""  headerValue="选择栏目..." cssStyle="width:200px"></s:select><font color="red">&nbsp;*</font>
+				<s:select name="model.documentType.id" listKey="id" listValue="name" list="DocumentTypeMap" cssClass="required" headerKey=""  headerValue="选择栏目..." cssStyle="width:200px"></s:select><font color="red">&nbsp;*</font>
 			</td>
 		</tr>
 		<tr>
