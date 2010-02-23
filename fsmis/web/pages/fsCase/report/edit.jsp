@@ -82,7 +82,7 @@
 		</tr>
 		<tr>
 			<td align="right" height="30">事发时间：</td>
-			<td align="left" colspan="3"><input type="text"
+			<td align="left" colspan="3"><input type="text" id="caseTime"
 				name="model.caseTime" style="width: 150px"
 				value='<s:property value="model.caseTime"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
@@ -140,7 +140,7 @@
 		</tr>
 		<tr>
 			<td align="right" height="33">调查时间：</td>
-			<td width="266" align="left"><input type="text"
+			<td width="266" align="left"><input type="text" id="disTime"
 				name="task.dispatchTime" style="width: 175px"
 				value='<s:property value="task.dispatchTime"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
@@ -148,7 +148,7 @@
 			</td>
 			<td width="99" align="right">结案时间：</td>
 			<td width="265" align="left">
-				<input type="text"
+				<input type="text" id="comTime"
 				name="taskDetail.completionTime" style="width: 175px"
 				value='<s:property value="taskDetail.completionTime"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
@@ -162,15 +162,15 @@
 				cssClass="required" /> <font color="red">&nbsp;*</font></td>
 		</tr>
 		<tr>
-			<td align="right">处理结果：</td>
-			<td align="left" colspan="3" style="vertical-align: top"><s:textarea
-				id="result" name="taskDetail.result" cssStyle="width:550px; height:90px"
-				cssClass="required" /> <font color="red">&nbsp;*</font></td>
-		</tr>
-		<tr>
 			<td align="right">处理依据：</td>
 			<td align="left" colspan="3" style="vertical-align: top"><s:textarea
 				id="basis" name="taskDetail.basis" cssStyle="width:550px; height:90px"
+				cssClass="required" /> <font color="red">&nbsp;*</font></td>
+		</tr>
+		<tr>
+			<td align="right">处理结果：</td>
+			<td align="left" colspan="3" style="vertical-align: top"><s:textarea
+				id="result" name="taskDetail.result" cssStyle="width:550px; height:90px"
 				cssClass="required" /> <font color="red">&nbsp;*</font></td>
 		</tr>
 	</table>
@@ -181,8 +181,8 @@
 		<tr>
 			<td width="151" align="right" height="26">单位名称：</td>
 			<td width="637" align="left"><s:textfield id="companyName" onblur="compCorpInfo(this.value)"
-				name="corpName" cssStyle="width:550px" cssClass="required"/>
-			<font color="red">&nbsp;*</font></td>
+				name="corpName" cssStyle="width:550px"/>
+			</td>
 		</tr>
 		<tr>
 			<td align="right" height="26"> 单位地址：</td>
@@ -223,9 +223,10 @@
 			<td height="5"></td>
 		</tr>
 		<tr>
-			<td style="text-align: center;"><s:submit value="保存"
-				cssClass="button" />&nbsp;&nbsp; <s:reset value="重置"
-				cssClass="button" /></td>
+			<td style="text-align: center;">
+				<input type="button" value="保存" class="button" onclick="saveReportCase()" />&nbsp;&nbsp; 
+				<s:reset value="重置" cssClass="button" />
+			</td>
 		</tr>
 	</table>
 </s:form></div>
@@ -346,6 +347,67 @@
 	$(document).ready(function() {
 		$("#save").validate();
 	});
+
+	function saveReportCase() {
+		//事件信息页面
+		var vTitle = document.getElementById('title').value;
+		var vCaseTime = document.getElementById('caseTime').value;
+		var vLevelone = document.getElementById('levelone').value;
+		var vAddress = document.getElementById('address').value;
+		var vDescn = document.getElementById('descn').value;
+		//处理结果页面
+		var vProcessor = document.getElementById('processor').value;
+		var vDisTime = document.getElementById('disTime').value;
+		var vComTime = document.getElementById('comTime').value;
+		var vProcess = document.getElementById('process').value;
+		var vBasis = document.getElementById('basis').value;
+		var vResult = document.getElementById('result').value;
+
+		if (vResult == null || vResult =='') {
+			showMessage("处理结果","处理结果");
+		}
+		if (vBasis == null || vBasis =='') {
+			showMessage("处理结果","处理依据");
+		}
+		if (vProcess == null || vProcess =='') {
+			showMessage("处理结果","处理过程");
+		}
+		if (vComTime == null || vComTime =='') {
+			showMessage("处理结果","结案时间");
+		}
+		if (vDisTime == null || vDisTime =='') {
+			showMessage("处理结果","调查时间");
+		}
+		if (vProcessor == null || vProcessor =='') {
+			showMessage("处理结果","处理人");
+		}
+		
+		if (vDescn == null || vDescn =='') {
+			showMessage("事件信息","事件描述");
+		}
+		if (vAddress == null || vAddress =='') {
+			showMessage("事件信息","事发地点");
+		}
+		if (vLevelone == null || vLevelone =='') {
+			showMessage("事件信息","案件类别");
+		}
+		if (vCaseTime == null || vCaseTime =='') {
+			showMessage("事件信息","事发时间");
+		}
+		if (vTitle == null || vTitle =='') {
+			showMessage("事件信息","事件标题");
+		}
+		$("#save").submit();
+	}
+	function showMessage(tab,msg) {
+		Ext.MessageBox.show({
+	           title:'提示',
+	           minWidth:220,
+	           msg:'请填写 "' + tab + '" 页面中的 "' + msg + '" ！',
+	           buttons:Ext.MessageBox.OK,
+	           icon:Ext.MessageBox.INFO
+	      });
+	}
 </script>
 </body>
 </html>
