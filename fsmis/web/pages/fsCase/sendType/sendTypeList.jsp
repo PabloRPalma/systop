@@ -27,6 +27,9 @@
       <a href="${ctx}/sendType/input.do">添加环节</a>
 	</div>
 </div>
+	<div>
+	<%@ include file="/common/messages.jsp"%>
+	</div> 
 	<div class="x-panel-body">
 		<ec:table
 			items="items" var="item" retrieveRowsCallback="process" sortRowsCallback="process"
