@@ -142,6 +142,7 @@ public class TaskManager extends BaseGenericsManager<Task> {
         smsSend.setFsCase(fsCase);
         smsSend.setTask(task);
         smsSend.setIsReceive(FsConstants.N);
+        smsSend.setName(u.getName());
         fsCase.getSmsSendses().add(smsSend);
         
         smsSendManager.addMessage(smsSend);
