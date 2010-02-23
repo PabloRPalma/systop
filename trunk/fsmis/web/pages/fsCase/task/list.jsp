@@ -67,8 +67,8 @@ function remove(id){
 	resizeColWidth="false" 
 	classic="false" 
 	width="100%" 
-	height="460px"
-	minHeight="460"
+	height="430px"
+	minHeight="430"
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	<ec:row>
 		<ec:column width="40" property="_s" title="No."
