@@ -213,6 +213,10 @@ public class User extends BaseModel implements UserDetails, Serializable {
 	 * 评估申请人
 	 */
 	private Set<Assessment> asseForProposer = new HashSet<Assessment>(0);
+	/**
+	 * 是否是短信接收人
+	 */
+	private String isSmsReceiver;
 
 	/**
 	 * 缺省构造器
@@ -733,4 +737,12 @@ public class User extends BaseModel implements UserDetails, Serializable {
 	public void setUrgentGroups(Set<UrgentGroup> urgentGroups) {
 		this.urgentGroups = urgentGroups;
 	}
+  @Column(name = "is_sms_receiver", columnDefinition = "char(1) default '0'")
+  public String getIsSmsReceiver() {
+    return isSmsReceiver;
+  }
+
+  public void setIsSmsReceiver(String isSmsReceiver) {
+    this.isSmsReceiver = isSmsReceiver;
+  }
 }
