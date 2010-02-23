@@ -31,7 +31,7 @@ public class SendType extends BaseModel {
 	/** 排列序号 */
 	private Integer sortId;
 
-	private Set<CountySendType> countySendSypeses = new HashSet<CountySendType>(0);
+	private Set<CountySendType> countySendTypes = new HashSet<CountySendType>(0);
 
 	/** 对应案件 */
 	private Set<FsCase> fsCases = new HashSet<FsCase>(0);
@@ -84,12 +84,12 @@ public class SendType extends BaseModel {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sendType")
-	public Set<CountySendType> getDeptSendSypeses() {
-		return this.countySendSypeses;
+	public Set<CountySendType> getCountySendTypes() {
+		return this.countySendTypes;
 	}
 
-	public void setDeptSendSypeses(Set<CountySendType> countySendSypeses) {
-		this.countySendSypeses = countySendSypeses;
+	public void setCountySendTypes(Set<CountySendType> countySendSypeses) {
+		this.countySendTypes = countySendSypeses;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sendType")
