@@ -42,6 +42,7 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
   public void doReturnTaskDetail(TaskDetail taskDetail) {
     // 设定当前任务明细的状态为退回状态
     taskDetail.setStatus(TaskConstants.TASK_DETAIL_RETURNED);
+    taskDetail.setCompletionTime(new Date());
     save(taskDetail);
     // 如果所有任务明细已经退回,则把任务和事件状态都置为"退回"
     Task task = taskDetail.getTask();
@@ -49,7 +50,7 @@ public class TaskDetailManager extends BaseGenericsManager<TaskDetail> {
     if (checkIsAllTaskDetailReturned(taskDetail)) {
       task.setStatus(TaskConstants.TASK_RETURNED);
       getDao().save(task);
-      //修改事件状态为：以退回
+      //修改事件状态为：已退回
       if (fsCase != null && fsCase.getId() != null) {
         fsCase.setStatus(CaseConstants.CASE_RETURNED);
         getDao().save(fsCase);
