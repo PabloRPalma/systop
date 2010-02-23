@@ -561,16 +561,7 @@ public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
     return "";
   }
   
-  
-  /**
-   * 事件上报市级操作 返回事件列表
-   */
-  public String isSubmited(){
-	  //将状态置为：上报市级
-	  getModel().setIsSubmited(CaseConstants.CITY);
-	  getManager().save(getModel());
-	  return SUCCESS;
-  }
+
 
   public List getTypeRst() {
     return typeRst;
