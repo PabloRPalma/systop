@@ -42,7 +42,7 @@ function removeCompany(corpId) {
 			<input type="submit" value="查询" class="button" />
 		</td>
 		</s:form>
-		<td width="398" align="right">
+		<td align="right">
 		<table>
 			<tr>
 				<td valign="middle"><a href="edit.do" title="添加企业信息">添加</a></td>
