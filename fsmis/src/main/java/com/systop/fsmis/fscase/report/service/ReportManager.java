@@ -53,6 +53,8 @@ public class ReportManager extends BaseGenericsManager<FsCase> {
 				getDao().flush();
 				fsCase.setCorp(corp);
 			}
+		} else {
+			fsCase.setCorp(null);
 		}
 		//保存上报事件
 		save(fsCase);
