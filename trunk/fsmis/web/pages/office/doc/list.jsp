@@ -70,7 +70,7 @@ function view(aID){
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	<ec:row>
 		<ec:column width="35" property="_No" title="No." value="${GLOBALROWCOUNT}" style="text-align:center" sortable="false"/>
-		<ec:column width="400" property="_0" title="文章标题" onclick="view(${item.id})" style="cursor:hand" sortable="false">
+		<ec:column width="400" property="_0" title="文章标题" ellipsis="true" onclick="view(${item.id})" style="cursor:hand" sortable="false">
 			<font color="blue">${item.title}</font>
 		</ec:column>
 		<ec:column width="100" property="author" title="作者" sortable="false"/>
