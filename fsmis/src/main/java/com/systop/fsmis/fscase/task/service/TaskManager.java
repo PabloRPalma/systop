@@ -1,5 +1,6 @@
 package com.systop.fsmis.fscase.task.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -18,9 +19,11 @@ import com.systop.fsmis.fscase.CaseConstants;
 import com.systop.fsmis.fscase.task.TaskConstants;
 import com.systop.fsmis.model.FsCase;
 import com.systop.fsmis.model.SendType;
+import com.systop.fsmis.model.SmsSend;
 import com.systop.fsmis.model.Task;
 import com.systop.fsmis.model.TaskAtt;
 import com.systop.fsmis.model.TaskDetail;
+import com.systop.fsmis.sms.SmsConstants;
 import com.systop.fsmis.sms.SmsSendManager;
 
 /**
@@ -60,7 +63,7 @@ public class TaskManager extends BaseGenericsManager<Task> {
       SendType st = getDao().get(SendType.class, sendTypeId);
       fsCase.setSendType(st);
     }
-    
+
     getDao().save(fsCase);
 
     // 设置任务信息,为接收,并保存
@@ -84,7 +87,7 @@ public class TaskManager extends BaseGenericsManager<Task> {
         getDao().save(taskDetail);
 
         // 向该部门发送短信
-        sendTaskMessage(dept);
+        sendTaskMessage(dept,fsCase,task);
       }
     }
     // 设置任务附件实体和任务实体的关联并保存任务附件实体
@@ -124,17 +127,25 @@ public class TaskManager extends BaseGenericsManager<Task> {
    * 
    * @param dept 任务明细关联的部门,短信的发送依据就是部门
    */
-  private void sendTaskMessage(Dept dept) {
-    // FIXME:这里这么获得用户肯定是不行的,要获得短信接收人员.郭红亮2010-01-18
+  private void sendTaskMessage(Dept dept,FsCase fsCase,Task task) {
     Set<User> users = dept.getUsers();
     StringBuffer buf = new StringBuffer();
     buf.append(dept.getName()).append(",你部门现有一条待处理任务,请及时登录系统处理.");
     for (User u : users) {
-      // User实体中没有isMesReceive属性,暂时无法判断是否是短信接收人,待加上该属性后,启用本段代码
-      /*
-       * if(){ getSmsSendManager().addMessage(mobileNum, content) }
-       */
-      smsSendManager.addMessage(u.getMobile(), buf.toString());
+      // 如果是短信接收人,则向其发送短信
+      if (FsConstants.Y.equals(u.getIsSmsReceiver())) {
+        SmsSend smsSend = new SmsSend();        
+        smsSend.setMobileNum(u.getMobile());
+        smsSend.setContent(buf.toString());
+        smsSend.setCreateTime(new Date());
+        smsSend.setIsNew(SmsConstants.SMS_SMS_SEND_IS_NEW);
+        smsSend.setFsCase(fsCase);
+        smsSend.setTask(task);
+        smsSend.setIsReceive(FsConstants.N);
+        fsCase.getSmsSendses().add(smsSend);
+        
+        smsSendManager.addMessage(smsSend);
+      }
     }
   }
 
