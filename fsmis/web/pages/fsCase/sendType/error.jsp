@@ -10,6 +10,11 @@
 <body>
 <div class="x-panel">
 	<%@ include file="/common/messages.jsp"%>
+	<br>
+	<div style="padding: 5 5 5 5">
+		<img src="${ctx}/images/icons/warning.gif" class="icon" />
+		<a href="#" onclick="javascript:history.back(-1)">退回上一步操作</a>
+	</div>
 </div>
 </body>
 </html>
