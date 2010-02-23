@@ -54,7 +54,7 @@
 			 viewConfig: {
 			       forceFit: true
 			   },						
-			height:108,
+			height:106,
 			frame:true,			
 			store: store,
 			cm : cm,
