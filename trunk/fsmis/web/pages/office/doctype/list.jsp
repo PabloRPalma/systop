@@ -74,7 +74,7 @@ function showArticles(cID){
 		<ec:column width="200" property="_1" title="栏目名称" style="cursor:hand" onclick="showArticles('${item.id}')">
 			<font color="blue">${item.name }</font>
 		</ec:column>
-		<ec:column width="400" property="descn" title="描述"/>
+		<ec:column width="400" property="descn" title="描述" ellipsis="true"/>
 		<ec:column width="150" property="_0" title="操作" style="text-align:center" sortable="false">
 			<a href="edit.do?model.id=${item.id}">编辑</a>|
 		<c:choose>
