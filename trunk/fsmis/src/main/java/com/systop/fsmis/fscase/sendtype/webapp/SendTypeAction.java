@@ -31,7 +31,25 @@ public class SendTypeAction extends
 	}
 
 	/**
-	 * 选择派遣类别方法
+	 * 删除，进行简单判断
+	 */
+	@Override
+	public String remove() {
+		if (getModel().getId() != null) {
+			if (getManager().hasCountySendTypes(getModel().getId())){
+				this.addActionError(getModel().getName() + ",存在关联的部门派遣方式,删除失败!");
+				return ERROR;
+			}
+			if (getManager().hasFsCase(getModel().getId())){
+				this.addActionError(getModel().getName() + ",存在关联的事件,删除失败!");
+				return ERROR;
+			}
+		}
+		return super.remove();
+	}
+
+	/**
+	 * 选择派遣类别
 	 * 
 	 * @return
 	 */

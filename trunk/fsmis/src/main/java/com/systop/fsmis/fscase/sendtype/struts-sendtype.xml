@@ -7,6 +7,7 @@
 		<action name="*" class="sendTypeAction" method="{1}">
 			<result name="index">/pages/fsCase/sendType/sendTypeList.jsp</result> 
 			<result name="input">/pages/fsCase/sendType/sendTypeEdit.jsp</result> 
+			<result name="error">/pages/fsCase/sendType/error.jsp</result> 
 			<result name="success" type="redirect">index.do</result> 
 			<result name="chooseSendType">/pages/fsCase/sendType/chooseSendType.jsp</result>
 		</action>
