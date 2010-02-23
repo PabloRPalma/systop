@@ -66,10 +66,10 @@ Ext.onReady(function(){
     var tabs = new Ext.TabPanel({
         renderTo: 'tabs',
         anchor : '100% 100%',
-        height : 270,
+        //height : 270,
         activeTab: 0,
         frame:false,
-        defaults:{autoHeight: false},
+        defaults:{autoHeight: true},
         items:[
             {contentEl:'basic', title: '评估上报'},
             {contentEl:'attach', title: '上传附件'},            
@@ -93,7 +93,7 @@ Ext.onReady(function(){
 <div><%@ include file="/common/messages.jsp"%></div>
 <s:form  action="resultSave.do" id="resultForm" method="post" theme="simple" validate="true" enctype="multipart/form-data">
 <div id="tabs" style="width: 100%;">
-<div id="basic" class="x-hide-display">
+<div id="basic" class="x-hide-display" align="center">
 	<s:hidden id="id" name="model.id" />
 	<s:hidden id="fsCaseId" name="model.fsCase.id" />	
 	<table id="mytable" >
@@ -104,23 +104,26 @@ Ext.onReady(function(){
             <td colspan="1"></td>
           </tr>
           <tr>
-             <td align="right" width="90">申&nbsp;&nbsp;请&nbsp;&nbsp;人：</td>
+             <td align="right" width="90" height="20">申&nbsp;请&nbsp;人：</td>
              <td align="left" >
              	<stc:username></stc:username>
              </td>
-          </tr>         
+          </tr>       
           <tr>
-             <td align="right" width="90">申请日期：</td>
+             <td align="right" width="90" height="20">申请日期：</td>
              <td align="left">
                 <s:date name="model.askDate" format="yyyy-MM-dd" />
              </td>    
-          </tr>          
+          </tr> 
           <tr>
-	          <td align="right" width="90">申请原因：</td>
-	          <td align="left" colspan="3">
-	            <pre>${model.askCause}</pre>
-	          </td>
-          </tr>    
+	         <td align="right" width="90" height="20">申请原因：</td>    
+	         <td align="left" height="20">见下</td>    	         
+          </tr>                 
+          <tr>
+			<td class="content" colspan="4" style="border-top:1px dashed #99BBE8; padding: 4 10 4 10;">
+                ${model.askCause}
+			</td>	          
+          </tr>  
           <tr>
              <td align="right" width="90" >专家组长：</td>
              <td>
@@ -143,7 +146,7 @@ Ext.onReady(function(){
           <tr>
              <td align="right" width="90" style="height:20px">处理意见：</td>
              <td align="left" colspan="3">
-            	<s:textarea id="result" name="model.result" cssStyle="width:360px; height:90px" cssClass="required"/><font color="red">*</font>
+            	<s:textarea id="result" name="model.result" cssStyle="width:360px; height:90px" cssClass="required"/><font color="red">&nbsp;*</font>
              </td>
           </tr>  
           </table></td></tr>                                    

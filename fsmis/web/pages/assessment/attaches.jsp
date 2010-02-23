@@ -89,7 +89,7 @@ String.prototype.trim = function(){
   classic="false" 
   width="100%" 
   height="160px"
-  minHeight="160"
+  minHeight="360"
   toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
  <ec:row>
     <ec:column width="30" property="_num" title="No." value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center"/>
