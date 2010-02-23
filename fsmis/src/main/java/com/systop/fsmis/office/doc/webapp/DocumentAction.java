@@ -90,6 +90,7 @@ public class DocumentAction extends ExtJsCrudAction<Document, DocumentManager> {
 			addActionError("无法添加，请选择栏目！");
 			return INPUT;
 		}
+		getManager().getDao().clear();
 		getManager().save(getModel());
 		return SUCCESS;
 	}
