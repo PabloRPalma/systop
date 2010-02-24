@@ -115,7 +115,8 @@
 			activeTab : ${empty currentTask ? 0 : currentTask},
 			frame : false,
 			defaults : {
-				autoHeight : true
+				autoHeight : true,
+				autoWidth : true
 			},
 			items : [ 
 			
