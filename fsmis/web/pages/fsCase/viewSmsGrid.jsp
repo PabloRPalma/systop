@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <script type="text/javascript">
+var initialWidth = 0;
+var maxWidth = 0;
 	Ext.onReady(function(){
 		//发送短信的GridPanel
 		var storeSend = new Ext.data.Store({
@@ -75,13 +77,16 @@
 		var gridSend = new Ext.grid.GridPanel({
 			title : '发送的短信',
 			applyTo : 'smsSendDiv',
-
+			id:'smsSendGrid',
 			bodyStyle:'width:100%',
 			height:185,
 			frame:true,			
 			store: storeSend,
 			loadMask:true,
 			layout:'fit', 
+			 viewConfig : {   
+                forceFit : true 
+            },   
 			cm : cmSend,
 			bbar : new Ext.PagingToolbar({
 				  pageSize : 10,
@@ -196,10 +201,16 @@
 		var gridReceive = new Ext.grid.GridPanel({
 			title : '接收的短信',
 			applyTo : 'smsReceiveSmsDiv',
-
+			id:'smsReceiveSmsGrid',
 			bodyStyle:'width:100%',
 			height:185,
 			frame:true,			
+			//layout:'fit',
+			autoWidth : true,     
+			autoScroll : true,
+			viewConfig : {   
+               forceFit : true 
+           },
 			store: storeReceive,
 			cm : cmReceive,
 			bbar : new Ext.PagingToolbar({
@@ -210,7 +221,7 @@
 				  emptyMsg : "没有记录"
 			  })
 		});
-	});
-  </script>
+	});	 
+	</script>
   <div id='smsSendDiv' style=" width: 100%; margin: -1;"></div>
   <div id='smsReceiveSmsDiv' style="width: 100%; margin: -1; " ></div>
