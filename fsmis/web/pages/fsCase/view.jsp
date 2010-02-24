@@ -7,6 +7,9 @@
 <%@include file="/common/ec.jsp"%>
 <%@include file="/common/extjs.jsp"%>
 <%@include file="/common/meta.jsp"%>
+<script type="text/javascript">
+var initWidth = 0;
+</script>
 <style type="text/css">
 .mytable{
 	width:600px;
@@ -38,8 +41,8 @@
 <body>
 <!-- 事件信息 -->
 <div class="x-panel" style="width: 100%">
-	<div class="x-panel-header">事件信息</div>
-	<div class="x-toolbar" style="padding: 5 5 0 5;">
+	<div class="x-panel-header"style="width: 100%">事件信息</div>
+	<div class="x-toolbar" style="padding: 5 5 0 5;width: 100%">
 		<table width="100%">
 			<tr>
 				<td width="90%" align="left"></td>
@@ -107,18 +110,18 @@
 			</table>
 		</div>
 		<c:if test="${model.isMultiple eq '1'}">		
-		<div id="general" class="x-hide-display"  style="z-index: 100;">
+		<div id="general" class="x-hide-display"  style="z-index: 100;width: 100%">
 			<!-- include进来二级Tab以现实一个食品安全综合案件关联的多个一般案件 -->		
 			<%@include	file="viewGenericCases.jsp"%>			
 		</div>
 		</c:if>
 		<c:if test="${not empty model.taskses }">	
-		<div id="tasks" class="x-hide-display" style="z-index: 100;">	
+		<div id="tasks" class="x-hide-display" style="z-index: 100;width: 100%">	
 			<!-- include进来二级Tab以现实一个食品安全案件下的多个任务 -->		
 			<%@include file="viewTasks.jsp"%>
 		</div>
 		</c:if>
-		<div id="sms" class="x-hide-display" style="z-index: 100;">
+		<div id="sms" class="x-hide-display" style="z-index: 100;width: 100%">
 		<%@include file="viewSmsGrid.jsp" %>
 		</div>
 		<c:if test="${not empty model.corp}">
@@ -198,7 +201,8 @@
 			activeTab : ${param['modelId']},
 			frame : false,
 			defaults : {
-				autoHeight : true
+				autoHeight : true,
+				autoWidth : true
 			},
 			items : [ {
 				contentEl : 'fsCaseDiv',
