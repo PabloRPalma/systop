@@ -60,10 +60,10 @@ Ext.onReady(function(){
     var tabs = new Ext.TabPanel({
         renderTo: 'tabs',
         anchor : '100% 100%',
-        height : 440,
+        //height : 440,
         activeTab: 0,
         frame:false,
-        defaults:{autoHeight: false},
+        defaults:{autoHeight: true},
         items:[
       	    <c:if test="${model.status == '4' && model.isLeader =='1'}">
             {contentEl:'result', title: '处理结果'},   
@@ -136,15 +136,15 @@ Ext.onReady(function(){
 </table>
 </div>
 
-<div id="task" class="x-hide-display">
+<div id="task" class="x-hide-display" align="center">
 <table id="mytable" border="0" cellpadding="1" cellspacing="1"> 
 	<s:hidden id="id" name="model.id" />
 	<tr>
-	<td align="right" width="80">任务标题：</td>
+	<td align="right" width="80" height="20">任务标题：</td>
 	<td align="left">${model.jointTask.title}</td>
 	 </tr>    
 	 <tr>
-	<td align="right" >任务说明：</td>
+	<td align="right" height="20">任务说明：</td>
 	   <td align="left" colspan="1">
 	   	<div style="width:700px;word-break:break-all;">
 	    	${model.jointTask.descn}
@@ -152,14 +152,14 @@ Ext.onReady(function(){
 	  </td>
 	</tr> 
 	<tr>
-		<td align="right">派送时间：</td>
+		<td align="right" height="20">派送时间：</td>
 		<td align="left" width="420"><s:date
 			 name="model.jointTask.createDate" 
 			format="yyyy-MM-dd hh:mm" />
 			</td>
 	</tr>  
 	<tr>
-	  <td align="right">&nbsp;&nbsp;附件信息：</td>
+	  <td align="right" height="20">&nbsp;&nbsp;附件信息：</td>
 		<td>
 		   <table>
 				<c:forEach var="mtd" items="${model.jointTask.taskAttachses}" >

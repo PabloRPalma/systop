@@ -37,10 +37,10 @@ Ext.onReady(function(){
     var tabs = new Ext.TabPanel({
         renderTo: 'tabs',
         anchor : '100% 100%',
-        height : 440,
+        //height : 440,
         activeTab: 0,
         frame:false,
-        defaults:{autoHeight: false},
+        defaults:{autoHeight: true},
         items:[
             {contentEl:'fsCase', title: '事件信息'},               
             {contentEl:'task', title: '任务信息'},    
@@ -112,14 +112,14 @@ Ext.onReady(function(){
 		</tr>						
 	</table>
 </div>	
-<div id="task" class="x-hide-display">
+<div id="task" class="x-hide-display" align="center">
 <table id="mytable" border="0" cellpadding="1" cellspacing="1"> 
   <tr>
-  	<td align="right" width="80">申&nbsp;请&nbsp;人：</td>
+  	<td align="right" width="80" height="20">申&nbsp;请&nbsp;人：</td>
   	<td align="left" ><stc:username></stc:username></td>
   </tr>
   <tr>
-	<td align="right">拟办意见：</td>
+	<td align="right" height="20">拟办意见：</td>
     <td align="left" colspan="1">
     	<div style="width:700px;word-break:break-all;">
      	${model.opinion}
@@ -127,11 +127,11 @@ Ext.onReady(function(){
     </td>
   </tr>  
   <tr>
-	<td align="right">任务标题：</td>
+	<td align="right" height="20">任务标题：</td>
 	<td align="left">${model.title}</td>
   </tr>    
   <tr>
-	<td align="right">任务说明：</td>
+	<td align="right" height="20">任务说明：</td>
     <td align="left" colspan="1">
     	<div style="width:700px;word-break:break-all;">
      	${model.descn}
@@ -139,7 +139,7 @@ Ext.onReady(function(){
     </td>
   </tr> 
 	<tr>
-	  <td width="80" align="right">&nbsp;&nbsp;任务附件：</td>
+	  <td width="80" align="right" height="20">&nbsp;&nbsp;任务附件：</td>
 		<td>
 		   <table>
 				<c:forEach var="mtd" items="${model.taskAttachses}" >

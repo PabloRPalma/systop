@@ -71,19 +71,19 @@ Ext.onReady(function(){
 <div><%@ include file="/common/messages.jsp"%></div>
 <s:form action="taskSave.do" id="taskSave" validate="true" method="post" enctype="multipart/form-data">
 <div id="tabs" style="width: 100%;">
-<div id="task" class="x-hide-display">
+<div id="task" class="x-hide-display" align="center">
 	<s:hidden id="id" name="model.id" />
 	<s:hidden id="fsCaseId" name="model.fsCase.id" />	
-	<table id="mytable" > 
+	<table id="mytable" width="700px"> 
 	  <tr>
-	  	<td align="right" width="93">申&nbsp;请&nbsp;人：</td>
+	  	<td align="right" width="94" height="20">申&nbsp;请&nbsp;人：</td>
 	  	<td width="5%" align="left" ><stc:username></stc:username></td>
 	  	<td align="right">申请日期：</td>
 	  	<td align="left"><input type="text" id="dt" style="border: 0"></td>
 	  </tr>	 	
 	  <tr>
 		<td align="right">拟办意见：</td>
-		<td align="left" colspan="3">
+		<td align="left" colspan="3" >
 		<s:textarea name="model.opinion" id="opinion" cssStyle="width:500px; height:80px;" cssClass="required"/>
 		<font color="red">&nbsp;*</font></td>
 	  </tr>    

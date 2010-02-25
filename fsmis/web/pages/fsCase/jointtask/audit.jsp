@@ -37,10 +37,10 @@ Ext.onReady(function(){
     var tabs = new Ext.TabPanel({
         renderTo: 'tabs',
         anchor : '100% 100%',
-        height : 440,
+        //height : 440,
         activeTab: 0,
         frame:false,
-        defaults:{autoHeight: false},
+        defaults:{autoHeight: true},
         items:[
             {contentEl:'audit', title: '任务审核'},  
             {contentEl:'task', title: '任务信息'},               
@@ -110,12 +110,12 @@ function auditSave(){
 <div><%@ include file="/common/messages.jsp"%></div>
 <s:form id="auditForm" validate="true" method="post" enctype="multipart/form-data">
 <div id="tabs" style="width: 100%;">
-<div id="audit" class="x-hide-display">
+<div id="audit" class="x-hide-display" align="center">
 	<s:hidden id="id" name="model.id" />
 	<s:hidden id="fsCaseId" name="model.fsCase.id" />	
 	<table id="mytable" >
           <tr>
-             <td align="right" width="80">审&nbsp;核&nbsp;人：</td>
+             <td align="right" width="80" height="20">审&nbsp;核&nbsp;人：</td>
              <td align="left" >
              	<stc:username></stc:username>
              </td>
@@ -130,7 +130,7 @@ function auditSave(){
           <tr>
 	          <td align="right"  >审核意见：</td>
 	          <td align="left" colspan="3">
-	          	<s:textarea id="result" name="checkResult.result" cssStyle="width:400px; height:140px" cssClass="required"/>
+	          	<s:textarea id="result" name="checkResult.result" cssStyle="width:550px; height:280px" cssClass="required"/>
                 <font color="red">&nbsp;*</font>	          
 	          </td>
           </tr>       
