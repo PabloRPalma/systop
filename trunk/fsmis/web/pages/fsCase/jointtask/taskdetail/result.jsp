@@ -37,10 +37,10 @@ Ext.onReady(function(){
     var tabs = new Ext.TabPanel({
         renderTo: 'tabs',
         anchor : '100% 100%',
-        height : 440,
+        //height : 440,
         activeTab: 0,
         frame:false,
-        defaults:{autoHeight: false},
+        defaults:{autoHeight: true},
         items:[
             {contentEl:'result', title: '任务处理'},  
             {contentEl:'taskDetailAttach', title: '任务附件'},               
@@ -66,13 +66,13 @@ Ext.onReady(function(){
 <div><%@ include file="/common/messages.jsp"%></div>
 <s:form action="resultSave.do" id="resultForm" validate="true" method="post" enctype="multipart/form-data">
 <div id="tabs" style="width: 100%;">
-<div id="result" class="x-hide-display">
+<div id="result" class="x-hide-display" style="width: 100%">
 	<s:hidden id="id" name="model.id" />
 	<s:hidden id="jointTaskId" name="model.jointTask.id" />
 	<s:hidden id="fsCaseId" name="model.jointTask.fsCase.id" />	
-	<table id="mytable" >
+	<table id="mytable" align="center">
           <tr>
-             <td align="right" width="80">填&nbsp;写&nbsp;人：</td>
+             <td align="right" width="80" height="20">填&nbsp;写&nbsp;人：</td>
              <td align="left" >
              	<stc:username></stc:username>
              </td>
