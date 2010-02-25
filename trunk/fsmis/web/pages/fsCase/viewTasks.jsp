@@ -57,7 +57,7 @@
 				</tr>
 				 --%>
 				<tr>					
-					<td class="content" colspan="6" style="border-top:1px dashed #99BBE8; padding: 4 10 4 10;"><div style="overflow: auto; width:100%; height: 66px;">	${task.descn}	</div>			</td>
+					<td class="content" colspan="6" style="border-top:1px dashed #99BBE8; padding: 4 10 4 10;"><div style="overflow: auto; width:100%; height: 100px;">	${task.descn}	</div>			</td>
 				</tr>		
 				<%--		
 				<tr>
