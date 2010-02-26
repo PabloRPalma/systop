@@ -4,12 +4,13 @@
 <html>
 <head>
 <title></title>
-<%@include file="/common/meta.jsp"%>
 <link rel="stylesheet" type="text/css" href="${ctx}/styles/ec/ecside_style.css" />
+<link href="${ctx}/styles/treeSelect.css" type='text/css' rel='stylesheet'>
 <%@include file="/common/extjs.jsp" %>
+<%@include file="/common/meta.jsp"%>
 <%@include file="/common/validator.jsp"%>
 <script type="text/javascript" src="${ctx}/scripts/fckeditor/fckeditor.js"></script>
-<link href="${ctx}/styles/treeSelect.css" type='text/css' rel='stylesheet'>
+
 <script type="text/javascript">
   function valileader(){
     var code = document.getElementById("code").value;
