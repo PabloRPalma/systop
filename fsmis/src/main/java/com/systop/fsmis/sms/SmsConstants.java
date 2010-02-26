@@ -72,4 +72,12 @@ public final class SmsConstants {
   public final static String CONN_URL = ResourceBundleUtil.getString(
       RESOURCE_BUNDLE, "sms.websconnUrl",
       "http://61.233.42.4:8080/masproxy/services/IfSMSService?WSDL");
+  
+  /** 移动号码段 */
+  public final static String MOBILE_FLAG = ResourceBundleUtil.getString(
+  		RESOURCE_BUNDLE, "sms.mobileFlag", "134,135,136,137,138,139,150,151,157,158,159,187,188");
+  
+  /** 联通号码段 */
+  public final static String UNICOM_FLAG = ResourceBundleUtil.getString(
+  		RESOURCE_BUNDLE, "sms.unicomFlag", "130,131,132,133,153,156");
 }
