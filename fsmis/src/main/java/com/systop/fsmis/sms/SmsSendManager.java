@@ -67,7 +67,8 @@ public class SmsSendManager extends BaseGenericsManager<SmsSend> {
     smsSend.setContent(content);
     smsSend.setCreateTime(new Date());
     smsSend.setIsNew(SmsConstants.SMS_SMS_SEND_IS_NEW);
-    // 缺少统计发送数量逻辑
+    // 统计发送数量
+    statisticsSendCount(mobileNum);
     save(smsSend);
   }
 
@@ -75,7 +76,8 @@ public class SmsSendManager extends BaseGenericsManager<SmsSend> {
     if (smsSend != null) {
       smsSend.setCreateTime(new Date());
       smsSend.setIsNew(SmsConstants.SMS_SMS_SEND_IS_NEW);
-      // 缺少统计发送数量逻辑
+      // 统计发送数量
+      statisticsSendCount(smsSend.getMobileNum());
       save(smsSend);
     }
   }
@@ -113,9 +115,9 @@ public class SmsSendManager extends BaseGenericsManager<SmsSend> {
       return;
     }
     // 移动号码段
-    String strMobileNum = "134,135,136,137,138,139,150,151,157,158,159,187,188";
+    String strMobileNum = SmsConstants.MOBILE_FLAG;
     // 联通号码段
-    String strUnicomNum = "130,131,132,133,153,156";
+    String strUnicomNum = SmsConstants.UNICOM_FLAG;
 
     String[] mobileNums = strMobileNum.split(",");
     String[] unicomNums = strUnicomNum.split(",");
