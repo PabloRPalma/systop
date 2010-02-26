@@ -8,7 +8,6 @@
 <%@include file="/common/extjs.jsp"%>
 <%@include file="/common/meta.jsp"%>
 <script type="text/javascript">
-var initWidth = 0;
 </script>
 <style type="text/css">
 .mytable{
