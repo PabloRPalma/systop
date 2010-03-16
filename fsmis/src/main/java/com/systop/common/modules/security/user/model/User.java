@@ -208,7 +208,7 @@ public class User extends BaseModel implements UserDetails, Serializable {
 	 * 对应应急组
 	 */
 	private Set<UrgentGroup> urgentGroups = new HashSet<UrgentGroup>(0);
-	
+
 	/**
 	 * 评估申请人
 	 */
@@ -217,6 +217,22 @@ public class User extends BaseModel implements UserDetails, Serializable {
 	 * 是否是短信接收人
 	 */
 	private String isSmsReceiver;
+	/**
+	 * 用户是否视频在线，0（缺省）表示否，1表示在线等待，2表示在线聊天
+	 */
+	private String videoOnline;
+	/**
+	 * 用戶是否在线，0（缺省）表示不在线，1表示在线。
+	 */
+	private String online;
+
+	public void setOnline(String online) {
+		this.online = online;
+	}
+
+	public void setVideoOnline(String videoOnline) {
+		this.videoOnline = videoOnline;
+	}
 
 	/**
 	 * 缺省构造器
@@ -661,7 +677,6 @@ public class User extends BaseModel implements UserDetails, Serializable {
 	public void setDept(Dept dept) {
 		this.dept = dept;
 	}
-	
 
 	/**
 	 * @return the registTime
@@ -728,7 +743,7 @@ public class User extends BaseModel implements UserDetails, Serializable {
 	public void setAsseForProposer(Set<Assessment> asseForProposer) {
 		this.asseForProposer = asseForProposer;
 	}
-	
+
 	@ManyToMany(cascade = {}, fetch = FetchType.LAZY, mappedBy = "users", targetEntity = UrgentGroup.class)
 	public Set<UrgentGroup> getUrgentGroups() {
 		return urgentGroups;
@@ -737,12 +752,23 @@ public class User extends BaseModel implements UserDetails, Serializable {
 	public void setUrgentGroups(Set<UrgentGroup> urgentGroups) {
 		this.urgentGroups = urgentGroups;
 	}
-  @Column(name = "is_sms_receiver", columnDefinition = "char(1) default '0'")
-  public String getIsSmsReceiver() {
-    return isSmsReceiver;
-  }
 
-  public void setIsSmsReceiver(String isSmsReceiver) {
-    this.isSmsReceiver = isSmsReceiver;
-  }
+	@Column(name = "is_sms_receiver", columnDefinition = "char(1) default '0'")
+	public String getIsSmsReceiver() {
+		return isSmsReceiver;
+	}
+
+	public void setIsSmsReceiver(String isSmsReceiver) {
+		this.isSmsReceiver = isSmsReceiver;
+	}
+
+	@Column(name = "video_online", columnDefinition = "char(1) default '0'")
+	public String getVideoOnline() {
+		return videoOnline;
+	}
+
+	@Column(name = "online", columnDefinition = "char(1) default '0'")
+	public String getOnline() {
+		return online;
+	}
 }
