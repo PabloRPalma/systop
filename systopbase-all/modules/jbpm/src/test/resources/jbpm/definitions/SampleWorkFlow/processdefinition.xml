@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition
+  xmlns=""  name="SampleWorkFlow">
+   <swimlane name="AUTH_CMS_EDITOR">
+      <assignment class="com.systop.core.wf.jbpm3x.demo.EditorSwimlane">
+      </assignment>
+   </swimlane>
+   <swimlane name="AUTH_CMS_AUDITOR">
+      <assignment class="com.systop.core.wf.jbpm3x.demo.AuditorSwimlane">
+      </assignment>
+   </swimlane>
+   <start-state name="start">
+      <transition name="" to="文章编辑"></transition>
+   </start-state>
+   <end-state name="end"></end-state>
+   <task-node name="文章审核">
+      <task name="auditArticle" swimlane="AUTH_CMS_AUDITOR">
+      </task>
+      <event type="node-leave">
+         <action name="updateArticleStatus" class="com.systop.core.wf.jbpm3x.JbpmHandlerProxy">
+            <factoryKey>jbpmConfiguration</factoryKey>
+            <targetBean>updateArticleStatusHandler</targetBean>
+         </action>
+      </event>
+      <transition name="" to="是否审核通过"></transition>
+   </task-node>
+   <decision name="是否审核通过">
+      <delegation class="com.systop.core.wf.jbpm3x.demo.AuditDecisionHandler"/>
+      <transition name="审核通过" to="end"></transition>
+      <transition name="审核未通过" to="文章编辑"></transition>
+   </decision>
+   <state name="文章编辑">
+      <assignment swimlane="AUTH_CMS_EDITOR"/>
+      <transition name="" to="文章审核"></transition>
+   </state>
+</process-definition>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd"
+	default-lazy-init="true" default-autowire="byName">
+   	<!-- 
+			专用于测试核心框架的Spring Application Context，使用hsqdb作为测试数据库，不可
+			与项目中其他ApplicationContext联合使用。
+		-->
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="systemPropertiesModeName"
+			value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="locations">
+			<list>
+				<value>classpath:test-dao.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="dataSource"
+		class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass">
+			<value>org.hsqldb.jdbcDriver</value>
+		</property>
+		<property name="jdbcUrl">
+			<value>jdbc:hsqldb:res:/data/hsqldb</value>
+		</property>
+		<property name="user">
+			<value>sa</value>
+		</property>
+		<property name="password">
+			<value></value>
+		</property>
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mappingLocations">
+			<list>
+				<value>classpath*:org/jbpm/**/*.hbm.xml</value>
+			</list>
+		</property>
+
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.HSQLDialect
+				</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.cache.provider_class">
+					org.hibernate.cache.EhCacheProvider
+				</prop>
+				<prop
+					key="hibernate.cache.provider_configuration_file_resource_path">
+					${hibernate.cache.provider_configuration_file_resource_path}
+				</prop>
+				<!-- 
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				 -->
+			</props>
+		</property>
+	</bean>
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<context:component-scan base-package="com.systop.core" />
+	
+	    <!-- jBPM Configuration -->
+    <bean id="jbpmConfiguration" class="com.systop.core.wf.jbpm3x.LocalJbpmConfigurationFactoryBean">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="configuration" value="classpath:jbpm/jbpm.cfg.xml"/>
+        <property name="processDefinitions">
+            <list>
+                <ref local="sampleWorkFlow"/>
+            </list>
+        </property>
+        
+    </bean>
+
+    <!-- Process Definition of sampleWorkFlow -->
+    <bean id="sampleWorkFlow" class="com.systop.core.wf.jbpm3x.definition.ProcessDefinitionFactoryBean">
+        <property name="definitionLocation"
+                  value="classpath:jbpm/definitions/SampleWorkFlow/processdefinition.xml"/>
+    </bean>
+    <!-- jbpm hibernate template -->
+    <bean id="jbpmHibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="exposeNativeSession" value="false"/>
+    </bean>
+    <!-- jBPM template -->
+    <bean id="jbpmSampleTemplate" class="com.systop.core.wf.jbpm3x.JbpmTemplate">
+        <property name="jbpmConfiguration" ref="jbpmConfiguration"></property>
+        <property name="processDefinition" ref="sampleWorkFlow"/>
+        <property name="hibernateTemplate" ref="jbpmHibernateTemplate"></property>
+    </bean>
+    <!-- 文章审核handler -->
+    <bean id="updateArticleStatusHandler" class="com.systop.core.wf.jbpm3x.demo.UpdateArticleStatusHandler">
+    </bean>
+	
+</beans>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <package name="admin.security" extends="json"
+	         namespace="/security/rbac">
+		<action name="*/*" class="{1}Action" method="{2}">
+		    <result name="index">/pages/security/rbac/{1}/index.jsp</result>
+		    <result name="input">/pages/security/rbac/{1}/edit.jsp</result>
+		    <result name="success" type="redirect">{1}/index.do</result>
+		    <result type="json" name="json">
+		    	<param name="root">page</param>
+		    </result>
+		    <result type="json" name="jsonRst">
+		   		<param name="root">roleName</param>
+			</result>
+		</action>		
+	</package>
+</struts>

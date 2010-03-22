@@ -1,0 +1,42 @@
+html,body {
+	font: normal 12px ËÎÌו, sans-serif;
+	margin: 0;
+	padding: 0;
+	border: 0 none;
+	overflow: hidden;
+	height: 100%;
+}
+
+.x-panel {
+	border-style: solid;
+	border-color: #abc;
+	border-width: 1px;
+}
+
+.x-panel-noborder,.x-panel-header-noborder,.x-panel-collapsed{
+	border:none;
+}
+
+p {
+	margin: 5px;
+}
+
+span {
+	font: 12px ËÎÌו, sans-serif;
+}
+
+#ext-gen15 {
+	font: bold 12px ËÎÌו, sans-serif;
+}
+
+.icon {
+	margin-right: 5px;
+	border: none;
+}
+
+.settings {
+	background-image: url(../images/exticons/folder_wrench.png);
+}
+
+.x-tree-node .x-tree-node-over{background-color:##F0F0F0;}
+.x-tree-node .x-tree-selected{background-color:#DBDBDB;}
