@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<int attr="18">188</int>
+	<string attr="zhangsan">张三</string>
+	<boolean attr="false">true</boolean>
+</root>

@@ -1,0 +1,84 @@
+body {
+	font-size: 10pt;
+}
+
+a:link {
+	color: #000000;
+	text-decoration: none;
+}
+
+.x-toolbar {
+	color: #ffffff;
+}
+
+a:visited {
+	color: #000000;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #FF6600;
+	text-decoration: none;
+}
+
+a:actvie {
+	color: #FF6600;
+	text-decoration: none;
+}
+
+fieldset {
+	border: 1px solid #B5B8C8;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+
+fieldset legend {
+	font: normal 12px sans-serif;
+	color: #15428b;
+}
+
+.listView th,.listView td {
+	border: solid #999 1px;
+}
+
+.inputView th,.inputView td {
+}	
+
+.actionMessage {
+	font-weight: bold;
+}
+
+.x-panel-header {
+	margin-left:-1px;
+    margin-right:-1px;
+}
+
+.x-panel-body {
+	border-top: 0px;/*1px solid #99bbe8;*/
+	border-left: 0px;
+	border-bottom: 0px;
+	border-right: 0px;
+	overflow: hidden;
+	background: white;
+}
+
+.x-tree-node-leaf .x-tree-node-icon{background-image:url(../images/icons/file.png);}
+.x-tree-node-leaf .dept-tree-node-icon{background-image:url(../js/extjs/resources/images/default/tree/folder.gif);}
+.x-tree-node-leaf .emp-F-tree-node-icon{background-image:url(../images/icons/F-2.gif);}
+.x-tree-node-leaf .emp-M-tree-node-icon{background-image:url(../images/icons/M-2.gif);}
+
+.x-window-tbar {
+	margin-top: -1px;
+}
+
+.msg .x-box-mc {
+	font-size: 14px;
+}
+
+#msg-div {
+	position: absolute;
+	left: 35%;
+	top: 10px;
+	width: 250px;
+	z-index: 20000;
+}

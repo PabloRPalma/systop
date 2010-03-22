@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>systopbase-parent</artifactId>
+		<groupId>com.systop</groupId>
+		<version>3.0.0</version>
+		<relativePath>modules/parent/pom.xml</relativePath>
+	</parent>
+	<groupId>com.systop</groupId>
+	<artifactId>systopbase-all</artifactId>
+	<name>Systopbase All</name>
+	<version>3.0.0</version>
+	<packaging>pom</packaging>
+
+	<prerequisites>
+		<maven>2.0.9</maven>
+	</prerequisites>
+	
+	<modules>
+		<module>modules/core</module>
+		<module>modules/ecside</module>
+		<module>modules/parent</module>
+		<module>modules/jbpm</module> 
+		<module>examples/systopbase-web</module>
+	</modules>
+</project>

@@ -1,0 +1,7 @@
+#Thu Feb 26 14:22:24 CST 2009
+eclipse.preferences.version=1
+encoding//src/test/java/com/systop/core/wf/jbpm3x/demo/ArticleAuditWorkflowManager.java=UTF-8
+encoding//src/test/java/com/systop/core/wf/jbpm3x/demo/AuditDecisionHandler.java=UTF-8
+encoding//src/test/java/com/systop/core/wf/jbpm3x/demo/AuditorSwimlane.java=UTF-8
+encoding//src/test/java/com/systop/core/wf/jbpm3x/demo/EditorSwimlane.java=UTF-8
+encoding//src/test/java/com/systop/core/wf/jbpm3x/demo/UpdateArticleStatusHandler.java=UTF-8
