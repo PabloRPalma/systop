@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+                        "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+<taglib>
+	<tlib-version>1.0</tlib-version>
+	<jsp-version>1.2</jsp-version>
+	<short-name>common</short-name>
+	<uri>systop/common</uri>
+	<tag>
+		<name>spring</name>
+		<tag-class>
+			agileweb.taglib.SpringTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<description>
+			This tag can put a Spring Managed bean to the PageContext、
+			Request Attribute or Session. The name of the attribute is
+			equal to bean id.
+		</description>
+		<attribute>
+			<name>beanId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>
+				Required,The spring bean id.
+			</description>
+		</attribute>
+		<attribute>
+			<name>scope</name>
+			<rtexprvalue>true</rtexprvalue>
+			<description>
+				The option can be one of the "request","page","session",
+				Default is "request".
+			</description>
+		</attribute>
+	</tag>
+	
+</taglib>
