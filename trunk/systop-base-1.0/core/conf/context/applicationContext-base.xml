@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans default-lazy-init="true">
+	<!-- ============================= -->
+	<!-- propertyConfigurer用于绑定属性文件，可以用${}引用属性文件中的数据 -->
+	<!-- ============================= -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+		lazy-init="false">
+		<property name="locations">
+			<list>
+				<value>classpath*:dao.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- ============================= -->
+	<!-- DataSource，据说DBCP连接池的BUG很多，所以使用C3P0，这也是Hibernate推荐的。 -->
+	<!-- ============================= -->
+	<bean id="dataSource"
+		class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close" abstract="false" singleton="true"
+		lazy-init="default" autowire="default" dependency-check="default">
+		<property name="driverClass">
+			<value>${jdbc.driverClassName}</value>
+		</property>
+		<property name="jdbcUrl">
+			<value>${jdbc.url}</value>
+		</property>
+		<property name="user">
+			<value>${jdbc.username}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.password}</value>
+		</property>
+		<property name="initialPoolSize">
+			<value>${pool.initialPoolSize}</value>
+		</property>
+		<property name="maxPoolSize">
+			<value>${pool.maxPoolSize}</value>
+		</property>
+		<property name="idleConnectionTestPeriod">
+			<value>${pool.testPeriod}</value>
+		</property>
+		<property name="automaticTestTable">
+			<value>${pool.testTable}</value>
+		</property>
+	</bean>
+
+	<!-- ============================= -->
+	<!-- jdbcTemplate 是很好用的JDBC工具，报表统计的时候会用到-->
+	<!-- ============================= -->
+	<bean id="jdbcTemplate"
+		class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+    <!-- ============================= -->
+	<!-- Hibernate Tempate             -->
+	<!-- ============================= -->
+	<bean id="hibernateTemplate"
+		class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- =============================== -->
+	<!-- BIRT报表基础Action，这里主要用于演示 -->
+	<!-- =============================== -->
+    <bean id="baseBirtAction" class="com.systop.common.webapp.struts2.action.BaseBirtAction"
+     singleton="false">
+    </bean>
+	<!-- ============================= -->
+	<!--Hibernate SessionFatory,可以使用classpath*:定位hbm文件的位置-->
+	<!--class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"-->
+	<!-- ============================= -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="annotatedClasses">
+			<list>
+				<value>com.systop.common.security.user.model.Permission</value>
+				<value>com.systop.common.security.user.model.Resource</value>
+				<value>com.systop.common.security.user.model.Role</value>
+				<value>com.systop.common.security.user.model.User</value>
+				<value>com.systop.common.security.dept.model.Dept</value>
+				<value>com.systop.common.map.model.Entry</value>
+				<value>com.systop.common.map.model.Map</value>
+				<value>com.systop.cms.model.Attachment</value>
+				<value>com.systop.cms.model.Content</value>
+			</list>
+		</property>
+		<!-- 
+			<property name="mappingDirectoryLocations">
+				<list>
+					<value>classpath*:/com/systop/common/security/user/model</value>
+					<value>classpath*:/com/systop/common/catalog/model</value>
+					<value>classpath*:/com/systop/common/map/model</value>
+					<value>classpath*:/com/systop/cms/model</value>
+					<value>classpath*:/com/systop/common/security/dept/model</value>
+				</list>
+			</property>
+		 -->
+		<property name="configurationClass" value="org.hibernate.cfg.AnnotationConfiguration"/>
+		 
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					${hibernate.dialect}
+				</prop>
+				<prop key="hibernate.show_sql">
+					${hibernate.show_sql}
+				</prop>
+				<prop key="hibernate.cache.use_query_cache">
+					${hibernate.cache.use_query_cache}
+				</prop>
+				<prop key="hibernate.cache.provider_class">
+					${hibernate.cache.provider_class}
+				</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- ============================= -->
+	<!-- Hibernate Transaction Manager -->
+	<!-- ============================= -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager"
+		abstract="false" singleton="true" lazy-init="default"
+		autowire="default" dependency-check="default">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- ============================= 
+	Trasaction代理，Manager类可以通过
+	<bean id="xManager" parent="baseTxService"> 
+	使用事务服务
+	============================= -->
+	<bean id="baseTxService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+		abstract="true">
+		<!-- 
+		<property name="preInterceptors" ref="methodSecurityInterceptor"></property>
+		 -->
+		<property name="transactionManager" ref="transactionManager" />
+		<!-- true表示使用cglib代理 -->
+		<property name="proxyTargetClass" value="true" />
+
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="find*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="load*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="remove*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+		<property name="preInterceptors">
+            <list>
+                <ref bean="methodSecurityInterceptor"/>
+            </list>
+        </property>
+	</bean>
+    
+    <!-- ================================= -->
+    <!-- BaseDAO                           -->
+    <!-- ================================= -->
+    <bean id="baseDao" class="com.systop.common.dao.impl.BaseHibernateDAO"
+     lazy-init="true">
+       <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    
+    <!-- ================================= -->
+    <!-- BaseManager                       -->
+    <!-- ================================= -->
+    <bean id="baseManager" parent="baseTxService">
+      <property name="target">
+        <bean class="com.systop.common.service.BaseManager">
+          <property name="sessionFactory" ref="sessionFactory" />
+        </bean>
+      </property>
+    </bean>
+    
+    <!-- ================================= -->
+    <!-- Cache FactoryBean                 -->
+    <!-- ================================= -->
+    <bean id="cache" class="com.systop.common.cache.OsCacheFactoryBean">
+      <property name="regionName">
+        <value>com.systop.common.cache.DefaultRegion</value>
+      </property>
+    </bean>
+</beans>

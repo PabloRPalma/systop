@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- Freemarker Configuration -->
+	<bean id="freemarkerConfiguration"
+		class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
+		<property name="templateLoaderPaths">
+			<list>
+				<value>classpath:templates</value>
+				<value>classpath:templates/yui</value>
+			</list>
+		</property>
+		<property name="defaultEncoding">
+			<value>UTF-8</value>
+		</property>
+		<!-- 
+			<property name="freemarkerVariables">
+			<map>
+			<entry key="name"><ref bean="beanId"/></entry>		    
+			</map>
+			</property>
+		-->
+	</bean>
+	<!-- ################User define cofiguration############### -->
+	<bean id="freemarkerConfigurationManager"
+		class="com.systop.common.webapp.taglibs.template.FreeMarkerConfigurationManager">
+		<property name="templateLoaderPaths">
+			<list>
+				<value>classpath:templates</value>
+			</list>
+		</property>
+		<property name="defaultEncoding">
+			<value>UTF-8</value>
+		</property>
+		
+		<property name="preferFileSystemAccess">
+		    <value>true</value>
+		</property>
+	</bean>
+
+	<bean id="freemarkerTemplateRender"
+		class="com.systop.common.webapp.taglibs.template.FreeMarkerTemplateRender">
+		<property name="configurationManager" ref="freemarkerConfigurationManager" />
+	</bean>
+</beans>

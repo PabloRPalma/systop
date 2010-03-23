@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <!-- Directory structure of the projeruntime.dirct -->
+    <property name="charset" value="utf-8" />
+    <property name="build.dir" value="${basedir}/build"/>
+    <property name="dist.dir" value="${basedir}/dist"/>
+    <property name="web.dir" value="${basedir}/web"/>
+    <property name="test.dir" value="${build.dir}/test"/>
+    <!-- Directories for code coverage sampling -->
+    <property name="coverage.dir" value="${test.dir}/coverage"/>
+    <property name="out.instr.dir" value="${test.dir}/outinstr"/>
+    
+    <!-- Default options for code-generation, compiling and junit-testing -->
+    <property name="javac.debug" value="true"/>
+    <property name="compile.deprecation" value="true"/>
+    <!-- build.compiler - seems to be issues using jikes and JDK 1.4 is just as fast-->
+    <property name="build.compiler" value="modern"/>
+    <property name="junit.fork" value="true"/>
+    <property name="junit.showoutput" value="true"/>
+    <property name="xdoclet.force" value="false"/>
+
+    <!-- Load user overrides -->
+    <property file="${user.home}/.${ant.project.name}-build.properties"/>
+    <property file="${user.home}/.build.properties"/>
+    <!-- Library versions and JARs -->
+    <property name="lib.dir" location="lib"/>
+    <property file="${lib.dir}/lib.properties"/>
+
+    <property file="build.properties"/>
+    <property file="web/WEB-INF/classes/mail.properties"/>
+
+    <!-- Application options that will likely vary between applications -->
+    <property name="http.port" value="8080"/>
+    <property name="dao.type" value="hibernate"/>
+    <property name="jsp.2" value="false"/>
+    <property name="jsp.precompile" value="false"/>
+
+    <!-- Properties for running unit tests with tomcat -->
+    <property name="tomcat.server" value="localhost"/>
+    <property name="tomcat.manager.url" value="http://${tomcat.server}:${http.port}/manager"/>
+    <property name="tomcat.username" value="admin"/>
+    <property name="tomcat.password" value="admin"/>
+
+    <!-- Defaults for database.properties -->
+    <property name="database.jar" location="${hsqldb.jar}"/>
+    <property name="database.type" value="hsqldb"/>
+    <property name="database.name" value="db"/>
+    <property name="database.host" value="localhost"/>
+    <property name="database.port" value="9002"/>
+    <property name="database.username" value="sa"/>
+    <property name="database.password" value=""/>
+
+    <!-- database URL for creating other dbs - used in db-create target -->
+    <property name="database.admin.url" value="jdbc:${database.type}://${database.host}:${database.port}/${database.name}"/>
+    <property name="database.admin.username" value="sa"/>
+    <property name="database.admin.password" value=""/>
+    <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
+    <property name="database.driver_class" value="org.hsqldb.jdbcDriver"/>
+    <property name="database.url" value="${database.admin.url}"/>
+    <property name="database.show_sql" value="true"/>
+    <property name="database.schema" value="PUBLIC"/>
+
+    <!-- Build and deploy properties -->
+    <property environment="env"/>
+    <property name="env.COMPUTERNAME" value="${env.HOSTNAME}"/>
+
+    <property name="tomcat.home" value="${env.CATALINA_HOME}"/>
+    <!-- The target directory for building the packed web application -->
+    <property name="webapp.dist" value="${dist.dir}/webapps"/>
+    <!-- The target directory for building the unpacked web application -->
+    <property name="webapp.target" value="${build.dir}/${webapp.name}"/>
+    <!-- Should Java compilations set the debug compiler option? -->
+    <property name="compile.debug" value="true"/>
+    <!-- Should Java compilations set the deprecation compiler option? -->
+    <property name="compile.deprecation" value="false"/>
+    <!-- Should Java compilations set the optimize compiler option? -->
+    <property name="compile.optimize" value="false"/>
+    <!-- The source directory for the core APIs -->
+    <property name="core" value="${basedir}/core"/>
+    <!-- The source directory for the CMS -->
+    <property name="cms" value="${basedir}/cms"/>
+    
+    <property name="tar.user" value="ant"/>
+    <property name="tar.group" value="ant"/>
+    <property name="tar.mode" value="644"/>
+
+    <!-- =================================================================== -->
+    <!-- Classpaths                                                          -->
+    <!-- =================================================================== -->
+
+    <path id="xdoclet.classpath">
+        <pathelement location="${log4j.jar}"/>
+        <pathelement location="${commons-logging.jar}"/>
+        <pathelement location="${commons-collections.jar}"/>
+        <fileset dir="${xdoclet.dir}" includes="*.jar"/>
+    </path>
+
+    <!-- Hibernate -->
+    <path id="hibernate.classpath">
+        <pathelement location="${hibernate.jar}"/>
+        <fileset dir="${hibernate.dir}/lib" includes="*.jar"/>
+        <pathelement location="${database.jar}"/>
+        <pathelement location="${commons-beanutils.jar}"/>
+        <pathelement location="${commons-lang.jar}"/>
+    </path>
+    <path id="birt.classpath">
+       <fileset dir="${birt.lib}" includes="*.jar"/>
+       <pathelement location="${commons-codec.jar}"/>
+    </path>
+    <path id="jbpm.classpath">
+       <fileset dir="${jbpm.dir}" includes="*.jar"/>
+    </path>
+    <!-- CORE -->
+    <path id="core.compile.classpath">
+        <path refid="hibernate.classpath"/>
+        <path refid="birt.classpath"/>
+        <path refid="jbpm.classpath"/>
+        <pathelement location="${acegi.jar}"/>
+        <pathelement location="${extremecomponents.jar}"/>
+        <pathelement location="${freemarker.jar}"/>
+        <pathelement location="${hsqldb.jar}"/>
+        <pathelement location="${junit.jar}"/>
+        <pathelement location="${log4j.jar}"/>
+        <pathelement location="${oscache.jar}"/>
+        <pathelement location="${poi.jar}"/>
+        <pathelement location="${dwr.jar}"/>
+        <pathelement location="${jcaptcha.jar}"/>
+        <pathelement location="${servletapi.jar}"/>
+        <fileset dir="${aspectj.dir}" includes="*.jar"/>
+        <fileset dir="${commons.dir}" includes="*.jar"/>
+        <fileset dir="${runtime.dir}" includes="*.jar"/>
+        <fileset dir="${spring.dir}" includes="*.jar"/>
+        <fileset dir="${struts.dir}" includes="*.jar"/>
+        <fileset dir="${freemarker.dir}" includes="*.jar"/>
+    </path>
+    <path id="core.test.classpath">
+        <path refid="core.compile.classpath"/>
+        <pathelement location="${c3p0.jar}"/>
+    </path>
+
+    <!-- CMS -->
+    <path id="cms.compile.classpath">
+        <path refid="core.compile.classpath"/>
+        <path refid="core.classes"/>
+        <!-- pathelement location="${dist.dir}/${webapp.name}-core.jar"/-->
+    </path>
+    <path id="cms.test.classpath">
+        <path refid="cms.compile.classpath"/>
+        <pathelement location="${c3p0.jar}"/>
+    </path>
+
+    
+    <path id="jspc.classpath">
+        <path refid="core.compile.classpath"/>
+        <pathelement location="${clickstream.jar}"/>
+        <pathelement location="${sitemesh.jar}"/>
+        <fileset dir="${jstl.dir}/lib" includes="*.jar"/>
+        <fileset dir="${tomcat.home}/common/lib" includes="*.jar"/>
+    </path>
+    
+    <!-- EMMA LIBs-->
+    <path id="emma.libs">
+        <pathelement location="${emma.dir}/emma.jar"/>
+        <pathelement location="${emma.dir}/emma_ant.jar"/>
+    </path>
+ 
+    <path id="core.resources">
+        <pathelement path="core/java"/>
+        <pathelement path="core/conf"/>
+        <pathelement path="core/test"/>
+    </path>
+    
+    <path id="core.classes">
+        <pathelement path="${build.dir}/core/classes"/>
+    </path>
+    
+    <path id="cms.resources">
+        <pathelement path="cms/java"/>
+        <pathelement path="cms/conf"/>
+        <pathelement path="cms/test"/>
+    </path>
+    
+    <path id="all.sources">
+        <path refid="core.resources"/>
+        <path refid="cms.resources"/>
+    </path>
+
+    <taskdef resource="emma_ant.properties" classpathref="emma.libs"/>
+    <property name="emma.enabled" value="true"/>
+    
+    <property name="inheritAll" value="true"/>
+
+    <!-- this macro is called by tasks that depend on a database.properties -->
+    <macrodef name="generate-database-properties">
+        <sequential>
+            <echo>generating database.properties from build.properties</echo>
+            <propertyfile comment="Hibernate Configuration for JUnit tests"
+                file="${basedir}/src/conf/dao.properties">
+                <entry key="hibernate.dialect" value="${hibernate.dialect}"/>
+                <entry key="hibernate.connection.driver_class" value="${jdbc.driverClassName}"/>
+                <entry key="hibernate.connection.url" value="${jdbc.url}"/>
+                <entry key="hibernate.connection.username" value="${jdbc.username}"/>
+                <entry key="hibernate.connection.password" value="${jdbc.password}"/>
+                <entry key="hibernate.connection.show_sql" value="${hibernate.show_sql}"/>
+                <entry key="dao.type" value="${dao.type}"/>
+            </propertyfile>
+            <replace file="dao.properties" token="amp;" value=""/>
+            <property file="dao.properties"/>
+        </sequential>
+    </macrodef>
+    
+    <macrodef name="copyresources">
+       <attribute name="module" />
+      <sequential>
+         <copy todir="${build.dir}/@{module}/classes" includeEmptyDirs="no">
+			<fileset dir="@{module}/java">
+				<exclude name="**/*_zh*.properties" />
+				<exclude name="**/*.java" />
+				<include name="**/*.properties" />
+				<include name="**/*.xml" />
+				<include name="**/*.ftl" />
+			</fileset>
+			<fileset dir="@{module}/conf">
+				<exclude name="**/*_zh*.properties" />
+				<exclude name="**/*.java" />
+				<include name="**/*.properties" />
+				<include name="**/*.xml" />
+				<include name="**/*.ftl" />
+			</fileset>
+			<fileset dir="@{module}/test">
+				<exclude name="**/*_zh*.properties" />
+				<exclude name="**/*.java" />
+				<include name="**/*.properties" />
+				<include name="**/*.xml" />
+				<include name="**/*.ftl" />
+			</fileset>
+		</copy>
+		<native2ascii src="@{module}/conf" dest="${build.dir}/@{module}/classes" includes="**/*_zh*.properties" encoding="UTF-8" />
+      </sequential>
+    </macrodef>
+</project>
+

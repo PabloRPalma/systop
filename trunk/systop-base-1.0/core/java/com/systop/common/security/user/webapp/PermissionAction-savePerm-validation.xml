@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE validators PUBLIC
+  		"-//OpenSymphony Group//XWork Validator 1.0//EN" 
+  		"http://www.opensymphony.com/xwork/xwork-validator-1.0.2.dtd">
+  		
+<validators>
+	
+	<field name="name">
+		<field-validator type="requiredstring">
+			<param name="trim">true</param>
+            <message key="perm.name.required"><![CDATA[ required and must be string ]]></message>
+		</field-validator>
+	</field>
+	
+	<field name="status">
+		<field-validator type="requiredstring">
+			<param name="trim">true</param>
+            <message key="perm.status.required"><![CDATA[ required and must be string ]]></message>
+		</field-validator>
+	</field>
+	<field name="operation">
+		<field-validator type="requiredstring">
+			<param name="trim">true</param>
+            <message key="perm.operation.required"><![CDATA[ required and must be string ]]></message>
+		</field-validator>
+	</field>
+	
+</validators>
+
+<!-- END SNIPPET: fieldValidatorsExample -->

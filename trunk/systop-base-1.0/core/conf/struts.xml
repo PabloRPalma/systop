@@ -1,0 +1,23 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+<!-- 
+	<package name="default" extends="struts-default">
+		<interceptors>
+			<interceptor-stack name="crudStack">
+				<interceptor-ref name="checkbox" />
+				<interceptor-ref name="params" />
+				<interceptor-ref name="static-params" />
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+	</package>
+ -->
+    <include file="struts-birt.xml" />	
+	<include file="struts-security.xml" />
+	<include file="struts-cms.xml" />
+	<include file="struts-catalog.xml" />
+</struts>
+

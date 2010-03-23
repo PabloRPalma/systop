@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE validators PUBLIC
+  		"-//OpenSymphony Group//XWork Validator 1.0//EN" 
+  		"http://www.opensymphony.com/xwork/xwork-validator-1.0.2.dtd">
+  		
+<validators>
+	
+	<field name="loginId">
+		<field-validator type="requiredstring">
+			<param name="trim">true</param>
+            <message key="user.loginId.required"><![CDATA[ required and must be string ]]></message>
+		</field-validator>
+	</field>
+	<field name="password">
+		<field-validator type="requiredstring">
+			<param name="trim">true</param>
+            <message key="user.password.required"><![CDATA[ required and must be string ]]></message>
+		</field-validator>
+	</field>
+	<field name="confirmPwd">
+		<field-validator type="fieldexpression">
+			<param name="expression">(confirmPwd == password)</param>
+			<message key="user.password.equal"><![CDATA[ must be the same as the Required Validator Field if specified ]]></message>
+		</field-validator>
+	</field>
+	
+</validators>
+
+<!-- END SNIPPET: fieldValidatorsExample -->

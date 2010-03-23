@@ -1,0 +1,3 @@
+<Context docBase="systop-base" path="/systop-base" reloadable="true" source="org.eclipse.jst.j2ee.server:systop-base">
+<Loader className="org.apache.catalina.loader.DevLoader" reloadable="true" debug="0"/>
+</Context>

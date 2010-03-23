@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-project guid="systop-base_10ee96e83ae_c5ded5c80d01018f" version="5">
+	<web-app guid="web_10ee96e83ae_f4ba551782050574">
+		<root-path-uri>web</root-path-uri>
+		<web-app-type>com.m7.webapp.java</web-app-type>
+	</web-app>
+	<properties>
+		<property name="validation.compile" value="true"/>
+		<property name="validation.missingFile" value="true"/>
+		<property name="validation.unresolvedVar" value="false"/>
+		<property name="validation" value="true"/>
+		<property name="taglib.downloadRemote" value="true"/>
+		<property name="validation.unresolvedType" value="true"/>
+		<property name="validation.compile.jspQuotation" value="false"/>
+	</properties>
+</web-project>

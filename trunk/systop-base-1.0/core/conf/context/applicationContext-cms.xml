@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+                       "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans default-lazy-init="true">
+	<bean id="contentManager" parent="baseTxService">
+		<property name="target">
+			<bean
+				class="com.systop.cms.service.impl.ContentManagerImpl">
+				<property name="sessionFactory" ref="sessionFactory" />
+				<property name="userManager" ref="userManager"></property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="find*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="load*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="copy*">PROPAGATION_REQUIRED</prop>
+				<prop key="paste*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="remove*">PROPAGATION_REQUIRED</prop>
+				<prop key="prepare*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+
+	</bean>
+    
+    <bean id="cmsDojoAction" class="com.systop.cms.webapp.action.CMSDojoAction"
+      singleton="false">
+      <property name="contentManager" ref="contentManager" />
+      <property name="workflowManager">
+          <bean class="com.systop.cms.audit.ArticleAuditWorkflowManager">
+               <property name="jbpmTemplate" ref="jbpmSampleTemplate" />
+          </bean>
+      </property>
+    </bean>
+</beans>

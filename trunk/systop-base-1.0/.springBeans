@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beansProjectDescription>
+	<version>1</version>
+	<pluginVersion><![CDATA[2.2.1.v200811281800]]></pluginVersion>
+	<configSuffixes>
+		<configSuffix><![CDATA[xml]]></configSuffix>
+	</configSuffixes>
+	<enableImports><![CDATA[false]]></enableImports>
+	<configs>
+		<config>core/conf/context/applicationContext-jbpm.xml</config>
+		<config>core/conf/context/applicationContext-security-acegi.xml</config>
+		<config>core/conf/context/applicationContext-map.xml</config>
+		<config>core/conf/context/applicationContext-freemarker.xml</config>
+		<config>core/conf/context/applicationContext-user.xml</config>
+		<config>core/conf/context/applicationContext-security-acl.xml</config>
+		<config>core/conf/context/applicationContext-security-captcha.xml</config>
+		<config>core/conf/context/applicationContext-base.xml</config>
+		<config>core/conf/context/applicationContext-cms.xml</config>
+		<config>core/conf/context/applicationContext-dept.xml</config>
+	</configs>
+	<configSets>
+		<configSet>
+			<name><![CDATA[base]]></name>
+			<allowBeanDefinitionOverriding>false</allowBeanDefinitionOverriding>
+			<incomplete>false</incomplete>
+			<configs>
+				<config>core/conf/context/applicationContext-base.xml</config>
+				<config>core/conf/context/applicationContext-dept.xml</config>
+				<config>core/conf/context/applicationContext-freemarker.xml</config>
+				<config>core/conf/context/applicationContext-user.xml</config>
+				<config>core/conf/context/applicationContext-security-acegi.xml</config>
+				<config>core/conf/context/applicationContext-security-captcha.xml</config>
+				<config>core/conf/context/applicationContext-security-acl.xml</config>
+				<config>core/conf/context/applicationContext-cms.xml</config>
+				<config>core/conf/context/applicationContext-map.xml</config>
+				<config>core/conf/context/applicationContext-jbpm.xml</config>
+			</configs>
+		</configSet>
+	</configSets>
+</beansProjectDescription>

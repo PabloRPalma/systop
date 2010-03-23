@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="systop" basedir=".">
+
+	<!-- import properties (app settings, classpath, jar file locations) -->
+	<import file="properties.xml" />
+
+	<target name="init" description="defines custom tasks">
+		<!-- Taskdefs -->
+		<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="${ant-contrib.jar}" />
+	</target>
+	<!-- ================================== -->
+	<!-- 复制JBPM到WEB-INF/lib               -->
+	<!-- ================================== -->
+	<target name="copy-jbpm">
+		    <mkdir dir="${web.dir}/WEB-INF/lib" />
+		    
+		    <copy todir="${web.dir}/WEB-INF/lib" includeEmptyDirs="no">
+		        <fileset dir="${jbpm.dir}" includes="*.jar" />	      
+		    </copy>
+		    
+	</target>
+	<!-- =================================== -->
+	<!-- 复制BIRT到合适的目录                      -->
+	<!-- =================================== -->
+	<target name="copy-birt">
+	    <mkdir dir="${web.dir}/WEB-INF/lib" />
+	    <mkdir dir="${web.dir}/WEB-INF/platform" />
+	    <mkdir dir="${web.dir}/WEB-INF/platform/plugins" />
+	    <mkdir dir="${web.dir}/WEB-INF/platform/configuration" />
+	    <copy todir="${web.dir}/WEB-INF/lib" includeEmptyDirs="no">
+	        <fileset dir="${birt.lib}" includes="*.jar" />	      
+	    </copy>
+	    <copy todir="${web.dir}/WEB-INF/Platform/plugins" includeEmptyDirs="yes">
+		     <fileset dir="${birt.plugins}" includes="**/*.*" />	      
+	    </copy>
+	    <copy todir="${web.dir}/WEB-INF/Platform/configuration" includeEmptyDirs="yes">
+			 <fileset dir="${birt.config}" includes="**/*.*" />	      
+		</copy>
+	</target>
+	<!-- =================================== -->
+	<!-- 复制lib下的jar包到web/WEB-INF/lib     -->
+	<!-- =================================== -->
+	<target name="copy-jars">
+		<mkdir dir="${web.dir}\WEB-INF\lib" />
+
+		<copy todir="${web.dir}\WEB-INF\lib" includeEmptyDirs="no">
+			<fileset dir="${runtime.dir}" includes="*.jar" excludes="jsp*,servlet*" />
+			<fileset dir="${ajax4jsf.dir}" includes="*.jar" />
+			<fileset dir="${aspectj.dir}" includes="*.jar"/>
+			<fileset dir="${commons.dir}" includes="*.jar" />
+			<fileset dir="${spring.dir}" includes="*.jar" />
+			<fileset dir="${hibernate.dir}" includes="*.jar" />
+			<fileset dir="${hibernate.dir}/lib" includes="*.jar" />
+			<fileset dir="${extremecomponents.dir}" includes="*.jar" />
+			<fileset dir="${dwr.dir}" includes="*.jar" />
+			<fileset dir="${freemarker.dir}" includes="*.jar" />
+			<fileset dir="${jcaptcha.dir}" includes="*.jar" />
+			<fileset dir="${log4j.dir}" includes="*.jar" />
+			<fileset dir="${struts.dir}" includes="*.jar" />
+			<fileset dir="${jsp2.jstl.dir}/lib" includes="*.jar" />
+			<fileset dir="${oscache.dir}" includes="*.jar" />
+			<fileset dir="${poi.dir}" includes="*.jar" />
+			<fileset dir="${struts.dir}" includes="*.jar" />
+			<fileset dir="${fckeditor.dir}" includes="*.jar" />
+			<fileset dir="${c3p0.dir}" includes="*.jar" />
+			<fileset dir="${acegi.dir}" includes="*.jar" />
+			<fileset dir="${sitemesh.dir}" includes="*.jar" />
+			<fileset dir="${hsqldb.dir}" includes="*.jar" />
+			<fileset dir="${junit.dir}" includes="*.jar" />
+		</copy>
+	</target>
+
+	<!--  ===================== -->
+	<!-- 编译核心代码               -->
+	<!--  ===================== -->
+	<target name="compile-core" description="Compile dao module">
+		<compile module="core" />
+	</target>
+	<!--  ===================== -->
+	<!-- 编译CMS代码               -->
+	<!--  ===================== -->
+	<target name="compile-cms" description="Compile dao module">
+		<compile module="cms" />
+	</target>
+
+	<!-- ======================  -->
+	<!-- 复制CORE配置文件到编译目录下 -->
+	<!-- ======================  -->
+	<target name="copyresources-core">
+		<copyresources module="core" />
+	</target>
+
+	<!-- ======================  -->
+	<!-- 复制CMS配置文件到编译目录下 -->
+	<!-- ======================  -->
+	<target name="copyresources-cms">
+		<copyresources module="cms" />
+	</target>
+
+	<!-- ======================  -->
+	<!-- 复制全部配置文件到编译目录下 -->
+	<!-- ======================  -->
+	<target name="copyresources-all" depends="copyresources-core,copyresources-cms">
+	</target>
+
+	<!-- ======================  -->
+	<!-- 执行核心代码单元测试         -->
+	<!-- ======================  -->
+	<target name="test-core" depends="compile-core,hibernatedoclet-core,copyresources-core">
+		<test-module module="core"/>
+	</target>
+
+	<!-- ======================  -->
+	<!-- 执行CMS代码单元测试         -->
+	<!-- ======================  -->
+	<target name="test-cms" depends="compile-core,compile-cms,hibernatedoclet-all,copyresources-all">
+		<test-module module="cms"/>
+	</target>
+
+	<!-- ======================  -->
+	<!-- 生成测试报告                -->
+	<!-- ======================  -->
+	<target name="test-reports" description="Generate test reports">
+		<mkdir dir="${test.dir}/reports" />
+		<junitreport todir="${test.dir}">
+			<fileset dir="${test.dir}/data">
+				<include name="TEST-*.xml" />
+			</fileset>
+			<report format="frames" todir="${test.dir}/reports" />
+		</junitreport>
+		<echo level="info">
+	        Test reports generated at ${test.dir}/reports
+	     </echo>
+	</target>
+
+	<!-- ==================================== -->
+	<!-- 执行XDoclet，生成CORE的HBM文件           -->
+	<!-- ==================================== -->
+	<target name="hibernatedoclet-core" depends="" description="Generate Hibernate mapping files">
+		<gen-hbm module="core" />
+	</target>
+	<!-- ==================================== -->
+	<!-- 执行XDoclet，生成CMS的HBM文件            -->
+	<!-- ==================================== -->
+	<target name="hibernatedoclet-cms" depends="" description="Generate Hibernate mapping files">
+		<gen-hbm module="cms" />
+	</target>
+	<!-- ==================================== -->
+	<!-- 执行XDoclet，生成全部的HBM文件           -->
+	<!-- ==================================== -->
+	<target name="hibernatedoclet-all" depends="hibernatedoclet-core,hibernatedoclet-cms" description="Generate Hibernate mapping files">
+	</target>
+
+
+	<!-- =================================================================== -->
+	<!-- 生成HBM文件的宏定义，target中输入<hibernatedoclet module="模块名称"/>     -->
+	<!-- =================================================================== -->
+	<macrodef name="gen-hbm">
+		<attribute name="module" />
+		<sequential>
+			<taskdef name="hibernatedoclet" classname="xdoclet.modules.hibernate.HibernateDocletTask" classpathref="xdoclet.classpath" />
+			<!-- 生成hibnernate hbm文件 -->
+			<hibernatedoclet destdir="@{module}/java" excludedtags="@version,@author" force="true">
+				<fileset dir="@{module}/java" />
+				<hibernate validatexml="true" version="3.0" />
+			</hibernatedoclet>
+		</sequential>
+	</macrodef>
+
+	<!--  ===================================================== -->
+	<!-- 编译源代码的宏定义，target中输入<complie module="模块名称"/> -->
+	<!--  ===================================================== -->
+	<macrodef name="compile">
+		<attribute name="module" />
+		<element name="options" optional="yes" />
+
+		<sequential>
+			<echo>Compiling @{module}...</echo>
+			<mkdir dir="${build.dir}/@{module}/classes" />
+			<!--源代码和测试代码的编译目录位于同一目录下-->
+			<javac srcdir="@{module}/java" encoding="${charset}" destdir="${build.dir}/@{module}/classes" debug="${compile.debug}" deprecation="${compile.deprecation}" optimize="${compile.optimize}" 
+				  classpathref="@{module}.compile.classpath">
+				<options />
+			</javac>
+			<javac srcdir="@{module}/test" encoding="${charset}" debug="true" destdir="${build.dir}/@{module}/classes">
+				<classpath>
+					<path refid="@{module}.test.classpath" />
+					<path location="${build.dir}/cms/classes" />
+					<path location="${build.dir}/core/classes" />
+				</classpath>
+				<options />
+			</javac>
+			<emma enabled="${emma.enabled}">
+				<instr instrpath="${build.dir}/@{module}/classes" destdir="${out.instr.dir}/@{module}/classes" metadatafile="${coverage.dir}/metadata-@{module}.emma" merge="true" />
+			</emma>
+		</sequential>
+	</macrodef>
+
+	<!-- 执行Junit单元测试的宏 -->
+	<macrodef name="test-module">
+		<attribute name="module" />
+		<element name="options" optional="yes" />
+
+		<sequential>
+			<echo level="info">Testing @{module}...</echo>
+			<mkdir dir="${test.dir}/data" />
+
+
+			<junit printsummary="no" forkmode="once" errorProperty="test.failed" failureProperty="test.failed" fork="${junit.fork}" showoutput="${junit.showoutput}">
+				<jvmarg value="-Duser.language=zh_CN" />
+				<classpath>
+					<!-- Instrumented classes - must be BEFORE the normal ones -->
+					<pathelement location="${out.instr.dir}/@{module}/classes" />
+
+					<pathelement path="@{additional.src.dirs}" />
+					<path refid="@{module}.test.classpath" />
+					<!--因为所有模块的sessionFactory是同一个bean，所以必须将所有class文件都包含。-->
+					<pathelement location="${build.dir}/core/classes" />
+					<pathelement location="${build.dir}/cms/classes" />
+
+					<pathelement path="${java.class.path}" />
+					<!-- Emma library -->
+					<pathelement location="${emma.jar}" />
+
+				</classpath>
+
+				<!-- emma-specific jvm parameter -->
+				<jvmarg value="-Demma.coverage.out.file=${coverage.dir}/coverage-@{module}.emma" />
+
+				<formatter type="xml" />
+				<formatter type="brief" usefile="false" />
+				<batchtest todir="${test.dir}/data">
+					<fileset dir="${build.dir}/@{module}/classes">
+						<exclude name="**/Base*TestCase.class"/>
+						<include name="**/*TestCase.class" />
+						<include name="**/*Test.class" />
+					</fileset>
+				</batchtest>
+			</junit>
+
+			<!-- emma report task -->
+			<emma enabled="${emma.enabled}">
+				<report sourcepathref="all.sources" depth="method">
+					<fileset dir="${coverage.dir}">
+						<include name="*.emma" />
+					</fileset>
+					<html outfile="${coverage.dir}/coverage.html" />
+				</report>
+			</emma>
+
+			<fail if="test.failed">
+	                Unit tests failed. For error messages, check the log files in
+	                ${test.dir}/data or run "ant test-reports"
+	                to generate reports at ${test.dir}/reports.</fail>
+		</sequential>
+	</macrodef>
+
+	<!-- ======================= -->
+	<!-- 删除构建目录                -->
+	<!-- ======================= -->
+	<target name="clean" description="Removes build artifacts">
+		<echo level="info">Cleaning build and distribution directories</echo>
+		<delete dir="${build.dir}"/>
+		<delete dir="${dist.dir}"/>
+		<delete file="database.properties"/>
+		<delete file="create-tables.sql"/>
+		<delete dir="${out.instr.dir}"/>
+		<delete dir="${coverage.dir}"/>
+	</target>
+	<!-- Utilities -->
+	<patternset id="java.files.pattern" includes="**/*.java" />
+
+	<!-- =================================================================== -->
+	<!-- Create JavaDoc Documentation                                        -->
+	<!-- =================================================================== -->
+	<target name="javadoc" depends="java2html"
+        description="Generate JavaDoc API docs">
+		<tstamp/>
+		<tstamp>
+			<format property="copyright.year" pattern="yyyy"/>
+		</tstamp>
+		<javadoc charset="utf-8" encoding="utf-8"
+            destdir="${build.dir}/docs/api"
+            packagenames="com.systop.*"
+            author="true"
+            version="true"
+            windowtitle="${webapp.name} api"
+            doctitle="&lt;h1&gt;${webapp.name} javadocs for
+                version ${webapp.version}&lt;/h1&gt;"
+            bottom="Copyright &#169; 2002-${copyright.year}"
+            stylesheetfile="${build.dir}/docs/api/stylesheet.css">
+
+			<fileset dir="${core}">
+				<patternset refid="java.files.pattern"/>
+			</fileset>
+			<fileset dir="${cms}">
+				<patternset refid="java.files.pattern"/>
+			</fileset>
+
+			<classpath refid="cms.test.classpath"/>
+
+			<!-- XDoclet Tags -->
+			<tag name="hibernate.class" scope="all" description="Class:"/>
+			<tag name="hibernate.id" scope="all" description="Id:"/>
+			<tag name="hibernate.property" scope="all" description="Property:"/>
+
+			<!-- Application frameworks -->
+			<link href="http://jakarta.apache.org/commons/lang/api"/>
+			<link href="http://struts.apache.org/struts-doc-1.2.9/api"/>
+			<link href="http://www.springframework.org/docs/api"/>
+			<link href="http://www.hibernate.org/hib_docs/api"/>
+
+			<!-- Testing frameworks -->
+			<link href="http://www.junit.org/junit/javadoc/${junit.version}"/>
+			<link href="http://strutstestcase.sf.net/api/"/>
+
+			<!-- SDKs -->
+			<link href="http://java.sun.com/j2se/1.4/docs/api/"/>
+			<link href="http://java.sun.com/j2ee/sdk_1.3/techdocs/api/"/>
+		</javadoc>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Create HTML versions of the Java code in this project               -->
+	<!-- =================================================================== -->
+	<target name="java2html" depends="" description="creates HTML pages of code for online viewing">
+		<taskdef name="java2html" classname="de.java2html.anttasks.Java2HtmlTask" classpath="${java2html.jar}" />
+		<java2html srcdir="${core}" 
+	               destdir="${build.dir}/docs/api"
+	               includes="**/*.java"
+	               style="eclipse"
+	               showLineNumbers="true" 
+	               showFileName="true"
+	               showTableBorder="false"
+                   overwrite="true"/>
+		<!-- Java2HTML生成的html的编码是iso-8859-1格式的，要转换为utf-8才能显示中文 -->
+		<replace dir="${build.dir}/docs/api"
+	             token="charset=iso-8859-1" value="charset=${charset}"
+	             includes="**/*.java.html" />
+
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- CORE jar任务，注意,没有将applicationContext-base.xml和dao.properites加入 -->
+	<!-- =================================================================== -->
+	<target name="package-core" depends="init,compile-core" description="Package CORE JAR">
+		<!-- Copy XML files from source -->
+		<copy todir="${build.dir}/core/classes">
+			<fileset dir="core/java" includes="**/*.xml"/>
+			<fileset dir="core/conf" includes="**/*.xml,**/*.properties"
+	                     excludes="**/applicationContext-base.xml,**/dao.properties"/>
+		</copy>
+		<mkdir dir="${dist.dir}" />
+		<jar destfile="${dist.dir}/core-${core.version}.jar">
+			<manifest>
+				<attribute name="Class-Path" value="core-${core.version}.jar"/>
+			</manifest>
+			<fileset dir="${build.dir}/core/classes"/>
+		</jar>
+	</target>
+
+	<target name="package-cms" depends="init,compile-core,compile-cms,copy-jars" description="Package web WAR">
+		<package-war module="cms"/>
+	</target>
+
+
+	<macrodef name="package-war">
+		<attribute name="module" />
+		<element name="options" optional="yes" />
+
+		<sequential>
+			<echo>Package @{module}.war, please ensure that all needed jars
+	are already in WEB-INF/lib</echo>
+			<delete file="${dist.dir}/web/@{module}.war" />
+			<mkdir dir="${dist.dir}/web" />
+			<copy todir="${web.dir}/WEB-INF/classes">
+				<fileset dir="${build.dir}/core/classes" includes="**/*.class"/>
+				<fileset dir="${build.dir}/@{module}/classes" includes="**/*.class"/>
+				<fileset dir="@{module}/java" includes="**/*.xml"/>
+				<fileset dir="@{module}/conf" includes="**/*.xml,**/*.properties" excludes="**/*test.properties,**/*test.xml"/>
+			</copy>
+			<war destfile="${dist.dir}/web/@{module}.war" duplicate="preserve"
+	            webxml="${web.dir}/WEB-INF/web.xml" compress="true">
+				<fileset dir="${web.dir}" excludes="**/web.xml" />
+			</war>
+		</sequential>
+	</macrodef>
+
+	<!-- =================================================================== -->
+	<!--            Start Tomcat                                             -->
+	<!-- =================================================================== -->
+	<target name="start.tomcat" description="starts tomcat in the current console window">
+		<java classname="org.apache.catalina.startup.Bootstrap" fork="yes">
+			<jvmarg value="-Dcatalina.home=${tomcat.home}"/>
+			<arg value="start"/>
+			<classpath>
+				<pathelement path="${java.home}/../lib/tools.jar"/>
+				<fileset dir="${tomcat.home}">
+					<include name="bin/bootstrap.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- The "deploy-cms" deploys the web application in the in a war format -->
+	<!-- =================================================================== -->
+	<target name="deploy-cms" depends="package-cms" if="tomcat.home"
+        description="Deploy 'cms.war' to local Tomcat">
+		<echo>Deploying cms.war to local Tomcat '${tomcat.home}/webapps'</echo>
+		<delete dir="${tomcat.home}/webapps/cms" />
+		<copy file="${dist.dir}/web/cms.war" overwrite="true"
+            todir="${tomcat.home}/webapps"/>
+	</target>
+	<!-- undeploy cms-->
+	<target name="undeploy-cms" depends="" if="tomcat.home" description="undeploy 'cms.war' from local Tomcat">
+		<echo>Uneploying cms.war to local Tomcat '${tomcat.home}/webapps'</echo>
+		<delete file="${tomcat.home}/webapps/cms.war" />
+		<delete dir="${tomcat.home}/webapps/cms" />
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- The "run-cms" package and deploy cms webapp, then run tomcat        -->
+	<!-- =================================================================== -->
+	<target name="run-cms" depends="init,package-cms,deploy-cms,start.tomcat" if="tomcat.home"
+	        description="RUN cms web application.">
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- 备份任务 -->
+	<!-- =================================================================== -->
+	<target name="backup" depends="clean" description="Backup">
+	    <tstamp/>
+	    <tstamp>
+				<format property="backup.day" pattern="yyyy-MM-dd"/>
+		</tstamp>
+		<zip destfile="./backup-${backup.day}.zip" compress="true" encoding="utf-8">
+	       <fileset dir="." includes="**/*" excludes="**/.svn/*.*,**/WEB-INF/classes/*.*,**/WEB-INF/lib/*.*"></fileset>
+        </zip>
+	</target>
+</project>

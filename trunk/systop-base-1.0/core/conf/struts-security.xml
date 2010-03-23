@@ -1,0 +1,114 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+   <!-- package for security -->
+   <package name="security.user" extends="struts-default" namespace="/security/user">
+    
+     <action name="userAction" class="userAction"/>
+     <action name="resourceAction" class="resourceAction"/>
+     <action name="permAction" class="permAction"/>
+     <!-- User management actions -->
+     <action name="listUsers" class="userAction" method="list">
+       <result name="success">/security/user/listUsers.jsp</result>
+     </action>
+     
+     <action name="queryUsers" class="userAction" method="query">
+       <result name="success">/security/user/listUsers.jsp</result>
+     </action>
+     
+     <action name="saveUser" class="userAction" method="save">
+       <result name="success" type="redirect">/security/user/listUsers.action</result>
+       <result name="error">/error.jsp</result>
+       <result name="input">editUser.jsp</result>
+       <interceptor-ref name="params" /> 
+       <interceptor-ref name="model-driven" /> 
+       <interceptor-ref name="validationWorkflowStack" />
+     </action>
+     
+     <action name="prepareEditUser" class="userAction" method="edit">
+       <result name="success" type="dispatcher">/security/user/editUser.jsp</result>
+     </action>
+     
+     <action name="removeUsers" class="userAction" method="remove">
+       <result name="success" type="redirect">/security/user/listUsers.action</result>
+     </action>
+     <!-- Role management actions -->
+     <action name="listRoles" class="roleAction" method="list">
+       <result name="success">/security/user/listRoles.jsp</result>
+     </action>
+     
+     <action name="saveRole" class="roleAction" method="save">
+       <result name="success" type="redirect">/security/user/listRoles.action</result>
+       <result name="error">/error.jsp</result>
+       <result name="input">editRole.jsp</result>
+       <interceptor-ref name="params" /> 
+       <interceptor-ref name="model-driven" /> 
+       <interceptor-ref name="validationWorkflowStack" />
+     </action>
+     
+     <action name="prepareEditRole" class="roleAction" method="edit">
+       <result name="success" type="dispatcher">/security/user/editRole.jsp</result>
+     </action>
+     
+     <action name="removeRoles" class="roleAction" method="remove">
+       <result name="success" type="redirect">/security/user/listRoles.action</result>
+     </action>
+     
+     <action name="queryRoles" class="roleAction" method="query">
+       <result name="success">/security/user/listRoles.jsp</result>
+     </action>
+     <!-- Resource management actions -->
+     
+     <action name="listResources" class="resourceAction" method="list">
+       <result name="success">/security/user/listResources.jsp</result>
+     </action>
+     
+     <action name="saveResource" class="resourceAction" method="save">
+       <result name="success" type="redirect">/security/user/listResources.action</result>
+       <result name="error">/error.jsp</result>
+       <result name="input">editResource.jsp</result>
+       <interceptor-ref name="params" /> 
+       <interceptor-ref name="model-driven" /> 
+       <interceptor-ref name="validationWorkflowStack" />
+     </action>
+     
+     <action name="prepareEditResource" class="resourceAction" method="edit">
+       <result name="success" type="dispatcher">/security/user/editResource.jsp</result>
+     </action>
+     
+     <action name="removeResources" class="resourceAction" method="remove">
+       <result name="success" type="redirect">/security/user/listResources.action</result>
+     </action>
+     
+     <action name="queryResources" class="resourceAction" method="query">
+       <result name="success">/security/user/listResources.jsp</result>
+     </action>
+     <!-- Permission management actions -->
+     <action name="listPerms" class="permAction" method="list">
+       <result name="success">/security/user/listPerms.jsp</result>
+     </action>
+     
+     <action name="savePerm" class="permAction" method="save">
+       <result name="success" type="redirect">/security/user/listPerms.action</result>
+       <result name="error">/error.jsp</result>
+       <result name="input">editPerm.jsp</result>
+       <interceptor-ref name="params" /> 
+       <interceptor-ref name="model-driven" /> 
+       <interceptor-ref name="validationWorkflowStack" />
+     </action>
+     
+     <action name="prepareEditPerm" class="permAction" method="edit">
+       <result name="success" type="dispatcher">/security/user/editPerm.jsp</result>
+     </action>
+     
+     <action name="removePerms" class="permAction" method="remove">
+       <result name="success" type="redirect">/security/user/listPerms.action</result>
+     </action>
+     
+     <action name="queryPerms" class="permAction" method="query">
+       <result name="success">/security/user/listPerms.jsp</result>
+     </action>
+  </package>
+</struts>
+

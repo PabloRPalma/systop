@@ -1,0 +1,33 @@
+<textarea style="display:none;" id="userRolesHeaderTemplate" cols="1000" rows="1">
+    
+    <div class='eXtremeTable'>
+    <table width='98%' cellpadding='0' cellspacing='0' class='tableRegion'>
+    <thead><tr><td class='tableHeader'>
+    ${text.roleName}
+    </td><td class='tableHeader'>
+    ${text.roleDescn}
+    </td><td class='tableHeader'>
+    ${text.select}
+    </td></tr></thead><tbody class='tableBody'>
+</textarea>
+
+<textarea style="display:none" id="userRolesBody" cols="1000" rows="1">
+   {for role in data}
+      {if role_index % 2 == 0}
+        <tr class='odd'>
+      {else}
+        <tr class='even'>
+      {/if} 
+        <td>${role.name}</td>
+        <td>${role.descn}</td>
+        <td>
+          {if role.selected}
+            <input type='checkbox' checked value='${role.id}'  onclick='onSelectRole(this, currentUserId)'/>
+          {else}
+            <input type='checkbox' value='${role.id}'  onclick='onSelectRole(this, currentUserId)'/>
+          {/if}
+        </td>
+      </tr>
+   {/for}
+   </tbody></table></div>
+</textarea>

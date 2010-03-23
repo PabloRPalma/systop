@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+                       "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+ <!-- ============================= 
+ propertyConfigurer用于绑定属性文件，可以用${}引用属性文件中的数据 
+ 在test.properties中，覆盖了某些../dao.properties中的属性，格式为：
+ beanId.propertyName=newValue
+ ============================= -->
+ <bean id="testPropertyConfigurer" class="org.springframework.beans.factory.config.PropertyOverrideConfigurer">
+        <property name="location" value="classpath:context/test/test.properties"/>
+        <property name="ignoreInvalidKeys" value="true"/>
+    </bean>
+
+ <!-- ============================= 
+ Trasaction代理，Manager类可以通过
+	<bean id="xManager" parent="baseTxService"> 
+	使用事务服务
+ ============================= -->
+ <bean abstract="true"
+  class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" id="baseTxService">
+  <property name="transactionManager" ref="transactionManager"/>
+  <!-- true表示使用cglib代理 -->
+  <property name="proxyTargetClass" value="true"/>
+  <property name="transactionAttributes">
+   <props>
+    <prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+    <prop key="find*">PROPAGATION_REQUIRED,readOnly</prop>
+    <prop key="load*">PROPAGATION_REQUIRED,readOnly</prop>
+    <prop key="save*">PROPAGATION_REQUIRED</prop>
+    <prop key="update*">PROPAGATION_REQUIRED</prop>
+    <prop key="remove*">PROPAGATION_REQUIRED</prop>
+   </props>
+  </property>
+ </bean>
+ 
+</beans>
