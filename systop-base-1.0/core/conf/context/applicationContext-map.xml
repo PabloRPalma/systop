@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans default-lazy-init="true">
+
+  <!-- =============================== -->
+  <!-- "baseTxService"指向Trasaction代理 -->
+  <!-- =============================== -->
+  <bean id="mapManager" parent="baseTxService">
+    <property name="target">
+        <bean class="com.systop.common.map.service.impl.MapManagerImpl">
+          <property name="sessionFactory" ref="sessionFactory" />
+        </bean>
+      </property>
+  </bean>
+  
+  <bean id="entryManager" parent="baseTxService">
+    <property name="target">
+        <bean class="com.systop.common.map.service.impl.EntryManagerImpl">
+          <property name="sessionFactory" ref="sessionFactory" />
+        </bean>
+      </property>
+  </bean>
+  
+  <bean id="backDataManager" parent="baseTxService">
+    <property name="target">
+        <bean class="com.systop.common.map.service.impl.BackDataImpl">
+          <property name="entrMagr" ref="entryManager" />
+          <property name="mapMagr" ref="mapManager" />
+        </bean>
+      </property>
+  </bean>
+  
+  <bean id="mapDwrAction" class="com.systop.common.map.webapp.MapDwrAction" singleton="false">
+    <property name="mapManager" ref="mapManager" />
+    <property name="entryManager" ref="entryManager" />
+    <property name="backDataMgr" ref="backDataManager" />
+  </bean>
+  
+  	<!-- ================================= -->
+    <!-- Cache FactoryBean                 -->
+    <bean id="entryUtil" class="com.systop.common.map.EntryUtil">
+      <property name="cache">
+        <bean class="com.systop.common.cache.OsCacheFactoryBean">
+           <property name="regionName"><value>com.systop.common.map.EntryRegion</value></property>
+        </bean>
+      </property>
+      <property name="entryManager" ref="entryManager"/>
+      <property name="mapManager" ref="mapManager"/>
+    </bean>
+    
+    <bean id="catalogUtil" class="com.systop.common.catalog.CatalogUtil">
+      <property name="entryUtil" ref="entryUtil"/>
+    </bean>
+  <!-- =============================== -->
+  
+</beans>

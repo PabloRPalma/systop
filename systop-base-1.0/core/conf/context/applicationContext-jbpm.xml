@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans default-lazy-init="true">
+    <!-- Local Hibernate Session Factory for jBPM
+         因为是用mapplingLocations的方式，和主sessionFactory mappingDirectoryLocations的方式不同 -->
+    <bean id="jbpmSessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mappingLocations">
+            <list>
+                <value>classpath*:org/jbpm/**/*.hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                <prop key="hibernate.cache.use_query_cache">${hibernate.cache.use_query_cache}</prop>
+                <prop key="hibernate.cache.provider_class">${hibernate.cache.provider_class}</prop>
+                <!-- <prop key="hibernate.hbm2ddl.auto">create</prop> -->
+            </props>
+        </property>
+    </bean>
+
+    <!--Hibernate TransactionManager-->
+    <bean id="jbpmTransactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="jbpmSessionFactory"/>
+    </bean>
+
+    <!-- jBPM Configuration -->
+    <bean id="jbpmConfiguration" class="org.springmodules.workflow.jbpm31.LocalJbpmConfigurationFactoryBean">
+        <property name="sessionFactory" ref="jbpmSessionFactory"/>
+        <property name="configuration" value="classpath:jbpm/jbpm.cfg.xml"/>
+        <property name="processDefinitions">
+            <list>
+                <ref local="sampleWorkFlow"/>
+            </list>
+        </property>
+        
+    </bean>
+
+    <!-- Process Definition of sampleWorkFlow -->
+    <bean id="sampleWorkFlow" class="org.springmodules.workflow.jbpm31.definition.ProcessDefinitionFactoryBean">
+        <property name="definitionLocation"
+                  value="classpath:jbpm/definitions/SampleWorkFlow/processdefinition.xml"/>
+    </bean>
+    <!-- jbpm hibernate template -->
+    <bean id="jbpmHibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <property name="sessionFactory" ref="jbpmSessionFactory"/>
+        <property name="exposeNativeSession" value="false"/>
+    </bean>
+    <!-- jBPM template -->
+    <bean id="jbpmSampleTemplate" class="org.springmodules.workflow.jbpm31.JbpmTemplate">
+        <property name="jbpmConfiguration" ref="jbpmConfiguration"></property>
+        <property name="processDefinition" ref="sampleWorkFlow"/>
+    </bean>
+    <!-- 文章审核handler -->
+    <bean id="updateArticleStatusHandler" class="com.systop.cms.audit.UpdateArticleStatusHandler">
+       <property name="contentManager" ref="contentManager"></property>
+    </bean>
+
+</beans>

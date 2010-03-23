@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--SiteMesh decorators-->
+<decorators defaultdir="/decorators">
+    <decorator name="main" page="customerDec.jsp"/>
+    <!-- Webwork 展示用到 -->
+    <decorator name="wwadmin" page="/WEB-INF/webwork/decorators/admin.ftl">
+        <pattern>/ww/admin/*.action</pattern>
+        <pattern>/ww/admin/*.jsp</pattern>
+    </decorator>
+    <decorator name="wwprintable" page="/WEB-INF/webwork/decorators/printable.ftl"/>
+    <excludes>
+        <pattern>/ww/styles/*</pattern>
+    </excludes>
+</decorators>

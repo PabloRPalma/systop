@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+
+>
+
+    <class
+            name="com.systop.common.security.dept.model.Dept"
+            table="DEPTS"
+            lazy="true"
+    >
+
+    <id
+        name="id"
+            column="ID"
+                type="java.lang.Integer"
+    >
+
+    <!-- The generator-class attribute of @hibernate.id is deprecated, use the @hibernate.generator tag instead -->
+    <generator class="hilo">
+
+    </generator>
+
+    </id>
+
+        <property
+            name="descn"
+                    column="DESCN"
+                length="255"
+        >
+
+        </property>
+
+        <property
+            name="name"
+                    column="NAME"
+                length="255"
+        >
+
+        </property>
+
+        <many-to-one
+            name="parent"
+        >
+
+            <column
+                name="PARENT_ID" 
+            />
+
+        </many-to-one>
+
+        <set
+            name="depts"
+            inverse="true"
+        >
+
+            <!-- @hibernate.collection-key tag is deprecated, use @hibernate.key instead -->
+            <key
+                column="PARENT_ID"
+            >
+
+            </key>
+
+            <!-- @hibernate.collection-one-to-many tag is deprecated, use @hibernate.one-to-many instead -->
+            <one-to-many
+                  class="com.systop.common.security.dept.model.Dept"
+            />
+
+        </set>
+
+        <set
+            name="users"
+            inverse="true"
+        >
+
+            <!-- @hibernate.collection-key tag is deprecated, use @hibernate.key instead -->
+            <key
+                column="DEPT_ID"
+            >
+
+            </key>
+
+            <!-- @hibernate.collection-one-to-many tag is deprecated, use @hibernate.one-to-many instead -->
+            <one-to-many
+                  class="com.systop.common.security.user.model.User"
+            />
+
+        </set>
+
+    </class>    
+
+</hibernate-mapping>
+

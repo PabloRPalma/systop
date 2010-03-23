@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+
+>
+
+    <class
+            name="com.systop.common.security.user.model.Permission"
+            table="PERMISSIONS"
+            schema="PUBLIC"
+            lazy="true"
+    >
+
+    <id
+        name="id"
+            column="ID"
+                type="java.lang.Integer"
+    >
+
+    <!-- The generator-class attribute of @hibernate.id is deprecated, use the @hibernate.generator tag instead -->
+    <generator class="hilo">
+
+    </generator>
+
+    </id>
+
+        <version
+            name="version"
+            column="VERSION"
+            type="java.lang.Integer"
+        />
+
+        <property
+            name="descn"
+                    column="DESCN"
+                length="255"
+        >
+
+        </property>
+
+        <property
+            name="name"
+                    column="NAME"
+                length="255"
+        >
+
+        </property>
+
+        <property
+            name="operation"
+                    column="OPERATION"
+                length="255"
+        >
+
+        </property>
+
+        <property
+            name="status"
+                    column="STATUS"
+                length="2"
+        >
+
+        </property>
+
+        <set
+            name="resources"
+            table="PERMIS_RESC"
+        >
+
+            <key
+                column="PERMISSION_ID"
+                not-null="true"
+            >
+
+            </key>          
+
+            <many-to-many
+                class="com.systop.common.security.user.model.Resource"
+                column="RESC_ID"
+             >
+
+             </many-to-many>
+
+        </set>
+
+        <set
+            name="roles"
+            table="ROLE_PERMIS"
+        >
+
+            <key
+                column="PERMISSION_ID"
+                not-null="true"
+            >
+
+            </key>          
+
+            <many-to-many
+                class="com.systop.common.security.user.model.Role"
+                column="ROLE_ID"
+             >
+
+             </many-to-many>
+
+        </set>
+
+    </class>    
+
+</hibernate-mapping>
+

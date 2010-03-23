@@ -1,0 +1,47 @@
+FIELDSET {
+	MARGIN-TOP: 5px;
+	BACKGROUND: #fff;
+	width: 95%;
+	font-size: small;
+	line-height: 22px;
+	margin-bottom: 10px;
+	padding-top: 10px;
+	padding-right: 10px;
+	padding-bottom: 5px;
+	padding-left: 10px;
+	border: 1px solid #b6c0db;
+}
+
+fieldset input{
+	border-left:1px solid #CCCCCC;
+	border-right:1px solid #CCCCCC;
+	border-top:1px solid #CCCCCC;
+	border-bottom:1px solid #CCCCCC;
+	padding:1px;
+	margin:1px;
+}
+.fieldsetStyle{
+	MARGIN-TOP: 5px;
+	BACKGROUND: #fff;
+	width: 95%;
+	font-size: small;
+	line-height: 22px;
+	margin-bottom: 10px;
+	padding-top: 10px;
+	padding-right: 10px;
+	padding-bottom: 5px;
+	padding-left: 10px;
+	border: 1px solid #b6c0db;
+	}
+FIELDSET LEGEND {
+	PADDING-RIGHT: 20px;
+	PADDING-LEFT: 20px;
+	FONT-WEIGHT: bold;
+	BACKGROUND: #fff;
+	COLOR: #526293;
+	font-size: 12px;
+	border: 1px solid #b6c0db;
+}
+FIELDSET LABEL {
+	PADDING-RIGHT: 4px; PADDING-LEFT: 4px; FLOAT: left; PADDING-BOTTOM: 4px; MARGIN: 1px; WIDTH: 120px; PADDING-TOP: 4px; TEXT-ALIGN: right
+}

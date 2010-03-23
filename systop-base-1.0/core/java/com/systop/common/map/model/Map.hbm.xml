@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+
+>
+
+    <class
+            name="com.systop.common.map.model.Map"
+            table="MAPS"
+            lazy="true"
+    >
+
+    <id
+        name="mapId"
+            column="MAP_ID"
+                type="java.lang.Integer"
+    >
+
+    <!-- The generator-class attribute of @hibernate.id is deprecated, use the @hibernate.generator tag instead -->
+    <generator class="hilo">
+
+    </generator>
+
+    </id>
+
+        <version
+            name="version"
+            column="VERSION"
+            type="java.lang.Integer"
+        />
+
+        <property
+            name="mapDescn"
+                    column="MAP_DESCN"
+                length="255"
+        >
+
+        </property>
+
+        <property
+            name="mapSign"
+                    column="MAP_SIGN"
+                length="255"
+        >
+
+        </property>
+
+        <property
+            name="mapTitle"
+                    column="MAP_TITLE"
+                length="255"
+        >
+
+        </property>
+
+        <set
+            name="entries"
+            inverse="true"
+        >
+
+            <!-- @hibernate.collection-key tag is deprecated, use @hibernate.key instead -->
+            <key
+                column="MAP_ID"
+            >
+
+            </key>
+
+            <!-- @hibernate.collection-one-to-many tag is deprecated, use @hibernate.one-to-many instead -->
+            <one-to-many
+                  class="com.systop.common.map.model.Entry"
+            />
+
+        </set>
+
+    </class>    
+
+</hibernate-mapping>
+

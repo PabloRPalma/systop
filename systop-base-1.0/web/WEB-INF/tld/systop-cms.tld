@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN" "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+<taglib>
+
+    <tlib-version>2.2.3</tlib-version>
+    <jsp-version>1.2</jsp-version>
+    <short-name>systopCMS</short-name>
+
+    <uri>/systop-cms</uri>
+    <tag>
+    	<name>allFolder</name>
+    	<tag-class>com.systop.cms.webapp.taglibs.CMSAllFolderTag</tag-class>
+    	<body-content>JSP</body-content>
+    	<attribute>
+    		<name>id</name>
+    		<required>true</required>
+    		<type>java.lang.String</type>
+    		<description>Identifer of the tag.</description>
+    	</attribute>
+    	<attribute>
+    		<name>width</name>
+    		<required>false</required>
+    		<type>java.lang.String</type>
+    	</attribute>
+    	<attribute>
+    		<name>templateDir</name>
+    		<type>java.lang.String</type>
+    		<description><![CDATA[ FTL file's location,examples:classpath:templates or web:templates ]]></description>
+    	</attribute>
+    	<attribute>
+    		<name>templateName</name>
+    		<required>false</required>
+    		<type>java.lang.String</type>
+    		<description>FTL file name.</description>
+    	</attribute>
+    	<attribute>
+    		<name>theme</name>
+    		<type>java.lang.String</type>
+    	</attribute>
+    </tag>
+    <tag>
+    	<name>displayField</name>
+    	<tag-class>com.systop.cms.webapp.taglibs.ContentDisplayerTag</tag-class>
+    	<body-content>JSP</body-content>
+    	<attribute>
+    		<name>contentId</name>
+    		<required>true</required>
+    		<type>java.lang.String</type>
+    		<description>id of a Content or the name of the content id in Request</description>
+    	</attribute>
+    	<attribute>
+    		<name>fieldName</name>
+    		<required>true</required>
+    		<type>java.lang.String</type>
+    		<description>field of Content</description>
+    	</attribute>
+    </tag>
+    <tag>
+    	<name>folder</name>
+    	<tag-class>com.systop.cms.webapp.taglibs.CMSFolderTag</tag-class>
+    	<body-content>JSP</body-content>
+    	<display-name>folderContent</display-name>
+    	<description><![CDATA[ A freemarker based tag lib that dispay a folder's contents. ]]></description>
+    	<attribute>
+    		<name>id</name>
+    		<required>true</required>
+    		<type>java.lang.String</type>
+    		<description>Identifer of the tag.</description>
+    	</attribute>
+    	<attribute>
+    		<name>templateName</name>
+    		<required>true</required>
+    		<type>java.lang.String</type>
+    		<description>FTL file name.</description>
+    	</attribute>
+    	<attribute>
+    		<name>folderId</name>
+    		<type>java.lang.Integer</type>
+    		<description>Identifer of the folder.</description>
+    	</attribute>
+    	<attribute>
+    		<name>folderName</name>
+    		<type>java.lang.String</type>
+    	</attribute>
+    	<attribute>
+    		<name>displayRows</name>
+    		<type>java.lang.Integer</type>
+    		<description>How many rows displayed.</description>
+    	</attribute>
+    	<attribute>
+    		<name>target</name>
+    		<type>java.lang.String</type>
+    		<description>the page open target</description>
+    	</attribute>
+    	<attribute>
+    		<name>openPage</name>
+    		<required>true</required>
+    		<type>java.lang.String</type>
+    		<description><![CDATA[ specify page what's you want to show content page ]]></description>
+    	</attribute>
+    	<attribute>
+    		<name>x</name>
+    		<type>java.lang.String</type>
+    	</attribute>
+    	<attribute>
+    		<name>y</name>
+    		<type>java.lang.String</type>
+    	</attribute>
+    	<attribute>
+    		<name>templateDir</name>
+    		<type>java.lang.String</type>
+    		<description><![CDATA[ FTL file's location,examples:classpath:templates or web:templates ]]></description>
+    	</attribute>
+    	<attribute>
+    		<name>width</name>
+    		<type>java.lang.String</type>
+    	</attribute>
+    	<attribute>
+    		<name>theme</name>
+    		<type>java.lang.String</type>
+    	</attribute>
+    </tag>
+    <tag>
+    	<name>moietyArticle</name>
+    	<tag-class>com.systop.cms.webapp.taglibs.MoietyArticle</tag-class>
+    	<body-content>JSP</body-content>
+    	<variable>
+    		<name-given>left</name-given>
+    		<variable-class>java.lang.String</variable-class>
+    		<declare>true</declare>
+    		<scope>AT_BEGIN</scope>
+    	</variable>
+    	<attribute>
+    		<name>id</name>
+    		<required>true</required>
+    		<type>java.lang.String</type>
+    	</attribute>
+    	<attribute>
+    		<name>articleId</name>
+    		<required>true</required>
+    		<type>java.lang.String</type>
+    	</attribute>
+    	<attribute>
+    		<name>wordCount</name>
+    		<required>false</required>
+    		<type>java.lang.Integer</type>
+    	</attribute>
+    	<attribute>
+    		<name>imgSrc</name>
+    		<type>java.lang.String</type>
+    	</attribute>
+    	<attribute>
+    		<name>imgWidth</name>
+    		<required>false</required>
+    		<type>java.lang.Integer</type>
+    	</attribute>
+    	<attribute>
+    		<name>imgHeight</name>
+    		<type>java.lang.Integer</type>
+    	</attribute>
+    	<attribute>
+    		<name>templateName</name>
+    		<type>java.lang.String</type>
+    	</attribute>
+    	<attribute>
+    		<name>templateDir</name>
+    		<type>java.lang.String</type>
+    	</attribute>
+    	<attribute>
+    		<name>theme</name>
+    		<type>java.lang.String</type>
+    	</attribute>
+    </tag>
+    <tag>
+    	<name>newArticles</name>
+    	<tag-class>com.systop.cms.webapp.taglibs.NewArticles</tag-class>
+    	<body-content>JSP</body-content>
+    	<description>new articles list</description>
+    	<attribute>
+    		<name>id</name>
+    		<required>true</required>
+    		<type>java.lang.String</type>
+    		<description>Identifer of the tag.</description>
+    	</attribute>
+    	<attribute>
+    		<name>templateDir</name>
+    		<required>false</required>
+    		<type>java.lang.String</type>
+    		<description><![CDATA[ FTL file's location,examples:classpath:templates or web:templates ]]></description>
+    	</attribute>
+    	<attribute>
+    		<name>templateName</name>
+    		<required>false</required>
+    		<type>java.lang.String</type>
+    		<description>FTL file name.</description>
+    	</attribute>
+    	<attribute>
+    		<name>displayRows</name>
+    		<type>java.lang.Integer</type>
+    		<description>How many rows displayed.</description>
+    	</attribute>
+    	<attribute>
+    		<name>target</name>
+    		<type>java.lang.String</type>
+    	</attribute>
+    	<attribute>
+    		<name>openPage</name>
+    		<type>java.lang.String</type>
+    	</attribute>
+    	<attribute>
+    		<name>theme</name>
+    		<type>java.lang.String</type>
+    	</attribute>
+    </tag>
+    <tag>
+    	<name>newFolders</name>
+    	<tag-class>com.systop.cms.webapp.taglibs.NewFolders</tag-class>
+    	<body-content>JSP</body-content>
+    	<description>new folder list</description>
+    	<attribute>
+    		<name>id</name>
+    		<required>true</required>
+    		<type>java.lang.String</type>
+    		<description>Identifer of the tag.</description>
+    	</attribute>
+    	<attribute>
+    		<name>templateDir</name>
+    		<type>java.lang.String</type>
+    		<description><![CDATA[ FTL file's location,examples:classpath:templates or web:templates ]]></description>
+    	</attribute>
+    	<attribute>
+    		<name>templateName</name>
+    		<type>java.lang.String</type>
+    		<description>FTL file name.</description>
+    	</attribute>
+    	<attribute>
+    		<name>displayRows</name>
+    		<type>java.lang.Integer</type>
+    		<description>How many rows displayed.</description>
+    	</attribute>
+    	<attribute>
+    		<name>theme</name>
+    		<type>java.lang.String</type>
+    	</attribute>
+    </tag>
+    <tag>
+    	<name>viewContent</name>
+    	<tag-class>com.systop.cms.webapp.taglibs.ViewContentTag</tag-class>
+    	<body-content>JSP</body-content>
+    	<description>use to view a article [content]</description>
+    	<attribute>
+    		<name>id</name>
+    		<required>true</required>
+    		<type>java.lang.String</type>
+    		<description>Identifer of the tag.</description>
+    	</attribute>
+    	<attribute>
+    		<name>templateName</name>
+    		<required>true</required>
+    		<type>java.lang.String</type>
+    			
+    		<description>FTL file name.</description>
+    	</attribute>
+    	<attribute>
+    		<name>templateDir</name>
+    		<type>java.lang.String</type>
+    		<description><![CDATA[ FTL file's location,examples:classpath:templates or web:templates ]]></description>
+    	</attribute>
+    	<attribute>
+    		<name>theme</name>
+    		<type>java.lang.String</type>
+    	</attribute>
+    </tag>
+    </taglib>

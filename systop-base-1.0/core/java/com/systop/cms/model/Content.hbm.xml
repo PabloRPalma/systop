@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+
+>
+
+    <class
+            name="com.systop.cms.model.Content"
+            table="CONTENTS"
+            schema="PUBLIC"
+            lazy="true"
+    >
+
+    <id
+        name="id"
+            column="ID"
+                type="java.lang.Integer"
+    >
+
+    <!-- The generator-class attribute of @hibernate.id is deprecated, use the @hibernate.generator tag instead -->
+    <generator class="hilo">
+
+    </generator>
+
+    </id>
+
+        <version
+            name="version"
+            column="VERSION"
+            type="java.lang.Integer"
+        />
+
+        <set
+            name="children"
+            inverse="true"
+        >
+
+            <key
+                column="PARENT_ID"
+            >
+
+            </key>          
+
+            <one-to-many
+                class="com.systop.cms.model.Content"
+            />
+
+        </set>
+
+        <many-to-one
+            name="parent"
+        >
+
+            <column
+                name="PARENT_ID" 
+            />
+
+        </many-to-one>
+
+        <property
+            name="body"
+                    column="BODY"
+                length="2147483647"
+                lazy="true"
+        >
+
+        </property>
+
+        <property
+            name="type"
+                    column="TYPE"
+                length="255"
+        >
+
+        </property>
+
+        <property
+            name="createTime"
+                    column="CREATE_TIME"
+        >
+
+        </property>
+
+        <property
+            name="expireDate"
+                    column="EXPIRE_DATE"
+        >
+
+        </property>
+
+        <property
+            name="audited"
+                    column="AUDITED"
+                length="1"
+        >
+
+        </property>
+
+        <property
+            name="available"
+                    column="AVAILABLE"
+                length="1"
+        >
+
+        </property>
+
+        <property
+            name="isDraft"
+                    column="IS_DRAFT"
+                length="1"
+        >
+
+        </property>
+
+        <property
+            name="visible"
+                    column="VISIBLE"
+                length="1"
+        >
+
+        </property>
+
+        <property
+            name="serialNo"
+                    column="SERIAL_NO"
+        >
+
+        </property>
+
+        <property
+            name="subtitle"
+                    column="SUBTITLE"
+                length="255"
+        >
+
+        </property>
+
+        <property
+            name="descn"
+                    column="DESCN"
+                length="255"
+        >
+
+        </property>
+
+        <property
+            name="summary"
+                    column="SUMMARY"
+                length="1000"
+        >
+
+        </property>
+
+        <property
+            name="title"
+                    column="TITLE"
+                length="255"
+        >
+
+        </property>
+
+        <property
+            name="updateTime"
+                    column="UPDATE_TIME"
+        >
+
+        </property>
+
+        <many-to-one
+            name="originalContent"
+        >
+
+            <column
+                name="SHORTCUT_ID" 
+            />
+
+        </many-to-one>
+
+        <many-to-one
+            name="author"
+        >
+
+            <column
+                name="AUTHOR" 
+            />
+
+        </many-to-one>
+
+        <many-to-one
+            name="updater"
+        >
+
+            <column
+                name="UPDATER" 
+            />
+
+        </many-to-one>
+
+        <many-to-one
+            name="auditor"
+        >
+
+            <column
+                name="AUDITOR" 
+            />
+
+        </many-to-one>
+
+        <set
+            name="attachments"
+            inverse="true"
+            cascade="all"
+        >
+
+            <key
+                column="CONTENT_ID"
+            >
+
+            </key>          
+
+            <one-to-many
+                class="com.systop.cms.model.Attachment"
+            />
+
+        </set>
+
+        <set
+            name="shortcuts"
+            inverse="true"
+        >
+
+            <key
+                column="SHORTCUT_ID"
+            >
+
+            </key>          
+
+            <one-to-many
+                class="com.systop.cms.model.Content"
+            />
+
+        </set>
+
+    </class>    
+
+</hibernate-mapping>
+

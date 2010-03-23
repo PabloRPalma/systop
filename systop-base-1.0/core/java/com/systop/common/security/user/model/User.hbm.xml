@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+
+>
+
+    <class
+            name="com.systop.common.security.user.model.User"
+            table="USERS"
+            schema="PUBLIC"
+            lazy="true"
+    >
+
+    <id
+        name="id"
+            column="ID"
+                type="java.lang.Integer"
+    >
+
+    <!-- The generator-class attribute of @hibernate.id is deprecated, use the @hibernate.generator tag instead -->
+    <generator class="hilo">
+
+    </generator>
+
+    </id>
+
+        <version
+            name="version"
+            column="VERSION"
+            type="java.lang.Integer"
+        />
+
+        <property
+            name="descn"
+                    column="DESCN"
+                length="255"
+        >
+
+        </property>
+
+        <property
+            name="email"
+                    column="EMAIL"
+                length="255"
+        >
+
+        </property>
+
+        <property
+            name="loginId"
+                    column="LOGIN_ID"
+                length="255"
+        >
+
+        </property>
+
+        <property
+            name="name"
+                    column="NAME"
+                length="255"
+        >
+
+        </property>
+
+        <property
+            name="password"
+                    column="PASSWORD"
+                length="255"
+        >
+
+        </property>
+
+        <property
+            name="region"
+                    column="REGION"
+                length="255"
+        >
+
+        </property>
+
+        <property
+            name="status"
+                    column="STATUS"
+                length="2"
+        >
+
+        </property>
+
+        <set
+            name="createdContents"
+            inverse="true"
+        >
+
+            <key
+                column="AUTHOR"
+            >
+
+            </key>          
+
+            <one-to-many
+                class="com.systop.cms.model.Content"
+            />
+
+        </set>
+
+        <set
+            name="updatedContents"
+            inverse="true"
+        >
+
+            <key
+                column="UPDATER"
+            >
+
+            </key>          
+
+            <one-to-many
+                class="com.systop.cms.model.Content"
+            />
+
+        </set>
+
+        <set
+            name="roles"
+            table="USER_ROLE"
+            inverse="true"
+        >
+
+            <key
+                column="USER_ID"
+                not-null="true"
+            >
+
+            </key>          
+
+            <many-to-many
+                class="com.systop.common.security.user.model.Role"
+                column="ROLE_ID"
+             >
+
+             </many-to-many>
+
+        </set>
+
+        <many-to-one
+            name="dept"
+        >
+
+            <column
+                name="DEPT_ID" 
+            />
+
+        </many-to-one>
+
+    </class>    
+
+</hibernate-mapping>
+

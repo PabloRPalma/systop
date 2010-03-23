@@ -1,0 +1,33 @@
+<textarea style="display:none;" id="permResourcesHeaderTemplate" cols="100" rows="1">
+
+    <div class='eXtremeTable'>
+    <table width='98%' cellpadding='0' cellspacing='0' class='tableRegion'>
+    <thead><tr><td class='tableHeader'>
+    ${text.resName}
+    </td><td class='tableHeader'>
+    ${text.resString}
+    </td><td class='tableHeader'>
+    ${text.select}
+    </td></tr></thead><tbody class='tableBody'>
+</textarea>
+
+<textarea style="display:none" id="permResourcesBody" cols="100" rows="1">
+   {for res in data}
+      {if res_index % 2 == 0}
+        <tr class='odd'>
+      {else}
+        </tr><tr class='even'>
+      {/if} 
+        <td><span title="${res.descn}">${res.name}</span></td>
+        <td>${res.resString}</td>
+        <td>
+          {if res.selected}
+            <input type='checkbox' checked value='${res.id}'  onclick='onSelectRes(this, currentPermId)'/>
+          {else}
+            <input type='checkbox' value='${res.id}'  onclick='onSelectRes(this, currentPermId)'/>
+          {/if}
+        </td>
+      </tr>
+   {/for}
+   </tbody></table></div>
+</textarea>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dwr PUBLIC "-//GetAhead Limited//DTD Direct Web Remoting 2.0//EN" "http://www.getahead.ltd.uk/dwr/dwr20.dtd">
+<!--DOCTYPE dwr PUBLIC "-//GetAhead Limited//DTD Direct Web Remoting 1.0//EN" "http://www.getahead.ltd.uk/dwr/dwr10.dtd"-->
+
+<dwr>
+
+	<allow>
+	    <create creator="new" javascript="UploadMonitor">
+            <param name="class" value="com.systop.common.webapp.upload.UploadMonitor"/>
+        </create>
+		<create creator="new" javascript="validator">
+			<param name="class"
+				value="org.apache.struts2.validators.DWRValidator" />
+		</create>
+		<convert converter="bean"
+			match="com.opensymphony.xwork2.ValidationAwareSupport" />
+		<!-- security.user Action for core  -->
+		<create javascript="userAction" creator="spring">
+			<param name="beanName" value="userAction" />
+		</create>
+		<create javascript="roleAction" creator="spring">
+			<param name="beanName" value="roleDwrAction" />
+		</create>
+		<create javascript="permAction" creator="spring">
+			<param name="beanName" value="permDwrAction" />
+		</create>
+		<create javascript="resourceAction" creator="spring">
+			<param name="beanName" value="resDwrAction" />
+		</create>
+		<create javascript="mapDwrAction" creator="spring">
+			<param name="beanName" value="mapDwrAction" />
+		</create>
+		<!-- Action for cms-->
+		<create javascript="cmsDojoAction" creator="spring">
+			<param name="beanName" value="cmsDojoAction"></param>
+		</create>
+		<!-- Action for dept -->
+		<create javascript="deptDojoAction" creator="spring">
+			<param name="beanName" value="deptDojoAction"></param>
+		</create>
+        <convert converter="bean" match="com.systop.common.webapp.upload.UploadInfo"/>
+		<convert converter="bean" match="com.systop.cms.model.Content" />
+		<convert converter="bean" match="com.systop.cms.model.Attachment" />
+		<convert converter="bean" match="com.systop.common.security.dept.model.Dept" />
+		<convert converter="bean" match="com.systop.common.security.user.model.Resource" />
+		<convert converter="bean" match="com.systop.common.security.user.model.Permission" />
+		<convert converter="bean" match="com.systop.common.security.user.model.Role" />
+		<convert converter="bean" match="com.systop.common.security.user.model.User" />
+		<convert converter="bean" match="com.systop.common.dao.Page" />
+		<convert converter="bean"  match="com.systop.common.map.model.Map" />
+		<convert converter="bean"  match="com.systop.common.map.model.Entry" />
+		<convert converter="map"  match="java.util.Map" />
+	</allow>
+
+
+	<signatures>
+		<![CDATA[
+        import java.util.Map;
+        import org.apache.struts2.validators.DWRValidator;
+        DWRValidator.doPost(String, String, Map<String, String>);
+        ]]>
+	</signatures>
+</dwr>

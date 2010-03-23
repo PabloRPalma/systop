@@ -1,0 +1,38 @@
+.paginatorClass {
+  border-left:1px solid #b6c0db;
+  border-top:1px solid #b6c0db;
+  border-bottom:1px solid #b6c0db;
+  border-right:1px solid #b6c0db;
+  padding:1px;
+}
+
+.paginatorButtonClass {
+  padding: 1px;
+  margin: 1px;
+}
+
+.paginatorInformationClass {
+  font-size: 12px;
+}
+
+.paginatorFastStepClass {
+  font-size: 12px;
+  color: #197aab;
+  vertical-align: middle;
+  
+}
+
+.paginatorFastStepInactiveClass {
+  text-decoration:underline;
+  cursor:pointer;
+  cursor:hand;
+  padding: 1px;
+  margin: 1px;
+}
+
+.paginatorFastStepActiveClass {
+  text-decoration:none;
+  padding: 1px;
+  margin: 1px;
+  font-weight: bold;
+}

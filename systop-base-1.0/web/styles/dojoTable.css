@@ -1,0 +1,132 @@
+/*ExtremeTable's Style*/
+.dojoTable {
+    margin: 0;
+    padding: 0;
+    border:0px;
+}
+
+
+/**/
+.dojoTable .tableRegion {
+    border-left:1px solid #6290d2;
+    border-top:1px solid #6290d2;
+    padding: 1px;
+    font-size: 12px;
+    margin-top: 7px;
+}
+
+.dojoTable .tablEdashedRegion {
+    border-left : 1px dashed #6290d2;
+    border-top : 1px dashed #6290d2;
+    padding: 1px;
+    font-size: 12px;
+    margin-top: 7px;
+}
+
+/**/
+.dojoTable .tableHeader {
+    background-color: #e8f2fe;
+    color: #000000 ;
+    font-size: 12px;
+    text-align: center;
+    padding-right: 3px;
+    padding-left: 3px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin: 0px;
+    border-right: 1px solid #6290d2;
+    border-bottom: 1px solid #6290d2;
+    background-image: url( "../images/tableTopbg.gif" );
+}
+
+/**/
+.dojoTable .tableHeaderSort {
+    background-color: #e8f2fe;
+    color: #999999 ;
+    font-size: 14px;
+    text-align: center;
+    
+    padding-right: 3px;
+    padding-left: 3px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+
+    border-right: 1px solid #6290d2;
+    border-bottom: 1px solid #6290d2;
+    background-image: url( "../images/tableTopbg.gif" );
+}
+
+.dojoTable .odd a, .even a {
+    color: Black;
+    font-size: 12px;
+}
+
+/**/
+.dojoTable .odd td, .dojoTable .even td {
+	vertical-align: middle;
+    font-size: 12px;
+    padding-right: 3px;
+    padding-left: 3px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin: 0px;
+    border-bottom: 1px solid #6290d2;
+    border-right: 1px solid #6290d2;
+}
+
+/**/
+.dojoTable .odd {
+    background-color: #f7f8fd;
+}
+
+.dojoTable td {
+    vertical-align: middle;
+    font-size: 12px;
+    padding-right: 3px;
+    padding-left: 3px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin: 0px;
+    border-bottom: 1px solid #6290d2;
+    border-right: 1px solid #6290d2;
+}
+
+/**/
+.dojoTable .even {
+    background-color: #ffffff;
+}
+
+/**/
+.dojoTable .highlight td {
+	margin: 0px;
+    color: black;
+    font-size: 12px;
+    vertical-align: middle;
+    background-color: #ebefef;
+
+    padding-right: 3px;
+    padding-left: 3px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #b6c0db;
+    border-right: 1px solid #b6c0db;
+}
+
+.dojoTable .highlight a, .highlight a {
+    color: black;
+    font-size: 12px;
+}
+/**/
+
+.dojoTable .compactToolbar{
+	background-color: #FFFFFF;
+    font-size: 12px;
+    border-bottom: 1px solid #b6c0db;
+    border-right: 1px solid #b6c0db;
+}
+
+.dojoTable .statusBar {
+    background-color: #FFFFFF;
+    font-size: 12px;
+    border-bottom: 1px solid #b6c0db;
+}

@@ -1,0 +1,33 @@
+<textarea style="display:none;" id="rolePermsHeaderTemplate" cols="1000" rows="1">
+   
+    <div class='eXtremeTable'>
+    <table width='98%' cellpadding='0' cellspacing='0' class='tableRegion'>
+    <thead><tr><td class='tableHeader'>
+    ${text.permName}
+    </td><td class='tableHeader'>
+    ${text.permDescn}
+    </td><td class='tableHeader'>
+    ${text.select}
+    </td></tr></thead><tbody class='tableBody'>
+</textarea>
+
+<textarea style="display:none" id="rolePermsBody" cols="1000" rows="1">
+   {for perm in data}
+      {if perm_index % 2 == 0}
+        <tr class='odd'>
+      {else}
+        </tr><tr class='even'>
+      {/if} 
+        <td>${perm.name}</td>
+        <td>${perm.descn}</td>
+        <td>
+          {if perm.selected}
+            <input type='checkbox' checked value='${perm.id}'  onclick='onSelectPerm(this, currentRoleId)'/>
+          {else}
+            <input type='checkbox' value='${perm.id}'  onclick='onSelectPerm(this, currentRoleId)'/>
+          {/if}
+        </td>
+      </tr>
+   {/for}
+   </tbody></table></div>
+</textarea>

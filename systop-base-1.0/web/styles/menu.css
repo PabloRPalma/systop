@@ -1,0 +1,36 @@
+.accordionTabTitleBar {
+   font-size           : 12px;
+	padding             : 4px 6px;
+   border-style        : solid none solid none;
+	border-top-color    : #FFFFFF;
+	border-bottom-color : #182052;
+   border-width        : 1px 0px 1px 0px;
+}
+
+.accordionTabTitleBarHover {
+   font-size        : 12px;
+   background-color : #1f669b;
+   border-top       : 0px;
+   color            : #000000;
+}
+/*
+.accordionTabContentBox {
+	font-size        : 12px;
+	border           : 1px solid #ffffff;
+	border-top-width : 0px;
+	padding          : 4px 8px 0px 8px;
+	line-height: 20px;
+}*/
+
+#accordionExample {
+	margin-top:0px; 
+	border-top-width:0px; 
+	border-top-style:solid;
+	height:100%
+}
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}

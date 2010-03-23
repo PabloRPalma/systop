@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans default-lazy-init="true">
+  <!-- DAOs -->
+  <bean id="userDao" class="com.systop.common.security.user.dao.UserDao">
+    <property name="sessionFactory" ref="sessionFactory" />
+  </bean>
+  
+  <bean id="roleDao" class="com.systop.common.security.user.dao.RoleDao">
+    <property name="sessionFactory" ref="sessionFactory" />
+  </bean>
+  
+  <bean id="permissionDao" class="com.systop.common.security.user.dao.PermissionDao">
+    <property name="sessionFactory" ref="sessionFactory" />
+  </bean>
+  
+  <bean id="resourceDao" class="com.systop.common.security.user.dao.ResourceDao">
+    <property name="sessionFactory" ref="sessionFactory" />
+  </bean>
+  
+  <!-- Managers -->
+  <bean id="userManager" parent="baseTxService">
+    <property name="target">
+        <bean class="com.systop.common.security.user.service.impl.UserManagerImpl">
+          <property name="userDao" ref="userDao" />
+          <property name="acegiCacheManager" ref="acegiCacheManager" />
+          <property name="userListeners">
+            <list>
+               <value>com.systop.common.security.user.service.impl.RolesUserListener</value>
+            </list>
+          </property>
+        </bean>
+      </property>
+  </bean>
+  <bean id="resourceManager" parent="baseTxService">
+    <property name="target">
+      <bean class="com.systop.common.security.user.service.impl.ResourceManagerImpl">
+        <property name="resourceDao" ref="resourceDao" />
+        <property name="acegiCacheManager" ref="acegiCacheManager" />
+      </bean>
+    </property>
+  </bean>
+  <bean id="roleManager" parent="baseTxService">
+    <property name="target">
+      <bean class="com.systop.common.security.user.service.impl.RoleManagerImpl">
+        <property name="roleDao" ref="roleDao" />
+        <property name="acegiCacheManager" ref="acegiCacheManager"/>
+      </bean>
+    </property>
+  </bean>
+  <bean id="permManager" parent="baseTxService">
+    <property name="target">
+      <bean class="com.systop.common.security.user.service.impl.PermissionManagerImpl">
+        <property name="permDao" ref="permissionDao" />
+        <property name="acegiCacheManager" ref="acegiCacheManager" />
+      </bean>
+    </property>
+  </bean>
+  
+  <!-- Struts2 actions -->
+  <bean id="userAction" class="com.systop.common.security.user.webapp.UserAction"
+   singleton="false">
+    <property name="manager" ref="userManager" />
+    <property name="catalogUtil" ref="catalogUtil" />
+    <property name="passwordEncoder" ref="passwordEncoder" />
+  </bean>
+  
+  
+  
+  <bean id="roleAction" class="com.systop.common.security.user.webapp.RoleAction"
+   singleton="false">
+    <property name="manager" ref="roleManager" />
+  </bean>
+  
+  <bean id="roleDwrAction"  parent="baseTxService" >
+  <property name="target">
+    <bean class="com.systop.common.security.user.webapp.RoleDwrAction"
+      singleton="false"> 
+         <property name="userManager" ref="userManager"/>
+         <property name="roleManager" ref="roleManager"/>
+    </bean>
+    </property>
+  </bean>
+  
+  <bean id="resourceAction" class="com.systop.common.security.user.webapp.ResourceAction"
+   singleton="false">
+     <property name="manager" ref="resourceManager" />
+     <property name="catalogUtil" ref="catalogUtil" />
+   </bean>
+   
+   <bean id="resDwrAction"  parent="baseTxService" >
+  	<property name="target">
+    <bean class="com.systop.common.security.user.webapp.ResDwrAction"
+      singleton="false"> 
+         <property name="permManager" ref="permManager"/>
+         <property name="resManager" ref="resourceManager"/>
+    </bean>
+    </property>
+  </bean>
+  <bean id="permAction" class="com.systop.common.security.user.webapp.PermissionAction"
+   singleton="false">
+     <property name="manager" ref="permManager" />
+     <property name="catalogUtil" ref="catalogUtil" />
+  </bean>
+  
+  <bean id="permDwrAction"  parent="baseTxService" >
+  <property name="target">
+    <bean class="com.systop.common.security.user.webapp.PermDwrAction"
+      singleton="false"> 
+         <property name="permManager" ref="permManager"/>
+         <property name="roleManager" ref="roleManager"/>
+    </bean>
+    </property>
+  </bean>
+  
+     <!-- UserCache, ResourceCache, AcegiCacheManager -->
+   <bean id="userCacheBackend" class="com.systop.common.cache.OsCacheFactoryBean">
+      <property name="regionName">
+        <value>com.systop.common.security.UserCacheRegion</value>
+      </property>
+    </bean>
+   
+   <bean id="userCache" class="com.systop.common.security.acegi.cache.OsCacheBasedUserCache">
+      <property name="cache"><ref local="userCacheBackend"/></property>
+   </bean>
+   
+   <bean id="resourceCacheBackend" class="com.systop.common.cache.OsCacheFactoryBean">
+      <property name="regionName">
+        <value>com.systop.common.security.ResourceCacheRegion</value>
+      </property>
+    </bean>
+   
+   <bean id="resourceCache" class="com.systop.common.security.acegi.cache.OsCacheBasedResourceCache">
+      <property name="cache"><ref local="resourceCacheBackend"/></property>
+   </bean>
+
+   <bean id="acegiCacheManager" class="com.systop.common.security.acegi.cache.AcegiCacheManagerImpl">
+      <property name="userDao" ref="userDao"/>
+      <property name="resourceDao" ref="resourceDao"/>
+      <property name="userCache" ref="userCache"/>
+      <property name="resCache" ref="resourceCache"/>      
+   </bean>
+   
+   <bean id="hibernateUserDetailService" class="com.systop.common.security.acegi.UserDetailService">
+       <property name="userManager" ref="userManager"></property>
+   </bean>
+</beans>

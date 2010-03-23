@@ -1,0 +1,84 @@
+.dojoTree {
+	font-size: 12px;
+	font-weight: normal;
+	overflow: auto;
+}
+
+.dojoDialog {
+	background: #efefef;
+	border: 1px solid #000099;
+	-moz-border-radius: 0px;
+	padding: 0px;
+	width: 400px;
+}
+
+.dojoMenuSeparator2{
+	background: #ffffff;
+}
+
+.dojoMenuSeparator2Top {
+	height: 50%;
+	border-bottom: 1px solid #000099;
+	margin: 0px 2px;
+	font-size: 1px;
+}
+.dojoMenuItem2 {
+	background: rgb(255, 255, 255);
+	width:100px;
+}
+
+.dojoMenuItem2Label {
+	position: relative;
+	vertical-align: middle;	
+}
+
+.dojoMenuSeparator2Bottom {
+	height: 50%;
+	border-top: 1px solid #FFFFFF;
+	margin: 0px 2px;
+	font-size: 1px;
+}
+
+.dojoPopupMenu2 {
+  position: absolute;
+	background: #ffffff ;
+	border: 1px solid #000099;
+	padding: 0px;
+	margin-top: 1px;
+	margin-bottom: 1px;
+}
+
+
+
+.dojoFloatingPaneClient {
+	position: relative;
+	z-index: 10;
+	border: 1px solid;
+	border-color: #cecece;
+	margin: 2px;
+	background-color: #FFFFFF;
+	padding: 8px;
+	font-size: 12px;
+	overflow: auto;
+}
+
+.dojoFloatingPane { /* essential css */
+	position: absolute;
+	overflow: visible; /* so drop shadow is displayed */
+	z-index: 10;
+	/* styling css */
+	border: 1px solid;
+	border-color: #cecece;
+	background-color: #7596c6;
+}
+
+.dojoFloatingPaneResizebar {
+	z-index: 10;
+	height: 13px;
+	background-color: #7596c6;
+};
+	background-color: #7596c6;
+}olor: #7596c6;
+}ckground-color: #7596c6;
+}c6;
+}

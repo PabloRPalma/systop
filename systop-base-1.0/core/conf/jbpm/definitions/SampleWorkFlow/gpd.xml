@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-diagram name="SampleWorkFlow" width="815" height="583">
+  <node name="start" x="143" y="16" width="140" height="40">
+    <transition name="">
+      <label x="5" y="-10"/>
+    </transition>
+  </node>
+  <node name="end" x="144" y="376" width="140" height="40"/>
+  <node name="ÎÄÕÂÉóºË" x="143" y="193" width="140" height="40">
+    <transition name="">
+      <label x="5" y="-10"/>
+    </transition>
+  </node>
+  <node name="ÊÇ·ñÉóºËÍ¨¹ý" x="143" y="271" width="140" height="40">
+    <transition name="ÉóºËÍ¨¹ý">
+      <label x="5" y="-10"/>
+    </transition>
+    <transition name="ÉóºËÎ´Í¨¹ý">
+      <label x="5" y="-10"/>
+      <bendpoint w1="150" h1="-1" w2="149" h2="171"/>
+      <bendpoint w1="149" h1="-172" w2="148" h2="0"/>
+    </transition>
+  </node>
+  <node name="ÎÄÕÂ±à¼­" x="143" y="99" width="140" height="40">
+    <transition name="">
+      <label x="5" y="-10"/>
+    </transition>
+  </node>
+</process-diagram>
