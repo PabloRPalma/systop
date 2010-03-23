@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+	<sql id="query_user">
+		<role_sam table="test_1" />
+		<role_lee table="test_2" />
+		<statement>
+		<![CDATA[
+		select * from {0}
+		]]>
+		</statement>
+	</sql>
+
+	<sql id="query_x">
+		<role_sam table="test_3" />
+		<role_lee table="test_4" />
+		<statement>
+		<![CDATA[
+		select * from {0} where name=?
+		]]>
+		</statement>
+	</sql>
+
+</sqls>

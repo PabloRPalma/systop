@@ -1,0 +1,77 @@
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+body,td,th {
+	font-size: 12px;
+}
+
+FIELDSET LEGEND {
+	PADDING-RIGHT: 20px;
+	PADDING-LEFT: 20px;
+	FONT-WEIGHT: bold;
+	BACKGROUND: #fff;
+	COLOR: #526293;
+	font-size: 12px;
+	border: 1px solid #b6c0db;
+}
+
+.button {
+	PADDING-RIGHT: 10px;
+	PADDING-LEFT: 10px;
+	FONT-SIZE: 12px;
+	PADDING-BOTTOM: 1px;
+	PADDING-TOP: 2px;
+	height: 20px;
+	background-color: #E6EAF5;
+	border: 1px solid #B6C0DB;
+}
+.table-title {
+	font-size: 1.5ex;
+	line-height: 22px;
+	color: #526293;
+	background-color: #EFEFEF;
+	font-weight: bold;
+	text-align: center;
+}
+.gray {
+	font-size: 1.5ex;
+	line-height: 22px;
+	color: #666666;
+}
+.thin-input {
+	border: 1px solid #CBCBCB;
+}
+INPUT {
+	border: 1px solid #CBCBCB;
+}
+SELECT {
+	PADDING-RIGHT: 1px; PADDING-LEFT: 1px; FONT-SIZE: 12px; PADDING-BOTTOM: 1px; MARGIN: 2px; PADDING-TOP: 1px
+}
+TEXTAREA {
+	PADDING-RIGHT: 1px; PADDING-LEFT: 1px; FONT-SIZE: 12px; PADDING-BOTTOM: 1px; MARGIN: 2px; PADDING-TOP: 1px
+}
+a:link {
+	color: #000000;
+    text-decoration:underline;
+}
+a:visited {
+	color: #000000;
+    text-decoration:underline;
+}
+a:hover{
+    color:#FF6600;
+	text-decoration:none;
+	}
+a:actvie{
+    color:#FF6600;
+	text-decoration:none;
+	}
+img {
+	border: none;
+}
+
+
+	
