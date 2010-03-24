@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="cz">
+    <resultMap class="java.util.HashMap" id="queryChannelResult">
+    	<result property="NET_CODE" column="NET_CODE" javaType="String"/>
+        <result property="STA_CODE" column="STA_CODE" javaType="String"/>
+        <result property="LOC_ID" column="LOC_ID" javaType="String"/>
+        <result property="CHN_CODE" column="CHN_CODE" javaType="String"/>
+        <result property="instrModel" column="instrModel" javaType="String"/>
+        <result property="instrType" column="instrType" javaType="String"/>
+        <result property="UNITOFSIGNALRES" column="UNITOFSIGNALRES" javaType="String"/>
+        <result property="UNITOFCALIINPUT" column="UNITOFCALIINPUT" javaType="String"/>
+        <result property="AZIMUTH" column="AZIMUTH" javaType="String"/>
+        <result property="DIP" column="DIP" javaType="String"/>
+        <result property="SAMP_RATE" column="SAMP_RATE" javaType="String"/>
+        <result property="RESPONSE" column="RESPONSE" javaType="String"/>
+        <result property="ONDATE" column="ONDATE" javaType="java.util.Date"/>
+        <result property="OFFDATE" column="OFFDATE" javaType="java.util.Date"/>
+    </resultMap>
+    <resultMap class="java.util.HashMap" id="queryStaResult">
+        <result property="STA_CODE" column="STA_CODE" javaType="String"/>
+        <result property="STA_CNAME" column="STA_CNAME" javaType="String"/>
+    </resultMap>
+    <!-- 查询测震通道参数数据 -->
+	<select id="queryChannelList" parameterClass="datashare.seismic.instrument.channel.model.Channel"
+                        resultMap="queryChannelResult">
+		<![CDATA[
+		SELECT CN.NET_CODE as NET_CODE,CN.STA_CODE as STA_CODE,LOC_ID,CHN_CODE,INS.INSTR_MODEL as instrModel,INS.INSTR_TYPE as instrType,
+			   UNITOFSIGNALRES,UNITOFCALIINPUT,AZIMUTH,DIP,SAMP_RATE,RESPONSE,ONDATE,OFFDATE
+		FROM $schema$.Channel_info CN left join $schema$.Instr_dic INS on CN.INSTRUMENT_ID = INS.ID
+		]]>
+		<dynamic prepend="WHERE">
+		    <isNotEmpty prepend="AND" property="staCode">
+		       <![CDATA[(CN.STA_CODE=#staCode#)]]>
+		    </isNotEmpty>
+		</dynamic>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortProperty">
+				<isNotEmpty property="sortDir">
+					<![CDATA[$sortProperty$ $sortDir$]]>
+				</isNotEmpty>
+			</isNotEmpty>
+			
+			<isEmpty property="sortProperty">
+				<isEmpty property="sortDir">
+					<![CDATA[CN.STA_CODE asc]]>
+				</isEmpty>
+			</isEmpty>
+		</dynamic>
+	</select>
+	<!-- 查询测震通道参数数据总数 -->
+	<select id="queryChannelListCount" parameterClass="datashare.seismic.instrument.channel.model.Channel"
+                        resultClass="Integer">
+		<![CDATA[
+		SELECT count(0)
+		FROM $schema$.Channel_info CN left join $schema$.Instr_dic INS on CN.INSTRUMENT_ID = INS.ID
+		]]>
+		<dynamic prepend="WHERE">
+		    <isNotEmpty prepend="AND" property="staCode">
+		       <![CDATA[(CN.STA_CODE=#staCode#)]]>
+		    </isNotEmpty>
+		</dynamic>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortProperty">
+				<isNotEmpty property="sortDir">
+					<![CDATA[$sortProperty$ $sortDir$]]>
+				</isNotEmpty>
+			</isNotEmpty>
+			
+			<isEmpty property="sortProperty">
+				<isEmpty property="sortDir">
+					<![CDATA[CN.STA_CODE asc]]>
+				</isEmpty>
+			</isEmpty>
+		</dynamic>
+	</select>
+	<!-- 查询测震台站列表数据 -->
+	<select id="queryStaList" parameterClass="datashare.seismic.station.model.Criteria"
+                        resultMap="queryStaResult">
+		<![CDATA[
+		SELECT STA_CODE,STA_CNAME
+		FROM $schema$.Station_info
+		]]>
+	</select>
+</sqlMap>
