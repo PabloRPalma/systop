@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title></title>
+<link type="text/css" href="../css/style.css" rel="stylesheet" />
+<link type="text/css" href="../../../../web/scripts/jquery/ui/css/jquery-ui-1.7.1.css"	rel="stylesheet" />
+<script type="text/javascript"	src="../../../../web/scripts/jquery/jquery-1.3.2.js"></script>
+<script type="text/javascript"	src="../../../../web/scripts/jquery/bgiframe/jquery.bgiframe.js"></script>
+<script type="text/javascript"	src="../../../../web/scripts/jquery/ui/jquery-ui-1.7.1.js"></script>
+<style type="text/css">
+b {
+   color:#2e6e9e;
+   margin-top:20px;
+}
+        div#divMemo {  width: 350px; margin: 10px 0; }
+		div#divMemo table { margin: 1em 0; border-collapse: collapse; width: 100%; }
+		div#divMemo table td, div#divMemo table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
+
+		.ui-button { outline: 0; margin:10px; padding: 5px; text-decoration:none;  !important; cursor:pointer; position: relative; text-align: center; }
+		.ui-dialog .ui-state-highlight, .ui-dialog .ui-state-error { padding: .3em;  }
+		
+</style>
+	<script type="text/javascript">
+	$(function() {
+		
+		$("#dialog").dialog({
+			bgiframe: true,
+			autoOpen: false,
+			height: 200,
+			width: 350,
+			modal: true,
+			buttons: {
+				'保存': function() {
+					
+					},
+				'取消': function() {
+					$(this).dialog('close');
+				  }
+				}
+				
+		});
+		
+		
+		
+		$('#meta').click(function() {
+			$('#dialog').dialog('open');
+		});
+		
+		$("#dlg").dialog({
+			bgiframe: true,
+			autoOpen: false,
+			height: 270,
+			width: 350,
+			modal: true,
+			buttons: {
+				'保存': function() {
+					   $('#content').html($('#textMemo').val());
+					   $('#title').html($('#textTitle').val());
+					   $(this).dialog('close');
+					},
+				'取消': function() {
+					$(this).dialog('close');
+				  }
+				}
+				
+		});
+		
+		
+		
+		$('#memo').click(function() {
+			$('#dlg').dialog('open');
+		});
+
+	});
+	</script>
+</head>
+<body>
+
+<div class="demo">
+<div id="divMemo" style="width:100%">
+<table class="ui-widget ui-widget-content" width="100%">
+<thead>
+   <tr class="ui-widget-header ">
+   <td>
+   <div id="title">
+   震相数据说明
+   </div>
+   </td>
+   </tr>
+</thead>
+<tbody>
+   <tr>
+   <td>
+   <div id="content">
+    河北省震相数据由河北省地震台网中心测定，提供由河北地震台网测定、ML1.0级以上地震的震相数据。从2001年1月以来至2007年12月底,用户可通过国家地震科学数据共享中心网站查询获取数据。    </div>
+   </td>
+   </tr>
+</tbody>
+</table>
+</div>
+<br>
+<button class="ui-button ui-state-default ui-corner-all">查看元数据</button>
+<button class="ui-button ui-state-default ui-corner-all">下载元数据</button>
+<b>管理：</b>
+<button id="meta" class="ui-button ui-state-default ui-corner-all">管理元数据信息</button>
+<button id="memo" class="ui-button ui-state-default ui-corner-all">管理本页说明</button>
+
+<br> 
+<div id="dialog" title="元数据管理">
+	<form>
+       <table>
+           <tr>
+              <td>类别：</td>
+              <td><select  style="width:120px"><option>测震</option><option>前兆</option></select></td>
+           </tr>
+           <tr>
+              <td>数据名称：</td>
+              <td><input type="text" style="width:120px"></td>
+           </tr>
+           <tr>
+              <td>数据文件：</td>
+              <td><input type="file"  style="width:100px"></td>
+           </tr>
+       </table>
+	</form>
+</div>
+<div id="dlg" title="说明信息">
+	<form>
+	<table>
+	   <tr>
+	   <td>
+	   请输入标题：<br>
+       <input type="text" id="textTitle">
+       </td>
+       </tr>
+	   <tr>
+	   <td>
+	   请输入关于本页的说明：<br>
+       <textarea rows="5" cols="40" id="textMemo"></textarea>
+       </td>
+       </tr>
+    </table>
+	</form>
+</div>
+
+</div>
+
+</body>
+</html>
+	

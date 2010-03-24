@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>jQuery UI Example Page</title>
+<link type="text/css" href="../../../web/scripts/jquery/ui/css/jquery-ui-1.7.1.css"	rel="stylesheet" />
+<link type="text/css" href="../../../web/scripts/jquery/tree/tree_component.css" rel="stylesheet" />
+
+<link type="text/css" href="css/style.css" rel="stylesheet" />
+<script type="text/javascript"	src="../../../web/scripts/jquery/jquery-1.3.2.js"></script>
+<script type="text/javascript"	src="../../../web/scripts/jquery/ui/jquery-ui-1.7.1.js"></script>
+<script type="text/javascript"	src="../../../web/scripts/jquery/layout/jquery.layout.js"></script>
+<script type="text/javascript"	src="../../../web/scripts/jquery/tree/_lib.js"></script>
+<script type="text/javascript"	src="../../../web/scripts/jquery/tree/tree_component.js"></script>
+
+<script type="text/javascript">
+			$(function(){
+			    $('.tree-leaf').attr("style", "background-image: url(images/plugin.gif)"); 
+          		var treeCZ = $.tree_create();
+			    treeCZ.init('#cz', {
+			        ui:{
+			            theme_name : 'default',
+			            dots : false,
+			            context : false }
+			     });
+			     var treeQZ = $.tree_create();
+			     treeQZ.init('#qz', {
+			        ui:{
+			            theme_name : 'default',
+			            dots : false,
+			            context : false },
+			        callback:{
+			            onselect: function(node, treeObj) {
+			               var url = $(node).children("a:first").attr("href");
+			               $('#anyLocation').attr('action', url);
+			               $('#anyLocation').submit();
+			            }
+			        }
+			     });
+			    /*$('#cz').tree({
+			        ui:{
+			            theme_name : 'default',
+			            dots : true,
+			            context : false }
+			     });
+			    $('#qz').tree({
+			        ui:{
+			            theme_name : 'default',
+			            dots : true,
+			            context : false }
+			     });*/
+			    $('body').layout({west__size: 270});
+			    // Accordion
+				$("#accordion").accordion({header: "h3",
+				fillSpace:true});
+				
+			});
+		</script>
+
+</head>
+<body>
+<form action="" target="main" id="anyLocation"></form>
+<div class="ui-layout-west">
+    <div id="accordion">
+		<div>
+		    <h3><a href="#">台网信息</a></h3>
+		    
+		    <div>
+				<div id="cz">
+				    <ul>
+				      <li></li>
+					  <li><a href="#">前兆台网</a>
+					     <ul>
+					        <li><a href="#" class="tree-leaf">台网概述</a></li>
+					        <li><a href="#" class="tree-leaf">台站基本信息</a></li>
+					     </ul>
+					  </li>
+					  <li><a href="#">测震台网</a>
+					    <ul>
+					        <li><a href="#" class="tree-leaf">台网概述</a></li>
+					        <li><a href="#" class="tree-leaf">台站基本信息</a></li>
+					        <li><a href="#" class="tree-leaf">台站仪器信息</a></li>
+					     </ul>
+					  </li>					  
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div>
+		    <h3><a href="#">数据服务</a></h3>
+			<div>
+			  <div id="qz">
+			    <ul>
+			        <li></li>
+			          <li><a href="eqCatalog\index.html">地震目录</a>
+					    <ul>
+					      <li><a href="#" class="tree-leaf">国家台网大震速报目录</a><br></li>
+					      <li><a href="#" class="tree-leaf">华北区子网地震目录</a><br></li>
+					    </ul>
+					  </li>
+					  <li><a href="eqPhase\index.html">震相</a>
+					  </li>
+					  <li><a href="#">事件波形</a>
+					  </li>
+					  <li><a href="#">连续波形</a>
+					  </li>
+					  <li><a href="#">重力</a></li>
+					  <li><a href="#">形变</a></li>
+					  <li><a href="qzData.html" target="main">地磁</a></li>
+					  <!-- 不涉密 -->
+			          <li><a href="#">地电</a></li>
+			          <li><a href="#">流体</a></li>
+			          <li><a href="#">三要素</a></li>
+			    </ul>
+			  </div> 
+			</div>
+		</div>
+		
+		<div>
+		    <h3><a href="#">邮件订阅</a></h3>
+			<div>
+			    <a href="#">订阅测震数据</a><br>
+				<a href="#">订阅前兆数据</a><br>
+				<a href="#">已订阅邮件管理</a>
+			</div>
+		</div>
+		
+		<div>
+		    <h3><a href="#">个人信息</a></h3>
+			<div>
+			    <a href="#">修改密码</a><br>
+				<a href="#">修改个人信息</a>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="ui-layout-center" style="padding:0px;margin:0px;">
+<iframe src="main.html" id="main"
+	name="main" style="width:100%; height:100%; border:0px;" frameborder="0"></iframe>
+</div>
+
+
+</body>
+
+</html>
+
+
