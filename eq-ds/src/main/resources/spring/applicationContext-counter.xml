@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-lazy-init="true" default-autowire="byName">
+	<bean id="siteFilter" class="datashare.admin.counter.filter.SiteFilter">
+		
+	</bean>
+	<bean id="downFilter" class="datashare.admin.counter.filter.DownFilter">		
+		<property name="downCounters">
+			<list>
+	    		<bean class="datashare.admin.counter.model.DownCounter">
+	    			<property name="pattern">
+	    				<value>/datashare/sign/data/zip.do*</value>
+	    			</property>
+	    		</bean>
+	    		<bean class="datashare.admin.counter.model.DownCounter">
+	    			<property name="pattern">
+	    				<value>/datashare/seismic/data/catalog/exportWkf.do*</value>
+	    			</property>
+	    		</bean>
+	    		<bean class="datashare.admin.counter.model.DownCounter">
+	    			<property name="pattern">
+	    				<value>/datashare/seismic/data/catalog/exportEqt.do*</value>
+	    			</property>
+	    		</bean>
+	    		<bean class="datashare.admin.counter.model.DownCounter">
+	    			<property name="pattern">
+	    				<value>application/vnd.ms-excel*</value>
+	    			</property>
+	    		</bean>
+			</list>
+		</property>
+	</bean><!--
+	<bean id="counterFilter" class="datashare.admin.counter.filter.CounterFilter">
+	    <property name="saveFreq">
+	    	<value type="java.lang.Integer">4000</value>
+	    </property>
+	    <property name="urlEntries">
+	    	<list>
+	    		<bean class="datashare.admin.counter.model.UrlEntry">
+	    			<property name="name">
+	    				<value>许可管理统计</value>
+	    			</property>
+	    			<property name="pattern">
+	    				<value>/security/**/*.*</value>
+	    			</property>
+	    		</bean>
+	    		<bean class="datashare.admin.counter.model.UrlEntry">
+	    			<property name="name">
+	    				<value>后台首前兆统计</value>
+	    			</property>
+	    			<property name="pattern">
+	    				<value>/datashare/admin/**/*.*</value>
+	    			</property>
+	    		</bean>
+	    		<bean class="datashare.admin.counter.model.UrlEntry">
+	    			<property name="name">
+	    				<value>软件下载统计</value>
+	    			</property>
+	    			<property name="pattern">
+	    				<value>/software/down.do*</value>
+	    			</property>
+	    		</bean>
+	    		<bean class="datashare.admin.counter.model.UrlEntry">
+	    			<property name="name">
+	    				<value>前兆数据下载统计</value>
+	    			</property>
+	    			<property name="pattern">
+	    				<value>/datashare/sign/data/zip.do*</value>
+	    			</property>
+	    		</bean>
+	    		<bean class="datashare.admin.counter.model.UrlEntry">
+	    			<property name="name">
+	    				<value>地震目录WKF数据下载统计</value>
+	    			</property>
+	    			<property name="pattern">
+	    				<value>/datashare/seismic/data/catalog/exportWkf.do*</value>
+	    			</property>
+	    		</bean>
+	    		<bean class="datashare.admin.counter.model.UrlEntry">
+	    			<property name="name">
+	    				<value>地震目录EQT数据下载统计</value>
+	    			</property>
+	    			<property name="pattern">
+	    				<value>/datashare/seismic/data/catalog/exportEqt.do*</value>
+	    			</property>
+	    		</bean>
+	    		
+	    	</list>
+	    </property>
+	</bean>-->
+</beans>
