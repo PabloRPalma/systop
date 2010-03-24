@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="datashare.email" extends="default" namespace="/datashare/email/admin">
+		 <action name="*" class="emailDefinitionAction" method="{1}">
+		     <result name="input">/pages/datashare/email/admin/edit.jsp</result>
+		     <result name="success" type="redirect">edit.do</result>
+		 </action>
+		
+	</package>
+	<package name="datashare.email.seisverify" extends="default" namespace="/datashare/email/admin/seisverify">
+		<action name="*" class="seismicMailVerifyAction" method="{1}">
+		     <result name="list">/pages/datashare/email/admin/listSeisMails.jsp</result>
+		 </action>
+	</package>
+	<package name="datashare.email.signverify" extends="default" namespace="/datashare/email/admin/signverify">
+		<action name="*" class="signMailVerifyAction" method="{1}">
+		     <result name="list">/pages/datashare/email/admin/listSignMails.jsp</result>
+		 </action>
+	</package>
+</struts>

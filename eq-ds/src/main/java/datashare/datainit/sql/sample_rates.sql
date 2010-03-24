@@ -1,0 +1,4 @@
+insert into sample_rates (id, data_amount, date_format, enabled, for_mail, name, stock_date_format, stock_period, stock_period_name, sort) values ('01',1440,'yyyy-MM-dd HH:mm','1','0','一次每分钟','YYYY-MM-DD hh:mm','DD','天',3);
+insert into sample_rates (id, data_amount, date_format, enabled, for_mail, name, stock_date_format, stock_period, stock_period_name, sort) values ('02',86400,'yyyy-MM-dd HH:mm:ss','1','0','一次每秒','YYYY-MM-DD hh:mm:ss','hh','小时',4);
+insert into sample_rates (id, data_amount, date_format, enabled, for_mail, name, stock_date_format, stock_period, stock_period_name, sort) values ('60',24,'yyyy-MM-dd HH','1','1','一次每小时','YYYY-MM-DD hh','MM','月',1);
+insert into sample_rates (id, data_amount, date_format, enabled, for_mail, name, stock_date_format, stock_period, stock_period_name, sort) values ('90',1,'yyyy-MM-dd','1','1','一次每日','YYYY-MM-DD','MM','月',0);

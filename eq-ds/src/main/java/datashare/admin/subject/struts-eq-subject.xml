@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="datashare.admin.subject" extends="default" namespace="/datashare/admin/subject">
+		<action name="*" class="subjectAction" method="{1}">
+			<result name="index">/pages/datashare/admin/subject/index.jsp</result>
+		    <result name="input">/pages/datashare/admin/subject/edit.jsp</result>
+		    <result name="success" type="redirect">index.do</result>
+		</action>
+	</package>
+</struts>

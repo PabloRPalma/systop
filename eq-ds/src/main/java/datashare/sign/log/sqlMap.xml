@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="qz">
+	
+	<typeAlias alias="signLog" type="datashare.sign.log.model.SignLog" />
+	<select id="querySignLog" parameterClass="datashare.sign.log.model.LogCriteria" resultClass="signLog">
+	<![CDATA[
+		SELECT * FROM $schema$.$logTableName$
+		WHERE 
+			STATIONID=#stationId# AND 
+			POINTID=#pointId# AND 
+			ITEMID=#itemId# AND
+			STARTDATE >= #startDate# AND 
+			ENDDATE <= #endDate# ORDER BY STARTDATE DESC
+	]]>
+		
+	</select>
+</sqlMap>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="ov">
+	<select id="overview" resultClass="java.util.HashMap" 
+			parameterClass="datashare.sign.data.model.Criteria">
+     <![CDATA[
+     SELECT 
+        S.STATIONNAME STATION_NAME,
+        SI.STATIONID STATION_ID,
+		I.ITEMNAME ITEM_NAME,
+		SI.ITEMID ITEM_ID,
+		SI.POINTID POINT_ID,
+		SI.SAMPLERATE SAMPLE_RATE,
+		SI.ANALOGORDIGITAL IS_DIGITAL,
+		SI.STARTDATE START_DATE,
+		SI.ENDDATE END_DATE,
+		SI.NOTE NOTE,
+		SI.ILLEAGLE ILLEAGLE
+	 FROM $schema$.QZ_DICT_STATIONITEMS SI, 
+	      $schema$.QZ_DICT_STATIONS S,
+	      $schema$.QZ_DICT_ITEMS I
+	 ]]>
+	 <dynamic prepend="WHERE">
+	 	<isNotEmpty prepend="AND" property="schema">
+	 <![CDATA[ S.STATIONID=SI.STATIONID AND I.ITEMID=SI.ITEMID]]>
+	 	</isNotEmpty>
+	        <isNotEmpty prepend="AND" property="stationId">
+		       <![CDATA[(SI.STATIONID=#stationId#)]]>
+		    </isNotEmpty>
+		    <isNotEmpty prepend="AND" property="itemId">
+		       <![CDATA[(SI.ITEMID=#itemId#)]]>
+		    </isNotEmpty>
+		    <isNotEmpty prepend="AND" property="sampleRate">
+		       <![CDATA[(SI.SAMPLERATE=#sampleRate#)]]>
+		    </isNotEmpty>
+	 </dynamic>
+     <![CDATA[
+	 ORDER BY SI.STATIONID,SI.POINTID,SI.ITEMID
+     ]]>
+	</select>
+	<select id="stations" resultClass="java.util.HashMap"
+			parameterClass="java.util.HashMap">
+		<![CDATA[
+			SELECT STATIONID,STATIONNAME
+			FROM $schema$.QZ_DICT_STATIONS S
+			ORDER BY S.STATIONID
+		]]>
+	</select>
+	
+</sqlMap>

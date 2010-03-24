@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="qz">
+	
+    <resultMap class="java.util.HashMap" id="queryDateResult">
+        <result property="OBSVALUE" column="OBSVALUE" javaType="String"/>
+        <result property="ITEMID" column="ITEMID" javaType="String"/>
+        <result property="STATIONID" column="STATIONID" javaType="String"/>
+        <result property="STARTDATE" column="STARTDATE" javaType="java.util.Date"/>
+        <result property="POINTID" column="POINTID" javaType="String"/>
+        <result property="SAMPLERATE" column="SAMPLERATE" javaType="String"/>
+        <result property="DATE_INDEX" column="DATE_INDEX" javaType="Integer"/>
+    </resultMap>
+    
+	<select id="queryData" parameterClass="datashare.sign.data.model.Criteria"
+                        resultMap="queryDateResult">
+                        
+		<![CDATA[
+		SELECT ITEMID,STATIONID,STARTDATE,POINTID,SAMPLERATE,OBSVALUE,DATE_INDEX
+		FROM $schema$.$tableName$
+		]]>
+		<dynamic prepend="WHERE">
+		    <isNotEmpty prepend="AND" property="stationId">
+		       <![CDATA[(STATIONID=#stationId#)]]>
+		    </isNotEmpty>
+		    <isNotEmpty prepend="AND" property="itemId">
+		       <![CDATA[(ITEMID=#itemId#)]]>
+		    </isNotEmpty>
+		    <isNotEmpty prepend="AND" property="pointId">
+		       <![CDATA[(POINTID=#pointId#)]]>
+		    </isNotEmpty>
+		    
+		    <isNotEmpty property="startDate">
+		        <isNotEmpty property="endDate">
+		           <![CDATA[
+		           AND((STARTDATE>=#startDate#) AND (STARTDATE<=#endDate#))
+		           ]]>
+		        </isNotEmpty>
+		    </isNotEmpty>
+		    <isNotEmpty property="startDate">
+		        <isEmpty property="endDate">
+		            <![CDATA[AND (STARTDATE>=#startDate#)]]>
+		        </isEmpty>
+		    </isNotEmpty>
+		    <isNotEmpty property="endDate">
+		        <isEmpty property="startDate">
+		            <![CDATA[AND (STARTDATE<=#endDate#)]]>
+		        </isEmpty>
+		    </isNotEmpty>
+		    <![CDATA[ ORDER BY STARTDATE $order$]]>
+		</dynamic>
+		
+	</select>
+	<select id="queryDataCount" parameterClass="datashare.sign.data.model.Criteria"
+                        resultClass="Integer">
+                        
+		<![CDATA[
+		SELECT COUNT(0) AS count FROM $schema$.$tableName$
+		]]>
+		<dynamic prepend="WHERE">
+		    <isNotEmpty prepend="AND" property="stationId">
+		       <![CDATA[(STATIONID=#stationId#)]]>
+		    </isNotEmpty>
+		    <isNotEmpty prepend="AND" property="itemId">
+		       <![CDATA[(ITEMID=#itemId#)]]>
+		    </isNotEmpty>
+		    <isNotEmpty prepend="AND" property="pointId">
+		       <![CDATA[(POINTID=#pointId#)]]>
+		    </isNotEmpty>
+		    
+		    <isNotEmpty property="startDate">
+		        <isNotEmpty property="endDate">
+		           <![CDATA[
+		           AND((STARTDATE>=#startDate#) AND (STARTDATE<=#endDate#))
+		           ]]>
+		        </isNotEmpty>
+		    </isNotEmpty>
+		    <isNotEmpty property="startDate">
+		        <isEmpty property="endDate">
+		            <![CDATA[AND (STARTDATE>=#startDate#)]]>
+		        </isEmpty>
+		    </isNotEmpty>
+		    <isNotEmpty property="endDate">
+		        <isEmpty property="startDate">
+		            <![CDATA[AND (STARTDATE<=#endDate#)]]>
+		        </isEmpty>
+		    </isNotEmpty>
+		    <![CDATA[ ORDER BY STARTDATE ASC]]>
+		</dynamic>
+	</select>
+</sqlMap>

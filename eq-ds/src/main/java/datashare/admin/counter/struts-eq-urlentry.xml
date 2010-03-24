@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<!--
+	<package name="datashare.admin.counter" extends="default" namespace="/datashare/admin/counter">
+		<action name="index" class="urlEntryAction" method="index">
+			<result name="index">/pages/datashare/admin/counter/index.jsp</result>
+		</action>		
+	</package>
+	-->
+	<package name="datashare.admin.counter" extends="default" namespace="/datashare/admin/counter">
+		<action name="*/*" class="{1}CounterAction" method="{2}">
+			<result name="index">/pages/datashare/admin/counter/{1}count/index.jsp</result>
+		</action>
+	</package>
+</struts>
