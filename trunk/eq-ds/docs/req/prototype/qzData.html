@@ -1,0 +1,355 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link type="text/css" href="../../../web/scripts/jquery/ui/css/jquery-ui-1.7.1.css"	rel="stylesheet" />
+<link type="text/css" href="../../../web/scripts/jquery/tree/tree_component.css" rel="stylesheet" />
+<link type="text/css" href="css/style.css" rel="stylesheet" />
+<script type="text/javascript"	src="../../../web/scripts/calendar/WdatePicker.js"></script>
+<script type="text/javascript"	src="../../../web/scripts/jquery/jquery-1.3.2.js"></script>
+<script type="text/javascript"	src="../../../web/scripts/jquery/ui/jquery-ui-1.7.1.js"></script>
+<script type="text/javascript"	src="../../../web/scripts/jquery/layout/jquery.layout.js"></script>
+<script type="text/javascript"	src="../../../web/scripts/jquery/tree/_lib.js"></script>
+<script type="text/javascript"	src="../../../web/scripts/jquery/tree/tree_component.js"></script>
+
+<script type="text/javascript">
+	$(function(){
+		$('.tree-leaf').attr("style", "background-image: url(images/plugin.gif)"); 
+	    var treeCZ = $.tree_create();
+        treeCZ.init('#tree', {
+		        ui:{
+		            theme_name : 'default',
+		            dots : true,
+		            context : false }
+		});
+		$('body').layout({west__size: 230});
+		$('#itemid').hide();
+		$('#table').hide();
+	});
+	function onSampleRate() {
+	   $('#itemid').fadeIn();
+	}
+	function onReset() {
+	   $('#itemid').fadeOut();
+	}
+	
+	function onQuery() {
+	    $('#table').show();
+	}
+</script>
+<style type="text/css">
+.ui-layout-pane-west{
+	border-left:none;
+	border-top:none;
+}
+.ui-layout-pane-center {
+	border-top:none;
+}
+select {
+    width:100px;
+}
+.in{
+    width:100px;
+}
+fieldset {
+	border: 1px solid #97b7e7;
+	padding: 2px;
+	margin-bottom: 10px;
+}
+
+fieldset legend {
+	font-size:12px;
+	color: #15428b;
+}
+
+td {
+    color:#15428b;
+}
+div#table table { margin: 5px; border-collapse: collapse; width: 100%; }
+div#table table td, div#table table th { border: 1px solid #1d5987; padding: 1px; text-align: left; }
+div#table table th {background-color:#dfeffc;}
+.ui-button { outline: 0; margin:10px; padding: .4em 1em .5em; text-decoration:none;  !important; cursor:pointer; position: relative; text-align: center; }
+.ui-dialog .ui-state-highlight, .ui-dialog .ui-state-error { padding: .3em;  }
+
+td img, td input{margin-left:5px;}
+</style>
+<title></title>
+</head>
+<body style="padding:0px;margin:0px;">
+
+<div class="ui-layout-west" style="padding:5px;">
+<form>
+<fieldset>
+	<legend>前兆数据查询</legend>
+<table width="100%">
+
+<tr>
+    <td style="width:70px;">数据类型：</td>
+    <td style="width:100px;"><select><option>预处理数据</option><option>原始数据</option></select></td>
+</tr>
+<tr>
+    <td>采样率：</td>
+    <td><select onchange="onSampleRate()">
+        <option>请选择...</option>
+        <option>日均值</option>
+        <option>小时值</option>
+        <option>分钟值</option>
+        <option>秒值</option></select>
+    </td>
+</tr>
+
+<tr>
+    <td>开始时间：</td>
+    <td>
+    <input class="in" onclick="WdatePicker({minDate:'2002-01-01',maxDate:'now',skin:'whyGreen'})" >
+    </td>
+</tr>
+<tr>
+    <td>结束时间：</td>
+    <td>
+    <input class="in"  onclick="WdatePicker({minDate:'2002-01-01',skin:'whyGreen'})" >
+    </td>
+</tr>
+
+</table>
+</fieldset>
+<fieldset id="itemid">
+	<legend>测项分量</legend>
+<table width="100%">
+
+<tr>
+   <td>
+   	<div id="tree" style="width:100%;">
+	        <ul>
+	            <li><a href="#" title="130160">红山</a>
+	               <ul>
+	                  <li><input type="checkbox" title="测项分量2341">地磁绝对观测水平分量(1)</li>
+	                  <li><input type="checkbox" title="测项分量2341">地磁绝对观测总场强(2)</li>
+	                  <li><input type="checkbox" title="测项分量2341,2003-03-04~2009-04-07">地磁相对观测偏角(1)</li>
+	               </ul>
+	            </li>
+	            <li><a href="#">昌黎后土桥</a></li>
+	            <li><a href="#" title="130161">承德</a>
+	               <ul>
+	                  <li><input type="checkbox" title="测项分量2341">磁通门(2)</li>
+	                  <li><input type="checkbox" title="测项分量2341">地磁绝对观测总场强(2)</li>
+	                  <li><input type="checkbox" title="测项分量2341">地磁相对观测偏角(1)</li>
+	               </ul>
+	            </li>
+	            <li><a href="#">新乐</a></li>
+	        </ul>
+	    </div>
+	  
+   </td>
+</tr>
+<tr>
+   <td align="center"><input type="button" value="查询" onclick="onQuery()"><input type="reset" value="重填" onclick="onReset()"></td>
+</tr>
+</table>
+</fieldset>
+</form>
+<br>
+</div>
+<div class="ui-layout-center">
+	<div id="table">
+	<button class="ui-button ui-state-default ui-corner-all"
+	onclick="location.href='line/qzLine.html'">曲线图</button>
+    <button class="ui-button ui-state-default ui-corner-all">下载</button>
+	<br>
+	<table width="97%" height="100%"  border=0 align="left" cellspacing="1" bordercolor="#009966">
+	<thead>
+	<tr align="center">
+    
+     <th width="12%"> 时   间</th>
+     
+     <th width="5%" >台站代码</th>
+     <th width="8%" >台站名称</th>
+     <th width="5%" >测点编码</th>
+     <th width="5%" >测向分量</th>
+     <th width="8%" >预处理数据</th>
+     <th width="5%" >台站代码</th>
+     <th width="8%" >台站名称</th>
+     <th width="5%" >测点编码</th>
+     <th width="5%" >测向分量</th>
+     <th width="8%" >预处理数据</th>     
+  </tr>
+   </thead>
+   <tbody>
+    <tr align="center">
+     
+     <td>2009-03-01</td>
+       <td >13026</td>
+       <td >永年/223XWHYQ0108</td>
+       <td >1</td>
+       <td >2241</td>
+       <td >-1112.6</td>
+       <td >13026</td>
+       <td >永年/223XWHYQ0108</td>
+       <td >1</td>
+       <td >2242</td>
+       <td >-925.9</td>
+   </tr>
+    <tr align="center">
+     
+     <td>2009-03-02</td>
+     <td >13026</td>
+       <td >永年/223XWHYQ0108</td>
+       <td >1</td>
+       <td >2241</td>
+       <td >-1127.2</td>
+       <td >13026</td>
+       <td >永年/223XWHYQ0108</td>
+       <td >1</td>
+       <td >2242</td>
+       <td >-953.5</td>
+   </tr>
+   
+    <tr align="center">
+     
+     <td>2009-03-03</td>
+     <td >13026</td>
+       <td >永年/223XWHYQ0108</td>
+       <td >1</td>
+       <td >2241</td>
+       <td >-1138.0</td>
+       <td >13026</td>
+       <td >永年/223XWHYQ0108</td>
+       <td >1</td>
+       <td >2242</td>
+       <td >-962.7</td>
+   </tr>
+   
+    <tr align="center">
+     
+     <td>2009-03-04</td>
+     <td >13026</td>
+     <td >永年/223XWHYQ0108</td>
+     <td >1</td>
+     <td >2241</td>
+     <td >-1159.1</td>
+       <td >13026</td>
+       <td >永年/223XWHYQ0108</td>
+       <td >1</td>
+       <td >2242</td>
+            <td >-978.3</td>
+   </tr>
+    <tr align="center">
+     
+     <td>2009-03-05</td>
+       <td >13026</td>
+       <td >永年/223XWHYQ0108</td>
+       <td >1</td>
+       <td >2241</td>
+       <td >-1178.8</td>
+       <td >13026</td>
+       <td >永年/223XWHYQ0108</td>
+       <td >1</td>
+       <td >2242</td>
+       <td >-1001.9</td>
+   </tr>
+    <tr align="center">
+     
+     <td>2009-03-06</td>
+       <td >13026</td>
+       <td >永年/223XWHYQ0108</td>
+       <td >1</td>
+       <td >2241</td>
+            <td >-1213.1</td>
+       <td >13026</td>
+       <td >永年/223XWHYQ0108</td>
+       <td >1</td>
+       <td >2242</td>
+            <td >-1035.2</td>
+   </tr>
+   
+    <tr align="center">
+     
+     <td>2009-03-07</td>
+    <td >13026</td>
+       <td >永年/223XWHYQ0108</td>
+       <td >1</td>
+       <td >2241</td>
+            <td >-1222.6</td>
+       <td >13026</td>
+       <td >永年/223XWHYQ0108</td>
+       <td >1</td>
+       <td >2242</td>
+            <td >-1053.3</td>
+     
+   </tr>
+   
+    <tr align="center">
+     
+    <td>2009-03-08</td>
+      <td >13026</td>
+       <td >永年/223XWHYQ0108</td>
+       <td >1</td>
+       <td >2241</td>
+           <td >-1246.6</td>
+      <td >13026</td>
+       <td >永年/223XWHYQ0108</td>
+       <td >1</td>
+       <td >2242</td>
+       <td >-1066.4</td>
+   </tr>
+   
+    <tr align="center">
+     
+     
+     <td>2009-03-09</td>
+        <td >13026</td>
+       <td >永年/223XWHYQ0108</td>
+       <td >1</td>
+       <td >2241</td>
+       <td >-1282.2</td>
+      <td >13026</td>
+       <td >永年/223XWHYQ0108</td>
+       <td >1</td>
+       <td >2242</td>
+      <td >-1088.0</td>
+     
+   </tr>
+   
+    <tr align="center">
+     
+      <td>2009-03-10</td>
+       <td >13026</td>
+       <td >永年/223XWHYQ0108</td>
+       <td >1</td>
+       <td >2241</td>
+             <td >-1316.9</td>
+       <td >13026</td>
+       <td >永年/223XWHYQ0108</td>
+       <td >1</td>
+       <td >2242</td>
+       
+         
+            <td >-1106.8</td>
+         
+        
+     
+   </tr>
+   </tbody>
+   <tfoot>
+   <tr>
+   <td colspan="6">
+   <img src="images/firstPage.gif">
+   <img src="images/prevPage.gif">
+   <img src="images/nextPage.gif">
+   <img src="images/lastPage.gif">
+   
+   <img src="images/gotoPage.gif" title="定位">
+   <input size="2" type="text" style="border:1px solid 1d5987;height:10px;">
+   <img src="images/clear.png" title="刷新">
+   </td>
+   <td colspan="10" align="right">
+   共200条数据，显示1-10条
+   </td>
+   </tr>
+   </tfoot>
+</table>
+	
+	</div>
+</div>
+</body>
+</html>
