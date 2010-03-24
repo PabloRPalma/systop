@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>eq-parent</artifactId>
+		<groupId>com.systop</groupId>
+		<version>1.0.0</version>
+		<relativePath>parent/pom.xml</relativePath>
+	</parent>
+	<groupId>com.systop</groupId>
+	<artifactId>eq</artifactId>
+	<packaging>war</packaging>
+	<name>Earthquake Data Sharing' pom.xml</name>
+	<version>1.0.0</version>
+	<organization>
+		<name>Systop</name>
+		<url>http://www.systop.com.cn</url>
+	</organization>
+
+
+	<dependencies>
+		<!-- systopbase modules begin -->
+			<dependency>
+				<groupId>com.systop</groupId>
+				<artifactId>systopbase-core</artifactId>
+			</dependency>
+			<!-- systopbase modules end -->
+			<!-- ecside begin -->
+			<dependency>
+				<groupId>org.ecside</groupId>
+				<artifactId>systopbase-ecside</artifactId>
+			</dependency>
+		<!-- ecside end -->
+		<!-- spring begin -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib-nodep</artifactId>
+		</dependency>
+		<!-- spring end -->
+		<!-- hibernate -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-annotations</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-ehcache</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javassist</groupId>
+			<artifactId>javassist</artifactId>
+		</dependency>
+		<dependency>
+				<groupId>org.apache.ibatis</groupId>
+				<artifactId>ibatis-sqlmap</artifactId>
+		</dependency>
+		<!--Lucene-->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-search</artifactId>
+		</dependency>
+		<dependency>
+			   <groupId>org.apache.lucene</groupId>
+               <artifactId>lucene-analyzers</artifactId>
+		</dependency> 
+		<!-- datasource -->
+		<dependency>
+			<groupId>c3p0</groupId>
+			<artifactId>c3p0</artifactId>
+		</dependency>
+		<!-- optional jdbc driver -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>com.oracle</groupId>
+		    <artifactId>ojdbc</artifactId>
+		</dependency> 
+		<!-- orm end -->
+
+		<!-- web begin -->
+		<!-- struts2 -->
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-spring-plugin</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.googlecode</groupId>
+			<artifactId>jsonplugin</artifactId>
+		</dependency>
+
+
+		<!-- j2ee web spec -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>taglibs</groupId>
+			<artifactId>standard</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+		<!-- web end -->
+
+		<!--spring security begin-->
+		<dependency>
+			<groupId>org.acegisecurity</groupId>
+			<artifactId>acegi-security</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>com.octo.captcha</groupId>
+		    <artifactId>jcaptcha</artifactId>
+		</dependency> 
+		<!-- spring security end -->
+		<dependency>
+			<groupId>org.jconfig</groupId>
+			<artifactId>jconfig</artifactId>
+		</dependency>
+		<!-- FckEditor -->
+		<dependency>
+	        <groupId>net.fckeditor</groupId>
+	        <artifactId>java-core</artifactId>
+	    </dependency> 
+	    <!-- end fck -->
+	    <!-- quartz -->
+	    <dependency>
+		    <groupId>org.opensymphony.quartz</groupId>
+			<artifactId>quartz</artifactId>
+		</dependency>  
+	    <!-- dwr -->
+	    <dependency>
+			<groupId>org.directwebremoting</groupId>
+			<artifactId>dwr</artifactId>
+		</dependency>
+		<!-- end dwr -->
+		<!-- logging begin-->
+		<!-- slf4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<!-- 替代common-logging 1.1.1 -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+		</dependency>
+		<!-- 替代log4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>log4j-over-slf4j</artifactId>
+		</dependency>
+		<!-- 替代java logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jul-to-slf4j</artifactId>
+		</dependency>
+
+		<!-- logback -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+		</dependency>
+
+		<!-- commons-logging已被logback代替 -->
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+		</dependency>
+
+		<!-- log4j已被slf4j代替 -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+		<!-- logging end-->
+		
+		<!-- utils begin -->
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+		</dependency>
+		<!-- for xml -->
+		<dependency>
+			<groupId>jaxen</groupId>
+			<artifactId>jaxen</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+		    <groupId>xerces</groupId>
+		    <artifactId>xercesImpl</artifactId>
+		</dependency> 
+		<!-- usually for orm -->
+		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+		</dependency>
+		<!-- Used for ecside -->
+		<dependency>
+			<groupId>rhino</groupId>
+			<artifactId>js</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.jexcelapi</groupId>
+			<artifactId>jxl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.htmlparser</groupId>
+			<artifactId>htmlparser</artifactId>
+		</dependency>
+		<!-- jfreechart -->
+		<dependency>
+			<groupId>jfree</groupId>
+			<artifactId>jfreechart</artifactId>
+		</dependency>
+		<!-- test begin -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.easymock</groupId>
+			<artifactId>easymock</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.easymock</groupId>
+			<artifactId>easymockclassextension</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+		</dependency>
+		<!-- test end -->
+	</dependencies>
+
+</project>
