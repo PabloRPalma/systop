@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="cz.sta" extends="default" namespace="/datashare/seismic/station">
+		 <action name="*" class="seismicStationAction" method="{1}">
+		     <result name="list">/pages/datashare/seismic/station/list.jsp</result>
+		     <result name="input">/pages/datashare/seismic/station/list.jsp</result>
+		     <result name="xmlUrl">/pages/datashare/seismic/station/gis.jsp</result>
+		     <result name="stationmap">/pages/datashare/seismic/station/station.jsp</result>
+		 </action>		 
+	</package>
+</struts>
