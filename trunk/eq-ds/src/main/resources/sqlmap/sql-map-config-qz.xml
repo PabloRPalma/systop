@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMapConfig      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+	<settings cacheModelsEnabled="true"
+	    enhancementEnabled="true"
+	    lazyLoadingEnabled="true" 
+		maxRequests="32" 
+		maxSessions="10"
+		maxTransactions="5" 
+		useStatementNamespaces="true" />
+		
+	<typeHandler jdbcType="BLOB" javaType="[B"
+		callback="datashare.base.dao.ibatis.BlobByteArrayTypeHandler" />
+	<typeHandler jdbcType="oracle.sql.CLOB" javaType="java.lang.String"
+		callback="datashare.base.dao.ibatis.ClobStringTypeHandler" />
+	<!-- There is no need for other sqlMap files -->	
+	<sqlMap resource="sqlmap/sqlMap.xml"/>
+</sqlMapConfig>
