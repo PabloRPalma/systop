@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="datashare.seismic.data.catalog" extends="default" namespace="/datashare/seismic/data/catalog">
+		 <action name="*" class="catAction" method="{1}">
+		 	 <!-- 地震目录查询  -->
+		     <result name="list">/pages/datashare/seismic/data/catalog/index.jsp</result>
+		     <result name="index">/pages/datashare/seismic/data/catalog/index.jsp</result>
+		     <!--  震相查询  -->
+		     <result name="indexPhase">/pages/datashare/seismic/data/phase/index.jsp</result>
+		     <result name="listPhase">/pages/datashare/seismic/data/phase/index.jsp</result>
+		     <result name="quake">/pages/datashare/seismic/data/catalog/eq.jsp</result>
+		     <!-- Seed查询 -->
+		     <result name="indexSeed">/pages/datashare/seismic/data/seed/index.jsp</result>
+		     <result name="listSeed">/pages/datashare/seismic/data/seed/index.jsp</result>
+		 </action>
+	</package>
+</struts>
