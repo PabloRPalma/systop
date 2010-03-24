@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="datashare.seismic.data.phase" extends="default" namespace="/datashare/seismic/data/phase">
+		 <action name="*" class="phaseAction" method="{1}">
+		     <result name="list">/pages/datashare/seismic/data/phase/list.jsp</result>
+		 </action>
+	</package>
+</struts>
