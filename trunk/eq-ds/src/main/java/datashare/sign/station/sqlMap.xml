@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="qz">
+	<resultMap class="java.util.HashMap" id="queryStationPointResult">
+    	<result property="STATIONID" column="STATIONID" javaType="String"/>
+        <result property="POINTID" column="POINTID" javaType="String"/>
+    </resultMap>
+    
+    <!-- 查询台站测点列表_按学科-测项-仪器查询   台站ID,测点ID -->
+    <select id="queryStationList" parameterClass="datashare.sign.station.model.SignStationCriteria"
+                        resultMap="queryStationPointResult">
+    	<![CDATA[
+    	SELECT DISTINCT POINT.STATIONID, POINT.POINTID 
+    	FROM $schema$.QZ_DICT_STATIONPOINTS POINT, $schema$.QZ_DICT_STATIONINSTRUMENTS MENTS, $schema$.QZ_DICT_STATIONITEMS ITEMS
+		WHERE (POINT.STATIONID = MENTS.STATIONID AND POINT.POINTID = MENTS.POINTID)
+	    AND (POINT.STATIONID = ITEMS.STATIONID AND POINT.POINTID = ITEMS.POINTID)
+		]]>
+		<dynamic>
+			<isEmpty property="instrCode">
+				<isEmpty property="itemId">
+					<isNotEmpty prepend="AND" property="subjectItemIds">
+						<![CDATA[
+						SUBSTR(ITEMS.ITEMID,1,2) in ($subjectItemIds$)
+						]]>
+					</isNotEmpty>
+				</isEmpty>
+			</isEmpty>
+			<isNotEmpty prepend="AND" property="instrCode">
+			<![CDATA[
+			MENTS.INSTRCODE = #instrCode#
+			]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="itemId">
+			<![CDATA[
+			ITEMS.ITEMID LIKE '$itemId$%'
+			]]>
+			</isNotEmpty>
+		</dynamic>
+		<![CDATA[
+		 ORDER BY POINT.STATIONID,POINT.POINTID
+		]]>
+    </select>
+    
+    <!-- 查询台站测点列表_按台站查询   台站ID,测点ID -->
+    <select id="queryStationByStaList" parameterClass="datashare.sign.station.model.SignStationCriteria"
+                        resultMap="queryStationPointResult">
+    	<![CDATA[
+    	SELECT DISTINCT STAT.STATIONID, POINT.POINTID 
+    	FROM $schema$.QZ_DICT_STATIONS STAT LEFT OUTER JOIN $schema$.QZ_DICT_STATIONPOINTS POINT ON STAT.STATIONID = POINT.STATIONID
+		]]>
+		<dynamic>
+			<isNotEmpty prepend="WHERE" property="stationItemIds">
+				<![CDATA[
+					STAT.STATIONID in ($stationItemIds$)
+				]]>
+			</isNotEmpty>
+		</dynamic>
+		<![CDATA[
+		 ORDER BY STAT.STATIONID,POINT.POINTID
+		]]>
+    </select>
+    
+    <resultMap class="java.util.HashMap" id="queryInstResult">
+    	<result property="INSTRCODE" column="INSTRCODE" javaType="String"/>
+        <result property="INSTRNAME" column="INSTRNAME" javaType="String"/>
+        <result property="INSTRTYPE" column="INSTRTYPE" javaType="String"/>
+    </resultMap>
+    
+    <!-- 查询前兆所有仪器-->
+    <select id="queryInstList" parameterClass="datashare.base.model.PageSchemaAware"
+    					resultMap="queryInstResult">
+    	<![CDATA[
+    	SELECT INSTRCODE,INSTRNAME,INSTRTYPE FROM $schema$.QZ_DICT_INSTRUMENTS
+    	]]>
+    </select>
+    
+    <resultMap class="java.util.HashMap" id="queryMsdResult">
+    	<result property="METHODID" column="METHODID" javaType="String"/>
+        <result property="METHODNAME" column="METHODNAME" javaType="String"/>
+    </resultMap>
+    
+    <!-- 查询前兆测项-->
+    <select id="queryMsdList" parameterClass="datashare.sign.station.model.SignStationCriteria"
+    					resultMap="queryMsdResult">
+    	<![CDATA[
+    	SELECT METHODID,METHODNAME FROM $schema$.QZ_DICT_METHODS
+    	WHERE METHODID LIKE '$itemId$%'
+    	]]>
+    </select>
+    
+    <resultMap class="java.util.HashMap" id="querySubInstrsResult">
+    	<result property="INSTRCODE" column="INSTRCODE" javaType="String"/>
+        <result property="INSTRNAME" column="INSTRNAME" javaType="String"/>
+        <result property="INSTRTYPE" column="INSTRTYPE" javaType="String"/>
+    </resultMap>
+    
+    <!-- 查询学科对应的仪器-->
+    <select id="querySubInstrsList" parameterClass="datashare.sign.station.model.SignStationCriteria"
+    					resultMap="querySubInstrsResult">
+    	<![CDATA[
+    	SELECT INSTRCODE,INSTRNAME,INSTRTYPE 
+    	FROM $schema$.QZ_DICT_INSTRUMENTS
+    	WHERE INSTRCODE LIKE '$itemId$%'
+    	]]>
+    </select>
+    
+    <resultMap class="java.util.HashMap" id="queryStationResult">
+    	<result property="STATIONID" column="STATIONID" javaType="String"/>
+    	<result property="STATIONCONSDATE" column="STATIONCONSDATE" javaType="String"/>
+        <result property="STATIONNAME" column="STATIONNAME" javaType="String"/>
+        <result property="LATITUDE" column="LATITUDE" javaType="Double"/>
+        <result property="LONGITUDE" column="LONGITUDE" javaType="Double"/>
+        <result property="ALTITUDE" column="ALTITUDE" javaType="Double"/>
+        <result property="UNITCODE" column="UNITCODE" javaType="String"/>
+        <result property="STATIONBASEROCK" column="STATIONBASEROCK" javaType="String"/>
+        <result property="STATIONOLDID" column="STATIONOLDID" javaType="String"/>
+        <result property="STATID_2" column="STATID_2" javaType="String"/>
+        <result property="STATIONSITEDETAIL" column="STATIONSITEDETAIL" javaType="String"/>
+        <result property="STASEISMICITY" column="STASEISMICITY" javaType="String"/>
+        <result property="STATIONGEOLOGYCONDITION" column="STATIONGEOLOGYCONDITION" javaType="String"/>
+        <result property="STATIONGROUNDAREA" column="STATIONGROUNDAREA" javaType="Double"/>
+        <result property="STATIONMGMTMODE" column="STATIONMGMTMODE" javaType="String"/>
+        <result property="STATIONDUTYPHONE" column="STATIONDUTYPHONE" javaType="String"/>
+        <result property="STATIONMAILADDRESS" column="STATIONMAILADDRESS" javaType="String"/>
+        <result property="STATIONNATURALGEOGRAPHY" column="STATIONNATURALGEOGRAPHY" javaType="String"/>
+        <result property="STATIONWEATHER" column="STATIONWEATHER" javaType="String"/>
+        <result property="STATIONHISTORY" column="STATIONHISTORY" javaType="String"/>
+        <result property="STATIONWORKINGLIVINGFACILITY" column="STATIONWORKINGLIVINGFACILITY" javaType="String"/>
+        <result property="DCUNITCODE" column="DCUNITCODE" javaType="String"/>
+        <result property="DESCRIPTION" column="DESCRIPTION" javaType="String"/>
+        <result property="STATIONREPORT" column="STATIONREPORT" javaType="[B"/>
+        <result property="STATIONPHOTO" column="STATIONPHOTO" javaType="[B"/>
+        <result property="STATIONPNTMAP" column="STATIONPNTMAP" javaType="[B"/>
+        <result property="ILLEAGLE" column="ILLEAGLE" javaType="String"/>
+        <result property="REGISTERFLAG" column="REGISTERFLAG" javaType="String"/>
+    </resultMap>
+    
+    <!-- 查询前兆台站信息-->
+    <select id="queryStationInfo" parameterClass="datashare.sign.station.model.SignStationCriteria"
+    					resultMap="queryStationResult">
+    	<![CDATA[
+    	SELECT STATIONID,STATIONCONSDATE,STATIONNAME,LATITUDE,LONGITUDE,ALTITUDE,UNITCODE,STATIONBASEROCK,STATIONOLDID,STATID_2,STATIONSITEDETAIL,
+    		   STASEISMICITY,STATIONGEOLOGYCONDITION,STATIONGROUNDAREA,STATIONMGMTMODE,STATIONDUTYPHONE,STATIONMAILADDRESS,STATIONNATURALGEOGRAPHY,STATIONWEATHER,STATIONHISTORY,
+    		   STATIONWORKINGLIVINGFACILITY,DCUNITCODE,DESCRIPTION,STATIONREPORT,STATIONPHOTO,STATIONPNTMAP,ILLEAGLE,REGISTERFLAG
+    	FROM $schema$.QZ_DICT_STATIONS
+    	WHERE STATIONID = #stationId#
+    	]]>
+    </select>
+    
+    <resultMap class="java.util.HashMap" id="queryPointResult">
+    	<result property="STATIONID" column="STATIONID" javaType="String"/>
+    	<result property="SUBSTATIONID" column="SUBSTATIONID" javaType="String"/>
+    	<result property="POINTID" column="POINTID" javaType="String"/>
+    	<result property="POINTCONSDATE" column="POINTCONSDATE" javaType="String"/>
+    	<result property="POINTNAME" column="POINTNAME" javaType="String"/>
+    	<result property="LATITUDE" column="LATITUDE" javaType="Double"/>
+    	<result property="LONGITUDE" column="LONGITUDE" javaType="Double"/>
+    	<result property="ALTITUDE" column="ALTITUDE" javaType="Double"/>
+    	<result property="COORDETERMINATIONWAY" column="COORDETERMINATIONWAY" javaType="String"/>
+    	<result property="POINTDISTANCE" column="POINTDISTANCE" javaType="Double"/>
+    	<result property="POINTADMINREGION" column="POINTADMINREGION" javaType="String"/>
+    	<result property="POINTMAINDISTURBSOURCE" column="POINTMAINDISTURBSOURCE" javaType="String"/>
+    	<result property="STATIONSTRUCTUREMAP" column="STATIONSTRUCTUREMAP" javaType="[B"/>
+    	<result property="POINTPHOTO" column="POINTPHOTO" javaType="[B"/>
+    	<result property="POINTREPORT" column="POINTREPORT" javaType="[B"/>
+    	<result property="POINTDESCRIPTION" column="POINTDESCRIPTION" javaType="String"/>
+    	<result property="ILLEAGLE" column="ILLEAGLE" javaType="String"/>
+    </resultMap>
+    
+    <!-- 查询前兆台站测点信息-->
+    <select id="queryPointInfo" parameterClass="datashare.sign.station.model.SignStationCriteria"
+    					resultMap="queryPointResult">
+    	<![CDATA[
+    	SELECT STATIONID,SUBSTATIONID,POINTID,POINTCONSDATE,POINTNAME,LATITUDE,LONGITUDE,ALTITUDE,COORDETERMINATIONWAY,
+    		   POINTDISTANCE,POINTADMINREGION,POINTMAINDISTURBSOURCE,STATIONSTRUCTUREMAP,POINTPHOTO,POINTREPORT,POINTDESCRIPTION,ILLEAGLE
+    	FROM $schema$.QZ_DICT_STATIONPOINTS
+    	WHERE STATIONID = #stationId# AND POINTID = #pointId#
+    	]]>
+    </select>
+    
+    <resultMap class="java.util.HashMap" id="queryInstrResult">
+    	<result property="INSTRID" column="INSTRID" javaType="String"/>
+    	<result property="STATIONID" column="STATIONID" javaType="String"/>
+    	<result property="POINTID" column="POINTID" javaType="String"/>
+    	<result property="STACKNO" column="STACKNO" javaType="Double"/>
+    	<result property="INSTRCODE" column="INSTRCODE" javaType="String"/>
+    	<result property="SAMPLERATE" column="SAMPLERATE" javaType="String"/>
+    	<result property="OUTDATE" column="OUTDATE" javaType="String"/>
+    	<result property="STARTDATE" column="STARTDATE" javaType="String"/>
+    	<result property="ENDDATE" column="ENDDATE" javaType="String"/>
+    	<result property="INSTRPROJECT" column="INSTRPROJECT" javaType="String"/>
+    	<result property="INSTRIP" column="INSTRIP" javaType="String"/>
+    	<result property="INSTRMASK" column="INSTRMASK" javaType="String"/>
+    	<result property="INSTRGATEWAY" column="INSTRGATEWAY" javaType="String"/>
+    	<result property="INSTRPORT" column="INSTRPORT" javaType="Integer"/>
+    	<result property="INSTRMAP" column="INSTRMAP" javaType="[B"/>
+    	<result property="DCUNITCODE" column="DCUNITCODE" javaType="String"/>
+    	<result property="USERNAME" column="USERNAME" javaType="String"/>
+    	<result property="PASSWORD" column="PASSWORD" javaType="String"/>
+    	<result property="NOTE" column="NOTE" javaType="String"/>
+    	<result property="ILLEAGLE" column="ILLEAGLE" javaType="String"/>
+    	<result property="REGISTERFLAG" column="REGISTERFLAG" javaType="String"/>
+    </resultMap>
+    
+    <!-- 查询前兆台站测点仪器运行信息-->
+    <select id="queryInstrInfo" parameterClass="datashare.sign.station.model.SignStationCriteria"
+    					resultMap="queryInstrResult">
+    	<![CDATA[
+    	SELECT INSTRID,STATIONID,POINTID,STACKNO,INSTRCODE,SAMPLERATE,OUTDATE,STARTDATE,ENDDATE,INSTRPROJECT,INSTRIP,
+    		   INSTRMASK,INSTRGATEWAY,INSTRPORT,INSTRMAP,DCUNITCODE,USERNAME,PASSWORD,NOTE,ILLEAGLE,REGISTERFLAG
+    	FROM $schema$.QZ_DICT_STATIONINSTRUMENTS
+    	WHERE STATIONID = #stationId# AND POINTID = #pointId#
+    	]]>
+    </select>
+    
+    <resultMap class="java.util.HashMap" id="queryGFlagResult">
+    	<result property="STATIONID" column="STATIONID" javaType="String"/>
+    	<result property="POINTID" column="POINTID" javaType="String"/>
+    	<result property="AZIFLAGNO" column="AZIFLAGNO" javaType="String"/>
+    	<result property="STACKNO" column="STACKNO" javaType="String"/>
+    	<result property="MEADATE" column="MEADATE" javaType="String"/>
+    	<result property="ISMAINAZIFLAG" column="ISMAINAZIFLAG" javaType="String"/>
+    	<result property="AZIFLAGDISTANCE" column="AZIFLAGDISTANCE" javaType="String"/>
+    	<result property="AZIFLAGTYPE" column="AZIFLAGTYPE" javaType="String"/>
+    	<result property="AZIMUTHANGLE" column="AZIMUTHANGLE" javaType="String"/>
+    </resultMap>
+    
+    <!-- 查询前兆台站测点地磁方位标-->
+    <select id="queryGFlagInfo" parameterClass="datashare.sign.station.model.SignStationCriteria"
+    					resultMap="queryGFlagResult">
+    	<![CDATA[
+    	SELECT STATIONID,POINTID,AZIFLAGNO,STACKNO,MEADATE,ISMAINAZIFLAG,AZIFLAGDISTANCE,
+    		   AZIFLAGTYPE,AZIMUTHANGLE
+    	FROM $schema$.QZ_DICT_STATGEOMAGAZIFLAG
+    	WHERE STATIONID = #stationId# AND POINTID = #pointId#
+    	]]>
+    </select>
+    
+    <resultMap class="java.util.HashMap" id="queryGDiffResult">
+    	<result property="STATIONID" column="STATIONID" javaType="String"/>
+    	<result property="POINTID" column="POINTID" javaType="String"/>
+    	<result property="MEADATE" column="MEADATE" javaType="String"/>
+    	<result property="STACKNO" column="STACKNO" javaType="String"/>
+    	<result property="ISSTANDARDSTACK" column="ISSTANDARDSTACK" javaType="String"/>
+    	<result property="DDIFFVALUE" column="DDIFFVALUE" javaType="String"/>
+    	<result property="IDIFFVALUE" column="IDIFFVALUE" javaType="String"/>
+    	<result property="FDIFFVALUE" column="FDIFFVALUE" javaType="String"/>
+    	<result property="HDIFFVALUE" column="HDIFFVALUE" javaType="String"/>
+    	<result property="ZDIFFVALUE" column="ZDIFFVALUE" javaType="String"/>
+    </resultMap>
+    
+    <!-- 查询前兆台站测点地磁墩差-->
+    <select id="queryGDiffInfo" parameterClass="datashare.sign.station.model.SignStationCriteria"
+    					resultMap="queryGDiffResult">
+    	<![CDATA[
+    	SELECT STATIONID,POINTID,MEADATE,STACKNO,ISSTANDARDSTACK,DDIFFVALUE,IDIFFVALUE,FDIFFVALUE,
+    		   HDIFFVALUE,ZDIFFVALUE
+    	FROM $schema$.QZ_DICT_STATGEOMAGDIFF
+    	WHERE STATIONID = #stationId# AND POINTID = #pointId#
+    	]]>
+    </select>
+    
+    <resultMap class="java.util.HashMap" id="queryStaItemsResult">
+    	<result property="STATIONID" column="STATIONID" javaType="String"/>
+    	<result property="POINTID" column="POINTID" javaType="String"/>
+    	<result property="ITEMID" column="ITEMID" javaType="String"/>
+    	<result property="SAMPLERATE" column="SAMPLERATE" javaType="String"/>
+    	<result property="ANALOGORDIGITAL" column="ANALOGORDIGITAL" javaType="String"/>
+    	<result property="STARTDATE" column="STARTDATE" javaType="String"/>
+    	<result property="ENDDATE" column="ENDDATE" javaType="String"/>
+    	<result property="NOTE" column="NOTE" javaType="String"/>
+    </resultMap>
+    
+    <!-- 查询前兆台站测点测项分量-->
+    <select id="queryStaItemsInfo" parameterClass="datashare.sign.station.model.SignStationCriteria"
+    					resultMap="queryStaItemsResult">
+    	<![CDATA[
+    	SELECT STATIONID,POINTID,ITEMID,SAMPLERATE,ANALOGORDIGITAL,STARTDATE,ENDDATE,NOTE
+    	FROM $schema$.QZ_DICT_STATIONITEMS
+    	WHERE STATIONID = #stationId# AND POINTID = #pointId#
+    	]]>
+    </select>
+    
+    <resultMap class="java.util.HashMap" id="queryInstrParamsResult">
+    	<result property="INSTRID" column="INSTRID" javaType="String"/>
+    	<result property="STATIONID" column="STATIONID" javaType="String"/>
+    	<result property="POINTID" column="POINTID" javaType="String"/>
+    	<result property="MEASDATE" column="MEASDATE" javaType="String"/>
+    	<result property="INVALIDDATE" column="INVALIDDATE" javaType="String"/>
+    	<result property="PARANAME" column="PARANAME" javaType="String"/>
+    	<result property="PARAVALUE" column="PARAVALUE" javaType="String"/>
+    	<result property="PARADESC" column="PARADESC" javaType="String"/>
+    </resultMap>
+    
+    <!-- 查询前兆台站测点仪器参数-->
+    <select id="queryInstrParamsInfo" parameterClass="datashare.sign.station.model.SignStationCriteria"
+    					resultMap="queryInstrParamsResult">
+    	<![CDATA[
+    	SELECT INSTRID,STATIONID,POINTID,MEASDATE,INVALIDDATE,PARANAME,PARAVALUE,PARADESC
+    	FROM $schema$.QZ_DICT_INSTRPARAMETERS
+    	WHERE STATIONID = #stationId# AND POINTID = #pointId#
+    	]]>
+    </select>
+    
+    <select id="queryInstrName" parameterClass="java.util.HashMap"
+    					resultClass="java.lang.String">
+    	<![CDATA[
+    	SELECT INSTRNAME FROM $schema$.QZ_DICT_INSTRUMENTS 
+    	WHERE INSTRCODE = #instrCode#
+    	]]>
+    </select>
+    
+    <resultMap class="java.util.HashMap" id="queryStaCaveResult">
+    	<result property="STATIONID" column="STATIONID" javaType="String"/>
+    	<result property="POINTID" column="POINTID" javaType="String"/>
+    	<result property="ITEMID" column="ITEMID" javaType="String"/>
+    	<result property="CAVENAME" column="CAVENAME" javaType="String"/>
+    	<result property="ENTRYDISTANCE" column="ENTRYDISTANCE" javaType="String"/>
+    	<result property="DIRECTION" column="DIRECTION" javaType="String"/>
+    	<result property="INSTRDIRECTION" column="INSTRDIRECTION" javaType="String"/>
+    	<result property="INSTRLENGTH" column="INSTRLENGTH" javaType="String"/>
+    	<result property="NOTE" column="NOTE" javaType="String"/>
+    </resultMap>
+    
+    <!-- 查询前兆台站测点洞体-->
+    <select id="queryStaCaveInfo" parameterClass="datashare.sign.station.model.SignStationCriteria"
+    					resultMap="queryStaCaveResult">
+    	<![CDATA[
+    	SELECT STATIONID,POINTID,ITEMID,CAVENAME,ENTRYDISTANCE,DIRECTION,INSTRDIRECTION,INSTRLENGTH,NOTE
+    	FROM $schema$.QZ_DICT_STATCAVEITEMS
+    	WHERE STATIONID = #stationId# AND POINTID = #pointId#
+    	]]>
+    </select>
+    
+    <resultMap class="java.util.HashMap" id="queryStaWellResult">
+    	<result property="STATIONID" column="STATIONID" javaType="String"/>
+    	<result property="POINTID" column="POINTID" javaType="String"/>
+    	<result property="ITEMID" column="ITEMID" javaType="String"/>
+    	<result property="WELLNAME" column="WELLNAME" javaType="String"/>
+    	<result property="DIRECTION" column="DIRECTION" javaType="String"/>
+    	<result property="MEALAYERDEPTH" column="MEALAYERDEPTH" javaType="String"/>
+    	<result property="MEALAYERTHICK" column="MEALAYERTHICK" javaType="String"/>
+    	<result property="ROCKAGE" column="ROCKAGE" javaType="String"/>
+    	<result property="ROCKTYPE" column="ROCKTYPE" javaType="String"/>
+    	<result property="MEALAYERTEMPERATURE" column="MEALAYERTEMPERATURE" javaType="String"/>
+    	<result property="NOTE" column="NOTE" javaType="String"/>
+    </resultMap>
+    
+    <!-- 查询前兆台站测点井泉信息-->
+    <select id="queryStaWellInfo" parameterClass="datashare.sign.station.model.SignStationCriteria"
+    					resultMap="queryStaWellResult">
+    	<![CDATA[
+    	SELECT STATIONID,POINTID,ITEMID,WELLNAME,DIRECTION,MEALAYERDEPTH,MEALAYERTHICK,ROCKAGE,ROCKTYPE,
+    		   MEALAYERTEMPERATURE,NOTE
+    	FROM $schema$.QZ_DICT_STATWELLITEMS
+    	WHERE STATIONID = #stationId# AND POINTID = #pointId#
+    	]]>
+    </select>
+    
+    <resultMap class="java.util.HashMap" id="queryStatCaveRst">
+    	<result property="STATIONID" column="STATIONID" javaType="String"/>
+    	<result property="CAVENAME" column="CAVENAME" javaType="String"/>
+    	<result property="CONSTRUCTDATE" column="CONSTRUCTDATE" javaType="String"/>
+    	<result property="ROCKTYPE" column="ROCKTYPE" javaType="String"/>
+    	<result property="UPDEPTH" column="UPDEPTH" javaType="Double"/>
+    	<result property="TEMPERATURE" column="TEMPERATURE" javaType="Double"/>
+    	<result property="HUMIDITY" column="HUMIDITY" javaType="Double"/>
+    	<result property="TEMPVARIATION" column="TEMPVARIATION" javaType="Double"/>
+    	<result property="CAVEMAP" column="CAVEMAP" javaType="[B"/>
+    </resultMap>
+    
+    <!-- 查询前兆台站相关洞体信息-->
+    <select id="queryStatCave" parameterClass="datashare.sign.station.model.SignStationCriteria"
+    					resultMap="queryStatCaveRst">
+    	<![CDATA[
+    	SELECT STATIONID,CAVENAME,CONSTRUCTDATE,ROCKTYPE,UPDEPTH,TEMPERATURE,HUMIDITY,TEMPVARIATION,CAVEMAP
+    	FROM $schema$.QZ_DICT_STATCAVE
+    	WHERE STATIONID = #stationId#
+    	]]>
+    </select>
+    
+    <resultMap class="java.util.HashMap" id="queryStatWellRst">
+    	<result property="STATIONID" column="STATIONID" javaType="String"/>
+    	<result property="WELLNAME" column="WELLNAME" javaType="String"/>
+    	<result property="CONSTRUCTDATE" column="CONSTRUCTDATE" javaType="String"/>
+    	<result property="FINISHDATE" column="FINISHDATE" javaType="String"/>
+    	<result property="CONSTRUNIT" column="CONSTRUNIT" javaType="String"/>
+    	<result property="DISTURBFACTOR" column="DISTURBFACTOR" javaType="String"/>
+    	<result property="WELLMOUTHALTITUDE" column="WELLMOUTHALTITUDE" javaType="String"/>
+    	<result property="WELLLOCATION" column="WELLLOCATION" javaType="String"/>
+    	
+    	<result property="GEOCONDITION" column="GEOCONDITION" javaType="String"/>
+    	<result property="WELLINIDEPTH" column="WELLINIDEPTH" javaType="String"/>
+    	<result property="WELLCURDEPTH" column="WELLCURDEPTH" javaType="String"/>
+    	<result property="HOLEDIAMETER" column="HOLEDIAMETER" javaType="String"/>
+    	<result property="HOLETENDENCY" column="HOLETENDENCY" javaType="String"/>
+    	<result property="HOLEDIPANGLE" column="HOLEDIPANGLE" javaType="String"/>
+    	<result property="DIACHANGECONDITION" column="DIACHANGECONDITION" javaType="String"/>
+    	
+    	<result property="WATERSTOPCONDITION" column="WATERSTOPCONDITION" javaType="String"/>
+    	<result property="CONTACTTYPE" column="CONTACTTYPE" javaType="String"/>
+    	<result property="MAINPARAMETER" column="MAINPARAMETER" javaType="String"/>
+    	<result property="PERFORATINGDATA" column="PERFORATINGDATA" javaType="String"/>
+    	<result property="SLIPCONDITION" column="SLIPCONDITION" javaType="String"/>
+    	<result property="WTEMPERATURE" column="WTEMPERATURE" javaType="String"/>
+    	<result property="WELLTYPE" column="WELLTYPE" javaType="String"/>
+    	
+    	<result property="OBSERVEDZONE" column="OBSERVEDZONE" javaType="String"/>
+    	<result property="AQUIFERLITH" column="AQUIFERLITH" javaType="String"/>
+    	<result property="OPENTHICKNESS" column="OPENTHICKNESS" javaType="String"/>
+    	<result property="WATERTYPE" column="WATERTYPE" javaType="String"/>
+    	<result property="PUMPTESTDATA" column="PUMPTESTDATA" javaType="String"/>
+    	<result property="PERMEABILITYCOEFFICIENT" column="PERMEABILITYCOEFFICIENT" javaType="String"/>
+    	<result property="MACRODESC" column="MACRODESC" javaType="String"/>
+    	
+    	<result property="MINERALDEGREE" column="MINERALDEGREE" javaType="String"/>
+    	<result property="PHVALUE" column="PHVALUE" javaType="String"/>
+    	<result property="HYDROCHEMTYPE" column="HYDROCHEMTYPE" javaType="String"/>
+    	<result property="ROUTELEMENT" column="ROUTELEMENT" javaType="String"/>
+    	<result property="MICROELEMENT" column="MICROELEMENT" javaType="String"/>
+    	<result property="PLUTGAS" column="PLUTGAS" javaType="String"/>
+    	<result property="OTHERCOMPONENT" column="OTHERCOMPONENT" javaType="String"/>
+    	<result property="HOUSECONDITION" column="HOUSECONDITION" javaType="String"/>
+    	
+    	<result property="HOUSEAREA" column="HOUSEAREA" javaType="String"/>
+    	<result property="WELLMOUTHSETDESC" column="WELLMOUTHSETDESC" javaType="String"/>
+    	<result property="WELLMOUTHSETSKMAP" column="WELLMOUTHSETSKMAP" javaType="[B"/>
+    	<result property="COLLGASSETSKMAP" column="COLLGASSETSKMAP" javaType="[B"/>
+    	<result property="MTDLAYOUTMAP" column="MTDLAYOUTMAP" javaType="[B"/>
+    	<result property="GEOMAPWELLAREA" column="GEOMAPWELLAREA" javaType="[B"/>
+    	<result property="NOTE" column="NOTE" javaType="String"/>
+    </resultMap>
+    
+    <!-- 查询前兆台站相关井信息-->
+    <select id="queryStatWell" parameterClass="datashare.sign.station.model.SignStationCriteria"
+    					resultMap="queryStatWellRst">
+    	<![CDATA[
+    	SELECT STATIONID,WELLNAME,CONSTRUCTDATE,FINISHDATE,CONSTRUNIT,DISTURBFACTOR,WELLMOUTHALTITUDE,WELLLOCATION,
+    		GEOCONDITION,WELLINIDEPTH,WELLCURDEPTH,HOLEDIAMETER,HOLETENDENCY,HOLEDIPANGLE,DIACHANGECONDITION,
+    		WATERSTOPCONDITION,CONTACTTYPE,MAINPARAMETER,PERFORATINGDATA,SLIPCONDITION,WTEMPERATURE,WELLTYPE,
+    		OBSERVEDZONE,AQUIFERLITH,OPENTHICKNESS,WATERTYPE,PUMPTESTDATA,PERMEABILITYCOEFFICIENT,MACRODESC,
+    		MINERALDEGREE,PHVALUE,HYDROCHEMTYPE,ROUTELEMENT,MICROELEMENT,PLUTGAS,OTHERCOMPONENT,HOUSECONDITION,
+    		HOUSEAREA,WELLMOUTHSETDESC,WELLMOUTHSETSKMAP,COLLGASSETSKMAP,MTDLAYOUTMAP,GEOMAPWELLAREA,NOTE
+    	FROM $schema$.QZ_DICT_STATWELL
+    	WHERE STATIONID = #stationId#
+    	]]>
+    </select>
+    
+    <resultMap class="java.util.HashMap" id="queryStatSpringRst">
+    	<result property="STATIONID" column="STATIONID" javaType="String"/>
+    	<result property="SPRINGNAME" column="SPRINGNAME" javaType="String"/>
+    	<result property="CONSTRUCTDATE" column="CONSTRUCTDATE" javaType="String"/>
+    	<result property="SPRINGTYPE" column="SPRINGTYPE" javaType="String"/>
+    	<result property="OUTCONDITION" column="OUTCONDITION" javaType="String"/>
+    	<result property="WELLLOCATION" column="WELLLOCATION" javaType="String"/>
+    	<result property="HYGEOCONDITION" column="HYGEOCONDITION" javaType="String"/>
+    	<result property="WTEMPERATURE" column="WTEMPERATURE" javaType="String"/>
+    	<result property="MINERALDEGREE" column="MINERALDEGREE" javaType="String"/>
+    	<result property="PHVALUE" column="PHVALUE" javaType="String"/>
+    	<result property="HYDROCHEMTYPE" column="HYDROCHEMTYPE" javaType="String"/>
+    	<result property="ROUTELEMENT" column="ROUTELEMENT" javaType="String"/>
+    	<result property="MICROELEMENT" column="MICROELEMENT" javaType="String"/>
+    	<result property="PLUTGAS" column="PLUTGAS" javaType="String"/>
+    	<result property="OTHERCOMPONENT" column="OTHERCOMPONENT" javaType="String"/>
+    	<result property="OUTFLOW" column="OUTFLOW" javaType="String"/>
+    	<result property="TOTALOUTFLOW" column="TOTALOUTFLOW" javaType="String"/>
+    	<result property="HYDROPROFILE" column="HYDROPROFILE" javaType="[B"/>
+    	<result property="WELLPHOTO" column="WELLPHOTO" javaType="[B"/>
+    	<result property="NOTE" column="NOTE" javaType="String"/>
+    </resultMap>
+    
+    <!-- 查询前兆台站相关泉信息-->
+    <select id="queryStatSpring" parameterClass="datashare.sign.station.model.SignStationCriteria"
+    					resultMap="queryStatSpringRst">
+    	<![CDATA[
+    	SELECT STATIONID,SPRINGNAME,CONSTRUCTDATE,SPRINGTYPE,OUTCONDITION,WELLLOCATION,HYGEOCONDITION,
+    		WTEMPERATURE,MINERALDEGREE,PHVALUE,HYDROCHEMTYPE,ROUTELEMENT,MICROELEMENT,PLUTGAS,
+    		OTHERCOMPONENT,OUTFLOW,TOTALOUTFLOW,HYDROPROFILE,WELLPHOTO,NOTE
+    	FROM $schema$.QZ_DICT_STATSPRING
+    	WHERE STATIONID = #stationId#
+    	]]>
+    </select>
+    
+    <resultMap class="java.util.HashMap" id="queryStatFaultsRst">
+    	<result property="STATIONID" column="STATIONID" javaType="String"/>
+    	<result property="FAULTNAME" column="FAULTNAME" javaType="String"/>
+    	<result property="FAULTTECTONICS" column="FAULTTECTONICS" javaType="String"/>
+    	<result property="FAULTTYPE" column="FAULTTYPE" javaType="String"/>
+    	<result property="FAULTSTRIKE" column="FAULTSTRIKE" javaType="String"/>
+    	<result property="FAULTMOVDIRECTION" column="FAULTMOVDIRECTION" javaType="String"/>
+    	<result property="FAULTDIPANGLE" column="FAULTDIPANGLE" javaType="String"/>
+    	<result property="UPPERROCKTYPE" column="UPPERROCKTYPE" javaType="String"/>
+    	<result property="LOWERROCKTYPE" column="LOWERROCKTYPE" javaType="String"/>
+    	<result property="FAULTPHOTO" column="FAULTPHOTO" javaType="[B"/>
+    	<result property="NOTE" column="NOTE" javaType="String"/>
+    </resultMap>
+    
+    <!-- 查询前兆台站相关断层信息-->
+    <select id="queryStatFaults" parameterClass="datashare.sign.station.model.SignStationCriteria"
+    					resultMap="queryStatFaultsRst">
+    	<![CDATA[
+    	SELECT STATIONID,FAULTNAME,FAULTTECTONICS,FAULTTYPE,FAULTSTRIKE,FAULTMOVDIRECTION,FAULTDIPANGLE,
+    		UPPERROCKTYPE,LOWERROCKTYPE,FAULTPHOTO,NOTE
+    	FROM $schema$.QZ_DICT_FAULTS
+    	WHERE STATIONID = #stationId#
+    	]]>
+    </select>
+    
+    <resultMap class="java.util.HashMap" id="queryBlobValResult">
+    	<result property="BLOBVAL" column="BLOBVAL"/>
+    </resultMap>
+    
+    <!-- 查询图片信息-->
+    <select id="queryBlobValInfo" parameterClass="datashare.sign.station.model.BlobCriteria"
+    					resultMap="queryBlobValResult">
+    	<![CDATA[
+    	SELECT $columnName$ as BLOBVAL
+    	FROM $schema$.$tableName$
+    	WHERE STATIONID = #stationId#
+    	]]>
+    	<dynamic>
+			<isNotEmpty prepend="AND" property="pointId">
+			<![CDATA[
+			POINTID = #pointId#
+			]]>
+			</isNotEmpty>
+		</dynamic>
+    </select>
+</sqlMap>

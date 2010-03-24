@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="qz">
+	<typeAlias alias="prequeryCriteria" type="datashare.sign.prequery.model.PrequeryCriteria" />
+	<typeAlias alias="node" type="datashare.sign.prequery.model.Node" />
+	
+	<select id="queryTable" parameterClass="prequeryCriteria" resultClass="String">
+                        
+	<![CDATA[
+		SELECT TABLE_NAME FROM ALL_TABLES 
+		WHERE 
+		OWNER=#schema# AND 
+		TABLE_NAME LIKE #likeTableName# ORDER BY TABLE_NAME
+	]]>
+	</select>
+	
+	<select id="queryNodeInfo" parameterClass="prequeryCriteria" resultClass="node">
+		<![CDATA[
+			SELECT DISTINCT POINTID, ITEMID, STATIONID FROM $schema$.$queryTableName$
+		]]>
+	</select>
+	
+	<select id="queryStartEndDate" parameterClass="prequeryCriteria" resultClass="node">
+	<![CDATA[
+		select TO_CHAR(MIN(STARTDATE), 'yyyy-mm-dd') as startDate, TO_CHAR(MAX(STARTDATE), 'yyyy-mm-dd') as endDate 
+		FROM $schema$.$queryTableName$ 
+		WHERE 
+		STATIONID = #stationId# 
+		AND POINTID = #pointId# 
+		AND ITEMID = #itemId# 
+	]]>
+	</select>
+	
+	
+</sqlMap>

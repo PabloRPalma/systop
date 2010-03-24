@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="qz.common">
+	
+	<typeAlias alias="criteria" type="datashare.sign.data.model.Criteria" />
+	
+	<select id="queryStationName" parameterClass="criteria" resultClass="String">
+	<![CDATA[
+		SELECT STATIONNAME FROM $schema$.QZ_DICT_STATIONS WHERE STATIONID=#stationId# 
+	]]>
+	</select>
+	
+	<select id="queryItemName" parameterClass="criteria" resultClass="String">
+	<![CDATA[
+		SELECT ITEMNAME FROM $schema$.QZ_DICT_ITEMS WHERE ITEMID=#itemId#
+	]]>
+	</select>
+	
+	<select id="queryPointName" parameterClass="criteria" resultClass="String">
+	<![CDATA[
+		SELECT POINTNAME FROM $schema$.QZ_DICT_STATIONPOINTS 
+		WHERE 
+			POINTID = #pointId# 
+			AND 
+			STATIONID = #stationId#
+	]]>
+	</select>
+	
+</sqlMap>

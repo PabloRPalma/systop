@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="qz.sta" extends="json" namespace="/datashare/sign/station">
+		 <action name="*" class="signStationAction" method="{1}">
+		 	 <result name="index">/pages/datashare/sign/station/index.jsp</result>
+		 	 <result name="indexForSta">/pages/datashare/sign/station/queryByStation.jsp</result>
+		     <result name="list">/pages/datashare/sign/station/list.jsp</result>
+		     <result name="input">/pages/datashare/sign/station/list.jsp</result>
+		     <result name="staInfo">/pages/datashare/sign/station/staInfo.jsp</result>
+		     <result name="pointInfo">/pages/datashare/sign/station/pointInfo.jsp</result>
+		     <result name="stagis">/pages/datashare/sign/station/station.jsp</result>
+		     <result type="json" name="tree">
+		        <param name="ignoreHierarchy">false</param>
+		        <param name="root">jsonData</param>
+		    </result>
+		    <result type="json" name="treeForSta">
+		        <param name="ignoreHierarchy">false</param>
+		        <param name="root">jsonDataForSta</param>
+		    </result>
+		    <result type="json" name="methods">
+		        <param name="ignoreHierarchy">false</param>
+		        <param name="root">jsonMethods</param>
+		    </result>
+		    <result type="json" name="instruments">
+		        <param name="ignoreHierarchy">false</param>
+		        <param name="root">jsonInstruments</param>
+		    </result>
+		 </action>		 
+	</package>
+	<package name="qz.bval" extends="json" namespace="/datashare/sign/bval">
+		 <action name="*" class="blobAction" method="{1}">
+		 	<result name="input">/pages/datashare/sign/station/index.jsp</result>
+		 </action>		 
+	</package>
+</struts>

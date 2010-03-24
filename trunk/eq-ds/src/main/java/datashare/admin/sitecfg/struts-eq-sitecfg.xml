@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="datashare.admin.sitecfg" extends="default" namespace="/datashare/admin/sitecfg">
+		 <action name="index" class="siteCfgAction" method="index">
+		     <result name="success">/pages/datashare/admin/sitecfg/index.jsp</result>
+		 </action>
+		 
+		 <action name="save" class="siteCfgAction" method="save">
+		     <result name="success" type="redirect">index.do</result>
+		     <result name="input">/pages/datashare/admin/sitecfg/index.jsp</result>
+		 </action>
+	</package>
+</struts>

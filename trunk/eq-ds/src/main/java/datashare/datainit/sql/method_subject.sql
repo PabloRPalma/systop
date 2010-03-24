@@ -1,0 +1,15 @@
+insert into method_subject(subject_id, method_id) values ('01','21');
+insert into method_subject(subject_id, method_id) values ('02','22');
+insert into method_subject(subject_id, method_id) values ('02','23');
+insert into method_subject(subject_id, method_id) values ('02','24');
+insert into method_subject(subject_id, method_id) values ('02','25');
+insert into method_subject(subject_id, method_id) values ('02','26');
+insert into method_subject(subject_id, method_id) values ('03','31');
+insert into method_subject(subject_id, method_id) values ('04','32');
+insert into method_subject(subject_id, method_id) values ('04','34');
+insert into method_subject(subject_id, method_id) values ('04','35');
+insert into method_subject(subject_id, method_id) values ('05','41');
+insert into method_subject(subject_id, method_id) values ('05','42');
+insert into method_subject(subject_id, method_id) values ('05','43');
+insert into method_subject(subject_id, method_id) values ('06','91');
+insert into method_subject(subject_id, method_id) values ('06','92');

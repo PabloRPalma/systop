@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="ds.descr" extends="json" namespace="/datashare/descr">
+		 <action name="*" class="descrAction" method="{1}">
+		     <result name="index">/pages/datashare/descr/index.jsp</result>
+		     <result type="json" name="jResult">
+		        <param name="ignoreHierarchy">false</param>
+		        <param name="root">josnResult</param>
+		 	 </result>
+		 	 <result type="json" name="descrResult">
+		        <param name="ignoreHierarchy">false</param>
+		        <param name="root">descr</param>
+		 	 </result>
+		 </action>
+	</package>
+</struts>
