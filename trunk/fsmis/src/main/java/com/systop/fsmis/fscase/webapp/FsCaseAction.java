@@ -16,6 +16,7 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.hibernate.criterion.MatchMode;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -118,7 +119,7 @@ public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
     }
 
     Page page = new Page(Page.start(getPageNo(), getPageSize()), getPageSize());
-    StringBuffer sql = new StringBuffer("from FsCase gc where isSubmited=0 ");
+    StringBuffer sql = new StringBuffer("from FsCase gc where 1=1 ");
     List args = new ArrayList();
     // 判断是否是市级人员登录,如果不是,则需要添加根据本区县查询案件的查询条件,本逻辑需要确认
     if (loginUserService.getLoginUserCounty(getRequest()).getParentDept() != null) {
@@ -561,6 +562,23 @@ public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
     return "";
   }
   
+  
+  /**
+   * 事件上报市级操作
+   */
+  public String isSubmited(){ 
+	  //插入一条新纪录
+	  FsCase fscase = new FsCase();
+	  BeanUtils.copyProperties(getModel(), fscase, new String[]{"id","taskses","jointTaskses","assessmentses","casesBySubmitedCase","compositiveCases","genericCases","smsSendses","smsReceiveses"});
+	  Dept dept =(Dept) getManager().getDao().findObject("from Dept d where d.parentDept is null");
+	  fscase.setCounty(dept);
+	  getManager().save(fscase);
+	  //将原纪录与新纪录关联,更改是否上报状态
+	  getModel().setSubmitedCase(fscase);
+	  getModel().setIsSubmited(CaseConstants.CITY);
+	  getManager().save(getModel());
+	  return SUCCESS;
+  }
 
 
   public List getTypeRst() {
