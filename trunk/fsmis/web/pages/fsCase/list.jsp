@@ -88,8 +88,15 @@ function caseRemove(caseId) {
 		<ec:column width="50" property="code" title="事件编号" sortable="false"/>
 		<ec:column width="80" property="caseType.name" title="事件类别" sortable="false"/>
 		<ec:column width="115" property="caseTime" title="事发时间"
-			style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm" sortable="false"/>
-		<ec:column width="50" property="status" title="事件状态"  mappingItem="stateColorMap" style="text-align:center" sortable="false"/>
+			style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm" sortable="false"/>	
+		<c:if test="${item.isSubmited ne '1'}">
+		 <ec:column width="50" property="status" title="事件状态"  mappingItem="stateColorMap" style="text-align:center" sortable="false"/>
+		</c:if>
+		<c:if test="${item.isSubmited eq '1'}">
+		 <ec:column width="50" property="status" title="事件状态"  mappingItem="stateColorMap" style="text-align:center" sortable="false">
+		    <font color='yellow'>已上报</font>
+		 </ec:column>
+		</c:if>	
 		<c:if test="${param['isMultipleCase'] eq 0}">
 		<ec:column width="80" property="_3" title="事件来源" style="text-align:center" sortable="false">
 			<c:if test="${item.caseSourceType == 'generic'}">普通添加</c:if>
@@ -131,7 +138,12 @@ function caseRemove(caseId) {
 				<c:if test="${empty item.status or item.status eq '0' or item.status eq '3' or item.status eq '5' or item.status eq '6'}">		
 				    <a title="修改事件" href="${ctx}/fscase/edit.do?model.id=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">改 </a> |
 				    <a title="派遣任务" href="#" onclick="showChooseSendTypeWindow(${item.id},'${item.title}')">派</a> |
-				    <a title="删除任务"href="#" onclick="remove(${item.id})" >删</a> 
+				    <c:if test="${item.isSubmited eq '0'}">
+				      <a title="删除任务"href="#" onclick="remove(${item.id})" >删</a> 
+				    </c:if>
+				    <c:if test="${item.isSubmited eq '1'}">
+				       <font color="silver" >删</font> 
+				    </c:if>
 				    <c:if test="${param['isMultipleCase'] eq 0}">
 				     | <font color="silver" >核</font>	
 				    </c:if>		    

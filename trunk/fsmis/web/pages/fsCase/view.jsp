@@ -36,6 +36,15 @@
  margin-top: -4;
  }
 </style>
+<script type="text/javascript">
+function isSubmited(caseId) {
+    Ext.MessageBox.confirm('提示','确认要将此事件上报市级么?', function(btn){
+        if (btn == 'yes') {
+          window.location = "${ctx}/fscase/isSubmited.do?model.id=" + caseId +"&modelId=0&isMultipleCase="+${model.isMultiple};
+        }
+    });
+  }
+</script>
 </head>
 <body>
 <!-- 事件信息 -->
@@ -47,9 +56,9 @@
 				<td width="90%" align="left"></td>
 				<td align="right"> <a href="#">地理位置</a></td>
 				<c:if test="${model.caseSourceType eq 'generic'}">				
-					<c:if test="${model.status eq '0' || model.status eq '2' || model.status eq '3'}">
+					<c:if test="${(model.status eq '0' || model.status eq '2' || model.status eq '3') && (model.isSubmited eq '0')}">
 					<td><span class="ytb-sep"></span></td>
-					    <td align="right"><a href="#"> 上报市级</a></td>
+					    <td align="right"><a href="#" onclick="isSubmited(${model.id})"> 上报市级</a></td>
 					</c:if>
 					<c:if test="${model.status eq '0' || model.status eq '2' || model.status eq '3'}">
 					<td><span class="ytb-sep"></span></td>
