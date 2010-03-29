@@ -800,7 +800,6 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 		} else {// 未选择部门按当前登录用户部门
 			dept = county;
 		}
-		List<Object[]> result = new ArrayList();
 		List<SendType> sts = sendTypeManager.orderSendType();
 		for (SendType st : sts) {
 			StringBuffer sql = new StringBuffer(
@@ -818,7 +817,7 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 				args.add(endDate);
 			}
 			List<Object[]> r = getDao().query(sql.toString(), args.toArray());
-			if (CollectionUtils.isNotEmpty(result)) {
+			if (CollectionUtils.isNotEmpty(r)) {
 				cvsData.append(st.getName() + ";").append(r.get(0)[1] + "\\n");
 			} else {
 				cvsData.append(st.getName() + ";").append(0 + "\\n");
