@@ -7,11 +7,38 @@
 <%@include file="/common/ec.jsp"%>
 <%@include file="/common/meta.jsp"%>
 <script type="text/javascript" src="${ctx}/amcharts/swfobject.js"></script>
+<script type="text/javascript">
+function strParser(){
+	var csvData = "${csvData}";
+	var itemList = csvData.split("\n");
+	var staticInfo = "";
+	var itemNums = new Array();
+	
+	for(var i = 0; i < itemList.length - 1; i++){
+		var item = itemList[i].split(";");
+		itemNums[i] = item[1];
+		staticInfo += '<b>' + item[0] + '</b>共发生食品安全事件<b>' + item[1] + '起</b>' + '；';
+		}
+	if(document.getElementById("yearOrMonth").value == 2 && itemNums[0] != 0 && itemNums[1] != 0){
+		if(document.getElementById("compareSort").value == 1){
+			staticInfo += '<b>同比</b>';
+			}else{
+				staticInfo += '<b>环比</b>';
+				}
+		if(itemNums[0] <= itemNums[1]){
+			staticInfo += "增加了" + '<b>' + 100*(itemNums[1] - itemNums[0])/itemNums[0] + "%</b>。";
+			}else{
+				staticInfo += "减少了" + '<b>' + 100*(itemNums[0] - itemNums[1])/itemNums[0] + "%</b>。";
+				}
+	}
+	document.getElementById("staticInfo").innerHTML = staticInfo;
+}
+</script>
 <link href="${ctx}/styles/treeSelect.css" type='text/css'
 	rel='stylesheet'>
 
 </head>
-<body>
+<body onload="strParser()">
 <div class="x-panel-header">事件数量统计图</div>
 <div class="x-toolbar">
 <table width="99%">
@@ -42,6 +69,11 @@
 	<tr>
 		<td align="center">
 			<div id="flashcontent"><strong>你需要更新你的flash了。</strong></div>
+		</td>
+	</tr>
+	<tr>
+		<td align="left">
+			<br><span>&nbsp;&nbsp;&nbsp;&nbsp;事件数量统计结果显示：</span><span id="staticInfo"></span>
 		</td>
 	</tr>
 </table>
