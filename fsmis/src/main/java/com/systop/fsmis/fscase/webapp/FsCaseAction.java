@@ -121,8 +121,8 @@ public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
     Page page = new Page(Page.start(getPageNo(), getPageSize()), getPageSize());
     StringBuffer sql = new StringBuffer("from FsCase gc where 1=1 ");
     List args = new ArrayList();
-    // 判断是否是市级人员登录,如果不是,则需要添加根据本区县查询案件的查询条件,本逻辑需要确认
-    if (loginUserService.getLoginUserCounty(getRequest()).getParentDept() != null) {
+    // 判断是什么区县人员登录,根据本区县查询案件的条件查询
+    if (loginUserService.getLoginUserCounty(getRequest()).getId() != null) {
       sql.append("and gc.county.id = ? ");
       args.add(loginUserService.getLoginUserCounty(getRequest()).getId());
     }
