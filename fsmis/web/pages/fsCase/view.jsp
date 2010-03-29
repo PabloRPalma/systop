@@ -55,11 +55,13 @@ function isSubmited(caseId) {
 			<tr>
 				<td width="90%" align="left"></td>
 				<td align="right"> <a href="#">地理位置</a></td>
-				<c:if test="${model.caseSourceType eq 'generic'}">				
+				<c:if test="${model.caseSourceType eq 'generic'}">	
+				    <stc:role ifNotGranted="ROLE_ADMIN">			
 					<c:if test="${(model.status eq '0' || model.status eq '2' || model.status eq '3') && (model.isSubmited eq '0')}">
 					<td><span class="ytb-sep"></span></td>
 					    <td align="right"><a href="#" onclick="isSubmited(${model.id})"> 上报市级</a></td>
 					</c:if>
+					</stc:role>
 					<c:if test="${model.status eq '0' || model.status eq '2' || model.status eq '3'}">
 					<td><span class="ytb-sep"></span></td>
 						<td align="right"><a href="#" onclick="showChooseSendTypeWindow(${model.id},'${model.title}')"> 任务派遣</a></td>
