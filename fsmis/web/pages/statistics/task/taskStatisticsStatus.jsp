@@ -29,8 +29,8 @@ function strParser(){
 	for(var i = 0; i < itemList.length - 1; i++){
 		var item = itemList[i].split(";");
 		staticInfo += '<b>' + item[0] + '</b>任务共发生<b>' + item[1] + '起</b>' + '，';
-		if(sumRet != 0){
-			staticInfo += '占比' + '<b>' + 100*(item[1]/sumRet).toPrecision(4) + "%</b>；";
+		if(sumRet != 0 && item[1] != 0){
+			staticInfo += '占比' + '<b>' + (100*item[1]/sumRet).toFixed(2) + "%</b>；";
 			}
 		}
 	document.getElementById("staticInfo").innerHTML = staticInfo;
@@ -72,20 +72,18 @@ function strParser(){
 </table>
 <table width="100%">
 	<tr>
-		<td align="center">
-			<div id="flashcontent"><strong>你需要更新你的flash了。</strong></div>
+		<td align="left" width="30%">
+			<p style="line-height: 20px"><font size="2" face=宋体><span>任务状态统计结果显示：</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span id="staticInfo"></span><span>以上信息反映了各个状态的任务发生的次数和占比。</span></font></p>
 		</td>
-	</tr>
-	<tr>
-		<td align="left">
-			<br><span>&nbsp;&nbsp;&nbsp;&nbsp;任务状态统计结果显示：</span><span id="staticInfo"></span>
+		<td align="right" width="70%">
+			<div id="flashcontent"><strong>你需要更新你的flash了。</strong></div>
 		</td>
 	</tr>
 </table>
 
 <script type="text/javascript">
 	// <![CDATA[		
-	var so = new SWFObject("${ctx}/amcharts/ampie.swf", "ampie", "750", "550",
+	var so = new SWFObject("${ctx}/amcharts/ampie.swf", "ampie", "650", "450",
 			"8", "#FFFFFF");
 	so.addVariable("path", "${ctx}/amcharts/");
 	so.addVariable("settings_file",
