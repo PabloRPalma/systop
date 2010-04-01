@@ -19,8 +19,43 @@
 		  }]
 });
 
-  function showProcess(status){
-		
+  function showProcess(status,i,isSubmited){
+	  this.status = status;
+	  this.i = i;
+	  this.isSubmited = isSubmited;
+		if(status == '1'){
+		  document.getElementById("status1").background = "${ctx}/pages/fsCase/flow/images/color/flow_11.gif";	
+		}
+		if(i == '1'){
+		  document.getElementById("status1").background = "${ctx}/pages/fsCase/flow/images/color/flow_11.gif";
+		  document.getElementById("status2").background = "${ctx}/pages/fsCase/flow/images/color/flow_13.gif";	
+	    }
+		if(i == '2'){
+		  document.getElementById("status1").background = "${ctx}/pages/fsCase/flow/images/color/flow_11.gif";
+		  document.getElementById("status2").background = "${ctx}/pages/fsCase/flow/images/color/flow_13.gif";
+		  document.getElementById("status3").background = "${ctx}/pages/fsCase/flow/images/color/flow_15.gif";	
+		}
+		if(status == '3'){
+		  document.getElementById("status1").background = "${ctx}/pages/fsCase/flow/images/color/flow_11.gif";
+		  document.getElementById("status2").background = "${ctx}/pages/fsCase/flow/images/color/flow_13.gif";
+		  document.getElementById("status4").background = "${ctx}/pages/fsCase/flow/images/color/flow_05.gif";	
+		}
+		if(status == '4'){
+		  document.getElementById("status1").background = "${ctx}/pages/fsCase/flow/images/color/flow_11.gif";
+		  document.getElementById("status2").background = "${ctx}/pages/fsCase/flow/images/color/flow_13.gif";
+		  document.getElementById("status3").background = "${ctx}/pages/fsCase/flow/images/color/flow_15.gif";
+		  document.getElementById("status5").background = "${ctx}/pages/fsCase/flow/images/color/flow_17.gif";
+		  document.getElementById("status6").background = "${ctx}/pages/fsCase/flow/images/color/flow_19.gif";	
+		}
+		if(status == '6'){
+		  document.getElementById("status1").background = "${ctx}/pages/fsCase/flow/images/color/flow_11.gif";
+		  document.getElementById("status2").background = "${ctx}/pages/fsCase/flow/images/color/flow_13.gif";
+		  document.getElementById("status3").background = "${ctx}/pages/fsCase/flow/images/color/flow_15.gif";
+		  document.getElementById("status7").background = "${ctx}/pages/fsCase/flow/images/color/flow_24.gif";	
+		}
+		if(isSubmited == '1'){
+		  document.getElementById("status8").background = "${ctx}/pages/fsCase/flow/images/color/flow_01.gif";	
+		}
 		showProcessWindow.show();	  
 } 
 
@@ -30,7 +65,7 @@
 <div class="x-window-body">
 <table width="670" height="201" border="0" align="center" cellpadding="0" cellspacing="0" id="__01">
 	<tr>
-		<td align="center" background="${ctx}/pages/fsCase/flow/images/blank/flow_01.gif" width="91" height="47">
+		<td align="center" id="status8" background="${ctx}/pages/fsCase/flow/images/blank/flow_01.gif" width="91" height="47">
 			上报市级
 		</td>
 		<td align="center" rowspan="5" background="${ctx}/pages/fsCase/flow/images/blank/flow_02.gif" width="1" height="201">
@@ -38,7 +73,7 @@
 		<td align="center" rowspan="2" background="${ctx}/pages/fsCase/flow/images/blank/flow_03.gif" width="27" height="72">
 		</td>
 		<td colspan="2" rowspan="2" background="${ctx}/pages/fsCase/flow/images/blank/flow_04.gif" width="120" height="72"></td>
-		<td align="center" background="${ctx}/pages/fsCase/flow/images/blank/flow_05.gif" width="91" height="47">
+		<td align="center" id="status4" background="${ctx}/pages/fsCase/flow/images/blank/flow_05.gif" width="91" height="47">
 			任务退回
 		</td>
 		<td colspan="6" rowspan="2" background="${ctx}/pages/fsCase/flow/images/blank/flow_06.gif" width="340" height="72"></td>
@@ -48,35 +83,35 @@
 		<td background="${ctx}/pages/fsCase/flow/images/blank/flow_08.gif" width="91" height="25"></td>
 	</tr>
 	<tr>
-		<td align="center" background="${ctx}/pages/fsCase/flow/images/blank/flow_09.gif" width="91" height="47">
+		<td align="center" background="${ctx}/pages/fsCase/flow/images/color/flow_09.gif" width="91" height="47">
 			事件发生
 		</td>
 		<td background="${ctx}/pages/fsCase/flow/images/blank/flow_10.gif" width="27" height="47"></td>
-		<td align="center" background="${ctx}/pages/fsCase/flow/images/blank/flow_11.gif" width="92" height="47">
+		<td align="center" id="status1" background="${ctx}/pages/fsCase/flow/images/blank/flow_11.gif" width="92" height="47">
 			任务派遣
 		</td>
 		<td background="${ctx}/pages/fsCase/flow/images/blank/flow_12.gif" width="28" height="47">
 		</td>
-		<td align="center" background="${ctx}/pages/fsCase/flow/images/blank/flow_13.gif" width="91" height="47">
+		<td align="center" id="status2" background="${ctx}/pages/fsCase/flow/images/blank/flow_13.gif" width="91" height="47">
 			任务接收
 		</td>
 		<td background="${ctx}/pages/fsCase/flow/images/blank/flow_14.gif" width="30" height="47">
 		</td>
-		<td align="center" background="${ctx}/pages/fsCase/flow/images/blank/flow_15.gif" width="92" height="47">
+		<td align="center" id="status3" background="${ctx}/pages/fsCase/flow/images/blank/flow_15.gif" width="92" height="47">
 			任务处理
 		</td>
 		<td background="${ctx}/pages/fsCase/flow/images/blank/flow_16.gif" width="32" height="47"></td>
-		<td align="center" background="${ctx}/pages/fsCase/flow/images/blank/flow_17.gif" width="91" height="47">
+		<td align="center" id="status5" background="${ctx}/pages/fsCase/flow/images/blank/flow_17.gif" width="91" height="47">
 			核实通过
 		</td>
 		<td background="${ctx}/pages/fsCase/flow/images/blank/flow_18.gif" width="31" height="47"></td>
-		<td align="center" background="${ctx}/pages/fsCase/flow/images/blank/flow_19.gif" width="64" height="47">
+		<td align="center" id="status6" background="${ctx}/pages/fsCase/flow/images/blank/flow_19.gif" width="64" height="47">
 			案件<br>
 			结束
 		</td>
 	</tr>
 	<tr>
-		<td rowspan="2" background="${ctx}/pages/fsCase/flow/images/blank/flow_20.gif" width="91" height="82" alt="">
+		<td rowspan="2" background="${ctx}/pages/fsCase/flow/images/blank/flow_20.gif" width="91" height="82" >
 		
 		</td>
 		<td colspan="7" rowspan="2" background="${ctx}/pages/fsCase/flow/images/blank/flow_21.gif" width="392" height="82">
@@ -90,7 +125,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td align="center" background="${ctx}/pages/fsCase/flow/images/blank/flow_24.gif" width="91" height="49">
+		<td align="center" id="status7" background="${ctx}/pages/fsCase/flow/images/blank/flow_24.gif" width="91" height="49">
 			未核实通过
 		</td>
 	</tr>
