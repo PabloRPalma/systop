@@ -196,21 +196,6 @@ function isSubmited(caseId) {
 			</table>			
 	</div>
 		</c:if>
-		<div id="process" class="x-hide-display" style="z-index: 100;width: 100%">		
-			<table class="mytable" align="center" cellpadding="0" cellspacing="0">		
-				<tr>
-					<td class="left">新事件</td>
-					<td class="left">>>>>>></td>
-					<td class="left">已派遣</td>
-					<td class="left">>>>>>></td>
-					<td class="left">处理中</td>
-					<td class="left">>>>>>></td>
-					<td class="left">已处理</td>
-					<td class="left">>>>>>></td>
-					<td class="left">已核实结案</td>
-				</tr>					
-			</table>
-		</div>
 	</div>
 </div>
 <%@include file="chooseSendType.jsp"%>
@@ -260,11 +245,7 @@ function isSubmited(caseId) {
 				contentEl : 'corp',
 				title : '关联企业'
 			} 
-			</c:if>
-			, {
-				contentEl : 'process',
-				title : '事件流程'
-			} 
+			</c:if> 
 			]
 		});
 	});
