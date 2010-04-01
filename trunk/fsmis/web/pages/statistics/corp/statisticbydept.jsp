@@ -7,8 +7,20 @@
 <%@include file="/common/ec.jsp"%>
 <%@include file="/common/meta.jsp"%>
 <script type="text/javascript" src="${ctx}/amcharts/swfobject.js"></script>
+<script type="text/javascript">
+function strParser(){
+	var result = "${result}";
+	var itemList = result.split("\n");
+	var staticInfo = "";
+	for(var i = 0; i < itemList.length - 1; i++){
+		var item = itemList[i].split(";");
+		staticInfo += '<b>' + item[0] + '</b>共有企业<b>' + item[1] + '个</b>' + '；';
+		}
+	document.getElementById("staticInfo").innerHTML = staticInfo;
+}
+</script>
 </head>
-<body>
+<body  onload="strParser()">
 <div class="x-panel-header">企业按部门统计</div>
 <div class="x-toolbar">
 <table width="100%" border="0">
@@ -36,11 +48,16 @@
 			<div id="flashcontent"><strong>你需要更新你的flash了。</strong></div>
 		</td>
 	</tr>
+	<tr>
+		<td align="left">
+			<p style="line-height: 20px"><font size="2" face=宋体><br><span>&nbsp;&nbsp;&nbsp;&nbsp;企业按部门统计结果显示：</span><span id="staticInfo"></span><span>以上信息显示出了各区县部门企业的数量。</span></font></p>
+		</td>
+	</tr>
 </table>
 
 <script type="text/javascript">
 	// <![CDATA[		
-	var so = new SWFObject("${ctx}/amcharts/amcolumn.swf", "column", "500", "450",
+	var so = new SWFObject("${ctx}/amcharts/amcolumn.swf", "column", "500", "400",
 			"8", "#FFFFFF");
 	so.addVariable("path", "${ctx}/amcharts/");
 	so.addVariable("settings_file",
