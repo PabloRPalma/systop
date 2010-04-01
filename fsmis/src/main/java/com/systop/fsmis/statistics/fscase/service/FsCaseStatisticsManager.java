@@ -526,6 +526,21 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 	}
 
 	/**
+	 * 返回所有一级类别字符串 页面使用
+	 * 
+	 * @return
+	 */
+	public String getTypes() {
+		String types = "";
+		List<CaseType> caseTypes = caseTypeManager
+				.query("from CaseType where caseType.id is null");
+		for (CaseType ct : caseTypes) {
+			types += ct.getName() + ";";
+		}
+		return types;
+	}
+	
+	/**
 	 * 事件按时间统计
 	 * 
 	 * @param beginDate
