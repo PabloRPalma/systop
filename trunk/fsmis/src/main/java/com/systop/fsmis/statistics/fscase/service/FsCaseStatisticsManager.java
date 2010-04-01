@@ -399,9 +399,9 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 		// 组装数据
 		HashMap<String, ArrayList> yearData = this.repairData(result);
 		StringBuffer cvsData = new StringBuffer();
-		for (String year : yearData.keySet()) {
-			ArrayList<Object[]> al = yearData.get(year);
-			cvsData.append(year).append("月;").append(praseString(al, caseTypes))
+		for(String month : months){
+			ArrayList<Object[]> al = yearData.get(month);
+			cvsData.append(month).append("月;").append(praseString(al, caseTypes))
 					.append("\\n");
 		}
 		logger.info("年度月{}", cvsData.toString());
