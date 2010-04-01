@@ -132,7 +132,7 @@ function caseRemove(caseId) {
 		<a title="地图" href="#">图</a>
 		</ec:column>
 		<stc:role ifNotGranted="ROLE_DEPT_OPER">
-		<ec:column width="120" property="_0" title="操作" style="text-align:center" sortable="false">
+		<ec:column width="160" property="_0" title="操作" style="text-align:center" sortable="false">
 		<!-- 0未派遣1已派遣2已处理3回退4已核实完成5忽略6核实不过-->	
 			<c:if test="${item.caseSourceType eq 'generic'}">
 				<c:if test="${empty item.status or item.status eq '0' or item.status eq '3' or item.status eq '5' or item.status eq '6'}">		
@@ -203,6 +203,7 @@ function caseRemove(caseId) {
 			     | <a title="查看核实反馈" href="confirmBackMsg.do?model.id=${item.id}&operType=V&modelId=0&isMultipleCase=${isMultipleCase}">核</a>
 			    </c:if>	
             </c:if>
+            | <a title="流" href="#" onclick="showProcess('${item.status}')">流</a>
             <%--
             <c:if test="${item.status == '2' || item.status == '4'}">
                 <a href="#">
@@ -241,6 +242,54 @@ function caseRemove(caseId) {
 	</ec:row>
 </ec:table>
 </div>
+</div>
+</div>
+<script type="text/javascript">
+  var faCaseId = null;
+  var showProcessWindow = new Ext.Window({
+	  el:'showProcessWindow',
+	  width:'500',
+	  height:'300',
+	  layout:'fit',
+	  closeAction:'hide',
+	  buttonAlign:'center',
+	  modal:'true',
+	  buttons:[{
+		  text:'关闭',
+		  handler:function(){
+		  showProcessWindow.hide();
+		  }
+		  }]
+});
+
+  function showProcess(status){
+		
+		showProcessWindow.show();	  
+} 
+
+</script>
+<div id="showProcessWindow" class="x-hidden">
+<div class="x-window-header">流程回溯</div>
+<div class="x-window-body">
+<table align="center" width="467" height="300" border="0" cellspacing="0"cellpadding="0">
+	<tr>
+	<td colspan="9"></td>
+	</tr>
+	<tr><!-- 0未派遣1已派遣2已处理3回退4已核实完成5忽略6核实不过-->
+		<td class="left">新事件</td>
+		<td class="left">>>>>>></td>
+		<td class="left">已派遣</td>
+		<td class="left">>>>>>></td>
+		<td class="left">处理中</td>
+		<td class="left">>>>>>></td>
+		<td class="left">已处理</td>
+		<td class="left">>>>>>></td>
+		<td class="left">已核实结案</td>
+	</tr>					
+	<tr>
+		<td style="margin-top: -1;margin-left: -2;"></td>
+	</tr>
+</table>
 </div>
 </div>
 <jsp:include page="chooseSendType.jsp"></jsp:include>
