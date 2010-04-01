@@ -416,6 +416,11 @@ public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
 
     if (StringUtils.isNumeric(fsCaseIdStr)) {
       Integer fsCaseId = Integer.valueOf(fsCaseIdStr);
+      FsCase fscase = getManager().get(fsCaseId);
+      //判断是否是上报市级数据，如果是，取原数据信息ID
+      if(fscase.getSubmitedCase() != null){
+    	  fsCaseId = fscase.getSubmitedCase().getId(); 
+      }
       page = PageUtil.getPage(getPageNo(), getPageSize());
       // 请求发送短信
       if ("smsSend".equals(smsType)) {
@@ -508,6 +513,10 @@ public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
 	 if (StringUtils.isNotBlank(id)) {
 	      Integer fsCaseId = Integer.parseInt(id);
 	      fscase = getManager().get(fsCaseId);
+	      //判断是否是上报市级数据，如果是，取原数据信息
+	      if(fscase.getSubmitedCase() != null){
+	    	  fscase = getManager().get(fscase.getSubmitedCase().getId()); 
+	      }
 	 }
 
 	 List genericCaseList = new ArrayList();
@@ -572,9 +581,10 @@ public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
 	  BeanUtils.copyProperties(getModel(), fscase, new String[]{"id","taskses","jointTaskses","assessmentses","casesBySubmitedCase","compositiveCases","genericCases","smsSendses","smsReceiveses"});
 	  Dept dept =(Dept) getManager().getDao().findObject("from Dept d where d.parentDept is null");
 	  fscase.setCounty(dept);
+	  //将新纪录与原纪录关联
+	  fscase.setSubmitedCase(getModel());
 	  getManager().save(fscase);
-	  //将原纪录与新纪录关联,更改是否上报状态
-	  getModel().setSubmitedCase(fscase);
+	  //将原纪录更改上报状态
 	  getModel().setIsSubmited(CaseConstants.CITY);
 	  getManager().save(getModel());
 	  return SUCCESS;
