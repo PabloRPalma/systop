@@ -80,14 +80,14 @@ function strParser(){
 	</tr>
 	<tr>
 		<td align="left">
-			<br><span>&nbsp;&nbsp;&nbsp;&nbsp;事件区县统计结果显示：</span><span id="staticInfo"></span>
+			<p style="line-height: 20px"><font size="2" face=宋体><br><span>&nbsp;&nbsp;&nbsp;&nbsp;事件按区县统计结果显示：</span><span id="staticInfo"></span><span>以上信息显示出了各区县食品安全事件的发生情况。</span></font></p>
 		</td>
 	</tr>
 </table>
 
 <script type="text/javascript">
 	// <![CDATA[		
-	var so = new SWFObject("${ctx}/amcharts/amcolumn.swf", "amcolumn", "750", "550",
+	var so = new SWFObject("${ctx}/amcharts/amcolumn.swf", "amcolumn", "650", "400",
 			"10", "#FFFFFF");
 	so.addVariable("path", "${ctx}/amcharts/");
 	so.addVariable("settings_file",

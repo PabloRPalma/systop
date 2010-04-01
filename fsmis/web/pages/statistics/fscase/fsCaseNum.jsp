@@ -26,9 +26,9 @@ function strParser(){
 				staticInfo += '<b>环比</b>';
 				}
 		if(itemNums[0] <= itemNums[1]){
-			staticInfo += "增加了" + '<b>' + 100*(itemNums[1] - itemNums[0])/itemNums[0] + "%</b>。";
+			staticInfo += "增加了" + '<b>' + (100*(itemNums[1] - itemNums[0])/itemNums[0]).toFixed(2) + "%</b>。";
 			}else{
-				staticInfo += "减少了" + '<b>' + 100*(itemNums[0] - itemNums[1])/itemNums[0] + "%</b>。";
+				staticInfo += "减少了" + '<b>' + (100*(itemNums[0] - itemNums[1])/itemNums[0]).toFixed(2) + "%</b>。";
 				}
 	}
 	document.getElementById("staticInfo").innerHTML = staticInfo;
@@ -73,14 +73,14 @@ function strParser(){
 	</tr>
 	<tr>
 		<td align="left">
-			<br><span>&nbsp;&nbsp;&nbsp;&nbsp;事件数量统计结果显示：</span><span id="staticInfo"></span>
+			<p style="line-height: 20px"><font size="2" face=宋体><br><span>&nbsp;&nbsp;&nbsp;&nbsp;事件数量统计结果显示：</span><span id="staticInfo"></span><span>以上统计信息反映了食品安全事件发生的数量和同比或环比变化情况。</span></font></p>
 		</td>
 	</tr>
 </table>
 
 <script type="text/javascript">
 	// <![CDATA[		
-	var so = new SWFObject("${ctx}/amcharts/amcolumn.swf", "amcolumn", "750", "550",
+	var so = new SWFObject("${ctx}/amcharts/amcolumn.swf", "amcolumn", "600", "400",
 			"10", "#FFFFFF");
 	so.addVariable("path", "${ctx}/amcharts/");
 	so.addVariable("settings_file",
