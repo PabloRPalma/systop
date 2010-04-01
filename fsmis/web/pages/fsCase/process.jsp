@@ -5,8 +5,8 @@
   var faCaseId = null;
   var showProcessWindow = new Ext.Window({
 	  el:'showProcessWindow',
-	  width:'700',
-	  height:'300',
+	  width:'685',
+	  height:'221',
 	  layout:'fit',
 	  closeAction:'hide',
 	  buttonAlign:'center',
@@ -28,23 +28,76 @@
 <div id="showProcessWindow" class="x-hidden">
 <div class="x-window-header">流程回溯</div>
 <div class="x-window-body">
-<table align="center" width="467" height="260" border="0" cellspacing="0"cellpadding="0">
+<table width="670" height="201" border="0" align="center" cellpadding="0" cellspacing="0" id="__01">
 	<tr>
-	<td colspan="9"></td>
+		<td align="center" background="${ctx}/images/flow/flow_01.gif" width="91" height="47">
+			上报市级
+		</td>
+		<td align="center" rowspan="5" background="${ctx}/images/flow/flow_02.gif" width="1" height="201">
+		</td>
+		<td align="center" rowspan="2" background="${ctx}/images/flow/flow_03.gif" width="27" height="72">
+		</td>
+		<td colspan="2" rowspan="2">
+			<img src="${ctx}/images/flow/flow_04.gif" width="120" height="72" alt=""></td>
+		<td align="center" background="${ctx}/images/flow/flow_05.gif" width="91" height="47">
+			任务退回
+		</td>
+		<td colspan="6" rowspan="2">
+			<img src="${ctx}/images/flow/flow_06.gif" width="340" height="72" alt=""></td>
 	</tr>
-	<tr><!-- 0未派遣1已派遣2已处理3回退4已核实完成5忽略6核实不过-->
-		<td class="left">新事件</td>
-		<td class="left">>>>>>></td>
-		<td class="left">已派遣</td>
-		<td class="left">>>>>>></td>
-		<td class="left">处理中</td>
-		<td class="left">>>>>>></td>
-		<td class="left">已处理</td>
-		<td class="left">>>>>>></td>
-		<td class="left">已核实结案</td>
-	</tr>					
 	<tr>
-		<td style="margin-top: -1;margin-left: -2;"></td>
+		<td>
+			<img src="${ctx}/images/flow/flow_07.gif" width="91" height="25" alt=""></td>
+		<td>
+			<img src="${ctx}/images/flow/flow_08.gif" width="91" height="25" alt=""></td>
+	</tr>
+	<tr>
+		<td align="center" background="${ctx}/images/flow/flow_09.gif" width="91" height="47">
+			事件发生
+		</td>
+		<td>
+			<img src="${ctx}/images/flow/flow_10.gif" width="27" height="47" alt=""></td>
+		<td align="center" background="${ctx}/images/flow/flow_11.gif" width="92" height="47">
+			任务派遣
+		</td>
+		<td>
+			<img src="${ctx}/images/flow/flow_12.gif" width="28" height="47" alt="">
+		</td>
+		<td align="center" background="${ctx}/images/flow/flow_13.gif" width="91" height="47">
+			任务接收
+		</td>
+		<td>
+			<img src="${ctx}/images/flow/flow_14.gif" width="30" height="47" alt="">
+		</td>
+		<td align="center" background="${ctx}/images/flow/flow_15.gif" width="92" height="47">
+			任务处理
+		</td>
+		<td>
+			<img src="${ctx}/images/flow/flow_16.gif" width="32" height="47" alt=""></td>
+		<td align="center" background="${ctx}/images/flow/flow_17.gif" width="91" height="47">
+			核实通过
+		</td>
+		<td>
+			<img src="${ctx}/images/flow/flow_18.gif" width="31" height="47" alt=""></td>
+		<td align="center" background="${ctx}/images/flow/flow_19.gif" width="64" height="47">
+			案件<br>
+			结束
+		</td>
+	</tr>
+	<tr>
+		<td rowspan="2">
+			<img src="${ctx}/images/flow/flow_20.gif" width="91" height="82" alt=""></td>
+		<td colspan="7" rowspan="2">
+			<img src="${ctx}/images/flow/flow_21.gif" width="392" height="82" alt=""></td>
+		<td>
+			<img src="${ctx}/images/flow/flow_22.gif" width="91" height="33" alt=""></td>
+		<td colspan="2" rowspan="2">
+			<img src="${ctx}/images/flow/flow_23.gif" width="95" height="82" alt=""></td>
+	</tr>
+	<tr>
+		<td align="center" background="${ctx}/images/flow/flow_24.gif" width="91" height="49">
+			未核实通过
+		</td>
 	</tr>
 </table>
 </div>
