@@ -95,8 +95,9 @@ function removeJointTask(eID){
 		</ec:column>
 		<ec:column width="75" property="createDate" title="创建日期" style="text-align:center" cell="date" />
 		<ec:column width="85" property="presetTime" title="规定完成日期" style="text-align:center" cell="date" />
-		<ec:column width="30" property="_view" title="查看" style="text-align:center" sortable="false">
-		   <a href="view.do?model.id=${item.id}">看</a> 
+		<ec:column width="45" property="_view" title="查看" style="text-align:center" sortable="false">
+		   <a href="view.do?model.id=${item.id}">看</a>|
+		   <a href="#" onclick="showProcessWindow('${item.status}','${item.fsCase.status}')" title="联合整治流程">流</a>
 		</ec:column>	
 		<ec:column width="115" property="_0" title="操作" style="text-align:center" sortable="false">
 	       <c:choose>
@@ -129,5 +130,6 @@ function removeJointTask(eID){
 </ec:table></div>
 </div>
 </div>
+<jsp:include page="flow/process.jsp"></jsp:include>
 </body>
 </html>
