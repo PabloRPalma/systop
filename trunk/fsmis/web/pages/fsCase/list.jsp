@@ -248,7 +248,7 @@ function caseRemove(caseId) {
   var faCaseId = null;
   var showProcessWindow = new Ext.Window({
 	  el:'showProcessWindow',
-	  width:'500',
+	  width:'700',
 	  height:'300',
 	  layout:'fit',
 	  closeAction:'hide',
@@ -271,7 +271,7 @@ function caseRemove(caseId) {
 <div id="showProcessWindow" class="x-hidden">
 <div class="x-window-header">流程回溯</div>
 <div class="x-window-body">
-<table align="center" width="467" height="300" border="0" cellspacing="0"cellpadding="0">
+<table align="center" width="467" height="260" border="0" cellspacing="0"cellpadding="0">
 	<tr>
 	<td colspan="9"></td>
 	</tr>
