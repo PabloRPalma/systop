@@ -84,7 +84,7 @@ function caseRemove(caseId) {
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	<ec:row>
 		<ec:column width="30" property="_s" title="No." value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center"/>	
-		<ec:column width="184" property="title" title="事件标题" tipTitle="${item.title}" ellipsis="true" sortable="false"/>
+		<ec:column width="150" property="title" title="事件标题" tipTitle="${item.title}" ellipsis="true" sortable="false"/>
 		<ec:column width="50" property="code" title="事件编号" sortable="false"/>
 		<ec:column width="80" property="caseType.name" title="事件类别" sortable="false"/>
 		<ec:column width="115" property="caseTime" title="事发时间"
@@ -108,7 +108,7 @@ function caseRemove(caseId) {
 			<c:if test="${item.processType == 'task'}">普通派遣处理</c:if>
 			<c:if test="${item.processType == 'jointask'}">联合整治处理</c:if>
 		</ec:column>
-		<ec:column width="54" property="_6" title="查看" style="text-align:center" sortable="false">
+		<ec:column width="90" property="_6" title="查看" style="text-align:center" sortable="false">
 		<c:if test="${item.caseSourceType eq 'generic'}">
 		   <c:if test="${empty item.processType || item.processType eq 'task'}">	
 		        <a title="查看事件" href="${ctx}/fscase/view.do?fsCaseId=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">看 </a> |
@@ -129,10 +129,11 @@ function caseRemove(caseId) {
 		   </c:choose> 			
 		</c:if>
 		
-		<a title="地图" href="#">图</a>
+		<a title="地图" href="#">图</a> |
+		<a title="流" href="#" onclick="showProcess('${item.status}')">流</a>
 		</ec:column>
 		<stc:role ifNotGranted="ROLE_DEPT_OPER">
-		<ec:column width="160" property="_0" title="操作" style="text-align:center" sortable="false">
+		<ec:column width="135" property="_0" title="操作" style="text-align:center" sortable="false">
 		<!-- 0未派遣1已派遣2已处理3回退4已核实完成5忽略6核实不过-->	
 			<c:if test="${item.caseSourceType eq 'generic'}">
 				<c:if test="${empty item.status or item.status eq '0' or item.status eq '3' or item.status eq '5' or item.status eq '6'}">		
@@ -203,40 +204,7 @@ function caseRemove(caseId) {
 			     | <a title="查看核实反馈" href="confirmBackMsg.do?model.id=${item.id}&operType=V&modelId=0&isMultipleCase=${isMultipleCase}">核</a>
 			    </c:if>	
             </c:if>
-            | <a title="流" href="#" onclick="showProcess('${item.status}')">流</a>
-            <%--
-            <c:if test="${item.status == '2' || item.status == '4'}">
-                <a href="#">
-                <font color="#999999">编辑</font>
-             </a>
-            </c:if>
-			<c:if test="${item.status == '0' || item.status == '1'}">
-			   <a href="${ctx}/fscase/edit.do?model.id=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">
-                                               编辑
-             </a>	
-            </c:if>
 
-			<c:if test="${item.status != '0'}">
-			     <font color="#999999" title="已派遣事件不能删除">删 |</font>
-			</c:if>
-			
-			<c:if test="${item.status == '0'}">
-			
-			</c:if>							         
-			<c:if test="${item.status == '2'}" >
-			  <a href="addSendMsg.do?model.id=${item.id}">核实</a>
-			</c:if>
-			<c:if test="${item.status == '2' && item.msgCheckedFlag == '1'}">
-			    <a href="confirmBackMsg.do?model.id=${item.id}">
-					核实反馈
-				</a>	
-			</c:if>
-			<c:if test="${item.status == '4'}">
-			     <a href="confirmBackMsg.do?model.id=${item.id}&operType='v'">
-					查看核实反馈
-				</a>				
-			</c:if>	
-			 --%>	
 		</ec:column>
 		</stc:role>
 	</ec:row>
@@ -244,54 +212,7 @@ function caseRemove(caseId) {
 </div>
 </div>
 </div>
-<script type="text/javascript">
-  var faCaseId = null;
-  var showProcessWindow = new Ext.Window({
-	  el:'showProcessWindow',
-	  width:'700',
-	  height:'300',
-	  layout:'fit',
-	  closeAction:'hide',
-	  buttonAlign:'center',
-	  modal:'true',
-	  buttons:[{
-		  text:'关闭',
-		  handler:function(){
-		  showProcessWindow.hide();
-		  }
-		  }]
-});
-
-  function showProcess(status){
-		
-		showProcessWindow.show();	  
-} 
-
-</script>
-<div id="showProcessWindow" class="x-hidden">
-<div class="x-window-header">流程回溯</div>
-<div class="x-window-body">
-<table align="center" width="467" height="260" border="0" cellspacing="0"cellpadding="0">
-	<tr>
-	<td colspan="9"></td>
-	</tr>
-	<tr><!-- 0未派遣1已派遣2已处理3回退4已核实完成5忽略6核实不过-->
-		<td class="left">新事件</td>
-		<td class="left">>>>>>></td>
-		<td class="left">已派遣</td>
-		<td class="left">>>>>>></td>
-		<td class="left">处理中</td>
-		<td class="left">>>>>>></td>
-		<td class="left">已处理</td>
-		<td class="left">>>>>>></td>
-		<td class="left">已核实结案</td>
-	</tr>					
-	<tr>
-		<td style="margin-top: -1;margin-left: -2;"></td>
-	</tr>
-</table>
-</div>
-</div>
+<jsp:include page="process.jsp"></jsp:include>
 <jsp:include page="chooseSendType.jsp"></jsp:include>
 </body>
 </html>
