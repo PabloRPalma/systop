@@ -48,6 +48,8 @@ public class FsCaseStatisticsAction extends
 	/** 部门管理 */
 	@Autowired
 	private DeptManager deptManager;
+	/** 类别 */
+	private String types;
 
 	/**
 	 * 按事件区县统计
@@ -109,6 +111,7 @@ public class FsCaseStatisticsAction extends
 			// 准备数据，页面图表下显示各种类别
 			String graph = getManager().getGraph();
 			getRequest().setAttribute("graph", graph);
+			types = getManager().getTypes();
 		}
 		return "fsCaseByType";
 	}
@@ -253,5 +256,14 @@ public class FsCaseStatisticsAction extends
 
 	public void setDeptId(String deptId) {
 		this.deptId = deptId;
+	}
+	
+
+	public String getTypes() {
+		return types;
+	}
+
+	public void setTypes(String types) {
+		this.types = types;
 	}
 }
