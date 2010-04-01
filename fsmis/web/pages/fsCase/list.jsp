@@ -212,7 +212,7 @@ function caseRemove(caseId) {
 </div>
 </div>
 </div>
-<jsp:include page="process.jsp"></jsp:include>
+<jsp:include page="flow/process.jsp"></jsp:include>
 <jsp:include page="chooseSendType.jsp"></jsp:include>
 </body>
 </html>
