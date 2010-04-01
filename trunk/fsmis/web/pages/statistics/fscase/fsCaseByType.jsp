@@ -7,6 +7,34 @@
 <%@include file="/common/ec.jsp"%>
 <%@include file="/common/meta.jsp"%>
 <script type="text/javascript" src="${ctx}/amcharts/swfobject.js"></script>
+<script type="text/javascript">
+function strParser(){
+	var csvData = "${csvData}";
+	var types = "${types}";
+	var itemList = csvData.split("\n");
+	var typelist = types.split(";");
+	var staticInfo = "";
+	var isNull = true;
+	for(var i = 0; i < itemList.length - 1; i++){
+		var item = itemList[i].split(";");
+		for(var n = 1; n < item.length; n++){
+			if(item[n] != 0){
+				isNull = false;
+				}
+		}
+		if(!isNull){
+			staticInfo += '<b>' + item[0] + '</b>，';
+			for(var j = 0; j < item.length - 1; j++){
+				if(item[j+1] != 0){
+					staticInfo += '<b>' + typelist[j] + '</b>类别共发生食品安全事件<b>' + item[j+1] + '</b>起；'; 
+					}
+				}
+		}
+	}
+	
+	document.getElementById("staticInfo").innerHTML = staticInfo;
+}
+</script>
 <link href="${ctx}/styles/treeSelect.css" type='text/css'
 	rel='stylesheet'>
 <style type="text/css">
@@ -15,7 +43,7 @@
 }
 </style>
 </head>
-<body>
+<body onload="strParser()">
 <div class="x-panel-header">事件类别统计图</div>
 <div class="x-toolbar" style="height:25px;padding:3px;">
 <table width="99%">
@@ -45,11 +73,16 @@
 			<div id="flashcontent"><strong>你需要更新你的flash了。</strong></div>
 		</td>
 	</tr>
+	<tr>
+		<td align="left">
+			<p style="line-height: 20px"><font size="2" face=宋体><br><span>&nbsp;&nbsp;&nbsp;&nbsp;事件按类别统计结果显示：</span><span id="staticInfo"></span><span>以上统计信息反映了各个类别的食品安全事件发生的数量情况。</span></font></p>
+		</td>
+	</tr>
 </table>
 
 <script type="text/javascript">
 		// <![CDATA[		
-		var so = new SWFObject("/fsmis/amcharts/amcolumn.swf", "amcolumn", "850", "560", "8", "#FFFFFF");
+		var so = new SWFObject("/fsmis/amcharts/amcolumn.swf", "amcolumn", "830", "400", "8", "#FFFFFF");
 		so.addVariable("path", "${ctx}/amcharts/");
 		so.addVariable("settings_file",
 				encodeURIComponent("/fsmis/pages/statistics/setting/fsCaseByType.xml"));
