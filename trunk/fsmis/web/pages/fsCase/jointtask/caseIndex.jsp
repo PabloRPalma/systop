@@ -160,6 +160,6 @@ function remove(id){
 </div>
 </div>
 </div>
-<jsp:include page="flow/processFsCase.jsp"></jsp:include>
+<jsp:include page="flow/process.jsp"></jsp:include>
 </body>
 </html>
