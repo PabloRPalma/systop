@@ -130,6 +130,64 @@
 	DispatchWindow.show();
   }
 </script>
+<!-- 流程回溯 -->
+<script type="text/javascript">
+  var FlowWindow = new Ext.Window({
+      el: 'flowWindow',
+      width: 660,
+      height: 300,
+      layout : 'fit',
+      closeAction:'hide',
+      buttonAlign:'center',
+      modal:'true',
+      buttons:[
+       {text:'关闭',
+           handler:function(){
+    	   	FlowWindow.hide();
+           }
+       }]
+  });
+
+  function viewCaseInfo(cca) {
+	  window.location = '${ctx}/urgentcase/view.do?model.id='+ ccfId +'&actId='+cca;
+  }
+  var ccfId = null;
+  function showFlowWindow(csId,csName,status) {
+	this.ccfId = csId;
+	document.getElementById('caseNameFlow').innerHTML = csName;
+	if (status == '' || status == 0) {
+		document.getElementById('csCheck').style.backgroundImage="url(${ctx}/pages/urgentcase/images/color/index_03.gif)";
+		document.getElementById('csCheck').innerHTML = "<a href='#' onclick='viewCaseInfo(0)'>"+"审核"+"</a>";
+	}
+	if (status != '' && status != 0) {
+		document.getElementById('csCheck').style.backgroundImage="url(${ctx}/pages/urgentcase/images/blank/index_03.gif)";
+		document.getElementById('csCheck').innerHTML = "审核";
+	}
+	if (status == 1) {
+		document.getElementById('csPai').style.backgroundImage="url(${ctx}/pages/urgentcase/images/color/index_11.gif)";
+		document.getElementById('csPai').innerHTML = "<a href='#' onclick='viewCaseInfo(0)'>"+"派遣"+"</a>";
+	}
+	if (status != 1) {
+		document.getElementById('csPai').style.backgroundImage="url(${ctx}/pages/urgentcase/images/blank/index_11.gif)";
+		document.getElementById('csPai').innerHTML = "派遣";
+	}
+	if (status == 2) {
+		document.getElementById('csDail').style.backgroundImage="url(${ctx}/pages/urgentcase/images/color/index_13.gif)";
+		document.getElementById('csDail').innerHTML = "<a href='#' onclick='viewCaseInfo(3)'>"+"处理"+"</a>";
+	}
+	if (status != 2) {
+		document.getElementById('csDail').style.backgroundImage="url(${ctx}/pages/urgentcase/images/blank/index_13.gif)";
+		document.getElementById('csDail').innerHTML = "处理";
+	}
+	if (status == 3) {
+		document.getElementById('csEnd').style.backgroundImage="url(${ctx}/pages/urgentcase/images/color/index_15.gif)";
+	}
+	if (status != 3) {
+		document.getElementById('csEnd').style.backgroundImage="url(${ctx}/pages/urgentcase/images/blank/index_15.gif)";
+	}
+	FlowWindow.show();
+  }
+</script>
 </head>
 <body>
 <!-- 审核 -->
@@ -185,6 +243,60 @@
     	</table>
     </td>
   </tr>
+</table>
+</div>
+</div>
+<!-- 流程回溯 -->
+<div id="flowWindow" class="x-hidden">
+<div class="x-window-header">流程回溯</div>
+<div class="x-window-body">
+<table width="567" border="0" cellspacing="0" cellpadding="0">
+   <tr>
+    <td align="left" style="padding: 15px 0px 15px 0px;">
+		<h4>&nbsp;&nbsp;事件名称：<s:label id="caseNameFlow"></s:label></h4>
+	</td>
+  </tr>
+  <tr>
+    <td style="margin-top: -1;margin-left: -2;"></td>
+  </tr>
+</table>
+<table id="__01" width="653" height="95" border="0" cellpadding="0" cellspacing="0">
+	<tr><td height="25" colspan="10" bgcolor="#FFFFFF"></td></tr>
+	<tr>
+		<td id="csStart" align="center" background="${ctx}/pages/urgentcase/images/blank/index_01.gif" width="93" height="48">
+			事件开始</td>
+		<td align="center" background="${ctx}/pages/urgentcase/images/blank/index_02.gif" width="33" height="48">
+			</td>
+		<td id="csCheck" align="center" background="${ctx}/pages/urgentcase/images/blank/index_03.gif" width="91" height="48">
+			待审核</td>
+		<td align="center" background="${ctx}/pages/urgentcase/images/blank/index_04.gif" width="88" height="48">
+			</td>
+		<td align="center" background="${ctx}/pages/urgentcase/images/blank/index_05.gif" width="348" height="48" colspan="6">
+			</td>
+	</tr>
+	<tr>
+		<td align="center" background="${ctx}/pages/urgentcase/images/blank/index_06.gif" width="93" height="47">
+			</td>
+		<td align="center" background="${ctx}/pages/urgentcase/images/blank/index_07.gif" width="33" height="47">
+			</td>
+		<td align="center" background="${ctx}/pages/urgentcase/images/blank/index_08.gif" width="91" height="47">
+			<font color="red"><br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;未通过</font></td>
+		<td align="center" background="${ctx}/pages/urgentcase/images/blank/index_09.gif" width="88" height="47">
+			审核</td>
+		<td align="center" background="${ctx}/pages/urgentcase/images/blank/index_10.gif" width="46" height="47">
+			<font color="green"><br><br>通过</font></td>
+		<td id="csPai" align="center" background="${ctx}/pages/urgentcase/images/blank/index_11.gif" width="92" height="47">
+			派遣</td>
+		<td align="center" background="${ctx}/pages/urgentcase/images/blank/index_12.gif" width="35" height="47">
+			</td>
+		<td id="csDail" align="center" background="${ctx}/pages/urgentcase/images/blank/index_13.gif" width="92" height="47">
+			处理</td>
+		<td align="center" background="${ctx}/pages/urgentcase/images/blank/index_14.gif" width="26" height="47">
+			</td>
+		<td id="csEnd" align="center" background="${ctx}/pages/urgentcase/images/blank/index_15.gif" width="57" height="47">
+			&nbsp;&nbsp;完成</td>
+	</tr>
+	<tr><td height="25" colspan="10" bgcolor="#FFFFFF"></td></tr>
 </table>
 </div>
 </div>
