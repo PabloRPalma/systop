@@ -37,6 +37,12 @@ function showProcessWindow(status,csStatus,isReceive,createDate,dispatchDate,che
 	this.status = status;
 	this.csStatus = csStatus;
 	this.isReceive = isReceive;
+	if(csStatus=='0'){//未派遣
+		document.getElementById("unPass").style.display = "none";
+		document.getElementById("pass").style.display = "none";
+		document.getElementById("pass2").style.display = "block";
+		document.getElementById("unPass2").style.display = "block";
+	}
 	if(csStatus=='1'){//任务派遣
 		document.getElementById("taskDispatch").background = "${ctx}/pages/fsCase/jointtask/flow/images/color/index_03.gif";
 		document.getElementById("unPass").style.display = "none";
@@ -108,12 +114,12 @@ function showProcessWindow(status,csStatus,isReceive,createDate,dispatchDate,che
 <div id="processWindow" class="x-hidden">
 <div class="x-window-header">联合整治流程图</div>
 <div class="x-window-body">
-	<table width="780" height="230" border="0" align="center" cellpadding="0" cellspacing="0" id="__01" style="margin:10px,10px,10px,10px">
+	<table width="780" height="230" border="0" align="center" cellpadding="0" cellspacing="0" id="__01">
 	<tr height="30">
 	<td colspan="12" width="780" background="${ctx}/pages/fsCase/jointtask/flow/images/black/index_05.gif"></td>
 	</tr>
 	<tr height="48">
-		<td width="93" background="${ctx}/pages/fsCase/jointtask/flow/images/color/index_01.gif" align="center">
+		<td width="93"  background="${ctx}/pages/fsCase/jointtask/flow/images/color/index_01.gif" align="center">
 			事件发生</br>
 			<FONT color="blue"><s:label id="createDate"></s:label></FONT></td>
 		<td width="33" background="${ctx}/pages/fsCase/jointtask/flow/images/black/index_02.gif"></td>
@@ -129,7 +135,7 @@ function showProcessWindow(status,csStatus,isReceive,createDate,dispatchDate,che
 		<td id="unPass2" width="91" height="47" background="${ctx}/pages/fsCase/jointtask/flow/images/black/index_06.gif" style=" display: none"></td>
 		<td id="check" width="88" height="47" background="${ctx}/pages/fsCase/jointtask/flow/images/black/index_09.gif" align="center">审核</br>
 			<FONT color="blue"><s:label id="checkDate"></s:label></FONT></td>
-		<td id="pass" width="46" height="47" background="${ctx}/pages/fsCase/jointtask/flow/images/color/index_10.gif" valign="top" align="center"><font color="blue">通过</font></td>
+		<td id="pass" width="46" height="47" background="${ctx}/pages/fsCase/jointtask/flow/images/color/index_10.gif" valign="top" align="center"><font color="red">通过</font></td>
 		<td id="pass2" width="46" height="47" background="${ctx}/pages/fsCase/jointtask/flow/images/black/index_10.gif" valign="top" align="center" style=" display: none"></td>
 		<td id="view" width="92" height="47" background="${ctx}/pages/fsCase/jointtask/flow/images/black/index_16.gif" align="center">任务查看</br>
 			<FONT color="blue"><s:label id="viewDate"></s:label></FONT></td>
@@ -146,6 +152,5 @@ function showProcessWindow(status,csStatus,isReceive,createDate,dispatchDate,che
 	<td colspan="12" width="780" background="${ctx}/pages/fsCase/jointtask/flow/images/black/index_05.gif">fffff</td>
 	</tr>
 </table>
-
 </div>
 </div>
