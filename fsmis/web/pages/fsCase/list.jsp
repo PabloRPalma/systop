@@ -94,7 +94,7 @@ function caseRemove(caseId) {
 		</c:if>
 		<c:if test="${item.isSubmited eq '1'}">
 		 <ec:column width="50" property="status" title="事件状态"  mappingItem="stateColorMap" style="text-align:center" sortable="false">
-		    <font color='yellow'>已上报</font>
+		    <font color='#993300'>已上报</font>
 		 </ec:column>
 		</c:if>	
 		<c:if test="${param['isMultipleCase'] eq 0}">
@@ -151,10 +151,13 @@ function caseRemove(caseId) {
 				<c:if test="${empty item.status or item.status eq '0' or item.status eq '3' or item.status eq '5' or item.status eq '6'}">		
 				    <a title="修改事件" href="${ctx}/fscase/edit.do?model.id=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">改 </a> |
 				    <a title="派遣任务" href="#" onclick="showChooseSendTypeWindow(${item.id},'${item.title}')">派</a> |
-				    <c:if test="${item.isSubmited eq '0'}">
+				    <c:if test="${(item.isSubmited eq '0') && (item.submitedCase eq null) }">
 				      <a title="删除任务"href="#" onclick="remove(${item.id})" >删</a> 
 				    </c:if>
-				    <c:if test="${item.isSubmited eq '1'}">
+				    <c:if test="${item.isSubmited eq '1' }">
+				       <font color="silver" >删</font> 
+				    </c:if>
+				    <c:if test="${item.submitedCase != null }">
 				       <font color="silver" >删</font> 
 				    </c:if>
 				    <c:if test="${param['isMultipleCase'] eq 0}">
