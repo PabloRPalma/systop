@@ -83,7 +83,7 @@
 				<font color="silver">无记录</font>
 			</c:if>
 		</ec:column>
-		<ec:column width="210" property="_0" title="操作" style="text-align:center" sortable="false">
+		<ec:column width="215" property="_0" title="操作" style="text-align:center" sortable="false">
 		  <c:if test="${item.status == '' || item.status eq '0'}">
 			<a href="${ctx}/urgentcase/edit.do?model.id=${item.id}" title="修改事件">改</a> | 
 			<a href="#" onclick="showCheckWindow('${item.id}')" title="审核事件">审</a> | 
@@ -106,7 +106,8 @@
 			<a href="${ctx}/urgentcase/view.do?model.id=${item.id}&actId=3" title="查看事件">看</a> | 
 		  </c:if>
 		  	<a href="${ctx}/urgentcase/printAppForm.do?model.id=${item.id}" title="打印应急预案申请单" target="_blank">印</a> | 
-			<a href="#" onclick="remove(${item.id})" title="删除事件">删</a>
+			<a href="#" onclick="remove(${item.id})" title="删除事件">删</a> | 
+			<a href="#" onclick="showFlowWindow('${item.id}','${item.title}','${item.status}')" title="流程回溯">流</a>
 		</ec:column>
 	</ec:row>
 </ec:table>
