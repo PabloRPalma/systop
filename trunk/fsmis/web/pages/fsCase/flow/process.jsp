@@ -18,11 +18,12 @@
 		  }]
 });
 
-  function showProcess(status,i,isSubmited,caseTime,closedTime,dispatchTime,closedTaskTime){
+  function showProcess(status,i,isSubmited,caseTime,closedTime,dispatchTime,closedTaskTime,isMultiple){
 	  this.status = status;
 	  this.i = i;
 	  this.isSubmited = isSubmited;
-	  document.getElementById("fsCase").innerHTML = '事件发生<br><font size="1px">' + caseTime.substring(0, 16) + '</font>'; 
+	  document.getElementById("fsCase").innerHTML = '事件发生<br><font size="1px">' + caseTime.substring(0, 16) + '</font>';
+	  if(isMultiple =='0'){ //单体事件
 		if(status == '1'){
 		  document.getElementById("status1").background = "${ctx}/pages/fsCase/flow/images/color/flow_11.gif";	
 		  document.getElementById("status1").innerHTML = '任务派遣<br><font size="1px">' + dispatchTime.substring(0, 16) + '</font>';
@@ -69,7 +70,62 @@
 		if(isSubmited == '1'){
 		  document.getElementById("status8").background = "${ctx}/pages/fsCase/flow/images/color/flow_01.gif";	
 		}
-		showProcessWindow.show();	  
+	  }else{//多体事件
+		  if(status == '0'){
+			  document.getElementById("status5").background = "${ctx}/pages/fsCase/flow/images/blank/flow_19.gif";
+			  document.getElementById("status5").innerHTML = '案件<br>结束';
+			  document.getElementById("arrow").background = "${ctx}/pages/fsCase/flow/images/blank/flow_22.gif";
+			  document.getElementById("status6").background = "${ctx}/pages/fsCase/flow/images/blank/flow_22.gif";
+			  document.getElementById("status6").innerHTML = "";
+			}
+		  if(status == '1'){
+			  document.getElementById("status1").background = "${ctx}/pages/fsCase/flow/images/color/flow_11.gif";	
+			  document.getElementById("status1").innerHTML = '任务派遣<br><font size="1px">' + dispatchTime.substring(0, 16) + '</font>';
+			  document.getElementById("status5").background = "${ctx}/pages/fsCase/flow/images/blank/flow_19.gif";
+			  document.getElementById("status5").innerHTML = '案件<br>结束';
+			  document.getElementById("arrow").background = "${ctx}/pages/fsCase/flow/images/blank/flow_22.gif";
+			  document.getElementById("status6").background = "${ctx}/pages/fsCase/flow/images/blank/flow_22.gif";
+			  document.getElementById("status6").innerHTML = "";
+			}
+			if(i == '1'){
+			  document.getElementById("status1").background = "${ctx}/pages/fsCase/flow/images/color/flow_11.gif";
+			  document.getElementById("status1").innerHTML = '任务派遣<br><font size="1px">' + dispatchTime.substring(0, 16) + '</font>';
+			  document.getElementById("status2").background = "${ctx}/pages/fsCase/flow/images/color/flow_13.gif";	
+			  document.getElementById("status5").background = "${ctx}/pages/fsCase/flow/images/blank/flow_19.gif";
+			  document.getElementById("status5").innerHTML = '案件<br>结束';
+			  document.getElementById("arrow").background = "${ctx}/pages/fsCase/flow/images/blank/flow_22.gif";
+			  document.getElementById("status6").background = "${ctx}/pages/fsCase/flow/images/blank/flow_22.gif";
+			  document.getElementById("status6").innerHTML = "";
+			}
+			if(status == '2'){
+			  document.getElementById("status1").background = "${ctx}/pages/fsCase/flow/images/color/flow_11.gif";
+			  document.getElementById("status1").innerHTML = '任务派遣<br><font size="1px">' + dispatchTime.substring(0, 16) + '</font>';
+			  document.getElementById("status2").background = "${ctx}/pages/fsCase/flow/images/color/flow_13.gif";
+			  document.getElementById("status3").background = "${ctx}/pages/fsCase/flow/images/color/flow_15.gif";
+			  document.getElementById("status3").innerHTML = '任务处理<br><font size="1px">' + closedTaskTime.substring(0, 16) + '</font>';	
+			  document.getElementById("status5").background = "${ctx}/pages/fsCase/flow/images/color/flow_19.gif";
+			  document.getElementById("status5").innerHTML = '案件<br>结束';
+			  document.getElementById("arrow").background = "${ctx}/pages/fsCase/flow/images/color/flow_22.gif";
+			  document.getElementById("status6").background = "${ctx}/pages/fsCase/flow/images/color/flow_22.gif";
+			  document.getElementById("status6").innerHTML = "";
+			}
+			if(status == '3'){
+			  document.getElementById("status1").background = "${ctx}/pages/fsCase/flow/images/color/flow_11.gif";
+			  document.getElementById("status1").innerHTML = '任务派遣<br><font size="1px">' + dispatchTime.substring(0, 16) + '</font>';
+			  document.getElementById("status2").background = "${ctx}/pages/fsCase/flow/images/color/flow_13.gif";
+			  document.getElementById("status4").background = "${ctx}/pages/fsCase/flow/images/color/flow_05.gif";	
+			  document.getElementById("status4").innerHTML = '任务退回<br><font size="1px">' + closedTime.substring(0, 16) + '</font>'; 
+			  document.getElementById("status5").background = "${ctx}/pages/fsCase/flow/images/blank/flow_19.gif";
+			  document.getElementById("status5").innerHTML = '案件<br>结束';
+			  document.getElementById("arrow").background = "${ctx}/pages/fsCase/flow/images/blank/flow_22.gif";
+			  document.getElementById("status6").background = "${ctx}/pages/fsCase/flow/images/blank/flow_22.gif";
+			  document.getElementById("status6").innerHTML = "";
+			}
+			if(isSubmited == '1'){
+			  document.getElementById("status8").background = "${ctx}/pages/fsCase/flow/images/color/flow_01.gif";	
+			}
+	  }
+	showProcessWindow.show();	  
 } 
 
 </script>
@@ -114,10 +170,10 @@
 			任务处理
 		</td>
 		<td background="${ctx}/pages/fsCase/flow/images/blank/flow_16.gif" width="32" height="47"></td>
-		<td align="center" id="status5" background="${ctx}/pages/fsCase/flow/images/blank/flow_17.gif" width="91" height="47">
+		<td align="center" id="status5" bgcolor="#FFFFFF" style="background-repeat:no-repeat" background="${ctx}/pages/fsCase/flow/images/blank/flow_17.gif" width="91" height="47">
 			核实
 		</td>
-		<td background="${ctx}/pages/fsCase/flow/images/blank/flow_18.gif" width="42" height="47"></td>
+		<td id="arrow" background="${ctx}/pages/fsCase/flow/images/blank/flow_18.gif" width="42" height="47"></td>
 		<td align="right" id="status6" background="${ctx}/pages/fsCase/flow/images/blank/flow_19.gif" width="53" height="47">
 			案件<br>
 			结束
