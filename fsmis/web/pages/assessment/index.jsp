@@ -97,8 +97,9 @@ window.onload = function(){
         </c:when>
       </c:choose>
     </ec:column>    
-	<ec:column width="30" property="_view" title="查看" style="text-align:center" sortable="false">
-  	   <a href="view.do?model.id=${item.id}">看</a> 
+	<ec:column width="47" property="_view" title="查看" style="text-align:center" sortable="false">
+  	   <a href="view.do?model.id=${item.id}">看</a> |
+	   <a title="流" href="#" onclick="showProcess('${item.state}', '${item.fsCase.caseTime}', '${item.askDate}', '${item.resultDate}')">流</a> 
 	</ec:column>	    
     <ec:column width="120" property="_0" title="操作" style="text-align:center" sortable="false">
        <c:if test="${item.state ne '4'}">
@@ -140,5 +141,6 @@ window.onload = function(){
 </div>
 </div>
 </div>
+<jsp:include page="/pages/assessment/flow/process.jsp"></jsp:include>
 </body>
 </html>
