@@ -131,15 +131,18 @@ function caseRemove(caseId) {
 		
 		<a title="地图" href="#">图</a> |
 		<c:set var="i" value="0"></c:set>
+		<c:set var="dispatchTime" value="0"></c:set>
+		<c:set var="closedTime" value="0"></c:set>
 			<c:forEach items="${item.taskses}" var="st">
 			    <c:if test="${st.status == '1'}">
 				  <c:set var="i" value="1"></c:set>
 				</c:if>
-				<c:if test="${st.status == '2'}">
-				  <c:set var="i" value="2"></c:set>
+				<c:if test="${st.status == '2' || st.status == '3'}">
+				  <c:set var="closedTime" value="${st.closedTime}"></c:set>
 				</c:if>
+				<c:set var="dispatchTime" value="${st.dispatchTime}"></c:set>
 			</c:forEach>	
-		<a title="流" href="#" onclick="showProcess('${item.status}','${i}','${item.isSubmited }')">流</a>
+		<a title="流" href="#" onclick="showProcess('${item.status}','${i}','${item.isSubmited}','${item.caseTime}','${item.closedTime}','${dispatchTime}','${closedTime}')">流</a>
 		</ec:column>
 		<stc:role ifNotGranted="ROLE_DEPT_OPER">
 		<ec:column width="135" property="_0" title="操作" style="text-align:center" sortable="false">
