@@ -79,7 +79,55 @@ function remove(id){
                 <a title="查看事件" href="${ctx}/fscase/view.do?fsCaseId=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">看 </a> |	       
 		     </c:otherwise>
 		   </c:choose> 
-			<a title="地图" href="#">图</a>
+			<a title="地图" href="#">图</a>|
+		   <c:set var="taskStatus" value="0"></c:set>
+		   <c:set var="dispatchDate" value="0"></c:set>
+		   <c:set var="viewDate" value="0"></c:set>
+		   <c:set var="receiveDate" value="0"></c:set>
+		    <c:set var="dealDate" value="0"></c:set>
+		    <c:set var="checkDate" value="0"></c:set>
+			<c:forEach items="${item.jointTaskses}" var="jt">
+			<c:if test="${jt.status == '0'}">
+				  <c:set var="dispatchDate" value="${jt.createDate}"></c:set>
+				</c:if>
+			<c:if test="${jt.status == '1'}">
+				  <c:set var="taskStatus" value="1"></c:set>
+				  <c:set var="dispatchDate" value="${jt.createDate}"></c:set>
+				</c:if>
+				<c:if test="${jt.status == '2'}">
+				  <c:set var="taskStatus" value="2"></c:set>
+				  <c:set var="dispatchDate" value="${jt.createDate}"></c:set>
+				</c:if>
+				<c:if test="${jt.status == '4'}">
+				  <c:set var="dispatchDate" value="${jt.createDate}"></c:set>
+				</c:if>
+				<c:set var="isReceive" value="0"></c:set>
+			<c:forEach items="${jt.taskDetailses}" var="td">
+			<c:if test="${td.isLeader eq '1'}">
+			<c:if test="${td.status == '1'}">
+				  <c:set var="isReceive" value="1"></c:set>
+				   <c:set var="viewDate" value="${td.receiveTime}"></c:set>
+				</c:if>
+				<c:if test="${td.status == '2'}">
+				  <c:set var="isReceive" value="2"></c:set>
+				   <c:set var="viewDate" value="${td.receiveTime}"></c:set>
+				   <c:set var="receiveDate" value="${td.receiveTime}"></c:set>
+				</c:if>
+				<c:if test="${td.status == '4'}">
+				  <c:set var="isReceive" value="4"></c:set>
+				   <c:set var="viewDate" value="${td.receiveTime}"></c:set>
+				   <c:set var="dealDate" value="${td.completionTime}"></c:set>
+				<c:set var="receiveDate" value="${td.receiveTime}"></c:set>
+				</c:if>
+				</c:if>	
+			</c:forEach>
+			<c:forEach items="${jt.checkResults}" var="cr">
+					<c:if test="${cr.isAgree == '1'}">
+						<c:set var="checkDate" value="${cr.checkTime}"></c:set>
+					</c:if>
+				</c:forEach>
+			</c:forEach>	
+		   <a href="#" onclick="showProcessWindow('${taskStatus}','${item.status}','${isReceive}','${item.caseTime}','${dispatchDate}','${checkDate}','${viewDate}','${receiveDate}','${dealDate}')" title="联合整治流程">流</a>
 		</ec:column>	
 		<ec:column width="90" property="_7" title="操作" style="text-align:center" sortable="false">
 			<c:choose>
@@ -112,5 +160,6 @@ function remove(id){
 </div>
 </div>
 </div>
+<jsp:include page="flow/processFsCase.jsp"></jsp:include>
 </body>
 </html>
