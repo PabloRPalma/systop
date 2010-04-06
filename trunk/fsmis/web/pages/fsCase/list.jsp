@@ -142,7 +142,7 @@ function caseRemove(caseId) {
 				</c:if>
 				<c:set var="dispatchTime" value="${st.dispatchTime}"></c:set>
 			</c:forEach>	
-		<a title="流" href="#" onclick="showProcess('${item.status}','${i}','${item.isSubmited}','${item.caseTime}','${item.closedTime}','${dispatchTime}','${closedTime}','${item.isMultiple}')">流</a>
+		<a title="流" href="#" onclick="showProcess('${item.status}','${i}','${item.isSubmited}','${item.caseTime}','${item.closedTime}','${dispatchTime}','${closedTime}','${item.isMultiple}','${item.title}')">流</a>
 		</ec:column>
 		<stc:role ifNotGranted="ROLE_DEPT_OPER">
 		<ec:column width="135" property="_0" title="操作" style="text-align:center" sortable="false">
