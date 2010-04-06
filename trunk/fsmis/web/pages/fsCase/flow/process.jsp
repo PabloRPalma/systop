@@ -5,7 +5,8 @@
   var faCaseId = null;
   var showProcessWindow = new Ext.Window({
 	  el:'showProcessWindow',
-	  width:'710',
+	  width:688,
+	  height: 370,
 	  layout:'fit',
 	  closeAction:'hide',
 	  buttonAlign:'center',
@@ -18,10 +19,11 @@
 		  }]
 });
 
-  function showProcess(status,i,isSubmited,caseTime,closedTime,dispatchTime,closedTaskTime,isMultiple){
+  function showProcess(status,i,isSubmited,caseTime,closedTime,dispatchTime,closedTaskTime,isMultiple,csName){
 	  this.status = status;
 	  this.i = i;
 	  this.isSubmited = isSubmited;
+	  document.getElementById('caseNameFlow').innerHTML = csName;
 	  document.getElementById("fsCase").innerHTML = '事件发生<br><font size="1px">' + caseTime.substring(0, 16) + '</font>';
 	  if(isMultiple =='0'){ //单体事件
 		if(status == '1'){
@@ -132,7 +134,18 @@
 <div id="showProcessWindow" class="x-hidden">
 <div class="x-window-header">流程回溯</div>
 <div class="x-window-body">
-<table width="670" height="201" border="0" align="center" cellpadding="0" cellspacing="0" id="__01" style="margin:10px,10px,10px,10px">
+<table width="567" border="0" cellspacing="0" cellpadding="0">
+   <tr>
+    <td align="left" style="padding: 15px 0px 15px 0px;">
+		<h4>&nbsp;&nbsp;事件名称：<s:label id="caseNameFlow"></s:label></h4>
+	</td>
+  </tr>
+  <tr>
+    <td style="margin-top: -1;margin-left: -2;"></td>
+  </tr>
+</table>
+<table width="670" height="201" border="0" align="center" cellpadding="0" cellspacing="0" id="__01">
+	<tr><td height="10" colspan="12" bgcolor="#FFFFFF"></td></tr>
 	<tr>
 		<td align="center" id="status8" background="${ctx}/pages/fsCase/flow/images/blank/flow_01.gif" width="91" height="47">
 			上报市级
@@ -191,6 +204,7 @@
 		<td colspan="8" id="status7" background="${ctx}/pages/fsCase/flow/images/blank/flow_24.gif" width="483" height="81" >
 		</td>
 	</tr>
+	<tr><td height="10" colspan="12" bgcolor="#FFFFFF"></td></tr>
 </table>
 </div>
 </div>
