@@ -100,5 +100,9 @@
     	</attribute>
     	
     </tag>
-    
+    <tag>
+    	<name>googleMapId</name>
+    	<tag-class>com.systop.fsmis.googlemap.taglibs.GoogleMapTag</tag-class>
+    	<body-content>JSP</body-content>
+    </tag>
 </taglib>
