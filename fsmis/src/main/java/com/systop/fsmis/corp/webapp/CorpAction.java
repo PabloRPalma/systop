@@ -207,6 +207,14 @@ public class CorpAction extends ExtJsCrudAction<Corp, CorpManager> {
 	}
 	
 	/**
+	 * 标注企业地图信息
+	 */
+	public String mark() {
+		edit();
+		return "markmap";
+	}
+	
+	/**
 	 * 将日期转换成字符串
 	 * @param date
 	 */

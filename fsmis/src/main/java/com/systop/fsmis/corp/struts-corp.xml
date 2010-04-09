@@ -14,7 +14,8 @@
 			</result>
 			<result type="json" name="json">
 		   		<param name="root">page</param>
-			</result>		
+			</result>	
+			<result name="markmap">/pages/corp/mark.jsp</result> 	
 		</action>
 	</package>
 </struts>
