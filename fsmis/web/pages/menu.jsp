@@ -271,6 +271,10 @@
 				<img src="${ctx}/images/icons/user_go.gif" class="icon">
 				<a href="${ctx}/regist/index.do" target="main">注册用户管理</a>
 			</div>
+			<div style="padding-top:2px">
+				<img src="${ctx}/images/icons/add.gif" class="icon">
+				<a href="${ctx}/fsmis/googlemap/edit.do" target="main">Google Map配置</a>
+			</div>
 		</div>
 	</div>
 </div>
