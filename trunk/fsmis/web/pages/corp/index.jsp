@@ -81,19 +81,20 @@ function removeCompany(corpId) {
 			<a href="view.do?model.id=${item.id}" target="_self" title="查看企业信息"><font color="blue">${item.name}</font></a>
 		</ec:column>
 		<ec:column width="100" property="code" title="企业编号" />
-		<ec:column width="100" property="legalPerson" title="法人" />
+		<ec:column width="80" property="legalPerson" title="法人" style="text-align:center"/>
 		<ec:column width="220" property="address" title="企业地址"/>
-		<ec:column width="140" property="_0" title="操作" style="text-align:center" sortable="false">
+		<ec:column width="170" property="_0" title="操作" style="text-align:center" sortable="false">
 			<a href="edit.do?model.id=${item.id}">编辑</a> |
 			<a href="view.do?model.id=${item.id}" target="_self">查看</a> |
 			<c:choose>
 	     		<c:when test="${!empty item.fsCases}"> 
-	        		<font color="#999999" title="该企业涉及食品安全事件，不能删除！">删除</font>
+	        		<font color="#999999" title="该企业涉及食品安全事件，不能删除！">删除</font> |
 	     		</c:when>
 	     		<c:otherwise>
-	        		<a href="#" onClick="removeCompany(${item.id})">删除</a>
+	        		<a href="#" onClick="removeCompany(${item.id})">删除</a> |
 	     		</c:otherwise>
 	   		</c:choose> 
+	   		<a href="mark.do?model.id=${item.id}">标注</a>
 		</ec:column>
 	</ec:row>
 </ec:table></div>
