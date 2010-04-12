@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglibs.jsp"%>
-<%@include file="/common/extjs.jsp"%>
 <%@include file="/common/mapid.jsp" %>
 <%@include file="/common/meta.jsp"%>
 <html>
@@ -14,6 +13,7 @@
         map.setCenter(new GLatLng(38.042,114.494), 12);
         map.removeMapType(G_HYBRID_MAP);
 		map.addControl(new GLargeMapControl());
+		map.disableDoubleClickZoom();
 				
 				GEvent.addListener(map, "click", function(overlay, latlng) {
 					var coordinate = map.fromLatLngToDivPixel(latlng);
@@ -62,8 +62,8 @@
 		        }
 				// 地图添加 标记
 		        var coordinate = '${model.coordinate}';
-		        var index = coordinate.indexOf(",");
-		        var latlng1 = new GLatLng(coordinate.substring(0,index ),coordinate.substring(index+1, coordinate.length));
+		        var cndata = coordinate.split(",");
+		        var latlng1 = new GLatLng(cndata[0],cndata[1]);
 		        map.addOverlay(createMarker(latlng1));
 	}
 }
@@ -73,12 +73,7 @@ function cancle(){
 }
 
 function saveData(id, x, y){
-	alert( id+ "," + x + "," + y);
-	Ext.MessageBox.confirm('提示','确认要保存此事件信息的发生地点吗?', function(btn){
-        if (btn == 'yes') {
-          window.location = "${ctx}/fscase/saveMap.do?model.id=" + id + "&isMultipleCase=0&x=" + x + "&y=" + y;
-        }
-    });
+	window.location = "${ctx}/fscase/saveMap.do?model.id=" + id + "&isMultipleCase=0&x=" + x + "&y=" + y;
 }
 </script>
 </head>
