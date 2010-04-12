@@ -390,6 +390,17 @@ public void setFsCases(Object[] fsCases) {
   }
   
   /**
+   * 跳转到地图页面（单体事件分布图）
+   */
+  public String fsCaseOfMap() {
+	Dept dept = loginUserService.getLoginUserCounty(getRequest());
+	String hql = "from FsCase fc where fc.isMultiple = ? and fc.county.id = ?  and fc.coordinate is not null";
+	List<FsCase> fcList = getManager().query(hql, FsConstants.N, dept.getId());
+	this.getRequest().setAttribute("items", fcList);
+    return "fsCaseOfMap";
+  }
+  
+  /**
    * 跳转到地图页面（多体事件）
    */
   public String mapMult() {
