@@ -102,6 +102,7 @@ function caseRemove(caseId) {
 			<c:if test="${item.caseSourceType == 'generic'}">普通添加</c:if>
 			<c:if test="${item.caseSourceType == 'jointask'}">联合整治添加</c:if>
 			<c:if test="${item.caseSourceType == 'deptreport'}">部门上报</c:if>
+			<c:if test="${item.caseSourceType == 'district'}">区县上报</c:if>
 		</ec:column>
 		</c:if>
 		<ec:column width="80" property="_4" title="事件处理流程" style="text-align:center" sortable="false">
@@ -109,7 +110,7 @@ function caseRemove(caseId) {
 			<c:if test="${item.processType == 'jointask'}">联合整治处理</c:if>
 		</ec:column>
 		<ec:column width="90" property="_6" title="查看" style="text-align:center" sortable="false">
-		<c:if test="${item.caseSourceType eq 'generic'}">
+		<c:if test="${item.caseSourceType != 'jointask' }">
 		   <c:if test="${empty item.processType || item.processType eq 'task'}">	
 		        <a title="查看事件" href="${ctx}/fscase/view.do?fsCaseId=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">看 </a> |
 		   </c:if>
@@ -147,7 +148,7 @@ function caseRemove(caseId) {
 		<stc:role ifNotGranted="ROLE_DEPT_OPER">
 		<ec:column width="155" property="_0" title="操作" style="text-align:center" sortable="false">
 		<!-- 0未派遣1已派遣2已处理3回退4已核实完成5忽略6核实不过-->	
-			<c:if test="${item.caseSourceType eq 'generic'}">
+			<c:if test="${item.caseSourceType != 'jointask'}">
 				<c:if test="${empty item.status or item.status eq '0' or item.status eq '3' or item.status eq '5' or item.status eq '6'}">		
 				    <a title="修改事件" href="${ctx}/fscase/edit.do?model.id=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">改 </a> |
 				    <a title="派遣任务" href="#" onclick="showChooseSendTypeWindow(${item.id},'${item.title}')">派</a> |
@@ -185,7 +186,7 @@ function caseRemove(caseId) {
 	            </c:if>
             </c:if>        
                           
-            <c:if test="${item.caseSourceType eq 'generic' && item.status eq '1'}">		
+            <c:if test="${item.caseSourceType != 'jointask' && item.status eq '1'}">		
 			    <font color="silver" >改</font> |
 			    <font color="silver" >派</font> |
 			    <font color="silver" >删</font> 
@@ -193,7 +194,7 @@ function caseRemove(caseId) {
 			     | <font color="silver" >核</font> 	
 			    </c:if>		  
             </c:if>
-            <c:if test="${item.caseSourceType eq 'generic' && item.status eq '2'}">		
+            <c:if test="${item.caseSourceType != 'jointask' && item.status eq '2'}">		
 			    <a title="修改事件" href="${ctx}/fscase/edit.do?model.id=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">改 </a> |
 			    <a title="派遣任务" href="#" onclick="showChooseSendTypeWindow(${item.id},'${item.title}')">派</a>  |
 			    <font color="silver" >删</font> 
@@ -211,7 +212,7 @@ function caseRemove(caseId) {
 			    </c:choose>	
 			    </c:if>	   
             </c:if>
-            <c:if test="${item.caseSourceType eq 'generic' && item.status eq '4'}">		
+            <c:if test="${item.caseSourceType != 'jointask' && item.status eq '4'}">		
 			    <font color="silver" >改</font> |
 			    <font color="silver" >派</font> |
 			    <font color="silver" >删</font> 
