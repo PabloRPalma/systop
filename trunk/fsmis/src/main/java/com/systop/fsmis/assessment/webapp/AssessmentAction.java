@@ -318,6 +318,14 @@ public class AssessmentAction extends
 		
 		return "listCheckRst";
 	}
+	
+	/**
+	 * 查询风险评估的评估进度
+	 */
+	public String process() {
+		return "process";
+	}
+	
 	/**
 	 * 
 	 * @return
