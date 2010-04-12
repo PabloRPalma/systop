@@ -84,7 +84,7 @@ function caseRemove(caseId) {
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	<ec:row>
 		<ec:column width="30" property="_s" title="No." value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center"/>	
-		<ec:column width="130" property="title" title="事件标题" tipTitle="${item.title}" ellipsis="true" sortable="false"/>
+		<ec:column width="160" property="title" title="事件标题" tipTitle="${item.title}" ellipsis="true" sortable="false"/>
 		<ec:column width="50" property="code" title="事件编号" sortable="false"/>
 		<ec:column width="80" property="caseType.name" title="事件类别" sortable="false"/>
 		<ec:column width="115" property="caseTime" title="事发时间"
@@ -109,7 +109,7 @@ function caseRemove(caseId) {
 			<c:if test="${item.processType == 'task'}">普通派遣处理</c:if>
 			<c:if test="${item.processType == 'jointask'}">联合整治处理</c:if>
 		</ec:column>
-		<ec:column width="90" property="_6" title="查看" style="text-align:center" sortable="false">
+		<ec:column width="50" property="_6" title="查看" style="text-align:center" sortable="false">
 		<c:if test="${item.caseSourceType != 'jointask' }">
 		   <c:if test="${empty item.processType || item.processType eq 'task'}">	
 		        <a title="查看事件" href="${ctx}/fscase/view.do?fsCaseId=${item.id}&modelId=0&isMultipleCase=${isMultipleCase}">看 </a> |
@@ -130,7 +130,6 @@ function caseRemove(caseId) {
 		   </c:choose> 			
 		</c:if>
 		
-		<a title="地图" href="map.do?model.id=${item.id}">图</a> |
 		<c:set var="i" value="0"></c:set>
 		<c:set var="dispatchTime" value="0"></c:set>
 		<c:set var="closedTime" value="0"></c:set>
@@ -220,8 +219,14 @@ function caseRemove(caseId) {
 			     | <a title="查看核实反馈" href="confirmBackMsg.do?model.id=${item.id}&operType=V&modelId=0&isMultipleCase=${isMultipleCase}">核</a>
 			    </c:if>	
             </c:if>
-		<c:if test="${isMultipleCase eq 0}">
+		<c:if test="${isMultipleCase eq '0' && item.coordinate eq null}">
 			| <a title="地图标注信息" href="map.do?model.id=${item.id}">注</a>
+		</c:if>
+		<c:if test="${isMultipleCase eq '0' && item.coordinate ne null}">
+			| <a title="地图标注信息" href="map.do?model.id=${item.id}">图</a>
+		</c:if>
+		<c:if test="${isMultipleCase eq '1'}">
+			| <a title="地图标注信息" href="mapMult.do?model.id=${item.id}">图</a>
 		</c:if>
 		</ec:column>
 		</stc:role>
