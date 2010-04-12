@@ -16,6 +16,10 @@
 		   		<param name="root">page</param>
 			</result>	
 			<result name="markmap">/pages/corp/mark.jsp</result> 	
+			<result type="json" name="markRst">
+		   		<param name="root">markResult</param>
+			</result>
+			<result name="mapOfCorps">/pages/corp/map.jsp</result> 	
 		</action>
 	</package>
 </struts>
