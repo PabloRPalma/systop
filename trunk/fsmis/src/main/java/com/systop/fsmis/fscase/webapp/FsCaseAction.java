@@ -604,6 +604,7 @@ public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
 	  BeanUtils.copyProperties(getModel(), fscase, new String[]{"id","taskses","jointTaskses","assessmentses","casesBySubmitedCase","compositiveCases","genericCases","smsSendses","smsReceiveses"});
 	  Dept dept =(Dept) getManager().getDao().findObject("from Dept d where d.parentDept is null");
 	  fscase.setCounty(dept);
+	  fscase.setCaseSourceType(CaseConstants.CASE_SOURCE_TYPE_DISTRICT);
 	  //将新纪录与原纪录关联
 	  fscase.setSubmitedCase(getModel());
 	  getManager().save(fscase);
