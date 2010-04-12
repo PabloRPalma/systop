@@ -58,6 +58,11 @@ public class CorpAction extends ExtJsCrudAction<Corp, CorpManager> {
 	 * json返回结果
 	 */
 	private Map<String, String> delResult;
+	
+	/**
+	 * 标注返回结果
+	 */
+	private Map<String, String> markResult;
 
 	@Autowired
 	private LoginUserService loginUserService;
@@ -212,6 +217,59 @@ public class CorpAction extends ExtJsCrudAction<Corp, CorpManager> {
 	public String mark() {
 		edit();
 		return "markmap";
+	}
+	
+	/**
+	 * 保存企业地图标注信息
+	 */
+	public String saveMapInfo() {
+		markResult = Collections.synchronizedMap(new HashMap<String, String>());
+		String corpId = getRequest().getParameter("corpId");
+		String coordinate = getRequest().getParameter("coordinate");
+		if (StringUtils.isNotBlank(corpId) && StringUtils.isNumeric(corpId)) {
+			Corp corp = getManager().get(Integer.valueOf(corpId));
+			corp.setCoordinate(coordinate);
+			getManager().save(corp);
+			markResult.put("result", "success");
+		} else {
+			markResult.put("result", "error");
+		}
+		
+		return "markRst";
+	}
+	
+	/**
+	 * 查看企业在地图上的分布情况
+	 */
+	public String mapOfCorps() {
+		List args = new ArrayList();
+		Dept dept = loginUserService.getLoginUserCounty(getRequest());
+		StringBuffer hql = new StringBuffer("from Corp cp where 1=1 ");
+		if (dept != null) {
+			if (dept.getChildDepts().size() > 0) {
+				hql.append(" and cp.dept.serialNo like ?");
+				args.add(MatchMode.START.toMatchString(dept.getSerialNo()));
+			} else {
+				hql.append(" and cp.dept.id = ?");
+				args.add(dept.getId());
+			}
+		}
+		if (StringUtils.isNotBlank(getModel().getName())) {
+			hql.append(" and cp.name like ?");
+			args.add(MatchMode.ANYWHERE.toMatchString(getModel().getName()));
+		}
+		if (StringUtils.isNotBlank(getModel().getLegalPerson())) {
+			hql.append(" and cp.legalPerson like ?");
+			args.add(MatchMode.ANYWHERE.toMatchString(getModel().getLegalPerson()));
+		}
+		if (StringUtils.isNotBlank(getModel().getAddress())) {
+			hql.append(" and cp.address like ?");
+			args.add(MatchMode.ANYWHERE.toMatchString(getModel().getAddress()));
+		}
+		List<Corp> corpList = getManager().query(hql.toString(), args.toArray());
+		getRequest().setAttribute("items", corpList);
+		
+		return "mapOfCorps";
 	}
 	
 	/**
