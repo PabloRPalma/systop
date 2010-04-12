@@ -11,6 +11,7 @@
 			<result name="addSendMsg">/pages/fsCase/addSendMsg.jsp</result>
 			<result name="confirmBackMsg">/pages/fsCase/confirmBackMsg.jsp</result>
 			<result name="map">/pages/fsCase/map.jsp</result>
+			<result name="mapMult">/pages/fsCase/mapMult.jsp</result>
 			<result name="success" type="redirect">
 				index.do?isMultipleCase=${isMultipleCase}&amp;modelId=${modelId}
 			</result>
