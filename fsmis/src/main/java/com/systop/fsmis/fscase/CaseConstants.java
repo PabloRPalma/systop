@@ -56,6 +56,8 @@ public final class CaseConstants {
   public static final String CASE_SOURCE_TYPE_JOINTASK = "jointask";
   /** 事件添加类别:部门上报添加单体事件 */
   public static final String CASE_SOURCE_TYPE_DEPTREPORT = "deptreport";
+  /** 事件添加类别:区县上报添加单体事件 */
+  public static final String CASE_SOURCE_TYPE_DISTRICT = "district";
   
   /** 市级汇总生成的多体事件标题名称 */
   public static final String CITY_MULTCASE_NAME = ResourceBundleUtil.getString(RESOURCE_BUNDLE,
