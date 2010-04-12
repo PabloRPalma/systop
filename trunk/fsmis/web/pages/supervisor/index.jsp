@@ -14,6 +14,12 @@ function removeSupervisor(sID){
 		location.href = "remove.do?model.id="+sID;
 	}
 }
+
+function mapOfSupervisors() {
+	var myform = document.getElementById("superVisorForm");
+	myform.action="mapOfSupervisors.do";
+	myform.submit();
+}
 </script>
 </head>
 
@@ -24,34 +30,38 @@ function removeSupervisor(sID){
 <table width="100%" border="0">
 	<tr>
 		<s:form id="superVisorForm" action="index.do" method="post" target="main">
-			<td width="42" align="left">姓名：</td>
+			<td width="42" align="left">姓名:</td>
 		  <td width="33"><s:textfield name="model.name"
 				cssStyle="width:60px" /></td>
-			<td width="45" align="right">手机：</td>
+			<td width="45" align="right">手机:</td>
 		  <td width="33"><s:textfield name="model.mobile"
 				cssStyle="width:60px" /></td>
-			<td width="80" align="right">所属部门：</td>
+			<td width="80" align="right">所属部门:</td>
 			<td align="left" class="simple">			
 				<div id="comboxWithTree"></div>
 				<s:hidden name="model.dept.id" id="deptId"></s:hidden>
 		  </td>
-			<td width="80" align="right">监管区域：</td>
+			<td width="80" align="right">监管区域:</td>
 		  <td width="50"><s:textfield name="model.superviseRegion" 
 				cssStyle="width:60px" /></td>
-		  <td width="60" align="right">负责人：</td>
+		  <td width="60" align="right">负责人:</td>
 		  <td width="45" valign="top">
 		  	是 <input type="radio" value="1" name="isLeader" id="model.isLeader" style="border: 0"/>
           </td>
           <td width="45" valign="top" >
           	否<input type="radio" value="0" name="isLeader" id="model.isLeader" style="border: 0"/>
           </td>
-			<td width="72" align="left">
+			<td width="40" align="left">
 				<input type="submit" value="查询" class="button"/>
 		  </td>
+		  <td>
+				<input onclick="mapOfSupervisors()" type="button" value="分布图" class="button" />
+		  </td>		  
 		</s:form>
 		<td><a href="editNew.do">添加</a></td>
 		<td><span class="ytb-sep"></span></td>
 		<td><a href="#" onClick="NumWindow.show()">导出手机号</a></td>
+
 	</tr>
 </table>
 </div>
@@ -81,13 +91,29 @@ function removeSupervisor(sID){
 		<ec:column width="35" property="gender" title="性别" style="text-align:center"/>
 		<ec:column width="55" property="code" title="编号" style="text-align:center"/>
 		<ec:column width="95" property="mobile" title="手机号码" style="text-align:center"/>
-		<ec:column width="120" property="dept.name" title="所属部门"/>
-		<ec:column width="250" property="superviseRegion" title="监管区域" />
-		<ec:column width="120" property="_0" title="操作" style="text-align:center" sortable="false">
-			<a href="edit.do?model.id=${item.id}">编辑</a>|
-			<a href="view.do?model.id=${item.id}" target="main">查看</a>|
-			<c:if test="${not empty item.fsCase}"><font color="silver" title="该信息员已举报过案件，无法删除">删除</font></c:if>
-			<c:if test="${empty item.fsCase}"><a href="#" onClick="removeSupervisor(${item.id})">删除</a></c:if>
+		<ec:column width="140" property="dept.name" title="所属部门"/>
+		<ec:column width="270" property="superviseRegion" title="监管区域" />
+		<ec:column width="40" property="_view" title="查看" style="text-align:center" sortable="false">
+	  	   <a href="view.do?model.id=${item.id}" target="main">看</a> 
+		</ec:column>			
+		<ec:column width="100" property="_0" title="操作" style="text-align:center" sortable="false">
+			<a href="edit.do?model.id=${item.id}">改</a> |
+		    <c:choose>
+		     <c:when test="${not empty item.fsCase}"> 
+               <font color="#999999" title="该信息员已举报过案件，无法删除">删</font> |        
+		     </c:when>
+		     <c:otherwise>
+	           <a href="#" onClick="removeSupervisor(${item.id})">删</a> |
+		     </c:otherwise>
+		   </c:choose> 
+		    <c:choose>
+		     <c:when test="${not empty item.coordinate}"> 
+			   <a href="markmap.do?model.id=${item.id}" target="main">图</a>   
+		     </c:when>
+		     <c:otherwise>
+			   <a href="markmap.do?model.id=${item.id}" target="main">注</a>   
+		     </c:otherwise>
+		   </c:choose>			
 		</ec:column>
 	</ec:row>
 </ec:table></div>
