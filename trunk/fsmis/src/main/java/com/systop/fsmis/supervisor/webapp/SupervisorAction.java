@@ -1,9 +1,11 @@
 package com.systop.fsmis.supervisor.webapp;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
@@ -53,12 +55,14 @@ public class SupervisorAction extends DefaultCrudAction<Supervisor, SupervisorMa
 	
 	@Autowired
 	private DeptManager deptManager;
-	/**
-	 * 
-	 */
+
 	@Autowired
 	private LoginUserService loginUserService;
 	
+	/**
+	 * 地图坐标
+	 */
+	private String coordinate;
 	/** 按姓名、监管区域、所属部门查询信息员信息*/
 	@SuppressWarnings("unchecked")
 	public String index(){
@@ -198,6 +202,64 @@ public class SupervisorAction extends DefaultCrudAction<Supervisor, SupervisorMa
 		getRequest().setAttribute("noNum", noNum);
 	}
 	
+	/**
+	 * 地图标注
+	 */
+	public String markmap() {
+		return "markmap";
+	}
+	
+	/**
+	 * 保存地图坐标信息
+	 */
+	public String saveMapInfo() {
+		if (getModel().getId() != null ){
+			Supervisor supervisor = getManager().get(getModel().getId());
+			supervisor.setCoordinate(coordinate);
+			getManager().save(supervisor);
+		}
+		return SUCCESS;
+	}
+	
+	/**
+	 * 所有监管员地图上的分布情况
+	 */
+	@SuppressWarnings("unchecked")
+	public String mapOfSupervisors() {
+		List args = new ArrayList();
+		Dept dept = loginUserService.getLoginUserCounty(getRequest());
+		StringBuffer hql = new StringBuffer("from Supervisor s where 1=1 ");
+		if (dept != null) {
+			if (dept.getChildDepts().size() > 0) {
+				hql.append(" and s.dept.serialNo like ?");
+				args.add(MatchMode.START.toMatchString(dept.getSerialNo()));
+			} else {
+				hql.append(" and s.dept.id = ?");
+				args.add(dept.getId());
+			}
+		}
+		if (StringUtils.isNotBlank(getModel().getName())) {
+			hql.append(" and s.name like ?");
+			args.add(MatchMode.ANYWHERE.toMatchString(getModel().getName()));
+		}
+		if (StringUtils.isNotBlank(getModel().getSuperviseRegion())) {
+			hql.append(" and s.superviseRegion like ?");
+			args.add(MatchMode.ANYWHERE.toMatchString(getModel().getSuperviseRegion()));
+		}
+		if (StringUtils.isNotBlank(getModel().getMobile())) {
+			hql.append(" and s.mobile like ?");
+			args.add(MatchMode.ANYWHERE.toMatchString(getModel().getMobile()));
+		}
+		if (StringUtils.isNotBlank(getModel().getIsLeader())) {
+			hql.append(" and s.isLeader = ?");
+			args.add(getModel().getIsLeader());
+		}		
+		List<Supervisor> supervisorList = getManager().query(hql.toString(), args.toArray());
+		getRequest().setAttribute("items", supervisorList);
+		
+		return "mapOfSupervisors";
+	}
+	
 	public String editNew(){
 		return INPUT;
 	}
@@ -233,4 +295,13 @@ public class SupervisorAction extends DefaultCrudAction<Supervisor, SupervisorMa
 	public void setDelResult(Map<String, String> delResult) {
 		this.delResult = delResult;
 	}
+
+	public String getCoordinate() {
+		return coordinate;
+	}
+
+	public void setCoordinate(String coordinate) {
+		this.coordinate = coordinate;
+	}
+
 }
