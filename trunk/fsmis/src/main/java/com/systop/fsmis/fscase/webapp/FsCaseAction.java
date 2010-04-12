@@ -379,7 +379,30 @@ public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
   public String confirmBackMsg() {
     return "confirmBackMsg";
   }
+  
+  /**
+   * 跳转到地图页面
+   */
+  public String map() {
+    return "map";
+  }
 
+  /**
+   * 保存事件的地理坐标
+   */
+  public String saveMap() {
+	if(getModel().getId() != null) {
+		FsCase fc = this.getManager().get(getModel().getId());
+		String x = this.getRequest().getParameter("x");
+		String y = this.getRequest().getParameter("y");
+		if (StringUtils.isNotBlank(x) && StringUtils.isNotBlank(y)) {
+			fc.setCoordinate(x + "," + y);
+		}
+		this.getManager().save(fc);
+	}
+    return SUCCESS;
+  }
+  
   /**
    * 确认核实信息
    * 
