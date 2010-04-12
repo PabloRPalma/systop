@@ -15,6 +15,11 @@ function removeCompany(corpId) {
         }
     });
   }
+function mapOfCorps() {
+	var myform = document.getElementById("search");
+	myform.action="mapOfCorps.do";
+	myform.submit();
+}
 </script>
 </head>
 <body>
@@ -24,7 +29,7 @@ function removeCompany(corpId) {
 <div class="x-toolbar">
 <table width="99%">
 	<tr>
-		<s:form action="index.do" method="post">
+		<s:form id="search" action="index.do" method="post">
 		<td width="83" align="right">
 			企业名称：		</td>
 		<td width="69">
@@ -37,9 +42,12 @@ function removeCompany(corpId) {
 		</td>
 		<td width="80" align="right">
 			企业地址：		</td>
-		<td width="179">
+		<td width="130">
 			<s:textfield name="model.address" cssStyle="width:80px"/>
 			<input type="submit" value="查询" class="button" />
+		</td>
+		<td>
+			<input onclick="mapOfCorps()" type="button" value="企业分布图" class="button" />
 		</td>
 		</s:form>
 		<td align="right">
