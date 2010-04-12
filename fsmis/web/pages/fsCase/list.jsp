@@ -84,7 +84,7 @@ function caseRemove(caseId) {
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	<ec:row>
 		<ec:column width="30" property="_s" title="No." value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center"/>	
-		<ec:column width="150" property="title" title="事件标题" tipTitle="${item.title}" ellipsis="true" sortable="false"/>
+		<ec:column width="130" property="title" title="事件标题" tipTitle="${item.title}" ellipsis="true" sortable="false"/>
 		<ec:column width="50" property="code" title="事件编号" sortable="false"/>
 		<ec:column width="80" property="caseType.name" title="事件类别" sortable="false"/>
 		<ec:column width="115" property="caseTime" title="事发时间"
@@ -129,7 +129,7 @@ function caseRemove(caseId) {
 		   </c:choose> 			
 		</c:if>
 		
-		<a title="地图" href="#">图</a> |
+		<a title="地图" href="map.do?model.id=${item.id}">图</a> |
 		<c:set var="i" value="0"></c:set>
 		<c:set var="dispatchTime" value="0"></c:set>
 		<c:set var="closedTime" value="0"></c:set>
@@ -145,7 +145,7 @@ function caseRemove(caseId) {
 		<a title="流" href="#" onclick="showProcess('${item.status}','${i}','${item.isSubmited}','${item.caseTime}','${item.closedTime}','${dispatchTime}','${closedTime}','${item.isMultiple}','${item.title}')">流</a>
 		</ec:column>
 		<stc:role ifNotGranted="ROLE_DEPT_OPER">
-		<ec:column width="135" property="_0" title="操作" style="text-align:center" sortable="false">
+		<ec:column width="155" property="_0" title="操作" style="text-align:center" sortable="false">
 		<!-- 0未派遣1已派遣2已处理3回退4已核实完成5忽略6核实不过-->	
 			<c:if test="${item.caseSourceType eq 'generic'}">
 				<c:if test="${empty item.status or item.status eq '0' or item.status eq '3' or item.status eq '5' or item.status eq '6'}">		
@@ -219,7 +219,9 @@ function caseRemove(caseId) {
 			     | <a title="查看核实反馈" href="confirmBackMsg.do?model.id=${item.id}&operType=V&modelId=0&isMultipleCase=${isMultipleCase}">核</a>
 			    </c:if>	
             </c:if>
-
+		<c:if test="${isMultipleCase eq 0}">
+			| <a title="地图标注信息" href="map.do?model.id=${item.id}">注</a>
+		</c:if>
 		</ec:column>
 		</stc:role>
 	</ec:row>
