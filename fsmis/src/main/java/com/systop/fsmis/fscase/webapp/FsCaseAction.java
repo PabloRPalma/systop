@@ -107,8 +107,17 @@ public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
   // 查看页面中默认显示那个tab
   private String modelId;
   private Map<String, String> jsonResult;
+  private Object fsCases[];
 
-  /**
+  public Object[] getFsCases() {
+	return fsCases;
+}
+
+public void setFsCases(Object[] fsCases) {
+	this.fsCases = fsCases;
+}
+
+/**
    * 查询获得一般事件信息列表，分页查询
    */
   public String index() {
@@ -381,7 +390,18 @@ public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
   }
   
   /**
-   * 跳转到地图页面
+   * 跳转到地图页面（多体事件）
+   */
+  public String mapMult() {
+	
+	List<FsCase> fcList = new ArrayList();
+	fcList.addAll(this.getManager().get(getModel().getId()).getGenericCases());
+	this.getRequest().setAttribute("items", fcList);
+    return "mapMult";
+  }
+  
+  /**
+   * 跳转到地图页面（单体事件）
    */
   public String map() {
     return "map";
