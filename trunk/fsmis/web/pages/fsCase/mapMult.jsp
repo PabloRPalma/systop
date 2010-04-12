@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.*, java.lang.Double, com.systop.fsmis.model.FsCase" %>
 <%@include file="/common/taglibs.jsp"%>
 <%@include file="/common/mapid.jsp" %>
 <%@include file="/common/meta.jsp"%>
 <html>
 <head>
-<title>单体事件地图标注</title>
+<title>多体事件地图标注</title>
 <script type="text/javascript">
     function initialize() {
       if (GBrowserIsCompatible()) {
@@ -14,26 +15,6 @@
         map.removeMapType(G_HYBRID_MAP);
 		map.addControl(new GLargeMapControl());
 		map.disableDoubleClickZoom();
-				
-				GEvent.addListener(map, "click", function(overlay, latlng) {
-					var coordinate = map.fromLatLngToDivPixel(latlng);
-					if (latlng) {
-						var marker = new GMarker(latlng, {draggable : true});
-						map.addOverlay(marker);
-						var x = latlng.lat();
-						var y = latlng.lng();
-						var html = "<div>"
-									+ "事件标题：'${model.title}'<br>"
-									+ "坐标：" + coordinate + "<br><br>"
-									+ "<div align='center'><a href='#' class='button' onclick='saveData(" + ${model.id} + "," + x + "," + y + ")'> &nbsp;保存&nbsp;  </a>&nbsp;&nbsp;"
-									+ "<a href='#' onclick='cancle()' class='button'> &nbsp;关闭&nbsp;  </a></div>"
-									+ "</div>";
-						marker.openInfoWindow(html);
-						GEvent.addListener(marker, "infowindowclose", function() {
-							initialize();
-						});
-					}
-				});
 				
 				// 为所有标记创建指定阴影、图标尺寸灯的基础图标
 		        var baseIcon = new GIcon();
@@ -45,7 +26,7 @@
 		        baseIcon.infoShadowAnchor = new GPoint(18, 25);
 	
 		        // 创建信息窗口显示对应给定索引的字母的标记
-		        function createMarker(lng) {
+		        function createMarker(lng, title, addr) {
 		          // Create a lettered icon for this point using our icon class
 		          var letteredIcon = new GIcon(baseIcon);
 		          letteredIcon.image = "http://www.google.cn/mapfiles/marker.png";
@@ -55,26 +36,26 @@
 	
 		          GEvent.addListener(marker1, "click", function() {
 		            marker1.openInfoWindowHtml("<div>"
-		            		+ "事件标题：${model.title}<br>"
-		            		+ "事件地址：${model.address}<br>"
+		            		+ "事件标题："+ title + "<br>"
+		            		+ "事件地址："+ addr + "<br>"
 							+ "坐标：" + lng.toUrlValue(4) + "<br>");
 		          });
 		          return marker1;
 		        }
 				// 地图添加 标记
-		        var coordinate = '${model.coordinate}';
-		        var cndata = coordinate.split(",");
-		        var latlng1 = new GLatLng(cndata[0],cndata[1]);
-		        map.addOverlay(createMarker(latlng1));
+		        <%
+		    	List<FsCase> fcList = (List)request.getAttribute("items"); 
+		    	for(FsCase fc : fcList){
+		    		String cdnt[] = new String []{};
+		    		String cdnate = fc.getCoordinate().toString();
+		    		cdnt = cdnate.split(",");
+		        %>
+			        var latlng = new GLatLng(<%=cdnt[0]%>, <%=cdnt[1]%>);
+			        map.addOverlay(createMarker(latlng, '<%=fc.getTitle()%>', '<%=fc.getAddress()%>'));
+			    <%    
+				}
+		    	%>
 	}
-}
-
-function cancle(){
-	initialize();
-}
-
-function saveData(id, x, y){
-	window.location = "${ctx}/fscase/saveMap.do?model.id=" + id + "&isMultipleCase=0&x=" + x + "&y=" + y;
 }
 </script>
 </head>

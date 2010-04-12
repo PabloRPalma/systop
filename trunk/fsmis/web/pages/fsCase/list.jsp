@@ -22,6 +22,9 @@ function caseRemove(caseId) {
         }
     });
   }
+function mapOfFsCases() {
+    window.location = "${ctx}/fscase/fsCaseOfMap.do";
+}
 </script>
 </head>
 <body>
@@ -36,12 +39,12 @@ function caseRemove(caseId) {
 			<s:textfield name="model.title" cssStyle="width:100px"></s:textfield>	
 						事件编号:
 			<s:textfield name="model.code" cssStyle="width:70px"></s:textfield>
-						事发时间:
+			<br>			事发时间:
 			<input type="text" name="caseBeginTime" style="width: 120px"
 				value='<s:date name="caseBeginTime" format="yyyy-MM-dd HH:mm"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
 				class="Wdate" />
-						至
+						</>至
 			<input type="text" name="caseEndTime" style="width: 120px"
 				value='<s:date name="caseEndTime" format="yyyy-MM-dd HH:mm"/>'
 				onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
@@ -50,6 +53,9 @@ function caseRemove(caseId) {
 			<s:select name="model.status" list="stateMap" headerKey="" headerValue="请选择"/>		
 			<s:submit value="查询" cssClass="button"></s:submit>
 		</s:form></td>
+		<td>
+			<c:if test="${isMultipleCase eq 0}"><input onclick="mapOfFsCases()" type="button" value="事件分布图" class="button" /></c:if>
+		</td>
 		<td align="right">
 		<stc:role ifNotGranted="ROLE_DEPT_OPER">
 		<table>
