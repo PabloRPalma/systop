@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.systop.core.service.BaseGenericsManager;
 import com.systop.core.util.ReflectUtil;
+import com.systop.fsmis.FsConstants;
 import com.systop.fsmis.model.Corp;
 import com.systop.fsmis.model.FsCase;
 import com.systop.fsmis.model.Task;
@@ -44,6 +45,7 @@ public class ReportManager extends BaseGenericsManager<FsCase> {
 			Corp oldCorp = getCorpByName(corpName, fsCase.getCounty().getId());
 			if (oldCorp != null) {
 				fsCase.setCorp(oldCorp);
+				fsCase.setIsMultiple(FsConstants.N);
 				getDao().clear();
 			} else {
 				corp.setName(corpName);
@@ -52,9 +54,11 @@ public class ReportManager extends BaseGenericsManager<FsCase> {
 				//将缓存中的对象保存到数据库。
 				getDao().flush();
 				fsCase.setCorp(corp);
+				fsCase.setIsMultiple(FsConstants.N);
 			}
 		} else {
 			fsCase.setCorp(null);
+			fsCase.setIsMultiple(FsConstants.N);
 		}
 		//保存上报事件
 		save(fsCase);
