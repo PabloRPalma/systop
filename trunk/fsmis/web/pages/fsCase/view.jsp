@@ -98,7 +98,11 @@ function isSubmited(caseId) {
 				</tr>
 				<tr>
 					<td class="title">事件类别:</td>
-					<td class="content" colspan="3">${model.caseType.name}</td>
+					<td class="content" width="100">${model.caseType.name}</td>
+					<c:if test="${model.submitedCase != null}">	
+					<td class="title" width="300">上报区县:</td>
+					<td class="content">${model.submitedCase.county.name}</td>
+					</c:if>
 				</tr>
 				<tr>
 					<td class="title">事发时间:</td>
