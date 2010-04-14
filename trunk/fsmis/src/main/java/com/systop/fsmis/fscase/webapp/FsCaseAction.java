@@ -104,7 +104,10 @@ public class FsCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
   private String msgContent;
   // 是否综合(多体)案件
   private String isMultipleCase;
-  // 查看页面中默认显示那个tab
+  //是否联合整治案件
+  private String isJointCase;
+
+// 查看页面中默认显示那个tab
   private String modelId;
   private Map<String, String> jsonResult;
   private Object fsCases[];
@@ -160,7 +163,21 @@ public void setFsCases(Object[] fsCases) {
       args.add(caseBeginTime);
       args.add(caseEndTime);
     }
-
+    // 查是否是上报案件
+    if (StringUtils.isNotBlank(getModel().getIsSubmited())) {
+        sql.append("and gc.isSubmited = ? ");
+        args.add(getModel().getIsSubmited());
+      }
+    // 查只是联合案件
+    if (StringUtils.isNotBlank(isJointCase) && isJointCase.equals(FsConstants.Y)) {
+      sql.append("and gc.caseSourceType=? ");
+      args.add(CaseConstants.CASE_SOURCE_TYPE_JOINTASK);
+    }
+    // 查非联合案件
+    if (StringUtils.isNotBlank(isJointCase) && isJointCase.equals(FsConstants.N)) {
+      sql.append("and gc.caseSourceType != ? ");
+      args.add(CaseConstants.CASE_SOURCE_TYPE_JOINTASK);
+    }
     sql.append("order by gc.caseTime desc,gc.status");
     page = getManager().pageQuery(page, sql.toString(), args.toArray());
 
@@ -772,6 +789,14 @@ public void setFsCases(Object[] fsCases) {
 
   public void setModelId(String modelId) {
     this.modelId = modelId;
+  }
+  
+  public String getIsJointCase() {
+		return isJointCase;
+  }
+
+  public void setIsJointCase(String isJointCase) {
+		this.isJointCase = isJointCase;
   }
 
 }
