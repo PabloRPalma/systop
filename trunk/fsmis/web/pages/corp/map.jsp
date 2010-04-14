@@ -22,13 +22,19 @@
 	List<Corp> corpList = (List)request.getAttribute("items"); 
 	for(Corp corp : corpList){
 		String cdnt[] = new String []{};
-		String cdnate = corp.getCoordinate().toString();
-		cdnt = cdnate.split(",");
-		double lat = Double.valueOf(cdnt[0]);
-		double lng = Double.valueOf(cdnt[1]);
+		String cdnate = corp.getCoordinate();
+		double lat = 0;
+		double lng = 0;
+		if (cdnate != null && cdnate != "") {
+			cdnt = cdnate.split(",");
+			lat = Double.valueOf(cdnt[0]);
+			lng = Double.valueOf(cdnt[1]);
+		}
 %>
 		var markerIcon = getMarkerIcon();
-		showMarker(markerIcon, "<%=corp.getName()%>", "<%=corp.getAddress()%>", <%=lng%>, <%=lat%>);
+		if (<%=lng%> != 0 && <%=lat%> != 0) {
+			showMarker(markerIcon, "<%=corp.getName()%>", "<%=corp.getAddress()%>", <%=lng%>, <%=lat%>);
+		}
 <%
 	}	
 %>
