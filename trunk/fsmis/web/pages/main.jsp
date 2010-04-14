@@ -88,7 +88,7 @@
 		   <img src="${ctx}/images/icons/authority.gif" width="16" height="16">&nbsp;风险评估
 		 </td>
 		 <td class="block-title"  align="right">
-		   <a href="${ctx}/fscaseCount/getCaseCount.do" target="main">
+		   <a href="${ctx}/assessment/index.do" target="main">
 			  <img src="${ctx}/images/icons/more2.gif" title="查看更多..." width="14" height="14">
 		   </a>&nbsp;&nbsp;
 		 </td>
