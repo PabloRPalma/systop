@@ -6,11 +6,14 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.criterion.MatchMode;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.systop.cms.utils.PageUtil;
+import com.systop.common.modules.dept.model.Dept;
+import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.core.dao.support.Page;
 import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
 import com.systop.fsmis.model.SmsReceive;
@@ -29,6 +32,9 @@ public class SmsReceiveAction extends
   private String smsReceiveId;
 
   private Map smsReceiveInfo;
+  
+  @Autowired
+	private LoginUserService loginUserService;
 
   /**
    * 短信接收列表
@@ -67,6 +73,37 @@ public class SmsReceiveAction extends
     restorePageData(page);
 
     return INDEX;
+  }
+  
+  /**
+   * 获取部门接收短信
+   * 
+   * @author ZZG
+   */
+  public String indexByDept() {
+    Page page = PageUtil.getPage(getPageNo(), getPageSize());
+    StringBuffer hql = new StringBuffer("from SmsReceive sr where 1=1 ");
+    List args = new ArrayList();
+    
+    Dept dept = loginUserService.getLoginUserDept(getRequest());
+		if (dept != null) {
+			 if (dept.getChildDepts().size() > 0) {
+					hql.append("and sr.county.serialNo like ? ");
+					args.add(MatchMode.START.toMatchString(dept.getSerialNo()));
+				} else {
+					hql.append("and sr.county.id = ? ");
+					args.add(dept.getId());
+				}
+		}else{
+			return "indexbydept";
+		}
+   
+    hql.append(" order by sr.receiveTime desc ");
+
+    page = getManager().pageQuery(page, hql.toString(), args.toArray());
+    restorePageData(page);
+
+    return "indexbydept";
   }
 
   /**
