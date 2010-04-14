@@ -282,7 +282,7 @@ public class JointTaskAction extends
 				return "addCase";
 			}
 			//联合整治业务不需要选择部门，只保存当前登录用户所在的部门信息
-	    Dept dept = loginUserService.getLoginUserDept(getRequest());
+	    Dept dept = loginUserService.getLoginUserCounty(getRequest());
 	    if (dept != null ) {
 	    	getModel().getFsCase().setCounty(dept);
 	    } else {
