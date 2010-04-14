@@ -5,12 +5,6 @@
 <html>
 <head>
 <title>通知信息列表</title>
-<script type="text/javascript">
-function view(aID){
-	url = "view.do?model.id=" + aID;
-	window.open(url);
-}
-</script>
 <style type="text/css">
 a:link {
 	font-size:12px;
@@ -40,7 +34,7 @@ a:actvie{
 		<tr valign="top">
 	      <td width="150">
 	      	<div style="display: inline;width:130px;white-space: nowrap;overflow:hidden;text-overflow:ellipsis;">
-				<img src="${ctx}/images/icons/124.gif">&nbsp;<a href="#" onclick="view('${rrecord.id}')">${rrecord.notice.title}</a>
+				<img src="${ctx}/images/icons/124.gif">&nbsp;<a href="${ctx}/office/receiverecord/view.do?model.id=${rrecord.id}" target="main">${rrecord.notice.title}</a>
 			</div>
 	      </td>
 	      <td width="90" style="font-size:12px;">
