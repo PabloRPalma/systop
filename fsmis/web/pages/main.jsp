@@ -9,12 +9,8 @@
 </head>
 <body>
 	<div style="padding: 50 10 10 100;">
-		<h1 style="color:green;">
-			旧版回顾地址<br>
-			用户:admin&nbsp;&nbsp;|&nbsp;&nbsp;密码:123<br>
-			<a href="http://192.168.1.244:8088/fsmis/" target="_blank">http://192.168.1.244:8088/fsmis/</a><br>
-		</h1>
-		
+		信息提示
 	</div>
+	<iframe src="${ctx}/fscaseCount/getCaseCount.do" frameborder="0" scrolling="no" style="width:280px;height:170px;margin-left:15px" ></iframe>
 </body>
 </html>
