@@ -43,6 +43,7 @@ public class SmsReceiveManager extends BaseGenericsManager<SmsReceive> {
   /**
    * 保存短信
    */
+  @Transactional
   public void save(SmsReceive smsReceive){
   	if(smsReceive != null){
   		statisticsReceiveCount(smsReceive.getMobileNum());
@@ -96,7 +97,7 @@ public class SmsReceiveManager extends BaseGenericsManager<SmsReceive> {
     }
     // 获取当天的统计实体
     SmsCount smsCount = smsCountManager.findObject(
-        "from SmsCount s where s.sendDate between ? and ?", DateUtil
+        "from SmsCount s where s.smsDate between ? and ?", DateUtil
             .firstSecondOfDate(new Date()), DateUtil
             .lastSecondOfDate(new Date()));
     // 存在当天的记录
