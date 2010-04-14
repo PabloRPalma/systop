@@ -102,7 +102,13 @@ function mapOfCorps() {
 	        		<a href="#" onClick="removeCompany(${item.id})">删除</a> |
 	     		</c:otherwise>
 	   		</c:choose> 
-	   		<a href="mark.do?model.id=${item.id}">标注</a>
+	   		
+	   		<c:if test="${item.coordinate eq null}">
+				<a href="mark.do?model.id=${item.id}" title="地图标注信息">标注</a>
+			</c:if>
+			<c:if test="${item.coordinate ne null}">
+				<a href="mark.do?model.id=${item.id}" title="地图标注信息">地图</a>
+			</c:if>
 		</ec:column>
 	</ec:row>
 </ec:table></div>

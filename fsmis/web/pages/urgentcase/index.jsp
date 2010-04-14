@@ -109,7 +109,12 @@
 		  	<a href="${ctx}/urgentcase/printAppForm.do?model.id=${item.id}" title="打印应急预案申请单" target="_blank">印</a> | 
 			<a href="#" onclick="remove(${item.id})" title="删除事件">删</a> | 
 			<a href="#" onclick="showFlowWindow('${item.id}','${item.title}','${item.status}')" title="流程回溯">流</a> | 
-			<a href="mark.do?model.id=${item.id}">标</a>
+			<c:if test="${item.coordinate eq null}">
+				<a href="mark.do?model.id=${item.id}" title="地图标注信息">标</a>
+			</c:if>
+			<c:if test="${item.coordinate ne null}">
+				<a href="mark.do?model.id=${item.id}" title="地图标注信息">图</a>
+			</c:if>
 		</ec:column>
 	</ec:row>
 </ec:table>
