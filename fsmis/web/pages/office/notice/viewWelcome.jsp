@@ -13,34 +13,41 @@ function view(aID){
 </script>
 <style type="text/css">
 a:link {
+	font-size:12px;
 	color: #000000;
     text-decoration:none;
 }
 a:visited {
+	font-size:12px;
 	color: #000000;
     text-decoration:none;
 }
 a:hover{
+	font-size:12px;
     color:#FF6600;
 	text-decoration:none;
 	}
 a:actvie{
+	font-size:12px;
     color:#FF6600;
 	text-decoration:none;
 	}
 </style>
 </head>
 <body>
-
-<s:iterator value="items" var="rrecord">
-<div>
-	<div style="font-size:12px;display: inline;width:100px;white-space: nowrap;overflow:hidden;text-overflow:ellipsis;">
-			<a href="#" onclick="view('${rrecord.id}')">${rrecord.notice.title}</a>
-	</div>
-	<div style="font-size:12px;display: inline;width:59px;white-space: nowrap;overflow:hidden;text-overflow:hidden;">
-		${rrecord.notice.createTime}
-	</div>
-</div>
-</s:iterator>
+<table width="250" border="0" align="center">
+	<s:iterator value="items" var="rrecord">
+		<tr valign="top">
+	      <td width="150">
+	      	<div style="display: inline;width:130px;white-space: nowrap;overflow:hidden;text-overflow:ellipsis;">
+				<img src="${ctx}/images/icons/124.gif">&nbsp;<a href="#" onclick="view('${rrecord.id}')">${rrecord.notice.title}</a>
+			</div>
+	      </td>
+	      <td width="90" style="font-size:12px;">
+	      	<s:date name="notice.createTime" format="yyyy-MM-dd" />
+	      </td>
+	    </tr>
+	</s:iterator>
+</table>
 </body>
 </html>
