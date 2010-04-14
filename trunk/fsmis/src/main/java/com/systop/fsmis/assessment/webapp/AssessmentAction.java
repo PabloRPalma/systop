@@ -3,6 +3,7 @@ package com.systop.fsmis.assessment.webapp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
@@ -13,9 +14,12 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.systop.cms.utils.PageUtil;
+import com.systop.common.modules.dept.model.Dept;
+import com.systop.common.modules.security.user.LoginUserService;
 import com.systop.common.modules.security.user.UserUtil;
 import com.systop.common.modules.security.user.model.User;
 import com.systop.core.dao.support.Page;
+import com.systop.core.util.ResourceBundleUtil;
 import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
 import com.systop.fsmis.assessment.AssessMentConstants;
 import com.systop.fsmis.assessment.service.AsseMemberManager;
@@ -82,6 +86,9 @@ public class AssessmentAction extends
 	@Autowired
 	private FsCaseManager fsCaseManager;
 	
+	@Autowired
+	private LoginUserService loginUserService;
+	
   /**
    * 返回所有事件标题
    * @return 返回所有事件标题
@@ -98,7 +105,12 @@ public class AssessmentAction extends
 	public String index() {
 		StringBuffer hql = new StringBuffer();
 		hql.append("from Assessment ass where 1=1 ");
+		Dept dept = loginUserService.getLoginUserCounty(getRequest());
 		List<Object> args = new ArrayList<Object>();
+		if (dept != null) {
+			hql.append(" and ass.fsCase.county.id = ?");
+			args.add(dept.getId());
+	  }
 		if (getModel().getFsCase() != null && StringUtils.isNotBlank(getModel().getFsCase().getTitle())) {
 			hql.append(" and ass.fsCase.title = ?");
 			args.add(getModel().getFsCase().getTitle());
@@ -325,6 +337,27 @@ public class AssessmentAction extends
 	public String process() {
 		return "process";
 	}
+	
+	/**
+	 * WelCome页面显示最新的5条风险评估信息
+	 */
+	public String viewWelcome() {
+		List args = new ArrayList();
+		Dept dept = loginUserService.getLoginUserCounty(getRequest());
+		StringBuffer hql = new StringBuffer("from Assessment ass where 1=1 ");
+		if (dept != null) {
+			hql.append(" and ass.fsCase.county.id = ?");
+			args.add(dept.getId());
+		}
+		hql.append(" order by ass.askDate desc");
+		String pageSize = ResourceBundleUtil.getString(ResourceBundle.getBundle("application"), "welcome.assessment.pageSize", "5");
+		Page page = PageUtil.getPage(1, Integer.valueOf(pageSize));
+		getManager().pageQuery(page, hql.toString(), args.toArray());
+		items = page.getData();
+		restorePageData(page);
+		return "viewWelcome";
+	}
+	
 	
 	/**
 	 * 
