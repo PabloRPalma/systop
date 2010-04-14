@@ -1,10 +1,12 @@
 package com.systop.fsmis.office.doc.webapp;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -62,6 +64,7 @@ public class DocumentAction extends ExtJsCrudAction<Document, DocumentManager> {
 			criteria.add(Restrictions.like("title", MatchMode.ANYWHERE
 					.toMatchString(getModel().getTitle())));			
 		}
+		criteria.addOrder(Order.desc("createTime"));
 		return criteria;
 	}
 	
@@ -71,7 +74,7 @@ public class DocumentAction extends ExtJsCrudAction<Document, DocumentManager> {
 	@SuppressWarnings("unchecked")
 	public String documentOfWelcome() {
 		Page page = PageUtil.getPage(1, 5);
-		page = getManager().pageQuery(page, "from Document order by id desc");
+		page = getManager().pageQuery(page, "from Document order by createTime desc");
 		items = page.getData();
 		restorePageData(page);
 		return "docWelcome";
@@ -103,6 +106,7 @@ public class DocumentAction extends ExtJsCrudAction<Document, DocumentManager> {
 			addActionError("无法添加，请选择栏目！");
 			return INPUT;
 		}
+		getModel().setCreateTime(new Date());
 		getManager().getDao().clear();
 		getManager().save(getModel());
 		return SUCCESS;
