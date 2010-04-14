@@ -13,7 +13,8 @@
 			<result name="print">/pages/assessment/printpage.jsp</result> 
 			<result name="listCheckRst">/pages/assessment/checkRstView.jsp</result>
 			<result name="process">/pages/assessment/flow/process.jsp</result>			
-			<result name="view">/pages/assessment/view.jsp</result> 														
+			<result name="view">/pages/assessment/view.jsp</result> 
+			<result name="viewWelcome">/pages/assessment/viewWelcome.jsp</result> 																		
 			<result name="success" type="redirect">index.do</result>	
 			<result type="json" name="titles">
 		        <param name="ignoreHierarchy">false</param>
