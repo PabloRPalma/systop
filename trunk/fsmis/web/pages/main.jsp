@@ -34,7 +34,7 @@
 		   <img src="${ctx}/images/icons/authority.gif" width="16" height="16">&nbsp;文章列表
 		 </td>
 		 <td class="block-title"  align="right">
-		   <a href="${ctx}/fscaseCount/getCaseCount.do" target="main">
+		   <a href="${ctx}/office/doc/index.do" target="main">
 			  <img src="${ctx}/images/icons/more2.gif" title="查看更多..." width="14" height="14">
 		   </a>&nbsp;&nbsp;
 		 </td>
@@ -70,7 +70,7 @@
 		   <img src="${ctx}/images/icons/sound_1.gif" width="16" height="16">&nbsp;通知公告
 		 </td>
 		 <td class="block-title"  align="right">
-		   <a href="${ctx}/fscaseCount/getCaseCount.do" target="main">
+		   <a href="${ctx}/office/receiverecord/index.do" target="main">
 			  <img src="${ctx}/images/icons/more2.gif" title="查看更多..." width="14" height="14">
 		   </a>&nbsp;&nbsp;
 		 </td>
