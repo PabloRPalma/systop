@@ -100,7 +100,7 @@ public class ReceiveRecordAction extends
 			hql.append(" and dept.id = ?");
 			args.add(dept.getId());
 		}
-		hql.append(" order by receiveDate desc");
+		hql.append(" order by notice.createTime desc");
 		Page page = PageUtil.getPage(1, 5);
 		page = getManager().pageQuery(page, hql.toString(), args.toArray());
 		items = page.getData();
