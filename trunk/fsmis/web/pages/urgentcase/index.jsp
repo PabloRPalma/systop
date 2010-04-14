@@ -16,7 +16,7 @@
 <table width="99%">
 	<tr>
 		<td>
-		<form action="${ctx}/urgentcase/index.do" method="post">
+		<form id="search" action="${ctx}/urgentcase/index.do" method="post">
 			 &nbsp;事件名称：
 		    <s:textfield name="model.title"></s:textfield>&nbsp;&nbsp;
 		           事发时间：
@@ -30,6 +30,7 @@
 				onfocus="WdatePicker({minDate:'#F{$dp.$D(\'caseBeginTime\')}',skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"
 				class="Wdate" />
 			<s:submit value="查询" cssClass="button"></s:submit>
+			<input onclick="mapOfCases()" type="button" value="事件分布图" class="button" />
 		</form>
 		</td>
 		<td align="right">
@@ -72,7 +73,7 @@
 			<a href="${ctx}/urgentcase/view.do?model.id=${item.id}&actId=3" title="查看事件"><font color="blue">${item.title}</font></a>
 		  </c:if>
 		</ec:column>
-		<ec:column width="180" property="address" title="事发地点"/>
+		<ec:column width="150" property="address" title="事发地点"/>
 		<ec:column width="110" property="caseTime" title="事发时间" style="text-align:center" format="yyyy-MM-dd HH:mm" cell="date"/>
 		<ec:column width="60" property="status" title="状态" mappingItem="ucStatusMap" style="text-align:center"/>
 		<ec:column width="60" property="_v" title="查看" style="text-align:center">
@@ -83,7 +84,7 @@
 				<font color="silver">无记录</font>
 			</c:if>
 		</ec:column>
-		<ec:column width="215" property="_0" title="操作" style="text-align:center" sortable="false">
+		<ec:column width="250" property="_0" title="操作" style="text-align:center" sortable="false">
 		  <c:if test="${item.status == '' || item.status eq '0'}">
 			<a href="${ctx}/urgentcase/edit.do?model.id=${item.id}" title="修改事件">改</a> | 
 			<a href="#" onclick="showCheckWindow('${item.id}')" title="审核事件">审</a> | 
@@ -107,7 +108,8 @@
 		  </c:if>
 		  	<a href="${ctx}/urgentcase/printAppForm.do?model.id=${item.id}" title="打印应急预案申请单" target="_blank">印</a> | 
 			<a href="#" onclick="remove(${item.id})" title="删除事件">删</a> | 
-			<a href="#" onclick="showFlowWindow('${item.id}','${item.title}','${item.status}')" title="流程回溯">流</a>
+			<a href="#" onclick="showFlowWindow('${item.id}','${item.title}','${item.status}')" title="流程回溯">流</a> | 
+			<a href="mark.do?model.id=${item.id}">标</a>
 		</ec:column>
 	</ec:row>
 </ec:table>
@@ -121,7 +123,13 @@
         }
     });
   }
-  
+
+  function mapOfCases() {
+	var myform = document.getElementById("search");
+	myform.action="mapOfCases.do";
+	myform.submit();
+  }
+	
   function refresh() {
     ECSideUtil.reload('ec');
   }
