@@ -80,7 +80,8 @@
 			dataType: 'json',
 			data: {caseId : caseId, coordinate : coordinate},
 			success: function(rst, textStatus){
-				initialize();
+				//initialize();
+				window.location = "${ctx}/urgentcase/index.do";
 			}
 	  	 });
 	}

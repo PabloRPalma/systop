@@ -81,7 +81,8 @@
 			dataType: 'json',
 			data: {corpId : corpId, coordinate : coordinate},
 			success: function(rst, textStatus){
-				initialize();
+				//initialize();
+				window.location = "${ctx}/corp/index.do";
 			}
 	  	 });
 	}
