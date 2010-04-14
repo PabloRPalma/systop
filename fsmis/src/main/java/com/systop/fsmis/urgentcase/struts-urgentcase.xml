@@ -17,7 +17,12 @@
 			<result name="editSendSms">/pages/urgentcase/editSendSms.jsp</result>
 			<result type="json" name="jsonRst">
 		   		<param name="root">checkResult</param>
-			</result>		
+			</result>	
+			<result name="markmap">/pages/urgentcase/mark.jsp</result> 	
+			<result type="json" name="markRst">
+		   		<param name="root">markResult</param>
+			</result>
+			<result name="mapOfCases">/pages/urgentcase/map.jsp</result> 	
 		</action>
 	</package>
 </struts>

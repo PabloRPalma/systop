@@ -51,6 +51,11 @@ public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseMana
 	private Map<String, String> checkResult;
 	
 	/**
+	 * 标注返回结果
+	 */
+	private Map<String, String> markResult;
+	
+	/**
 	 * 编辑指挥组处理结果时所用的事件ID
 	 */
 	private Integer caseId;
@@ -347,6 +352,63 @@ public class UrgentCaseAction extends ExtJsCrudAction<UrgentCase, UrgentCaseMana
 			}
 		}
 		return categoryMap;
+	}
+	
+	/**
+	 * 标注应急事件地图信息
+	 */
+	public String mark() {
+		edit();
+		return "markmap";
+	}
+	
+	/**
+	 * 保存应急事件地图标注信息
+	 */
+	public String saveMapInfo() {
+		markResult = Collections.synchronizedMap(new HashMap<String, String>());
+		String caseId = getRequest().getParameter("caseId");
+		String coordinate = getRequest().getParameter("coordinate");
+		if (StringUtils.isNotBlank(caseId) && StringUtils.isNumeric(caseId)) {
+			UrgentCase urgentCase = getManager().get(Integer.valueOf(caseId));
+			urgentCase.setCoordinate(coordinate);
+			getManager().save(urgentCase);
+			markResult.put("result", "success");
+		} else {
+			markResult.put("result", "error");
+		}
+		
+		return "markRst";
+	}
+	
+	/**
+	 * 查看应急事件在地图上的分布情况
+	 */
+	public String mapOfCases() {
+		List args = new ArrayList();
+		Dept county = loginUserService.getLoginUserCounty(getRequest());
+		StringBuffer sql = new StringBuffer("from UrgentCase uc where 1=1 ");
+		if (county != null) {
+			sql.append(" and uc.county.id = ?");
+			args.add(county.getId());
+			if (StringUtils.isNotBlank(getModel().getTitle())) {
+				sql.append(" and uc.title like ?");
+				args.add(MatchMode.ANYWHERE.toMatchString(getModel().getTitle()));
+			}
+			if (StringUtils.isNotBlank(getModel().getIsAgree())) {
+				sql.append(" and uc.isAgree = ?");
+				args.add(getModel().getIsAgree());
+			}
+			if (caseBeginTime != null && caseEndTime != null) {
+				sql.append("and uc.caseTime >= ? and uc.caseTime <= ? ");
+				args.add(caseBeginTime);
+				args.add(caseEndTime);
+			}
+		}
+		List<UrgentCase> caseList = getManager().query(sql.toString(), args.toArray());
+		getRequest().setAttribute("items", caseList);
+		
+		return "mapOfCases";
 	}
 	
 	public Map<String, String> getIsAgreeMap() {
