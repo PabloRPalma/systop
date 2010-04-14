@@ -186,9 +186,11 @@ public class JointTaskAction extends
     StringBuffer hql = new StringBuffer("from FsCase fc where fc.isSubmited = 0 ");
 		List<Object> args = new ArrayList<Object>();
     // 判断是否是市级人员登录,如果不是,则需要添加根据本区县查询案件的查询条件,本逻辑需要确认
-    if (loginUserService.getLoginUserCounty(getRequest()).getParentDept() != null) {
-      hql.append("and fc.county.id = ? ");
-      args.add(loginUserService.getLoginUserCounty(getRequest()).getId());
+		Dept dept = loginUserService.getLoginUserCounty(getRequest());
+    //if (loginUserService.getLoginUserCounty(getRequest()).getParentDept() != null) {
+		if (dept != null) {
+      hql.append(" and fc.county.id = ? ");
+			args.add(dept.getId());
     }
 		if (getModel().getFsCase() != null ) {
 	    if (StringUtils.isNotBlank(getModel().getFsCase().getTitle())) {
