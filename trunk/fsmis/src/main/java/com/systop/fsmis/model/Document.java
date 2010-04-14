@@ -1,5 +1,7 @@
 package com.systop.fsmis.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
@@ -47,6 +51,11 @@ public class Document extends BaseModel {
 	 * 内容 
 	 * */
 	private String content;
+	
+	/**
+	 * 接收时间
+	 */
+	private Date createTime;
 	
 	/** 描述
 	 *  */
@@ -108,6 +117,14 @@ public class Document extends BaseModel {
 		this.content = content;
 	}
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATE_TIME", length = 11)
+	public Date getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 	@Column(name = "DESCN", length = 510)
 	public String getDescn() {
 		return this.descn;
