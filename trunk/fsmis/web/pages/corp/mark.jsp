@@ -50,9 +50,12 @@
 	        }
 	     	// 地图添加 标记
 	        var coordinate = '${model.coordinate}';
-	        var cndata = coordinate.split(",");
-	        var latlng1 = new GLatLng(cndata[0],cndata[1]);
-	        map.addOverlay(createMarker(latlng1));
+	        if (coordinate != null && coordinate != '') {
+	        	var cndata = coordinate.split(",");
+	        	var latlng1 = new GLatLng(cndata[0],cndata[1]);
+		        map.addOverlay(createMarker(latlng1));
+		    }
+	        
 		}
 	}
 
