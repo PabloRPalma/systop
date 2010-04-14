@@ -88,6 +88,28 @@ public class ReceiveRecordAction extends
 	}
 
 	/**
+	 * welcome页面收到的通知列表，按时间倒序显示5条信息
+	 */
+	@SuppressWarnings("unchecked")
+	public String noticeOfWelcome() {
+		Dept dept = loginUserService.getLoginUserDept(getRequest());
+		StringBuffer hql = new StringBuffer();
+		hql.append("from ReceiveRecord r where 1=1");
+		List args = new ArrayList();
+		if (dept != null) {
+			hql.append(" and dept.id = ?");
+			args.add(dept.getId());
+		}
+		hql.append(" order by receiveDate desc");
+		Page page = PageUtil.getPage(1, 5);
+		page = getManager().pageQuery(page, hql.toString(), args.toArray());
+		items = page.getData();
+		restorePageData(page);
+		return "noticeWelcome";
+		
+	}
+	
+	/**
 	 * 查看通知
 	 * 
 	 * @return
