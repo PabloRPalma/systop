@@ -64,6 +64,19 @@ public class DocumentAction extends ExtJsCrudAction<Document, DocumentManager> {
 		}
 		return criteria;
 	}
+	
+	/**
+	 * welcome页面文章列表，按时间倒序显示5条信息
+	 */
+	@SuppressWarnings("unchecked")
+	public String documentOfWelcome() {
+		Page page = PageUtil.getPage(1, 5);
+		page = getManager().pageQuery(page, "from Document order by id desc");
+		items = page.getData();
+		restorePageData(page);
+		return "docWelcome";
+		
+	}
 
 	/** 查看文章信息 */
 	public String view() {
