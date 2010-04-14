@@ -13,29 +13,6 @@
 			map.setCenter(new GLatLng(38.0300, 114.4900), 11);
 			map.removeMapType(G_HYBRID_MAP);
 			map.addControl(new GLargeMapControl());
-
-			var coordinate = document.getElementById("coordinate").value;
-			var corpName = document.getElementById("corpname").value;
-			
-			if (coordinate != null && coordinate != '') {
-				coordinate = coordinate.split(",");
-
-				var markerIcon = getMarkerIcon();
-				//showMarker(markerIcon, corpName, coordinate[1], coordinate[0]);
-				
-				var latlng = new GLatLng(coordinate[0], coordinate[1]);
-				var dmarker = new GMarker(latlng, markerIcon);
-				
-				map.addOverlay(dmarker);
-			
-				GEvent.addListener(dmarker, "click", function() {
-					var html ="<div>" +
-					"<p><p>" +
-					"<b>名称：<\/b>" + corpName + "<br>" +
-					"<\/div>";
-					dmarker.openInfoWindowHtml(html);
-				});
-			}
 			
 			GEvent.addListener(map, "click", function(overlay, latlng) {
 				var coordinate = map.fromLatLngToDivPixel(latlng);
@@ -44,10 +21,10 @@
 					map.addOverlay(marker);
 					var x = latlng.lat();
 					var y = latlng.lng();
-					var html = "<div>"
-								+ "企业名称："+ corpName +"<br>"
-								+ "坐标：" + coordinate + "<br><br>"
-								+ "<div align='center'><a href='#' class='button' onclick='saveData(" + x + "," + y + ")'>&nbsp;保存&nbsp;</a>&nbsp;&nbsp;"
+					var html = "<div>" + 
+								"<b>名称：<\/b>${model.name}<br>" + 
+								"<b>地址：<\/b>${model.address}<br><br>" + 
+								"<div align='center'><a href='#' class='button' onclick='saveData(" + x + "," + y + ")'>&nbsp;保存&nbsp;</a>&nbsp;&nbsp;"
 								+ "<a href='#' class='button' onclick='cancle()'>&nbsp;关闭&nbsp;</a></div>"
 								+ "</div>";
 					marker.openInfoWindow(html);
@@ -56,13 +33,30 @@
 					});
 				}
 			});
+			
+			// 创建信息窗口显示对应给定索引的字母的标记
+	        function createMarker(lng) {
+	          markerOptions = getMarkerIcon();
+	          var marker1 = new GMarker(lng, markerOptions);
+	          GEvent.addListener(marker1, "click", function() {
+	        	var html ="<div>" +
+					"<p><p>" +
+					"<b>名称：<\/b>${model.name} <br>" + 
+					"<b>地址：<\/b>${model.address} <br>" + 
+					"<\/div>";
+	            marker1.openInfoWindowHtml(html);
+	          });
+	          return marker1;
+	        }
+	     	// 地图添加 标记
+	        var coordinate = '${model.coordinate}';
+	        var cndata = coordinate.split(",");
+	        var latlng1 = new GLatLng(cndata[0],cndata[1]);
+	        map.addOverlay(createMarker(latlng1));
 		}
 	}
-	
-	function cancle(){
-		initialize();
-	}
 
+	//自定义显示图标
 	function getMarkerIcon() {
 		var baseIcon = new GIcon();
 		var iconSize = 18;
@@ -87,6 +81,10 @@
 				initialize();
 			}
 	  	 });
+	}
+
+	function cancle(){
+		initialize();
 	}
 </script>
 </head>
