@@ -8,7 +8,8 @@
 			<result name="index">/pages/office/doc/list.jsp</result> 
 			<result name="input">/pages/office/doc/edit.jsp</result> 
 			<result name="view">/pages/office/doc/view.jsp</result>
-			<result name="success" type="redirect">index.do</result> 
+			<result name="success" type="redirect">index.do</result>
+			<result name="docWelcome">/pages/office/doc/viewWelcome.jsp</result> 
 		</action>
 	</package>
 </struts>
