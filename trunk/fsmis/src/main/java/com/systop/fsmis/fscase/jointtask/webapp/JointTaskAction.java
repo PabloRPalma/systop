@@ -189,7 +189,7 @@ public class JointTaskAction extends
 		Dept dept = loginUserService.getLoginUserCounty(getRequest());
     //if (loginUserService.getLoginUserCounty(getRequest()).getParentDept() != null) {
 		if (dept != null) {
-      hql.append(" and fc.county.id = ? ");
+      hql.append("and fc.county.id = ? ");
 			args.add(dept.getId());
     }
 		if (getModel().getFsCase() != null ) {
