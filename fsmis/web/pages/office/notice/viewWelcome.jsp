@@ -11,12 +11,35 @@ function view(aID){
 	window.open(url);
 }
 </script>
+<style type="text/css">
+a:link {
+	color: #000000;
+    text-decoration:none;
+}
+a:visited {
+	color: #000000;
+    text-decoration:none;
+}
+a:hover{
+    color:#FF6600;
+	text-decoration:none;
+	}
+a:actvie{
+    color:#FF6600;
+	text-decoration:none;
+	}
+</style>
 </head>
 <body>
 
 <s:iterator value="items" var="rrecord">
-<div style="font-size:12px;width:100px;float:left;display:inline;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
-		<a href="#" onclick="view('${rrecord.id}')">${rrecord.notice.title}</a>
+<div>
+	<div style="font-size:12px;display: inline;width:100px;white-space: nowrap;overflow:hidden;text-overflow:ellipsis;">
+			<a href="#" onclick="view('${rrecord.id}')">${rrecord.notice.title}</a>
+	</div>
+	<div style="font-size:12px;display: inline;width:59px;white-space: nowrap;overflow:hidden;text-overflow:hidden;">
+		${rrecord.notice.createTime}
+	</div>
 </div>
 </s:iterator>
 </body>
