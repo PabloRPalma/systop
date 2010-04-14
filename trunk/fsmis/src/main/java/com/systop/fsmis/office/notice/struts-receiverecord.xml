@@ -7,6 +7,7 @@
 		<action name="*" class="receiveRecordAction" method="{1}">
 			<result name="index">/pages/office/notice/deptIndex.jsp</result> 
 			<result name="view">/pages/office/notice/deptView.jsp</result>
+			<result name="noticeWelcome">/pages/office/notice/viewWelcome.jsp</result>
 			<result name="listbyNoticeId">/pages/office/notice/recordsByNoticeId.jsp</result>
 			<result name="success" type="redirect">listbyNoticeId.do?noticeId=${noticeId}</result>
 		</action>
