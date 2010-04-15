@@ -153,7 +153,7 @@ public class UrgentCase extends BaseModel {
 	@Id
 	@GeneratedValue(generator = "hibseq")
 	@GenericGenerator(name = "hibseq", strategy = "hilo")
-	@Column(name = "ID", unique = true, nullable = false, precision = 10, scale = 0)
+	@Column(name = "ID", nullable = false, precision = 10, scale = 0)
 	public Integer getId() {
 		return this.id;
 	}
