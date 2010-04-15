@@ -60,7 +60,7 @@ public class ReceiveRecord extends BaseModel {
 	@Id
 	@GeneratedValue(generator = "hibseq")
 	@GenericGenerator(name = "hibseq", strategy = "hilo")
-	@Column(name = "ID", unique = true, nullable = false)
+	@Column(name = "ID", nullable = false)
 	public Integer getId() {
 		return this.id;
 	}
