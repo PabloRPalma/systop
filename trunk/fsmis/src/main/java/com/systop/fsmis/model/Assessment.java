@@ -61,7 +61,7 @@ public class Assessment extends BaseModel {
 	@Id
 	@GeneratedValue(generator = "hibseq")
 	@GenericGenerator(name = "hibseq", strategy = "hilo")
-	@Column(name = "ID", unique = true, nullable = false)
+	@Column(name = "ID", nullable = false)
 	public Integer getId() {
 		return this.id;
 	}
@@ -119,7 +119,7 @@ public class Assessment extends BaseModel {
 		this.state = state;
 	}
 
-	@Column(name = "LEVEL", length = 50)
+	@Column(name = "LEVELS", length = 50)
 	public String getLevel() {
 		return level;
 	}
