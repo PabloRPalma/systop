@@ -82,7 +82,7 @@ public class SmsReceiveAction extends
    */
   public String indexByDept() {
     Page page = PageUtil.getPage(getPageNo(), getPageSize());
-    StringBuffer hql = new StringBuffer("from SmsReceive sr where 1=1 ");
+    StringBuffer hql = new StringBuffer("from SmsReceive sr where sr.isNew = 1 ");
     List args = new ArrayList();
     
     Dept dept = loginUserService.getLoginUserDept(getRequest());
