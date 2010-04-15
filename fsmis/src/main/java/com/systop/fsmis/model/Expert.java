@@ -117,7 +117,7 @@ public class Expert extends BaseModel {
 	@Id
 	@GeneratedValue(generator = "hibseq")
 	@GenericGenerator(name = "hibseq", strategy = "hilo")
-	@Column(name = "ID", unique = true, nullable = false)
+	@Column(name = "ID", nullable = false)
 	public Integer getId() {
 		return this.id;
 	}
@@ -284,7 +284,7 @@ public class Expert extends BaseModel {
 		this.remark = remark;
 	}
 
-	@Column(name = "LEVEL", length = 100)
+	@Column(name = "LEVELS", length = 100)
 	public String getLevel() {
 		return this.level;
 	}
