@@ -243,7 +243,7 @@ public class User extends BaseModel implements UserDetails, Serializable {
 	@Id
 	@GeneratedValue(generator = "hibseq")
 	@GenericGenerator(name = "hibseq", strategy = "hilo")
-	@Column(name = "ID", unique = true, nullable = false)
+	@Column(name = "ID", nullable = false)
 	public Integer getId() {
 		return this.id;
 	}
@@ -261,7 +261,7 @@ public class User extends BaseModel implements UserDetails, Serializable {
 
 	/**
 	 * @param name
-	 *            the name to set
+	 *          the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -276,7 +276,7 @@ public class User extends BaseModel implements UserDetails, Serializable {
 
 	/**
 	 * @param sex
-	 *            the sex to set
+	 *          the sex to set
 	 */
 	public void setSex(String sex) {
 		this.sex = sex;
@@ -291,7 +291,7 @@ public class User extends BaseModel implements UserDetails, Serializable {
 
 	/**
 	 * @param folk
-	 *            the folk to set
+	 *          the folk to set
 	 */
 	public void setFolk(String folk) {
 		this.folk = folk;
@@ -306,7 +306,7 @@ public class User extends BaseModel implements UserDetails, Serializable {
 
 	/**
 	 * @param birthday
-	 *            the birthday to set
+	 *          the birthday to set
 	 */
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
@@ -322,7 +322,7 @@ public class User extends BaseModel implements UserDetails, Serializable {
 
 	/**
 	 * @param tel
-	 *            the hTel to set
+	 *          the hTel to set
 	 */
 	public void setHTel(String tel) {
 		hTel = tel;
@@ -337,7 +337,7 @@ public class User extends BaseModel implements UserDetails, Serializable {
 
 	/**
 	 * @param mobil
-	 *            the mobil to set
+	 *          the mobil to set
 	 */
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
@@ -352,7 +352,7 @@ public class User extends BaseModel implements UserDetails, Serializable {
 
 	/**
 	 * @param address
-	 *            the address to set
+	 *          the address to set
 	 */
 	public void setAddress(String address) {
 		this.address = address;
@@ -367,7 +367,7 @@ public class User extends BaseModel implements UserDetails, Serializable {
 
 	/**
 	 * @param zip
-	 *            the zip to set
+	 *          the zip to set
 	 */
 	public void setZip(String zip) {
 		this.zip = zip;
@@ -491,6 +491,7 @@ public class User extends BaseModel implements UserDetails, Serializable {
 		this.province = province;
 	}
 
+	@Column(name = "levels")
 	public String getLevel() {
 		return level;
 	}
@@ -564,7 +565,7 @@ public class User extends BaseModel implements UserDetails, Serializable {
 
 	/**
 	 * @param authorities
-	 *            the authorities to set
+	 *          the authorities to set
 	 */
 	public void setAuthorities(GrantedAuthority[] authorities) {
 		log.info("Set GrantedAuthorities :" + Arrays.toString(authorities));
@@ -646,7 +647,7 @@ public class User extends BaseModel implements UserDetails, Serializable {
 
 	/**
 	 * @param msn
-	 *            the msn to set
+	 *          the msn to set
 	 */
 	public void setMsn(String msn) {
 		this.msn = msn;
@@ -662,7 +663,7 @@ public class User extends BaseModel implements UserDetails, Serializable {
 
 	/**
 	 * @param qq
-	 *            the qq to set
+	 *          the qq to set
 	 */
 	public void setQq(String qq) {
 		this.qq = qq;
@@ -688,7 +689,7 @@ public class User extends BaseModel implements UserDetails, Serializable {
 
 	/**
 	 * @param registTime
-	 *            the registTime to set
+	 *          the registTime to set
 	 */
 	public void setRegistTime(Date registTime) {
 		this.registTime = registTime;
@@ -704,7 +705,7 @@ public class User extends BaseModel implements UserDetails, Serializable {
 
 	/**
 	 * @param isSys
-	 *            the isSys to set
+	 *          the isSys to set
 	 */
 	public void setIsSys(String isSys) {
 		this.isSys = isSys;
@@ -720,7 +721,7 @@ public class User extends BaseModel implements UserDetails, Serializable {
 
 	/**
 	 * @param dataEmail
-	 *            the dataEmail to set
+	 *          the dataEmail to set
 	 */
 	public void setDataEmail(String dataEmail) {
 		this.dataEmail = dataEmail;
