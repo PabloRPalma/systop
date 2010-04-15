@@ -65,7 +65,7 @@ public class GatherConfiger extends BaseModel {
 	@Id
 	@GeneratedValue(generator = "hibseq")
 	@GenericGenerator(name = "hibseq", strategy = "hilo")
-	@Column(name = "ID", unique = true, nullable = false)
+	@Column(name = "ID", nullable = false)
 	public Integer getId() {
 		return id;
 	}
@@ -97,7 +97,7 @@ public class GatherConfiger extends BaseModel {
 		this.keyWord = keyWord;
 	}
 
-	@Column(name = "LEVEL", length = 1)
+	@Column(name = "LEVELS", length = 1)
 	public String getLevel() {
 		return level;
 	}
