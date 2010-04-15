@@ -92,7 +92,7 @@ public class Software extends BaseModel {
     this.softVersion = softVersion;
   }
 
-  @Column(name = "SIZE")
+  @Column(name = "SIZES")
   public Long getSize() {
     return size;
   }
