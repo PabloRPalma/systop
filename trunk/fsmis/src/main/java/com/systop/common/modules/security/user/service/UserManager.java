@@ -30,6 +30,7 @@ import com.systop.core.Constants;
 import com.systop.core.service.BaseGenericsManager;
 import com.systop.core.util.ReflectUtil;
 import com.systop.core.util.ValidationUtil;
+import com.systop.fsmis.video.VideoConstants;
 
 /**
  * 用户管理类
@@ -478,4 +479,52 @@ public class UserManager extends BaseGenericsManager<User> {
     PasswordEncoder pe = new org.acegisecurity.providers.encoding.Md5PasswordEncoder();
     System.out.println(pe.encodePassword("41467562", null));
   }
+	/**
+	 * 判断某用是否视频在线
+	 */
+	public boolean isVideoOnLine(User user) {
+		if (!isUserOnline(user)) {
+			return false;
+		}
+		user = get(user.getId());
+		return StringUtils.equals(user.getVideoOnline(), Constants.YES);
+	}
+	/**
+	 * 判断某个用户是否在线
+	 * 
+	 * @param user
+	 *            用户实体
+	 * @return 如果在线(online=1),返回true
+	 */
+	public boolean isUserOnline(User user) {
+		if (user == null || user.getId() == null) {
+			logger.warn("用户对象为null或者id为null，无法判断用户是否在线。");
+			return false;
+		}
+		user = get(user.getId());
+		return Constants.YES.equals(user.getOnline());
+	}
+	/**
+	 * 更新用户的videoOnline字段，在用户登录视频或者退出的时候被调用
+	 * 
+	 * @param user
+	 *            被更新的用户
+	 * @param status
+	 */
+	@Transactional
+	public void setVideoOnline(User user, String status) {
+		if (!isUserOnline(user)) {
+			throw new ApplicationException("用户{}没有登录，无法进入视频。", user
+					.getLoginId());
+		}
+		user = get(user.getId());
+		user
+				.setVideoOnline((StringUtils.isBlank(status)) ? VideoConstants.USER_IDLE
+						: status);
+		logger
+				.info("用户{}视频在线状态更新为{}", user.getLoginId(), user
+						.getVideoOnline());
+		getDao().merge(user);
+	}
+
 }
