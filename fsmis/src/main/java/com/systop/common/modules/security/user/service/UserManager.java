@@ -30,7 +30,7 @@ import com.systop.core.Constants;
 import com.systop.core.service.BaseGenericsManager;
 import com.systop.core.util.ReflectUtil;
 import com.systop.core.util.ValidationUtil;
-import com.systop.fsmis.video.VideoConstants;
+
 
 /**
  * 用户管理类
@@ -510,7 +510,7 @@ public class UserManager extends BaseGenericsManager<User> {
 	 * @param user
 	 *            被更新的用户
 	 * @param status
-	 */
+	 
 	@Transactional
 	public void setVideoOnline(User user, String status) {
 		if (!isUserOnline(user)) {
@@ -526,5 +526,5 @@ public class UserManager extends BaseGenericsManager<User> {
 						.getVideoOnline());
 		getDao().merge(user);
 	}
-
+*/
 }
