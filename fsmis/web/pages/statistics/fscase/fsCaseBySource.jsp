@@ -44,7 +44,7 @@ function strParser(){
 </style>
 </head>
 <body onload="strParser()">
-<div class="x-panel-header">事件派遣环节统计图</div>
+<div class="x-panel-header">事件来源统计图</div>
 <div class="x-toolbar" style="height:25px;padding:3px;">
 <table width="99%">
   <tr>
