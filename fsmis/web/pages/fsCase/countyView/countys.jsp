@@ -18,7 +18,7 @@
 		   <img src="${ctx}/images/exticons/preview-right.gif" width="16" height="16">&nbsp;区县名称:${dept.name}
 		 </td>
 		 <td class="block-title"  align="right">
-		   <a href="${ctx}/fscaseCount/getCaseCount.do" target="main">
+		   <a href="${ctx}/fscase/countyView/deptCaseCount.do?model.county.id=${dept.id}" target="main">
 			  <img src="${ctx}/images/icons/more2.gif" title="查看更多..." width="14" height="14">
 		   </a>&nbsp;&nbsp;
 		 </td>
