@@ -29,11 +29,12 @@ function mapOfFsCases() {
 </head>
 <body>
 <div class="x-panel">
-<div class="x-panel-header">${isMultipleCase eq 0?'单体事件':'多体事件'}管理</div>
+<div class="x-panel-header">${isMultipleCase eq 0?'单体事件':'多体事件'}察看</div>
 <div class="x-toolbar">
 <table width="99%">
 	<tr>
 		<td><s:form action="index" method="post">
+			<s:hidden name="model.county.id"></s:hidden>
 			<s:hidden name="isMultipleCase"></s:hidden>
 						事件标题:
 			<s:textfield name="model.title" cssStyle="width:100px"></s:textfield>	
@@ -58,18 +59,7 @@ function mapOfFsCases() {
 			<input onclick="mapOfFsCases()" type="button" value="事件分布图"
 				class="button" />
 		</c:if></td>
-		<td align="right"><stc:role ifNotGranted="ROLE_DEPT_OPER">
-			<table>
-				<tr>
-					<td><span class="ytb-sep"></span></td>
-					<td><c:if test="${isMultipleCase eq 0}">
-						<a
-							href="${ctx}/fscase/edit.do?isMultipleCase=${isMultipleCase}&modelId=${modelId}">
-						添加事件</a>
-					</c:if></td>
-				</tr>
-			</table>
-		</stc:role></td>
+		
 	</tr>
 </table>
 </div>
