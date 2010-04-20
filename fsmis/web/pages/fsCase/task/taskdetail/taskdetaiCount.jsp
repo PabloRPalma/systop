@@ -4,7 +4,7 @@
 <html>
 <head>
 <%@include file="/common/meta.jsp"%>
-<meta http-equiv="refresh" content="300" url="${ctx}/taskdetailCount/getTaskDetailCount.do"/>
+
 <title></title>
 </head>
 <body>
@@ -17,6 +17,10 @@
 	    <tr>
 	      <td><img src="${ctx}/images/exticons/bit.png">&nbsp;未接收多体任务</td>
 	      <td><a href="${ctx}/taskdetail/index.do?status=0&isMultipleCase=1" target="main" style="color: red">${multipleTaskCountNoReceive}</a></td>
+	    </tr>
+	    <tr>
+	      <td width="130"><img src="${ctx}/images/exticons/bit.png">&nbsp;未接收联合任务</td>
+	      <td width="70"><a href="${ctx}/jointTask/deptTaskDetail/deptTaskDetailIndex.do" target="main" style="color: red">${jointTaskCountNoReceive}</a></td>
 	    </tr>
   
   </table>
