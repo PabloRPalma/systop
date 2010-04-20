@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="fsmis.fscase.sjview" extends="json"  namespace="/fscase/countyView">
+		<action name="*" class="fsCaseCountyViewAction" method="{1}">
+			<result name="index">/pages/fsCase/countyView/index.jsp</result> 
+			<result name="listAllDepts">/pages/fsCase/countyView/countys.jsp</result>
+			<result name="deptCaseCount">/pages/fsCase/countyView/countyCaseCount.jsp</result> 						
+		</action>
+	</package>
+</struts>
+
