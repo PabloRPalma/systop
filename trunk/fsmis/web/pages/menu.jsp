@@ -3,7 +3,8 @@
 <%request.setAttribute("ctx", request.getContextPath()); %>
 <%@ taglib prefix="stc" uri="/systop/common" %>
 <div id="menu" style="display:none">
-	<div id="command">		
+	<div id="command">	
+	    <stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CITY,ROLE_COUNTY">	
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/casetype/index.do" target="main">事件类别</a>
@@ -16,10 +17,14 @@
 			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/task/index.do?isMultipleCase=0&modelId=1" target="main">单体任务管理</a>
 		</div>
+		</stc:role>
+		<stc:role ifAnyGranted="ROLE_DEPT">
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/taskdetail/index.do?isMultipleCase=0&modelId=1" target="main">单体任务接收</a>
 		</div>
+		</stc:role>
+		<stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CITY,ROLE_COUNTY">	
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/fscase/index.do?isMultipleCase=1&modelId=0" target="main">多体事件管理</a>
@@ -28,10 +33,14 @@
 			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/task/index.do?isMultipleCase=1&modelId=2" target="main">多体任务管理</a>
 		</div>
+		</stc:role>
+		<stc:role ifAnyGranted="ROLE_DEPT">
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/taskdetail/index.do?isMultipleCase=1&modelId=2" target="main">多体任务接收</a>
 		</div>
+		</stc:role>
+		<stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CITY,ROLE_COUNTY">	
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/sendType/index.do" target="main">派遣环节</a>
@@ -40,6 +49,8 @@
 			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/jointTask/index.do" target="main">联合整治管理</a>
 		</div>	
+		</stc:role>
+		<stc:role ifAnyGranted="ROLE_DEPT">
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/jointTask/deptTaskDetail/deptTaskDetailIndex.do" target="main">联合整治接收</a>
@@ -47,8 +58,10 @@
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/casereport/index.do" target="main">部门上报</a>
-		</div>			
+		</div>	
+		</stc:role>		
 	</div>
+		
 	<div id="assess">
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
@@ -142,13 +155,14 @@
 			</div>
 		</div>
 	</div>
+		
 	<div id="supervisor">
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/supervisor/index.do" target="main">信息员</a>
 		</div>
 	</div>
-	<div id=member>
+	<div id=member>    
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/member/edit.do" target="main">添加成员</a>
@@ -260,13 +274,11 @@
 			<div style="padding-top:4px;"> 
 				<img src="${ctx}/images/icons/resource.gif" class="icon">
 				<a href="${ctx}/userHistory/userHistoryList.do" target="main"><font color="red">登录记录</font></a>
-			</div>
-			<!--  
+			</div> 
 			<div style="padding-top:2px"> 
 				<img src="${ctx}/images/icons/resource.gif" class="icon">
 				<a href="${ctx}/security/resource/index.do" target="main">资源管理</a>
 			</div>
-			-->
 			<div style="padding-top:2px">
 				<img src="${ctx}/images/icons/user_go.gif" class="icon">
 				<a href="${ctx}/regist/index.do" target="main">注册用户管理</a>
@@ -277,4 +289,5 @@
 			</div>
 		</div>
 	</div>
+	
 </div>
