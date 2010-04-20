@@ -13,7 +13,6 @@ import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
 import com.systop.fsmis.FsConstants;
 import com.systop.fsmis.fscase.CaseConstants;
 import com.systop.fsmis.fscase.service.FsCaseManager;
-import com.systop.fsmis.fscase.task.TaskConstants;
 import com.systop.fsmis.model.FsCase;
 
 
