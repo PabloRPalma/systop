@@ -208,4 +208,12 @@ public class FsCaseCountyViewAction extends ExtJsCrudAction<FsCase, FsCaseCounty
 	public void setIsMultipleCase(String isMultipleCase) {
 		this.isMultipleCase = isMultipleCase;
 	}
+
+	public String getIsJointCase() {
+		return isJointCase;
+	}
+
+	public void setIsJointCase(String isJointCase) {
+		this.isJointCase = isJointCase;
+	}
 }
