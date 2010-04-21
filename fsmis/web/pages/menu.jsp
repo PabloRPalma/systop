@@ -18,7 +18,7 @@
 			<a href="${ctx}/task/index.do?isMultipleCase=0&modelId=1" target="main">单体任务管理</a>
 		</div>
 		</stc:role>
-		<stc:role ifAnyGranted="ROLE_DEPT">
+		<stc:role ifAnyGranted="ROLE_COUNTY,ROLE_DEPT">
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/taskdetail/index.do?isMultipleCase=0&modelId=1" target="main">单体任务接收</a>
@@ -34,7 +34,7 @@
 			<a href="${ctx}/task/index.do?isMultipleCase=1&modelId=2" target="main">多体任务管理</a>
 		</div>
 		</stc:role>
-		<stc:role ifAnyGranted="ROLE_DEPT">
+		<stc:role ifAnyGranted="ROLE_COUNTY,ROLE_DEPT">
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/taskdetail/index.do?isMultipleCase=1&modelId=2" target="main">多体任务接收</a>
@@ -50,11 +50,13 @@
 			<a href="${ctx}/jointTask/index.do" target="main">联合整治管理</a>
 		</div>	
 		</stc:role>
-		<stc:role ifAnyGranted="ROLE_DEPT">
+		<stc:role ifAnyGranted="ROLE_COUNTY,ROLE_DEPT">
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/jointTask/deptTaskDetail/deptTaskDetailIndex.do" target="main">联合整治接收</a>
-		</div>			
+		</div>
+		</stc:role>
+		<stc:role ifAnyGranted="ROLE_DEPT">			
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/casereport/index.do" target="main">部门上报</a>
