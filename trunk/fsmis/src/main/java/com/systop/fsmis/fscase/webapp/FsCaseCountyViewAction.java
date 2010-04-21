@@ -48,7 +48,7 @@ public class FsCaseCountyViewAction extends ExtJsCrudAction<FsCase, FsCaseCounty
 	 */
 	@SuppressWarnings("unchecked")
 	public String listAllDepts() {
-		String hql = "from Dept d where d.type = '1' and d.parentDept <> null ";
+		String hql = "from Dept d where d.type = '1' and d.parentDept <> null order by d.deptSort";
 		deptList = getManager().getDao().query(hql);
 
 		return "listAllDepts";
