@@ -59,6 +59,12 @@
 			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/casereport/index.do" target="main">部门上报</a>
 		</div>	
+		</stc:role>
+		<stc:role ifAnyGranted="ROLE_CITY">
+			<div style="padding-top:2px">
+				<img src="${ctx}/images/icons/add.gif" class="icon">
+				<a href="${ctx}/fscase/countyView/listAllDepts.do" target="main">市级察看</a>
+			</div>
 		</stc:role>		
 	</div>
 		
