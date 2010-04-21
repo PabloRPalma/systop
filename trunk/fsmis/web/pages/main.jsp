@@ -10,6 +10,7 @@
 </head>
 <body>
 <div class="col">
+  <stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CITY,ROLE_COUNTY">
   <div class="block">
      <table width="100%" class="toptdborder">
 	   <tr>
@@ -25,6 +26,7 @@
        <iframe src="${ctx}/fscaseCount/getCaseCount.do" frameborder="0" scrolling="no" style="margin-left:-20px;height: 120px;"></iframe>
      </div>
    </div>
+   </stc:role>
    <div class="block">
      <table width="100%" class="toptdborder">
 	   <tr>
@@ -40,6 +42,7 @@
        <iframe src="${ctx}/office/doc/documentOfWelcome.do" frameborder="0" scrolling="no" style="margin-left:-20px;height: 120px;"></iframe>
      </div>
    </div>
+   <stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CITY,ROLE_COUNTY">
    <div class="block">
      <table width="100%" class="toptdborder">
 	   <tr>
@@ -55,8 +58,10 @@
        <iframe src="${ctx}/smsreceive/indexByDept.do" frameborder="0" scrolling="no" style="margin-left:-20px;height: 120px;"></iframe>
      </div>
    </div>
+   </stc:role>
  </div>
 <div class="col"> 
+  <stc:role ifAnyGranted="ROLE_ADMIN,ROLE_COUNTY,ROLE_DEPT">
    <div class="block">
      <table width="100%" class="toptdborder">
 	   <tr>
@@ -72,6 +77,7 @@
        <iframe src="${ctx}/taskdetailCount/getTaskDetailCount.do" frameborder="0" scrolling="no" style="margin-left:-20px;height: 120px;"></iframe>
      </div>
    </div>
+    </stc:role>
    <div class="block">
      <table width="100%" class="toptdborder">
 	   <tr>
@@ -87,6 +93,7 @@
        <iframe src="${ctx}/office/receiverecord/noticeOfWelcome.do" frameborder="0" scrolling="no" style="margin-left:-20px;height: 120px;"></iframe>
      </div>
    </div>
+   <stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CITY,ROLE_COUNTY">
    <div class="block">
      <table width="100%" class="toptdborder">
 	   <tr>
@@ -102,6 +109,7 @@
        <iframe src="${ctx}/assessment/viewWelcome.do" frameborder="0" scrolling="no" style="margin-left:-20px;height: 120px;"></iframe>
      </div>
    </div>
+   </stc:role>
  </div>
 </body>
 </html>

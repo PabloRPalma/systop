@@ -17,7 +17,7 @@
 </style>
 </head>
 <body>
-<script type="text/javascript">
+<script type="text/javascript"><!--
 	Ext.onReady(function() {
 
 		Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
@@ -87,12 +87,12 @@
 					html : document.getElementById('configer').innerHTML,
 					border : false,
 					iconCls : 'cms'
-				}</stc:role>,{
+				}</stc:role>/*,{
 					title : '<span class="title">网站管理</span>',
 					html : document.getElementById('cms').innerHTML,
 					border : false,
 					iconCls : 'cms'
-				}<stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CITY,ROLE_COUNTY">,{
+				}*/<stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CITY,ROLE_COUNTY">,{
 					title : '<span class="title">成员管理</span>',
 					html : document.getElementById('member').innerHTML,
 					border : false,
@@ -114,7 +114,7 @@
 			} ]
 		});
 	});
-</script>
+--></script>
 <%@include file="/pages/menu.jsp"%>
 <div id="west"></div>
 <div id="north" align="center" style="margin-top: 4px;">
