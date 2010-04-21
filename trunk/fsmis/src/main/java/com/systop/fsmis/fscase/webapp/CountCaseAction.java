@@ -47,7 +47,7 @@ public class CountCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
 	    buf1.append(" and s.isSubmited= ?");
 	    args.add(FsConstants.N);
 	    buf1.append(" and s.caseSourceType <> ?");
-	    args.add("'"+CaseConstants.CASE_SOURCE_TYPE_JOINTASK+"'");
+	    args.add(CaseConstants.CASE_SOURCE_TYPE_JOINTASK);
 	    
 	    StringBuffer buf2 = new StringBuffer("from FsCase s where s.county.id= ? ");
 	    List<Object> args2 = new ArrayList<Object>();
@@ -59,7 +59,7 @@ public class CountCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
 	    buf2.append(" and s.isSubmited= ?");
 	    args2.add(FsConstants.N);
 	    buf2.append(" and s.caseSourceType <> ?");
-	    args2.add("'"+CaseConstants.CASE_SOURCE_TYPE_JOINTASK+"'");
+	    args2.add(CaseConstants.CASE_SOURCE_TYPE_JOINTASK);
 	    
 	    StringBuffer buf3 = new StringBuffer("from FsCase s where s.county.id= ? ");
 	    List<Object> args3 = new ArrayList<Object>();
@@ -71,7 +71,7 @@ public class CountCaseAction extends ExtJsCrudAction<FsCase, FsCaseManager> {
 	    buf3.append(" and s.isSubmited= ?");
 	    args3.add(FsConstants.N);
 	    buf3.append(" and s.caseSourceType = ?");
-	    args3.add("'"+CaseConstants.CASE_SOURCE_TYPE_JOINTASK+"'");
+	    args3.add(CaseConstants.CASE_SOURCE_TYPE_JOINTASK);
 	    
 	  
 		//统计未派遣单体案件
