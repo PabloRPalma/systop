@@ -9,27 +9,16 @@
 <link rel="stylesheet" type="text/css" href="${ctx}/styles/welcome.css"/>
 </head>
 <body>
+<div style="width: 850px;">
 <c:forEach items="${deptList}" var="dept">
-<div class="col">
-  <div class="block">
-     <table width="100%" class="toptdborder">
-	   <tr>
-		 <td class="block-title">
-		   <img src="${ctx}/images/exticons/preview-right.gif" width="16" height="16">&nbsp;区县名称:${dept.name}
-		 </td>
-		 <td class="block-title"  align="right">
-		   <a href="${ctx}/fscase/countyView/deptCaseCount.do?model.county.id=${dept.id}" target="main">
-			  <img src="${ctx}/images/icons/more2.gif" title="查看更多..." width="14" height="14">
-		   </a>&nbsp;&nbsp;
-		 </td>
-	   </tr>
-	 </table>
-     <div class="block-body">
-       <iframe src="${ctx}/fscase/countyView/deptCaseCount.do?model.county.id=${dept.id}" frameborder="0" scrolling="no" style="margin-left:-20px;height: 120px;"></iframe>
-     </div>
-   </div>  
- </div>
+	<div class="block" style="width:140px; float: left; margin-left: 10px;">
+		&nbsp;<img src="${ctx}/images/exticons/preview-right.gif" width="16" height="16">&nbsp;区县:${dept.name}
+		<div style="width: 140px;">
+    		<iframe width="140" height="90" src="${ctx}/fscase/countyView/deptCaseCount.do?model.county.id=${dept.id}" frameborder="0" scrolling="no"></iframe>
+    	</div>
+	</div>  
 </c:forEach>
+</div>
 
  
 </body>
