@@ -7,10 +7,6 @@
 	    <stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CITY,ROLE_COUNTY">	
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
-			<a href="${ctx}/casetype/index.do" target="main">事件类别</a>
-		</div>
-		<div style="padding-top:2px">
-			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/fscase/index.do?isMultipleCase=0&modelId=0" target="main">单体事件管理</a>
 		</div>
 		<div style="padding-top:2px">
@@ -40,7 +36,11 @@
 			<a href="${ctx}/taskdetail/index.do?isMultipleCase=1&modelId=2" target="main">多体任务接收</a>
 		</div>
 		</stc:role>
-		<stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CITY,ROLE_COUNTY">	
+		<stc:role ifAnyGranted="ROLE_CITY,ROLE_COUNTY">	
+		<div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/casetype/index.do" target="main">事件类别</a>
+		</div>
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/sendType/index.do" target="main">派遣环节</a>
@@ -53,7 +53,7 @@
 		<stc:role ifAnyGranted="ROLE_COUNTY,ROLE_DEPT">
 		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
-			<a href="${ctx}/jointTask/deptTaskDetail/deptTaskDetailIndex.do" target="main">联合整治接收</a>
+			<a href="${ctx}/jointTask/deptTaskDetail/deptTaskDetailIndex.do" target="main">联合整治任务接收</a>
 		</div>
 		</stc:role>
 		<stc:role ifAnyGranted="ROLE_DEPT">			
@@ -65,7 +65,7 @@
 		<stc:role ifAnyGranted="ROLE_CITY">
 			<div style="padding-top:2px">
 				<img src="${ctx}/images/icons/add.gif" class="icon">
-				<a href="${ctx}/fscase/countyView/listAllDepts.do" target="main">市级察看</a>
+				<a href="${ctx}/fscase/countyView/listAllDepts.do" target="main">全市情况总揽</a>
 			</div>
 		</stc:role>		
 	</div>
@@ -192,6 +192,7 @@
 	</div>
 	<div id="office">
 		<div style="padding-left:5px;">   
+			<stc:role ifAnyGranted="ROLE_CITY,ROLE_COUNTY">	
 			<div style="padding-top:2px">
 				<img src="${ctx}/images/icons/add.gif" class="icon">
 				<a href="${ctx}/office/doctype/index.do" target="main">栏目管理</a>
@@ -204,9 +205,10 @@
 				<img src="${ctx}/images/icons/add.gif" class="icon">
 				<a href="${ctx}/office/notice/index.do" target="main">通知管理</a>
 			</div>
+			</stc:role>
 			<div style="padding-top:2px">
 				<img src="${ctx}/images/icons/add.gif" class="icon">
-				<a href="${ctx}/office/receiverecord/index.do" target="main">通知部门记录</a>
+				<a href="${ctx}/office/receiverecord/index.do" target="main">接收通知</a>
 			</div>
 			<div style="padding-top:2px">
 				<img src="${ctx}/images/icons/add.gif" class="icon">
@@ -293,9 +295,12 @@
 			</div>
 			<div style="padding-top:2px">
 				<img src="${ctx}/images/icons/add.gif" class="icon">
-				<a href="${ctx}/fsmis/googlemap/edit.do" target="main">Google Map配置</a>
+				<a href="${ctx}/fsmis/googlemap/edit.do" target="main">WebGIS配置</a>
 			</div>
 		</div>
 	</div>
-	
+	<div id="help">
+		<div style="padding-left:5px;">  
+		</div>
+	</div>
 </div>
