@@ -179,7 +179,7 @@
 					}
 				}
 			});
-			setTimeout("checkNewMsg()", 15000);
+			setTimeout("checkNewMsg()", 10000);
 		}
 		
 		checkNewMsg();
@@ -198,7 +198,7 @@
 					}
 				}
 			});
-			setTimeout("checkNewNotice()", 200000);
+			setTimeout("checkNewNotice()", 30000);
 		}
 		
 		checkNewNotice();
@@ -226,7 +226,7 @@
 					 }					
 				}
 			});
-			setTimeout("checkNewTaskDetail()", 20000);
+			setTimeout("checkNewTaskDetail()", 30000);
 		}
 		checkNewTaskDetail();
 
@@ -250,7 +250,7 @@
 					 }					
 				}
 			});
-			setTimeout("checkNewMutilCase()", 20000);
+			setTimeout("checkNewMutilCase()", 30000);
 		}
 		checkNewMutilCase();
 		
@@ -270,7 +270,7 @@
 				}
 
 			});
-			setTimeout("checkNewJointTaskDetail()", 20000);
+			setTimeout("checkNewJointTaskDetail()", 30000);
 		}
 		checkNewJointTaskDetail();		
 		
@@ -298,7 +298,7 @@
 					 }					
 				}
 			});
-			setTimeout("checkNewSms()", 2000);
+			setTimeout("checkNewSms()", 10000);
 		}
 		checkNewSms();
 	</script>
