@@ -90,8 +90,7 @@ function mapOfFsCases() {
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	<ec:row>
 		<ec:column width="30" property="_s" title="No." value="${GLOBALROWCOUNT}" sortable="false" style="text-align:center"/>	
-		<ec:column width="160" property="title" title="事件标题" tipTitle="${item.title}" ellipsis="true" sortable="false"/>
-		<ec:column width="50" property="code" title="事件编号" sortable="false"/>
+		<ec:column width="350" property="title" title="事件标题" tipTitle="${item.title}" ellipsis="true" sortable="false"/>
 		<ec:column width="80" property="caseType.name" title="事件类别" sortable="false"/>
 		<ec:column width="115" property="caseTime" title="事发时间"
 			style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm" sortable="false"/>	
@@ -104,16 +103,16 @@ function mapOfFsCases() {
 		 </ec:column>
 		</c:if>	
 		<c:if test="${param['isMultipleCase'] eq 0}">
-		<ec:column width="80" property="_3" title="事件来源" style="text-align:center" sortable="false">
-			<c:if test="${item.caseSourceType == 'generic'}">普通添加</c:if>
-			<c:if test="${item.caseSourceType == 'jointask'}">联合整治添加</c:if>
-			<c:if test="${item.caseSourceType == 'deptreport'}">部门上报</c:if>
-			<c:if test="${item.caseSourceType == 'district'}">区县上报</c:if>
+		<ec:column width="60" property="_3" title="事件来源" style="text-align:center" sortable="false">
+			<c:if test="${item.caseSourceType == 'generic'}">普通</c:if>
+			<c:if test="${item.caseSourceType == 'jointask'}">联合</c:if>
+			<c:if test="${item.caseSourceType == 'deptreport'}">部门报</c:if>
+			<c:if test="${item.caseSourceType == 'district'}">区县报</c:if>
 		</ec:column>
 		</c:if>
-		<ec:column width="80" property="_4" title="事件处理流程" style="text-align:center" sortable="false">
-			<c:if test="${item.processType == 'task'}">普通派遣处理</c:if>
-			<c:if test="${item.processType == 'jointask'}">联合整治处理</c:if>
+		<ec:column width="60" property="_4" title="处理流程" style="text-align:center" sortable="false">
+			<c:if test="${item.processType == 'task'}">普通</c:if>
+			<c:if test="${item.processType == 'jointask'}">联合</c:if>
 		</ec:column>
 		<ec:column width="50" property="_6" title="查看" style="text-align:center" sortable="false">
 		<c:if test="${item.caseSourceType != 'jointask' }">
