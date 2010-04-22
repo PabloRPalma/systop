@@ -90,6 +90,7 @@ public final class UserConstants {
 		SYS_ROLES.add(sysRole(ROLE_ADMIN, "系统管理员角色"));
 		SYS_ROLES.add(sysRole("ROLE_CITY", "市级角色"));
 		SYS_ROLES.add(sysRole("ROLE_COUNTY", "区县级角色"));
+		SYS_ROLES.add(sysRole("ROLE_DEPT", "执行部门"));
 	}
 
 	/**
