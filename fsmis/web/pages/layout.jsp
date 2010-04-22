@@ -42,69 +42,81 @@
 				layoutConfig : {
 					animate : true
 				},
-				items : [ {
+				items : [ 
+				<stc:role ifAnyGranted="ROLE_CITY,ROLE_COUNTY,ROLE_DEPT">{
 					title : '<span class="title">协调指挥</span>',
 					html : document.getElementById('command').innerHTML,
 					border : false,
 					iconCls : 'cms'
-				}<stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CITY,ROLE_COUNTY">, {
+				},</stc:role>
+				<stc:role ifAnyGranted="ROLE_CITY,ROLE_COUNTY">{
 					title : '<span class="title">专家评估</span>',
 					html : document.getElementById('assess').innerHTML,
 					border : false,
 					iconCls : 'cms'
-				}</stc:role><stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CITY,ROLE_COUNTY">,{
+				},{
 					title : '<span class="title">应急指挥</span>',
 					html : document.getElementById('urgent').innerHTML,
 					border : false,
 					iconCls : 'cms'
-				}</stc:role>,{
+				},{
 					title : '<span class="title">统计分析</span>',
 					html : document.getElementById('analyse').innerHTML,
 					border : false,
 					iconCls : 'cms'
-				},{
-					title : '<span class="title">企业诚信</span>',
-					html : document.getElementById('corp').innerHTML,
-					border : false,
-					iconCls : 'corp'
-				}<stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CITY,ROLE_COUNTY">,{
+				},</stc:role>
+				<stc:role ifAnyGranted="ROLE_CITY,ROLE_COUNTY">{
 					title : '<span class="title">信息员管理</span>',
 					html : document.getElementById('supervisor').innerHTML,
 					border : false,
 					iconCls : 'cms'
-				}</stc:role><stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CITY,ROLE_COUNTY">	,{
+				},{
 					title : '<span class="title">短信管理</span>',
 					html : document.getElementById('sms').innerHTML,
 					border : false,
 					iconCls : 'cms'
-				}</stc:role>,{
+				},</stc:role>
+				<stc:role ifAnyGranted="ROLE_CITY,ROLE_COUNTY,ROLE_DEPT">{
+					title : '<span class="title">企业管理</span>',
+					html : document.getElementById('corp').innerHTML,
+					border : false,
+					iconCls : 'corp'
+				},{
 					title : '<span class="title">内部办公</span>',
 					html : document.getElementById('office').innerHTML,
 					border : false,
 					iconCls : 'cms'
-				}<stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CITY,ROLE_COUNTY"> ,{
+				},</stc:role>
+				<stc:role ifAnyGranted="ROLE_CITY,ROLE_COUNTY">{
 					title : '<span class="title">配置管理</span>',
 					html : document.getElementById('configer').innerHTML,
 					border : false,
 					iconCls : 'cms'
-				}</stc:role>/*,{
-					title : '<span class="title">网站管理</span>',
-					html : document.getElementById('cms').innerHTML,
-					border : false,
-					iconCls : 'cms'
-				}*/<stc:role ifAnyGranted="ROLE_ADMIN,ROLE_CITY,ROLE_COUNTY">,{
+				},{
 					title : '<span class="title">成员管理</span>',
 					html : document.getElementById('member').innerHTML,
 					border : false,
 					iconCls : 'cms'
-				}</stc:role><stc:role ifAnyGranted="ROLE_ADMIN">, {
+				},/*{
+					title : '<span class="title">网站管理</span>',
+					html : document.getElementById('cms').innerHTML,
+					border : false,
+					iconCls : 'cms'
+				}*/
+				</stc:role>
+				<stc:role ifAnyGranted="ROLE_ADMIN">{
 					title : '<span class="title">许可管理</span>',
 					html : document.getElementById('xkgl').innerHTML,
 					border : false,
 					iconCls : 'permit'
-				}</stc:role> ]
+				},</stc:role>
+				{
+					title : '<span class="title">系统帮助</span>',
+					html : document.getElementById('cms').innerHTML,
+					border : false,
+					iconCls : 'help'
+				} ]
 			},
-
 			{
 				region : 'center',
 				contentEl : 'center',
@@ -286,7 +298,7 @@
 					 }					
 				}
 			});
-			setTimeout("checkNewSms()", 20000);
+			setTimeout("checkNewSms()", 2000);
 		}
 		checkNewSms();
 	</script>
