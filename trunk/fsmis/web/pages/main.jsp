@@ -37,7 +37,7 @@
 	   </tr>
 	 </table>
 	 <div class="block-body">
-       <iframe src="${ctx}/office/doc/documentOfWelcome.do" frameborder="0" scrolling="no" style="margin-left:-20px;height: 120px;"></iframe>
+       <iframe width="500" src="${ctx}/office/doc/documentOfWelcome.do" frameborder="0" scrolling="no" style="margin-left:-20px;height: 130px;"></iframe>
      </div>
    </div>
    <stc:role ifAnyGranted="ROLE_CITY,ROLE_COUNTY">
