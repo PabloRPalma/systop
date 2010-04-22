@@ -112,9 +112,9 @@
 				},</stc:role>
 				{
 					title : '<span class="title">系统帮助</span>',
-					html : document.getElementById('cms').innerHTML,
+					html : document.getElementById('help').innerHTML,
 					border : false,
-					iconCls : 'help'
+					iconCls : 'cms'
 				} ]
 			},
 			{
