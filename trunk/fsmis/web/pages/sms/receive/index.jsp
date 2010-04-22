@@ -41,10 +41,10 @@
 	action="index.do" 
 	useAjax="false"
 	doPreload="false" 
-	pageSizeList="30,50,100,200" 
+	pageSizeList="20,50,100,200" 
 	editable="false"
-	sortable="true" 
-	rowsDisplayed="30" 
+	sortable="false" 
+	rowsDisplayed="20" 
 	generateScript="true"
 	resizeColWidth="false" 
 	classic="false" 
@@ -71,13 +71,13 @@
 			</s:elseif>
 			<s:else><font color="" title="普通短信">普</font></s:else>
 		</ec:column>
-		<ec:column width="100" property="_stuts" title="状态" style="text-align:center"  sortable="false" viewsAllowed="html">
+		<ec:column width="120" property="_stuts" title="状态" style="text-align:center"  sortable="false" viewsAllowed="html">
 			<s:if test="#attr.item.isNew eq 1"><font color="red">未读</font></s:if>
 			<s:else><font color="green">已读</font></s:else>|
 			<s:if test="#attr.item.isTreated eq 1"><font color="green">已处理</font></s:if>
 			<s:else><font color="red">未处理</font></s:else>
 		</ec:column>
-		<ec:column width="100" property="_0" title="操作" style="text-align:center" sortable="false">	
+		<ec:column width="120" property="_0" title="操作" style="text-align:center" sortable="false">	
 		<a href="#" onClick="viewSmsInfo(${item.id})">查看</a> |
 			<c:choose>
 				<c:when test="${item.isReport eq '1'}">
