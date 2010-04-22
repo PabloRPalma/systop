@@ -768,7 +768,7 @@ public class User extends BaseModel implements UserDetails, Serializable {
 		return videoOnline;
 	}
 
-	@Column(name = "online", columnDefinition = "char(1) default '0'")
+	@Column(name = "is_online", columnDefinition = "char(1) default '0'")
 	public String getOnline() {
 		return online;
 	}
