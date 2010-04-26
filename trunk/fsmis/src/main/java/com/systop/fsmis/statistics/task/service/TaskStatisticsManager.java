@@ -107,7 +107,7 @@ public class TaskStatisticsManager extends BaseGenericsManager<Task> {
 			}
 			hql.append(" and ts.fsCase.county.id=? ");
 			args.add(Integer.valueOf(dp.getId()));
-			hql.append("group by ts.fsCase.county.id ");
+			hql.append("group by ts.fsCase.county.id,ts.fsCase.county.name ");
 			List<Object[]> result = getDao().query(hql.toString(), args.toArray());
 			if (result.size() > 0) {
 				for (Object[] objs : result) {
