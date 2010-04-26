@@ -126,7 +126,7 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 				args.add(beginDate);
 				args.add(endDate);
 			}
-			sqlTemp.append(" group by fc.county.id");
+			sqlTemp.append(" group by fc.county.id,fc.county.name");
 			List<Object[]> result = getDao()
 					.query(sqlTemp.toString(), args.toArray());
 			if (CollectionUtils.isNotEmpty(result)) {
@@ -462,7 +462,7 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 					args.add(c.getId());
 				}
 			}
-			sql.append(" )group by year(fc.caseTime)");
+			sql.append(" )group by year(fc.caseTime),fc.caseType.id");
 			List<Object[]> r = getDao().query(sql.toString(), args.toArray());
 			if (CollectionUtils.isNotEmpty(r)) {
 				result.add(r.get(0));
@@ -831,6 +831,7 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 				args.add(beginDate);
 				args.add(endDate);
 			}
+			sql.append(" group by fc.id,fc.sendType.name");
 			List<Object[]> r = getDao().query(sql.toString(), args.toArray());
 			if (CollectionUtils.isNotEmpty(r)) {
 				cvsData.append(st.getName() + ";").append(r.get(0)[1] + "\\n");
