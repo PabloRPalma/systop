@@ -1,98 +1,121 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<settings>  
-  <type></type>                                               
-  <data_type>csv</data_type>                                  
-  <csv_separator>;</csv_separator>                                 
-  <skip_rows>0</skip_rows>         
-  <text_color>000000</text_color>
+<settings> 
+  <data_type>csv</data_type> 
+  <font>Tahoma</font>   
+  <text_size>11</text_size>
   <depth>30</depth>
   <angle>25</angle>
-  <column>
-    <type>3d column</type>                                             <!-- [clustered] (clustered, stacked, 100% stacked, 3d column) -->
-    <width>30</width>                                         <!-- [80] (0 - 100) width of column (in percents)  -->
-    <spacing>0</spacing>                                      <!-- [5] (Number) space between columns of one category axis value, in pixels. Negative values can be used. -->
-    <grow_time>3</grow_time>                                   <!-- [0] (Number) grow time in seconds. Leave 0 to appear instantly -->
-    <grow_effect>strong</grow_effect>                           <!-- [elastic] (elastic, regular, strong) -->    
-    <balloon_text>                                                    
-      <![CDATA[{series} : {value}件]]>                       <!-- [] ({title} {value} {series} {percents} {start} {difference} {total}) You can format any data label: {title} will be replaced with real title, {value} - with value and so on. You can add your own text or html code too. -->
-    </balloon_text>
-    <hover_brightness>-25</hover_brightness>                  <!-- [0] (from -255 to 255) The column may darken/lighten when the use rolls over it. The intensity may be set here -->                             
-  </column>
   
-  <background>                                                <!-- BACKGROUND -->
-    <color>#ffffff</color>                                    <!-- [#FFFFFF] (hex color code) Separate color codes with comas for gradient -->
-    <border_color>#000000</border_color>                             <!-- [#000000] (hex color code) -->
-    <border_alpha>15</border_alpha>
-  </background>
-     
-  <plot_area>                                                 <!-- PLOT AREA (the area between axes) -->
-    <alpha>10</alpha>                                         <!-- [0] (0 - 100) if you want it to be different than background color, use bigger than 0 value -->
-    <margins>                                                 <!-- plot area margins -->
-      <left>80</left>                                         <!-- [60](Number / Number%) --> 
-      <top>80</top>                                           <!-- [60](Number / Number%) --> 
-      <right>80</right>                                       <!-- [60](Number / Number%) -->
-      <bottom>80</bottom>                                     <!-- [80](Number / Number%) -->
+  <column>
+    <width>30</width>     
+    <spacing>0</spacing> 
+    <grow_time>3</grow_time>
+    <grow_effect>strong</grow_effect>    
+    <balloon_text>                                                    
+      <![CDATA[共  {value} 件]]>
+    </balloon_text>    
+  </column>
+
+  <plot_area>
+    <margins>
+      <left>40</left>
+      <right>20</right>
     </margins>
   </plot_area>
   
-  <values> 
-    <value>                                                   <!-- value axis -->
-      <min>0</min>      
-      <unit></unit> 
+  <grid>                 
+    <category>                                                                
+      <alpha>10</alpha>  
+      <dashed>true</dashed>
+    </category>
+    <value>                      
+      <alpha>10</alpha>    
+      <dashed>true</dashed>
+    </value>
+  </grid>
+  
+  <values>                 
+    <category>             
+      <color>999999</color>
+    </category>
+    <value>                    
+      <min>0</min>             
     </value>
   </values>
   
-  <axes>                                                      <!-- axes -->
-    <category>                                                <!-- category axis -->
-      <color>#000000</color>                                  <!-- [#000000] (hex color code) -->
-      <alpha>20</alpha>                                       <!-- [100] (0 - 100) -->
-      <width>1</width>                                        <!-- [2] (Number) line width, 0 for hairline -->
+  <axes>                       
+    <category>                 
+      <color>E7E7E7</color>    
+      <width>1</width>         
     </category>
-    <value>                                                   <!-- value axis -->
-      <color>#000000</color>                                  <!-- [#000000] (hex color code) -->
-      <alpha>20</alpha>                                       <!-- [100] (0 - 100) -->
-      <width>1</width>                                        <!-- [2] (Number) line width, 0 for hairline -->
+    <value>                    
+      <color>#E7E7E7</color>       
+      <width>1</width>         
     </value>
   </axes>  
   
-  <balloon>                                                   <!-- BALLOON -->
-    <text_color>#ffffff</text_color>                          <!-- [0xFFFFFF] (hex color code) -->
+  <balloon>                    
+    <text_color>000000</text_color>
+    <corner_radius>4</corner_radius>
+    <border_width>3</border_width>
+    <border_alpha>50</border_alpha>
+    <border_color>#000000</border_color>
+    <alpha>80</alpha>
   </balloon>
-  
   <strings>
-    <no_data>没有数据.</no_data>    
+    <no_data>对不起，没有查到数据.</no_data>    
   </strings>    
-<legend>                                                    <!-- LEGEND -->
-    <enabled>false</enabled>                                 <!-- [true] (true / false) -->
-    <x></x>                                                  <!-- [] (Number / Number% / !Number) if empty, will be equal to left margin -->
-    <y></y>                                                  <!-- [] (Number / Number% / !Number) if empty, will be below plot area -->
-    <width>400</width>                                       <!-- [] (Number / Number%) if empty, will be equal to plot area width -->
-    <max_columns></max_columns>                               <!-- [] (Number) the maximum number of columns in the legend -->    
-    <color></color>                                           <!-- [#FFFFFF] (hex color code) background color. Separate color codes with comas for gradient -->
-    <alpha></alpha>                                           <!-- [0] (0 - 100) background alpha -->
-    <border_color></border_color>                             <!-- [#000000] (hex color code) border color -->
-    <border_alpha></border_alpha>                             <!-- [0] (0 - 100) border alpha -->
-    <text_color></text_color>                                 <!-- [text_color] (hex color code) -->   
-    <text_size></text_size>                                   <!-- [text_size] (Number) -->
-    <spacing>10</spacing>                                      <!-- [10] (Number) vertical and horizontal gap between legend entries -->
-    <margins></margins>                                       <!-- [0] (Number) legend margins (space between legend border and legend entries, recommended to use only if legend border is visible or background color is different from chart area background color) -->
-    <reverse_order></reverse_order>                           <!-- [false] (true / false) whether to sort legend entries in a reverse order -->    
-    <align></align>                                           <!-- [left] (left / center / right) alignment of legend entries -->
-    <key>                                                     <!-- KEY (the color box near every legend entry) -->
-      <size></size>                                           <!-- [16] (Number) key size-->
-      <border_color></border_color>                           <!-- [] (hex color code) leave empty if you don't want to have border-->
-    </key>
-  </legend>  
-  <labels>       
+  <labels>                         
     <label>
-      <x>0</x>                                                <!-- [0] (Number / Number% / !Number) -->
-      <y>25</y>                                               <!-- [0] (Number / Number% / !Number) -->
-      <align>center</align>                                   <!-- [left] (left / center / right) -->  
-      <text_color>7f7ffb</text_color>                               <!-- [text_color] (hex color code) button text color -->
-      <text_size>12</text_size>   
-      <text>                                                  <!-- [] (text) html tags may be used (supports <b>, <i>, <u>, <font>, <a href="">, <br/>. Enter text between []: <![CDATA[your <b>bold</b> and <i>italic</i> text]]>-->
-          <![CDATA[<b>事件区县统计</b>]]>
+      <x>0</x>
+      <y>7</y>
+      <text_color>000000</text_color>
+      <text_size>13</text_size>
+      <align>center</align>
+      <text>
+        <![CDATA[<b></b>]]>
       </text>        
     </label>
   </labels>
+  
+  <legend>
+    <enabled>false</enabled>
+    <align></align>
+    <border_alpha>100</border_alpha>
+    <border_color>E7E7E7</border_color>
+    <margins>5</margins>
+  </legend>
+
+  <graphs>
+    <graph>                          
+      <type></type>                                                      
+      <title><![CDATA[部门]]></title>             
+      <color>add981</color>                  
+    </graph>      
+    <graph>                          
+      <type></type>                                                      
+      <title><![CDATA[Column]]></title>             
+      <color>7F8DA9</color>                  
+    </graph>
+    <graph>                          
+      <type></type>                                                      
+      <title><![CDATA[Line]]></title>             
+      <color>FEC514</color>                  
+    </graph>
+    <graph>                          
+      <type></type>                                                      
+      <title><![CDATA[Pie]]></title>             
+      <color>DB4C3C</color>                  
+    </graph>
+    <graph>                          
+      <type></type>                                                      
+      <title><![CDATA[Scatter]]></title>             
+      <color>DAF0FD</color>                  
+    </graph>
+    <graph>                          
+      <type></type>                                                      
+      <title><![CDATA[Radar]]></title>             
+      <color></color>                  
+    </graph>    
+  </graphs>          
 </settings>

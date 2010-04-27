@@ -97,7 +97,7 @@ function strParser(){
 <script type="text/javascript">
 	// <![CDATA[		
 	var so = new SWFObject("${ctx}/amcharts/amcolumn.swf", "amcolumn", "650", "500",
-			"10", "#FFFFFF");
+			"8", "#FFFFFF");
 	so.addVariable("path", "${ctx}/amcharts/");
 	so.addVariable("settings_file",
 			encodeURIComponent("${ctx}/pages/statistics/fscase/setting/fsCaseByTime.xml"));
