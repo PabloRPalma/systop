@@ -279,7 +279,7 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 			sql.append(" and fc.county.id= ? ");
 			args.add(county.getId());
 		}
-		sql.append(" group by year(fc.caseTime)");
+		sql.append(" group by year(fc.caseTime),fc.id");
 		return getDao().query(sql.toString(), args.toArray());
 	}
 
@@ -302,7 +302,7 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 			sql.append(" and fc.county.id=? ");
 			args.add(county.getId());
 		}
-		sql.append(" group by year(fc.caseTime)");
+		sql.append(" group by year(fc.caseTime),month(fc.caseTime)");
 		return getDao().query(sql.toString(), args.toArray());
 	}
 
@@ -383,6 +383,7 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 				sql.append(" )and fc.caseTime between ? and ?");
 				args.add(sDate);
 				args.add(eDate);
+				sql.append(" group by fc.caseType.id");
 				List<Object[]> r = getDao().query(sql.toString(), args.toArray());
 				// 对某一类别某月的统计
 				Object[] data = new Object[3];
@@ -741,6 +742,7 @@ public class FsCaseStatisticsManager extends BaseGenericsManager<FsCase> {
 			sql.append(" and fc.caseTime between ? and ?");
 			args.add(sDate);
 			args.add(eDate);
+			sql.append(" group by year(fc.caseTime)");
 			List<Object[]> r = getDao().query(sql.toString(), args.toArray());
 			Object[] data = new Object[2];
 			data[1] = StringUtils.substring(month, 2);
