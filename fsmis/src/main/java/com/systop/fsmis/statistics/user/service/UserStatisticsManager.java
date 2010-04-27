@@ -133,6 +133,7 @@ public class UserStatisticsManager extends
 					args.add(beginDate);
 					args.add(endDate);
 				}
+				sqlTemp.append(" group by ulh.user.name");
 				List<Object[]> result = getDao().query(sqlTemp.toString(),
 						args.toArray());
 				if (CollectionUtils.isNotEmpty(result)) {
