@@ -85,7 +85,7 @@ function strParser(){
 <script type="text/javascript">
 	// <![CDATA[		
 	var so = new SWFObject("${ctx}/amcharts/amcolumn.swf", "amcolumn", "750", "400",
-			"10", "#FFFFFF");
+			"8", "#FFFFFF");
 	so.addVariable("path", "${ctx}/amcharts/");
 	so.addVariable("settings_file",
 			encodeURIComponent("${ctx}/pages/statistics/task/setting/statisticCounty_amcolumn.xml"));
