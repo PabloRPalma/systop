@@ -47,13 +47,14 @@
 		    	List<FsCase> fcList = (List)request.getAttribute("items"); 
 		    	for(FsCase fc : fcList){
 		    		String cdnt[] = new String []{};
+		    		if(fc.getCoordinate() != null) {
 		    		String cdnate = fc.getCoordinate().toString();
 		    		cdnt = cdnate.split(",");
 		        %>
 			        var latlng = new GLatLng(<%=cdnt[0]%>, <%=cdnt[1]%>);
 			        map.addOverlay(createMarker(latlng, '<%=fc.getTitle()%>', '<%=fc.getAddress()%>'));
 			    <%    
-				}
+				}}
 		    	%>
 	}
 }
