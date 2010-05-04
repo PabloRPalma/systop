@@ -11,6 +11,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -90,6 +91,7 @@ public class NoticeAction extends ExtJsCrudAction<Notice, NoticeManager> {
 		if(dept != null) {
 			criteria.add(Restrictions.eq("pubDept.id", dept.getId()));
 		}
+		criteria.addOrder(Order.desc("createTime"));
 		return criteria;
 	}
 
