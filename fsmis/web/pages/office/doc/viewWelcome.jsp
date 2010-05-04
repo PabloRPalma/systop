@@ -20,7 +20,7 @@ function view(aID){
 		  <td><img src="${ctx}/images/exticons/bit.png">&nbsp;</td>
 	      <td>
 	      	<div style="display:inline;width:160px;white-space: nowrap;overflow:hidden;text-overflow:ellipsis;">
-				<a href="#" onclick="view('${doc.id}')">${doc.title}</a> 
+				<a href="#" title="${doc.title}" onclick="view('${doc.id}')">${doc.title}</a> 
 			</div>
 		  </td>
 		  <td><s:date name="createTime" format="yyyy-MM-dd" /></td>
