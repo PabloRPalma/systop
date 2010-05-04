@@ -56,7 +56,7 @@ function showWin() {
 			<td align="right" width="70">收信人：</td>
 			<td align="left">
 					<s:textfield id="person" name="person" cssStyle="width:450px" cssClass="required" /><font color="red">&nbsp;*</font>
-					<s:hidden name="userId"></s:hidden>
+					<s:hidden id="userId" name="userId"></s:hidden>
 					<input onclick="showWin()" value="添加人员" type="button">
 			</td>
 		</tr>
