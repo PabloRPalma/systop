@@ -74,7 +74,7 @@ function showWin() {
 			<td align="left">
 					<s:textfield id="person" name="person" cssStyle="width:272px" />
 					<input onclick="showWin()" value="添加人员" type="button" style="width: 55px;" >
-					<s:hidden name="userIds"/>
+					<s:hidden id="userIds" name="userIds"/>
 			</td>
 		</tr> 
            <tr>
