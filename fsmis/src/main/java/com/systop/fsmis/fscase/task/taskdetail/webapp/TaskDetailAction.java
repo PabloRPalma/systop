@@ -101,6 +101,7 @@ public class TaskDetailAction extends
     // 区分一般案件和综合案件
     buf.append("and detail.task.fsCase.isMultiple = ? ");
     args.add(isMultipleCase);
+    buf.append(" order by detail.task.presetTime desc detail.status");
     getRequest().setAttribute("userId", user.getId());
     getRequest().setAttribute("userName", user.getName());
     
