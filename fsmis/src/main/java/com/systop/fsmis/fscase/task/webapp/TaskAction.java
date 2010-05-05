@@ -181,7 +181,7 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
      * loginUserService.getLoginUserDept(getRequest()).getId());
      */
     
-    buf.append(" order by t.id desc");
+    buf.append(" order by t.dispatchTime desc t.status");
     Page page = PageUtil.getPage(getPageNo(), getPageSize());
     page = getManager().pageQuery(page, buf.toString(), args.toArray());
 
