@@ -175,7 +175,7 @@ public class TaskAction extends DefaultCrudAction<Task, TaskManager> {
     }
 
     // 查询属于当前区县的案件的任务,现阶段(20091226)项目组长说暂时不考虑,待以后加上此功能时,启用代码
-    // buf.append(" and t.fsCase.county.id = ? order by t.status, t.time desc");
+    // buf.append(" and t.fsCase.county.id = ? ");
     /*
      * page = getManager().pageQuery(page, buf.toString(),
      * loginUserService.getLoginUserDept(getRequest()).getId());
