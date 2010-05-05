@@ -133,13 +133,13 @@ UserSelector.prototype = {
 					var ids = _this.tree.getChecked('id');
 					var txts = _this.tree.getChecked('text');
 					Ext.get(_this.textEl).dom.value = txts;
-					document.getElementById(_this.idsEl).value = ids;
+					Ext.get(_this.idsEl).dom.value = ids;
 				});
 		//单选情况下，双击用户节点，关闭对话框
 		_this.tree.on('dblclick', function(node) {
 			if(!_this.multiSel && node.attributes.type == 'user') {
 				Ext.get(_this.textEl).dom.value = node.text;
-				document.getElementById(_this.idsEl).value = node.id;
+				Ext.get(_this.idsEl).dom.value = node.id;
 				_this.win.hide();
 			}
 		});
@@ -214,8 +214,7 @@ UserSelector.prototype = {
 			this.treeFilter.clear();
 		}
 		// 设置TreeNode选框中的状态
-		alert(this.idsEl);
-		var str = document.getElementById(this.idsEl).value;
+		var str = Ext.get(this.idsEl).dom.value;
 		if (str) {
 			var ids = str.split(',');
 			for (var i = 0; i < ids.length; i++) {
