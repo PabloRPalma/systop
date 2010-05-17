@@ -30,6 +30,7 @@ import com.systop.core.Constants;
 import com.systop.core.service.BaseGenericsManager;
 import com.systop.core.util.ReflectUtil;
 import com.systop.core.util.ValidationUtil;
+import com.systop.fsmis.video.VideoConstants;
 
 
 /**
@@ -120,6 +121,7 @@ public class UserManager extends BaseGenericsManager<User> {
      
      user.setLastLoginIp(loginIp);
      user.setLastLoginTime(new Date());
+     user.setOnline(Constants.YES);
      if (user.getLoginTimes() == null) {
        user.setLoginTimes(1);
      } else {
@@ -510,7 +512,7 @@ public class UserManager extends BaseGenericsManager<User> {
 	 * @param user
 	 *            被更新的用户
 	 * @param status
-	 
+	 */
 	@Transactional
 	public void setVideoOnline(User user, String status) {
 		if (!isUserOnline(user)) {
@@ -526,5 +528,5 @@ public class UserManager extends BaseGenericsManager<User> {
 						.getVideoOnline());
 		getDao().merge(user);
 	}
-*/
+
 }
