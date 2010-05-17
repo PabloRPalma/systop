@@ -10,7 +10,7 @@
 	is intended to be displayed by tools. The display 
 	name need not be unique.
 	-->
-	<display-name>cnhrVideo</display-name>
+	<display-name>fsmis</display-name>
 	
 	<!--
 	The context-param element contains the declaration of a web
@@ -18,7 +18,7 @@
 	-->	
 	<context-param>
 		<param-name>webAppRootKey</param-name>
-		<param-value>/cnhrVideo</param-value>
+		<param-value>/fsmis</param-value>
 	</context-param>
 	<!-- Red5 Global Scope -->
 	<context-param>
