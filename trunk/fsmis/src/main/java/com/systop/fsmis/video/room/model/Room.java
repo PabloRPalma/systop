@@ -14,10 +14,9 @@ import org.hibernate.annotations.GenericGenerator;
 import com.systop.core.model.BaseModel;
 
 @Entity
-@Table(name = "rooms")
+@Table(name = "rooms", uniqueConstraints = {})
 @SuppressWarnings("serial")
 public class Room extends BaseModel {
-	private Integer id;
 
 	/**
 	 * 房间name
@@ -49,13 +48,15 @@ public class Room extends BaseModel {
 	private String waitings;
 
 	private String remark;
-	
+
 	private Date createTime;
+	/** 会议记录 */
+	private String meetingRecord;
 
 	@Id
 	@GeneratedValue(generator = "assigned")
 	@GenericGenerator(name = "assigned", strategy = "assigned")
-	@Column(unique = true)
+	@Column(unique = true, name = "roomName")
 	public String getName() {
 		return name;
 	}
@@ -70,6 +71,7 @@ public class Room extends BaseModel {
 
 	@Column(name = "members_count")
 	public void setMembersCount(Integer membersCount) {
+
 		this.membersCount = membersCount;
 	}
 
@@ -97,14 +99,6 @@ public class Room extends BaseModel {
 	public void setWaitings(String waitings) {
 		this.waitings = waitings;
 	}
-	
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	@Column(name = "remark", columnDefinition = "varchar(2000)")
 	public String getRemark() {
@@ -114,6 +108,7 @@ public class Room extends BaseModel {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
+
 	@Transient
 	public String getMasterName() {
 		return masterName;
@@ -122,6 +117,7 @@ public class Room extends BaseModel {
 	public void setMasterName(String masterName) {
 		this.masterName = masterName;
 	}
+
 	@Column(name = "create_Time")
 	public Date getCreateTime() {
 		return createTime;
@@ -130,4 +126,14 @@ public class Room extends BaseModel {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
+
+	@Column(name = "meeting_Record", columnDefinition = "varchar(2000)")
+	public String getMeetingRecord() {
+		return meetingRecord;
+	}
+
+	public void setMeetingRecord(String meetingRecord) {
+		this.meetingRecord = meetingRecord;
+	}
+
 }
