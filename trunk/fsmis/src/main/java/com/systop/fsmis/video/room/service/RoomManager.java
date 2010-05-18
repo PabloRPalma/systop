@@ -233,7 +233,8 @@ public class RoomManager extends BaseGenericsManager<Room> {
 			return;
 		}
 		// 如果用户存在于房间中,则将其id从mebers字符串中剔除
-		if (VideoUtils.hasIt(room.getMembers(), user.getId())||room.getMaster().equals(user.getId())) {
+		if (VideoUtils.hasIt(room.getMembers(), user.getId())
+				|| room.getMaster().equals(user.getId())) {
 			// 问题:房主是否可以提前离开房间?,即:房主如果离开了,其他客人怎样?
 			// room.setMembers(VideoUtils.removeBlock(room.getMembers(), user
 			// .getId()));
@@ -272,4 +273,21 @@ public class RoomManager extends BaseGenericsManager<Room> {
 		return rooms;
 	}
 
+	/**
+	 * 保存会议记录,每次有会议成员发文字消息,以累加的方式将文字消息保存到数据库中
+	 * 
+	 * @param roomName
+	 *            房间名称
+	 * @param message
+	 *            用户累加的会议记录
+	 */
+	@Transactional
+	public void saveMeetingRecord(String roomName, String message) {
+		Room room = get(roomName);
+		StringBuffer buf = new StringBuffer(room.getMeetingRecord());
+		buf.append(message);
+		room.setMeetingRecord(buf.toString());
+
+		getDao().merge(room);
+	}
 }
