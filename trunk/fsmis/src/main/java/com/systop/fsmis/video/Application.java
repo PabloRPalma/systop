@@ -210,7 +210,7 @@ public class Application extends MultiThreadedApplicationAdapter implements
 	public boolean roomJoin(IClient client, final IScope room) {
 
 		// 检查房间人数是否超限
-		Room r = roomManager.get(room.getName());
+		Room r = roomManager.getByName(room.getName());
 		if (r != null && r.getMembersCount() >= VideoConstants.MAX_ROOM_MEMBERS) {
 			// 显示房间已经满了
 			VideoUtils.doWithClientConnections(client, new IConnectionCallback() {
@@ -514,6 +514,7 @@ public class Application extends MultiThreadedApplicationAdapter implements
 						new Object[] { msg, user.getName() }, null);
 			}
 		});
+		roomManager.saveMeetingRecord(scope.getName(), msg);
 	}
 
 	/**
@@ -588,7 +589,7 @@ public class Application extends MultiThreadedApplicationAdapter implements
 		/*logger.info("------------------------------->" + roomName);*/
 		Assert.notNull(roomName);
 		Assert.notNull(userId);
-		final Room room = roomManager.get(roomName);
+		final Room room = roomManager.getByName(roomName);
 		// final User user = VideoUtils.getCurrentUser(userManager);
 		/*final User user = userManager.get(Integer.valueOf(userId));*/
 		if (room != null) {
@@ -615,7 +616,7 @@ public class Application extends MultiThreadedApplicationAdapter implements
 	public String getRoomInfoByName(final String roomName) {
 		Assert.notNull(roomName);
 		/*logger.info(roomName);*/
-		final Room room = roomManager.get(roomName);
+		final Room room = roomManager.getByName(roomName);
 
 		if (room != null) {
 			String members = room.getMembers();
@@ -827,7 +828,7 @@ public class Application extends MultiThreadedApplicationAdapter implements
 	 */
 	public String checkSameNameRoom(final String roomName) {
 		Assert.notNull(roomName);
-		Room room = roomManager.get(roomName);
+		Room room = roomManager.getByName(roomName);
 		if (room != null) {
 			return "TRUE";
 		} else {
