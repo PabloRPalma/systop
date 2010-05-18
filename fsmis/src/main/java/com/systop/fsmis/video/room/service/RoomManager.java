@@ -24,6 +24,13 @@ public class RoomManager extends BaseGenericsManager<Room> {
 	@Autowired
 	private UserManager userManager;
 
+	public Room getByName(String name) {
+		String hql = "from Room r where r.name = ?";
+		Room room = (Room) getDao().findObject(hql, name);
+
+		return room;
+	}
+
 	/**
 	 * 创建一个视频房间,默认以房间的创建者作为房间的主人
 	 * 
@@ -65,7 +72,7 @@ public class RoomManager extends BaseGenericsManager<Room> {
 	 */
 	@Transactional
 	public void setMaster(String roomName, User user) {
-		Room room = get(roomName);
+		Room room = getByName(roomName);
 		if (room != null && user != null) {
 			room.setMaster(user.getId());
 		}
@@ -79,7 +86,7 @@ public class RoomManager extends BaseGenericsManager<Room> {
 	 */
 	@Transactional
 	public void remove(String roomName) {
-		Room room = get(roomName);
+		Room room = getByName(roomName);
 		Assert.notNull(room);
 		List<User> members = getMembers(room);
 		// 设定所有该房间成员的视频在线状态为"空闲"
@@ -135,7 +142,7 @@ public class RoomManager extends BaseGenericsManager<Room> {
 	public Room join(String roomName, User user) {
 
 		// 根据房间名称得到room
-		Room room = get(roomName);
+		Room room = getByName(roomName);
 		// 如果房间不存在,则该用户作为房主创建房间
 		if (room == null) {
 			/*
@@ -182,7 +189,7 @@ public class RoomManager extends BaseGenericsManager<Room> {
 		if (membersStr != null) {
 			membersStr = VideoUtils.removeBlock(membersStr, user.getId());
 		}
-		Room room = get(roomName);
+		Room room = getByName(roomName);
 		// 如果房间不存在,则新创建房间
 		if (room == null) {
 			return create(roomName, user, membersStr, roomRemark);
@@ -208,7 +215,7 @@ public class RoomManager extends BaseGenericsManager<Room> {
 	 */
 	public boolean isMaster(String roomName, User user) {
 		// 根据房间名称得到房间,如果为null则返回false
-		Room room = get(roomName);
+		Room room = getByName(roomName);
 		if (room == null) {
 			return false;
 		}
@@ -227,7 +234,7 @@ public class RoomManager extends BaseGenericsManager<Room> {
 	 */
 	@Transactional
 	public void leave(String roomName, User user) {
-		Room room = get(roomName);
+		Room room = getByName(roomName);
 		if (room == null) {
 			logger.warn("房间{}不存在!", roomName);
 			return;
@@ -283,7 +290,7 @@ public class RoomManager extends BaseGenericsManager<Room> {
 	 */
 	@Transactional
 	public void saveMeetingRecord(String roomName, String message) {
-		Room room = get(roomName);
+		Room room = getByName(roomName);
 		StringBuffer buf = new StringBuffer(room.getMeetingRecord());
 		buf.append(message);
 		room.setMeetingRecord(buf.toString());

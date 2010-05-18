@@ -17,7 +17,7 @@ import com.systop.core.model.BaseModel;
 @Table(name = "rooms", uniqueConstraints = {})
 @SuppressWarnings("serial")
 public class Room extends BaseModel {
-
+	private Integer id;
 	/**
 	 * 房间name
 	 */
@@ -53,9 +53,7 @@ public class Room extends BaseModel {
 	/** 会议记录 */
 	private String meetingRecord;
 
-	@Id
-	@GeneratedValue(generator = "assigned")
-	@GenericGenerator(name = "assigned", strategy = "assigned")
+
 	@Column(unique = true, name = "roomName")
 	public String getName() {
 		return name;
@@ -134,6 +132,18 @@ public class Room extends BaseModel {
 
 	public void setMeetingRecord(String meetingRecord) {
 		this.meetingRecord = meetingRecord;
+	}
+
+	@Id
+	@GeneratedValue(generator = "hibseq")
+	@GenericGenerator(name = "hibseq", strategy = "hilo")
+	@Column(name = "ID", nullable = false)
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 }
