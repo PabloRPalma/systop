@@ -3,6 +3,7 @@ package com.systop.fsmis.video.room.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.ArrayUtils;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import com.systop.common.modules.dept.DeptConstants;
+import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.security.user.model.User;
 import com.systop.common.modules.security.user.service.UserManager;
 import com.systop.core.service.BaseGenericsManager;
@@ -198,6 +201,8 @@ public class RoomManager extends BaseGenericsManager<Room> {
 		room.setMaster(user.getId());
 		room.setMembers(membersStr);
 		room.setRemark(roomRemark);
+		room.setCounty(getUserCounty(user));
+		room.setStatus(VideoConstants.ROOM_STATUS_ACTIVED);//默认进行中状态
 
 		getDao().merge(room);
 
@@ -296,5 +301,45 @@ public class RoomManager extends BaseGenericsManager<Room> {
 		room.setMeetingRecord(buf.toString());
 
 		getDao().merge(room);
+	}
+
+	/**
+	 * 由于Red5应用中和HttpServletRequest无关,<br>
+	 * 而LoginUserService.getLoginUserCounty却需要用request作为参数<br>
+	 * 所以在这儿写个私有方法,以获得当前访问Red5应用的用户所在区县
+	 * 
+	 * @param user
+	 * @return
+	 */
+	private Dept getUserCounty(User user) {
+		String hql = "from Dept d  left join fetch d.parentDept where d.id = ?";
+		
+		Dept dept = (Dept) getDao().findObject(hql, user.getDept().getId());
+		if (dept == null) {
+			return null;
+		}
+		while (!DeptConstants.TYPE_COUNTY.equals(dept.getType())) {
+			dept = dept.getParentDept();
+		}
+		return dept;
+	}
+	/**
+	 * 根据当前人员所在区县,得到区县下所有人员
+	 * @param user
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<User> getUserByCounty(User user){
+		//String hql = "select u from User u left join fetch u.dept where u.id <> ?";
+		String hql = "select u from User u left join fetch u.dept where u.id <> ? and u.dept.id in (?)";
+		Dept dept = getUserCounty(user);
+		Set<Dept> childDepts = dept.getChildDepts();
+		childDepts.add(dept);
+		List<Integer> deptIds = new ArrayList<Integer>();
+		for(Dept d : childDepts){
+			deptIds.add(d.getId());
+		}
+		
+		return getDao().query(hql, user.getId(),deptIds);
 	}
 }

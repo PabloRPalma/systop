@@ -58,6 +58,7 @@ public class Application extends MultiThreadedApplicationAdapter implements
 	private RoomManager roomManager;
 	@Autowired
 	private TemplateRender templateRender;
+
 	/**
 	 * Red5的顶级Scope,用于遍历Red5的Scope树
 	 */
@@ -79,7 +80,7 @@ public class Application extends MultiThreadedApplicationAdapter implements
 	public boolean appConnect(IConnection conn, Object[] params) {
 		logger.info("--appConnect--------video---------->" + "用户连接scope:{}",
 				conn.getScope().getParent());
-		//logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		// logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		String userId = null;
 		if (params != null && params.length > 0 && params[0] != null) {
 			if (params[0] instanceof String) {
@@ -115,8 +116,10 @@ public class Application extends MultiThreadedApplicationAdapter implements
 		 * false; }
 		 */
 
-		/*logger.info("---3-------video---------->" + "客户端连入(appConect){}",
-				params[0]);*/
+		/*
+		 * logger.info("---3-------video---------->" + "客户端连入(appConect){}",
+		 * params[0]);
+		 */
 		// Object[] param = new Object[] { userId };
 		return super.appConnect(conn, params);
 
@@ -127,8 +130,10 @@ public class Application extends MultiThreadedApplicationAdapter implements
 	 */
 	@Override
 	public void appDisconnect(IConnection conn) {
-		/*logger.info("--appDisconnect--------video---------->" + "用户{}断开连接",
-				conn.getAttribute(VideoConstants.USER_CLIENT_ATTR_KEY));*/
+		/*
+		 * logger.info("--appDisconnect--------video---------->" + "用户{}断开连接",
+		 * conn.getAttribute(VideoConstants.USER_CLIENT_ATTR_KEY));
+		 */
 		super.appDisconnect(conn);
 	}
 
@@ -137,8 +142,10 @@ public class Application extends MultiThreadedApplicationAdapter implements
 	 */
 	@Override
 	public boolean appJoin(IClient client, IScope app) {
-	/*	logger.info("--appJoin--------video---------->" + "用户{}加入视频", client
-				.getAttribute(VideoConstants.USER_CLIENT_ATTR_KEY));*/
+		/*
+		 * logger.info("--appJoin--------video---------->" + "用户{}加入视频", client
+		 * .getAttribute(VideoConstants.USER_CLIENT_ATTR_KEY));
+		 */
 		return super.appJoin(client, app);
 	}
 
@@ -147,8 +154,10 @@ public class Application extends MultiThreadedApplicationAdapter implements
 	 */
 	@Override
 	public void appLeave(IClient client, IScope app) {
-/*		logger.info("--appLeave--------video---------->" + "用户{}", client
-				.getAttribute(VideoConstants.USER_CLIENT_ATTR_KEY));*/
+		/*
+		 * logger.info("--appLeave--------video---------->" + "用户{}", client
+		 * .getAttribute(VideoConstants.USER_CLIENT_ATTR_KEY));
+		 */
 		super.appLeave(client, app);
 	}
 
@@ -190,8 +199,10 @@ public class Application extends MultiThreadedApplicationAdapter implements
 		}
 		conn.getClient().setAttribute(VideoConstants.USER_CLIENT_ATTR_KEY,
 				userId);
-	/*	logger.info("--roomConnect--------video---------->"
-				+ "客户连入(roomConnect){}", params[0]);*/
+		/*
+		 * logger.info("--roomConnect--------video---------->" +
+		 * "客户连入(roomConnect){}", params[0]);
+		 */
 		return super.roomConnect(conn, params);
 	}
 
@@ -213,15 +224,19 @@ public class Application extends MultiThreadedApplicationAdapter implements
 		Room r = roomManager.getByName(room.getName());
 		if (r != null && r.getMembersCount() >= VideoConstants.MAX_ROOM_MEMBERS) {
 			// 显示房间已经满了
-			VideoUtils.doWithClientConnections(client, new IConnectionCallback() {
+			VideoUtils.doWithClientConnections(client,
+					new IConnectionCallback() {
 
-				@Override
-				public void doWithConnection(IConnection conn) {
-					VideoUtils.call(conn,
-							VideoConstants.CLIENT_METHOD_ON_ROOM_IS_FULL,
-							new Object[] { room.getName()}, null);
-				}
-			});
+						@Override
+						public void doWithConnection(IConnection conn) {
+							VideoUtils
+									.call(
+											conn,
+											VideoConstants.CLIENT_METHOD_ON_ROOM_IS_FULL,
+											new Object[] { room.getName() },
+											null);
+						}
+					});
 			return true;
 		}
 		if (!super.roomJoin(client, room)) {
@@ -229,8 +244,10 @@ public class Application extends MultiThreadedApplicationAdapter implements
 		}
 
 		String id = VideoUtils.getUserIdByClient(client);
-	/*	logger.info("--roomJoin--------video---------->" + "{}进入房间{}", id, room
-				.getName());*/
+		/*
+		 * logger.info("--roomJoin--------video---------->" + "{}进入房间{}", id,
+		 * room .getName());
+		 */
 
 		final User user = userManager.get(Integer.valueOf(id));
 		final Integer minIndex = VideoUtils.getMinIndex(room);
@@ -241,7 +258,7 @@ public class Application extends MultiThreadedApplicationAdapter implements
 		Room rom = null;
 		// 如果room为null或者房间名称为null,则无理取闹(null)--登录大厅...,不予理睬
 		if (room == null || "null".equals(room.getName())) {
-		/*	logger.info("用户{}登录大厅!!!", user.getName());*/
+			/* logger.info("用户{}登录大厅!!!", user.getName()); */
 			return true;
 		} else {// 如果room不为null并且房间名称为有意义的值(加入/或者创建)
 			// 更新room成员,修改成员的在线状态
@@ -254,7 +271,10 @@ public class Application extends MultiThreadedApplicationAdapter implements
 						minIndex);
 			}
 
-			/*logger.info("-------->用户{}进入房间,获得视频索引{}", user.getName(), minIndex);*/
+			/*
+			 * logger.info("-------->用户{}进入房间,获得视频索引{}", user.getName(),
+			 * minIndex);
+			 */
 		}
 		final String roomName = rom.getName();
 		final User master = userManager.get(rom.getMaster());
@@ -298,12 +318,16 @@ public class Application extends MultiThreadedApplicationAdapter implements
 							.getUserIdByClient(client)));
 					Integer currentIndex = (Integer) client
 							.getAttribute(VideoConstants.STREAM_CLIENT_ATTR_INDEX);
-					/*logger.info("%%%%%%%%%%%%%%%%%%%%%%" + currentIndex);*/
+					/* logger.info("%%%%%%%%%%%%%%%%%%%%%%" + currentIndex); */
 					if (StringUtils.isNotBlank(publishedName)) {
-						/*logger.info("----------video---------->" + "恢复视频通话{}",
-								publishedName);*/
-						/*logger.info("----->房间成员{}视频index:{}", user.getName(),
-								currentIndex);*/
+						/*
+						 * logger.info("----------video---------->" +
+						 * "恢复视频通话{}", publishedName);
+						 */
+						/*
+						 * logger.info("----->房间成员{}视频index:{}", user.getName(),
+						 * currentIndex);
+						 */
 						VideoUtils
 								.call(
 										conn,
@@ -353,12 +377,14 @@ public class Application extends MultiThreadedApplicationAdapter implements
 				VideoUtils.call(conn,
 						VideoConstants.CLIENT_METHOD_ON_ROOM_LEAVE,
 						new Object[] { user.getName(),
-								roomManager.isMaster(room.getName(), user),currentIndex },
-						null);
+								roomManager.isMaster(room.getName(), user),
+								currentIndex }, null);
 			}
 		});
-	/*	logger.info("--roomLeave--------video---------->" + "用户{}离开了房间{}", user
-				.getName(), room.getName());*/
+		/*
+		 * logger.info("--roomLeave--------video---------->" + "用户{}离开了房间{}",
+		 * user .getName(), room.getName());
+		 */
 	}
 
 	/**
@@ -367,8 +393,10 @@ public class Application extends MultiThreadedApplicationAdapter implements
 	 */
 	@Override
 	public void roomStop(IScope room) {
-/*		logger.info("--roomStop--------video---------->" + "room{}stop", room
-				.getName());*/
+		/*
+		 * logger.info("--roomStop--------video---------->" + "room{}stop", room
+		 * .getName());
+		 */
 		room.removeAttributes();
 		if (roomManager.getDao().exists(room, "name")) {
 			roomManager.remove(room.getName());
@@ -385,10 +413,12 @@ public class Application extends MultiThreadedApplicationAdapter implements
 
 		// 当前连接的user,即视频的发送者
 		final User user = VideoUtils.getCurrentUser(userManager);
-/*		logger.info("--streamBroadcastStart--------video---------->"
-				+ "视频广播开始: name{},Scope{},publishedName{}", new Object[] {
-				stream.getName(), stream.getScope().getName(),
-				stream.getPublishedName() });*/
+		/*
+		 * logger.info("--streamBroadcastStart--------video---------->" +
+		 * "视频广播开始: name{},Scope{},publishedName{}", new Object[] {
+		 * stream.getName(), stream.getScope().getName(),
+		 * stream.getPublishedName() });
+		 */
 		VideoUtils.doWithScopeConnections(stream.getScope(),
 				new IConnectionCallback() {
 					// 回调方法
@@ -441,19 +471,23 @@ public class Application extends MultiThreadedApplicationAdapter implements
 	public void streamBroadcastClose(final IBroadcastStream stream) {
 		final User user = VideoUtils.getCurrentUser(userManager);
 		super.streamBroadcastClose(stream);
-/*		logger.info("--streamBroadcastClose--------video---------->"
-				+ "视频广播结束 name {},Scope {},publishedName{}", new Object[] {
-				stream.getName(), stream.getScope().getName(),
-				stream.getPublishedName() });*/
+		/*
+		 * logger.info("--streamBroadcastClose--------video---------->" +
+		 * "视频广播结束 name {},Scope {},publishedName{}", new Object[] {
+		 * stream.getName(), stream.getScope().getName(),
+		 * stream.getPublishedName() });
+		 */
 		// 删除当前scope中的接收视频的客户保存在IClient中的publishedName
 		Set<IClient> clients = stream.getScope().getClients();
 		for (IClient client : clients) {
 			Object obj = client
 					.getAttribute(VideoConstants.STREAM_CLIENT_ATTR_KEY);
 			if (stream.getPublishedName().equals(obj)) {
-		/*		logger.info("----------video---------->"
-						+ "remove stream published name.{}", stream
-						.getPublishedName());*/
+				/*
+				 * logger.info("----------video---------->" +
+				 * "remove stream published name.{}", stream
+				 * .getPublishedName());
+				 */
 				client.removeAttribute(VideoConstants.STREAM_CLIENT_ATTR_KEY);
 				break;
 			}
@@ -467,9 +501,10 @@ public class Application extends MultiThreadedApplicationAdapter implements
 						String clientUser = VideoUtils.getUserIdByClient(conn
 								.getClient());
 
-				/*		logger.info("----------video---------->"
-								+ "视频关闭:视频发送者{},接收者{}", user.getLoginId(),
-								clientUser);*/
+						/*
+						 * logger.info("----------video---------->" +
+						 * "视频关闭:视频发送者{},接收者{}", user.getLoginId(), clientUser);
+						 */
 
 						// 向其他人发送停止接收视频的提示
 						if (StringUtils.isNotBlank(clientUser)
@@ -482,7 +517,7 @@ public class Application extends MultiThreadedApplicationAdapter implements
 											.getAttribute(
 													VideoConstants.STREAM_CLIENT_ATTR_INDEX)
 											.toString());
-							/*logger.info("视频index{}", currentIndex);*/
+							/* logger.info("视频index{}", currentIndex); */
 							VideoUtils
 									.call(
 											conn,
@@ -504,7 +539,7 @@ public class Application extends MultiThreadedApplicationAdapter implements
 	public void onSendMsg(final String msg) {
 		// 得到当前用户(聊天信息发送者)
 		final User user = VideoUtils.getCurrentUser(userManager);
-	/*	logger.info("&&&&&&&&&&&&&&&&&&&" + user.getName());*/
+		/* logger.info("&&&&&&&&&&&&&&&&&&&" + user.getName()); */
 		// 得到当前用户所在房间
 		IScope scope = Red5.getConnectionLocal().getScope();
 		VideoUtils.doWithScopeConnections(scope, new IConnectionCallback() {
@@ -527,8 +562,8 @@ public class Application extends MultiThreadedApplicationAdapter implements
 		final Integer currentIndex = index;
 		final Integer currentGain = gain;
 		// 得到当前用户(聊天信息发送者)
-		//final User user = VideoUtils.getCurrentUser(userManager);
-		/*logger.info("&&&&&&&&&&&&&&&&&&&" + user.getName());*/
+		// final User user = VideoUtils.getCurrentUser(userManager);
+		/* logger.info("&&&&&&&&&&&&&&&&&&&" + user.getName()); */
 		// 得到当前用户所在房间
 		IScope scope = Red5.getConnectionLocal().getScope();
 		VideoUtils.doWithScopeConnections(scope, new IConnectionCallback() {
@@ -538,14 +573,19 @@ public class Application extends MultiThreadedApplicationAdapter implements
 				if (client
 						.getAttribute(VideoConstants.STREAM_CLIENT_ATTR_INDEX)
 						.toString().equals(currentIndex.toString())) {
-/*					final Integer currentIndex = Integer.valueOf(Red5
-							.getConnectionLocal().getClient().getAttribute(
-									VideoConstants.STREAM_CLIENT_ATTR_INDEX)
-							.toString());*/
-			/*		logger.info("%%%%%%%%%%%%%%%%%%%%%%------------------>"
-							+ currentIndex);*/
-		/*			logger.info("设定成员{}麦克风音量为{}", VideoUtils
-							.getUserIdByClient(client), currentGain);*/
+					/*
+					 * final Integer currentIndex = Integer.valueOf(Red5
+					 * .getConnectionLocal().getClient().getAttribute(
+					 * VideoConstants.STREAM_CLIENT_ATTR_INDEX) .toString());
+					 */
+					/*
+					 * logger.info("%%%%%%%%%%%%%%%%%%%%%%------------------>" +
+					 * currentIndex);
+					 */
+					/*
+					 * logger.info("设定成员{}麦克风音量为{}", VideoUtils
+					 * .getUserIdByClient(client), currentGain);
+					 */
 					VideoUtils.call(conn, VideoConstants.SWITCH_CLIENT_MIC,
 							new Object[] { currentGain }, null);
 				}
@@ -564,7 +604,7 @@ public class Application extends MultiThreadedApplicationAdapter implements
 	public void createRoom(final String roomName, final String remark) {
 
 		final User user = VideoUtils.getCurrentUser(userManager);
-	/*	logger.info("user{}创建名称为{}的房间", user.getName(), roomName);*/
+		/* logger.info("user{}创建名称为{}的房间", user.getName(), roomName); */
 		Room room = new Room();
 		room.setName(roomName);
 		room.setRemark(remark);
@@ -586,14 +626,14 @@ public class Application extends MultiThreadedApplicationAdapter implements
 	 * @param roomName
 	 */
 	public void removeRoom(final String roomName, final String userId) {
-		/*logger.info("------------------------------->" + roomName);*/
+		/* logger.info("------------------------------->" + roomName); */
 		Assert.notNull(roomName);
 		Assert.notNull(userId);
 		final Room room = roomManager.getByName(roomName);
 		// final User user = VideoUtils.getCurrentUser(userManager);
-		/*final User user = userManager.get(Integer.valueOf(userId));*/
+		/* final User user = userManager.get(Integer.valueOf(userId)); */
 		if (room != null) {
-		/*	logger.info("user{}删除名称为{}的房间", user.getName(), room.getName());*/
+			/* logger.info("user{}删除名称为{}的房间", user.getName(), room.getName()); */
 			roomManager.remove(room);
 		}
 		IScope scope = appScope.getScope(roomName);
@@ -615,16 +655,19 @@ public class Application extends MultiThreadedApplicationAdapter implements
 	 */
 	public String getRoomInfoByName(final String roomName) {
 		Assert.notNull(roomName);
-		/*logger.info(roomName);*/
+		/* logger.info(roomName); */
 		final Room room = roomManager.getByName(roomName);
 
 		if (room != null) {
 			String members = room.getMembers();
 
 			List<User> memberList = new ArrayList<User>();
-			/*String masterHql = "select u from User u left join fetch u.dept where u.id = ? ";
-			User master = (User) roomManager.getDao().query(masterHql,
-					Integer.valueOf(room.getMaster())).get(0);*/
+			/*
+			 * String masterHql =
+			 * "select u from User u left join fetch u.dept where u.id = ? ";
+			 * User master = (User) roomManager.getDao().query(masterHql,
+			 * Integer.valueOf(room.getMaster())).get(0);
+			 */
 			// User master = roomManager.getDao().get(User.class,
 			// Integer.valueOf(room.getMaster()));
 			// memberList.add(master);
@@ -661,8 +704,10 @@ public class Application extends MultiThreadedApplicationAdapter implements
 				logger.error("An error has occurs. {}", e.getMessage());
 				e.printStackTrace();
 			}
-		/*	logger.info("返回XML数据供客户端刷新房间信息及成员列表");
-			logger.info(writer.toString());*/
+			/*
+			 * logger.info("返回XML数据供客户端刷新房间信息及成员列表");
+			 * logger.info(writer.toString());
+			 */
 
 			return writer.toString();
 
@@ -673,17 +718,19 @@ public class Application extends MultiThreadedApplicationAdapter implements
 
 	/**
 	 * 客户端调用<br>
-	 * 得到已经登录人员列表,以填充房间信息中人员列表备选
-	 * 
+	 * 得到已当前人员所在区县人员列表,以填充房间信息中人员列表备选
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
+	
 	public String refreshUsers(String userId, String currentRoomMembersStr) {
 		Assert.notNull(userId);
-
-		final List<User> users = userManager.getDao().query(
+		
+		/*final List<User> users = userManager.getDao().query(
 				"select u from User u left join fetch u.dept where u.id <> ?",
 				new Object[] { Integer.valueOf(userId) });
+		*/
+		User user = userManager.findObject("select u from User u left join fetch u.dept where u.id = ? ", Integer.valueOf(userId));
+		final List<User> users = roomManager.getUserByCounty(user);
 		// 得到房间已有成员
 		List<User> currentRoomMembers = new ArrayList<User>();
 		if (StringUtils.isNotBlank(currentRoomMembersStr)) {
@@ -696,7 +743,7 @@ public class Application extends MultiThreadedApplicationAdapter implements
 		// 从人员列表中剔除已有的成员
 		users.removeAll(currentRoomMembers);
 		// users.add(userManager.get(Integer.valueOf(userId)));
-		/*logger.info("总共{}个用户", users.size());*/
+		/* logger.info("总共{}个用户", users.size()); */
 		// 用模板生成xml
 		Template template = new Template("userListXml");
 		TemplateContext templateCtx = new TemplateContext();
@@ -710,8 +757,9 @@ public class Application extends MultiThreadedApplicationAdapter implements
 			logger.error("An error has occurs. {}", e.getMessage());
 			e.printStackTrace();
 		}
-		/*logger.info("返回XML数据供客户端刷新登录人员列表");
-		logger.info(writer.toString());*/
+		/*
+		 * logger.info("返回XML数据供客户端刷新登录人员列表"); logger.info(writer.toString());
+		 */
 		return writer.toString();
 	}
 
@@ -723,7 +771,7 @@ public class Application extends MultiThreadedApplicationAdapter implements
 	public String refreshRooms() {
 		final List<Room> rooms = roomManager.list();
 
-		/*logger.info("总共{}个房间", rooms.size());*/
+		/* logger.info("总共{}个房间", rooms.size()); */
 		// 用模板生成xml
 		Template template = new Template("roomListXml");
 		TemplateContext templateCtx = new TemplateContext();
@@ -737,8 +785,9 @@ public class Application extends MultiThreadedApplicationAdapter implements
 			logger.error("An error has occurs. {}", e.getMessage());
 			e.printStackTrace();
 		}
-/*		logger.info("返回XML数据供客户端刷新房间列表");
-		logger.info(writer.toString());*/
+		/*
+		 * logger.info("返回XML数据供客户端刷新房间列表"); logger.info(writer.toString());
+		 */
 		return writer.toString();
 	}
 
@@ -748,7 +797,7 @@ public class Application extends MultiThreadedApplicationAdapter implements
 	@Override
 	public void streamRecordStart(IBroadcastStream stream) {
 		StringBuffer buf = new StringBuffer();
-		/*logger.info("视频录制开始");*/
+		/* logger.info("视频录制开始"); */
 		User user = VideoUtils.getCurrentUser(userManager);
 		if (user != null) {
 			Calendar c = Calendar.getInstance();

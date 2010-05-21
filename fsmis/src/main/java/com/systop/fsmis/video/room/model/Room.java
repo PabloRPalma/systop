@@ -4,13 +4,17 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.systop.common.modules.dept.model.Dept;
 import com.systop.core.model.BaseModel;
 
 @Entity
@@ -52,7 +56,10 @@ public class Room extends BaseModel {
 	private Date createTime;
 	/** 会议记录 */
 	private String meetingRecord;
-
+	/** 会议所归属的区县 */
+	private Dept county;
+	/** 会议状态 0未开始 1 进行中 2 暂停 3结束 */
+	private String status;
 
 	@Column(unique = true, name = "roomName")
 	public String getName() {
@@ -144,6 +151,25 @@ public class Room extends BaseModel {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "COUNTY")
+	public Dept getCounty() {
+		return county;
+	}
+
+	public void setCounty(Dept county) {
+		this.county = county;
+	}
+
+	@Column(name = "STATUS", length = 1)
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }
