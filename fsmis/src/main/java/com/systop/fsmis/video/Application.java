@@ -730,7 +730,7 @@ public class Application extends MultiThreadedApplicationAdapter implements
 				new Object[] { Integer.valueOf(userId) });
 		*/
 		User user = userManager.findObject("select u from User u left join fetch u.dept where u.id = ? ", Integer.valueOf(userId));
-		final List<User> users = roomManager.getUserByCounty(user);
+		final List<User> users = roomManager.getUsersByCounty(user);
 		// 得到房间已有成员
 		List<User> currentRoomMembers = new ArrayList<User>();
 		if (StringUtils.isNotBlank(currentRoomMembersStr)) {

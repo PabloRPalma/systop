@@ -2,6 +2,7 @@ package com.systop.fsmis.video.room.service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -201,7 +202,7 @@ public class RoomManager extends BaseGenericsManager<Room> {
 		room.setMaster(user.getId());
 		room.setMembers(membersStr);
 		room.setRemark(roomRemark);
-		room.setCounty(getUserCounty(user));
+		room.setCounty(getCountyByUser(user));
 		room.setStatus(VideoConstants.ROOM_STATUS_ACTIVED);//默认进行中状态
 
 		getDao().merge(room);
@@ -311,7 +312,7 @@ public class RoomManager extends BaseGenericsManager<Room> {
 	 * @param user
 	 * @return
 	 */
-	private Dept getUserCounty(User user) {
+	private Dept getCountyByUser(User user) {
 		String hql = "from Dept d  left join fetch d.parentDept where d.id = ?";
 		
 		Dept dept = (Dept) getDao().findObject(hql, user.getDept().getId());
@@ -329,11 +330,12 @@ public class RoomManager extends BaseGenericsManager<Room> {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<User> getUserByCounty(User user){
+	public List<User> getUsersByCounty(User user){
 		//String hql = "select u from User u left join fetch u.dept where u.id <> ?";
 		String hql = "select u from User u left join fetch u.dept where u.id <> ? and u.dept.id in (?)";
-		Dept dept = getUserCounty(user);
-		Set<Dept> childDepts = dept.getChildDepts();
+		Dept dept = getCountyByUser(user);
+		Set<Dept> childDepts =  new HashSet<Dept>();
+		childDepts.addAll(dept.getChildDepts());
 		childDepts.add(dept);
 		List<Integer> deptIds = new ArrayList<Integer>();
 		for(Dept d : childDepts){
