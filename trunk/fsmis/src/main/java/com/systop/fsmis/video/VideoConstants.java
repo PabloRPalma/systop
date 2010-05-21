@@ -96,4 +96,20 @@ public final class VideoConstants {
 	 * 客户端方法名,设置麦克风音量
 	 */
 	public static final String SWITCH_CLIENT_MIC = "onSwitchSpeaker";
+	/**
+	 * 会议状态:未激活(未开始)
+	 */
+	public static final String ROOM_STATUS_NON_ACTIVED = "0";
+	/**
+	 * 会议状态:已激活(进行中)
+	 */
+	public static final String ROOM_STATUS_ACTIVED = "1";
+	/**
+	 * 会议状态:暂停
+	 */
+	public static final String ROOM_STATUS_HALT = "2";
+	/**
+	 * 会议状态:会议结束/关闭
+	 */
+	public static final String ROOM_STATUS_CLOSE = "3";
 }
