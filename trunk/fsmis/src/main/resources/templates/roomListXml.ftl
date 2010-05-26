@@ -6,6 +6,7 @@
        <master>${room.getMaster()?default("")}</master>
        <masterName>${room.getMasterName()?default("")}</masterName>
        <members>${room.getMembers()?default("")}</members>
+       <status>${room.getStatus()?default("")}</status>
    </room>
 </#list>
 </rooms>
