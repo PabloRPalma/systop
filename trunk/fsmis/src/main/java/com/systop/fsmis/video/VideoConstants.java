@@ -97,6 +97,10 @@ public final class VideoConstants {
 	 */
 	public static final String SWITCH_CLIENT_MIC = "onSwitchSpeaker";
 	/**
+	 * 客户端方法名,当有客户端修改房间或者新建房间时调用
+	 */
+	public static final String CLIENT_METHOD_ON_ROOM_CHANGE = "onRoomChange";
+	/**
 	 * 会议状态:未激活(未开始)
 	 */
 	public static final String ROOM_STATUS_NON_ACTIVED = "0";

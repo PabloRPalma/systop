@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
+import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.security.user.model.User;
 import com.systop.common.modules.security.user.service.UserManager;
 import com.systop.common.modules.template.Template;
@@ -194,11 +195,26 @@ public class Application extends MultiThreadedApplicationAdapter implements
 				User user = userManager.get(Integer.valueOf(userId));
 
 				roomManager.saveRoom(roomName, user, members, roomRemark);
+				
+				VideoUtils.doWithScopeConnections(appScope, new IConnectionCallback() {
+					@Override
+					public void doWithConnection(IConnection conn) {
+						VideoUtils
+								.call(
+										conn,
+										VideoConstants.CLIENT_METHOD_ON_ROOM_CHANGE,
+										new Object[] { },
+										null);
+					}
+				});
 
 			}
 		}
 		conn.getClient().setAttribute(VideoConstants.USER_CLIENT_ATTR_KEY,
 				userId);
+		
+		
+		
 		/*
 		 * logger.info("--roomConnect--------video---------->" +
 		 * "客户连入(roomConnect){}", params[0]);
@@ -601,7 +617,7 @@ public class Application extends MultiThreadedApplicationAdapter implements
 	 * 
 	 * @return
 	 */
-	public void createRoom(final String roomName, final String remark) {
+	public void createRoom1111(final String roomName, final String remark) {
 
 		final User user = VideoUtils.getCurrentUser(userManager);
 		/* logger.info("user{}创建名称为{}的房间", user.getName(), roomName); */
@@ -612,7 +628,7 @@ public class Application extends MultiThreadedApplicationAdapter implements
 
 		roomManager.create(room);
 		// 调用刷新房间列表方法--是否可行?????tmd好像不行啊!!!!
-		refreshRooms();
+		//refreshRooms();
 		/*
 		 * //得到当前连接 IConnection conn = Red5.getConnectionLocal(); //调用客户端函数,重新刷新
 		 * VideoUtils.call(conn, VideoConstants.CLIENT_METHOD_NOT_LOGIN, null,
@@ -643,7 +659,17 @@ public class Application extends MultiThreadedApplicationAdapter implements
 			// 从Scope树中删除指定的房间
 			appScope.removeChildScope(scope);
 		}
-
+		VideoUtils.doWithScopeConnections(appScope, new IConnectionCallback() {
+			@Override
+			public void doWithConnection(IConnection conn) {
+				VideoUtils
+						.call(
+								conn,
+								VideoConstants.CLIENT_METHOD_ON_ROOM_CHANGE,
+								new Object[] { },
+								null);
+			}
+		});
 	}
 
 	/**
@@ -730,7 +756,8 @@ public class Application extends MultiThreadedApplicationAdapter implements
 				new Object[] { Integer.valueOf(userId) });
 		*/
 		User user = userManager.findObject("select u from User u left join fetch u.dept where u.id = ? ", Integer.valueOf(userId));
-		final List<User> users = roomManager.getUsersByCounty(user);
+		Dept dept = roomManager.getCountyByUser(user);
+		final List<User> users = roomManager.getUsersByCounty(dept);
 		// 得到房间已有成员
 		List<User> currentRoomMembers = new ArrayList<User>();
 		if (StringUtils.isNotBlank(currentRoomMembersStr)) {
@@ -742,6 +769,7 @@ public class Application extends MultiThreadedApplicationAdapter implements
 
 		// 从人员列表中剔除已有的成员
 		users.removeAll(currentRoomMembers);
+		users.remove(user);//在用户列表中排除当前用户自己
 		// users.add(userManager.get(Integer.valueOf(userId)));
 		/* logger.info("总共{}个用户", users.size()); */
 		// 用模板生成xml
@@ -764,12 +792,18 @@ public class Application extends MultiThreadedApplicationAdapter implements
 	}
 
 	/**
-	 * 得到房间列表
+	 * 得到房间列表,根据当前用户所在区县,列出特定区县下的会议(房间)
+	 * 1.如果当前用户为区县级用户,即其所在部门为区县
+	 *     (所在部门为county,user.getDept eq getCountyByUser(user)),
+	 *     则列出其区县会议和上一级区县的会议
+	 * 2.如果当前用户不为区县级用户(某职能部门),
+	 *     (所在部门不为county,user.getDept ne getCountyByUser(user))
+	 *     则只列出其所在区县的会议
 	 * 
 	 * @return
 	 */
-	public String refreshRooms() {
-		final List<Room> rooms = roomManager.list();
+	public String refreshRooms(String userId) {
+		final List<Room> rooms = roomManager.listRooms(userId);
 
 		/* logger.info("总共{}个房间", rooms.size()); */
 		// 用模板生成xml
@@ -785,9 +819,9 @@ public class Application extends MultiThreadedApplicationAdapter implements
 			logger.error("An error has occurs. {}", e.getMessage());
 			e.printStackTrace();
 		}
-		/*
-		 * logger.info("返回XML数据供客户端刷新房间列表"); logger.info(writer.toString());
-		 */
+		
+		 // logger.info("返回XML数据供客户端刷新房间列表"); logger.info(writer.toString());
+		 
 		return writer.toString();
 	}
 
@@ -868,7 +902,25 @@ public class Application extends MultiThreadedApplicationAdapter implements
 		logger.info("----------video---------->"
 				+ iPendingServiceCall.getServiceName());
 	}
-
+	/**
+	 * 切换会议房间的状态
+	 * @param roomName
+	 */
+	public void switchRoomStatus(String roomName){
+		roomManager.switchRoomStatus(roomName);
+		
+		VideoUtils.doWithScopeConnections(appScope, new IConnectionCallback() {
+			@Override
+			public void doWithConnection(IConnection conn) {
+				VideoUtils
+						.call(
+								conn,
+								VideoConstants.CLIENT_METHOD_ON_ROOM_CHANGE,
+								new Object[] { },
+								null);
+			}
+		});
+	}
 	/**
 	 * 检查同名房间是否存在
 	 * 
