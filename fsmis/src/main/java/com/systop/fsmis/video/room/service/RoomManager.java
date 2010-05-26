@@ -2,9 +2,7 @@ package com.systop.fsmis.video.room.service;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.ArrayUtils;
@@ -16,6 +14,7 @@ import org.springframework.util.Assert;
 
 import com.systop.common.modules.dept.DeptConstants;
 import com.systop.common.modules.dept.model.Dept;
+import com.systop.common.modules.dept.service.DeptManager;
 import com.systop.common.modules.security.user.model.User;
 import com.systop.common.modules.security.user.service.UserManager;
 import com.systop.core.service.BaseGenericsManager;
@@ -27,6 +26,8 @@ import com.systop.fsmis.video.util.VideoUtils;
 public class RoomManager extends BaseGenericsManager<Room> {
 	@Autowired
 	private UserManager userManager;
+	@Autowired
+	private DeptManager deptManager;
 
 	public Room getByName(String name) {
 		String hql = "from Room r where r.name = ?";
@@ -48,6 +49,7 @@ public class RoomManager extends BaseGenericsManager<Room> {
 		Room room = new Room();
 		room.setName(roomName);// 视频房间名称,惟一的id
 		room.setMaster(user.getId());// 视频房间的主人
+		room.setCounty(getCountyByUser(user));
 		// room.setMembers(user.getId().toString());// 房间成员
 		if (membersStr != null) {
 			room.setMembers(membersStr);// 房间成员
@@ -58,6 +60,7 @@ public class RoomManager extends BaseGenericsManager<Room> {
 		room.setMembersCount(1);// 房间内成员数量,由于是新创建房间,默认为1
 		room.setRemark(roomRemark);
 		room.setCreateTime(new Date());
+		room.setStatus(VideoConstants.ROOM_STATUS_ACTIVED);
 		create(room);
 		// 更新当前加入用户的视频状态为"等待"
 		userManager.setVideoOnline(user, VideoConstants.USER_WAITING);
@@ -177,6 +180,17 @@ public class RoomManager extends BaseGenericsManager<Room> {
 
 		return room;
 	}
+	@Transactional
+	public void switchRoomStatus(String roomName){
+		Room room = getByName(roomName);
+		if(VideoConstants.ROOM_STATUS_HALT.equals(room.getStatus())){
+			room.setStatus(VideoConstants.ROOM_STATUS_ACTIVED);
+		}else{
+			room.setStatus(VideoConstants.ROOM_STATUS_HALT);
+		}
+		
+		getDao().merge(room);
+	}
 
 	/**
 	 * 修改房间信息方法
@@ -203,7 +217,7 @@ public class RoomManager extends BaseGenericsManager<Room> {
 		room.setMembers(membersStr);
 		room.setRemark(roomRemark);
 		room.setCounty(getCountyByUser(user));
-		room.setStatus(VideoConstants.ROOM_STATUS_ACTIVED);//默认进行中状态
+		room.setStatus(VideoConstants.ROOM_STATUS_ACTIVED);// 默认进行中状态
 
 		getDao().merge(room);
 
@@ -265,15 +279,32 @@ public class RoomManager extends BaseGenericsManager<Room> {
 	}
 
 	/**
+	 * 列出当前用户所在区县的会议房间,
+	 * 如果当前用户的部门是区县,则同时列出市级会议房间
+	 * 如果是市级,则只列出市级会议房间
 	 * 
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Room> list() {
-		String hql = "from Room r order by r.createTime desc";
-		List<Room> rooms = new ArrayList<Room>();
-		rooms = getDao().query(hql);
+	public List<Room> listRooms(String userId) {
+		// 根据用户id得到用户
+		String hqluser = "select u from User u left join fetch u.dept where u.id = ?";
+		User user = (User) getDao()
+				.findObject(hqluser, Integer.valueOf(userId));
 
+		Dept dept = getCountyByUser(user);
+		List<Dept> childCountys = getCountysByUser(user);
+		childCountys.add(dept);
+		List<Integer> deptIds = new ArrayList<Integer>();
+		for (Dept d : childCountys) {
+			deptIds.add(d.getId());
+		}
+		String hql = "select r from Room r left join r.county where r.county.id in (:ids) order by r.createTime desc";
+		List<Room> rooms = getDao().getHibernateTemplate().getSessionFactory()
+				.openSession().createQuery(hql).setParameterList("ids",
+						deptIds).list();
+		
+		
 		if (CollectionUtils.isNotEmpty(rooms)) {
 			for (Room room : rooms) {
 				User u = (User) getDao().get(User.class, room.getMaster());
@@ -282,6 +313,8 @@ public class RoomManager extends BaseGenericsManager<Room> {
 				}
 			}
 		}
+		
+		
 
 		return rooms;
 	}
@@ -297,7 +330,13 @@ public class RoomManager extends BaseGenericsManager<Room> {
 	@Transactional
 	public void saveMeetingRecord(String roomName, String message) {
 		Room room = getByName(roomName);
-		StringBuffer buf = new StringBuffer(room.getMeetingRecord());
+		StringBuffer buf = null;
+		if (StringUtils.isNotBlank(room.getMeetingRecord())) {
+			buf = new StringBuffer(room.getMeetingRecord());
+		} else {
+			buf = new StringBuffer();
+		}
+
 		buf.append(message);
 		room.setMeetingRecord(buf.toString());
 
@@ -312,10 +351,12 @@ public class RoomManager extends BaseGenericsManager<Room> {
 	 * @param user
 	 * @return
 	 */
-	private Dept getCountyByUser(User user) {
-		String hql = "from Dept d  left join fetch d.parentDept where d.id = ?";
-		
-		Dept dept = (Dept) getDao().findObject(hql, user.getDept().getId());
+	public Dept getCountyByUser(User user) {
+		// String hql =
+		// "from Dept d  left join fetch d.parentDept where d.id = ?";
+
+		// Dept dept = (Dept) getDao().findObject(hql, user.getDept().getId());
+		Dept dept = deptManager.get(user.getDept().getId());
 		if (dept == null) {
 			return null;
 		}
@@ -325,23 +366,109 @@ public class RoomManager extends BaseGenericsManager<Room> {
 		return dept;
 	}
 	/**
+	 * 根据部门得到其上级区县
+	 * @param dept
+	 * @return
+	 */
+	private Dept getCountyByDept(Dept dept){
+		Dept county = null;
+		String hql = "select new Dept(d.id,d.parentDept)from Dept d where d.id = ?";
+		Dept d = (Dept) getDao().findObject(hql, dept.getId());
+		if(d == null){
+			return null;
+		}
+		String hqlParentDept = "select d from Dept d where id = ?";
+		Dept parentDept = (Dept) getDao().findObject(hqlParentDept, d.getParentDept().getId());
+		if(DeptConstants.TYPE_COUNTY.equals(parentDept.getType())){
+			county = parentDept;
+		}
+		
+		while (!DeptConstants.TYPE_COUNTY.equals(parentDept.getType())) {
+			county = dept.getParentDept();
+		}
+		return county;
+	}
+	/**
+	 * 根据用户得到其所在区县.
+	 * 如果用户的部门为职能部门(非区县)则只得到其部门所在区县
+	 * 如果用户的部门就是区县,则得到其区县和上级区县
+	 * @param user
+	 * @return
+	 */
+	private List<Dept> getCountysByUser(User user){
+		List<Dept> countys = new ArrayList<Dept>();	
+		Dept county = getCountyByUser(user);
+		//如果是区县级用户即用户所在部门eq该部门所在区县,则需要得到其上级区县
+		if(user.getDept().equals(county)){			
+			Dept parentCounty =getCountyByDept(county); 
+			if(parentCounty != null){
+				countys.add(parentCounty);
+			}
+				
+		}		
+		//countys.add(county);
+		
+		return countys;
+	}
+	/**
+	 * 根据当前区县,得到所有子区县
+	 * 
+	 * @param dept
+	 * @return
+	 */
+
+	private List<Dept> getChildCountysByCounty(Dept dept) {
+		List<Dept> childCountys = getAllChildsByDept(dept);
+		for (Dept d : childCountys) {
+			if (!DeptConstants.TYPE_COUNTY.equals(dept.getType())) {
+				childCountys.remove(d);
+			}
+		}
+		return childCountys;
+	}
+
+	/**
 	 * 根据当前人员所在区县,得到区县下所有人员
+	 * 
 	 * @param user
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<User> getUsersByCounty(User user){
-		//String hql = "select u from User u left join fetch u.dept where u.id <> ?";
-		String hql = "select u from User u left join fetch u.dept where u.id <> ? and u.dept.id in (?)";
-		Dept dept = getCountyByUser(user);
-		Set<Dept> childDepts =  new HashSet<Dept>();
-		childDepts.addAll(dept.getChildDepts());
-		childDepts.add(dept);
+	public List<User> getUsersByCounty(Dept dept) {
+		// String hql =
+		// "select u from User u left join fetch u.dept where u.id <> ?";
+		String hql = "select u from User u left join fetch u.dept where u.dept.id in (:ids)";
+
+		List<Dept> depts = getAllChildsByDept(dept);
+		depts.add(dept);
 		List<Integer> deptIds = new ArrayList<Integer>();
-		for(Dept d : childDepts){
+		for (Dept d : depts) {
 			deptIds.add(d.getId());
 		}
-		
-		return getDao().query(hql, user.getId(),deptIds);
+
+		return getDao().getHibernateTemplate().getSessionFactory()
+				.openSession().createQuery(hql)
+				.setParameterList("ids", deptIds).list();
+		// return getDao().query(hql, deptIds.toArray());
+	}
+
+	/**
+	 * 得到一个部门下的所有子部门.
+	 * @param dept
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	private List<Dept> getAllChildsByDept(Dept dept) {
+		List<Dept> childs = new ArrayList<Dept>();
+		String hql = "select new Dept(d.id,d.parentDept)from Dept d where d.parentDept.id = ?";
+		List<Dept> list = getDao().query(hql, dept.getId());
+		childs.addAll(list);
+		/*
+		for (Dept d : list) {
+			if (d.getParentDept() != null) {
+				childs.addAll(getAllChildsByDept(d));
+			}
+		}*/
+		return childs;
 	}
 }
