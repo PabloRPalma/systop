@@ -121,6 +121,15 @@ public class Dept extends BaseModel {
 		this.name = name;
 		this.type = type;
 	}
+	/**
+	 * 为在Red5中应用中属性查询而加的构造
+	 * @param id
+	 * @param parentDept
+	 */
+	public Dept(Integer id, Dept parentDept) {
+		this.id = id;
+		this.parentDept = parentDept;
+	}
 
 	@Id
 	@GeneratedValue(generator = "hibseq")
