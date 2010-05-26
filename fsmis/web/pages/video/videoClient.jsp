@@ -19,6 +19,7 @@
 </stc:ifNotLogin>
 <stc:ifLogin>
 <%
+String role = "NONE";
 //得到当前用户,以构建flex程序必须的参数
 User user = UserUtil.getPrincipal(request);
 
@@ -40,10 +41,11 @@ if(host.indexOf(":") > 0) {
 } else if(host.indexOf("/") > 0 ) {
   host = host.substring(0, host.indexOf("/"));
 }
-//System.out.println("userId:--------->"+id);
-//System.out.println("room:"+room);
-//System.out.println("host:"+host);
 %>
+<stc:role ifAnyGranted="ROLE_CITY,ROLE_COUNTY">
+	<%role = "ROLE_CREATE"; %>	
+	<%System.out.println(role); %>
+</stc:role>
 
 <script src="AC_OETags.js" language="javascript"></script>
 
@@ -89,7 +91,7 @@ if ( hasProductInstall && !hasRequestedVersion ) {
     
    	AC_FL_RunContent(
 		"src", "playerProductInstall",
-		"FlashVars", "appUrl=<%=appUrl%>&userId=<%=user.getId()%>&ctxPath=<%=VideoConstants.WEBAPP_CONTEXT_PATH%>",
+		"FlashVars", "appUrl=<%=appUrl%>&userId=<%=user.getId()%>&ctxPath=<%=VideoConstants.WEBAPP_CONTEXT_PATH%>&role=<%=role%>",
 		"width", "100%",
 		"height", "100%",
 		"align", "middle",
@@ -107,7 +109,7 @@ if ( hasProductInstall && !hasRequestedVersion ) {
 	// embed the Flash Content SWF when all tests are passed
 	AC_FL_RunContent(
 			"src", "videoClient",
-			"FlashVars", "appUrl=<%=appUrl%>&userId=<%=user.getId()%>&ctxPath=<%=VideoConstants.WEBAPP_CONTEXT_PATH%>",
+			"FlashVars", "appUrl=<%=appUrl%>&userId=<%=user.getId()%>&ctxPath=<%=VideoConstants.WEBAPP_CONTEXT_PATH%>&role=<%=role%>",
 			"width", "100%",
 			"height", "100%",
 			"align", "middle",
@@ -124,11 +126,10 @@ if ( hasProductInstall && !hasRequestedVersion ) {
     var alternateContent = 'Alternate HTML content should be placed here. '
   	+ 'This content requires the Adobe Flash Player. '
    	+ '<a href=http://www.adobe.com/go/getflash/>Get Flash</a>';
-    document.write(alternateContent);  // insert non-flash content
+    //document.write(alternateContent);  // insert non-flash content
   }
 // -->
 </script>
-
 <noscript>
   	<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
 			id="cnhrClient" width="100%" height="100%"
@@ -136,7 +137,7 @@ if ( hasProductInstall && !hasRequestedVersion ) {
 			<param name="movie" value="${ctx}/flash/video/videoClient.swf" />
 			<param name="quality" value="high" />
 			<param name="bgcolor" value="#ffffff" />
-			<param name="FlashVars" value="room=<%=room%>&loginId=<%=loginId%>&host=<%=host%>&userId=<%=user.getId()%>&ctxPath=<%=VideoConstants.WEBAPP_CONTEXT_PATH%>"/>
+			<param name="FlashVars" value="room=<%=room%>&loginId=<%=loginId%>&host=<%=host%>&userId=<%=user.getId()%>&ctxPath=<%=VideoConstants.WEBAPP_CONTEXT_PATH%>&role=<%=role%>"/>
 			<param name="allowScriptAccess" value="sameDomain" />
 			<embed src="${ctx}/flash/video/videoClient.swf" quality="high" bgcolor="#ffffff" 
 				width="100%" height="100%" name="videoClient" align="middle"
