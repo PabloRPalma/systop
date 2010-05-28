@@ -56,7 +56,7 @@ function remove(id){
 		<ec:column width="60" property="status" title="会议状态" mappingItem="RoomMap"
 			style="text-align: center" sortable="false"/>
 		<ec:column width="50" property="_o" title="操作" sortable="false" style="text-align: center">
-			<a title="查看会议" href="${ctx}/room/view.do?id=${item.id}">
+			<a title="查看会议" href="${ctx}/room/view.do?model.id=${item.id}">
 			看</a> |
 			<a href="#" title="删除会议" onclick="remove(${item.id})">删 </a>
 		</ec:column>
