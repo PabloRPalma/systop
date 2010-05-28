@@ -423,6 +423,7 @@ public class RoomManager extends BaseGenericsManager<Room> {
 	 * @return
 	 */
 
+	@SuppressWarnings("unused")
 	private List<Dept> getChildCountysByCounty(Dept dept) {
 		List<Dept> childCountys = getAllChildsByDept(dept);
 		for (Dept d : childCountys) {
