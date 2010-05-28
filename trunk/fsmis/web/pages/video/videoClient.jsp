@@ -15,7 +15,9 @@
 </head>
 <body>
 <stc:ifNotLogin>
-   请登录。
+
+<c:redirect url="${ctx}/login.jsp">
+</c:redirect>
 </stc:ifNotLogin>
 <stc:ifLogin>
 <%
