@@ -92,7 +92,7 @@ public class RoomManager extends BaseGenericsManager<Room> {
 	 *            要删除的房间实体实例
 	 */
 	@Transactional
-	public void remove(String roomName) {
+	public void closeRoom(String roomName) {
 		Room room = getByName(roomName);
 		Assert.notNull(room);
 		List<User> members = getMembers(room);
@@ -100,8 +100,10 @@ public class RoomManager extends BaseGenericsManager<Room> {
 		for (User member : members) {
 			userManager.setVideoOnline(member, VideoConstants.USER_IDLE);
 			// 删除房间
-			getDao().delete(Room.class, room.getName());
+			//getDao().delete(Room.class, room.getName());
 		}
+		room.setStatus(VideoConstants.ROOM_STATUS_CLOSE);
+		getDao().merge(room);
 	}
 
 	/**
@@ -299,10 +301,10 @@ public class RoomManager extends BaseGenericsManager<Room> {
 		for (Dept d : childCountys) {
 			deptIds.add(d.getId());
 		}
-		String hql = "select r from Room r left join r.county where r.county.id in (:ids) order by r.createTime desc";
+		String hql = "select r from Room r left join r.county where r.county.id in (:ids) and r.status <> :status order by r.createTime desc";
 		List<Room> rooms = getDao().getHibernateTemplate().getSessionFactory()
 				.openSession().createQuery(hql).setParameterList("ids",
-						deptIds).list();
+						deptIds).setParameter("status", VideoConstants.ROOM_STATUS_CLOSE).list();
 		
 		
 		if (CollectionUtils.isNotEmpty(rooms)) {
