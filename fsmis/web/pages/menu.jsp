@@ -97,9 +97,13 @@
 			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/ucgroup/index.do" target="main">指挥组管理</a>
 		</div>
-			<div style="padding-top:2px">
+		<div style="padding-top:2px">
 			<img src="${ctx}/images/icons/add.gif" class="icon">
 			<a href="${ctx}/pages/video/videoClient.jsp" target="_blank">视频会议</a>
+		</div>
+		<div style="padding-top:2px">
+			<img src="${ctx}/images/icons/add.gif" class="icon">
+			<a href="${ctx}/room/index.do" target="main">历史会议</a>
 		</div>
 	</div>
 	<div id="analyse">
