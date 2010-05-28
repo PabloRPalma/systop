@@ -2,8 +2,10 @@ package com.systop.fsmis.video;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -597,7 +599,10 @@ public class Application extends MultiThreadedApplicationAdapter implements
 						new Object[] { msg, user.getName() }, null);
 			}
 		});
-		roomManager.saveMeetingRecord(scope.getName(), msg);
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy年MM月dd日 hh:mm:ss");
+		StringBuffer buf = new StringBuffer("[").append(user.getName()).append("]").append(sf.format(new Date())).append("<br>");
+		buf.append(msg);
+		roomManager.saveMeetingRecord(scope.getName(), buf.toString());
 	}
 
 	/**
