@@ -592,17 +592,21 @@ public class Application extends MultiThreadedApplicationAdapter implements
 		/* logger.info("&&&&&&&&&&&&&&&&&&&" + user.getName()); */
 		// 得到当前用户所在房间
 		IScope scope = Red5.getConnectionLocal().getScope();
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy年MM月dd日 hh:mm:ss");
+		StringBuffer buf = new StringBuffer("[").append(user.getName()).append("]").append(sf.format(new Date())).append("<br>");
+		buf.append(msg);
+		final String fullMsg = buf.toString();
+		logger.info(fullMsg);
+		
 		VideoUtils.doWithScopeConnections(scope, new IConnectionCallback() {
 			@Override
 			public void doWithConnection(IConnection conn) {
 				VideoUtils.call(conn, VideoConstants.CLIENT_METHOD_RECEIVE_MSG,
-						new Object[] { msg, user.getName() }, null);
+						new Object[] { fullMsg, user.getName() }, null);
 			}
 		});
-		SimpleDateFormat sf = new SimpleDateFormat("yyyy年MM月dd日 hh:mm:ss");
-		StringBuffer buf = new StringBuffer("[").append(user.getName()).append("]").append(sf.format(new Date())).append("<br>");
-		buf.append(msg);
-		roomManager.saveMeetingRecord(scope.getName(), buf.toString());
+		
+		roomManager.saveMeetingRecord(scope.getName(), fullMsg);
 	}
 
 	/**
