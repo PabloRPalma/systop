@@ -1,0 +1,78 @@
+/* CSS file */
+
+
+
+Button.quit
+{
+	color: #FFFFFF;
+	fillAlphas: 0.73, 1.0, 0.73, 0.73;
+	fillColors: #216CD3, #53C9F9;
+	fontFamily: "宋体";
+	fontSize: 12;
+	borderColor: #519ADB;
+	themeColor: #FFFFFF;
+}
+
+Button
+{
+	fontFamily: "中易宋体";
+	fontSize: 12;
+	
+	fillColors: #CBDCF5, #ffffff;
+}
+Canvas.myCanvas {    
+	
+	
+	background-position: center;
+	
+	
+	
+	
+	
+}
+TextArea.talkContent
+{
+	backgroundColor: #F6F9FC;
+	cornerRadius: 10;
+}
+Canvas.videoCanvas
+{
+	fontFamily: "宋体";
+	fontSize: 12;
+	fontStyle: normal;
+	fontWeight: normal;
+	textDecoration: none;
+}
+
+Accordion
+{
+	fontFamily: "宋体";
+	fontSize: 14;
+	fontStyle: normal;
+	fontWeight: normal;
+	textDecoration: none;
+}
+
+VideoDisplay.localPlayer
+{
+	backgroundColor: #EDF7FF;
+}
+RichTextEditor.msgBox
+{
+	cornerRadius: 10;
+	fontSize: 12;
+	fontStyle: normal;
+	fontWeight: normal;
+	controlBarStyleName: richTextEditorControlBar;
+	titleStyleName: richTextEditorTitle;
+	borderAlpha: 1.0;
+	borderColor: #ECF7FF;
+}
+.richTextEditorControlBar
+{
+	backgroundSize: auto;
+}
+.richTextEditorTitle
+{
+}
+
