@@ -354,16 +354,20 @@ public class RoomManager extends BaseGenericsManager<Room> {
 	 * @return
 	 */
 	public Dept getCountyByUser(User user) {
-		// String hql =
-		// "from Dept d  left join fetch d.parentDept where d.id = ?";
+		
+		 String hql = "from Dept d  left join fetch d.parentDept where d.id = ?";
 
-		// Dept dept = (Dept) getDao().findObject(hql, user.getDept().getId());
-		Dept dept = deptManager.get(user.getDept().getId());
+		 Dept dept = (Dept) getDao().findObject(hql, user.getDept().getId());
+		//Dept dept = deptManager.get(user.getDept().getId());
 		if (dept == null) {
 			return null;
 		}
 		while (!DeptConstants.TYPE_COUNTY.equals(dept.getType())) {
+			
 			dept = dept.getParentDept();
+			String hql1 = "from Dept d  left join fetch d.parentDept where d.id = ?";
+
+			dept = (Dept) getDao().findObject(hql1, dept.getId());
 		}
 		return dept;
 	}
