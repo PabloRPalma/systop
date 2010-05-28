@@ -1,5 +1,8 @@
 package com.systop.fsmis.video;
 
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import com.systop.core.util.ResourceBundleUtil;
@@ -121,4 +124,17 @@ public final class VideoConstants {
 	 * 会议状态:会议结束/关闭
 	 */
 	public static final String ROOM_STATUS_CLOSE = "3";
+	
+	
+	
+	  /** 会议状态常量Map  */
+	  public static final Map<String, String> ROOM_MAP = Collections
+	      .synchronizedMap(new LinkedHashMap<String, String>());
+	  static {
+		  ROOM_MAP.put(ROOM_STATUS_NON_ACTIVED, "未开始");
+		  ROOM_MAP.put(ROOM_STATUS_ACTIVED, "进行中");
+		  ROOM_MAP.put(ROOM_STATUS_HALT, "暂停");
+		  ROOM_MAP.put(ROOM_STATUS_CLOSE, "已关闭");
+
+	  }
 }
