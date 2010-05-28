@@ -26,6 +26,7 @@ import com.systop.fsmis.video.util.VideoUtils;
 public class RoomManager extends BaseGenericsManager<Room> {
 	@Autowired
 	private UserManager userManager;
+	@SuppressWarnings("unused")
 	@Autowired
 	private DeptManager deptManager;
 
