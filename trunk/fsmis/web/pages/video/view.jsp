@@ -20,7 +20,7 @@
 			</tr>
 		    <tr>
 		       <td>
-		       <div style="overflow: auto; height: 520px; width: 800px" id="meetingRecord" >
+		       <div style="overflow: auto; height: 520px " id="meetingRecord" >
 		        ${model.meetingRecord }
 		       </div>
 		       </td>
