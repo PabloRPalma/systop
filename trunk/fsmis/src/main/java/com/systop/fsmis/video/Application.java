@@ -595,7 +595,9 @@ public class Application extends MultiThreadedApplicationAdapter implements
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy年MM月dd日 hh:mm:ss");
 		StringBuffer buf = new StringBuffer("[").append(user.getName()).append("]").append(sf.format(new Date())).append("<br>");
 		buf.append(msg);
+		buf.delete(buf.indexOf("SIZE"), buf.indexOf("SIZE")+9);
 		final String fullMsg = buf.toString();
+		//fullMsg.replace("SIZE=\'10\'", " ");
 		logger.info(fullMsg);
 		
 		VideoUtils.doWithScopeConnections(scope, new IConnectionCallback() {
