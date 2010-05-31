@@ -34,6 +34,7 @@ import com.systop.common.modules.security.user.service.UserManager;
 import com.systop.common.modules.template.Template;
 import com.systop.common.modules.template.TemplateContext;
 import com.systop.common.modules.template.TemplateRender;
+import com.systop.core.Constants;
 import com.systop.fsmis.video.room.model.Room;
 import com.systop.fsmis.video.room.service.RoomManager;
 import com.systop.fsmis.video.util.IConnectionCallback;
@@ -111,14 +112,18 @@ public class Application extends MultiThreadedApplicationAdapter implements
 			return false;
 		}
 		// 如果是assistant登录，----------------------??是否启用??
-		/*
-		 * if (isVideoOnline(params[0].toString())) {
-		 * logger.info("--2--------video---------->" + "用户{}试图重复连接视频",
-		 * params[0].toString()); VideoUtils.call(conn,
-		 * VideoConstants.CLIENT_METHOD_DUPLE_CONNECT, null, this); return
-		 * false; }
-		 */
 
+		if (isVideoOnline(userId)) {
+			logger.info("--2--------video---------->" + "用户{}试图重复连接视频",
+					params[0].toString());
+			VideoUtils.call(conn, VideoConstants.CLIENT_METHOD_DUPLE_CONNECT,
+					null, this);
+			return false;
+		}else{
+			userManager.setVideoOnline(userManager.get(Integer.valueOf(userId)), Constants.YES);
+		}
+		conn.getClient().setAttribute(VideoConstants.USER_CLIENT_ATTR_KEY,
+				userId);
 		/*
 		 * logger.info("---3-------video---------->" + "客户端连入(appConect){}",
 		 * params[0]);
@@ -137,6 +142,8 @@ public class Application extends MultiThreadedApplicationAdapter implements
 		 * logger.info("--appDisconnect--------video---------->" + "用户{}断开连接",
 		 * conn.getAttribute(VideoConstants.USER_CLIENT_ATTR_KEY));
 		 */
+		final User user = VideoUtils.getCurrentUser(userManager);
+		userManager.setVideoOnline(userManager.get(user.getId()), Constants.NO);
 		super.appDisconnect(conn);
 	}
 
@@ -212,8 +219,7 @@ public class Application extends MultiThreadedApplicationAdapter implements
 
 			}
 		}
-		conn.getClient().setAttribute(VideoConstants.USER_CLIENT_ATTR_KEY,
-				userId);
+		
 
 		/*
 		 * logger.info("--roomConnect--------video---------->" +
@@ -428,7 +434,7 @@ public class Application extends MultiThreadedApplicationAdapter implements
 	 */
 	public void closeRoom(String roomName) {
 		roomManager.closeRoom(roomName);
-		//如果在Scope树中有该会议(因为数据库中的rooms和Scope有时候是不同步的),则通知会议中的各个客户端,会议关闭
+		// 如果在Scope树中有该会议(因为数据库中的rooms和Scope有时候是不同步的),则通知会议中的各个客户端,会议关闭
 		if (appScope.hasChildScope(roomName)) {
 			IScope scope = appScope.getScope(roomName);
 			VideoUtils.doWithScopeConnections(scope, new IConnectionCallback() {
@@ -442,7 +448,7 @@ public class Application extends MultiThreadedApplicationAdapter implements
 				}
 			});
 		}
-		//通知应用中的所有客户端,房间的状态改变
+		// 通知应用中的所有客户端,房间的状态改变
 		VideoUtils.doWithScopeConnections(appScope, new IConnectionCallback() {
 			@Override
 			public void doWithConnection(IConnection conn) {
@@ -593,13 +599,14 @@ public class Application extends MultiThreadedApplicationAdapter implements
 		// 得到当前用户所在房间
 		IScope scope = Red5.getConnectionLocal().getScope();
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy年MM月dd日 hh:mm:ss");
-		StringBuffer buf = new StringBuffer("[").append(user.getName()).append("]").append(sf.format(new Date())).append("<br>");
+		StringBuffer buf = new StringBuffer("[").append(user.getName()).append(
+				"]").append(sf.format(new Date())).append("<br>");
 		buf.append(msg);
-		buf.delete(buf.indexOf("SIZE"), buf.indexOf("SIZE")+9);
+		buf.delete(buf.indexOf("SIZE"), buf.indexOf("SIZE") + 9);
 		final String fullMsg = buf.toString();
-		//fullMsg.replace("SIZE=\'10\'", " ");
+		// fullMsg.replace("SIZE=\'10\'", " ");
 		logger.info(fullMsg);
-		
+
 		VideoUtils.doWithScopeConnections(scope, new IConnectionCallback() {
 			@Override
 			public void doWithConnection(IConnection conn) {
@@ -607,7 +614,7 @@ public class Application extends MultiThreadedApplicationAdapter implements
 						new Object[] { fullMsg, user.getName() }, null);
 			}
 		});
-		
+
 		roomManager.saveMeetingRecord(scope.getName(), fullMsg);
 	}
 
@@ -919,7 +926,7 @@ public class Application extends MultiThreadedApplicationAdapter implements
 	 *            要验证的用户的id
 	 * @return 是否视频在线
 	 */
-	@SuppressWarnings("unused")
+
 	private boolean isVideoOnline(String userId) {
 		User user = userManager.get(Integer.valueOf(userId));
 		return userManager.isVideoOnLine(user);
@@ -991,5 +998,6 @@ public class Application extends MultiThreadedApplicationAdapter implements
 	public void setAppScope(IScope appScope) {
 		this.appScope = appScope;
 	}
-
+	
+	
 }
