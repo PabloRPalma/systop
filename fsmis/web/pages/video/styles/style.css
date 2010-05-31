@@ -1,7 +1,19 @@
 /* CSS file */
 
-
-
+BODY{
+	fontFamily: "宋体";
+	fontSize: 12;
+}
+LinkButton{
+	padding-left:0;
+	padding-right:0;
+}
+.halt{
+	color:#ff9d07;
+}
+.actived{
+	color:green;
+}
 Button.quit
 {
 	color: #FFFFFF;
@@ -15,7 +27,7 @@ Button.quit
 
 Button
 {
-	fontFamily: "中易宋体";
+	fontFamily: "宋体";
 	fontSize: 12;
 	
 	fillColors: #CBDCF5, #ffffff;
@@ -35,7 +47,7 @@ TextArea.talkContent
 	backgroundColor: #F6F9FC;
 	cornerRadius: 10;
 }
-Canvas.videoCanvas
+Canvas
 {
 	fontFamily: "宋体";
 	fontSize: 12;
@@ -47,13 +59,13 @@ Canvas.videoCanvas
 Accordion
 {
 	fontFamily: "宋体";
-	fontSize: 14;
+	fontSize: 12;
 	fontStyle: normal;
 	fontWeight: normal;
 	textDecoration: none;
 }
 
-VideoDisplay.localPlayer
+VideoDisplay
 {
 	backgroundColor: #EDF7FF;
 }
