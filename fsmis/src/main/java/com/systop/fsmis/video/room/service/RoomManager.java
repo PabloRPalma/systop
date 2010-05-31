@@ -12,11 +12,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+
 import com.systop.common.modules.dept.DeptConstants;
 import com.systop.common.modules.dept.model.Dept;
 import com.systop.common.modules.dept.service.DeptManager;
 import com.systop.common.modules.security.user.model.User;
 import com.systop.common.modules.security.user.service.UserManager;
+import com.systop.core.Constants;
 import com.systop.core.service.BaseGenericsManager;
 import com.systop.fsmis.video.VideoConstants;
 import com.systop.fsmis.video.room.model.Room;
@@ -262,6 +264,9 @@ public class RoomManager extends BaseGenericsManager<Room> {
 			logger.warn("房间{}不存在!", roomName);
 			return;
 		}
+		user.setVideoOnline(Constants.NO);
+		userManager.getDao().merge(user);
+		
 		// 如果用户存在于房间中,则将其id从mebers字符串中剔除
 		if (VideoUtils.hasIt(room.getMembers(), user.getId())
 				|| room.getMaster().equals(user.getId())) {
@@ -273,6 +278,7 @@ public class RoomManager extends BaseGenericsManager<Room> {
 				room.setMembersCount(room.getMembersCount() - 1);
 				getDao().merge(room);
 			}
+			
 			logger.info("用户{}离开了,房间{}", user.getName(), roomName);
 			logger.info("房间{}当前人数:{}", roomName, room.getMembersCount());
 		} else {
