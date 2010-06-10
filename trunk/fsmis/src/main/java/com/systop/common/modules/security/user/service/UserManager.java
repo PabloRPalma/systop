@@ -592,5 +592,19 @@ public class UserManager extends BaseGenericsManager<User> {
 						.getVideoOnline());
 		getDao().merge(user);
 	}
+	/**
+	 * 初始化用户的videoOnline属性为"不在线"
+	 */
+	@Transactional
+	public void initUserVideoOnline(){
+		String hql = "from User";
+		List<User> users = query(hql);
+		for(User u : users){
+			if(Constants.YES.equals(u.getVideoOnline())){
+				u.setVideoOnline(Constants.NO);
+				getDao().merge(u);
+			}
+		}
+	}
 
 }
