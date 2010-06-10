@@ -77,6 +77,8 @@ public class Application extends MultiThreadedApplicationAdapter implements
 		logger.info("--appStart--------video---------->"
 				+ "Red5视频服务启动...SCOPE:{}", app.getClass());
 		appScope = app;
+		//初始化所有用户的videoOnline属性为"不在线"
+		userManager.initUserVideoOnline();
 		return true;
 	}
 
@@ -655,7 +657,6 @@ public class Application extends MultiThreadedApplicationAdapter implements
 					VideoUtils.call(conn, VideoConstants.SWITCH_CLIENT_MIC,
 							new Object[] { currentGain }, null);
 				}
-
 			}
 		});
 	}
@@ -873,7 +874,6 @@ public class Application extends MultiThreadedApplicationAdapter implements
 			logger.error("An error has occurs. {}", e.getMessage());
 			e.printStackTrace();
 		}
-
 		// logger.info("返回XML数据供客户端刷新房间列表"); logger.info(writer.toString());
 
 		return writer.toString();
@@ -997,7 +997,5 @@ public class Application extends MultiThreadedApplicationAdapter implements
 
 	public void setAppScope(IScope appScope) {
 		this.appScope = appScope;
-	}
-	
-	
+	}		
 }
