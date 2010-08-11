@@ -90,6 +90,15 @@ function queryForList(url, target) {
 function downloadInXls() {
 	ECSideUtil.doExport('xls','仪器通道参数信息列表.xls','','ec');
 }
+$(function() {
+	$("#dialog").dialog({
+		bgiframe: true,
+		autoOpen: false,
+		height: 380,
+		width: 580,
+		modal: true
+		});
+});
 //显示通道参数
 function look(id) {
 	$('#rescon').attr("value", $('#' + id).attr('value').replace(new RegExp('>','gm'), '>\n'));
