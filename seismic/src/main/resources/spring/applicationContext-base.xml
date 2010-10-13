@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+xmlns:aop="http://www.springframework.org/schema/aop" 
+xmlns:context="http://www.springframework.org/schema/context" 
+xmlns:jee="http://www.springframework.org/schema/jee"
+xmlns:task="http://www.springframework.org/schema/task" 
+xmlns:tx="http://www.springframework.org/schema/tx" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd   http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd   http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd  http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd"
+default-lazy-init="true"  default-autowire="byName">
+	<description>Spring公共配置文件</description>
+	<!--
+		加载.properties文件，可以在XML文件的属性中使用${property}注入常量，
+		也可以在@Value标记中使用${property}注入常量.
+	-->
+	<context:property-placeholder location="classpath:application.properties"/>
+	<context:property-placeholder location="classpath:dao.properties"/>
+	<!-- Turn on AspectJ @Configurable support. -->
+	<context:spring-configured/>
+	<!-- 数据源配置 -->
+	<bean id="dataSource"
+		class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass">
+			<value>${jdbc.driverClassName}</value>
+		</property>
+		<property name="jdbcUrl">
+			<value>${jdbc.url}</value>
+		</property>
+		<property name="user">
+			<value>${jdbc.username}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.password}</value>
+		</property>
+		<property name="initialPoolSize">
+            <value>${pool.initialPoolSize}</value>
+        </property>
+        <property name="maxPoolSize">
+            <value>${pool.maxPoolSize}</value>
+        </property>
+        <property name="idleConnectionTestPeriod">
+            <value>${pool.testPeriod}</value>
+        </property>
+        <property name="automaticTestTable">
+            <value>${pool.testTable}</value>
+        </property>
+	</bean>
+
+	<!-- Hibernate配置 -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		
+		<property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">
+                	${hibernate.dialect}
+                </prop>
+                <prop key="hibernate.show_sql">
+                	${hibernate.show_sql}
+                </prop>
+                <prop key="hibernate.cache.use_query_cache">
+                    ${hibernate.cache.use_query_cache}
+                </prop>
+                <prop key="hibernate.cache.provider_class">
+                    ${hibernate.cache.provider_class}
+                </prop>
+                <prop key="hibernate.jdbc.batch_size">
+                    ${hibernate.jdbc.batch_size}
+                </prop>
+                <prop key="hibernate.jdbc.batch_size">
+                    ${hibernate.jdbc.batch_size}
+                </prop>
+                <prop key="hibernate.cache.provider_configuration_file_resource_path">
+                    ${hibernate.cache.provider_configuration_file_resource_path}
+                </prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                
+            </props>
+        </property>
+		<property name="packagesToScan">
+		    <list>
+		        <value>com.systop.**.model</value>
+		        <value>datashare.**.model</value>
+		    </list>
+		</property>
+	</bean>
+
+	<!-- 事务配置 -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+	</bean>
+	
+	<!-- 使用annotation定义事务 -->
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+    <!--
+		这个声明会使得spring定位所有以 @Component, @Repository,@Controller和 @Service
+		标记的类
+	-->
+	<context:component-scan base-package="com.systop" />
+	<context:component-scan base-package="datashare" />
+	<!-- Async -->
+    <task:annotation-driven/>
+    
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"></bean>
+	
+	<!-- Ehcache -->
+    <bean id="ehCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+       <property name="configLocation" value="classpath:ehcache.xml"></property>
+       <property name="cacheManagerName" value="ehCacheManager"></property>
+    </bean>
+    <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+       <property name="cacheManager" ref="ehCacheManager"></property>
+    </bean>
+    
+    <!-- Freemarker -->
+    <bean id="freemarkerConfigurationManager"
+		class="com.systop.common.modules.template.freemarker.FreeMarkerConfigurationManager">
+		<property name="templateLoaderPaths">
+			<list>
+				<value>classpath:templates</value>
+				<value>classpath:com/systop/common/modules/security/user/webapp</value>				
+			</list>
+		</property>
+		<property name="defaultEncoding">
+			<value>UTF-8</value>
+		</property>
+		
+		<property name="preferFileSystemAccess">
+		    <value>true</value>
+		</property>
+		
+	</bean>
+	
+	<!-- Lucene全文检索中文分词解析 -->
+	<bean id="chineseAnalyzer" class="org.apache.lucene.analysis.cn.ChineseAnalyzer"/>
+	
+	<bean id="sqlMapClientFactory" class="quake.base.dao.ibatis.SqlMapClientFactory">
+	   <description>
+	   <![CDATA[IBatis SqlMapClient工厂类，因为需要使用的DataSource是可以
+	   随时定义的，所有没有采用Sping提供的FactoryBean
+	   ]]>
+	   </description>
+	   <property name="czConfigLocations">
+	      <list>
+	          <value>classpath:sqlmap/sql-map-config-cz.xml</value>
+	      </list>
+	   </property>
+	   <property name="qzConfigLocations">
+          <list>
+	          <value>classpath:sqlmap/sql-map-config-qz.xml</value>
+	      </list>
+	   </property>
+	   <property name="czMappingLocations">
+	       <list>
+	          <value>classpath*:datashare/seismic/**/sqlMap.xml</value>
+	       </list>
+	   </property>
+	   <property name="qzMappingLocations">
+	       <list>
+	          <value>classpath*:datashare/sign/**/sqlMap.xml</value>
+	       </list>
+	   </property>
+	</bean>
+</beans>

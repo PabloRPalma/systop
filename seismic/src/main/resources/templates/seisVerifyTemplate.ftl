@@ -1,0 +1,29 @@
+尊敬的<b>${data.user.name!data.user.loginId}</b>：<br>
+您订阅的测震数据邮件的审核结果是：${data.passed}<br>
+你的邮件详情是：<br>
+<table border="1">
+<thead>
+   <tr>
+      <th>地震目录</th>
+      <th>电子邮件</th>
+      <th>最小震级</th>
+      <th>最大震级</th>
+      <th>起始经度</th>
+      <th>结束经度</th>
+      <th>起始纬度</th>
+      <th>结束纬度</th>
+   </tr>
+</thead>
+<tbody>
+  <tr>
+      <td>${data.mail.catalogName!''}</td>
+      <td>${data.mail.emailAddr!''}</td>
+      <td>${data.mail.minM!''}</td>
+      <td>${data.mail.maxM!''}</td>
+      <td>${data.mail.startEpiLon!''}</td>
+      <td>${data.mail.endEpiLon!''}</td>
+      <td>${data.mail.startEpiLat!''}</td>
+      <td>${data.mail.endEpiLat!''}</td>
+   </tr>
+</tbody>
+</table>

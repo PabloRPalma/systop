@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC
+  		"-//OpenSymphony Group//XWork Validator 1.0//EN" 
+  		"http://www.opensymphony.com/xwork/xwork-validator-1.0.2.dtd">
+<validators>
+	<field name="model.title">
+		<field-validator type="requiredstring">
+			<message><![CDATA[文章的标题不能为空！]]></message>
+		</field-validator>
+	</field>
+	<field name="model.shortTitle">
+		<field-validator type="requiredstring">
+			<message><![CDATA[文章的简短标题不能为空！]]></message>
+		</field-validator>
+	</field>
+	<field name="model.hits">
+		<field-validator type="int">
+			<param name="min">0</param>
+			<param name="max">32767</param>
+			<message>点击数取值范围在 ${min} 和 ${max} 之间</message>
+		</field-validator>
+	</field>
+	<field name="model.linkUrl">
+		<field-validator type="url">
+			<message>请填写有效的链接地址！（如http://www.systop.com）</message>
+		</field-validator>
+	</field>
+	<field name="model.summary">
+		<field-validator type="stringlength">
+			<param name="maxLength">500</param>
+			<message>文章简介的最大字符为 ${maxLength}个字符!</message>
+		</field-validator>
+	</field>
+</validators>
