@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="cz">
+    <resultMap class="java.util.HashMap" id="queryStaSiteResult">
+    	<result property="NET_CODE" column="NET_CODE" javaType="String"/>
+        <result property="STA_CODE" column="STA_CODE" javaType="String"/>
+        <result property="SITE" column="SITE" javaType="String"/>
+        <result property="EVENT_NUM" column="EVENT_NUM" javaType="String"/>
+        <result property="CREATE_DATE" column="CREATE_DATE" javaType="Date"/>
+        <result property="OPERATOR" column="OPERATOR" javaType="String"/>
+        <result property="REMARK" column="REMARK" javaType="String"/>
+    </resultMap>
+    <!-- 查询场地响应数据 -->
+	<select id="queryStaSiteList" parameterClass="quake.seismic.instrument.stasite.model.StaSite"
+                        resultMap="queryStaSiteResult">
+		<![CDATA[
+		SELECT NET_CODE,STA_CODE,SITE,EVENT_NUM,CREATE_DATE,OPERATOR,REMARK
+		FROM $schema$.Station_site
+		]]>
+		<dynamic prepend="WHERE">
+		    <isNotEmpty prepend="AND" property="staCode">
+		       <![CDATA[(STA_CODE=#staCode#)]]>
+		    </isNotEmpty>
+		</dynamic>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortProperty">
+				<isNotEmpty property="sortDir">
+					<![CDATA[$sortProperty$ $sortDir$]]>
+				</isNotEmpty>
+			</isNotEmpty>
+			
+			<isEmpty property="sortProperty">
+				<isEmpty property="sortDir">
+					<![CDATA[STA_CODE asc]]>
+				</isEmpty>
+			</isEmpty>
+		</dynamic>
+	</select>
+	<!-- 查询场地响应数据总数 -->
+	<select id="queryStaSiteListCount" parameterClass="quake.seismic.instrument.stasite.model.StaSite"
+                        resultClass="Integer">
+		<![CDATA[
+		SELECT count(0)
+		FROM $schema$.Station_site
+		]]>
+		<dynamic prepend="WHERE">
+		    <isNotEmpty prepend="AND" property="staCode">
+		       <![CDATA[(STA_CODE=#staCode#)]]>
+		    </isNotEmpty>
+		</dynamic>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortProperty">
+				<isNotEmpty property="sortDir">
+					<![CDATA[$sortProperty$ $sortDir$]]>
+				</isNotEmpty>
+			</isNotEmpty>
+			
+			<isEmpty property="sortProperty">
+				<isEmpty property="sortDir">
+					<![CDATA[STA_CODE asc]]>
+				</isEmpty>
+			</isEmpty>
+		</dynamic>
+	</select>
+</sqlMap>

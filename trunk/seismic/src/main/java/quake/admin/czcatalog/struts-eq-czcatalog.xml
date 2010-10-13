@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="quake.admin.czcatalog" extends="json" namespace="/quake/admin/czcatalog">
+		 <action name="*" class="czCatalogAction" method="{1}">
+		    <result name="index">/pages/quake/admin/czcatalog/index.jsp</result>
+		    <result name="input">/pages/quake/admin/czcatalog/edit.jsp</result>
+		    <result name="success" type="redirect">index.do</result>
+		 </action>
+	</package>
+</struts>
+

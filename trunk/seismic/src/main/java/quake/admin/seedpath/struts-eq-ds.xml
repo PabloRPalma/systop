@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="admin.seedpath" extends="json" namespace="/quake/admin/seedpath">
+		 <action name="edit" class="seedpathAction" method="edit">
+		     <result name="input">/pages/quake/admin/seedpath/edit.jsp</result>
+		 </action>
+		 <action name="save" class="seedpathAction" method="save">
+		     <result name="success" type="redirect">edit.do</result>
+		     <result name="input">/pages/quake/admin/seedpath/edit.jsp</result>
+		 </action>
+		 <action name="exeSeedPro" class="seedpathAction" method="execSeedPro">
+		     <result type="json" name="seedResult">
+		        <param name="ignoreHierarchy">false</param>
+		        <param name="root">josnResult</param>
+		 	 </result>
+		 </action>
+	</package>
+</struts>
