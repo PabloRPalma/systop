@@ -46,9 +46,8 @@ public class DataSourceAction extends BaseAction implements ModelDriven<DataSour
    */
   public String save() {
     try {
-      model.setQzSchema(model.getQzSchema().toUpperCase());
       manager.save(model);
-      addActionMessage("您已经成功设置了测震和前兆数据源.");
+      addActionMessage("您已经成功设置了数据源.");
       return SUCCESS;
     } catch (Exception e) {
       addActionError(e.getMessage());

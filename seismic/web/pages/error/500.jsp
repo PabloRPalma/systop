@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-    <%@include  file="/common/taglibs.jsp"%>
+<%@include  file="/common/taglibs.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,14 +8,26 @@
 <title>服务器内部错误</title>
 </head>
 <body bgcolor="#FFFFFF">
-<p><br />
-  <br />
-  <br />
-</p>
-<table width="637" height="172" border="0" align="center" cellpadding="0" cellspacing="0">
-  <tr>
-    <td><img src="${ctx}/images/500.jpg" width="750" height="400" /></td>
-  </tr>
-</table>
+
+<div id="_title">
+		<p>问题描述</p>
+		<c:if test="${not empty exception}">
+			<p>
+				<h4><c:out value="${exception.details}" /></h4>
+				
+				<c:out value="${exception.message}" />
+				<div id="_exception">
+					<c:out value="${exception.localizedMessage}" />
+				</div>
+				
+				<c:out value="${exception.stacktrace}" />
+				<div id="_stacktrace">
+					<c:forEach items="${exception.stackTrace}" var="trace">
+						<c:out value="${trace}"/><br/>
+					</c:forEach>
+				</div>
+			</p>
+		</c:if>
+</div>
 </body>
 </html>

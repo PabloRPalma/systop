@@ -13,8 +13,7 @@ default-lazy-init="true"  default-autowire="byName">
 		加载.properties文件，可以在XML文件的属性中使用${property}注入常量，
 		也可以在@Value标记中使用${property}注入常量.
 	-->
-	<context:property-placeholder location="classpath:application.properties"/>
-	<context:property-placeholder location="classpath:dao.properties"/>
+	<context:property-placeholder location="classpath:application.properties,classpath:dao.properties"/>
 	<!-- Turn on AspectJ @Configurable support. -->
 	<context:spring-configured/>
 	<!-- 数据源配置 -->
@@ -81,7 +80,7 @@ default-lazy-init="true"  default-autowire="byName">
 		<property name="packagesToScan">
 		    <list>
 		        <value>com.systop.**.model</value>
-		        <value>datashare.**.model</value>
+		        <value>quake.**.model</value>
 		    </list>
 		</property>
 	</bean>
@@ -97,7 +96,7 @@ default-lazy-init="true"  default-autowire="byName">
 		标记的类
 	-->
 	<context:component-scan base-package="com.systop" />
-	<context:component-scan base-package="datashare" />
+	<context:component-scan base-package="quake" />
 	<!-- Async -->
     <task:annotation-driven/>
     
