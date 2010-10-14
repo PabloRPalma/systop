@@ -196,7 +196,7 @@ public class DataSourceManager implements Definable {
         // 构建测震数据源
         dataSources.put(DataType.SEISMIC, closeAndRebuild(dsInfo, DataType.SEISMIC));
         // 构建前兆数据源
-        dataSources.put(DataType.SIGN, closeAndRebuild(dsInfo, DataType.SIGN));
+        //dataSources.put(DataType.SIGN, closeAndRebuild(dsInfo, DataType.SIGN));
       } finally {
         write.unlock();
       }

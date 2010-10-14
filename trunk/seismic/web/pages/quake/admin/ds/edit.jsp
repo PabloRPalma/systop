@@ -9,16 +9,11 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$("#save").validate();
-	//初始化前兆schema缺省值
-	if($('#qzSchema').val() == '') {
-	  $('#qzSchema').val('QZDATA');
-	}
-	
+	//初始化schema缺省值
 	 if($('#czType').val()=='cz_mysql') {
 	   $('#czSchema').attr('readonly', 'readonly');
 	   $('#czSchema').val($('#czIns').val());
 	 }
-	//初始化测震schema缺省值
 	$('#czType').change(function() { //如果是oracle，则缺省值为CZDATA
 	   if($('#czType').val()=='cz_oracle') {
 	       $('#czSchema').attr('readonly', '');
@@ -48,10 +43,6 @@ $(document).ready(function() {
 	    $('#czSchema').val('CZDATA');
 	  }
 	});
-	//其他缺省值
-	if($('#qzPort').val() == '') {
-	   $('#qzPort').val('1521');
-	}
 });
 
 
@@ -70,15 +61,15 @@ $(document).ready(function() {
 		   		    <%@ include file="/common/messages.jsp"%>
 		   		</div>
 		   		<fieldset style="margin:30px;">
-			    <legend>设定测震数据源</legend>
+			    <legend>设定数据源</legend>
 			    
 				<table width="100%">
 						
                         <tr>
                              <td width="50%" style="text-align:right;">测震数据库类型：</td>
                              <td style="text-align:left;">
-                             <s:select list="czTypes" name="model.czType"
-                             id="czType" cssStyle="width:180px;"></s:select>
+                             MySQL
+                             <input type="hidden" name="model.czType" id="czType" value="cz_mysql">
                              </td>
                         </tr>
                         <tr>
@@ -112,13 +103,14 @@ $(document).ready(function() {
                              <s:textfield size="30" name="model.czPwd" cssClass="required"/>
                              </td>
                         </tr>
+                        <!-- 
                         <tr>
                              <td  style="text-align:right;">测震数据库SCHEMA（<font color="red">*</font>仅限ORACLE）：</td>
                              <td style="text-align:left;">
                              <s:textfield size="30" name="model.czSchema" id="czSchema" cssClass="required"/>
                              </td>
                         </tr>
-                        <!--  
+                         
                         <tr>
                              <td  style="text-align:right;">测震归档事件波形数据存储路径：（<font color="red">*</font>）</td>
                              <td style="text-align:left;">
@@ -129,49 +121,7 @@ $(document).ready(function() {
                         
                 </table>
                 </fieldset>
-                <fieldset style="margin:30px;">
-			    <legend>设定前兆数据源</legend>
-			    <table width="100%">
-						
-                        <tr>
-                             <td width="50%" style="text-align:right;">前兆数据库服务器地址（IP，<font color="red">*</font>）：</td>
-                             <td style="text-align:left;">
-                             <s:textfield size="30" name="model.qzHost" cssClass="required"/>
-                             </td>
-                        </tr>
-                        <tr>
-                             <td  style="text-align:right;">前兆数据库名/实例名（<font color="red">*</font>）：</td>
-                             <td style="text-align:left;">
-                             <s:textfield size="30" name="model.qzInstance" cssClass="required"/>
-                             </td>
-                        </tr>
-                        <tr>
-                             <td  style="text-align:right;">前兆数据库端口（<font color="red">*</font>）：</td>
-                             <td style="text-align:left;">
-                             <s:textfield size="30" id="qzPort" name="model.qzPort" cssClass="required"/>
-                             </td>
-                        </tr>
-                        <tr>
-                             <td  style="text-align:right;">前兆数据库只读用户名（<font color="red">*</font>）：</td>
-                             <td style="text-align:left;">
-                             <s:textfield size="30" name="model.qzUser" cssClass="required"/>
-                             </td>
-                        </tr>
-                        <tr>
-                             <td  style="text-align:right;">前兆数据库只读密码（<font color="red">*</font>）：</td>
-                             <td style="text-align:left;">
-                             <s:textfield size="30" name="model.qzPwd" cssClass="required"/>
-                             </td>
-                        </tr>
-                        <tr>
-                             <td  style="text-align:right;">前兆数据库SCHEMA（<font color="red">*</font>）：</td>
-                             <td style="text-align:left;">
-                             <s:textfield size="30" name="model.qzSchema" id="qzSchema" cssClass="required"/>
-                             </td>
-                        </tr>
-                        
-                </table>
-			    </fieldset>
+                
                 <table width="100%" style="margin-bottom:10px;">
                        <tr>
                         <td style="text-align:center;">

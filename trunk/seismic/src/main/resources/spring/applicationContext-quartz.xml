@@ -16,27 +16,10 @@
 		<property name="jobDetail" ref="seismicEmailJobDetail" />
 		<property name="cron">
 			<bean class="quake.email.admin.jobs.CronFactoryBean" scope="prototype">
-			   <property name="forSign" value="false"></property>
 			</bean>
 		</property>
 	</bean>
-	<!-- 前兆邮件发送任务 -->
-	<bean id="signEmailJobDetail"
-		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-		<property name="targetObject" ref="signEmailJob" />
-		<property name="targetMethod" value="send" />
-		<property name="concurrent" value="false" />
-	</bean>
-	<!-- 前兆邮件发送触发器(trigger) -->
-	<bean id="signEmailCronTrigger"
-		class="quake.email.admin.jobs.CronTriggerBeanEx">
-		<property name="jobDetail" ref="signEmailJobDetail" />
-		<property name="cron">
-			<bean class="quake.email.admin.jobs.CronFactoryBean" scope="prototype">
-			   <property name="forSign" value="true"></property>
-			</bean>
-		</property>
-	</bean>
+	
 	<!-- seed程序执行任务 -->
 	<bean id="seedProJobDetail" 
 		  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
@@ -72,7 +55,6 @@
 		<property name="triggers">
 			<list>
 				<ref local="seismicEmailCronTrigger" />
-				<ref local="signEmailCronTrigger"/>
 				<ref local="seedProTrigger"/>
 			</list>
 		</property>
