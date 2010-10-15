@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import quake.ProvinceLatlng;
-import quake.admin.czcatalog.model.QuakeCatalog;
-import quake.admin.czcatalog.service.QuakeCatalogManager;
+import quake.admin.catalog.model.QuakeCatalog;
+import quake.admin.catalog.service.QuakeCatalogManager;
 import quake.admin.ds.service.DataSourceManager;
 import quake.base.webapp.AbstractQueryAction;
 import quake.base.webapp.NumberFormatUtil;

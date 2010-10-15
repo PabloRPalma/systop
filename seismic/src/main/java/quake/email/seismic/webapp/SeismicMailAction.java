@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 
-import quake.admin.czcatalog.model.QuakeCatalog;
-import quake.admin.czcatalog.service.QuakeCatalogManager;
+import quake.admin.catalog.model.QuakeCatalog;
+import quake.admin.catalog.service.QuakeCatalogManager;
 import quake.email.admin.model.EmailDefinition;
 import quake.email.admin.service.EmailDefinitionManager;
 import quake.email.seismic.model.SeismicMail;

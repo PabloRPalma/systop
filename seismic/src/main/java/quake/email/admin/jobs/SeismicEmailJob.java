@@ -19,8 +19,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import quake.GlobalConstants;
-import quake.admin.czcatalog.model.QuakeCatalog;
-import quake.admin.czcatalog.service.QuakeCatalogManager;
+import quake.admin.catalog.model.QuakeCatalog;
+import quake.admin.catalog.service.QuakeCatalogManager;
 import quake.admin.ds.service.DataSourceManager;
 import quake.email.EmailConstants;
 import quake.email.seismic.model.SeismicMail;

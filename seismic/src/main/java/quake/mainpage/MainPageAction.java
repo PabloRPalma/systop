@@ -8,7 +8,7 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import quake.admin.czcatalog.service.QuakeCatalogManager;
+import quake.admin.catalog.service.QuakeCatalogManager;
 
 import com.systop.core.webapp.struts2.action.BaseAction;
 
