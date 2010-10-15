@@ -7,7 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import quake.admin.czcatalog.model.QuakeCatalog;
+import quake.admin.catalog.model.QuakeCatalog;
 import quake.admin.ds.service.DataSourceManager;
 import quake.admin.sitecfg.model.SiteCfg;
 import quake.admin.sitecfg.service.SiteCfgManager;
