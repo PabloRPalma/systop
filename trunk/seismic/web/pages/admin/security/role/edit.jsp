@@ -67,12 +67,7 @@ $(function(){
 		<s:textfield id="model.descn" name="model.descn" ></s:textfield><font color="red">&nbsp;*</font>
 		</td>
 	</tr>
-	<tr>
-		<td style="width:30%;text-align:right;">测项<input type="checkbox" id="selAll" title="全选">：</td>
-		<td width="300">
-		  <s:checkboxlist name="model.methodIds" list="methodAll" listKey="id" listValue="name" templateDir="templates" theme="eqds"/>
-		</td>
-	</tr>
+	
 	</table>
 	</fieldset>
 	<table width="100%" style="margin-bottom:10px;">
