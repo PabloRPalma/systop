@@ -69,14 +69,7 @@
 		<ec:column width="40" property="_0" title="序号" value="${GLOBALROWCOUNT}"  sortable="false"/>
 		<ec:column width="100" property="name" title="角色名称" />
 		<ec:column width="150" property="descn" title="角色描述" />
-		<ec:column width="100" property="_1" title="可查测项数量" sortable="false">
-		   <s:if test="#attr.item.methods.size() == 0">
-		      <font color='red'>0</font>
-		   </s:if>
-		   <s:else>
-  		       <s:property value="#attr.item.methods.size()"/>
-		   </s:else>
-		</ec:column>
+		
 		<ec:column width="60" property="_2" title="系统角色" style="text-align:center;">
 		   <s:if test="#attr.item.isSys==1">
 		      <span style="color:red">是</span>
