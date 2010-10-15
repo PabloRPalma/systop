@@ -46,7 +46,7 @@
 </table>
 <div class="x-panel-body">
 <table width="600" align="center"><tr><td align="center">
-<s:form action="save" namespace="/quake/admin/czcatalog" validate="true" theme="simple">
+<s:form action="save" namespace="/quake/admin/catalog" validate="true" theme="simple">
 <s:hidden name="model.id"/>
 	<fieldset style="margin:10px;">
 	<legend>编辑地震目录属性</legend>

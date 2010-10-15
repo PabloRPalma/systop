@@ -2,6 +2,8 @@ package quake.admin.czcatalog.dao;
 
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,6 +21,7 @@ import quake.admin.ds.service.DataSourceManager;
 
 @Repository
 public class ExistTableNameDao {
+  private static Logger logger = LoggerFactory.getLogger(ExistTableNameDao.class);
   /**
    * 用于得到DataSource
    */
@@ -43,6 +46,7 @@ public class ExistTableNameDao {
       .append(".")
       .append(tableName).append(" where 1=0");
     try {
+      logger.debug(sql.toString());
       jt.queryForList(sql.toString());
     } catch (DataAccessException e) {
       return false;

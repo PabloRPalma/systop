@@ -10,7 +10,7 @@
 <%@include file="/common/meta.jsp" %>
 </head>
 <body>
-<s:form id="removeForm" action="remove" namespace="/quake/admin/czcatalog" method="POST"></s:form>
+<s:form id="removeForm" action="remove" namespace="/quake/admin/catalog" method="POST"></s:form>
 <div class="x-panel">
   <div class="x-panel-header">地震目录管理</div>
     <div class="x-toolbar">
@@ -22,9 +22,9 @@
          <td align="right">
          <table> 
            <tr>
-             <td><a href="${ctx}/quake/admin/czcatalog/index.do"><img src="${ctx}/images/icons/house.gif"/> 地震目录管理首页</a></td>
+             <td><a href="${ctx}/quake/admin/catalog/index.do"><img src="${ctx}/images/icons/house.gif"/> 地震目录管理首页</a></td>
              <td><span class="ytb-sep"></span></td>
-             <td><a href="${ctx}/quake/admin/czcatalog/editNew.do"><img src="${ctx}/images/icons/add.gif"/> 新建地震目录</a></td>
+             <td><a href="${ctx}/quake/admin/catalog/editNew.do"><img src="${ctx}/images/icons/add.gif"/> 新建地震目录</a></td>
              <td><span class="ytb-sep"></span></td>
              <td><a href="#" onclick="onRemove({noneSelectedMsg:'请至少选择一个角色.',
              confirmMsg:'确认要删除地震目录吗？'})"><img src="${ctx}/images/icons/delete.gif"/> 删除地震目录</a></td>

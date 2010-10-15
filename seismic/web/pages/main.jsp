@@ -36,7 +36,7 @@ Ext.onReady(function(){
                 }]
             
         });
-        
+        /*
         Ext.Ajax.request({
           url:'${ctx}/quake/admin/main/validateConfigurations.do',
           success: function(response) {
@@ -55,7 +55,7 @@ Ext.onReady(function(){
 	           }
 	           
           }
-        });
+        });*/
         
     });
 </script>
