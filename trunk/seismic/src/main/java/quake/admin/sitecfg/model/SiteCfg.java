@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import quake.admin.czcatalog.model.CzCatalog;
+import quake.admin.czcatalog.model.QuakeCatalog;
 
 import com.systop.core.model.BaseModel;
 
@@ -41,7 +41,7 @@ public class SiteCfg extends BaseModel implements Serializable {
   /**
    * 本省地震目录
    */
-  private CzCatalog provinceCat;
+  private QuakeCatalog provinceCat;
   
   /**
    * 地震目录最小震级
@@ -114,11 +114,11 @@ public class SiteCfg extends BaseModel implements Serializable {
 
   @ManyToOne(cascade = { }, fetch = FetchType.LAZY)
   @JoinColumn(name = "cz_catalog")
-  public CzCatalog getProvinceCat() {
+  public QuakeCatalog getProvinceCat() {
     return provinceCat;
   }
 
-  public void setProvinceCat(CzCatalog provinceCat) {
+  public void setProvinceCat(QuakeCatalog provinceCat) {
     this.provinceCat = provinceCat;
   }
 

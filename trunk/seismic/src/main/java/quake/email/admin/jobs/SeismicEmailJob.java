@@ -19,7 +19,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import quake.GlobalConstants;
-import quake.admin.czcatalog.model.CzCatalog;
+import quake.admin.czcatalog.model.QuakeCatalog;
 import quake.admin.czcatalog.service.QuakeCatalogManager;
 import quake.admin.ds.service.DataSourceManager;
 import quake.email.EmailConstants;
@@ -93,7 +93,7 @@ public class SeismicEmailJob {
     for (SeismicMail mail : list) {
       Criteria criteria = mail.getCriteria();
       //关联震级
-      CzCatalog catalog = czCatalogManager.findObject("from CzCatalog cc where cc.cltName=?", criteria.getTableName());
+      QuakeCatalog catalog = czCatalogManager.findObject("from QuakeCatalog cc where cc.cltName=?", criteria.getTableName());
       criteria.setMagTname(catalog.getMagTname());
       
       Page page = new Page(0, GlobalConstants.MAX_RESULTS);

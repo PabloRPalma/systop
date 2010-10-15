@@ -24,8 +24,8 @@ public class DataSourceInfo {
   private String id;
   /**
    * 测震数据库类型,取值为DsConstants#DB_CZ_MYSQL或DsConstants#DB_CZ_ORACLE
-   * @see {@link DsConstants#DB_CZ_MYSQL}
-   * @see {@link DsConstants#DB_CZ_ORACLE}
+   * @see {@link DsConstants#DB_MYSQL}
+   * @see {@link DsConstants#DB_ORACLE}
    */
   private String czType;
   /**

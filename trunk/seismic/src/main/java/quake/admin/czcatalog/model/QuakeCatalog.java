@@ -29,8 +29,8 @@ import com.systop.core.model.BaseModel;
  */
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "cz_catalog", uniqueConstraints = {})
-public class CzCatalog extends BaseModel implements Serializable {
+@Table(name = "quake_catalog", uniqueConstraints = {})
+public class QuakeCatalog extends BaseModel implements Serializable {
   /**
    * 主键
    */
@@ -166,10 +166,10 @@ public class CzCatalog extends BaseModel implements Serializable {
     if (this == other) {
       return true;
     }
-    if (!(other instanceof CzCatalog)) {
+    if (!(other instanceof QuakeCatalog)) {
       return false;
     }
-    CzCatalog czCatalog = (CzCatalog) other;
+    QuakeCatalog czCatalog = (QuakeCatalog) other;
     return new EqualsBuilder().append(this.getId(), czCatalog.getId()).isEquals();
   }
 

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 
-import quake.admin.czcatalog.model.CzCatalog;
+import quake.admin.czcatalog.model.QuakeCatalog;
 import quake.admin.czcatalog.service.QuakeCatalogManager;
 import quake.email.admin.model.EmailDefinition;
 import quake.email.admin.service.EmailDefinitionManager;
@@ -62,7 +62,7 @@ public class SeismicMailAction extends DefaultCrudAction<SeismicMail, SeismicMai
   @Override
   public String save() {
     Assert.notNull(getModel());
-    CzCatalog catalog = cataMgr.queryByCltName(getModel().getCatalog());
+    QuakeCatalog catalog = cataMgr.queryByCltName(getModel().getCatalog());
     if(catalog != null) {
       getModel().setCatalogName(catalog.getClcName());
     }
@@ -93,7 +93,7 @@ public class SeismicMailAction extends DefaultCrudAction<SeismicMail, SeismicMai
   /**
    * 返回地震目录列表，用于页面上的Select
    */
-  public List<CzCatalog> getCatalogs() {
+  public List<QuakeCatalog> getCatalogs() {
     return cataMgr.get();
   }
   

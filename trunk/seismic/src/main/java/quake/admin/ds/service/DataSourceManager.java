@@ -43,10 +43,7 @@ public class DataSourceManager implements Definable {
   private String dsString;
 
   private static Map<DataType, DataSource> dataSources = new HashMap<DataType, DataSource>();
-  /**
-   * 缺省前兆SCHEMA
-   */
-  public static final String DEFAULT_QZ_SCHEMA = "QZDATA";
+  
   /**
    * 缺省测震SCHEMA
    */
@@ -58,15 +55,12 @@ public class DataSourceManager implements Definable {
   /**
    * 数据库类型——测震MySQL数据库
    */
-  public static final String DB_CZ_MYSQL = "cz_mysql";
+  public static final String DB_MYSQL = "cz_mysql";
   /**
    * 数据库类型——测震Oracle数据库
    */
-  public static final String DB_CZ_ORACLE = "cz_oracle";
-  /**
-   * 数据库类型——前兆Oracle数据库
-   */
-  public static final String DB_QZ_ORACLE = "qz_oracle";
+  public static final String DB_ORACLE = "cz_oracle";
+  
 
   /**
    * 连接池属性,初始连接数量
@@ -138,10 +132,6 @@ public class DataSourceManager implements Definable {
    * @return <code>true</code> if the target database is Oracle.
    */
   public boolean isOracle(DataType dataType) {
-    if (DataType.SIGN.equals(dataType)) {
-      return true;
-    }
-
     ComboPooledDataSource ds = (ComboPooledDataSource) this.get(dataType);
 
     String driver = ds.getDriverClass();
@@ -211,16 +201,14 @@ public class DataSourceManager implements Definable {
    */
   @PostConstruct
   public void init() {
-    urls.put(DB_CZ_MYSQL, "jdbc:mysql://"); // localhost/db
-    urls.put(DB_CZ_ORACLE, "jdbc:oracle:thin:@"); // localhost:1521:orcl
-    urls.put(DB_QZ_ORACLE, "jdbc:oracle:thin:@");
-
-    drivers.put(DB_CZ_MYSQL, "com.mysql.jdbc.Driver");
-    drivers.put(DB_CZ_ORACLE, "oracle.jdbc.driver.OracleDriver");
-    drivers.put(DB_QZ_ORACLE, "oracle.jdbc.driver.OracleDriver");
-
-    dbTypes.put(DB_CZ_ORACLE, "Oracle数据库");
-    dbTypes.put(DB_CZ_MYSQL, "MySQL数据库");
+    urls.put(DB_MYSQL, "jdbc:mysql://"); // localhost/db
+    urls.put(DB_ORACLE, "jdbc:oracle:thin:@"); // localhost:1521:orcl
+    
+    drivers.put(DB_MYSQL, "com.mysql.jdbc.Driver");
+    drivers.put(DB_ORACLE, "oracle.jdbc.driver.OracleDriver");
+    
+    dbTypes.put(DB_ORACLE, "Oracle数据库");
+    dbTypes.put(DB_MYSQL, "MySQL数据库");
     // dbTypes.put(DB_QZ_ORACLE, "前兆Oracle数据库");
 
     try {
@@ -241,7 +229,7 @@ public class DataSourceManager implements Definable {
   private DataSource closeAndRebuild(DataSourceInfo dsInfo, DataType dataType) {
     // 根据数据类型（CZ/QZ）和数据库类型（MySQL，ORACLE）得到Driver
     String driver = drivers.get((dataType.equals(DataType.SEISMIC)) ? dsInfo.getCzType()
-        : DB_QZ_ORACLE);
+        : DB_ORACLE);
     if(driver != null) {
       driver = driver.trim();
     }
@@ -292,33 +280,11 @@ public class DataSourceManager implements Definable {
   }
 
   private boolean isOracle(DataSourceInfo dsInfo, DataType dataType) {
-    if (DataType.SIGN.equals(dataType)) {
-      return true;
-    } else if (DB_CZ_MYSQL.equals(dsInfo.getCzType())) {
-      return false;
-    }
-    return true;
-  }
-
-  /**
-   * 检查数据源是否可用,如果不可用，则抛出ApplicationException
-   * @deprecated use {@link #isAvailable(String, String, String, String, DataType)}
-   */
-  
-  @SuppressWarnings("unused")
-  private void isAvailable(DataSource ds, DataType dataType) throws ApplicationException {
-    try {
-      String dbName = ds.getConnection().getMetaData().getDatabaseProductName();
-      logger.debug(dbName);
-    } catch (SQLException e) {
-      e.printStackTrace();
-      throw new ApplicationException(((DataType.SEISMIC.equals(dataType)) ? "测震" : "前兆")
-          + "数据源信息错误，请检查各项属性.");
-    }
+    return ! (DB_MYSQL.equals(dsInfo.getCzType()));
   }
 
   private void isAvailable(String driver, String url, String user, String password, DataType dataType) {
-    String msg = ((DataType.SEISMIC.equals(dataType)) ? "测震" : "前兆") + "数据源信息错误，请检查各项属性.";
+    String msg = "数据源信息错误，请检查各项属性.";
     
     Connection conn = null;
     try {
@@ -350,12 +316,12 @@ public class DataSourceManager implements Definable {
   private String buildUrl(DataSourceInfo dsInfo, DataType dataType) {
     // MySQL和Oracle的URL分隔符是不同的...
     String splitter = ":";
-    if (DataType.SEISMIC.equals(dataType) && StringUtils.equals(dsInfo.getCzType(), DB_CZ_MYSQL)) {
+    if (DataType.SEISMIC.equals(dataType) && StringUtils.equals(dsInfo.getCzType(), DB_MYSQL)) {
       splitter = "/";
     }
     // 根据数据类型（CZ/QZ）和数据库类型（MySQL，ORACLE）得到URL前缀
     String prefix = urls.get((dataType.equals(DataType.SEISMIC)) ? dsInfo.getCzType()
-        : DB_QZ_ORACLE);
+        : DB_ORACLE);
     // 根据数据类型（CZ/QZ）到User\Port\Instance
     String host = (dataType.equals(DataType.SEISMIC)) ? dsInfo.getCzHost() : dsInfo.getQzHost();
     String port = (dataType.equals(DataType.SEISMIC)) ? dsInfo.getCzPort() : dsInfo.getQzPort();
@@ -378,19 +344,7 @@ public class DataSourceManager implements Definable {
   public Map getCzTypes() {
     return this.dbTypes;
   }
-
-  /**
-   * 返回前兆SCHEMA
-   */
-  public String getQzSchema() {
-    if (isDefined()) {
-      String schema = get().getQzSchema();
-      return (StringUtils.isBlank(schema)) ? DEFAULT_QZ_SCHEMA : schema;
-    }
-
-    return null;
-  }
-
+  
   /**
    * 返回测震SCHEMA
    */

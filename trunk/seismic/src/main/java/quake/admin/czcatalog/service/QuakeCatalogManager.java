@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import quake.DataType;
-import quake.admin.czcatalog.CzConstants;
+import quake.admin.czcatalog.QuakeCatalogConstants;
 import quake.admin.czcatalog.dao.ExistTableNameDao;
-import quake.admin.czcatalog.model.CzCatalog;
+import quake.admin.czcatalog.model.QuakeCatalog;
 import quake.admin.sitecfg.model.SiteCfg;
 import quake.base.service.Definable;
 import quake.mainpage.MainPageAction;
@@ -28,7 +28,7 @@ import com.systop.core.service.BaseGenericsManager;
  * @author wbb
  */
 @Service
-public class QuakeCatalogManager extends BaseGenericsManager<CzCatalog> implements Definable  {
+public class QuakeCatalogManager extends BaseGenericsManager<QuakeCatalog> implements Definable  {
   @Autowired(required = true)
   private ExistTableNameDao existTableNameDao;
 
@@ -37,7 +37,7 @@ public class QuakeCatalogManager extends BaseGenericsManager<CzCatalog> implemen
    */
   @Override
   @Transactional
-  public void save(CzCatalog model) {
+  public void save(QuakeCatalog model) {
     if (getDao().exists(model, "cltName")) {
       throw new ApplicationException("地震目录表名'" + model.getCltName() + "'已经存在.");
     }
@@ -67,9 +67,9 @@ public class QuakeCatalogManager extends BaseGenericsManager<CzCatalog> implemen
    * @param clcName 地震目录表名
    * @return 返回地震目录信息
    */
-  public CzCatalog queryByCltName(String cltName) {
-    String hql = "from CzCatalog where cltName = ?";
-    List<CzCatalog> list = query(hql, cltName);
+  public QuakeCatalog queryByCltName(String cltName) {
+    String hql = "from QuakeCatalog where cltName = ?";
+    List<QuakeCatalog> list = query(hql, cltName);
     return list.isEmpty() ? null : list.get(0);
   }
   
@@ -78,7 +78,7 @@ public class QuakeCatalogManager extends BaseGenericsManager<CzCatalog> implemen
    * @return
    */
   public List<Map<String, String>> getCat() {
-    List<CzCatalog> list = get();
+    List<QuakeCatalog> list = get();
     return setPostfix(list, "地震目录");
   }
 
@@ -86,8 +86,8 @@ public class QuakeCatalogManager extends BaseGenericsManager<CzCatalog> implemen
    * 得到有震相表关联的地震目录列表，用于数据服务显示
    */
   public List<Map<String, String>> getPhaseCat() {
-    String hql = "from CzCatalog where phaseTname is not null and phaseTname <> ''";
-    List<CzCatalog> list = query(hql, new Object[] {});
+    String hql = "from QuakeCatalog where phaseTname is not null and phaseTname <> ''";
+    List<QuakeCatalog> list = query(hql, new Object[] {});
     return setPostfix(list, "震相数据");
   }
   
@@ -96,8 +96,8 @@ public class QuakeCatalogManager extends BaseGenericsManager<CzCatalog> implemen
    * @return
    */
   public List<Map<String, String>> getSeedCat() {
-    String hql = "from CzCatalog where seedDis = ?";
-    List<CzCatalog> list = query(hql, CzConstants.SEEDDIS_YES);
+    String hql = "from QuakeCatalog where seedDis = ?";
+    List<QuakeCatalog> list = query(hql, QuakeCatalogConstants.SEEDDIS_YES);
     return setPostfix(list, "事件波形");
   }
   
@@ -107,9 +107,9 @@ public class QuakeCatalogManager extends BaseGenericsManager<CzCatalog> implemen
    * @param postfix 后缀字符串
    * @return
    */
-  private List<Map<String, String>> setPostfix(List<CzCatalog> list, String postfix) {
+  private List<Map<String, String>> setPostfix(List<QuakeCatalog> list, String postfix) {
     List<Map<String, String>> listMap = new ArrayList<Map<String, String>>();
-    for (CzCatalog czCat : list) {
+    for (QuakeCatalog czCat : list) {
       Map<String, String> cat = new HashMap<String, String>();
       cat.put("cltName", czCat.getCltName());
       String clcName = czCat.getClcName();
@@ -128,7 +128,7 @@ public class QuakeCatalogManager extends BaseGenericsManager<CzCatalog> implemen
 
   @Override
   @Transactional
-  public void remove(CzCatalog model) {
+  public void remove(QuakeCatalog model) {
     Set<SiteCfg> siteCfgs = model.getSiteCfgs();
     if (!siteCfgs.isEmpty()) {
       //解除关联

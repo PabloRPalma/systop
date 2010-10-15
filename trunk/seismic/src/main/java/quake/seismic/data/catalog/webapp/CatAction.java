@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import quake.ProvinceLatlng;
-import quake.admin.czcatalog.model.CzCatalog;
+import quake.admin.czcatalog.model.QuakeCatalog;
 import quake.admin.czcatalog.service.QuakeCatalogManager;
 import quake.admin.ds.service.DataSourceManager;
 import quake.base.webapp.AbstractQueryAction;
@@ -72,7 +72,7 @@ public class CatAction extends AbstractQueryAction<Criteria> {
    */
   public String index() {
     if (StringUtils.isNotBlank(model.getTableName())) {
-      CzCatalog czCat = czCatalogManager.queryByCltName(model.getTableName());
+      QuakeCatalog czCat = czCatalogManager.queryByCltName(model.getTableName());
       if (czCat == null) {
         addActionError("您选择的地震目录在本系统中不存在.");
       } else {

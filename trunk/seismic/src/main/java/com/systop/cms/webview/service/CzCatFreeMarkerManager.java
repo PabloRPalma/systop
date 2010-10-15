@@ -7,7 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import quake.admin.czcatalog.model.CzCatalog;
+import quake.admin.czcatalog.model.QuakeCatalog;
 import quake.admin.ds.service.DataSourceManager;
 import quake.admin.sitecfg.model.SiteCfg;
 import quake.admin.sitecfg.service.SiteCfgManager;
@@ -42,7 +42,7 @@ public class CzCatFreeMarkerManager{
    */
   @SuppressWarnings("unchecked")
   public List<Map> queryHomeCzCats(int pageNo, int pageSize) {
-    CzCatalog czCat = getProvinceCat();
+    QuakeCatalog czCat = getProvinceCat();
     if (czCat == null) {
       return Collections.EMPTY_LIST;
     }
@@ -65,7 +65,7 @@ public class CzCatFreeMarkerManager{
    * 得到本省地震目录
    * @return
    */
-  public CzCatalog getProvinceCat() {
+  public QuakeCatalog getProvinceCat() {
     SiteCfg siteCfg = siteCfgManager.getCmsConfig();
     if (siteCfg == null) {
       return null;
