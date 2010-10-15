@@ -99,9 +99,8 @@ public class SqlMapClientFactory {
     if(!StringUtils.equals(dsi.toString(), dataSourceInfoString)) {
       try {
         SqlMapClient czClient = buildSqlMapClient(czConfigLocations, czMappingLocations, null, DataType.SEISMIC);
-        SqlMapClient qzClient = buildSqlMapClient(qzConfigLocations, qzMappingLocations, null, DataType.SIGN);
         SQL_MAP_CLIENTS.put(DataType.SEISMIC, czClient);
-        SQL_MAP_CLIENTS.put(DataType.SIGN, qzClient);        
+                
       } catch (IOException e) {
         e.printStackTrace();
         throw new ApplicationException("SqlMapClient创建出现IO错误:" + e.getMessage());

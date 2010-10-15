@@ -7,7 +7,7 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import quake.admin.czcatalog.model.CzCatalog;
+import quake.admin.czcatalog.model.QuakeCatalog;
 import quake.admin.czcatalog.service.QuakeCatalogManager;
 import quake.admin.sitecfg.SiteConstants;
 import quake.admin.sitecfg.model.SiteCfg;
@@ -46,7 +46,7 @@ public class SiteCfgAction extends DefaultCrudAction<SiteCfg, SiteCfgManager> {
    * 得到所有地震目录
    * @return
    */
-  public List<CzCatalog> getAllCzCat() {
+  public List<QuakeCatalog> getAllCzCat() {
     return czCatalogManager.get();
   }
 }

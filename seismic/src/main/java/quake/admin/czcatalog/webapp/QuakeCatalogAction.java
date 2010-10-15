@@ -6,8 +6,8 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import quake.admin.czcatalog.CzConstants;
-import quake.admin.czcatalog.model.CzCatalog;
+import quake.admin.czcatalog.QuakeCatalogConstants;
+import quake.admin.czcatalog.model.QuakeCatalog;
 import quake.admin.czcatalog.service.QuakeCatalogManager;
 
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
@@ -22,7 +22,7 @@ import com.systop.core.webapp.struts2.action.DefaultCrudAction;
 @SuppressWarnings("serial")
 @Controller
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-public class CzCatalogAction extends DefaultCrudAction<CzCatalog, QuakeCatalogManager> {
+public class QuakeCatalogAction extends DefaultCrudAction<QuakeCatalog, QuakeCatalogManager> {
 
   /**
    * 保存地震目录
@@ -38,10 +38,10 @@ public class CzCatalogAction extends DefaultCrudAction<CzCatalog, QuakeCatalogMa
   }
   
   public Map<String, String> getDisTypeMap() {
-    return CzConstants.DISTYPE_MAP;
+    return QuakeCatalogConstants.DISTYPE_MAP;
   }
 
   public Map<String, String> getSeedDisMap() {
-    return CzConstants.SEEDDIS_MAP;
+    return QuakeCatalogConstants.SEEDDIS_MAP;
   }
 }

@@ -8,7 +8,7 @@ import java.util.Map;
  * @author DU
  *
  */
-public class CzConstants {
+public class QuakeCatalogConstants {
 
   /**
    * 地震目录震级列显示类型_ML
@@ -43,6 +43,6 @@ public class CzConstants {
     SEEDDIS_MAP.put(SEEDDIS_NO, "不显示");
   }
   
-  private CzConstants() {
+  private QuakeCatalogConstants() {
   }
 }
