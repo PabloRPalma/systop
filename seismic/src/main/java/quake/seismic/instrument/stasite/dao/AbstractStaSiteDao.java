@@ -1,7 +1,7 @@
 package quake.seismic.instrument.stasite.dao;
 
 import quake.DataType;
-import quake.base.dao.AbstractDataShareDao;
+import quake.base.dao.AbstractSeismicDao;
 
 /**
  * 场地响应查询DAO
@@ -10,7 +10,7 @@ import quake.base.dao.AbstractDataShareDao;
  * @param <T> 查询结果的数据类型
  */
 @SuppressWarnings("unchecked")
-public abstract class AbstractStaSiteDao <T> extends AbstractDataShareDao {
+public abstract class AbstractStaSiteDao <T> extends AbstractSeismicDao {
 
   /**
    * 场地响应查询在IBatis中的statementName

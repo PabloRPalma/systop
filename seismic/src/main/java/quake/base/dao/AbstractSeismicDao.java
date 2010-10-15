@@ -15,7 +15,7 @@ import quake.base.dao.ibatis.SqlMapClientTemplateFactory;
  * @author Sam
  * 
  */
-public abstract class AbstractDataShareDao implements DataShareDao {
+public abstract class AbstractSeismicDao {
   /**
    * 子类可以直接使用的Logger
    */
@@ -23,7 +23,6 @@ public abstract class AbstractDataShareDao implements DataShareDao {
   /**
    * SqlMapClientTemplate工厂类，用于创建SqlMapClientTemplate
    */
-  @SuppressWarnings("unused")
   @Autowired(required = true)
   private SqlMapClientTemplateFactory sqlMapClientTemplateFactory;
 
@@ -35,7 +34,7 @@ public abstract class AbstractDataShareDao implements DataShareDao {
     try {
       return sqlMapClientTemplateFactory.getTemplate(getDataType());
     } catch (IllegalStateException e) {
-      logger.error("前兆或测震数据源没有定义，数据服务无法使用。");
+      logger.error("数据源没有定义，数据服务无法使用。");
       return null;
     }
   }

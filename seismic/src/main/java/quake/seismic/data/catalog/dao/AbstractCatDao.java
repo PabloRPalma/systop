@@ -6,7 +6,7 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 
 import quake.DataType;
-import quake.base.dao.AbstractDataShareDao;
+import quake.base.dao.AbstractSeismicDao;
 import quake.seismic.data.catalog.model.Criteria;
 import quake.seismic.data.catalog.model.MagCriteria;
 
@@ -15,7 +15,7 @@ import quake.seismic.data.catalog.model.MagCriteria;
  * 地震目录浏览Dao抽象实现类
  * @author wbb
  */
-public abstract class AbstractCatDao<T> extends AbstractDataShareDao {
+public abstract class AbstractCatDao<T> extends AbstractSeismicDao {
   /**
    * 地震目录数据查询在IBatis中的statementName
    */

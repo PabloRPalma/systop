@@ -1,7 +1,7 @@
 package quake.seismic.station.dao;
 
 import quake.DataType;
-import quake.base.dao.AbstractDataShareDao;
+import quake.base.dao.AbstractSeismicDao;
 
 /**
  * {@link StationDao}的抽象实现类。
@@ -11,7 +11,7 @@ import quake.base.dao.AbstractDataShareDao;
  * @param <T> 查询结果的数据类型
  */
 @SuppressWarnings("unchecked")
-public abstract class AbstractStationDao <T> extends AbstractDataShareDao {
+public abstract class AbstractStationDao <T> extends AbstractSeismicDao {
 
   /**
    * 测震台站查询在IBatis中的statementName
