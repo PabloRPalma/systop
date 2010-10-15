@@ -8,7 +8,7 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import quake.admin.czcatalog.service.CzCatalogManager;
+import quake.admin.czcatalog.service.QuakeCatalogManager;
 
 import com.systop.core.webapp.struts2.action.BaseAction;
 
@@ -23,16 +23,16 @@ public class MainPageAction extends BaseAction{
 
   
   /** 地震目录 静态化，避免重复查询 */
-  private static List<Map<String, String>> CZCATALOGS = null;
+  private static List<Map<String, String>> catalogs = null;
 
   /** 有震相的地震目录 静态化，避免重复查询 */
-  private static List<Map<String, String>> PHASECATS = null;
+  private static List<Map<String, String>> phases = null;
 
   /** 有事件波形的地震目录 静态化，避免重复查询 */
-  private static List<Map<String, String>> SEEDCATS = null;
+  private static List<Map<String, String>> seeds = null;
   
   @Autowired
-  private CzCatalogManager czCatalogManager;
+  private QuakeCatalogManager catalogManager;
   
   /**
    * 用于加载学科列表，地震目录列表，震相列表
@@ -41,46 +41,46 @@ public class MainPageAction extends BaseAction{
    */
   public String index() {
     
-    if (CZCATALOGS == null) { // 查询地震目录
-      CZCATALOGS = czCatalogManager.getCat();
+    if (catalogs == null) { // 查询地震目录
+      catalogs = catalogManager.getCat();
     }
-    if (PHASECATS == null) { // 查询震相
-      PHASECATS = czCatalogManager.getPhaseCat();
+    if (phases == null) { // 查询震相
+      phases = catalogManager.getPhaseCat();
     }
-    if (SEEDCATS == null) { //查询事件波形
-      SEEDCATS = czCatalogManager.getSeedCat();
+    if (seeds == null) { //查询事件波形
+      seeds = catalogManager.getSeedCat();
     }
     return SUCCESS;
   }
   
 
   /** 获取地震目录列表 */
-  public static List<Map<String, String>> getCZCATALOGS() {
-    return CZCATALOGS;
+  public static List<Map<String, String>> getCatalogs() {
+    return catalogs;
   }
 
   /** 获取震项列表 */
-  public static List<Map<String, String>> getPHASECATS() {
-    return PHASECATS;
+  public static List<Map<String, String>> getPhases() {
+    return phases;
   }
 
   /** 获取事件波形列表 */
-  public static List<Map<String, String>> getSEEDCATS() {
-    return SEEDCATS;
+  public static List<Map<String, String>> getSeeds() {
+    return seeds;
   }
   
   /** 用于外部修改地震目录，与菜单同步 */
-  public static void setEmptyCZCATALOGS() {
-    CZCATALOGS = null;
+  public static void resetCatalogs() {
+    catalogs = null;
   }
 
   /** 用于外部修地震目录，与菜单同步 */
-  public static void setEmptyPHASECATS() {
-    PHASECATS = null;
+  public static void resetPhases() {
+    phases = null;
   }
   
   /** 用于外部修地震目录，与菜单同步 */
-  public static void setEmptySEEDCATS() {
-    SEEDCATS = null;
+  public static void resetSeeds() {
+    seeds = null;
   }
 }

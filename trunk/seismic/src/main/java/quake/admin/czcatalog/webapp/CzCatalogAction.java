@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 
 import quake.admin.czcatalog.CzConstants;
 import quake.admin.czcatalog.model.CzCatalog;
-import quake.admin.czcatalog.service.CzCatalogManager;
+import quake.admin.czcatalog.service.QuakeCatalogManager;
 
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
@@ -22,7 +22,7 @@ import com.systop.core.webapp.struts2.action.DefaultCrudAction;
 @SuppressWarnings("serial")
 @Controller
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-public class CzCatalogAction extends DefaultCrudAction<CzCatalog, CzCatalogManager> {
+public class CzCatalogAction extends DefaultCrudAction<CzCatalog, QuakeCatalogManager> {
 
   /**
    * 保存地震目录

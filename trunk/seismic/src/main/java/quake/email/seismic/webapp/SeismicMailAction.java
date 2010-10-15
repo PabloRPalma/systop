@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 
 import quake.admin.czcatalog.model.CzCatalog;
-import quake.admin.czcatalog.service.CzCatalogManager;
+import quake.admin.czcatalog.service.QuakeCatalogManager;
 import quake.email.admin.model.EmailDefinition;
 import quake.email.admin.service.EmailDefinitionManager;
 import quake.email.seismic.model.SeismicMail;
@@ -36,7 +36,7 @@ public class SeismicMailAction extends DefaultCrudAction<SeismicMail, SeismicMai
   @Autowired(required = true)
   private EmailDefinitionManager emailDefMgr;
   @Autowired(required = true)
-  private CzCatalogManager cataMgr;
+  private QuakeCatalogManager cataMgr;
   
   /**
    * 列出当前用户所订阅的测震邮件.

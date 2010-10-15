@@ -10,6 +10,7 @@
 <body bgcolor="#FFFFFF">
 
 <div id="_title">
+<s:property value="exception.message"/>
 		<p>问题描述</p>
 		<c:if test="${not empty exception}">
 			<p>
