@@ -1,10 +1,10 @@
 package quake.seismic.data.phase.dao;
 
 import quake.DataType;
-import quake.base.dao.AbstractDataShareDao;
+import quake.base.dao.AbstractSeismicDao;
 import quake.seismic.data.phase.model.PhaseCriteria;
 
-public abstract class AbstractPhaseDao<T> extends AbstractDataShareDao {
+public abstract class AbstractPhaseDao<T> extends AbstractSeismicDao {
   /**
    * 震相数据查询在IBatis中的statementName
    */

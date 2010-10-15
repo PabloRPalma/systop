@@ -1,7 +1,7 @@
 package quake.seismic.instrument.channel.dao;
 
 import quake.DataType;
-import quake.base.dao.AbstractDataShareDao;
+import quake.base.dao.AbstractSeismicDao;
 
 /**
  * 测震通道参数查询DAO
@@ -10,7 +10,7 @@ import quake.base.dao.AbstractDataShareDao;
  * @param <T> 查询结果的数据类型
  */
 @SuppressWarnings("unchecked")
-public abstract class AbstractChannelDao<T> extends AbstractDataShareDao {
+public abstract class AbstractChannelDao<T> extends AbstractSeismicDao {
 
   /**
    * 测震通道参数查询在IBatis中的statementName
