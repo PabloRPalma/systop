@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import quake.admin.czcatalog.model.QuakeCatalog;
+import quake.admin.catalog.model.QuakeCatalog;
 
 import com.systop.core.model.BaseModel;
 

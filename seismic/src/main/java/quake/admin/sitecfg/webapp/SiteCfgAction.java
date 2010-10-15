@@ -7,8 +7,8 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import quake.admin.czcatalog.model.QuakeCatalog;
-import quake.admin.czcatalog.service.QuakeCatalogManager;
+import quake.admin.catalog.model.QuakeCatalog;
+import quake.admin.catalog.service.QuakeCatalogManager;
 import quake.admin.sitecfg.SiteConstants;
 import quake.admin.sitecfg.model.SiteCfg;
 import quake.admin.sitecfg.service.SiteCfgManager;
