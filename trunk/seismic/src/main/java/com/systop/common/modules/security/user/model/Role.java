@@ -86,12 +86,6 @@ public class Role extends BaseModel implements Serializable {
   private Set<User> users = new HashSet<User>(0);
 
 
-
-  /**
-   * 页面checkboxList提交数据保存
-   */
-  private String[] methodIds = new String[0];
-
   /**
    * 缺省构造器
    */
