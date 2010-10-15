@@ -149,18 +149,9 @@
 				<a href="${ctx}/admin/mail/view.do" target="main">SMTP配置</a>
 			</div>
 				
-			<div style="padding-top:2px">
-				<img src="${ctx}/images/icons/template.gif" class="icon">
-				<a href="${ctx}/quake/admin/samplerate/index.do" target="main">采样率配置</a>
-			</div>
-			
 			<div style="padding-top:2px">	
 				<img src="${ctx}/images/icons/template.gif" class="icon">
-                  <a href="${ctx}/quake/admin/subject/index.do" target="main">测项配置</a>
-			</div>	
-			<div style="padding-top:2px">	
-				<img src="${ctx}/images/icons/template.gif" class="icon">
-                  <a href="${ctx}/quake/admin/czcatalog/index.do" target="main">地震目录管理</a>
+                  <a href="${ctx}/quake/admin/catalog/index.do" target="main">地震目录管理</a>
 			</div>  
 			<div style="padding-top:2px">	
 				<img src="${ctx}/images/icons/template.gif" class="icon">
@@ -173,10 +164,6 @@
 			<div style="padding-top:2px">	
 				<img src="${ctx}/images/icons/template.gif" class="icon">
                   <a href="${ctx}/quake/email/admin/seisverify/list.do" target="main">测震邮件审核</a>
-			</div>
-			<div style="padding-top:2px">	
-				<img src="${ctx}/images/icons/template.gif" class="icon">
-                  <a href="${ctx}/quake/email/admin/signverify/list.do" target="main">前兆邮件审核</a>
 			</div>
 			
 			<div style="padding-top:2px">	
