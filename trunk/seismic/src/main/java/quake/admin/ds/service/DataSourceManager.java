@@ -47,7 +47,7 @@ public class DataSourceManager implements Definable {
   /**
    * 缺省测震SCHEMA
    */
-  public static final String DEFAULT_CZ_SCHEMA = "CZDATA";
+  public static final String SCHEMA = "CZDATA";
   /**
    * 数据源表主键（为了配合Hibernate）
    */
@@ -162,6 +162,10 @@ public class DataSourceManager implements Definable {
     Assert.notNull(dsInfo);
     if (StringUtils.isBlank(dsInfo.getId())) {
       dsInfo.setId(PK);
+    }
+    if(StringUtils.isBlank(dsInfo.getCzSchema()) &&
+        StringUtils.isNotBlank(dsInfo.getCzInstance())) {
+      dsInfo.setCzSchema(dsInfo.getCzInstance());
     }
     if (get() != null) {
       baseHibernateDao.merge(dsInfo);
@@ -351,7 +355,7 @@ public class DataSourceManager implements Definable {
   public String getCzSchema() {
     if (isDefined()) {
       String schema = get().getCzSchema();
-      return (StringUtils.isBlank(schema)) ? DEFAULT_CZ_SCHEMA : schema;
+      return (StringUtils.isBlank(schema)) ? SCHEMA : schema;
     }
 
     return null;

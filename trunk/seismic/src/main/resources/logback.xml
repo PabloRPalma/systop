@@ -29,7 +29,7 @@
 		<level value="INFO" />
 	</logger>
 	<logger name="quake">
-		<level value="INFO" />
+		<level value="DEBUG" />
 	</logger>
 	<logger name="org.ecside">
 		<level value="INFO" />

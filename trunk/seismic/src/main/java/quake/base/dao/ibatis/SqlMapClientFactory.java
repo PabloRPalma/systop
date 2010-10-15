@@ -60,22 +60,14 @@ public class SqlMapClientFactory {
    */
   
   private Resource[] czConfigLocations;
-  /**
-   * 前兆Sql Map 配置文件的位置
-   */
   
-  private Resource[] qzConfigLocations;
   
   /**
    * 测震Sql 配置文件的位置
    */
   
   private Resource[] czMappingLocations;
-  /**
-   * 前兆Sql 配置文件的位置
-   */
   
-  private Resource[] qzMappingLocations;
   
   /**
    * 用于标识数据源信息是否改变
@@ -249,13 +241,7 @@ public class SqlMapClientFactory {
   public void setCzConfigLocations(Resource[] czConfigLocations) {
     this.czConfigLocations = czConfigLocations;
   }
-
-  /**
-   * @param qzConfigLocations the qzCfonfigLocations to set
-   */
-  public void setQzConfigLocations(Resource[] qzConfigLocations) {
-    this.qzConfigLocations = qzConfigLocations;
-  }
+  
 
   /**
    * @param czMappingLocations the czMappingLocations to set
@@ -264,10 +250,4 @@ public class SqlMapClientFactory {
     this.czMappingLocations = czMappingLocations;
   }
 
-  /**
-   * @param qzMappingLocations the qzMappingLocations to set
-   */
-  public void setQzMappingLocations(Resource[] qzMappingLocations) {
-    this.qzMappingLocations = qzMappingLocations;
-  }
 }
