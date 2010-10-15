@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -39,13 +40,10 @@ public class MainFrameAction extends BaseAction {
   /**
    * “所有配置项都已配置了。”
    */
-  @Autowired
-  @Qualifier("allDefinableAreOK")
+  @Value("所有配置项均已定义。")
   private String allDefineMessage;
   
   @SuppressWarnings("unchecked")
-  @Autowired
-  @Qualifier("configMessages")
   private LinkedHashMap configMessages = new LinkedHashMap();
   /**
    * 定位到/pages/main.jsp

@@ -28,7 +28,7 @@ import com.systop.core.service.BaseGenericsManager;
  * @author wbb
  */
 @Service
-public class CzCatalogManager extends BaseGenericsManager<CzCatalog> implements Definable  {
+public class QuakeCatalogManager extends BaseGenericsManager<CzCatalog> implements Definable  {
   @Autowired(required = true)
   private ExistTableNameDao existTableNameDao;
 
@@ -57,9 +57,9 @@ public class CzCatalogManager extends BaseGenericsManager<CzCatalog> implements 
     }
     super.save(model);
     /** 实现与菜单同步,清空常量 */
-    MainPageAction.setEmptyCZCATALOGS();
-    MainPageAction.setEmptyPHASECATS();
-    MainPageAction.setEmptySEEDCATS();
+    MainPageAction.resetCatalogs();
+    MainPageAction.resetPhases();
+    MainPageAction.resetSeeds();
   }
 
   /**

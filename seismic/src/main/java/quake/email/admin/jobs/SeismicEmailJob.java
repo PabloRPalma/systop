@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 
 import quake.GlobalConstants;
 import quake.admin.czcatalog.model.CzCatalog;
-import quake.admin.czcatalog.service.CzCatalogManager;
+import quake.admin.czcatalog.service.QuakeCatalogManager;
 import quake.admin.ds.service.DataSourceManager;
 import quake.email.EmailConstants;
 import quake.email.seismic.model.SeismicMail;
@@ -66,7 +66,7 @@ public class SeismicEmailJob {
   private MailSender mailSender;
   
   @Autowired(required = true)
-  private CzCatalogManager czCatalogManager;
+  private QuakeCatalogManager czCatalogManager;
 
   /**
    * 获取“from”参数

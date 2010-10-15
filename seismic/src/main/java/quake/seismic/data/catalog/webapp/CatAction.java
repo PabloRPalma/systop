@@ -13,7 +13,7 @@ import org.springframework.stereotype.Controller;
 
 import quake.ProvinceLatlng;
 import quake.admin.czcatalog.model.CzCatalog;
-import quake.admin.czcatalog.service.CzCatalogManager;
+import quake.admin.czcatalog.service.QuakeCatalogManager;
 import quake.admin.ds.service.DataSourceManager;
 import quake.base.webapp.AbstractQueryAction;
 import quake.base.webapp.NumberFormatUtil;
@@ -57,7 +57,7 @@ public class CatAction extends AbstractQueryAction<Criteria> {
   private DataSourceManager dataSourceManager;
 
   @Autowired(required = true)
-  private CzCatalogManager czCatalogManager;
+  private QuakeCatalogManager czCatalogManager;
   
   @Autowired
   private ProvinceLatlng provinceLatlng;
