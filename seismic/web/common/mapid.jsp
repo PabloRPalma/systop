@@ -1,1 +1,0 @@
-<script src="http://ditu.google.com/maps?file=api&v=2&key=<stc:googleMapId/>" type="text/javascript" Charset="UTF-8"></script>
