@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC
+  		"-//OpenSymphony Group//XWork Validator 1.0//EN" 
+  		"http://www.opensymphony.com/xwork/xwork-validator-1.0.2.dtd">
+<validators>
+	<field name="model.title">
+		<field-validator type="requiredstring">
+			<message><![CDATA[领导名称不能为空！]]></message>
+		</field-validator>
+	</field>
+	<field name="model.content">
+		<field-validator type="requiredstring">
+			<message><![CDATA[领导信息不能为空！]]></message>
+		</field-validator>
+	</field>
+</validators>
