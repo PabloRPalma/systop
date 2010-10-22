@@ -1,9 +1,9 @@
 package com.systop.common.modules.security.user.model;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -21,8 +21,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
-import org.acegisecurity.GrantedAuthority;
-import org.acegisecurity.userdetails.UserDetails;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -30,6 +28,8 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import quake.email.seismic.model.SeismicMail;
 
@@ -524,13 +524,13 @@ public class User extends BaseModel implements UserDetails, Serializable {
   /**
    * 用户所具有的权限，可用通过角色-权限对应关系得到
    */
-  private transient GrantedAuthority[] authorities;
+  private transient List<GrantedAuthority> authorities;
 
   /**
    * @see {@link UserDetails#getAuthorities()}
    */
   @Transient
-  public GrantedAuthority[] getAuthorities() {
+  public List<GrantedAuthority> getAuthorities() {
     return this.authorities;
   }
 
@@ -538,8 +538,7 @@ public class User extends BaseModel implements UserDetails, Serializable {
    * @param authorities
    *          the authorities to set
    */
-  public void setAuthorities(GrantedAuthority[] authorities) {
-    log.info("Set GrantedAuthorities :" + Arrays.toString(authorities));
+  public void setAuthorities(List<GrantedAuthority> authorities) {
     this.authorities = authorities;
   }
 
