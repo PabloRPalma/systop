@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="quake.email" extends="default" namespace="/quake/email/admin">
+		 <action name="*" class="emailDefinitionAction" method="{1}">
+		     <result name="input">/pages/quake/email/admin/edit.jsp</result>
+		     <result name="success" type="redirect">edit.do</result>
+		 </action>
+		
+	</package>
+	<package name="quake.email.seisverify" extends="default" namespace="/quake/email/admin/seisverify">
+		<action name="*" class="seismicMailVerifyAction" method="{1}">
+		     <result name="list">/pages/quake/email/admin/listSeisMails.jsp</result>
+		 </action>
+	</package>
+	<package name="quake.email.signverify" extends="default" namespace="/quake/email/admin/signverify">
+		<action name="*" class="signMailVerifyAction" method="{1}">
+		     <result name="list">/pages/quake/email/admin/listSignMails.jsp</result>
+		 </action>
+	</package>
+</struts>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-lazy-init="false">
+	<description>配置Quartz，定时发送Email</description>
+	
+	<!-- 测震邮件发送任务 -->
+	<bean id="seismicEmailJobDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="seismicEmailJob" />
+		<property name="targetMethod" value="send" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<!-- 测震邮件发送触发器(trigger) -->
+	<bean id="seismicEmailCronTrigger"
+		class="quake.email.admin.jobs.CronTriggerBeanEx">		
+		<property name="jobDetail" ref="seismicEmailJobDetail" />
+		<property name="cron">
+			<bean class="quake.email.admin.jobs.CronFactoryBean" scope="prototype">
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- seed程序执行任务 -->
+	<bean id="seedProJobDetail" 
+		  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="seedpathAction"/>
+		</property>
+		<property name="targetMethod">
+			<value>execSeedPro</value>
+		</property>
+		<property name="concurrent">
+			<value>false</value>
+		</property>
+	</bean>
+	<!-- seed程序执行触发器(trigger) -->
+	<bean id="seedProTrigger" 
+		  class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="seedProJobDetail"/>
+		</property>
+		<property name="cronExpression">
+			<value>0 0 0 * * ?</value>
+		</property>
+	</bean>
+	<!-- 启动Quartz任务 -->
+	<bean id="emailSchedulerFactory"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<!-- 使用内存存储,否则可能自动装配dataSource -->
+		<property name="dataSource"><null/></property>
+		<!-- 系统启动后自动启动任务 -->
+		<property name="autoStartup" value="true"/>
+		<!-- 延时20秒启动 -->
+		<property name="startupDelay" value="20"/>
+		<property name="triggers">
+			<list>
+				<ref local="seismicEmailCronTrigger" />
+				<ref local="seedProTrigger"/>
+			</list>
+		</property>
+	</bean>
+</beans>
