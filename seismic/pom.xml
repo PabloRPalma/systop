@@ -174,17 +174,7 @@
 			</exclusions>
 		</dependency>
 
-		<dependency>
-			<groupId>com.googlecode</groupId>
-			<artifactId>jsonplugin</artifactId>
-			<version>0.33</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>struts2-junit-plugin</artifactId>
-					<groupId>org.apache.struts</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+		
 
 
 		<!-- j2ee web spec -->
@@ -233,10 +223,12 @@
 					<groupId>org.springframework</groupId>
 					<artifactId>spring-support</artifactId>
 				</exclusion>
+				<!-- 
 				<exclusion>
 					<groupId>org.springframework</groupId>
 					<artifactId>spring-web</artifactId>
 				</exclusion>
+				 -->
 				<exclusion>
 					<groupId>org.springframework</groupId>
 					<artifactId>spring-mock</artifactId>
