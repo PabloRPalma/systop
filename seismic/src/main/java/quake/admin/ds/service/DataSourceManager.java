@@ -190,7 +190,7 @@ public class DataSourceManager implements Definable {
         // 构建测震数据源
         dataSources.put(DataType.SEISMIC, closeAndRebuild(dsInfo, DataType.SEISMIC));
         // 构建前兆数据源
-        //dataSources.put(DataType.SIGN, closeAndRebuild(dsInfo, DataType.SIGN));
+        dataSources.put(DataType.SIGN, closeAndRebuild(dsInfo, DataType.SIGN));
       } finally {
         write.unlock();
       }
@@ -206,10 +206,10 @@ public class DataSourceManager implements Definable {
   @PostConstruct
   public void init() {
     urls.put(DB_MYSQL, "jdbc:mysql://"); // localhost/db
-    urls.put(DB_ORACLE, "jdbc:oracle:thin:@"); // localhost:1521:orcl
+    urls.put(DB_ORACLE, "jdbc:mysql://"); // localhost:1521:orcl
     
     drivers.put(DB_MYSQL, "com.mysql.jdbc.Driver");
-    drivers.put(DB_ORACLE, "oracle.jdbc.driver.OracleDriver");
+    drivers.put(DB_ORACLE, "com.mysql.jdbc.Driver");
     
     dbTypes.put(DB_ORACLE, "Oracle数据库");
     dbTypes.put(DB_MYSQL, "MySQL数据库");
@@ -319,7 +319,8 @@ public class DataSourceManager implements Definable {
    */
   private String buildUrl(DataSourceInfo dsInfo, DataType dataType) {
     // MySQL和Oracle的URL分隔符是不同的...
-    String splitter = ":";
+    //String splitter = ":";
+    String splitter = "/";
     if (DataType.SEISMIC.equals(dataType) && StringUtils.equals(dsInfo.getCzType(), DB_MYSQL)) {
       splitter = "/";
     }
