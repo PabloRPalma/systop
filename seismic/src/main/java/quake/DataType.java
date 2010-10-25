@@ -13,5 +13,5 @@ public enum DataType {
   /**
    * 前兆数据
    */
-  //SIGN; 
+  SIGN; 
 }
