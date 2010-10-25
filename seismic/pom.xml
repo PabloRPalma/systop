@@ -175,17 +175,10 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.googlecode</groupId>
-			<artifactId>jsonplugin</artifactId>
-			<version>0.33</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>struts2-junit-plugin</artifactId>
-					<groupId>org.apache.struts</groupId>
-				</exclusion>
-			</exclusions>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-json-plugin</artifactId>
+			<version>${struts2.version}</version>
 		</dependency>
-
 
 		<!-- j2ee web spec -->
 		<dependency>
