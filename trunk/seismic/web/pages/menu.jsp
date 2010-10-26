@@ -70,7 +70,18 @@
 			</div>
 		</div>
 	</div>
-	
+	<div id="specials">
+		<div style="padding-left:5px;">          
+			<div style="padding-top:2px">
+				<img src="${ctx}/images/icons/xhtml_add.gif" class="icon">
+				<a href="${ctx}/admin/special/edit.do" target="main">专题添加</a>
+			</div>
+			<div style="padding-top:2px">
+				<img src="${ctx}/images/icons/xhtml_go.gif" class="icon">
+				<a href="${ctx}/admin/special/index.do" target="main">专题列表</a>
+			</div>
+		</div>
+	</div>
 	<div id="announce">
 		<div style="padding-left:5px;">       
 		    <!--   
