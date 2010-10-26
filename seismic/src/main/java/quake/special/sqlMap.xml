@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="zt">
+   <resultMap class="java.util.HashMap" id="queryQcResult">
+        <result property="NET_CODE" column="NET_CODE" javaType="String"/>
+        <result property="STA_CODE" column="STA_CODE" javaType="String"/>
+        <result property="STA_CNAME" column="STA_CNAME" javaType="String"/>
+        <result property="ROCK_TYPE" column="ROCK_TYPE" javaType="String"/>
+        <result property="INSTRUMENT_ID" column="INSTRUMENT_ID" javaType="String"/>
+        <result property="DATARECORD_ID" column="DATARECORD_ID" javaType="String"/>
+        <result property="instrModel" column="insModel" javaType="String"/>
+        <result property="dasModel" column="dasModel" javaType="String"/>
+        <result property="STA_LAT" column="STA_LAT" javaType="Double"/>
+        <result property="STA_LON" column="STA_LON" javaType="Double"/>
+        <result property="STA_ELEV" column="STA_ELEV" javaType="Double"/>
+    </resultMap>
+    <select id="queryQc" parameterClass="quake.special.model.Criteria"
+			resultMap="queryQcResult">
+		<![CDATA[
+		SELECT ID,Eq_name,Location_cname,Epi_lat,Epi_lon,O_time
+		FROM $schema$.catalog_w 
+		WHERE length(INSTR_TYPE) = length(#instrType#)
+		]]>
+	</select>
+</sqlMap>
