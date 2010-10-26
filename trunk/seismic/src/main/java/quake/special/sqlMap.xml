@@ -5,24 +5,19 @@
     "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="zt">
    <resultMap class="java.util.HashMap" id="queryQcResult">
-        <result property="NET_CODE" column="NET_CODE" javaType="String"/>
-        <result property="STA_CODE" column="STA_CODE" javaType="String"/>
-        <result property="STA_CNAME" column="STA_CNAME" javaType="String"/>
-        <result property="ROCK_TYPE" column="ROCK_TYPE" javaType="String"/>
-        <result property="INSTRUMENT_ID" column="INSTRUMENT_ID" javaType="String"/>
-        <result property="DATARECORD_ID" column="DATARECORD_ID" javaType="String"/>
-        <result property="instrModel" column="insModel" javaType="String"/>
-        <result property="dasModel" column="dasModel" javaType="String"/>
-        <result property="STA_LAT" column="STA_LAT" javaType="Double"/>
-        <result property="STA_LON" column="STA_LON" javaType="Double"/>
-        <result property="STA_ELEV" column="STA_ELEV" javaType="Double"/>
+   		<result property="ID" column="ID" javaType="String"/>
+   		<result property="Eq_name" column="Eq_name" javaType="String"/>
+        <result property="Location_cname" column="Location_cname" javaType="String"/>
+        <result property="EPI_LAT" column="EPI_LAT" javaType="Double"/>
+        <result property="EPI_LON" column="EPI_LON" javaType="Double"/>
+        <result property="O_TIME" column="O_TIME" javaType="java.util.Date"/>
     </resultMap>
     <select id="queryQc" parameterClass="quake.special.model.Criteria"
 			resultMap="queryQcResult">
 		<![CDATA[
 		SELECT ID,Eq_name,Location_cname,Epi_lat,Epi_lon,O_time
 		FROM $schema$.catalog_w 
-		WHERE length(INSTR_TYPE) = length(#instrType#)
+		WHERE Location_cname = #startDate#
 		]]>
 	</select>
 </sqlMap>
