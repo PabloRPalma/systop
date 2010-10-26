@@ -64,6 +64,12 @@
                         iconCls:'template'
                     },
                     {                    
+                        title:'专题管理',
+                        html:document.getElementById('specials').innerHTML,
+                        border:false,
+                        iconCls:'template'
+                    },
+                    {                    
                         title:'链接、反馈',
                         html:document.getElementById('announce').innerHTML,
                         border:false,
