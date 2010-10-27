@@ -43,11 +43,14 @@ public class DataSourceManager implements Definable {
   private String dsString;
 
   private static Map<DataType, DataSource> dataSources = new HashMap<DataType, DataSource>();
-  
+  /**
+   * 缺省前兆SCHEMA
+   */
+  public static final String DEFAULT_QZ_SCHEMA = "QZDATA";
   /**
    * 缺省测震SCHEMA
    */
-  public static final String SCHEMA = "CZDATA";
+  public static final String DEFAULT_CZ_SCHEMA = "CZDATA";
   /**
    * 数据源表主键（为了配合Hibernate）
    */
@@ -166,6 +169,10 @@ public class DataSourceManager implements Definable {
     if(StringUtils.isBlank(dsInfo.getCzSchema()) &&
         StringUtils.isNotBlank(dsInfo.getCzInstance())) {
       dsInfo.setCzSchema(dsInfo.getCzInstance());
+    }
+    if(StringUtils.isBlank(dsInfo.getQzSchema()) &&
+        StringUtils.isNotBlank(dsInfo.getQzInstance())) {
+      dsInfo.setQzSchema(dsInfo.getQzInstance());
     }
     if (get() != null) {
       baseHibernateDao.merge(dsInfo);
@@ -356,12 +363,24 @@ public class DataSourceManager implements Definable {
   public String getCzSchema() {
     if (isDefined()) {
       String schema = get().getCzSchema();
-      return (StringUtils.isBlank(schema)) ? SCHEMA : schema;
+      return (StringUtils.isBlank(schema)) ? DEFAULT_CZ_SCHEMA : schema;
     }
 
     return null;
   }
 
+  /**
+   * 返回前兆SCHEMA
+   */
+  public String getQzSchema() {
+    if (isDefined()) {
+      String schema = get().getQzSchema();
+      return (StringUtils.isBlank(schema)) ? DEFAULT_QZ_SCHEMA : schema;
+    }
+
+    return null;
+  }
+  
   /**
    * @param baseHibernateDao the baseHibernateDao to set
    */
