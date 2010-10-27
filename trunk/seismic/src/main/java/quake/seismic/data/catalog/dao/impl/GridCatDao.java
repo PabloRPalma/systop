@@ -15,8 +15,8 @@ import com.systop.core.dao.support.Page;
 
 
 /**
- * 地震目录查询dao
- * @author wbb
+ * 地震目录查询DAO
+ * @author DU
  */
 @Repository
 public class GridCatDao extends AbstractCatDao<Page> {

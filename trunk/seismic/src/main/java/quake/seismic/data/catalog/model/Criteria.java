@@ -7,7 +7,7 @@ import quake.base.model.PageSchemaAware;
 
 /**
  * 地震目录查询条件
- * @author wbb
+ * @author DU
  */
 public class Criteria extends PageSchemaAware {
   /**

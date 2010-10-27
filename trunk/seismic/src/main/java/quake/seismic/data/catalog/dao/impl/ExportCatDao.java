@@ -18,8 +18,8 @@ import com.systop.core.util.DateUtil;
 
 
 /**
- * 导出地震目录数据Dao
- * @author wbb
+ * 导出地震目录数据DAO
+ * @author DAO
  */
 @SuppressWarnings("unchecked")
 @Repository
@@ -114,7 +114,6 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
    * @param len 字符串总长度
    * @return 返回格式化好的字符串
    */
-  @SuppressWarnings("unused")
   private String formatNumber(Double val, int len) {
     String strVal = null;
     // 值为空时
