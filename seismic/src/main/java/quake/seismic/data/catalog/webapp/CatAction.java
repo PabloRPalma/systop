@@ -27,7 +27,7 @@ import com.systop.core.dao.support.Page;
 
 /**
  * 地震目录查询查
- * @author wbb
+ * @author DU
  *
  */
 @SuppressWarnings({"serial","unchecked"})
@@ -92,7 +92,6 @@ public class CatAction extends AbstractQueryAction<Criteria> {
    * 显示GIS信息
    * @return
    */
-  @SuppressWarnings("unchecked")
   public String showGis(){
     if (StringUtils.isNotBlank(model.getTableName())) {
       try {

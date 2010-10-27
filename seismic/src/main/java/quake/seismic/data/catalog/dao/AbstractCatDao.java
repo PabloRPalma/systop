@@ -13,7 +13,7 @@ import quake.seismic.data.catalog.model.MagCriteria;
 
 /**
  * 地震目录浏览Dao抽象实现类
- * @author wbb
+ * @author DU
  */
 public abstract class AbstractCatDao<T> extends AbstractSeismicDao {
   /**
