@@ -137,12 +137,11 @@ a[href='#'] {
 		    <h3><a id="dataserv" href="javascript:void(0);">数据服务</a></h3>
 		    <div>
 				<ul id="dataService" style="margin:10px 10px 10px 10px">
-					<li><span><strong><img id="note_seismicMetadata" src="${ctx}/images/icons/folder.gif">&nbsp;<a id="seismicMetadata" href="${ctx}/quake/descr/queryDescribe.do?model.type=seismicMetadata&model.hasMetadata=1" target="main"><b>地震观测数据</b></a></strong></span>
+					<li><span><strong><img id="note_seismicMetadata" src="${ctx}/images/icons/folder.gif">&nbsp;<b>地震观测数据</b></strong></span>
+					 <ul>
+					  <li><span><b><img id="note_catalog" src="${ctx}/images/icons/folder.gif">&nbsp;地震目录</b></span>
 						<ul>
-					<stc:role ifAnyGranted="ROLE_NORMAL,ROLE_SENIOR,ROLE_ADMIN,ROLE_CATALOG">
-					  <li><span><b><img id="note_catalog" src="${ctx}/images/icons/folder.gif">&nbsp;<a id="catalog" href="${ctx}/quake/descr/queryDescribe.do?model.type=catalog&model.hasMetadata=1" target="main">地震目录</a></b></span>
-						<ul>
-							<s:iterator value="CZCATALOGS">
+							<s:iterator value="catalogs">
 								<li>
 								  <img src="${ctx}/images/icons/go.gif">
 									<a href="${ctx}/quake/seismic/data/catalog/index.do?model.tableName=<s:property value="cltName"/>" target="main">
@@ -152,9 +151,8 @@ a[href='#'] {
 							</s:iterator>
 						</ul> 
 					  </li>
-					</stc:role>
 					<stc:role ifAnyGranted="ROLE_SENIOR,ROLE_ADMIN,ROLE_PHASE">
-					  <li><span><b><img id="note_phase" src="${ctx}/images/icons/folder.gif">&nbsp;<a id="phase" href="${ctx}/quake/descr/queryDescribe.do?model.type=phase&model.hasMetadata=1" target="main">震相</a></b></span>
+					  <li><span><b><img id="note_phase" src="${ctx}/images/icons/folder.gif">&nbsp;震相</b></span>
 					    <ul>
 							<s:iterator value="pHASECATS"> 
 								<li>
@@ -229,7 +227,7 @@ a[href='#'] {
 	</div>
 </div>
 <div class="ui-layout-center" style="padding:0px;margin:0px;">
-	<iframe src="${ctx}/quake/descr/queryDescribe.do?model.type=seismicNetDescn&model.hasMetadata=0" id="main" name="main" style="width:100%; height:100%; border:0px;" frameborder="0"></iframe>
+	<iframe src="" id="main" name="main" style="width:100%; height:100%; border:0px;" frameborder="0"></iframe>
 </div>
 </body>
 </html>
