@@ -43,6 +43,7 @@ public class MainPageAction extends BaseAction{
     
     if (catalogs == null) { // 查询地震目录
       catalogs = catalogManager.getCat();
+      logger.info("地震目录数：{}",catalogs.size());
     }
     if (phases == null) { // 查询震相
       phases = catalogManager.getPhaseCat();
