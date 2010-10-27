@@ -51,54 +51,48 @@ $(document).ready(function() {
 </head>
 <body>
 <div class="x-panel">
-    	<div class="x-panel-header">基础信息数据源管理</div>
+    	<div class="x-panel-header">数据源管理</div>
     	
     	<div class="x-panel-body">
 			<s:form action="save" theme="simple" id="save" validate="true" method="POST">
 		   		<s:hidden name="model.id"/>
 		   		<s:hidden name="model.version"/>
+		   		<s:hidden name="model.czType" id="czType" value="cz_mysql"/>
 		   		<div style="margin:30px;text-align:center;">
 		   		    <%@ include file="/common/messages.jsp"%>
 		   		</div>
 		   		<fieldset style="margin:30px;">
-			    <legend>基础信息数据源</legend>
+			    <legend>测震数据源</legend>
 			    
 				<table width="100%">
 						
                         <tr>
-                             <td width="50%" style="text-align:right;">数据库类型：</td>
-                             <td style="text-align:left;">
-                             MySQL
-                             <input type="hidden" name="model.czType" id="czType" value="cz_mysql">
-                             </td>
-                        </tr>
-                        <tr>
-                             <td  style="text-align:right;">基础信息数据库服务器地址（IP,<font color="red">*</font>）：</td>
+                             <td width="50%" style="text-align:right;">测震数据库服务器地址（IP,<font color="red">*</font>）：</td>
                              <td style="text-align:left;">
 		                         <s:textfield size="30" name="model.czHost" cssClass="required"/>
                              </td>
                         </tr>
                         
                         <tr>
-                             <td  style="text-align:right;">基础信息数据库名/实例名（<font color="red">*</font>）：</td>
+                             <td  style="text-align:right;">测震数据库名/实例名（<font color="red">*</font>）：</td>
                              <td style="text-align:left;">
                              <s:textfield size="30" name="model.czInstance" cssClass="required" id="czIns"/>
                              </td>
                         </tr>
                         <tr>
-                             <td  style="text-align:right;">基础信息数据库端口（<font color="red">*</font>）：</td>
+                             <td  style="text-align:right;">测震数据库端口（<font color="red">*</font>）：</td>
                              <td style="text-align:left;">
                              <s:textfield size="30" id="czPort" name="model.czPort" cssClass="required digits"/>
                              </td>
                         </tr>
                         <tr>
-                             <td  style="text-align:right;">基础信息数据库只读用户名（<font color="red">*</font>）：</td>
+                             <td  style="text-align:right;">测震数据库只读用户名（<font color="red">*</font>）：</td>
                              <td style="text-align:left;">
                              <s:textfield size="30" name="model.czUser"/>
                              </td>
                         </tr>
                         <tr>
-                             <td  style="text-align:right;">基础信息数据库只读密码（<font color="red">*</font>）：</td>
+                             <td  style="text-align:right;">测震数据库只读密码（<font color="red">*</font>）：</td>
                              <td style="text-align:left;">
                              <s:textfield size="30" name="model.czPwd" cssClass="required"/>
                              </td>
@@ -122,35 +116,35 @@ $(document).ready(function() {
                 </table>
                 </fieldset>
                 <fieldset style="margin:30px;">
-			    <legend>目录信息数据源</legend>
+			    <legend>基本信息数据源</legend>
 			    <table width="100%">
 						
                         <tr>
-                             <td width="50%" style="text-align:right;">目录信息数据库服务器地址（IP，<font color="red">*</font>）：</td>
+                             <td width="50%" style="text-align:right;">基本信息数据库服务器地址（IP，<font color="red">*</font>）：</td>
                              <td style="text-align:left;">
                              <s:textfield size="30" name="model.qzHost" cssClass="required"/>
                              </td>
                         </tr>
                         <tr>
-                             <td  style="text-align:right;">目录信息数据库名/实例名（<font color="red">*</font>）：</td>
+                             <td  style="text-align:right;">基本信息数据库名/实例名（<font color="red">*</font>）：</td>
                              <td style="text-align:left;">
                              <s:textfield size="30" name="model.qzInstance" cssClass="required"/>
                              </td>
                         </tr>
                         <tr>
-                             <td  style="text-align:right;">目录信息数据库端口（<font color="red">*</font>）：</td>
+                             <td  style="text-align:right;">基本信息数据库端口（<font color="red">*</font>）：</td>
                              <td style="text-align:left;">
                              <s:textfield size="30" id="qzPort" name="model.qzPort" cssClass="required"/>
                              </td>
                         </tr>
                         <tr>
-                             <td  style="text-align:right;">目录信息数据库只读用户名（<font color="red">*</font>）：</td>
+                             <td  style="text-align:right;">基本信息数据库只读用户名（<font color="red">*</font>）：</td>
                              <td style="text-align:left;">
                              <s:textfield size="30" name="model.qzUser" cssClass="required"/>
                              </td>
                         </tr>
                         <tr>
-                             <td  style="text-align:right;">目录信息数据库只读密码（<font color="red">*</font>）：</td>
+                             <td  style="text-align:right;">基本信息数据库只读密码（<font color="red">*</font>）：</td>
                              <td style="text-align:left;">
                              <s:textfield size="30" name="model.qzPwd" cssClass="required"/>
                              </td>
