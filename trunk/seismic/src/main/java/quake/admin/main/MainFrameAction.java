@@ -6,9 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.struts2.json.annotations.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -16,7 +15,6 @@ import org.springframework.util.ClassUtils;
 
 import quake.base.service.Definable;
 
-import com.googlecode.jsonplugin.annotations.JSON;
 import com.systop.core.webapp.struts2.action.BaseAction;
 
 
@@ -40,7 +38,7 @@ public class MainFrameAction extends BaseAction {
   /**
    * “所有配置项都已配置了。”
    */
-  @Value("所有配置项均已定义。")
+  
   private String allDefineMessage;
   
   @SuppressWarnings("unchecked")
