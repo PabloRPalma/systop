@@ -5,11 +5,11 @@ import java.util.Collection;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.struts2.interceptor.validation.SkipValidation;
+import org.apache.struts2.json.annotations.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.validation.Validator;
 
-import com.googlecode.jsonplugin.annotations.JSON;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
 import com.systop.core.ApplicationException;
