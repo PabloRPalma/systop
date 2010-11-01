@@ -63,11 +63,11 @@
 	<package name="json" extends="default">
 		<result-types>
 			<result-type name="json"
-				class="com.googlecode.jsonplugin.JSONResult" />
+				class="org.apache.struts2.json.JSONResult" />
 		</result-types>
 		<interceptors>
 			<interceptor name="json"
-				class="com.googlecode.jsonplugin.JSONInterceptor" />
+				class="org.apache.struts2.json.JSONInterceptor" />
 		</interceptors>
 	</package>
 	
