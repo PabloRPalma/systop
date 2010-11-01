@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.struts2.json.annotations.JSON;
 
-import com.googlecode.jsonplugin.annotations.JSON;
 import com.systop.core.Constants;
 
 
