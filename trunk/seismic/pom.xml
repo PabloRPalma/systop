@@ -467,6 +467,11 @@
 			<artifactId>plexus-utils</artifactId>
 			<version>1.1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-json-plugin</artifactId>
+			<version>${struts2.version}</version>
+		</dependency>
 	</dependencies>
 
 	<!-- 插件配置 -->
