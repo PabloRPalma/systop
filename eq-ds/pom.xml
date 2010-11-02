@@ -20,18 +20,18 @@
 
 
 	<dependencies>
-		<!-- systopbase modules begin -->
+		<!-- systopbase modules begin 
 			<dependency>
 				<groupId>com.systop</groupId>
 				<artifactId>systopbase-core</artifactId>
 			</dependency>
-			<!-- systopbase modules end -->
-			<!-- ecside begin -->
+			systopbase modules end -->
+			<!-- ecside begin 
 			<dependency>
 				<groupId>org.ecside</groupId>
 				<artifactId>systopbase-ecside</artifactId>
 			</dependency>
-		<!-- ecside end -->
+		ecside end -->
 		<!-- spring begin -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -94,10 +94,12 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
+		<!-- 
 		<dependency>
 		    <groupId>com.oracle</groupId>
 		    <artifactId>ojdbc</artifactId>
 		</dependency> 
+		 -->
 		<!-- orm end -->
 
 		<!-- web begin -->
