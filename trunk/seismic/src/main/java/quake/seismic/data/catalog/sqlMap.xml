@@ -139,6 +139,7 @@
 				</isEmpty>
 			</isEmpty>
 		</dynamic>
+		LIMIT $start$, $size$
 	</select>
 	<select id="queryCatDataCount" parameterClass="quake.seismic.data.catalog.model.Criteria"
 		resultClass="Integer">         
@@ -225,27 +226,13 @@
 				</isNull>
 			</isNull>
 		</dynamic>
-		
-		<dynamic prepend="ORDER BY">
-			<isNotEmpty property="sortProperty">
-				<isNotEmpty property="sortDir">
-					<![CDATA[$sortProperty$ $sortDir$]]>
-				</isNotEmpty>
-			</isNotEmpty>
-			
-			<isEmpty property="sortProperty">
-				<isEmpty property="sortDir">
-					<![CDATA[O_TIME desc]]>
-				</isEmpty>
-			</isEmpty>
-		</dynamic>
 	</select>
 	
 	 <!-- 有震级关联的地震目录查询 -->
 	<select id="queryCatMagData" parameterClass="quake.seismic.data.catalog.model.Criteria"
 		resultMap="queryCatMagDataResult">    
 		<![CDATA[
-		select CL.ID,CL.SEQUEN_NAME,CL.O_TIME,CL.O_TIME_FRAC,CL.EPI_LAT,CL.EPI_LON,CL.EPI_DEPTH,CL.M as M,MC.MAG_VAL as MAG_VAL,CL.M_SOURCE,CL.QLOC,CL.QCOM,CL.LOCATION_CNAME,EVENT_ID,MC.ID as MAGC_ID 
+		select DISTINCT CL.ID,CL.SEQUEN_NAME,CL.O_TIME,CL.O_TIME_FRAC,CL.EPI_LAT,CL.EPI_LON,CL.EPI_DEPTH,CL.M as M,MC.MAG_VAL as MAG_VAL,CL.M_SOURCE,CL.QLOC,CL.QCOM,CL.LOCATION_CNAME,EVENT_ID,MC.ID as MAGC_ID 
 		FROM $schema$.$tableName$  CL LEFT JOIN $schema$.$magTname$ MC ON CL.ID = MC.CATALOG_ID AND CL.M_SOURCE = MC.MAG_NAME
 		]]>
 		<dynamic prepend="WHERE">
@@ -302,7 +289,8 @@
 				<![CDATA[(CL.EPI_LON<=#endLon#)]]>
 				</isNull>
 			</isNotNull>
-			
+			<!-- 关联震级表查询，按照震级表中的震级作为查询条件 -->
+			<!--
 			<isNotNull property="startM">
 				<isNotNull prepend="AND" property="endM">
 				<![CDATA[
@@ -320,10 +308,36 @@
 				<![CDATA[(MC.MAG_VAL<=#endM# OR CL.M<=#endM#)]]>
 				</isNull>
 			</isNotNull>
+			-->
 			<!--只显示大于-10的震级,两个震级有一个>-10就可以-->
+			<!--
 			<isNull property="startM">
 				<isNull prepend="AND" property="endM">
 					<![CDATA[(MC.MAG_VAL>-10 OR CL.M>-10)]]>
+				</isNull>
+			</isNull>
+			-->
+			<isNotNull property="startM">
+				<isNotNull prepend="AND" property="endM">
+				<![CDATA[
+				(CL.M>=#startM# AND CL.M<=#endM#)
+				]]>
+				</isNotNull>
+			</isNotNull>
+			<isNotNull property="startM">
+				<isNull prepend="AND" property="endM">
+				<![CDATA[CL.M>=#startM#]]>
+				</isNull>
+			</isNotNull>
+			<isNotNull property="endM">
+				<isNull prepend="AND" property="startM">
+				<![CDATA[CL.M<=#endM#]]>
+				</isNull>
+			</isNotNull>
+			<!--只显示大于-10的震级,两个震级有一个>-10就可以-->
+			<isNull property="startM">
+				<isNull prepend="AND" property="endM">
+					<![CDATA[CL.M>-10]]>
 				</isNull>
 			</isNull>
 		</dynamic>
@@ -341,12 +355,13 @@
 				</isEmpty>
 			</isEmpty>
 		</dynamic>
+		LIMIT $start$, $size$
 	</select>
 	<select id="queryCatMagDataCount" parameterClass="quake.seismic.data.catalog.model.Criteria"
 		resultClass="Integer">         
 		<![CDATA[
 		SELECT count(0)
-		FROM $schema$.$tableName$  CL LEFT JOIN $schema$.$magTname$ MC ON CL.ID = MC.CATALOG_ID AND CL.M_SOURCE = MC.MAG_NAME
+		FROM $schema$.$tableName$ CL
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty property="startDate">
@@ -406,40 +421,26 @@
 			<isNotNull property="startM">
 				<isNotNull prepend="AND" property="endM">
 				<![CDATA[
-				((MC.MAG_VAL>=#startM# AND MC.MAG_VAL<=#endM#) OR (CL.M>=#startM# AND CL.M<=#endM#))
+				(CL.M>=#startM# AND CL.M<=#endM#)
 				]]>
 				</isNotNull>
 			</isNotNull>
 			<isNotNull property="startM">
 				<isNull prepend="AND" property="endM">
-				<![CDATA[(MC.MAG_VAL>=#startM# OR CL.M>=#startM#)]]>
+				<![CDATA[CL.M>=#startM#]]>
 				</isNull>
 			</isNotNull>
 			<isNotNull property="endM">
 				<isNull prepend="AND" property="startM">
-				<![CDATA[(MC.MAG_VAL<=#endM# OR CL.M<=#endM#)]]>
+				<![CDATA[CL.M<=#endM#]]>
 				</isNull>
 			</isNotNull>
 			<!--只显示大于-10的震级,两个震级有一个>-10就可以-->
 			<isNull property="startM">
 				<isNull prepend="AND" property="endM">
-					<![CDATA[(MC.MAG_VAL>-10 OR CL.M>-10)]]>
+					<![CDATA[CL.M>-10]]>
 				</isNull>
 			</isNull>
-		</dynamic>
-		
-		<dynamic prepend="ORDER BY">
-			<isNotEmpty property="sortProperty">
-				<isNotEmpty property="sortDir">
-					<![CDATA[$sortProperty$ $sortDir$]]>
-				</isNotEmpty>
-			</isNotEmpty>
-			
-			<isEmpty property="sortProperty">
-				<isEmpty property="sortDir">
-					<![CDATA[CL.O_TIME desc]]>
-				</isEmpty>
-			</isEmpty>
 		</dynamic>
 	</select>
 	
@@ -457,7 +458,7 @@
 	<select id="queryMagM" parameterClass="quake.seismic.data.catalog.model.MagCriteria"
 			resultMap="queryMagMResult">
 		<![CDATA[
-			select MAG_NAME,MAG_VAL from $schema$.$tableName$ WHERE CATALOG_ID = #catId# and ID = #magcId#
+			select MAG_NAME,MAG_VAL from $schema$.$tableName$ WHERE CATALOG_ID = #catId#
 		]]>
 	</select>
 </sqlMap>
