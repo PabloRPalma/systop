@@ -123,9 +123,14 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
         }
       }
       page = PageUtil.getPage(getPageNo(), getPageSize());
+      
+      int start = Page.start(getPageNo(), getPageSize());
+      criteria.setStart(start);
+      criteria.setSize(getPageSize());
+
       page = gridCatDao.query(criteria);
       cats = page.getData();
-     
+     logger.info("--------------cats {}"+cats.size());
       Special s = null;
       if(getModel().getId()!=null){
         s = getManager().getSpecialById(getModel().getId());
