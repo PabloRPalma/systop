@@ -27,21 +27,26 @@ public class GridCatDao extends AbstractCatDao<Page> {
     String sql = "";
     String sqlCount = "";
     //单表查询，还是级连震级表查询
-    if(StringUtils.isNotBlank(criteria.getMagTname())) {//关联震级表
+    /*if(StringUtils.isNotBlank(criteria.getMagTname())) {//关联震级表
       sql = SQL_CAT_MAG_ID;
       sqlCount = SQL_CAT_MAG_COUNT_ID;
     } else { //不关联震级表
       sql = SQL_ID;
       sqlCount = SQL_COUNT_ID;
-    }
+    }*/
+    //当前查询方式_都不关联震级查询
+    sql = SQL_ID;
+    sqlCount = SQL_COUNT_ID;
+    
     int count = (Integer) (getTemplate().queryForObject(sqlCount, criteria));
-    List<Map> rows = getTemplate().queryForList(sql, criteria, criteria.getPage().getStartIndex(),
-        criteria.getPage().getPageSize());
+    List<Map> rows = getTemplate().queryForList(sql, criteria);
     
     if(StringUtils.isNotBlank(criteria.getMagTname())) {//关联震级表
-      setMagM(rows, criteria);
+      criteria.getPage().setData(EQTimeFormat.getEqTimeValue(setMagM(rows, criteria), "O_TIME", "O_TIME_FRAC"));
+    } else {
+      criteria.getPage().setData(EQTimeFormat.getEqTimeValue(rows, "O_TIME", "O_TIME_FRAC"));
     }
-    criteria.getPage().setData(EQTimeFormat.getEqTimeValue(rows, "O_TIME", "O_TIME_FRAC"));
+    
     criteria.getPage().setRows(count);
     return criteria.getPage();
   }
@@ -86,13 +91,13 @@ public class GridCatDao extends AbstractCatDao<Page> {
     
     for (Map catalog : rows) {
       String catalogId = (String)catalog.get("ID");
-      String magcId = (String)catalog.get("MAGC_ID");
+      //String magcId = (String)catalog.get("MAGC_ID");
       if(StringUtils.isBlank(catalogId)){
         continue;
       }
       magCriteria.setCatId(catalogId);
       //根据关联震级表的ID查询，只按照catalogId查询MAG_C表里有重复数据
-      magCriteria.setMagcId(magcId);
+      //magCriteria.setMagcId(magcId);
       List<Map> magList = getMagM(magCriteria);
       if (magList != null && magList.size() > 0){
         for (Map magtype : magList) {
