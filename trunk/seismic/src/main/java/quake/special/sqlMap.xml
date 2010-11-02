@@ -4,20 +4,27 @@
     PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
     "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="zt">
-   <resultMap class="java.util.HashMap" id="queryQcResult">
-   		<result property="ID" column="ID" javaType="String"/>
-   		<result property="Eq_name" column="Eq_name" javaType="String"/>
-        <result property="Location_cname" column="Location_cname" javaType="String"/>
+  <resultMap class="java.util.HashMap" id="queryQcResult">
+        <result property="ID" column="ID" javaType="String"/>
+        <result property="SEQUEN_NAME" column="SEQUEN_NAME" javaType="String"/>
+        <result property="O_TIME" column="O_TIME" javaType="java.util.Date"/>
+        <result property="O_TIME_FRAC" column="O_TIME_FRAC" javaType="Integer"/>
         <result property="EPI_LAT" column="EPI_LAT" javaType="Double"/>
         <result property="EPI_LON" column="EPI_LON" javaType="Double"/>
-        <result property="O_TIME" column="O_TIME" javaType="java.util.Date"/>
+        <result property="EPI_DEPTH" column="EPI_DEPTH" javaType="Double"/>
+        <result property="M" column="M" javaType="Double"/>
+        <result property="M_SOURCE" column="M_SOURCE" javaType="String"/>
+        <result property="QLOC" column="QLOC" javaType="String"/>
+        <result property="QCOM" column="QCOM" javaType="String"/>
+        <result property="LOCATION_CNAME" column="LOCATION_CNAME" javaType="String"/>
+        <result property="EVENT_ID" column="EVENT_ID" javaType="String"/>
     </resultMap>
-    <select id="queryQc" parameterClass="quake.special.model.Criteria"
+
+	  <select id="queryQcById" parameterClass="quake.seismic.data.catalog.model.Criteria"
 			resultMap="queryQcResult">
 		<![CDATA[
-		SELECT ID,Eq_name,Location_cname,Epi_lat,Epi_lon,O_time
-		FROM $schema$.catalog_w 
-		WHERE Location_cname = #startDate#
+		SELECT ID,SEQUEN_NAME,O_TIME,O_TIME_FRAC,EPI_LAT,EPI_LON,EPI_DEPTH,M,M_SOURCE,QLOC,QCOM,LOCATION_CNAME,EVENT_ID 
+		FROM $schema$.$tableName$ WHERE ID = #qcId#
 		]]>
 	</select>
 </sqlMap>

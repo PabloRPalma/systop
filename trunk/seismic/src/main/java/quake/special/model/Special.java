@@ -21,6 +21,13 @@ public class Special extends BaseModel {
    * 地震目录
    */
   private String qc_id;
+  
+  /**
+   * 地震目录对应的表
+   */
+  private String tableName;
+  
+
   /**
    * 创建时间
    */
@@ -213,5 +220,13 @@ public class Special extends BaseModel {
 
   public void setTitle(String title) {
     this.title = title;
+  }
+  @Column(name = "TABLENAME")
+  public String getTableName() {
+    return tableName;
+  }
+
+  public void setTableName(String tableName) {
+    this.tableName = tableName;
   }
 }
