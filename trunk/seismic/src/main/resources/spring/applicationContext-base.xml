@@ -147,7 +147,7 @@ default-lazy-init="true"  default-autowire="byName">
 	  
 	   <property name="czMappingLocations">
 	       <list>
-	          <value>classpath*:quake/seismic/**/sqlMap.xml</value>
+	          <value>classpath*:quake/**/sqlMap.xml</value>
 	       </list>
 	   </property>
 	  
