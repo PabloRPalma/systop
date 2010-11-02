@@ -55,7 +55,10 @@ public class Criteria extends PageSchemaAware {
    * 结束震级
    */
   private Double endM;
-  
+  /**
+   * 地震目录ID
+   */
+  private String qcId;
   /**
    * 排序字段
    */
@@ -225,5 +228,13 @@ public class Criteria extends PageSchemaAware {
    */
   public void setDisType(String disType) {
     this.disType = disType;
+  }
+
+  public String getQcId() {
+    return qcId;
+  }
+
+  public void setQcId(String qcId) {
+    this.qcId = qcId;
   }
 }
