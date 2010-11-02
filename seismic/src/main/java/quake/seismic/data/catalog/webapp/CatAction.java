@@ -82,6 +82,7 @@ public class CatAction extends AbstractQueryAction<Criteria> {
         model.setClcName(czCat.getClcName());
         model.setClDescn(czCat.getClDescn());
         model.setDisType(czCat.getDisType());
+        
       }
     } else {
       addActionError("请选择要查询的地震目录，进行数据查询.");
@@ -167,10 +168,16 @@ public class CatAction extends AbstractQueryAction<Criteria> {
         model.setSchema(dataSourceManager.getCzSchema());
         model.setSortProperty(getSortProperty());
         model.setSortDir(getSortDir());
+        //limit查询，设定start和size
+        int start = Page.start(getPageNo(), getPageSize());
+        model.setStart(start);
+        model.setSize(getPageSize());
+        logger.debug("list方法，开始记录:{},pageSize:{}", start, getPageSize());
+        
         Page page = gridCatDao.query(model);
-        cats = page.getData();
-        getRequest().setAttribute("items", cats);
-        restorePageData(page.getRows(), page.getPageSize());
+        logger.debug("查询出的记录数：{}",page.getData().size());
+        getRequest().setAttribute("items", page.getData());
+        restorePageData(page.getRows(), getPageSize());
       } catch (Exception e) {
         logger.error("数据查询错误{}", e.getMessage());
         e.printStackTrace();
