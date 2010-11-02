@@ -21,25 +21,14 @@ import com.systop.core.dao.support.Page;
 @Repository
 public class GridCatDao extends AbstractCatDao<Page> {
   
+  /**
+   * 查询地震目录
+   */
   @SuppressWarnings("unchecked")
   @Override
-  public Page query(Criteria criteria) {
-    String sql = "";
-    String sqlCount = "";
-    //单表查询，还是级连震级表查询
-    /*if(StringUtils.isNotBlank(criteria.getMagTname())) {//关联震级表
-      sql = SQL_CAT_MAG_ID;
-      sqlCount = SQL_CAT_MAG_COUNT_ID;
-    } else { //不关联震级表
-      sql = SQL_ID;
-      sqlCount = SQL_COUNT_ID;
-    }*/
-    //当前查询方式_都不关联震级查询
-    sql = SQL_ID;
-    sqlCount = SQL_COUNT_ID;
-    
-    int count = (Integer) (getTemplate().queryForObject(sqlCount, criteria));
-    List<Map> rows = getTemplate().queryForList(sql, criteria);
+  public Page query(Criteria criteria) {    
+    int count = (Integer) (getTemplate().queryForObject(SQL_COUNT_ID, criteria));
+    List<Map> rows = getTemplate().queryForList(SQL_ID, criteria);
     
     if(StringUtils.isNotBlank(criteria.getMagTname())) {//关联震级表
       criteria.getPage().setData(EQTimeFormat.getEqTimeValue(setMagM(rows, criteria), "O_TIME", "O_TIME_FRAC"));
