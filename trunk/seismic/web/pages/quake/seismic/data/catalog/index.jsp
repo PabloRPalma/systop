@@ -106,15 +106,15 @@ $(function() {
 	resizeColWidth="true"	
 	classic="false"	
 	width="100%" 	
-	height="477px"	
-	minHeight="300"
+	height="280px"	
+	minHeight="280"
 	toolbarContent="navigation|pagejump|pagesize|extend|status"     
 	>
 	<ec:row>
 		<ec:column width="40" property="_0" title="序号" value="${GLOBALROWCOUNT}" style="text-align:center"/>
 		<ec:column width="160" property="O_TIME" title="发震时刻" sortable="true">${item.EQ_TIME}</ec:column>	
-		<ec:column width="80" property="EPI_LAT" title="震中纬度" cell="quake.base.webapp.DoubleCell"/>	
-		<ec:column width="80" property="EPI_LON" title="震中经度" cell="quake.base.webapp.DoubleCell"/>
+		<ec:column width="70" property="EPI_LAT" title="震中纬度" cell="quake.base.webapp.DoubleCell"/>	
+		<ec:column width="70" property="EPI_LON" title="震中经度" cell="quake.base.webapp.DoubleCell"/>
 		<c:if test="${model.magTname != ''}">
 			<ec:column width="40" property="ML" title="ML" cell="quake.seismic.data.catalog.webapp.cell.EMCell"/>		
 			<ec:column width="40" property="Ms" title="Ms" cell="quake.seismic.data.catalog.webapp.cell.EMCell"/>		
@@ -127,10 +127,10 @@ $(function() {
 		<c:if test="${model.magTname == ''}">
 			<ec:column width="40" property="M" title="${model.disType}" cell="quake.seismic.data.catalog.webapp.cell.EMCell"/>		
 		</c:if>
-		<ec:column width="80" property="EPI_DEPTH" title="深度(Km)" cell="quake.seismic.data.catalog.webapp.cell.DepthFomat"/>	
+		<ec:column width="70" property="EPI_DEPTH" title="深度(Km)" cell="quake.seismic.data.catalog.webapp.cell.DepthFomat"/>	
 		<ec:column width="60" property="QLOC" title="定位质量" />	
 		<ec:column width="60" property="QCOM" title="综合质量" />	
-		<ec:column width="120" property="LOCATION_CNAME" title="震中地名" />
+		<ec:column width="160" property="LOCATION_CNAME" title="震中地名" />
 	</ec:row>   
 </ec:table>
 </div>
