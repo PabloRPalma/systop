@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import quake.admin.catalog.model.QuakeCatalog;
+import quake.admin.catalog.service.QuakeCatalogManager;
 import quake.admin.ds.service.DataSourceManager;
 import quake.admin.sitecfg.model.SiteCfg;
 import quake.admin.sitecfg.service.SiteCfgManager;
@@ -19,7 +20,7 @@ import com.systop.core.dao.support.Page;
 
 /**
  * 首页地震目录显示
- * @author wbb
+ * @author DU
  *
  */
 @Service
@@ -35,6 +36,9 @@ public class CzCatFreeMarkerManager{
    */
   @Autowired(required = true)
   private DataSourceManager dataSourceManager;
+  
+  @Autowired
+  private QuakeCatalogManager catalogManager;
   
   /**
    * 查询首页前10条地震目录信息
@@ -59,6 +63,14 @@ public class CzCatFreeMarkerManager{
     //最小地震目录（SAM）
     model.setStartM(siteCfgManager.getCmsConfig().getMinM());
     return gridCatDao.query(model).getData();
+  }
+  
+  /**
+   * 取得首页下拉菜单显示的地址目录列表
+   * @return
+   */
+  public List<Map<String, String>> queryMenuCzCats() {
+    return catalogManager.getCat();
   }
   
   /**
