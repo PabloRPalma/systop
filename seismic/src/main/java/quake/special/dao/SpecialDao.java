@@ -3,22 +3,30 @@ package quake.special.dao;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.util.Assert;
+import org.springframework.stereotype.Repository;
 
-import quake.special.model.Criteria;
+import quake.seismic.data.EQTimeFormat;
+import quake.seismic.data.catalog.model.Criteria;
 
+import com.systop.core.dao.support.Page;
 
-public class SpecialDao extends AbstractSpecialDao {
+@SuppressWarnings("unchecked")
+@Repository
+public class SpecialDao extends AbstractSpecialDao<Page> {
   /**
    * 根据查询条件执行地震目录数据查询。
+   * 
    * @param criteria 封装查询条件的<code>Criteria</code>对象
-   * @see {@link Criteria}
+   * @see {@link QcCriteria}
    * @return 查询结果对象。
    */
-  @SuppressWarnings("unchecked")
-  public List<Map> queryQc(Criteria criteria) {
-    Assert.notNull(criteria, "Criteria is null.");
-    return getTemplate().queryForList(SQL_ID, criteria);
+  public Page queryQcForObeject(Criteria criteria) {
+    // TODO Auto-generated method stub
+
+    List<Map> list = getTemplate().queryForList(SQL_QUERY_QC_BY_ID, criteria);
+    criteria.getPage().setData(EQTimeFormat.getEqTimeValue(list, "O_TIME", "O_TIME_FRAC"));
+    return criteria.getPage();
+    
+
   }
-  
 }
