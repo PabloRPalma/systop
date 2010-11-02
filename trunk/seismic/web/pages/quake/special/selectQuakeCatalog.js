@@ -1,4 +1,6 @@
-var currentSpecialId; 
+var qcTableName; 
+var qcId;
+var specialId;
 var store = new Ext.data.Store({
 			proxy : new Ext.data.HttpProxy({
 						url : ''// URL will defined dynamicly.
@@ -8,19 +10,17 @@ var store = new Ext.data.Store({
 						totalProperty : 'totalProperty',
 						id : 'id',
 						fields : [{
-									name : 'id'
+									name : 'ID'
 								},{
-									name : 'Eq_name'
+									name : 'LOCATION_CNAME'
 								}, {
-									name : 'Location_cname'
+									name : 'M'
 								}, {
-									name : 'Mag_val'
+									name : 'EPI_LAT'
 								}, {
-									name : 'Epi_lat'
-								}, {
-									name : 'Epi_lon'
+									name : 'EPI_LON'
 								}, {									
-									name : 'O_time'
+									name : 'EQ_TIME'
 								}, {
 									name : 'changed'
 								}]
@@ -29,45 +29,41 @@ var store = new Ext.data.Store({
 			remoteSort : true
 		});
 var cm = new Ext.grid.ColumnModel([{
-			header : "名字",
-			dataIndex : 'Eq_name',
-			width : 200
-		}, {
 			header : "震中",
-			dataIndex : 'Location_cname',
-			width : 200,
-			align : 'left'
+			dataIndex : 'LOCATION_CNAME',
+			width : 120,
+			align : 'center'
 		}, {
 			header : "震级",
-			dataIndex : 'Mag_val',
-			width : 200,
-			align : 'left'
+			dataIndex : 'M',
+			width : 60,
+			align : 'center'
 		}, {
 			header : "经度",
-			dataIndex : 'Epi_lat',
-			width : 200,
-			align : 'left'
+			dataIndex : 'EPI_LAT',
+			width : 100,
+			align : 'center'
 		}, {			
 			header : "纬度",
-			dataIndex : 'Epi_lon',
-			width : 200,
-			align : 'left'
+			dataIndex : 'EPI_LON',
+			width : 100,
+			align : 'center'
 		}, {			
 			header : "发震时刻",
-			dataIndex : 'O_time',
+			dataIndex : 'EQ_TIME',
 			width : 200,
-			align : 'left'
+			align : 'center'
 		},{			
 			header : "选择",
 			dataIndex : 'changed',
-			width : 50,
+			width : 60,
 			sortable : false,
 			align : 'center',
 			renderer : function(value, cellmeta, record, rowIndex, columnIndex,
 					store) {
 			var checked = (value == true) ? 'checked' : '';
-			return "<input type='radio' value='" + record.data["id"] + "' "
-					+ checked + " id='cb' class='radio' "
+			return "<input type='radio' value='" + record.data["ID"] + "' "
+					+ checked + " id='cb' name='cb' "
 					+ "onclick='javascript:onSelectQc(this)'>"
 			}
 		}]);
@@ -90,14 +86,78 @@ var grid = new Ext.grid.GridPanel({
 
 function toolbarItmes() {
 	var div = document.createElement("div");
-	var txt = document.createElement("input");
 	div.style.margin = "2px;";
-	txt.type = "text";
-	txt.name = "criteria.location_cname";
-	txt.id = "location_cname";
-	var msg = document.createTextNode("震中:");
-	div.appendChild(msg);
-	div.appendChild(txt);
+	var to=document.createTextNode("至:")
+	/*
+	var qcDate=document.createTextNode("发震日期:")
+	var star = document.createElement("input");
+	star.type = "text";
+	star.name = "criteria.startDate";
+	star.id = "startDate";
+	star.onclick="WdatePicker({maxDate:'#F{$dp.$D(\'endDate\')||\'now\'}',skin:'whyGreen'})";
+	//star.style="width:80px;";
+	
+	var end = document.createElement("input");
+	end.type = "text";
+	end.name = "criteria.endDate";
+	end.id = "endDate";
+	end.onclick="WdatePicker({maxDate:'#F{$dp.$D(\'endDate\')||\'now\'}',skin:'whyGreen'})";
+	
+	*/
+	var m=document.createTextNode("震级:")
+	var mStar = document.createElement("input");
+	mStar.type = "text";
+	mStar.name = "criteria.startM";
+	mStar.id = "startM";
+
+	var mEnd = document.createElement("input");
+	mEnd.type = "text";
+	mEnd.name = "criteria.endM";
+	mEnd.id = "endM";
+	/*
+	var lon=document.createTextNode("经度:")
+	var lonStar = document.createElement("input");
+	lonStar.type = "text";
+	lonStar.name = "criteria.startLon";
+	lonStar.id = "startLon";
+	
+	var lonEnd = document.createElement("input");
+	lonEnd.type = "text";
+	lonEnd.name = "criteria.endLon";
+	lonEnd.id = "endLon";
+	
+	var lat=document.createTextNode("纬度:")
+	var latStar = document.createElement("input");
+	latStar.type = "text";
+	latStar.name = "criteria.startLat";
+	latStar.id = "startLat";
+	
+	var latEnd = document.createElement("input");
+	latEnd.type = "text";
+	latEnd.name = "criteria.endLat";
+	latEnd.id = "endLat";
+	
+	div.appendChild(qcDate);
+	div.appendChild(star);
+	div.appendChild(to);
+	div.appendChild(end);
+	*/
+	div.appendChild(m);
+	div.appendChild(mStar);
+	div.appendChild(to);
+	div.appendChild(mEnd);
+	/*
+	div.appendChild(lon);
+	div.appendChild(lonStar);
+	div.appendChild(to);
+	div.appendChild(lonEnd);
+	
+	
+	div.appendChild(lat);
+	div.appendChild(latStar);
+	div.appendChild(to);
+	div.appendChild(latEnd);
+	*/
 	return div;
 }
 
@@ -117,28 +177,26 @@ var win = new Ext.Window({
 							});
 				}
 			}, {
-				text : '保存',
+				text : '确定',
 				handler : function() {
 					Ext.Ajax.request({
-								url : '/special/saveQc.do',
+								url : '/admin/special/ensureQc.do',
 								params : {
-									'model.id' : currentSpecialId,		
+									'qcId' : qcId,
+									'tableName' : qcTableName
 								},
 								method : 'POST',
-								success : function(xhr, textStatus) {
-									win.hide(textStatus);
-									//Ext.my().msg('', '您已经成功的为评估对象设置了专家成员.');
-									if(xhr.responseText != null){
-									  if(currentExpertType == '1') {
-										 Ext.my().msg('', '您已经成功为评估信息设置了专家组长.');
-										 $("#leader")[0].value = xhr.responseText;
-									  }	
-									  if(currentExpertType == '2') {
-										 Ext.my().msg('', '您已经成功为评估信息设置了专家成员.');										  
-										 $("#member")[0].value = xhr.responseText;
-									  }											
-									}
-									//window.location.reload();
+								success : function(response) {
+							
+										 Ext.my().msg('', '您已经成功选择地震目录.');
+										 var jsonResult = Ext.util.JSON.decode(response.responseText);
+										 document.getElementById("location").value=jsonResult.LOCATION_CNAME;
+										 document.getElementById("longitude").value=jsonResult.EPI_LON;
+										 document.getElementById("latitude").value=jsonResult.EPI_LAT;
+										 document.getElementById("magnitude").value=jsonResult.M;
+										 document.getElementById("quakeTime").value=jsonResult.EQ_TIME;
+										 document.getElementById("model.qc_id").value=qcId;
+										 document.getElementById("model.tableName").value=qcTableName;
 								}
 							});
 				}
@@ -150,8 +208,8 @@ var win = new Ext.Window({
 				}
 			}],
 	layout : 'fit',
-	width : 580,
-	height : 420,
+	width : 680,
+	height : 500,
 	closeAction : 'hide',
 	plain : false,
 	modal : true,
@@ -165,31 +223,17 @@ win.addListener('hide', cancelAssign); // When dialog closed, a cancel command
 // will be sent to backend.
 
 function cancelAssign() {
-	Ext.Ajax.request({
-				url : '/special/cancelSaveSpecialQc.do',
-				params : {
-					'model.id' : currentSpecialId
-				},
-				method : 'POST'
-			});
 }
 
 function onSelectQc(cb) {
-	var url = (cb.checked)
-			? '/special/selectQc.do'
-			: '/special/deselectQc.do';
-	Ext.Ajax.request({
-				url : url,
-				params : {
-					'model.id' : currentSpecialId,
-					'criteria.id' : cb.value
-				},
-				method : 'POST'
-			});
+	if(cb.checked){
+		qcId=cb.value;
+	}
 }
 
-function selectQc(specialId) {
-	currentSpecialId = specialId;
+function selectQc(tableName,id) {
+	specialId=id;
+	qcTableName=tableName;
 	if (win) {
 		win.show();
 		store.proxy.conn.url = url();
@@ -203,11 +247,12 @@ function selectQc(specialId) {
 }
 
 function url() {
-	var urlStr = '/special/qcOfSpecial.do?model.id='
-			+ currentSpecialId;
-	if (Ext.get('location_cname')) {
-		urlStr = urlStr + '&criteria.name=' + Ext.get('location_cname').getValue();
+	var urlStr = '/admin/special/qcOfSpecial.do?tableName='+qcTableName+'&specialId='+specialId;
+	if (Ext.get('startM')) {
+		urlStr = urlStr + '&criteria.startM=' + Ext.get('startM').getValue();
 	}
-	
+	if (Ext.get('endM')) {
+		urlStr = urlStr + '&criteria.endM=' + Ext.get('endM').getValue();
+	}
 	return encodeURI(encodeURI(urlStr));
 }
