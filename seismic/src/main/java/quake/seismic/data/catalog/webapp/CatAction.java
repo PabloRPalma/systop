@@ -173,7 +173,7 @@ public class CatAction extends AbstractQueryAction<Criteria> {
         model.setStart(start);
         model.setSize(getPageSize());
         logger.debug("list方法，开始记录:{},pageSize:{}", start, getPageSize());
-        
+        //查询地震目录
         Page page = gridCatDao.query(model);
         logger.debug("查询出的记录数：{}",page.getData().size());
         getRequest().setAttribute("items", page.getData());
