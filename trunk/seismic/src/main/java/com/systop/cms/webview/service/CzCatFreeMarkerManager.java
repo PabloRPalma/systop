@@ -60,6 +60,10 @@ public class CzCatFreeMarkerManager{
     model.setSchema(dataSourceManager.getCzSchema());
     model.setTableName(czCat.getCltName());
     model.setMagTname(czCat.getMagTname());
+    //limit查询，设定start和size
+    model.setStart(pageNo);
+    model.setSize(pageSize);
+    
     //最小地震目录（SAM）
     model.setStartM(siteCfgManager.getCmsConfig().getMinM());
     return gridCatDao.query(model).getData();
