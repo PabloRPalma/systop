@@ -197,7 +197,9 @@ var win = new Ext.Window({
 										 document.getElementById("quakeTime").value=jsonResult.EQ_TIME;
 										 document.getElementById("model.qc_id").value=qcId;
 										 document.getElementById("model.tableName").value=qcTableName;
-								}
+								
+										 win.hide();
+										 }
 							});
 				}
 			}, {
