@@ -9,6 +9,10 @@ import java.util.Map;
 public class SeismicConstants {
 
   /**
+   * 地震目录查询时（不分页），限制最大查询条数
+   */
+  public static int MAX_SIZE = 1000;
+  /**
    * 测震台站信息查询访问地址
    */
   public static String STATION_INFO_URL = "/quake/seismic/station/stationSettings.do";
