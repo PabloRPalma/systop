@@ -138,9 +138,15 @@
 					<![CDATA[O_TIME desc]]>
 				</isEmpty>
 			</isEmpty>
+			<!-- 地震目录分页查询条件 -->
+			<isNotEmpty property="start">
+				<isGreaterThan property="size" compareValue="0">
+					LIMIT <![CDATA[$start$,$size$]]>
+				</isGreaterThan>
+			</isNotEmpty>
 		</dynamic>
-		LIMIT $start$, $size$
 	</select>
+	
 	<select id="queryCatDataCount" parameterClass="quake.seismic.data.catalog.model.Criteria"
 		resultClass="Integer">         
 		<![CDATA[

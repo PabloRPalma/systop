@@ -101,7 +101,10 @@ public class CatAction extends AbstractQueryAction<Criteria> {
         model.setSchema(dataSourceManager.getCzSchema());
         model.setSortProperty(getSortProperty());
         model.setSortDir(getSortDir());
+        
+        //地震目录查询_不分页
         List<Map> list = gridCatDao.queryForGis(model);
+        logger.debug("显示GIS信息时查询地震目录条数：{}",list.size());
         for(Map map : list) {
           map.put("EPI_LON", NumberFormatUtil.format(map.get("EPI_LON"), 2));
           map.put("EPI_LAT", NumberFormatUtil.format(map.get("EPI_LAT"), 2));

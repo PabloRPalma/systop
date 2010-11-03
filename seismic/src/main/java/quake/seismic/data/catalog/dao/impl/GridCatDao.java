@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Repository;
 
+import quake.seismic.SeismicConstants;
 import quake.seismic.data.EQTimeFormat;
 import quake.seismic.data.catalog.dao.AbstractCatDao;
 import quake.seismic.data.catalog.model.Criteria;
@@ -47,11 +48,8 @@ public class GridCatDao extends AbstractCatDao<Page> {
    */
   @SuppressWarnings("unchecked")
   public List<Map> queryForGis(Criteria criteria) {
-    String sql = SQL_CAT_MAG_ID;
-    if(StringUtils.isBlank(criteria.getMagTname())){
-      sql = SQL_ID;
-    }
-    List<Map> rows = getTemplate().queryForList(sql, criteria);
+    //GIS显示地震目录条数设定值为常量自定义的最大值
+    List<Map> rows = getTemplate().queryForList(SQL_ID, criteria, 0, SeismicConstants.MAX_SIZE);
     return rows;
   }
   
