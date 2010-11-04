@@ -207,12 +207,14 @@ function station_wave(){
 					
 		</s:iterator>
 		</td>
+		<td width="60px">&nbsp;</td>
 	</tr>
 	<tr><td width="10px">&nbsp;</td>
 		<td width="80px">地  点:</td>
 		<td>
 		<s:textfield id="location" name="location" disabled="true" cssStyle="width:155px"/>
 		</td>
+		<td width="60px">&nbsp;</td>
 	</tr>
 	<tr><td width="10px">&nbsp;</td>
 		<td>经  度:</td>
@@ -220,6 +222,7 @@ function station_wave(){
 		<s:textfield id="longitude" name="longitude" disabled="true" cssStyle="width:155px"/>
 			
 		</td>
+		<td width="60px">&nbsp;</td>
 	</tr>
 	<tr><td width="10px">&nbsp;</td>
 		<td>纬  度:</td>
@@ -227,6 +230,7 @@ function station_wave(){
 		<s:textfield id="latitude" name="latitude" disabled="true" cssStyle="width:155px"/>
 			
 		</td>
+		<td width="60px">&nbsp;</td>
 	</tr>
 	<tr><td width="10px">&nbsp;</td>
 		<td>震  级:</td>
@@ -234,25 +238,29 @@ function station_wave(){
 		<s:textfield id="magnitude" name="magnitude" disabled="true" cssStyle="width:155px"/>
 			
 		</td>
+		<td width="60px">&nbsp;</td>
 	</tr>
 	<tr><td width="10px">&nbsp;</td>
 		<td>发震时刻:</td>
 		<td>
 		<s:textfield id="quakeTime" name="quakeTime" disabled="true" cssStyle="width:155px"/>
 		</td>
+		<td width="60px">&nbsp;</td>
 	</tr>
 	
 	<tr><td width="10px">&nbsp;</td>
 		<td>专题标题:</td>
 		<td>
-		<s:textfield id="model.title" name="model.title" cssStyle="width:353px"/>
+		<s:textfield id="model.title" name="model.title" cssStyle="width:355px" cssClass="required" />
 		</td>
+		<td width="60px"><font color="red">&nbsp;*</font></td>
 	</tr>
 	<tr><td width="10px">&nbsp;</td>
 		<td>影响地区:</td>
 		<td>
-		<s:textfield id="model.area" name="model.area" cssStyle="width:353px"/>
+		<s:textfield id="model.area" name="model.area" cssStyle="width:355px"/>
 		</td>
+		<td width="60px">&nbsp;</td>
 	</tr>
 	<tr><td width="10px">&nbsp;</td>
 		<td>专题图片:</td>
@@ -265,12 +273,14 @@ function station_wave(){
 			              </a>
 			</c:if>
 		</td>
+		<td width="60px">&nbsp;</td>
 	</tr>
 	<tr><td width="10px">&nbsp;</td>
 		<td>地震描述:</td>
 		<td>
-		<s:textarea id="model.desn" name="model.desn" cssStyle="width:350px;height:100px"/>
+		<s:textarea id="model.desn" name="model.desn" cssStyle="width:355px;height:100px" cssClass="required" />
 		</td>
+		<td width="60px"><font color="red">&nbsp;*</font></td>
 	</tr>
 	</table>
 	
