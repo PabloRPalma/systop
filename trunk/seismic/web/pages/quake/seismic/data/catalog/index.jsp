@@ -11,16 +11,6 @@
 <script type="text/javascript">
 $(function() {
 	$("#queryFrm").validate();
-	$("#dialog").dialog({
-		bgiframe: true,
-		autoOpen: false,
-		height: 300,
-		width: 500,
-		modal: false
-		});
-	$('#look').click(function() {
-			$('#dialog').dialog('open');
-		});
 });
 
 </script>
@@ -59,12 +49,10 @@ $(function() {
 		  	    </td>
 		  	    <td>
 		  	      <input type="button" value="查询" onclick="exportData('${ctx}/quake/seismic/data/catalog/list.do', '')"  class="button"/>
-		  	      <input type="button" value="WKF" onclick="exportData('${ctx}/quake/seismic/data/catalog/exportWkf.do', '_blank')" class="button"/>
-	  	      	  <input type="button" value="EQT" onclick="exportData('${ctx}/quake/seismic/data/catalog/exportEqt.do', '_blank')" class="button"/>
+		  	      <input type="button" value="震中分布图" onclick="exportData('${ctx}/quake/seismic/data/catalog/showGis.do', '_blank')" class="button"/>
 	  	      	  <%-->
 	  	      	  <input type="button" value="震中分布图" onclick="exportData('${ctx}/pages/quake/seismic/data/catalog/demoGis.jsp', '_blank')" class="button"/>
 	  	      	  --%>
-	  	      	  <input type="button" value="震中分布图" onclick="exportData('${ctx}/quake/seismic/data/catalog/showGis.do', '_blank')" class="button"/>
 		  	    </td>
 			</tr>
 			<tr>
@@ -85,8 +73,9 @@ $(function() {
 		  	      <s:textfield name="model.endLon" cssStyle="width:80px;" cssClass="number" title="度.度，-180至180"/>
 		  	    </td>
 		  	    <td>
-		  	      <input value="数据下载" onclick="downloadInXls()" size="9" style="text-align: center;cursor: auto;" type="button" class="button"/>
-		  	      <input type="button" id="look" value="简介" class="button"/>
+		  	      <input type="button" value="WKF" onclick="exportData('${ctx}/quake/seismic/data/catalog/exportWkf.do', '_blank')" class="button"/>
+	  	      	  <input type="button" value="EQT" onclick="exportData('${ctx}/quake/seismic/data/catalog/exportEqt.do', '_blank')" class="button"/>
+		  	      <input value="XLS" onclick="downloadInXls()" size="9" style="text-align: center;cursor: auto;" type="button" class="button"/>
 		  	    </td>
 	  	  </tr>
 		</table>
@@ -145,15 +134,5 @@ function downloadInXls() {
 	ECSideUtil.doExport('xls','地震目录列表.xls','','ec');
 }
 </script>
-<div id="dialog" title="查看目录简介">
-   <table>
-       <tr>
-          <td align="center">${model.clcName}</td>
-       </tr>
-       <tr>
-          <td>&nbsp;&nbsp;&nbsp;&nbsp;${model.clDescn}</td>
-       </tr>
-   </table>
-</div>
 </body>
 </html>
