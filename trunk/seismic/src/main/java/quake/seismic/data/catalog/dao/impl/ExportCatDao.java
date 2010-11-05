@@ -11,31 +11,28 @@ import org.ecside.util.ExtremeUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
+import quake.seismic.SeismicConstants;
 import quake.seismic.data.catalog.dao.AbstractCatDao;
 import quake.seismic.data.catalog.model.Criteria;
 
 import com.systop.core.util.DateUtil;
 
-
 /**
  * 导出地震目录数据DAO
- * @author DAO
+ * @author DU
  */
 @SuppressWarnings("unchecked")
 @Repository
 public class ExportCatDao extends AbstractCatDao<StringBuffer> {
+  
+  /**
+   * 查询需要导出的数据
+   */
   @Override
   public StringBuffer query(Criteria criteria) {
     Assert.notNull(criteria, "Criteria is null.");
-    String sql = "";
-    //单表查询，还是级连震级表查询
-    if (StringUtils.isNotBlank(criteria.getMagTname())) {
-      sql = SQL_CAT_MAG_ID;
-    } else {
-      sql = SQL_ID;
-    }
-    
-    List<Map> rows = getTemplate().queryForList(sql, criteria);
+    //查询地震目录    
+    List<Map> rows = getTemplate().queryForList(SQL_ID, criteria);
     StringBuffer buf = new StringBuffer(100000);
     for (Iterator<Map> itr = rows.iterator(); itr.hasNext();) {
       Map row = itr.next();
@@ -48,6 +45,40 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
     return buf;
   }
 
+  /**
+   * 查询需要导出的数据(VLM)
+   */
+  public StringBuffer queryForVlm(Criteria criteria) {
+    Assert.notNull(criteria, "Criteria is null.");
+    //查询地震目录    
+    List<Map> rows = getTemplate().queryForList(SQL_ID, criteria);
+    StringBuffer buf = new StringBuffer(100000);
+    if ("BASIC_VLM".equals(criteria.getExpType())) {
+      buf.append(extractBasicVlm(rows));
+    }
+    
+    return buf;
+  }
+  
+  /**
+   * 导出基本目录格式数据(BASIC_VLM)
+   * @param rows 地震目录
+   * @return
+   */
+  public String extractBasicVlm(List<Map> rows) {
+    StringBuffer buf = new StringBuffer();
+    logger.debug("导出基本目录格式数据时，地震目录条数：{}", rows.size());
+    //Write Volume_index_block0; 
+    buf.append("VI0").append(" ").append("Volume_type").append(" ").append(
+        SeismicConstants.Catalog_basic).append(" ").append("CSF_Ver").append(" ").append("1.0");
+    //Write Volume_index_block1; 
+    
+    //Write Basic origin head block 
+    
+    
+    return buf.toString();
+  }
+  
   /**
    * 导出WKF格式
    * @param row 一行数据

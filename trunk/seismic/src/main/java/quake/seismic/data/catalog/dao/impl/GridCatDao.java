@@ -94,4 +94,14 @@ public class GridCatDao extends AbstractCatDao<Page> {
     }
     return rows;
   }
+  
+  /**
+   * 查询台网信息
+   * @param criteria
+   */
+  @SuppressWarnings("unchecked")
+  public List<Map> queryNetwordInfo(Criteria criteria) {
+    logger.debug("查询台网信息....");
+    return getTemplate().queryForList("cz.queryNetworkInfo", criteria);
+  }
 }

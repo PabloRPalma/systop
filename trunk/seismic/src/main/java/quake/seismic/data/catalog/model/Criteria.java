@@ -11,6 +11,10 @@ import quake.base.model.PageSchemaAware;
  */
 public class Criteria extends PageSchemaAware {
   /**
+   * 台网代码
+   */
+  private String netCode;
+  /**
    * 目录表名
    */
   private String tableName;
@@ -31,6 +35,10 @@ public class Criteria extends PageSchemaAware {
    * 发震结束时间
    */
   private Date endDate;
+  /**
+   * 震中地名
+   */
+  private String location;
   /**
    * 开始伟度
    */
@@ -236,5 +244,19 @@ public class Criteria extends PageSchemaAware {
 
   public void setQcId(String qcId) {
     this.qcId = qcId;
+  }
+  public String getNetCode() {
+    return netCode;
+  }
+
+  public void setNetCode(String netCode) {
+    this.netCode = netCode;
+  }
+  public String getLocation() {
+    return location;
+  }
+
+  public void setLocation(String location) {
+    this.location = location;
   }
 }
