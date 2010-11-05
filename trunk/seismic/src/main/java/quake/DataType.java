@@ -11,7 +11,7 @@ public enum DataType {
    */
   SEISMIC, 
   /**
-   * 前兆数据
+   * 基本信息数据(台网,台站等数据字典)
    */
   SIGN; 
 }
