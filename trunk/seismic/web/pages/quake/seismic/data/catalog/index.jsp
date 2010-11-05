@@ -27,6 +27,10 @@ $(function() {
   			<s:hidden name="model.disType"/>
 		<table width="99%" style="margin:0px;">
 			<tr>
+				<td align="right">台网：</td>
+				<td><s:select list="netCodes" name="model.netCode" headerKey="" headerValue="--请选择台网--" cssStyle="width:100px;">
+        			</s:select>
+        		</td>
 				<td align="right" title="(YYYY-MM-DD)">发震日期：</td>
 		  	    <td>
 		  	      <input type="text" id="startDate" name="model.startDate" 
@@ -50,12 +54,17 @@ $(function() {
 		  	    <td>
 		  	      <input type="button" value="查询" onclick="exportData('${ctx}/quake/seismic/data/catalog/list.do', '')"  class="button"/>
 		  	      <input type="button" value="震中分布图" onclick="exportData('${ctx}/quake/seismic/data/catalog/showGis.do', '_blank')" class="button"/>
+	  	      	  <input type="button" value="WKF" onclick="exportData('${ctx}/quake/seismic/data/catalog/exportWkf.do', '_blank')" class="button"/>
+	  	      	  <input type="button" value="EQT" onclick="exportData('${ctx}/quake/seismic/data/catalog/exportEqt.do', '_blank')" class="button"/>
+		  	      <input value="XLS" onclick="downloadInXls()" size="9" style="text-align: center;cursor: auto;" type="button" class="button"/>
 	  	      	  <%-->
 	  	      	  <input type="button" value="震中分布图" onclick="exportData('${ctx}/pages/quake/seismic/data/catalog/demoGis.jsp', '_blank')" class="button"/>
 	  	      	  --%>
 		  	    </td>
 			</tr>
 			<tr>
+				<td align="right">地名：</td>
+				<td><s:textfield name="model.location" cssStyle="width:100px;"/></td>
 				<td align="right">纬度(°)：</td> 
 		  	    <td>
 		  	      <s:textfield name="model.startLat" cssStyle="width:80px;" cssClass="number" title="度.度，-90至90"/>
@@ -73,9 +82,7 @@ $(function() {
 		  	      <s:textfield name="model.endLon" cssStyle="width:80px;" cssClass="number" title="度.度，-180至180"/>
 		  	    </td>
 		  	    <td>
-		  	      <input type="button" value="WKF" onclick="exportData('${ctx}/quake/seismic/data/catalog/exportWkf.do', '_blank')" class="button"/>
-	  	      	  <input type="button" value="EQT" onclick="exportData('${ctx}/quake/seismic/data/catalog/exportEqt.do', '_blank')" class="button"/>
-		  	      <input value="XLS" onclick="downloadInXls()" size="9" style="text-align: center;cursor: auto;" type="button" class="button"/>
+		  	      <input type="button" value="基本目录格式" onclick="exportData('${ctx}/quake/seismic/data/catalog/exportBasicVlm.do', '_blank')" class="button"/>
 		  	    </td>
 	  	  </tr>
 		</table>
