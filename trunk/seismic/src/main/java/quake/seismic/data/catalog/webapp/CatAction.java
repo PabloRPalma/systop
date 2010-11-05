@@ -220,7 +220,8 @@ public class CatAction extends AbstractQueryAction<Criteria> {
    * @return
    */
   public String exportBasicVlm() {
-    model.setExpType("BASIC_VLM");
+    //导出数据格式
+    model.setExpType(SeismicConstants.Catalog_basic);
     String data = exportVlmData();
     logger.debug("导出的数据：{}", data);
     getResponse().addHeader("Content-Disposition", "attachment;filename=\"BASIC_VLM.txt\"");
