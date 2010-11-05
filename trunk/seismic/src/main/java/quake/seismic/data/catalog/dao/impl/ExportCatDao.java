@@ -53,7 +53,8 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
     //查询地震目录    
     List<Map> rows = getTemplate().queryForList(SQL_ID, criteria);
     StringBuffer buf = new StringBuffer(100000);
-    if ("BASIC_VLM".equals(criteria.getExpType())) {
+    //基本目录数据格式
+    if (SeismicConstants.Catalog_basic.equals(criteria.getExpType())) {
       buf.append(extractBasicVlm(rows));
     }
     
@@ -74,8 +75,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
     //Write Volume_index_block1; 
     
     //Write Basic origin head block 
-    
-    
+        
     return buf.toString();
   }
   
