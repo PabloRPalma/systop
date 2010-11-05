@@ -1,6 +1,7 @@
 package quake.seismic.data.catalog.webapp;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import quake.admin.catalog.service.QuakeCatalogManager;
 import quake.admin.ds.service.DataSourceManager;
 import quake.base.webapp.AbstractQueryAction;
 import quake.base.webapp.NumberFormatUtil;
+import quake.seismic.SeismicConstants;
 import quake.seismic.data.catalog.dao.impl.ExportCatDao;
 import quake.seismic.data.catalog.dao.impl.GridCatDao;
 import quake.seismic.data.catalog.model.Criteria;
@@ -49,7 +51,7 @@ public class CatAction extends AbstractQueryAction<Criteria> {
   @Autowired(required = true)
   @Qualifier("exportCatDao")
   private ExportCatDao exportCatDao;
-
+  
   /**
    * 用于获取Schema
    */
@@ -82,7 +84,6 @@ public class CatAction extends AbstractQueryAction<Criteria> {
         model.setClcName(czCat.getClcName());
         model.setClDescn(czCat.getClDescn());
         model.setDisType(czCat.getDisType());
-        
       }
     } else {
       addActionError("请选择要查询的地震目录，进行数据查询.");
@@ -214,7 +215,23 @@ public class CatAction extends AbstractQueryAction<Criteria> {
     return null;
   }
 
+  /**
+   * 导出BASIC_VLM(基本目录格式)数据
+   * @return
+   */
+  public String exportBasicVlm() {
+    model.setExpType("BASIC_VLM");
+    String data = exportVlmData();
+    logger.debug("导出的数据：{}", data);
+    getResponse().addHeader("Content-Disposition", "attachment;filename=\"BASIC_VLM.txt\"");
+    render(getResponse(), data, "text/html");
+    return null;
+  }
   
+  /**
+   * 根据数据格式(WKF和EQT)，导出相应数据
+   * @return
+   */
   private String exportData() {
     if (StringUtils.isNotBlank(model.getTableName())) {
       //测震SCHEMA
@@ -225,7 +242,49 @@ public class CatAction extends AbstractQueryAction<Criteria> {
       return null;
     }
   }
+  
+  /**
+   * 根据数据格式(BASIC_VLM,FULL_VLM)，导出相应数据
+   * @return
+   */
+  private String exportVlmData() {
+    if (StringUtils.isNotBlank(model.getTableName())) {
+      //测震SCHEMA
+      model.setSchema(dataSourceManager.getCzSchema());
+      StringBuffer buf = exportCatDao.queryForVlm(model);
+      return buf.toString();
+    } else {
+      return null;
+    }
+  }
 
+  /**
+   * 台网代码名称Map
+   */
+  public Map<String, String> getNetworkInfoMap() {
+    return SeismicConstants.NETWORK_INFO;
+  }
+
+  /**
+   * 返回Network_info表中台网代码名称对应Map，用于页面查询条件的显示。
+   */
+  public Map<String, String> getNetCodes() {
+    Criteria criteria = new Criteria();
+    criteria.setSchema(dataSourceManager.getQzSchema());
+    
+    List<Map> list = gridCatDao.queryNetwordInfo(criteria);
+    Map map = new LinkedHashMap();
+    for (Map network : list) {
+      String netCode = (String) network.get("Net_code");
+      logger.debug("取得Network_info表中的台网代码：{}", netCode);
+      if (StringUtils.isNotBlank(netCode) 
+          && SeismicConstants.NETWORK_INFO.containsKey(netCode)) {
+        map.put(netCode, SeismicConstants.NETWORK_INFO.get(netCode));
+      }
+    }
+    return map;
+  }
+  
   @Override
   public Criteria getModel() {
     return model;

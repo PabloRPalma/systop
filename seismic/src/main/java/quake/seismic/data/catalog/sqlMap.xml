@@ -18,7 +18,36 @@
         <result property="QLOC" column="QLOC" javaType="String"/>
         <result property="QCOM" column="QCOM" javaType="String"/>
         <result property="LOCATION_CNAME" column="LOCATION_CNAME" javaType="String"/>
+        <result property="Location_sname" column="Location_sname" javaType="String"/>
         <result property="EVENT_ID" column="EVENT_ID" javaType="String"/>
+        <result property="NET_CODE" column="NET_CODE" javaType="String"/>
+        <result property="Save_time" column="Save_time" javaType="java.util.Date"/>
+        <result property="Auto_flag" column="Auto_flag" javaType="String"/>
+        <result property="Operator" column="Operator" javaType="String"/>
+        <result property="Loc_program" column="Loc_program" javaType="String"/>
+        <result property="Eq_type" column="Eq_type" javaType="String"/>
+        <result property="Depfix_flag" column="Depfix_flag" javaType="Integer"/>
+        <result property="SPmin" column="SPmin" javaType="Double"/>
+        <result property="Dmin" column="Dmin" javaType="Double"/>
+        <result property="Gap_azi" column="Gap_azi" javaType="Double"/>
+        <result property="Rms" column="Rms" javaType="Double"/>
+        <result property="Erh" column="Erh" javaType="Double"/>
+        <result property="Erz" column="Erz" javaType="Double"/>
+        <result property="Qnet" column="Qnet" javaType="String"/>
+        <result property="Sum_stn" column="Sum_stn" javaType="Integer"/>
+        <result property="Loc_stn" column="Loc_stn" javaType="Integer"/>
+        <result property="Sum_pha" column="Sum_pha" javaType="Integer"/>
+        <result property="Loc_pha" column="Loc_pha" javaType="Integer"/>
+        <result property="Epic_id" column="Epic_id" javaType="String"/>
+        <result property="Source_id" column="Source_id" javaType="String"/>
+        <result property="FE_num" column="FE_num" javaType="Integer"/>
+        <result property="FE_sname" column="FE_sname" javaType="String"/>
+        <result property="FE_cname" column="FE_cname" javaType="String"/>
+        <result property="Eq_name" column="Eq_name" javaType="String"/>
+        <result property="Model_name" column="Model_name" javaType="String"/>
+        <result property="Remark" column="Remark" javaType="String"/>
+        <result property="Lock_flag" column="Lock_flag" javaType="String"/>
+        <result property="Group_id" column="Group_id" javaType="String"/>
     </resultMap>
     
     <!-- 关联震级震相查询结果，多字段MAG_VAL -->
@@ -43,10 +72,21 @@
 	<select id="queryCatData" parameterClass="quake.seismic.data.catalog.model.Criteria"
 		resultMap="queryCatDataResult">    
 		<![CDATA[
-		SELECT ID,SEQUEN_NAME,O_TIME,O_TIME_FRAC,EPI_LAT,EPI_LON,EPI_DEPTH,M,M_SOURCE,QLOC,QCOM,LOCATION_CNAME,EVENT_ID 
+		SELECT ID,SEQUEN_NAME,O_TIME,O_TIME_FRAC,EPI_LAT,EPI_LON,EPI_DEPTH,M,M_SOURCE,QLOC,QCOM,LOCATION_CNAME,EVENT_ID,
+		       NET_CODE,Location_sname,Save_time,Auto_flag,Operator,Loc_program,Eq_type,Depfix_flag,SPmin,Dmin,Gap_azi,
+		       Rms,Erh,Erz,Qnet,Sum_stn,Loc_stn,Sum_pha,Loc_pha,Epic_id,Source_id,FE_num,FE_sname,FE_cname,
+		       Eq_name,Model_name,Remark,Lock_flag,Group_id
 		FROM $schema$.$tableName$
 		]]>
 		<dynamic prepend="WHERE">
+			<!-- 台网查询条件 -->
+		    <isNotEmpty prepend="AND" property="netCode">
+		       <![CDATA[(NET_CODE=#netCode#)]]>
+		    </isNotEmpty>
+		    <!-- 震中地名查询条件 -->
+		    <isNotEmpty prepend="AND" property="location">
+		       <![CDATA[(LOCATION_CNAME LIKE '%$location$%')]]>
+		    </isNotEmpty>
 			<isNotEmpty property="startDate">
 				<isNotEmpty prepend="AND" property="endDate">
 				<![CDATA[
@@ -154,6 +194,14 @@
 		FROM $schema$.$tableName$
 		]]>
 		<dynamic prepend="WHERE">
+			<!-- 台网查询条件 -->
+		    <isNotEmpty prepend="AND" property="netCode">
+		       <![CDATA[(NET_CODE=#netCode#)]]>
+		    </isNotEmpty>
+		    <!-- 震中地名查询条件 -->
+		    <isNotEmpty prepend="AND" property="location">
+		       <![CDATA[(LOCATION_CNAME LIKE '%$location$%')]]>
+		    </isNotEmpty>
 			<isNotEmpty property="startDate">
 				<isNotEmpty prepend="AND" property="endDate">
 				<![CDATA[
@@ -466,5 +514,43 @@
 		<![CDATA[
 			select MAG_NAME,MAG_VAL from $schema$.$tableName$ WHERE CATALOG_ID = #catId#
 		]]>
+	</select>
+	
+	<!-- 台网信息查询结果 -->
+    <resultMap class="java.util.HashMap" id="queryNetworkInfoResult">
+    	<result property="Net_code" column="Net_code" javaType="String"/>
+        <result property="Net_cname" column="Net_cname" javaType="String"/>
+        <result property="Net_sname" column="Net_sname" javaType="String"/>
+        <result property="Net_Lat" column="Net_Lat" javaType="Double"/>
+        <result property="Net_lon" column="Net_lon" javaType="Double"/>
+        <result property="Net_elev" column="Net_elev" javaType="Double"/>
+        <result property="Net_type" column="Net_type" javaType="String"/>
+        <result property="Net_startdate" column="Net_startdate" javaType="java.util.Date"/>
+        <result property="Net_enddate" column="Net_enddate" javaType="java.util.Date"/>
+        <result property="Sta_num" column="Sta_num" javaType="Integer"/>
+        <result property="Director" column="Director" javaType="String"/>
+        <result property="Mail_address" column="Mail_address" javaType="String"/>
+        <result property="Telphone" column="Telphone" javaType="String"/>   
+        <result property="Postalcode" column="Postalcode" javaType="String"/>
+        <result property="Address" column="Address" javaType="String"/>
+        <result property="Ondate" column="Ondate" javaType="java.util.Date"/>  
+        <result property="Offdate" column="Offdate" javaType="java.util.Date"/>  
+        <result property="Remark" column="Remark" javaType="String"/>    	
+    </resultMap>
+    <!-- 台网信息查询 -->
+	<select id="queryNetworkInfo" parameterClass="quake.seismic.data.catalog.model.Criteria"
+		resultMap="queryNetworkInfoResult">    
+		<![CDATA[
+		SELECT Net_code,Net_cname,Net_sname,Net_Lat,Net_lon,Net_elev,Net_type,Net_startdate,Net_enddate,
+				Sta_num,Director,Mail_address,Telphone,Postalcode,Address,Ondate,Offdate,Remark
+		FROM $schema$.Network_info
+		WHERE 1=1
+		]]>
+		<dynamic>
+		    <!-- 台网代码查询条件 -->
+		    <isNotEmpty prepend="AND" property="netCode">
+		       <![CDATA[(Net_code=#netCode#)]]>
+		    </isNotEmpty>
+		</dynamic>
 	</select>
 </sqlMap>
