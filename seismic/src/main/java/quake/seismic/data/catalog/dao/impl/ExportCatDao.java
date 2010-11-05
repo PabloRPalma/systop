@@ -8,9 +8,11 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.ecside.util.ExtremeUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
+import quake.admin.ds.service.DataSourceManager;
 import quake.seismic.SeismicConstants;
 import quake.seismic.data.catalog.dao.AbstractCatDao;
 import quake.seismic.data.catalog.model.Criteria;
@@ -24,6 +26,12 @@ import com.systop.core.util.DateUtil;
 @SuppressWarnings("unchecked")
 @Repository
 public class ExportCatDao extends AbstractCatDao<StringBuffer> {
+  
+  /**
+   * 用于获取Schema
+   */
+  @Autowired(required = true)
+  private DataSourceManager dataSourceManager;
   
   /**
    * 查询需要导出的数据
@@ -55,7 +63,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
     StringBuffer buf = new StringBuffer(100000);
     //基本目录数据格式
     if (SeismicConstants.Catalog_basic.equals(criteria.getExpType())) {
-      buf.append(extractBasicVlm(rows));
+      buf.append(extractBasicVlm(rows, criteria));
     }
     
     return buf;
@@ -64,19 +72,66 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
   /**
    * 导出基本目录格式数据(BASIC_VLM)
    * @param rows 地震目录
+   * @param criteria 目录查询参数
    * @return
    */
-  public String extractBasicVlm(List<Map> rows) {
+  public String extractBasicVlm(List<Map> rows, Criteria criteria) {
     StringBuffer buf = new StringBuffer();
     logger.debug("导出基本目录格式数据时，地震目录条数：{}", rows.size());
     //Write Volume_index_block0; 
     buf.append("VI0").append(" ").append("Volume_type").append(" ").append(
-        SeismicConstants.Catalog_basic).append(" ").append("CSF_Ver").append(" ").append("1.0");
+        SeismicConstants.Catalog_basic).append(" ").append("CSF_Ver").append(" ").append("1.0").append("\n\r");
     //Write Volume_index_block1; 
+    Map networkInfo = (Map) queryNetwordInfo(criteria);
+    logger.debug("台网信息：{}",networkInfo);
+    if (networkInfo != null) {
+      String netCode = (String)networkInfo.get("Net_code");
+      String netName = (String)networkInfo.get("Net_cname");
+      logger.debug("台网代码：{}，台网名称：{}", netCode, netName);
+      String startDate = null;
+      String endDate = null;
+      if (networkInfo.get("Net_startdate") != null) {
+        startDate = DateUtil.getDateTime("yyyy/MM/dd HH:ss:ss.ss", (Date)networkInfo.get("Net_startdate"));
+      }
+      if (networkInfo.get("Net_enddate") != null) {
+        endDate = DateUtil.getDateTime("yyyy/MM/dd HH:ss:ss.ss", (Date)networkInfo.get("Net_enddate"));
+      }
+      logger.debug("台网起始时间：{} ----- 结束时间：{}", startDate, endDate);
+      
+      buf.append("VI1").append(" ").append("Net_code").append(" ").append(
+          netCode).append(" ").append("Net_cname").append(" ").append(
+              netName).append(" ").append(startDate).append(" ").append(endDate).append("\n\r");
+    }
+    //Write Basic origin head block (HBO)
+    buf.append("HBO").append(" ").append(getHBO());
+    //Write Basic origin data block (DBO)
     
-    //Write Basic origin head block 
-        
+    
     return buf.toString();
+  }
+  
+  /**
+   * HBO数据格式内容
+   * @return
+   */
+  private String getHBO() {
+    String hboFormat = MessageFormat.format("{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15}\n\r",new Object[] {
+        "Net", "date", "O_time", "Epi_lat", "Epi_lon", "Epi_depth", 
+        "Mag_name", "Mag_value",  "Rms", "Qloc",  "Sum_stn", "Loc_stn", 
+        "Eq_type", "Epic_id", "Source_id", "Location_cname"
+    });
+    logger.debug("HBO数据格式内容：{}", hboFormat);
+    return hboFormat;
+  }
+  
+  /**
+   * 查询台网信息
+   * @param criteria
+   */
+  public Object queryNetwordInfo(Criteria criteria) {
+    //查询基本信息数据库中的台网表
+    criteria.setSchema(dataSourceManager.getQzSchema());
+    return getTemplate().queryForObject("cz.queryNetworkInfo", criteria);
   }
   
   /**
