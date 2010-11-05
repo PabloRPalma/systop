@@ -16,7 +16,13 @@ public class SeismicConstants {
    * 测震台站信息查询访问地址
    */
   public static String STATION_INFO_URL = "/quake/seismic/station/stationSettings.do";
-  
+  /**
+   * 地震目录导出的数据格式卷类型
+   */
+  public static String Catalog_basic = "Catalog_basic";
+  public static String Catalog_full = "Catalog_full";
+  public static String Bulletin_basic = "Bulletin_basic";
+  public static String Bulletin_full = "Bulletin_full";
   /**
    * 测震台网代码
    */
