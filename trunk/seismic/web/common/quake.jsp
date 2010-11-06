@@ -14,6 +14,7 @@
 <script type="text/javascript" src="${ctx}/scripts/jquery/validate/jquery.validate.js"></script>
 <script type="text/javascript" src="${ctx}/scripts/jquery/validate/messages_cn.js"></script>
 <script type="text/javascript" src="${ctx}/scripts/calendar/WdatePicker.js"></script>
+<!--
 <div id="loading-mask" style=""></div>
 <div id="loading">
     <div class="loading-indicator">Loading...</div>
@@ -26,3 +27,4 @@ $(function(){
 	    }, 250);
 });
 </script>
+-->
