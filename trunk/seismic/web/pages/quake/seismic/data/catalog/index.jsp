@@ -16,7 +16,7 @@ $(function() {
 </script>
 </head>
 <body>
-<table width="1003" style="margin-top: -10px;" align="center"><tr><td>
+<table style="margin-top: -5px;" align="center"><tr><td width="1003">
 <fieldset>
 		<legend>地震目录查询</legend>
 		<s:form id="queryFrm" action="list" namespace="/quake/seismic/data/catalog" theme="simple">			
@@ -89,7 +89,7 @@ $(function() {
 		</table>
 		</s:form>		
 </fieldset>
-<div class="x-panel-body" style="width: 1003px;">
+<div class="x-panel-body">
 <ec:table items="items" var="item" retrieveRowsCallback="limit" sortRowsCallback="limit" 
 	action="list.do"
 	useAjax="true" doPreload="false"
@@ -127,7 +127,7 @@ $(function() {
 		<ec:column width="70" property="EPI_DEPTH" title="深度(Km)" cell="quake.seismic.data.catalog.webapp.cell.DepthFomat"/>	
 		<ec:column width="60" property="QLOC" title="定位质量" />	
 		<ec:column width="60" property="QCOM" title="综合质量" />	
-		<ec:column width="160" property="LOCATION_CNAME" title="震中地名" />
+		<ec:column width="155" property="LOCATION_CNAME" title="震中地名" />
 	</ec:row>   
 </ec:table>
 </div>
