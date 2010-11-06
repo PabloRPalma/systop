@@ -16,7 +16,6 @@ $(function() {
 </script>
 </head>
 <body>
-<table style="margin-top: -5px;" align="center"><tr><td width="1003">
 <fieldset>
 		<legend>地震目录查询</legend>
 		<s:form id="queryFrm" action="list" namespace="/quake/seismic/data/catalog" theme="simple">			
@@ -131,7 +130,6 @@ $(function() {
 	</ec:row>   
 </ec:table>
 </div>
-</td></tr></table>
 <script type="text/javascript">
 function exportData(url, target) {
 	$("#queryFrm").attr("action", url);
