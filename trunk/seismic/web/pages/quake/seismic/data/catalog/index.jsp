@@ -109,8 +109,8 @@ $(function() {
 	<ec:row>
 		<ec:column width="40" property="_0" title="序号" value="${GLOBALROWCOUNT}" style="text-align:center"/>
 		<ec:column width="160" property="O_TIME" title="发震时刻" sortable="true">${item.EQ_TIME}</ec:column>	
-		<ec:column width="70" property="EPI_LAT" title="震中纬度" cell="quake.base.webapp.DoubleCell"/>	
-		<ec:column width="70" property="EPI_LON" title="震中经度" cell="quake.base.webapp.DoubleCell"/>
+		<ec:column width="60" property="EPI_LAT" title="震中纬度" cell="quake.base.webapp.DoubleCell"/>	
+		<ec:column width="60" property="EPI_LON" title="震中经度" cell="quake.base.webapp.DoubleCell"/>
 		<c:if test="${model.magTname != ''}">
 			<ec:column width="40" property="ML" title="ML" cell="quake.seismic.data.catalog.webapp.cell.EMCell"/>		
 			<ec:column width="40" property="Ms" title="Ms" cell="quake.seismic.data.catalog.webapp.cell.EMCell"/>		
