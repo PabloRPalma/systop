@@ -16,6 +16,7 @@ $(function() {
 </script>
 </head>
 <body>
+<table width="1003" style="margin-top: -10px;" align="center"><tr><td>
 <fieldset>
 		<legend>地震目录查询</legend>
 		<s:form id="queryFrm" action="list" namespace="/quake/seismic/data/catalog" theme="simple">			
@@ -88,7 +89,7 @@ $(function() {
 		</table>
 		</s:form>		
 </fieldset>
-<div class="x-panel-body">
+<div class="x-panel-body" style="width: 1003px;">
 <ec:table items="items" var="item" retrieveRowsCallback="limit" sortRowsCallback="limit" 
 	action="list.do"
 	useAjax="true" doPreload="false"
@@ -130,6 +131,7 @@ $(function() {
 	</ec:row>   
 </ec:table>
 </div>
+</td></tr></table>
 <script type="text/javascript">
 function exportData(url, target) {
 	$("#queryFrm").attr("action", url);
