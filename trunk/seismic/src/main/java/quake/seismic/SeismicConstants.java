@@ -24,6 +24,38 @@ public class SeismicConstants {
   public static String Bulletin_basic = "Bulletin_basic";
   public static String Bulletin_full = "Bulletin_full";
   /**
+   * 地震类型代码
+   */
+  public static String eq = "天然地震";
+  public static String ep = "爆破";
+  public static String sp = "疑爆";
+  public static String ss = "塌陷";
+  public static String se = "可疑事件";
+  public static String ve = "火山构造地震";
+  public static String le = "长周期事件";
+  public static String vh = "火山混合事件";
+  public static String vp = "火山爆炸";
+  public static String vt = "火山颤动";
+  public static String ot = "其它";
+
+  /**
+   * 地震类型代码Map
+   */
+  public static final Map<String, String> EQ_TYPE_MAP = new HashMap<String, String>();
+  static {
+    EQ_TYPE_MAP.put(eq, "eq");
+    EQ_TYPE_MAP.put(ep, "ep");
+    EQ_TYPE_MAP.put(sp, "sp");
+    EQ_TYPE_MAP.put(ss, "ss");
+    EQ_TYPE_MAP.put(se, "se");
+    EQ_TYPE_MAP.put(ve, "ve");
+    EQ_TYPE_MAP.put(le, "le");
+    EQ_TYPE_MAP.put(vh, "vh");
+    EQ_TYPE_MAP.put(vp, "vp");
+    EQ_TYPE_MAP.put(vt, "vt");
+    EQ_TYPE_MAP.put(ot, "ot");
+  }
+  /**
    * 测震台网代码
    */
   public static String NETWORK_INFO_CB = "CB";

@@ -105,7 +105,10 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
     //Write Basic origin head block (HBO)
     buf.append("HBO").append(" ").append(getHBO());
     //Write Basic origin data block (DBO)
-    
+    for (Iterator<Map> itr = rows.iterator(); itr.hasNext();) {
+      Map row = itr.next();
+      buf.append("DBO").append(" ").append(getDBO(row));
+    }
     
     return buf.toString();
   }
@@ -115,13 +118,31 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
    * @return
    */
   private String getHBO() {
-    String hboFormat = MessageFormat.format("{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15}\n\r",new Object[] {
-        "Net", "date", "O_time", "Epi_lat", "Epi_lon", "Epi_depth", 
+    String hboFormat = MessageFormat.format(
+        "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14}\n\r",new Object[] {
+        "Net", "dateO_time", "Epi_lat", "Epi_lon", "Epi_depth", 
         "Mag_name", "Mag_value",  "Rms", "Qloc",  "Sum_stn", "Loc_stn", 
         "Eq_type", "Epic_id", "Source_id", "Location_cname"
     });
     logger.debug("HBO数据格式内容：{}", hboFormat);
     return hboFormat;
+  }
+  
+  /**
+   * DBO数据
+   * @return
+   */
+  private String getDBO(Map row) {
+    String dboData = MessageFormat.format(
+        "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14}\n\r",new Object[] {
+         row.get("NET_CODE"), DateUtil.getDateTime("yyyy/MM/dd HH:ss:ss.ss", (Date)row.get("O_TIME")), 
+           row.get("EPI_LAT"), row.get("EPI_LON"), row.get("EPI_DEPTH"), row.get("M_SOURCE"), row.get("M"), 
+             row.get("Rms"), row.get("QLOC"),  row.get("Sum_stn"), row.get("Loc_stn"), 
+               SeismicConstants.EQ_TYPE_MAP.get(row.get("Eq_type")), 
+                 row.get("Epic_id"), row.get("Source_id"), row.get("LOCATION_CNAME")
+    });
+    logger.debug("DBO数据格式内容：{}", dboData);
+    return dboData;
   }
   
   /**
