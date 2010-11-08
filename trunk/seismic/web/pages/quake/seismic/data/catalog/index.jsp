@@ -83,6 +83,7 @@ $(function() {
 		  	    </td>
 		  	    <td>
 		  	      <input type="button" value="基本目录格式" onclick="exportData('${ctx}/quake/seismic/data/catalog/exportBasicVlm.do', '_blank')" class="button"/>
+		  	      <input type="button" value="完全目录格式" onclick="exportData('${ctx}/quake/seismic/data/catalog/exportFullVlm.do', '_blank')" class="button"/>
 		  	    </td>
 	  	  </tr>
 		</table>
