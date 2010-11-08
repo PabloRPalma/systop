@@ -508,11 +508,18 @@
 	<resultMap class="java.util.HashMap" id="queryMagMResult">
         <result property="MAG_NAME" column="MAG_NAME" javaType="String"/>
         <result property="MAG_VAL" column="MAG_VAL" javaType="Double"/>
+        <result property="MAG_GAP" column="MAG_GAP" javaType="Double"/>
+        <result property="MAG_STN" column="MAG_STN" javaType="Integer"/>
+        <!-- 目前数据库中没有该字段
+        <result property="MAG_ERROR" column="MAG_ERROR" javaType="Double"/>
+         -->
+        <result property="REMARK" column="REMARK" javaType="String"/>
     </resultMap>
 	<select id="queryMagM" parameterClass="quake.seismic.data.catalog.model.MagCriteria"
 			resultMap="queryMagMResult">
 		<![CDATA[
-			select MAG_NAME,MAG_VAL from $schema$.$tableName$ WHERE CATALOG_ID = #catId#
+			select MAG_NAME,MAG_VAL,MAG_GAP,MAG_STN,REMARK
+			from $schema$.$tableName$ WHERE CATALOG_ID = #catId#
 		]]>
 	</select>
 	
