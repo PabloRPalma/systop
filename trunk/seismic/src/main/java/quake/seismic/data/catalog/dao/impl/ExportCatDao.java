@@ -16,6 +16,7 @@ import quake.admin.ds.service.DataSourceManager;
 import quake.seismic.SeismicConstants;
 import quake.seismic.data.catalog.dao.AbstractCatDao;
 import quake.seismic.data.catalog.model.Criteria;
+import quake.seismic.data.catalog.model.MagCriteria;
 
 import com.systop.core.util.DateUtil;
 
@@ -65,7 +66,10 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
     if (SeismicConstants.Catalog_basic.equals(criteria.getExpType())) {
       buf.append(extractBasicVlm(rows, criteria));
     }
-    
+    //完全目录数据格式
+    if (SeismicConstants.Catalog_full.equals(criteria.getExpType())) {
+      buf.append(extractFullVlm(rows, criteria));
+    }
     return buf;
   }
   
@@ -79,35 +83,52 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
     StringBuffer buf = new StringBuffer();
     logger.debug("导出基本目录格式数据时，地震目录条数：{}", rows.size());
     //Write Volume_index_block0; 
-    buf.append("VI0").append(" ").append("Volume_type").append(" ").append(
-        SeismicConstants.Catalog_basic).append(" ").append("CSF_Ver").append(" ").append("1.0").append("\n\r");
+    buf.append(getVlmIndexBlock0(criteria.getExpType()));
     //Write Volume_index_block1; 
-    Map networkInfo = (Map) queryNetwordInfo(criteria);
-    logger.debug("台网信息：{}",networkInfo);
-    if (networkInfo != null) {
-      String netCode = (String)networkInfo.get("Net_code");
-      String netName = (String)networkInfo.get("Net_cname");
-      logger.debug("台网代码：{}，台网名称：{}", netCode, netName);
-      String startDate = null;
-      String endDate = null;
-      if (networkInfo.get("Net_startdate") != null) {
-        startDate = DateUtil.getDateTime("yyyy/MM/dd HH:ss:ss.ss", (Date)networkInfo.get("Net_startdate"));
-      }
-      if (networkInfo.get("Net_enddate") != null) {
-        endDate = DateUtil.getDateTime("yyyy/MM/dd HH:ss:ss.ss", (Date)networkInfo.get("Net_enddate"));
-      }
-      logger.debug("台网起始时间：{} ----- 结束时间：{}", startDate, endDate);
-      
-      buf.append("VI1").append(" ").append("Net_code").append(" ").append(
-          netCode).append(" ").append("Net_cname").append(" ").append(
-              netName).append(" ").append(startDate).append(" ").append(endDate).append("\n\r");
-    }
+    buf.append(getVlmIndexBlock1(criteria));
     //Write Basic origin head block (HBO)
     buf.append("HBO").append(" ").append(getHBO());
     //Write Basic origin data block (DBO)
     for (Iterator<Map> itr = rows.iterator(); itr.hasNext();) {
       Map row = itr.next();
       buf.append("DBO").append(" ").append(getDBO(row));
+    }
+    
+    return buf.toString();
+  }
+  
+  /**
+   * 导出完全目录格式数据(FULL_VLM)
+   * @param rows 地震目录
+   * @param criteria 目录查询参数
+   * @return
+   */
+  public String extractFullVlm(List<Map> rows, Criteria criteria) {
+    StringBuffer buf = new StringBuffer();
+    logger.debug("导出完全目录格式数据时，地震目录条数：{}", rows.size());
+    //Write Volume_index_block0; 
+    buf.append(getVlmIndexBlock0(criteria.getExpType()));
+    //Write Volume_index_block1; 
+    buf.append(getVlmIndexBlock1(criteria));
+    //Write Basic origin head block (HBO)
+    buf.append("HBO").append(" ").append(getHBO());
+    //Write Extened origin head block (HEO)
+    buf.append("HEO").append(" ").append(getHEO());
+    //Write Magnitude head block (HMB)
+    buf.append("HMB").append(" ").append(getHMB());
+    
+    for (Iterator<Map> itr = rows.iterator(); itr.hasNext();) {
+      Map row = itr.next();
+      //Write Basic origin data block (DBO)
+      buf.append("DBO").append(" ").append(getDBO(row));
+      //Write Extened origin data block (DEO)
+      buf.append("DEO").append(" ").append(getDEO(row));
+      //取得地震目录相关震级
+      List<Map> magList = getMagOfCatalog((String)row.get("ID"), criteria);
+      //Write Magnitude data block (DMB) 
+      for(Map mag : magList) {
+        buf.append("DMB").append(" ").append(getDMB(mag));
+      }
     }
     
     return buf.toString();
@@ -129,8 +150,8 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
   }
   
   /**
-   * DBO数据
-   * @return
+   * 取得地震目录的DBO数据
+   * @param row 地震目录
    */
   private String getDBO(Map row) {
     String dboData = MessageFormat.format(
@@ -143,6 +164,123 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
     });
     logger.debug("DBO数据格式内容：{}", dboData);
     return dboData;
+  }
+  
+  /**
+   * HEO数据格式内容
+   * @return
+   */
+  private String getHEO() {
+    String heoFormat = MessageFormat.format(
+        "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15} {16}\n\r",new Object[] {
+        "Auto_flag", "Event_id", "Sequen_name", "Depfix_flag", "M", "M_source", 
+        "SPmin", "Dmin",  "Gap_azi", "Erh",  "Erz", "Qnet", "Qcom", 
+        "Sum_pha", "Loc_pha", "FE_num", "FE_sname"
+    });
+    logger.debug("HEO数据格式内容：{}", heoFormat);
+    return heoFormat;
+  }
+  
+  /**
+   * 取得地震目录的DEO数据
+   * @param row 地震目录
+   */
+  private String getDEO(Map row) {
+    String deoData = MessageFormat.format(
+        "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15} {16}\n\r",new Object[] {
+         row.get("Auto_flag"), row.get("EVENT_ID"), row.get("SEQUEN_NAME"),row.get("Depfix_flag"), 
+           row.get("M"), row.get("M_SOURCE"), row.get("SPmin"), row.get("Dmin"), row.get("Gap_azi"),
+             row.get("Erh"), row.get("Erz"), row.get("Qnet"),row.get("QCOM"), row.get("Sum_pha"),
+                row.get("Loc_pha"), row.get("FE_num"), row.get("FE_sname")
+    });
+    logger.debug("DEO数据格式内容：{}", deoData);
+    return deoData;
+  }
+  
+  /**
+   * HMB数据格式内容
+   * @return
+   */
+  private String getHMB() {
+    String hmbFormat = MessageFormat.format(
+        "{0} {1} {2} {3} {4}\n\r",new Object[] {
+        "Mag_name", "Mag_val", "Mag_gap", "Mag_stn", "Mag_error"
+    });
+    logger.debug("HMB数据格式内容：{}", hmbFormat);
+    return hmbFormat;
+  }
+  
+  /**
+   * 取得地震目录的DMB数据
+   * @param mag 地震目录的相关震级
+   */
+  private String getDMB(Map mag) {
+    String dmbFormat = MessageFormat.format(
+        "{0} {1} {2} {3} {4}\n\r",new Object[] {
+        mag.get("MAG_NAME"), mag.get("MAG_VAL"), mag.get("MAG_GAP"), mag.get("MAG_STN"), mag.get("MAG_ERROR")
+    });
+    logger.debug("DMB数据格式内容：{}", dmbFormat);
+    return dmbFormat;
+  }
+  
+  /**
+   * 取得volume_index_block0的数据
+   * @param vlmType 卷类型
+   */
+  private StringBuffer getVlmIndexBlock0(String vlmType) {
+    StringBuffer indexBlock0 = new StringBuffer();
+    indexBlock0.append("VI0").append(" ").append("Volume_type").append(" ").append(
+        vlmType).append(" ").append("CSF_Ver").append(" ").append("1.0").append("\n\r");
+    return indexBlock0;
+  }
+  
+  /**
+   * 取得volume_index_block1的数据
+   * @param criteria 数据参数
+   */
+  private StringBuffer getVlmIndexBlock1(Criteria criteria) {
+    StringBuffer indexBlock1 = new StringBuffer();
+    Map networkInfo = (Map) queryNetwordInfo(criteria);
+    logger.debug("台网信息：{}",networkInfo);
+    if (networkInfo != null) {
+      String netCode = (String)networkInfo.get("Net_code");
+      String netName = (String)networkInfo.get("Net_cname");
+      logger.debug("台网代码：{}，台网名称：{}", netCode, netName);
+      String startDate = null;
+      String endDate = null;
+      if (networkInfo.get("Net_startdate") != null) {
+        startDate = DateUtil.getDateTime("yyyy/MM/dd HH:ss:ss.ss", (Date)networkInfo.get("Net_startdate"));
+      }
+      if (networkInfo.get("Net_enddate") != null) {
+        endDate = DateUtil.getDateTime("yyyy/MM/dd HH:ss:ss.ss", (Date)networkInfo.get("Net_enddate"));
+      }
+      logger.debug("台网起始时间：{} ----- 结束时间：{}", startDate, endDate);
+      
+      indexBlock1.append("VI1").append(" ").append("Net_code").append(" ").append(
+          netCode).append(" ").append("Net_cname").append(" ").append(
+              netName).append(" ").append(startDate).append(" ").append(endDate).append("\n\r");
+    }
+    
+    return indexBlock1;
+  }
+  
+  /**
+   * 根据地震目录ID，取得该目录所有的震级
+   * @param catalogId 地震目录ID
+   * @param criteria 目录查询条件
+   */
+  private List<Map> getMagOfCatalog(String catalogId, Criteria criteria) {
+    MagCriteria magCriteria = new MagCriteria();
+    magCriteria.setSchema(dataSourceManager.getCzSchema());
+    //如果已经配置了震级表
+    if(StringUtils.isNotEmpty(criteria.getMagTname())) {
+      magCriteria.setTableName(criteria.getMagTname());
+    } else {//使用默认的震级表
+      magCriteria.setTableName(SeismicConstants.DEFAULT_MAG_TABLE);
+    }
+    magCriteria.setCatId(catalogId);
+    List<Map> magList = getTemplate().queryForList(SQL_MAG_NAME, magCriteria);
+    return magList.isEmpty() ? null : magList;
   }
   
   /**
