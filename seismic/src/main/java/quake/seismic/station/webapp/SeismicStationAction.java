@@ -304,7 +304,7 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
    * 
    * @return
    */
-  public String eqt() {
+  public String resp() {
     String data = exportEqtData();
     logger.debug("导出的数据：{}", data);
     getResponse().addHeader("Content-Disposition", "attachment;filename=\"EQT.txt\"");
