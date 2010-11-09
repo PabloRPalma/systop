@@ -16,11 +16,19 @@ import quake.base.model.PageSchemaAware;
  *
  */
 public class Criteria extends PageSchemaAware {
-
+  /**
+   * 台站ID
+   */
+  private String id;
   /**
    * 台网名称
    */
   private String netCode;
+  
+  /**
+   * 台站代码  
+   */
+  private String staCode;
   
   /**
    * 起始日期查询条件
@@ -199,5 +207,21 @@ public class Criteria extends PageSchemaAware {
    */
   public void setEndDate(String endDate) {
     this.endDate = endDate;
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  public String getStaCode() {
+    return staCode;
+  }
+
+  public void setStaCode(String staCode) {
+    this.staCode = staCode;
   }
 }
