@@ -88,7 +88,10 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
    * 网站访问前缀
    */
   private String ctxUrl;
-
+  /**
+   * 台站ID
+   */
+  private String stataionId;
   /**
    * 表格查询Action
    */
@@ -305,7 +308,7 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
    * @return
    */
   public String resp() {
-    String data = exportEqtData();
+    String data = exportRespData();
     logger.debug("导出的数据：{}", data);
     getResponse().addHeader("Content-Disposition", "attachment;filename=\"EQT.txt\"");
     render(getResponse(), data, "text/html");
@@ -318,8 +321,9 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
    * 
    * @return
    */
-  private String exportEqtData() {
+  private String exportRespData() {
     model.setSchema(dataSourceManager.getQzSchema());
+    model.setId(stataionId);
     StringBuffer buf = exportStationDao.queryForEqt(model);
     return buf.toString();
   }
@@ -351,5 +355,13 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
    */
   public void setCtxUrl(String ctxUrl) {
     this.ctxUrl = ctxUrl;
+  }
+
+  public String getStataionId() {
+    return stataionId;
+  }
+
+  public void setStataionId(String stataionId) {
+    this.stataionId = stataionId;
   }
 }
