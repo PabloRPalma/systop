@@ -11,7 +11,7 @@ import quake.seismic.data.phase.model.PhaseCriteria;
 
 /**
  * 查询震相数据
- * @author wbb
+ * @author DU
  */
 @SuppressWarnings("unchecked")
 @Repository

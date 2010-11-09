@@ -13,6 +13,10 @@ public class SeismicConstants {
    */
   public static String DEFAULT_MAG_TABLE = "Mag_w";
   /**
+   * 默认的震相表
+   */
+  public static String DEFAULT_PHASE_TABLE = "Phase_w";
+  /**
    * 地震目录查询时（不分页），限制最大查询条数
    */
   public static int MAX_SIZE = 1000;
