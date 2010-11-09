@@ -5,6 +5,9 @@
 <head>
 <title></title>
 <%@include file="/common/quake.jsp" %>
+<link type="text/css" href="${ctx}/scripts/jquery/ui/css/jquery-ui-1.7.1.css"	rel="stylesheet" />
+<script type="text/javascript"	src="${ctx}/scripts/jquery/bgiframe/jquery.bgiframe.js"></script>
+<script type="text/javascript"	src="${ctx}/scripts/jquery/ui/jquery-ui-1.7.1.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	$("#queryFrm").validate();
@@ -22,6 +25,10 @@ $(document).ready(function() {
   			<s:hidden name="model.disType"/>
 		<table width="99%" align="center">
 			<tr>
+				<td align="right">台网：</td>
+				<td><s:select list="netCodes" name="model.netCode" headerKey="" headerValue="--请选择台网--" cssStyle="width:100px;">
+        			</s:select>
+        		</td>
 				<td align="right" title="(YYYY-MM-DD)">发震日期：</td>
 		  	    <td>
 		  	      <input type="text" id="startDate" name="model.startDate" 
@@ -42,12 +49,14 @@ $(document).ready(function() {
 		  	     <td>
 		  	      <s:textfield name="model.endM" cssStyle="width:80px;" cssClass="number" title="大于等于1的正数"/>
 		  	    </td>
-		  	    
 		  	    <td>
-		  	      <s:submit value="查询" cssClass="button"/>
+		  	      <input type="button" value="查询" onclick="exportData('${ctx}/quake/seismic/data/catalog/listPhase.do', '')"  class="button"/>
+		  	      <input type="button" value="观测报告" onclick="exportData('${ctx}/quake/seismic/data/catalog/exportBulletin.do', '_blank')" class="button"/>
 		  	    </td>
 			</tr>
 			<tr>
+				<td align="right">地名：</td>
+				<td><s:textfield name="model.location" cssStyle="width:100px;"/></td>
 				<td align="right">纬度(°)：</td> 
 		  	    <td>
 		  	      <s:textfield name="model.startLat" cssStyle="width:80px;" cssClass="number" title="度.度，-90至90"/>
@@ -84,20 +93,15 @@ $(document).ready(function() {
 	resizeColWidth="true"	
 	classic="false"	
 	width="100%" 	
-	height="477px"	
-	minHeight="300"
+	height="280px"	
+	minHeight="280"
 	toolbarContent="navigation|pagejump|pagesize|extend|status"     
 	>
 	<ec:row>
 		<ec:column width="40" property="_0" title="序号" value="${GLOBALROWCOUNT}" style="text-align:center"/>
-		<ec:column width="70" property="_1" title="震相数据" style="text-align:center" viewsAllowed="html" sortable="false">
-		   <a href="#" onclick="phase('${ctx}/quake/seismic/data/phase/list.do', '${item.ID}', '${item.EQ_TIME}', '${item.O_TIME_FRAC}', '${item.EPI_LAT}', '${item.EPI_LON}', '${item.EPI_DEPTH}', ${item.M}, '${item.M_SOURCE}', '${item.QLOC}', '${item.QCOM}', '${item.LOCATION_CNAME}')" title="查看震相数据"> 
-		      查看
-		   </a>
-		</ec:column>
 		<ec:column width="160" property="O_TIME" title="发震时刻" sortable="true">${item.EQ_TIME}</ec:column>	
-		<ec:column width="80" property="EPI_LAT" title="震中纬度" cell="quake.base.webapp.DoubleCell"/>	
-		<ec:column width="80" property="EPI_LON" title="震中经度" cell="quake.base.webapp.DoubleCell"/>	
+		<ec:column width="60" property="EPI_LAT" title="震中纬度" cell="quake.base.webapp.DoubleCell"/>	
+		<ec:column width="60" property="EPI_LON" title="震中经度" cell="quake.base.webapp.DoubleCell"/>	
 		<c:if test="${model.magTname != ''}">
 			<ec:column width="40" property="ML" title="ML" cell="quake.seismic.data.catalog.webapp.cell.EMCell"/>		
 			<ec:column width="40" property="Ms" title="Ms" cell="quake.seismic.data.catalog.webapp.cell.EMCell"/>		
@@ -110,15 +114,25 @@ $(document).ready(function() {
 		<c:if test="${model.magTname == ''}">	
 			<ec:column width="40" property="M" title="${model.disType}" cell="quake.seismic.data.catalog.webapp.cell.EMCell"/>	
 		</c:if>
-		<ec:column width="80" property="EPI_DEPTH" title="深度(Km)" cell="quake.seismic.data.catalog.webapp.cell.DepthFomat"/>
+		<ec:column width="70" property="EPI_DEPTH" title="深度(Km)" cell="quake.seismic.data.catalog.webapp.cell.DepthFomat"/>
 		<ec:column width="60" property="QLOC" title="定位质量" />	
 		<ec:column width="60" property="QCOM" title="综合质量" />	
 		<ec:column width="120" property="LOCATION_CNAME" title="震中地名" />
+		<ec:column width="40" property="_1" title="震相" style="text-align:center" viewsAllowed="html" sortable="false">
+		   <a href="#" onclick="phase('${ctx}/quake/seismic/data/phase/list.do', '${item.ID}', '${item.EQ_TIME}', '${item.O_TIME_FRAC}', '${item.EPI_LAT}', '${item.EPI_LON}', '${item.EPI_DEPTH}', ${item.M}, '${item.M_SOURCE}', '${item.QLOC}', '${item.QCOM}', '${item.LOCATION_CNAME}')" title="查看震相数据"> 
+		      查看
+		   </a>
+		</ec:column>
 	</ec:row>   
 </ec:table>
 </div>
 <script type="text/javascript">
-function phase(url, id, O_TIME, O_TIME_FRAC, EPI_LAT, EPI_LON, EPI_DEPTH, M, M_SOURCE, QLOC, QCOM, LOCATION_CNAME) {
+function exportData(url, target) {
+	$("#queryFrm").attr("action", url);
+	$("#queryFrm").attr("target", target);
+	$("#queryFrm").submit();
+}
+function phase(url, id, O_TIME, O_TIME_FRAC, EPI_LAT, EPI_LON, EPI_DEPTH, M, M_SOURCE, QLOC, QCOM, LOCATION_CNAME){
 	$("#phaseFrm").attr("action", url);
 	$("#catId").attr("value", id);
 	$("#O_TIME").attr("value", O_TIME);
