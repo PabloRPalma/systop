@@ -5,17 +5,23 @@
     "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="cz">
     <resultMap class="java.util.HashMap" id="queryStationResult">
+     	<result property="ID" column="ID" javaType="String"/>
         <result property="NET_CODE" column="NET_CODE" javaType="String"/>
         <result property="STA_CODE" column="STA_CODE" javaType="String"/>
         <result property="STA_CNAME" column="STA_CNAME" javaType="String"/>
         <result property="ROCK_TYPE" column="ROCK_TYPE" javaType="String"/>
-        <result property="INSTRUMENT_ID" column="INSTRUMENT_ID" javaType="String"/>
-        <result property="DATARECORD_ID" column="DATARECORD_ID" javaType="String"/>
-        <result property="instrModel" column="insModel" javaType="String"/>
-        <result property="dasModel" column="dasModel" javaType="String"/>
         <result property="STA_LAT" column="STA_LAT" javaType="Double"/>
         <result property="STA_LON" column="STA_LON" javaType="Double"/>
         <result property="STA_ELEV" column="STA_ELEV" javaType="Double"/>
+        <result property="STA_STARTDATE" column="STA_STARTDATE" javaType="java.util.Date"/>
+        <result property="STA_ENDDATE" column="STA_ENDDATE" javaType="java.util.Date"/>
+        <result property="SITE_NAME" column="SITE_NAME" javaType="String"/>
+    </resultMap>
+    
+    <resultMap class="java.util.HashMap" id="queryChannelResult">    	
+        <result property="LOC_ID" column="LOC_ID" javaType="String"/>
+        <result property="RESPONSE" column="RESPONSE" javaType="String"/> 
+        <result property="CHN_CODE" column="CHN_CODE" javaType="String"/>   
     </resultMap>
     <resultMap class="java.util.HashMap" id="queryInstrResult">
     	<result property="ID" column="ID" javaType="String"/>
@@ -26,22 +32,11 @@
 	<select id="queryStation" parameterClass="quake.seismic.station.model.Criteria"
                         resultMap="queryStationResult">
 		<![CDATA[
-		SELECT NET_CODE,STA_CODE,STA_CNAME,ROCK_TYPE,INSTRUMENT_ID,DATARECORD_ID,INS.INSTR_MODEL as insModel,INS2.INSTR_MODEL as dasModel,
-			   STA_LAT,STA_LON,STA_ELEV
-		FROM $schema$.Station_info ST, $schema$.Instr_dic INS, $schema$.Instr_dic INS2
-		WHERE ST.INSTRUMENT_ID = INS.ID AND ST.DATARECORD_ID = INS2.ID
+		SELECT ID,NET_CODE,STA_CODE,STA_CNAME,ROCK_TYPE,STA_LAT,STA_LON,STA_ELEV,STA_STARTDATE,STA_ENDDATE,SITE_NAME
+		FROM $schema$.Station_info ST
 		]]>
-		<dynamic>
+		<dynamic prepend="WHERE">
 		    <!-- 加入台网查询条件 BY Sam 20090707 -->
-		    <isNotEmpty prepend="AND" property="netCode">
-		       <![CDATA[(NET_CODE=#netCode#)]]>
-		    </isNotEmpty>
-		    <isNotEmpty prepend="AND" property="instrumentId">
-		       <![CDATA[(INSTRUMENT_ID=#instrumentId#)]]>
-		    </isNotEmpty>
-		    <isNotEmpty prepend="AND" property="datarecordId">
-		       <![CDATA[(DATARECORD_ID=#datarecordId#)]]>
-		    </isNotEmpty>
 		    <isNotEmpty property="startTimeOfTheYear">
 		        <isNotEmpty property="endTimeOfTheYear">
 		           <![CDATA[
@@ -49,6 +44,11 @@
 		           ]]>
 		        </isNotEmpty>
 		    </isNotEmpty>
+		    
+		    <isNotEmpty prepend="AND" property="netCode">
+		       <![CDATA[(NET_CODE=#netCode#)]]>
+		    </isNotEmpty>
+		    
 		</dynamic>
 	</select>
 	<!-- 测震仪器选择列表查询 MySQL-->
@@ -75,6 +75,21 @@
 		resultClass="java.lang.String">
 		<![CDATA[
 		SELECT DISTINCT NET_CODE FROM $schema$.Station_info
+		]]>
+	</select>
+	
+	  <select id="queryStationById" parameterClass="quake.seismic.station.model.Criteria"
+			resultMap="queryStationResult">
+		<![CDATA[
+		SELECT ID,NET_CODE,STA_CODE,STA_CNAME,ROCK_TYPE,STA_LAT,STA_LON,STA_ELEV,STA_STARTDATE,STA_ENDDATE,SITE_NAME
+		FROM $schema$.Station_info ST WHERE ID = #id#
+		]]>
+	</select>
+	 <select id="queryChannel" parameterClass="quake.seismic.station.model.Criteria"
+			resultMap="queryChannelResult">
+		<![CDATA[
+		SELECT LOC_ID,RESPONSE,CHN_CODE
+		FROM $schema$.Channel_info ST WHERE NET_CODE=#netCode# and STA_CODE=#staCode#
 		]]>
 	</select>
 </sqlMap>
