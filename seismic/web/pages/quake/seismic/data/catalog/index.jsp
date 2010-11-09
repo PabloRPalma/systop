@@ -5,14 +5,10 @@
 <head>
 <title></title>
 <%@include file="/common/quake.jsp" %>
-<link type="text/css" href="${ctx}/scripts/jquery/ui/css/jquery-ui-1.7.1.css"	rel="stylesheet" />
-<script type="text/javascript"	src="${ctx}/scripts/jquery/bgiframe/jquery.bgiframe.js"></script>
-<script type="text/javascript"	src="${ctx}/scripts/jquery/ui/jquery-ui-1.7.1.js"></script>
 <script type="text/javascript">
 $(function() {
 	$("#queryFrm").validate();
 });
-
 </script>
 </head>
 <body>
