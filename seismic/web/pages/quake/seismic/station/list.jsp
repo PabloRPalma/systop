@@ -69,7 +69,7 @@
 		</stc:role>
 		<ec:column width="100" property="-8" title="操作" style="text-align:center">
 			<a href="xml.do?model.id=${item.id}">XML</a>|
-			<a href="eqt.do?model.id=${item.id}">EQT</a>	
+			<a href="resp.do?model.id=${item.id}">RESP</a>	
 		</ec:column>
 	  </ec:row>
 	</ec:table>
