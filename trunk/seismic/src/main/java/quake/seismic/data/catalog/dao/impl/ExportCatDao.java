@@ -17,6 +17,7 @@ import quake.seismic.SeismicConstants;
 import quake.seismic.data.catalog.dao.AbstractCatDao;
 import quake.seismic.data.catalog.model.Criteria;
 import quake.seismic.data.catalog.model.MagCriteria;
+import quake.seismic.data.phase.model.PhaseCriteria;
 
 import com.systop.core.util.DateUtil;
 
@@ -69,6 +70,10 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
     //完全目录数据格式
     if (SeismicConstants.Catalog_full.equals(criteria.getExpType())) {
       buf.append(extractFullVlm(rows, criteria));
+    }
+    //观测报告数据格式
+    if (SeismicConstants.Bulletin_full.equals(criteria.getExpType())) {
+      buf.append(extractBulletinVlm(rows, criteria));
     }
     return buf;
   }
@@ -128,6 +133,60 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
       //Write Magnitude data block (DMB) 
       for(Map mag : magList) {
         buf.append("DMB").append(" ").append(getDMB(mag));
+      }
+    }
+    
+    return buf.toString();
+  }
+  
+  /**
+   * 导出观测报告格式数据(BULLETIN_VLM)
+   * @param rows 地震目录
+   * @param criteria 目录查询参数
+   * @return
+   */
+  public String extractBulletinVlm(List<Map> rows, Criteria criteria) {
+    StringBuffer buf = new StringBuffer();
+    logger.debug("导出观测报告格式数据时，地震目录条数：{}", rows.size());
+    //Write Volume_index_block0; 
+    buf.append(getVlmIndexBlock0(criteria.getExpType()));
+    //Write Volume_index_block1; 
+    buf.append(getVlmIndexBlock1(criteria));
+    
+    /**
+     * 该部分内容需要确定后再加入，有待完善
+    //Write station head block (HSB)
+    
+    //Write station data block (DSB)
+    */
+    
+    //Write Basic origin head block (HBO)
+    buf.append("HBO").append(" ").append(getHBO());
+    //Write Extened origin head block (HEO)
+    buf.append("HEO").append(" ").append(getHEO());
+    //Write Magnitude head block (HMB)
+    buf.append("HMB").append(" ").append(getHMB());
+    //Write phase head block (HPB)
+    buf.append("HPB").append(" ").append(getHPB());
+    
+    for (Iterator<Map> itr = rows.iterator(); itr.hasNext();) {
+      Map row = itr.next();
+      //Write Basic origin data block (DBO)
+      buf.append("DBO").append(" ").append(getDBO(row));
+      //Write Extened origin data block (DEO)
+      buf.append("DEO").append(" ").append(getDEO(row));
+      //取得地震目录相关震级
+      List<Map> magList = getMagOfCatalog((String)row.get("ID"), criteria);
+      //Write Magnitude data block (DMB) 
+      for(Map mag : magList) {
+        buf.append("DMB").append(" ").append(getDMB(mag));
+      }
+      //取得地震目录相关震相
+      List<Map> phaseList = getPhaseOfCatalog((String)row.get("ID"), criteria);
+      logger.debug("地震目录ID：{},对应的震相个数：{}", (String)row.get("ID"), phaseList.size());
+      //Write phase data block (DPB)
+      for(Map phase : phaseList) {
+        buf.append("DPB").append(" ").append(getDPB(phase));
       }
     }
     
@@ -224,6 +283,38 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
   }
   
   /**
+   * HPB数据格式内容
+   * @return
+   */
+  private String getHPB() {
+    String hpbFormat = MessageFormat.format(
+        "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15}\n\r",new Object[] {
+        "Net_code", "Sta_code", "Chn_code", "Clarity", "Wsign", 
+        "Phase_name", "Weight",  "Rec_type", "Phase_time",  "Resi", "Distance", 
+        "Azi", "Amp", "Period", "Mag_name", "Mag_val"
+    });
+    logger.debug("HPB数据格式内容：{}", hpbFormat);
+    return hpbFormat;
+  }
+  
+  /**
+   * HPB数据格式内容
+   * @return
+   */
+  private String getDPB(Map phase) {
+    String hpbFormat = MessageFormat.format(
+        "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15}\n\r",new Object[] {
+        phase.get("NET_CODE"), phase.get("STA_CODE"), phase.get("CHN_CODE"), phase.get("CLARITY"), phase.get("WSIGN"), 
+          phase.get("PHASE_NAME"), phase.get("WEIGHT"),  phase.get("REC_TYPE"), 
+            DateUtil.getDateTime("yyyy/MM/dd HH:ss:ss.ss", (Date)phase.get("PHASE_TIME")),  
+              phase.get("RESI"), phase.get("DISTANCE"), phase.get("AZI"), phase.get("AMP"), phase.get("PERIOD"),
+                phase.get("MAG_NAME"), phase.get("MAG_VAL")
+    });
+    logger.debug("HPB数据格式内容：{}", hpbFormat);
+    return hpbFormat;
+  }
+  
+  /**
    * 取得volume_index_block0的数据
    * @param vlmType 卷类型
    */
@@ -279,8 +370,25 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
       magCriteria.setTableName(SeismicConstants.DEFAULT_MAG_TABLE);
     }
     magCriteria.setCatId(catalogId);
-    List<Map> magList = getTemplate().queryForList(SQL_MAG_NAME, magCriteria);
-    return magList.isEmpty() ? null : magList;
+    return getTemplate().queryForList(SQL_MAG_NAME, magCriteria);
+  }
+  
+  /**
+   * 根据地震目录ID，取得该目录所有的震相
+   * @param catalogId 地震目录ID
+   * @param criteria 目录查询条件
+   */
+  private List<Map> getPhaseOfCatalog(String catalogId, Criteria criteria) {
+    PhaseCriteria phaseCriteria = new PhaseCriteria();
+    phaseCriteria.setSchema(dataSourceManager.getCzSchema());
+    //如果已经配置了震相表
+    if(StringUtils.isNotEmpty(criteria.getPhaseTname())) {
+      phaseCriteria.setTableName(criteria.getPhaseTname());
+    } else {//使用默认的震相表
+      phaseCriteria.setTableName(SeismicConstants.DEFAULT_PHASE_TABLE);
+    }
+    phaseCriteria.setCatId(catalogId);
+    return getTemplate().queryForList("cz.queryPhaseData", phaseCriteria);
   }
   
   /**

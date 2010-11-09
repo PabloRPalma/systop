@@ -242,6 +242,19 @@ public class CatAction extends AbstractQueryAction<Criteria> {
   }
   
   /**
+   * 导出Bulletin_VLM(观测报告)数据
+   * @return
+   */
+  public String exportBulletin() {
+    model.setExpType(SeismicConstants.Bulletin_full);
+    String data = exportVlmData();
+    logger.debug("观测报告导出的数据：{}", data);
+    getResponse().addHeader("Content-Disposition", "attachment;filename=\"Bulletin_FULL_VLM.txt\"");
+    render(getResponse(), data, "text/html");
+    return null;
+  }
+  
+  /**
    * 根据数据格式(WKF和EQT)，导出相应数据
    * @return
    */
@@ -257,7 +270,7 @@ public class CatAction extends AbstractQueryAction<Criteria> {
   }
   
   /**
-   * 根据数据格式(BASIC_VLM,FULL_VLM)，导出相应数据
+   * 根据数据格式(BASIC_VLM,FULL_VLM,Bulletin_VLM)，导出相应数据
    * @return
    */
   private String exportVlmData() {
