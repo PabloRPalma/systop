@@ -68,8 +68,8 @@
 		    <ec:column width="70" property="STA_ELEV" title="高程(m)" />
 		</stc:role>
 		<ec:column width="100" property="-8" title="操作" style="text-align:center">
-			<a href="xml.do?model.id=${item.id}">XML</a>|
-			<a href="resp.do?model.id=${item.id}">RESP</a>	
+			<a href="xml.do?stataionId=${item.ID}">XML</a>|
+			<a href="resp.do?stataionId=${item.ID}">RESP</a>	
 		</ec:column>
 	  </ec:row>
 	</ec:table>
