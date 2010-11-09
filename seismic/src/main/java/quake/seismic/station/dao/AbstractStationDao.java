@@ -24,6 +24,9 @@ public abstract class AbstractStationDao <T> extends AbstractSeismicDao {
   public static final String SQL_INSTR_ID_MYSQL = "cz.queryInstrumentMySQL";
   public static final String SQL_INSTR_ID_ORACLE = "cz.queryInstrumentOracle";
   
+  protected static final String SQL_STATION_ID = "cz.queryStationById";
+  protected static final String SQL_CHANNEL = "cz.queryChannel";
+  
   @Override
   protected DataType getDataType() {
     return DataType.SEISMIC;
