@@ -13,28 +13,21 @@
 	<s:form action="list" theme="simple" id="queryFrm">
      <table width="99%">
      <tr>
-       <td>起始年限：
-          <s:textfield size="7" cssClass="Wdate" id="startDate" name="model.startDate"
+       <td width="400">起始年限:
+          <s:textfield size="9" cssClass="Wdate" id="startDate" name="model.startDate"
 			onclick="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM'});" readonly="true"/>&nbsp;至&nbsp;
-		  <s:textfield size="7" cssClass="Wdate" id="endDate" name="model.endDate"
+		  <s:textfield size="9" cssClass="Wdate" id="endDate" name="model.endDate"
 			onclick="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM'});" readonly="true"/>
+		  	&nbsp;&nbsp;台网:
+          <s:select list="netCodes" name="model.netCode" headerKey="" headerValue="全部" cssStyle="width:100px;">
+          </s:select>
 	   </td>
-	   
-   
-       
-         <td>
-           
-      台网代码:
-        <s:select list="netCodes" name="model.netCode" headerKey="" headerValue="全部" cssStyle="width:100px;">
-        </s:select>
-       </td>
-       <td>
-	   <input value="查询" onclick="queryForList('${ctx}/quake/seismic/station/list.do', '')" size="6" style="text-align: center;cursor: auto;" type="button" class="button"/>
-       <input value="台站分布图" onclick="queryForList('${ctx}/quake/seismic/station/stationGis.do', '_blank')" style="text-align: center;cursor: auto;" type="button" class="button"/>
-       <input value="数据下载" onclick="downloadInXls()" size="9" style="text-align: center;cursor: auto;" type="button" class="button"/>
-	   </td> 
+	   <td align="left">
+	   	  <input value="查询" onclick="queryForList('${ctx}/quake/seismic/station/list.do', '')" size="6" style="text-align: center;cursor: auto;" type="button" class="button"/>
+       	  <input value="台站分布图" onclick="queryForList('${ctx}/quake/seismic/station/stationGis.do', '_blank')" style="text-align: center;cursor: auto;" type="button" class="button"/>
+       	  <input value="数据下载" onclick="downloadInXls()" size="9" style="text-align: center;cursor: auto;" type="button" class="button"/>
+	   </td>
        </tr>
-       
      </table>
      </s:form>
 </fieldset>
@@ -52,8 +45,8 @@
 		resizeColWidth="true"	
 		classic="false"	
 		width="100%" 
-		height="360px" 
-		minHeight="360"
+		height="300px" 
+		minHeight="300"
 		excludeParameters="selectedItems"
 		toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	  <ec:row>
