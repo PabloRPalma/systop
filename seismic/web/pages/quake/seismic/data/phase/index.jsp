@@ -51,6 +51,7 @@ $(document).ready(function() {
 		  	    </td>
 		  	    <td>
 		  	      <input type="button" value="查询" onclick="exportData('${ctx}/quake/seismic/data/catalog/listPhase.do', '')"  class="button"/>
+		  	      <input type="button" value="震中分布图" onclick="exportData('${ctx}/quake/seismic/data/catalog/showGis.do', '_blank')" class="button"/>
 		  	      <input type="button" value="观测报告" onclick="exportData('${ctx}/quake/seismic/data/catalog/exportBulletin.do', '_blank')" class="button"/>
 		  	    </td>
 			</tr>
