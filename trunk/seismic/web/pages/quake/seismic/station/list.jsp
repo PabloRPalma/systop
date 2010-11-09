@@ -20,15 +20,13 @@
 			onclick="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM'});" readonly="true"/>
 	   </td>
 	   
-     </tr>
-       <tr>
+   
+       
          <td>
            
-        台网代码:
+      台网代码:
         <s:select list="netCodes" name="model.netCode" headerKey="" headerValue="全部" cssStyle="width:100px;">
         </s:select>
-        地震计类型:<s:select id="instrId" name="model.instrumentId" list="instrumentsMap" listKey="instrCode" cssStyle="width:100px;" listValue="instrName" headerKey="" headerValue="--所有类型--" />
-        数采类型:<s:select id="datId" name="model.datarecordId" list="datarecordsMap" listKey="instrCode" cssStyle="width:100px;" listValue="instrName" headerKey="" headerValue="--所有类型--" />
        </td>
        <td>
 	   <input value="查询" onclick="queryForList('${ctx}/quake/seismic/station/list.do', '')" size="6" style="text-align: center;cursor: auto;" type="button" class="button"/>
@@ -69,8 +67,10 @@
 			<ec:column width="70" property="STA_LAT" title="纬度"/>		
 		    <ec:column width="70" property="STA_ELEV" title="高程(m)" />
 		</stc:role>
-		<ec:column width="110" property="instrModel" title="地震计" />
-		<ec:column width="110" property="dasModel" title="数采" />
+		<ec:column width="100" property="-8" title="操作" style="text-align:center">
+			<a href="xml.do?model.id=${item.id}">XML</a>|
+			<a href="eqt.do?model.id=${item.id}">EQT</a>	
+		</ec:column>
 	  </ec:row>
 	</ec:table>
 </div>
