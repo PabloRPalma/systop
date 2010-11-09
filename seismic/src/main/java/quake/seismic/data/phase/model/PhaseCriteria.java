@@ -8,7 +8,7 @@ import quake.base.model.PageSchemaAware;
 
 /**
  * 震相查询条件
- * @author wbb
+ * @author DU
  */
 public class PhaseCriteria extends PageSchemaAware {
   /**
