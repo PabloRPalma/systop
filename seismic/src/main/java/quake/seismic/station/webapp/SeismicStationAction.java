@@ -21,6 +21,7 @@ import quake.admin.ds.service.DataSourceManager;
 import quake.base.webapp.AbstractQueryAction;
 import quake.seismic.SeismicConstants;
 import quake.seismic.station.dao.AbstractStationDao;
+import quake.seismic.station.dao.ExportStationDao;
 import quake.seismic.station.dao.GridStationDao;
 import quake.seismic.station.model.Criteria;
 import quake.seismic.station.model.InstrDic;
@@ -31,7 +32,6 @@ import com.systop.common.modules.template.TemplateRender;
 import com.systop.core.Constants;
 import com.systop.core.util.DateUtil;
 import com.systop.core.util.ResourceBundleUtil;
-
 
 /**
  * 测震台站查询Action
@@ -55,6 +55,13 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
   @Autowired(required = true)
   @Qualifier("gridStationDao")
   private GridStationDao gridStationDao;
+
+  /**
+   * 用于导出台站DAO
+   */
+  @Autowired(required = true)
+  @Qualifier("exportStationDao")
+  private ExportStationDao exportStationDao;
 
   @Autowired
   private ProvinceLatlng provinceLatlng;
@@ -90,7 +97,7 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
       model.setPage(getPage());
       model.setOrder(getSortDir());
       // 测震SCHEMA
-      model.setSchema(dataSourceManager.getCzSchema());
+      model.setSchema(dataSourceManager.getQzSchema());
       /*
        * 不同省份有不同的台网代码，暂时不考虑台网问题,即使考虑台网，如何取得有待确定....
        * model.setNetCode(SeismicConstants.NETWORK_INFO_HE);
@@ -159,16 +166,17 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
    */
   public String stationGis() {
     // 测震SCHEMA
-    model.setSchema(dataSourceManager.getCzSchema());
+    model.setSchema(dataSourceManager.getQzSchema());
     /*
      * 不同省份有不同的台网代码，暂时不考虑台网问题,即使考虑台网，如何取得有待确定....
      * model.setNetCode(SeismicConstants.NETWORK_INFO_HE);
      */
-    if (StringUtils.isNotEmpty(model.getStartDate()) 
-        && StringUtils.isNotEmpty(model.getEndDate())) {
+    if (StringUtils.isNotEmpty(model.getStartDate()) && StringUtils.isNotEmpty(model.getEndDate())) {
       try {
-        Date first = DateUtil.firstSecondOfDate(DateUtil.convertStringToDate(model.getStartDate()+"-1"));
-        Date end = DateUtil.firstSecondOfDate(DateUtil.convertStringToDate(model.getEndDate()+"-31"));
+        Date first = DateUtil.firstSecondOfDate(DateUtil.convertStringToDate(model.getStartDate()
+            + "-1"));
+        Date end = DateUtil.firstSecondOfDate(DateUtil.convertStringToDate(model.getEndDate()
+            + "-31"));
         // logger.info("开始日期：" + first + " 结束日期：" + end);
         if (first != null && end != null) {
           model.setStartTimeOfTheYear(first);
@@ -181,9 +189,10 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
     }
     List data = gridStationDao.queryStation(model);
     getRequest().setAttribute("items", data);
-    if(StringUtils.isNotBlank(model.getNetCode())){
-      getRequest().setAttribute("currentProvince", provinceLatlng.getProvinceByCode(model.getNetCode()));
-    }else{
+    if (StringUtils.isNotBlank(model.getNetCode())) {
+      getRequest().setAttribute("currentProvince",
+          provinceLatlng.getProvinceByCode(model.getNetCode()));
+    } else {
       getRequest().setAttribute("currentProvince", provinceLatlng.getCurrentProvince());
     }
     return "stationmap";
@@ -279,7 +288,7 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
    */
   public Map<String, String> getNetCodes() {
     Criteria c = new Criteria();
-    c.setSchema(dataSourceManager.getCzSchema());
+    c.setSchema(dataSourceManager.getQzSchema());
     List<String> list = gridStationDao.getTemplate().queryForList("cz.queryNetCode", c);
     Map map = new LinkedHashMap();
     for (String netCode : list) {
@@ -288,6 +297,31 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
       }
     }
     return map;
+  }
+
+  /**
+   * 导出EQT格式数据
+   * 
+   * @return
+   */
+  public String eqt() {
+    String data = exportEqtData();
+    logger.debug("导出的数据：{}", data);
+    getResponse().addHeader("Content-Disposition", "attachment;filename=\"EQT.txt\"");
+    render(getResponse(), data, "text/html");
+    return null;
+
+  }
+
+  /**
+   * 根据数据格式导出相应数据
+   * 
+   * @return
+   */
+  private String exportEqtData() {
+    model.setSchema(dataSourceManager.getQzSchema());
+    StringBuffer buf = exportStationDao.queryForEqt(model);
+    return buf.toString();
   }
 
   /**
