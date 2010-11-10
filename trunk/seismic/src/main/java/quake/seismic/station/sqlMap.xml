@@ -33,22 +33,22 @@
                         resultMap="queryStationResult">
 		<![CDATA[
 		SELECT ID,NET_CODE,STA_CODE,STA_CNAME,ROCK_TYPE,STA_LAT,STA_LON,STA_ELEV,STA_STARTDATE,STA_ENDDATE,SITE_NAME
-		FROM $schema$.Station_info ST
+		FROM $schema$.Station_info ST 
 		]]>
 		<dynamic prepend="WHERE">
 		    <!-- 加入台网查询条件 BY Sam 20090707 -->
-		    <isNotEmpty property="startTimeOfTheYear">
-		        <isNotEmpty property="endTimeOfTheYear">
-		           <![CDATA[
-		           AND((ONDATE>=#startTimeOfTheYear#) AND (ONDATE<=#endTimeOfTheYear#))
-		           ]]>
-		        </isNotEmpty>
-		    </isNotEmpty>
-		    
-		    <isNotEmpty prepend="AND" property="netCode">
+		     <isNotEmpty prepend="AND" property="netCode">
 		       <![CDATA[(NET_CODE=#netCode#)]]>
 		    </isNotEmpty>
 		    
+		     <isNotEmpty property="startTimeOfTheYear">
+		        <isNotEmpty prepend="AND" property="endTimeOfTheYear">
+		           <![CDATA[
+		           ((ONDATE>=#startTimeOfTheYear#) AND (ONDATE<=#endTimeOfTheYear#))
+		           ]]>
+		        </isNotEmpty>
+		    </isNotEmpty>	 
+		       
 		</dynamic>
 	</select>
 	<!-- 测震仪器选择列表查询 MySQL-->
