@@ -5,7 +5,7 @@
 <%@page import="com.systop.common.modules.security.user.model.User"%>
 <html>
 <head>
-<title>地震数据共享省级中心网站平台</title>
+<title>测震数据服务网站管理平台</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <%@include file="/common/extjs.jsp"%>
 <LINK href="${ctx}/styles/style.css" type='text/css' rel='stylesheet'>
@@ -64,18 +64,17 @@
                         iconCls:'template'
                     },
                     {                    
-                        title:'专题管理',
-                        html:document.getElementById('specials').innerHTML,
-                        border:false,
-                        iconCls:'template'
-                    },
-                    {                    
                         title:'链接、反馈',
                         html:document.getElementById('announce').innerHTML,
                         border:false,
                         iconCls:'announce'
                     },
-                    
+                    {                    
+                        title:'专题管理',
+                        html:document.getElementById('specials').innerHTML,
+                        border:false,
+                        iconCls:'template'
+                    },
                     {                    
                         title:'许可管理',
                         html:document.getElementById('menu_sys').innerHTML,
@@ -87,11 +86,6 @@
                         html:document.getElementById('smtpsetting').innerHTML,
                         border:false,
                         iconCls:'system'
-                    },{
-                    	title:'网站统计',
-                    	html:document.getElementById('counter').innerHTML,
-                    	border:false,
-                    	iconCls:'system'
                     }]
                 },
                 
