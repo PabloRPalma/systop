@@ -72,7 +72,6 @@ public class SeedDao extends AbstractSeedDao<Page> {
   /**
    * 判断SEED文件是否解析
    */
-  @SuppressWarnings("unchecked")
   private void seedAnalysis(String seedFile, Map map) {
     int count = querySeedPlotsDataCount(seedFile);
     if (count > 0) {
