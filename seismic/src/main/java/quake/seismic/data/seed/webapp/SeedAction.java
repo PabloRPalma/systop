@@ -61,7 +61,6 @@ public class SeedAction extends AbstractQueryAction<Criteria> {
   /**
    * 显示Seed文件解析内容,各台站监测事件数据
    */
-  @SuppressWarnings("unchecked")
   public String showSeed() {
     String seedName = getRequest().getParameter("seedname");
     StringBuffer seedFile = new StringBuffer("");
@@ -72,7 +71,7 @@ public class SeedAction extends AbstractQueryAction<Criteria> {
     }
     List<Map<String, Object>> items = seedDao.querySeedPlotsData(seedFile.toString());
     StaCriteria criteria = new StaCriteria();
-    criteria.setSchema(dataSourceManager.getCzSchema());
+    criteria.setSchema(dataSourceManager.getQzSchema());
     // 遍历所有的事件，取出对应Seed文件名，并将台站代码替换为台站中文名
     for (Map map : items) {
       String seedFileName = "";
@@ -96,7 +95,9 @@ public class SeedAction extends AbstractQueryAction<Criteria> {
         logger.debug("criteria:" + criteria.getNetCode() + "." + criteria.getStaCode());
         station = seedDao.queryStaName(criteria);// 获取台站中文名
       }
-      map.put("Station", station);
+      if(StringUtils.isNotBlank(station)) {
+        map.put("Station", station);
+      }
     }
     getRequest().setAttribute("items", items);
     return "show";
