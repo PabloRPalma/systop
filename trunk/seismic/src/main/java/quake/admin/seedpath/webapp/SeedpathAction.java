@@ -38,7 +38,7 @@ public class SeedpathAction extends BaseAction implements ModelDriven<Seedpath> 
   @Autowired(required = true)
   private SeedpathManager manager;
 
-  private String josnResult;
+  private String jsonResult;
   
   /**
    * 编辑或者新建Action
@@ -101,7 +101,7 @@ public class SeedpathAction extends BaseAction implements ModelDriven<Seedpath> 
    */
   public String execSeedPro() {
     if(isRunning()) { //检查seed是否正在运行
-      josnResult = "seed程序正在运行,不可同时运行两个seed程序！";
+      jsonResult = "seed程序正在运行,不可同时运行两个seed程序！";
       return "seedResult";
     }
     Seedpath seedpath = manager.get();
@@ -117,22 +117,29 @@ public class SeedpathAction extends BaseAction implements ModelDriven<Seedpath> 
           Process process = procBuilder.start();
           
           drainInBackground(process.getInputStream());
+          /*
+          BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+          String out = "";
+          while((out = reader.readLine()) != null) {
+            System.out.println(out);
+          }
+          */
           int exit = process.waitFor();
           logger.info("seed程序退出{}", exit);
-          josnResult = "seed解析程序运行成功！";
+          jsonResult = "seed解析程序运行成功！";
         } else {
-          josnResult = "seed程序未找到。";
+          jsonResult = "seed程序未找到。";
         }
       } catch (IOException e) {
         e.printStackTrace();
         logger.error("程序：" + pro + " 执行错误...");
-        josnResult = "seed程序执行错误。" + e.getMessage();
+        jsonResult = "seed程序执行错误。" + e.getMessage();
       } catch (InterruptedException e) {
         e.printStackTrace();
-        josnResult = "seed程序非正常中断退出。" + e.getMessage();
+        jsonResult = "seed程序非正常中断退出。" + e.getMessage();
       }
     } else {
-      josnResult = "未找到seed程序路径。";
+      jsonResult = "未找到seed程序路径。";
     }
     return "seedResult";
   }
@@ -200,11 +207,11 @@ public class SeedpathAction extends BaseAction implements ModelDriven<Seedpath> 
   }
 
   public String getJosnResult() {
-    return josnResult;
+    return jsonResult;
   }
 
   public void setJosnResult(String josnResult) {
-    this.josnResult = josnResult;
+    this.jsonResult = josnResult;
   }
   
   /**

@@ -14,7 +14,7 @@
 		 <action name="exeSeedPro" class="seedpathAction" method="execSeedPro">
 		     <result type="json" name="seedResult">
 		        <param name="ignoreHierarchy">false</param>
-		        <param name="root">josnResult</param>
+		        <param name="root">jsonResult</param>
 		 	 </result>
 		 </action>
 	</package>

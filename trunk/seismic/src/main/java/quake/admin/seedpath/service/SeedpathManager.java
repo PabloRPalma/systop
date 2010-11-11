@@ -95,7 +95,7 @@ public class SeedpathManager implements Definable {
       .append(folderPath).append("data/sac").append("\n")
       .append(folderPath).append("bin").append("\n")
       .append("host:localhost").append("\n")
-      .append("database:eq").append("\n")
+      .append("database:quake").append("\n")
       .append("table:seed_plots").append("\n")
       .append("user:").append(userName).append("\n")
       .append("passwd:").append(password).append("\n");
