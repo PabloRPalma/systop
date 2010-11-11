@@ -181,6 +181,7 @@ public class CatAction extends AbstractQueryAction<Criteria> {
         Page page = gridCatDao.query(model);
         logger.debug("查询出的记录数：{}",page.getData().size());
         getRequest().setAttribute("items", page.getData());
+        cats = page.getData(); //供震相、Seed使用的数据
         restorePageData(page.getRows(), getPageSize());
       } catch (Exception e) {
         logger.error("数据查询错误{}", e.getMessage());
