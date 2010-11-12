@@ -16,7 +16,10 @@ public abstract class AbstractInstrDao<T> extends AbstractSeismicDao {
   protected static final String SQL_ID = "cz.queryInstr";
   
   protected static final String SQL_COUNT_ID = "cz.queryInstrCount";
-  
+  /**
+   * 查询仪器所在台站
+   */
+  protected static final String SQL_STA_INSTR_ID = "cz.queryStaOfInstr";
   /**
    * 根据条件查询仪器信息
    * @param criteria  封装查询条件的<code>Criteria</code>对象
