@@ -16,20 +16,45 @@
         <result property="Use_type" column="Use_type" javaType="String"/>
         <result property="Ondate" column="Ondate" javaType="java.util.Date"/>
         <result property="Offdate" column="Offdate" javaType="java.util.Date"/>
-        <result property="Remark" column="Remark" javaType="String"/>
+        <result property="Instr_type" column="Instr_type" javaType="String"/>
     </resultMap>
     <!-- 查询仪器数据 -->
 	<select id="queryInstr" parameterClass="quake.seismic.instrument.model.Instrument"
                         resultMap="queryInstrResult">
 		<![CDATA[
-		SELECT id,Organization_code,Instr_model,Instru_sn,Mac,Instr_ver,Resp_ID,
-				Sensitivity,Use_type,Ondate,Offdate,Remark
-		FROM $schema$.instru_archive
+		SELECT id,Organization_code,arch.Instr_model as Instr_model,Instru_sn,Mac,Instr_ver,Resp_ID,
+				Sensitivity,Use_type,Ondate,Offdate,dic.Instr_type as Instr_type
+		FROM $schema$.instru_archive arch LEFT JOIN $schema$.instr_dic dic ON arch.Instr_model=dic.Instr_model
 		]]>
 		<dynamic prepend="WHERE">
 		    <isNotEmpty prepend="AND" property="netCode">
 		       <![CDATA[(Organization_code=#netCode#)]]>
 		    </isNotEmpty>
+		    <isNotEmpty prepend="AND" property="useType">
+		       <![CDATA[(Use_type=#useType#)]]>
+		    </isNotEmpty>
+		    <isNotEmpty prepend="AND" property="instrType">
+		       <![CDATA[(Instr_type=#instrType#)]]>
+		    </isNotEmpty>
+		    <!-- 启用时间 -->
+		    <isNotEmpty property="startDate">
+				<isNotEmpty prepend="AND" property="endDate">
+				<![CDATA[
+				((Ondate>=#startDate#) AND (Ondate<=#endDate#))
+				]]>
+				</isNotEmpty>
+			</isNotEmpty>
+			<isNotEmpty property="startDate">
+				<isEmpty prepend="AND" property="endDate">
+				<![CDATA[(Ondate>=#startDate#)]]>
+				</isEmpty>
+			</isNotEmpty>
+			<isNotEmpty property="endDate">
+				<isEmpty prepend="AND" property="startDate">
+				<![CDATA[(Ondate<=#endDate#)]]>
+				</isEmpty>
+			</isNotEmpty>
+			
 		</dynamic>
 		<dynamic prepend="ORDER BY">
 			<isNotEmpty property="sortProperty">
@@ -50,12 +75,37 @@
                         resultClass="Integer">
 		<![CDATA[
 		SELECT count(0)
-		FROM $schema$.instru_archive
+		FROM $schema$.instru_archive arch LEFT JOIN $schema$.instr_dic dic ON arch.Instr_model=dic.Instr_model
 		]]>
 		<dynamic prepend="WHERE">
 		    <isNotEmpty prepend="AND" property="netCode">
 		       <![CDATA[(Organization_code=#netCode#)]]>
 		    </isNotEmpty>
+		    <isNotEmpty prepend="AND" property="useType">
+		       <![CDATA[(Use_type=#useType#)]]>
+		    </isNotEmpty>
+		    <isNotEmpty prepend="AND" property="instrType">
+		       <![CDATA[(Instr_type=#instrType#)]]>
+		    </isNotEmpty>
+		    <!-- 启用时间 -->
+		    <isNotEmpty property="startDate">
+				<isNotEmpty prepend="AND" property="endDate">
+				<![CDATA[
+				((Ondate>=#startDate#) AND (Ondate<=#endDate#))
+				]]>
+				</isNotEmpty>
+			</isNotEmpty>
+			<isNotEmpty property="startDate">
+				<isEmpty prepend="AND" property="endDate">
+				<![CDATA[(Ondate>=#startDate#)]]>
+				</isEmpty>
+			</isNotEmpty>
+			<isNotEmpty property="endDate">
+				<isEmpty prepend="AND" property="startDate">
+				<![CDATA[(Ondate<=#endDate#)]]>
+				</isEmpty>
+			</isNotEmpty>
+			
 		</dynamic>
 		<dynamic prepend="ORDER BY">
 			<isNotEmpty property="sortProperty">
@@ -71,5 +121,25 @@
 			</isEmpty>
 		</dynamic>
 	</select>
+	<!--查询台网代码-->
+	<select id="queryNetCodeAtInstr" parameterClass="quake.seismic.instrument.model.Instrument"
+		resultClass="java.lang.String">
+		<![CDATA[
+		SELECT DISTINCT NET_CODE FROM $schema$.Network_info
+		]]>
+	</select>
 	
+	<!-- 仪器所在台站 -->
+	<select id="queryStaOfInstr" parameterClass="quake.seismic.instrument.model.Instrument"
+                        resultClass="String">
+		<![CDATA[
+		SELECT sta.Sta_cname
+		FROM $schema$.loc_info loc LEFT JOIN $schema$.station_info sta ON loc.Net_code=sta.Net_code AND loc.Sta_code=sta.Sta_code
+		]]>
+		<dynamic prepend="WHERE">
+		    <isNotEmpty prepend="AND" property="instrModel">
+		       <![CDATA[(loc.Sensor_model=#instrModel#) or (loc.Digitizer_model=#instrModel#)]]>
+		    </isNotEmpty>
+		</dynamic>
+	</select>
 </sqlMap>
