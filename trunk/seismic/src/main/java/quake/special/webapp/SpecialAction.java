@@ -102,7 +102,7 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
       criteria.setTableName(tableName);
       criteria.setPage(new Page(Page.start(getPageNo(), getPageSize()), getPageSize()));
       // 测震SCHEMA
-      criteria.setSchema(dataSourceManager.getCzSchema());
+      criteria.setSchema(dataSourceManager.getSeismicSchema());
       criteria.setSortProperty(getSortProperty());
       criteria.setSortDir(getSortDir());
       if (criteria.getEndDate() == null) {
@@ -217,7 +217,7 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
       criteria.setTableName(tableName);
       criteria.setPage(new Page(Page.start(getPageNo(), getPageSize()), getPageSize()));
       // 测震SCHEMA
-      criteria.setSchema(dataSourceManager.getCzSchema());
+      criteria.setSchema(dataSourceManager.getSeismicSchema());
       criteria.setSortProperty(getSortProperty());
       criteria.setSortDir(getSortDir());
       criteria.setQcId(qcId);

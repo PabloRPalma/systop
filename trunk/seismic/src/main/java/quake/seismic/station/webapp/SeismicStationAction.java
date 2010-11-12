@@ -100,7 +100,7 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
       model.setPage(getPage());
       model.setOrder(getSortDir());
       // 测震SCHEMA
-      model.setSchema(dataSourceManager.getQzSchema());
+      model.setSchema(dataSourceManager.getStationSchema());
       /*
        * 不同省份有不同的台网代码，暂时不考虑台网问题,即使考虑台网，如何取得有待确定....
        * model.setNetCode(SeismicConstants.NETWORK_INFO_HE);
@@ -138,7 +138,7 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
   @Deprecated
   public String stationSettings() {
     // 测震SCHEMA
-    model.setSchema(dataSourceManager.getCzSchema());
+    model.setSchema(dataSourceManager.getSeismicSchema());
     /*
      * 不同省份有不同的台网代码，暂时不考虑台网问题,即使考虑台网，如何取得有待确定....
      * model.setNetCode(SeismicConstants.NETWORK_INFO_HE);
@@ -169,7 +169,7 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
    */
   public String stationGis() {
     // 测震SCHEMA
-    model.setSchema(dataSourceManager.getQzSchema());
+    model.setSchema(dataSourceManager.getStationSchema());
     /*
      * 不同省份有不同的台网代码，暂时不考虑台网问题,即使考虑台网，如何取得有待确定....
      * model.setNetCode(SeismicConstants.NETWORK_INFO_HE);
@@ -264,7 +264,7 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
   private List<Map> getInstrByType(String instrType) {
     List list = Collections.EMPTY_LIST;
     InstrDic instrDic = new InstrDic();
-    instrDic.setSchema(dataSourceManager.getCzSchema());
+    instrDic.setSchema(dataSourceManager.getSeismicSchema());
     if (StringUtils.isNotEmpty(instrType)) {
       instrDic.setTypeLen(instrType.length());
       instrDic.setInstrType(instrType);
@@ -291,7 +291,7 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
    */
   public Map<String, String> getNetCodes() {
     Criteria c = new Criteria();
-    c.setSchema(dataSourceManager.getQzSchema());
+    c.setSchema(dataSourceManager.getStationSchema());
     List<String> list = gridStationDao.getTemplate().queryForList("cz.queryNetCode", c);
     Map map = new LinkedHashMap();
     for (String netCode : list) {
@@ -322,7 +322,7 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
    * @return
    */
   private String exportRespData() {
-    model.setSchema(dataSourceManager.getQzSchema());
+    model.setSchema(dataSourceManager.getStationSchema());
     model.setId(stataionId);
     StringBuffer buf = exportStationDao.queryForEqt(model);
     return buf.toString();

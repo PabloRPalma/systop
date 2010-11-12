@@ -99,7 +99,7 @@ public class CatAction extends AbstractQueryAction<Criteria> {
       try {
         model.setPage(getPage());
         //测震SCHEMA
-        model.setSchema(dataSourceManager.getCzSchema());
+        model.setSchema(dataSourceManager.getSeismicSchema());
         model.setSortProperty(getSortProperty());
         model.setSortDir(getSortDir());
         
@@ -169,7 +169,7 @@ public class CatAction extends AbstractQueryAction<Criteria> {
       try {
         model.setPage(getPage());
         //测震SCHEMA
-        model.setSchema(dataSourceManager.getCzSchema());
+        model.setSchema(dataSourceManager.getSeismicSchema());
         model.setSortProperty(getSortProperty());
         model.setSortDir(getSortDir());
         //limit查询，设定start和size
@@ -262,7 +262,7 @@ public class CatAction extends AbstractQueryAction<Criteria> {
   private String exportData() {
     if (StringUtils.isNotBlank(model.getTableName())) {
       //测震SCHEMA
-      model.setSchema(dataSourceManager.getCzSchema());
+      model.setSchema(dataSourceManager.getSeismicSchema());
       StringBuffer buf = exportCatDao.query(model);
       return buf.toString();
     } else {
@@ -277,7 +277,7 @@ public class CatAction extends AbstractQueryAction<Criteria> {
   private String exportVlmData() {
     if (StringUtils.isNotBlank(model.getTableName())) {
       //测震SCHEMA
-      model.setSchema(dataSourceManager.getCzSchema());
+      model.setSchema(dataSourceManager.getSeismicSchema());
       StringBuffer buf = exportCatDao.queryForVlm(model);
       return buf.toString();
     } else {
@@ -297,7 +297,7 @@ public class CatAction extends AbstractQueryAction<Criteria> {
    */
   public Map<String, String> getNetCodes() {
     Criteria criteria = new Criteria();
-    criteria.setSchema(dataSourceManager.getQzSchema());
+    criteria.setSchema(dataSourceManager.getStationSchema());
     
     List<Map> list = gridCatDao.queryNetwordInfo(criteria);
     Map map = new LinkedHashMap();

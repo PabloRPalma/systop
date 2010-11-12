@@ -44,7 +44,7 @@ public abstract class AbstractSeismicDao {
    * 
    * <pre>
    * protected DataType getDataType() {
-   *   return DataType.SEISMIC; //or DataType.SIGN
+   *   return DataType.SEISMIC; //or DataType.STATIONS
    * }
    * </pre>
    */

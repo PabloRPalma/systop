@@ -362,7 +362,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
    */
   private List<Map> getMagOfCatalog(String catalogId, Criteria criteria) {
     MagCriteria magCriteria = new MagCriteria();
-    magCriteria.setSchema(dataSourceManager.getCzSchema());
+    magCriteria.setSchema(dataSourceManager.getSeismicSchema());
     //如果已经配置了震级表
     if(StringUtils.isNotEmpty(criteria.getMagTname())) {
       magCriteria.setTableName(criteria.getMagTname());
@@ -380,7 +380,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
    */
   private List<Map> getPhaseOfCatalog(String catalogId, Criteria criteria) {
     PhaseCriteria phaseCriteria = new PhaseCriteria();
-    phaseCriteria.setSchema(dataSourceManager.getCzSchema());
+    phaseCriteria.setSchema(dataSourceManager.getSeismicSchema());
     //如果已经配置了震相表
     if(StringUtils.isNotEmpty(criteria.getPhaseTname())) {
       phaseCriteria.setTableName(criteria.getPhaseTname());
@@ -397,7 +397,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
    */
   public Object queryNetwordInfo(Criteria criteria) {
     //查询基本信息数据库中的台网表
-    criteria.setSchema(dataSourceManager.getQzSchema());
+    criteria.setSchema(dataSourceManager.getStationSchema());
     return getTemplate().queryForObject("cz.queryNetworkInfo", criteria);
   }
   
