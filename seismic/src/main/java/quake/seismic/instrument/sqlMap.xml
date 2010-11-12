@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="cz">
+    <resultMap class="java.util.HashMap" id="queryInstrResult">
+    	<result property="id" column="id" javaType="Integer"/>
+        <result property="Organization_code" column="Organization_code" javaType="String"/>
+        <result property="Instr_model" column="Instr_model" javaType="String"/>
+        <result property="Instru_sn" column="Instru_sn" javaType="String"/>
+        <result property="Mac" column="Mac" javaType="String"/>
+        <result property="Instr_ver" column="Instr_ver" javaType="String"/>
+        <result property="Resp_ID" column="Resp_ID" javaType="String"/>
+        <result property="Sensitivity" column="Sensitivity" javaType="String"/>
+        <result property="Use_type" column="Use_type" javaType="String"/>
+        <result property="Ondate" column="Ondate" javaType="java.util.Date"/>
+        <result property="Offdate" column="Offdate" javaType="java.util.Date"/>
+        <result property="Remark" column="Remark" javaType="String"/>
+    </resultMap>
+    <!-- 查询仪器数据 -->
+	<select id="queryInstr" parameterClass="quake.seismic.instrument.model.Instrument"
+                        resultMap="queryInstrResult">
+		<![CDATA[
+		SELECT id,Organization_code,Instr_model,Instru_sn,Mac,Instr_ver,Resp_ID,
+				Sensitivity,Use_type,Ondate,Offdate,Remark
+		FROM $schema$.instru_archive
+		]]>
+		<dynamic prepend="WHERE">
+		    <isNotEmpty prepend="AND" property="netCode">
+		       <![CDATA[(Organization_code=#netCode#)]]>
+		    </isNotEmpty>
+		</dynamic>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortProperty">
+				<isNotEmpty property="sortDir">
+					<![CDATA[$sortProperty$ $sortDir$]]>
+				</isNotEmpty>
+			</isNotEmpty>
+			
+			<isEmpty property="sortProperty">
+				<isEmpty property="sortDir">
+					<![CDATA[id asc]]>
+				</isEmpty>
+			</isEmpty>
+		</dynamic>
+	</select>
+	<!-- 查询仪器总数 -->
+	<select id="queryInstrCount" parameterClass="quake.seismic.instrument.model.Instrument"
+                        resultClass="Integer">
+		<![CDATA[
+		SELECT count(0)
+		FROM $schema$.instru_archive
+		]]>
+		<dynamic prepend="WHERE">
+		    <isNotEmpty prepend="AND" property="netCode">
+		       <![CDATA[(Organization_code=#netCode#)]]>
+		    </isNotEmpty>
+		</dynamic>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortProperty">
+				<isNotEmpty property="sortDir">
+					<![CDATA[$sortProperty$ $sortDir$]]>
+				</isNotEmpty>
+			</isNotEmpty>
+			
+			<isEmpty property="sortProperty">
+				<isEmpty property="sortDir">
+					<![CDATA[id asc]]>
+				</isEmpty>
+			</isEmpty>
+		</dynamic>
+	</select>
+	
+</sqlMap>
