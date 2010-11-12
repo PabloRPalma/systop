@@ -144,12 +144,20 @@ default-lazy-init="true"  default-autowire="byName">
 	          <value>classpath:sqlmap/sql-map-config-cz.xml</value>
 	      </list>
 	   </property>
-	  
+	   <property name="qzConfigLocations">
+          <list>
+	          <value>classpath:sqlmap/sql-map-config-qz.xml</value>
+	      </list>
+	   </property>
 	   <property name="czMappingLocations">
 	       <list>
 	          <value>classpath*:quake/**/sqlMap.xml</value>
 	       </list>
 	   </property>
-	  
+	   <property name="qzMappingLocations">
+	       <list>
+	          <value>classpath*:quake/**/sqlMap.xml</value>
+	       </list>
+	   </property>
 	</bean>
 </beans>
