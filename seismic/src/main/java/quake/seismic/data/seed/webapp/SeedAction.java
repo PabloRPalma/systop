@@ -71,7 +71,7 @@ public class SeedAction extends AbstractQueryAction<Criteria> {
     }
     List<Map<String, Object>> items = seedDao.querySeedPlotsData(seedFile.toString());
     StaCriteria criteria = new StaCriteria();
-    criteria.setSchema(dataSourceManager.getQzSchema());
+    criteria.setSchema(dataSourceManager.getStationSchema());
     // 遍历所有的事件，取出对应Seed文件名，并将台站代码替换为台站中文名
     for (Map map : items) {
       String seedFileName = "";

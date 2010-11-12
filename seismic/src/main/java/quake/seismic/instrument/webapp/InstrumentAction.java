@@ -46,7 +46,7 @@ public class InstrumentAction extends AbstractQueryAction<Instrument> {
       model.setPage(getPage());
       model.setSortProperty(getSortProperty());
       model.setSortDir(getSortDir());
-      model.setSchema(dataSourceManager.getQzSchema());
+      model.setSchema(dataSourceManager.getStationSchema());
       Page page = instrumentDao.query(model);
       if (page != null) {
         getRequest().setAttribute("items", page.getData());

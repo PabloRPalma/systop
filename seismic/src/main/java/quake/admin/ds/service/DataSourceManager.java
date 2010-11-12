@@ -197,7 +197,7 @@ public class DataSourceManager implements Definable {
         // 构建测震数据源
         dataSources.put(DataType.SEISMIC, closeAndRebuild(dsInfo, DataType.SEISMIC));
         // 构建前兆数据源
-        dataSources.put(DataType.SIGN, closeAndRebuild(dsInfo, DataType.SIGN));
+        dataSources.put(DataType.STATIONS, closeAndRebuild(dsInfo, DataType.STATIONS));
       } finally {
         write.unlock();
       }
@@ -360,7 +360,7 @@ public class DataSourceManager implements Definable {
   /**
    * 返回测震SCHEMA
    */
-  public String getCzSchema() {
+  public String getSeismicSchema() {
     if (isDefined()) {
       String schema = get().getCzSchema();
       return (StringUtils.isBlank(schema)) ? DEFAULT_CZ_SCHEMA : schema;
@@ -372,7 +372,7 @@ public class DataSourceManager implements Definable {
   /**
    * 返回前兆SCHEMA
    */
-  public String getQzSchema() {
+  public String getStationSchema() {
     if (isDefined()) {
       String schema = get().getQzSchema();
       return (StringUtils.isBlank(schema)) ? DEFAULT_QZ_SCHEMA : schema;

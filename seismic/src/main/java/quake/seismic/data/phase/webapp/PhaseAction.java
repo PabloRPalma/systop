@@ -52,7 +52,7 @@ public class PhaseAction extends AbstractQueryAction<PhaseCriteria> {
     if (StringUtils.isNotBlank(model.getTableName())) {
       try {
         // 测震SCHEMA
-        model.setSchema(dataSourceManager.getCzSchema());
+        model.setSchema(dataSourceManager.getSeismicSchema());
         List items = gridPhaseDao.query(model);
         logger.debug("地震目录ID：{}，对应的震相数：{}", model.getCatId(), items.size());
         getRequest().setAttribute("items", items);
@@ -71,7 +71,7 @@ public class PhaseAction extends AbstractQueryAction<PhaseCriteria> {
   public String exportData() {
     if (StringUtils.isNotBlank(model.getTableName())) {
       // 测震SCHEMA
-      model.setSchema(dataSourceManager.getCzSchema());
+      model.setSchema(dataSourceManager.getSeismicSchema());
       StringBuffer buf = exportPhaseDao.query(model);
       render(getResponse(), buf.toString(), "text/html");
       return null;

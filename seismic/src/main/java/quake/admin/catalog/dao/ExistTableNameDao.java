@@ -40,7 +40,7 @@ public class ExistTableNameDao {
     }
     JdbcTemplate jt = new JdbcTemplate();
     jt.setDataSource(dsi);
-    String schema = dataSourceManager.getCzSchema();   
+    String schema = dataSourceManager.getSeismicSchema();   
     StringBuffer sql = new StringBuffer("select * from ")
       .append(schema)
       .append(".")

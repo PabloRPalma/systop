@@ -57,7 +57,7 @@ public class CzCatFreeMarkerManager{
     model.setSortProperty("O_TIME");
     model.setSortDir("desc");
     model.setPage(page);
-    model.setSchema(dataSourceManager.getCzSchema());
+    model.setSchema(dataSourceManager.getSeismicSchema());
     model.setTableName(czCat.getCltName());
     model.setMagTname(czCat.getMagTname());
     //limit查询，设定start和size

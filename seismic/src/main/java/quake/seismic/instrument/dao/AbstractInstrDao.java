@@ -26,6 +26,6 @@ public abstract class AbstractInstrDao<T> extends AbstractSeismicDao {
   
   @Override
   protected DataType getDataType() {
-    return DataType.SIGN;
+    return DataType.STATIONS;
   }
 }
