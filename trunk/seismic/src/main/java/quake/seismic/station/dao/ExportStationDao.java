@@ -32,7 +32,6 @@ public class ExportStationDao extends AbstractStationDao {
     StringBuffer sb = new StringBuffer();
     sb.append(StationConstants.ROW_START).append("    ").append(
         "<< IRIS SEED Reader, Release 5.0 >>").append(StationConstants.NEW_LINE);
-    sb.append(StationConstants.ROW_START).append(StationConstants.NEW_LINE);
     List<Map> stationList = queryStationById(model);
     if (stationList.size() == 1) {
       Map m = stationList.get(0);
@@ -73,7 +72,7 @@ public class ExportStationDao extends AbstractStationDao {
               .append("               ").append("+--------------------------------------------+")
               .append("               ").append("+").append(StationConstants.NEW_LINE);
           sb.append(StationConstants.ROW_START).append("    ").append("+")
-              .append("               ").append("|   Response  (Poles & Zeros),   )").append(
+              .append("               ").append("|   Response  (Poles & Zeros),   ").append(
                   m.get("STA_CODE")).append(" ch ").append(channelMap.get("CHN_CODE")).append(
                   "   |").append("               ").append("+").append(StationConstants.NEW_LINE);
           sb.append(StationConstants.ROW_START).append("    ").append("+")
@@ -100,27 +99,27 @@ public class ExportStationDao extends AbstractStationDao {
 
           temp.put("att", "Signal_output_unit");
 
-          sb.append("B053F05").append("    ").append("Response out units lookup:").append("    ")
+          sb.append("B053F06").append("    ").append("Response out units lookup:").append("    ")
               .append(getElementValue(l, temp)).append(StationConstants.NEW_LINE);
 
           temp.put("att", "Normalization_factor");
 
-          sb.append("B053F05").append("    ").append("A0 Normalization factor:").append("    ")
+          sb.append("B053F07").append("    ").append("A0 Normalization factor:").append("    ")
               .append(getElementValue(l, temp)).append(StationConstants.NEW_LINE);
 
           temp.put("att", "Normalization_frequency");
 
-          sb.append("B053F05").append("    ").append("Normalization frequency:").append("    ")
+          sb.append("B053F08").append("    ").append("Normalization frequency:").append("    ")
               .append(getElementValue(l, temp)).append(StationConstants.NEW_LINE);
 
           temp.put("att", "zero");
           List zeroList = getChildCount(l, temp);
-          sb.append("B053F05").append("    ").append("Normalization frequency:").append("    ")
+          sb.append("B053F09").append("    ").append("Normalization frequency:").append("    ")
               .append(zeroList.size()).append(StationConstants.NEW_LINE);
 
           temp.put("att", "pole");
           List poleList = getChildCount(l, temp);
-          sb.append("B053F05").append("    ").append("Normalization frequency:").append("    ")
+          sb.append("B053F14").append("    ").append("Normalization frequency:").append("    ")
               .append(poleList.size()).append(StationConstants.NEW_LINE);
 
           if (zeroList.size() > 0) {
