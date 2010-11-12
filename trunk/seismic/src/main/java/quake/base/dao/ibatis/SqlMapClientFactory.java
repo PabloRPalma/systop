@@ -35,7 +35,6 @@ import com.ibatis.sqlmap.engine.transaction.TransactionManager;
 import com.ibatis.sqlmap.engine.transaction.jdbc.JdbcTransactionConfig;
 import com.systop.core.ApplicationException;
 
-
 /**
  * IBatis SqlMapClient Factory.因为项目的特殊性（数据源会动态改变）， 所以不能使用Spring提供的<code>SqlMapClientFactoryBean</code>.
  * 但是，实现过程参考了Spring的这个类。
@@ -60,14 +59,22 @@ public class SqlMapClientFactory {
    */
   
   private Resource[] czConfigLocations;
+  /**
+   * 前兆Sql Map 配置文件的位置
+   */
   
+  private Resource[] qzConfigLocations;
   
   /**
    * 测震Sql 配置文件的位置
    */
   
   private Resource[] czMappingLocations;
+  /**
+   * 前兆Sql 配置文件的位置
+   */
   
+  private Resource[] qzMappingLocations;
   
   /**
    * 用于标识数据源信息是否改变
@@ -91,8 +98,9 @@ public class SqlMapClientFactory {
     if(!StringUtils.equals(dsi.toString(), dataSourceInfoString)) {
       try {
         SqlMapClient czClient = buildSqlMapClient(czConfigLocations, czMappingLocations, null, DataType.SEISMIC);
+        SqlMapClient qzClient = buildSqlMapClient(qzConfigLocations, qzMappingLocations, null, DataType.SIGN);
         SQL_MAP_CLIENTS.put(DataType.SEISMIC, czClient);
-                
+        SQL_MAP_CLIENTS.put(DataType.SIGN, qzClient);
       } catch (IOException e) {
         e.printStackTrace();
         throw new ApplicationException("SqlMapClient创建出现IO错误:" + e.getMessage());
@@ -242,6 +250,12 @@ public class SqlMapClientFactory {
     this.czConfigLocations = czConfigLocations;
   }
   
+  /**
+   * @param qzConfigLocations the qzCfonfigLocations to set
+   */
+  public void setQzConfigLocations(Resource[] qzConfigLocations) {
+    this.qzConfigLocations = qzConfigLocations;
+  }
 
   /**
    * @param czMappingLocations the czMappingLocations to set
@@ -250,4 +264,10 @@ public class SqlMapClientFactory {
     this.czMappingLocations = czMappingLocations;
   }
 
+  /**
+   * @param qzMappingLocations the qzMappingLocations to set
+   */
+  public void setQzMappingLocations(Resource[] qzMappingLocations) {
+    this.qzMappingLocations = qzMappingLocations;
+  }
 }
