@@ -15,6 +15,14 @@ public class Criteria extends PageSchemaAware {
    */
   private String netCode;
   /**
+   * 地震类型
+   */
+  private String eqType;
+  /**
+   * 地震序列标识
+   */
+  private String sequenName;
+  /**
    * 目录表名
    */
   private String tableName;
@@ -258,5 +266,21 @@ public class Criteria extends PageSchemaAware {
 
   public void setLocation(String location) {
     this.location = location;
+  }
+
+  public String getEqType() {
+    return eqType;
+  }
+
+  public void setEqType(String eqType) {
+    this.eqType = eqType;
+  }
+
+  public String getSequenName() {
+    return sequenName;
+  }
+
+  public void setSequenName(String sequenName) {
+    this.sequenName = sequenName;
   }
 }
