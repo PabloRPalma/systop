@@ -286,6 +286,12 @@ public class CatAction extends AbstractQueryAction<Criteria> {
   }
 
   /**
+   * 地震类型
+   */
+  public Map<String, String> getEqTypesMap() {
+    return SeismicConstants.QUERY_EQ_TYPE;
+  }
+  /**
    * 台网代码名称Map
    */
   public Map<String, String> getNetworkInfoMap() {
