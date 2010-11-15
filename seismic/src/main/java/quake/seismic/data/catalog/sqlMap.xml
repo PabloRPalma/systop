@@ -83,6 +83,14 @@
 		    <isNotEmpty prepend="AND" property="netCode">
 		       <![CDATA[(NET_CODE=#netCode#)]]>
 		    </isNotEmpty>
+		    <!-- 地震类型查询条件 -->
+		    <isNotEmpty prepend="AND" property="eqType">
+		       <![CDATA[(Eq_type=#eqType#)]]>
+		    </isNotEmpty>
+		    <!-- 地震序列标识 -->
+		    <isNotEmpty prepend="AND" property="sequenName">
+		       <![CDATA[(SEQUEN_NAME LIKE '%$sequenName$%')]]>
+		    </isNotEmpty>
 		    <!-- 震中地名查询条件 -->
 		    <isNotEmpty prepend="AND" property="location">
 		       <![CDATA[(LOCATION_CNAME LIKE '%$location$%')]]>
@@ -197,6 +205,14 @@
 			<!-- 台网查询条件 -->
 		    <isNotEmpty prepend="AND" property="netCode">
 		       <![CDATA[(NET_CODE=#netCode#)]]>
+		    </isNotEmpty>
+		    <!-- 地震类型查询条件 -->
+		    <isNotEmpty prepend="AND" property="eqType">
+		       <![CDATA[(Eq_type=#eqType#)]]>
+		    </isNotEmpty>
+		    <!-- 地震序列标识 -->
+		    <isNotEmpty prepend="AND" property="sequenName">
+		       <![CDATA[(SEQUEN_NAME LIKE '%$sequenName$%')]]>
 		    </isNotEmpty>
 		    <!-- 震中地名查询条件 -->
 		    <isNotEmpty prepend="AND" property="location">
