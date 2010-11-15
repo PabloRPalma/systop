@@ -1,6 +1,7 @@
 package quake.seismic;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -47,7 +48,7 @@ public class SeismicConstants {
   public static String ot = "其它";
 
   /**
-   * 地震类型代码Map
+   * 地震类型代码Map_用于地震目录下载时用
    */
   public static final Map<String, String> EQ_TYPE_MAP = new HashMap<String, String>();
   static {
@@ -62,6 +63,23 @@ public class SeismicConstants {
     EQ_TYPE_MAP.put(vp, "vp");
     EQ_TYPE_MAP.put(vt, "vt");
     EQ_TYPE_MAP.put(ot, "ot");
+  }
+  /**
+   * 地震类型代码Map_用于地震目录查询时用
+   */
+  public static final Map<String, String> QUERY_EQ_TYPE = new LinkedHashMap<String, String>();
+  static {
+    QUERY_EQ_TYPE.put(eq, eq);
+    QUERY_EQ_TYPE.put(ep, ep);
+    QUERY_EQ_TYPE.put(sp, sp);
+    QUERY_EQ_TYPE.put(ss, ss);
+    QUERY_EQ_TYPE.put(se, se);
+    QUERY_EQ_TYPE.put(ve, ve);
+    QUERY_EQ_TYPE.put(le, le);
+    QUERY_EQ_TYPE.put(vh, vh);
+    QUERY_EQ_TYPE.put(vp, vp);
+    QUERY_EQ_TYPE.put(vt, vt);
+    QUERY_EQ_TYPE.put(ot, ot);
   }
   /**
    * 测震台网代码
