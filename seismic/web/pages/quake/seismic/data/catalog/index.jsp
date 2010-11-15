@@ -5,9 +5,22 @@
 <head>
 <title></title>
 <%@include file="/common/quake.jsp" %>
+<link type="text/css" href="${ctx}/scripts/jquery/ui/css/jquery-ui-1.7.1.css"	rel="stylesheet" />
+<script type="text/javascript"	src="${ctx}/scripts/jquery/bgiframe/jquery.bgiframe.js"></script>
+<script type="text/javascript"	src="${ctx}/scripts/jquery/ui/jquery-ui-1.7.1.js"></script>
 <script type="text/javascript">
 $(function() {
 	$("#queryFrm").validate();
+	$("#dialog").dialog({
+		bgiframe: true,
+		autoOpen: false,
+		height: 300,
+		width: 500,
+		modal: false
+		});
+	$('#look').click(function() {
+			$('#dialog').dialog('open');
+		});
 });
 </script>
 </head>
@@ -90,12 +103,13 @@ $(function() {
 				  <input type="button" value="基本目录格式" onclick="exportData('${ctx}/quake/seismic/data/catalog/exportBasicVlm.do', '_blank')" class="button"/>
 				  <input type="button" value="WKF" onclick="exportData('${ctx}/quake/seismic/data/catalog/exportWkf.do', '_blank')" class="button"/>
 	  	      	  <input type="button" value="EQT" onclick="exportData('${ctx}/quake/seismic/data/catalog/exportEqt.do', '_blank')" class="button"/>
-		  	    </td>
+		  	    </td> 
 			</tr>
 			<tr>
 				<td height="24">&nbsp;
 		  	      <input type="button" value="完全目录格式" onclick="exportData('${ctx}/quake/seismic/data/catalog/exportFullVlm.do', '_blank')" class="button"/>
-		  	      <input value="XLS" onclick="downloadInXls()" size="9" style="text-align: center;cursor: auto;" type="button" class="button"/>
+		  	      <input type="button" value="XLS" onclick="downloadInXls()" class="button" style="width: 40px;"/>
+				  <input type="button" id="look" value="简介" class="button"/>
 				</td>
 			</tr>
 			</table>
@@ -144,6 +158,16 @@ $(function() {
 		<ec:column width="155" property="LOCATION_CNAME" title="震中地名" />
 	</ec:row>   
 </ec:table>
+</div>
+<div id="dialog" title="查看目录简介">
+   <table>
+       <tr>
+          <td align="center">${model.clcName}</td>
+       </tr>
+       <tr>
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;${model.clDescn}</td>
+       </tr>
+   </table>
 </div>
 <script type="text/javascript">
 function exportData(url, target) {
