@@ -9,11 +9,11 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import quake.GlobalConstants;
 import quake.base.model.PageSchemaAware;
 
-
 /**
  * 测震台站查询条件
+ * 
  * @author DU
- *
+ * 
  */
 public class Criteria extends PageSchemaAware {
   /**
@@ -24,81 +24,70 @@ public class Criteria extends PageSchemaAware {
    * 台网名称
    */
   private String netCode;
-  
+
   /**
-   * 台站代码  
+   * 台站代码
    */
   private String staCode;
-  
+
   /**
    * 起始日期查询条件
    */
   private String startDate;
-  
+
   /**
    * 结束日期查询条件
    */
   private String endDate;
-  
+
   /**
    * 起始年限的开始时间
    */
   private Date startTimeOfTheYear;
-  
+
   /**
    * 起始年限的结束时间
    */
   private Date endTimeOfTheYear;
-  
+
   /**
    * 地震计类型标示
    */
-  private String instrumentId;
-  
+  private String sensorModel;
+
   /**
    * 数据采集类型标示
    */
-  private String datarecordId;
+  private String digitizerModel;
 
+  /**
+   * 台站类型
+   */
+  String staType;
+  /**
+   * 台基类型
+   */
+  String rockType;
+  /**
+   * 台站名称
+   */
+  String staName;
+  
+  /**
+   * 通道id
+   */
+  String channelId;
   /**
    * 排序顺序
    */
   private String order;
-  
-  /**
-   * @return the instrumentId
-   */
-  public String getInstrumentId() {
-    return instrumentId;
-  }
-
-  /**
-   * @param instrumentId the instrumentId to set
-   */
-  public void setInstrumentId(String instrumentId) {
-    this.instrumentId = instrumentId;
-  }
-
-  /**
-   * @return the datarecordId
-   */
-  public String getDatarecordId() {
-    return datarecordId;
-  }
-
-  /**
-   * @param datarecordId the datarecordId to set
-   */
-  public void setDatarecordId(String datarecordId) {
-    this.datarecordId = datarecordId;
-  }
 
   /**
    * @return the order
    */
   public String getOrder() {
-    return (GlobalConstants.ORDER_DESC.equalsIgnoreCase(order)) ? 
-        GlobalConstants.ORDER_DESC : GlobalConstants.ORDER_ASC;
+    return (GlobalConstants.ORDER_DESC.equalsIgnoreCase(order)) ? GlobalConstants.ORDER_DESC
+        : GlobalConstants.ORDER_ASC;
   }
 
   /**
@@ -107,20 +96,20 @@ public class Criteria extends PageSchemaAware {
   public void setOrder(String order) {
     this.order = order;
   }
-  
+
   /**
    * 构造测震台站数据表名称
    */
   public String getTableName() {
     return "STATION_INFO";
   }
-  
+
   /**
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
   public boolean equals(Object obj) {
-    return EqualsBuilder.reflectionEquals(this, obj, new String[]{"tableName", "page"});
+    return EqualsBuilder.reflectionEquals(this, obj, new String[] { "tableName", "page" });
   }
 
   /**
@@ -128,7 +117,7 @@ public class Criteria extends PageSchemaAware {
    */
   @Override
   public int hashCode() {
-    return HashCodeBuilder.reflectionHashCode(this, new String[]{"tableName", "page"});
+    return HashCodeBuilder.reflectionHashCode(this, new String[] { "tableName", "page" });
   }
 
   /**
@@ -223,5 +212,53 @@ public class Criteria extends PageSchemaAware {
 
   public void setStaCode(String staCode) {
     this.staCode = staCode;
+  }
+
+  public String getStaType() {
+    return staType;
+  }
+
+  public void setStaType(String staType) {
+    this.staType = staType;
+  }
+
+  public String getRockType() {
+    return rockType;
+  }
+
+  public void setRockType(String rockType) {
+    this.rockType = rockType;
+  }
+
+  public String getStaName() {
+    return staName;
+  }
+
+  public void setStaName(String staName) {
+    this.staName = staName;
+  }
+
+  public String getSensorModel() {
+    return sensorModel;
+  }
+
+  public void setSensorModel(String sensorModel) {
+    this.sensorModel = sensorModel;
+  }
+
+  public String getDigitizerModel() {
+    return digitizerModel;
+  }
+
+  public void setDigitizerModel(String digitizerModel) {
+    this.digitizerModel = digitizerModel;
+  }
+
+  public String getChannelId() {
+    return channelId;
+  }
+
+  public void setChannelId(String channelId) {
+    this.channelId = channelId;
   }
 }
