@@ -15,11 +15,12 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import quake.DataType;
 import quake.ProvinceLatlng;
 import quake.admin.ds.service.DataSourceManager;
 import quake.base.webapp.AbstractQueryAction;
 import quake.seismic.SeismicConstants;
+import quake.seismic.instrument.InstrumentConstants;
+import quake.seismic.station.StationConstants;
 import quake.seismic.station.dao.AbstractStationDao;
 import quake.seismic.station.dao.ExportStationDao;
 import quake.seismic.station.dao.GridStationDao;
@@ -29,9 +30,7 @@ import quake.seismic.station.model.InstrDic;
 import com.systop.common.modules.template.Template;
 import com.systop.common.modules.template.TemplateContext;
 import com.systop.common.modules.template.TemplateRender;
-import com.systop.core.Constants;
 import com.systop.core.util.DateUtil;
-import com.systop.core.util.ResourceBundleUtil;
 
 /**
  * 测震台站查询Action
@@ -85,13 +84,15 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
   private Criteria model = new Criteria();
 
   /**
-   * 网站访问前缀
-   */
-  private String ctxUrl;
-  /**
    * 台站ID
    */
   private String stataionId;
+
+  /**
+   *通道ID
+   */
+  private String channelId;
+
   /**
    * 表格查询Action
    */
@@ -224,35 +225,17 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
   }
 
   /**
-   * 提供测震台站查询访问地址，并重定向到第三方提供的JSP页面。
-   */
-  public String xmlUrlJsp() {
-    StringBuffer staUrl = new StringBuffer();
-    staUrl.append(ctxUrl).append(SeismicConstants.STATION_INFO_URL).append("?model.startDate=")
-        .append(model.getStartDate()).append("&model.endDate=").append(model.getEndDate()).append(
-            "&model.instrumentId=").append(model.getInstrumentId()).append("&model.datarecordId=")
-        .append(model.getDatarecordId());
-    // logger.info("访问地址：" + staUrl.toString());
-    getRequest().setAttribute("xmlUrl", staUrl.toString());
-    return "xmlUrl";
-  }
-
-  /**
    * 地震计map,页面上显示的下拉列表
    */
-  public List<Map> getInstrumentsMap() {
-    String instrType = ResourceBundleUtil.getString(Constants.RESOURCE_BUNDLE,
-        "quake.instrtype.seismometer", "地震计");
-    return getInstrByType(instrType);
+  public List<Map> getSensorMap() {
+    return getInstrByType(InstrumentConstants.INSTR_TYPE_SENSOR);
   }
 
   /**
    * 数采map，页面上显示的下拉列表
    */
-  public List<Map> getDatarecordsMap() {
-    String instrType = ResourceBundleUtil.getString(Constants.RESOURCE_BUNDLE,
-        "quake.instrtype.das", "数采");
-    return getInstrByType(instrType);
+  public List<Map> getDigitizerMap() {
+    return getInstrByType(InstrumentConstants.INSTR_TYPE_DIGITIZER);
   }
 
   /**
@@ -264,18 +247,11 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
   private List<Map> getInstrByType(String instrType) {
     List list = Collections.EMPTY_LIST;
     InstrDic instrDic = new InstrDic();
-    instrDic.setSchema(dataSourceManager.getSeismicSchema());
+    instrDic.setSchema(dataSourceManager.getStationSchema());
     if (StringUtils.isNotEmpty(instrType)) {
-      instrDic.setTypeLen(instrType.length());
       instrDic.setInstrType(instrType);
     }
-    // 分别处理Oracle和Mysql
-    if (dataSourceManager.isOracle(DataType.SEISMIC)) {
-      list = gridStationDao.getAllInstrument(instrDic, AbstractStationDao.SQL_INSTR_ID_ORACLE);
-    } else {
-      list = gridStationDao.getAllInstrument(instrDic, AbstractStationDao.SQL_INSTR_ID_MYSQL);
-    }
-
+    list = gridStationDao.getInstrumentByType(instrDic, AbstractStationDao.SQL_INSTR_TYPE);
     return list;
   }
 
@@ -303,6 +279,24 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
   }
 
   /**
+   * 台基类型
+   * 
+   * @return
+   */
+  public Map<String, String> getRockTypes() {
+    return StationConstants.ROCK_TYPE;
+  }
+
+  /**
+   * 台站类型
+   * 
+   * @return
+   */
+  public Map<String, String> getStaTypes() {
+    return StationConstants.STA_TYPE;
+  }
+
+  /**
    * 导出EQT格式数据
    * 
    * @return
@@ -322,10 +316,28 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
    * @return
    */
   private String exportRespData() {
+    StringBuffer buf = exportStationDao.queryForResp(channelId,dataSourceManager.getStationSchema());
+    return buf.toString();
+  }
+
+  /**
+   * 查看台站下的通道
+   * 
+   * @return
+   */
+  public String viewChannels() {
+
     model.setSchema(dataSourceManager.getStationSchema());
     model.setId(stataionId);
-    StringBuffer buf = exportStationDao.queryForEqt(model);
-    return buf.toString();
+    List<Map> stationList = exportStationDao.queryStationById(model);
+    if (stationList.size() == 1) {
+      Map m = stationList.get(0);
+      model.setStaCode(m.get("STA_CODE").toString());
+      model.setNetCode(m.get("NET_CODE").toString());
+      List<Map> channelList = exportStationDao.queryChannel(model);
+      getRequest().setAttribute("items", channelList);
+    }
+    return "viewChannels";
   }
 
   /**
@@ -343,25 +355,19 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
     this.model = model;
   }
 
-  /**
-   * @return the ctxUrl
-   */
-  public String getCtxUrl() {
-    return ctxUrl;
-  }
-
-  /**
-   * @param ctxUrl the ctxUrl to set
-   */
-  public void setCtxUrl(String ctxUrl) {
-    this.ctxUrl = ctxUrl;
-  }
-
   public String getStataionId() {
     return stataionId;
   }
 
   public void setStataionId(String stataionId) {
     this.stataionId = stataionId;
+  }
+
+  public String getChannelId() {
+    return channelId;
+  }
+
+  public void setChannelId(String channelId) {
+    this.channelId = channelId;
   }
 }
