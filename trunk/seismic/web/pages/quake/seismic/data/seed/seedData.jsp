@@ -24,20 +24,28 @@ fieldset {
 </style>
 </head>
 <body>
-<s:form id="queryFrm" action="view" namespace="/quake/seismic/data/seed" theme="simple">
+<s:form id="queryFrm" action="view" theme="simple">
 
 <fieldset>
 		<legend>事件波形</legend>
 		<table width="98%" align="center">
 			<tr>				
 		  	    <td>
+		  	    输出格式:
+		  	    <s:select list="@quake.seismic.data.seed.webapp.EventExportAction@OUTPUT_FORMAT"
+		  	        name="format"></s:select>
+		  	    <input type="hidden" name="seed" value="${param.seedname}"></input>
+		  	    
+		  	      <input type="button" align="center" value="导出数据" onclick="return exp();"  class="button"/>
 		  	      <input type="button" align="center" value="查看波形图" onclick="return post();"  class="button"/>
+		  	      
 		  	     &nbsp;&nbsp; <input type="button" align="center" value="返回上一页" onclick="history.go(-1);"  class="button"/>
 		  	    </td>
 			</tr>			
 		</table>
 </fieldset>
 </s:form>
+
 <table width="98%">
   <tr>
     <td>
@@ -87,6 +95,12 @@ fieldset {
        }
      }
    }
+
+	function exp() {
+		$('#queryFrm').attr("action", "${ctx}/quake/seismic/data/seed/eventexp/export.do");
+		$('#queryFrm').submit();
+	}
+	   
 	function post(){
 		var ids = new Array();
 		var obj = document.getElementsByName('selectedItems');

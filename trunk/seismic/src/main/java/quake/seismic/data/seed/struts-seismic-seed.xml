@@ -7,7 +7,10 @@
     		<action name="*" class="seedAction" method="{1}">
 		        <result name="show">/pages/quake/seismic/data/seed/seedData.jsp</result>
 		        <result name="view">/pages/quake/seismic/data/seed/view.jsp</result>
+    		</action>    		
+    	</package>
+    	<package name="quake.seismic.eventExp" extends="default" namespace="/quake/seismic/data/seed/eventexp">
+    		<action name="*" class="eventExportAction" method="{1}">
     		</action>
     	</package>
-    	
     </struts>
