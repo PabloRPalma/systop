@@ -10,37 +10,72 @@
         <result property="STA_CODE" column="STA_CODE" javaType="String"/>
         <result property="STA_CNAME" column="STA_CNAME" javaType="String"/>
         <result property="ROCK_TYPE" column="ROCK_TYPE" javaType="String"/>
+         <result property="STA_TYPE" column="STA_TYPE" javaType="String"/>
         <result property="STA_LAT" column="STA_LAT" javaType="Double"/>
         <result property="STA_LON" column="STA_LON" javaType="Double"/>
         <result property="STA_ELEV" column="STA_ELEV" javaType="Double"/>
         <result property="STA_STARTDATE" column="STA_STARTDATE" javaType="java.util.Date"/>
         <result property="STA_ENDDATE" column="STA_ENDDATE" javaType="java.util.Date"/>
         <result property="SITE_NAME" column="SITE_NAME" javaType="String"/>
+        
     </resultMap>
     
-    <resultMap class="java.util.HashMap" id="queryChannelResult">    	
+    <resultMap class="java.util.HashMap" id="queryChannelResult"> 
+    	<result property="ID" column="ID" javaType="String"/>
+    	<result property="NET_CODE" column="NET_CODE" javaType="String"/>
+        <result property="STA_CODE" column="STA_CODE" javaType="String"/>   	
         <result property="LOC_ID" column="LOC_ID" javaType="String"/>
         <result property="RESPONSE" column="RESPONSE" javaType="String"/> 
-        <result property="CHN_CODE" column="CHN_CODE" javaType="String"/>   
+        <result property="CHN_CODE" column="CHN_CODE" javaType="String"/>
+        <result property="UNITOFSIGNALRES" column="UNITOFSIGNALRES" javaType="String"/>
+    	<result property="UNITOFCALIINPUT" column="UNITOFCALIINPUT" javaType="String"/>
+        <result property="AZIMUTH" column="AZIMUTH" javaType="Double"/>   	
+        <result property="DIP" column="DIP" javaType="Double"/>
+        <result property="SAMP_RATE" column="SAMP_RATE" javaType="Double"/>
+        <result property="ONDATE" column="ONDATE" javaType="java.util.Date"/>
+        <result property="OFFDATE" column="OFFDATE" javaType="java.util.Date"/> 
+        <result property="REMARK" column="REMARK" javaType="String"/>     
     </resultMap>
     <resultMap class="java.util.HashMap" id="queryInstrResult">
-    	<result property="ID" column="ID" javaType="String"/>
         <result property="INSTR_TYPE" column="INSTR_TYPE" javaType="String"/>
         <result property="INSTR_MODEL" column="INSTR_MODEL" javaType="String"/>
+    </resultMap>
+    
+    <resultMap class="java.util.HashMap" id="queryLocResult">
+      <result property="DIGITIZER_MODEL" column="DIGITIZER_MODEL" javaType="String"/>
+        <result property="DIGITIZER_RESPID" column="DIGITIZER_RESPID" javaType="String"/>
+    </resultMap>
+    
+    <resultMap class="java.util.HashMap" id="queryDigitizerResult">
+         <result property="RESPONSE" column="RESPONSE" javaType="String"/> 
     </resultMap>
     <!-- 查询测震台站数据 -->
 	<select id="queryStation" parameterClass="quake.seismic.station.model.Criteria"
                         resultMap="queryStationResult">
 		<![CDATA[
-		SELECT ID,NET_CODE,STA_CODE,STA_CNAME,ROCK_TYPE,STA_LAT,STA_LON,STA_ELEV,STA_STARTDATE,STA_ENDDATE,SITE_NAME
-		FROM $schema$.Station_info ST 
+		SELECT ST.ID,ST.NET_CODE,ST.STA_CODE,STA_CNAME,STA_TYPE,ROCK_TYPE,STA_LAT,STA_LON,STA_ELEV,STA_STARTDATE,STA_ENDDATE,SITE_NAME,DIGITIZER_RESPID,DIGITIZER_MODEL
+		FROM $schema$.Station_info ST ,$schema$.Loc_info loc WHERE ST.NET_CODE=loc.NET_CODE and ST.STA_CODE=LOC.STA_CODE
 		]]>
-		<dynamic prepend="WHERE">
+		<dynamic>
 		    <!-- 加入台网查询条件 BY Sam 20090707 -->
 		     <isNotEmpty prepend="AND" property="netCode">
 		       <![CDATA[(NET_CODE=#netCode#)]]>
 		    </isNotEmpty>
-		    
+		     <isNotEmpty prepend="AND" property="sensorModel">
+		       <![CDATA[(SENSOR_MODEL=#sensorModel#)]]>
+		    </isNotEmpty>
+		    <isNotEmpty prepend="AND" property="digitizerModel">
+		       <![CDATA[(DIGITIZER_MODEL=#digitizerModel#)]]>
+		    </isNotEmpty>
+		      <isNotEmpty prepend="AND" property="staType">
+		       <![CDATA[(STA_TYPE=#staType#)]]>
+		    </isNotEmpty>
+		     <isNotEmpty prepend="AND" property="rockType">
+		       <![CDATA[(ROCK_TYPE=#rockType#)]]>
+		    </isNotEmpty>
+		    <isNotEmpty prepend="AND" property="staName">
+		       <![CDATA[(STA_CNAME LIKE '%$staName$%')]]>
+		    </isNotEmpty>
 		     <isNotEmpty property="startTimeOfTheYear">
 		        <isNotEmpty prepend="AND" property="endTimeOfTheYear">
 		           <![CDATA[
@@ -50,24 +85,6 @@
 		    </isNotEmpty>	 
 		       
 		</dynamic>
-	</select>
-	<!-- 测震仪器选择列表查询 MySQL-->
-	<select id="queryInstrumentMySQL" parameterClass="quake.seismic.station.model.InstrDic"
-			resultMap="queryInstrResult">
-		<![CDATA[
-		SELECT ID,INSTR_TYPE,INSTR_MODEL
-		FROM $schema$.Instr_dic 
-		WHERE length(INSTR_TYPE) = length(#instrType#)
-		]]>
-	</select>
-	<!-- 测震仪器选择列表查询 ORACLE-->
-	<select id="queryInstrumentOracle" parameterClass="quake.seismic.station.model.InstrDic"
-			resultMap="queryInstrResult">
-		<![CDATA[
-		SELECT ID,INSTR_TYPE,INSTR_MODEL
-		FROM $schema$.Instr_dic 
-		WHERE length(INSTR_TYPE) = #typeLen#
-		]]>
 	</select>
 	
 	<!--查询台网代码 20090707 By SAM-->
@@ -81,15 +98,44 @@
 	  <select id="queryStationById" parameterClass="quake.seismic.station.model.Criteria"
 			resultMap="queryStationResult">
 		<![CDATA[
-		SELECT ID,NET_CODE,STA_CODE,STA_CNAME,ROCK_TYPE,STA_LAT,STA_LON,STA_ELEV,STA_STARTDATE,STA_ENDDATE,SITE_NAME
+		SELECT ID,NET_CODE,STA_CODE,STA_CNAME,ROCK_TYPE,STA_LAT,STA_LON,STA_ELEV,STA_STARTDATE,STA_ENDDATE,SITE_NAME,STA_TYPE
 		FROM $schema$.Station_info ST WHERE ID = #id#
 		]]>
 	</select>
 	 <select id="queryChannel" parameterClass="quake.seismic.station.model.Criteria"
 			resultMap="queryChannelResult">
 		<![CDATA[
-		SELECT LOC_ID,RESPONSE,CHN_CODE
-		FROM $schema$.Channel_info ST WHERE NET_CODE=#netCode# and STA_CODE=#staCode#
+		SELECT ID,LOC_ID,RESPONSE,CHN_CODE,NET_CODE,STA_CODE,UNITOFSIGNALRES,UNITOFCALIINPUT,AZIMUTH,DIP,SAMP_RATE,ONDATE,OFFDATE,REMARK
+		FROM $schema$.Channel_info  WHERE NET_CODE=#netCode# and STA_CODE=#staCode#
+		]]>
+	</select>
+		<!-- 测震仪器选择列表查询 -->
+	<select id="queryInstrByType" parameterClass="quake.seismic.station.model.InstrDic"
+			resultMap="queryInstrResult">
+		<![CDATA[
+		SELECT INSTR_TYPE,INSTR_MODEL
+		FROM $schema$.Instr_dic 
+		WHERE INSTR_TYPE = #instrType#
+		]]>
+	</select>
+	
+	  <select id="queryChannelById" parameterClass="quake.seismic.station.model.Criteria"
+			resultMap="queryChannelResult">
+		<![CDATA[
+		SELECT ID,LOC_ID,RESPONSE,CHN_CODE,NET_CODE,STA_CODE,UNITOFSIGNALRES,UNITOFCALIINPUT,AZIMUTH,DIP,SAMP_RATE,ONDATE,OFFDATE,REMARK
+		FROM $schema$.Channel_info  WHERE ID = #channelId#
+		]]>
+	</select>
+	  <select id="queryDigitizer" parameterClass="quake.seismic.station.model.Digitizer"
+			resultMap="queryDigitizerResult">
+		<![CDATA[
+		SELECT RESPONSE FROM $schema$.DIGITIZER_RESP_DIC  WHERE INSTR_MODEL = #instr_model# and RESP_ID=#resp_id#
+		]]>
+	</select>
+	  <select id="queryLoc" parameterClass="quake.seismic.station.model.loc"
+			resultMap="queryLocResult">
+		<![CDATA[
+		SELECT DIGITIZER_MODEL,DIGITIZER_RESPID FROM $schema$.loc_info  WHERE NET_CODE=#netCode# and STA_CODE=#staCode# and LOC_ID=#Loc_id#
 		]]>
 	</select>
 </sqlMap>
