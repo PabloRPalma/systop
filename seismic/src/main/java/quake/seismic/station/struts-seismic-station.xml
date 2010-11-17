@@ -9,6 +9,7 @@
 		     <result name="input">/pages/quake/seismic/station/list.jsp</result>
 		     <result name="xmlUrl">/pages/quake/seismic/station/gis.jsp</result>
 		     <result name="stationmap">/pages/quake/seismic/station/station.jsp</result>
+			 <result name="viewChannels">/pages/quake/seismic/station/channels.jsp</result>
 		 </action>		 
 	</package>
 </struts>
