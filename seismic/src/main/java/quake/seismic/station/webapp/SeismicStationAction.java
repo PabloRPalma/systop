@@ -304,10 +304,35 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
   public String resp() {
     String data = exportRespData();
     logger.debug("导出的数据：{}", data);
-    getResponse().addHeader("Content-Disposition", "attachment;filename=\"RESP.txt\"");
+    String fileName = getFileName();
+    getResponse().addHeader("Content-Disposition", fileName);
     render(getResponse(), data, "text/html");
     return null;
 
+  }
+
+  /**
+   * 下载文件命名
+   * 
+   * @return
+   */
+  private String getFileName() {
+    Criteria c = new Criteria();
+    c.setChannelId(channelId);
+    c.setSchema(dataSourceManager.getStationSchema());
+    List<Map> ChannelList = exportStationDao.queryChannelById(c);
+    Map channel = null;
+    if (ChannelList.size() == 1) {
+      channel = ChannelList.get(0);
+    }
+    StringBuffer sb = new StringBuffer();
+    if (channel != null) {
+      sb.append("\"RESP.").append(channel.get("NET_CODE").toString()).append(".").append(
+          channel.get("STA_CODE").toString()).append("..").append(
+          channel.get("CHN_CODE").toString()).append("\"");
+    }
+    String fileName = "attachment;filename=" + sb.toString();
+    return fileName;
   }
 
   /**
@@ -316,7 +341,8 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
    * @return
    */
   private String exportRespData() {
-    StringBuffer buf = exportStationDao.queryForResp(channelId,dataSourceManager.getStationSchema());
+    StringBuffer buf = exportStationDao.queryForResp(channelId, dataSourceManager
+        .getStationSchema());
     return buf.toString();
   }
 
