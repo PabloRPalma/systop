@@ -53,6 +53,7 @@ window.onload = function(){
 
 //文本编辑组件
 function preFckEditor(){
+	area();
 	epifocus();
 	history_pic();
 	m_t();
@@ -61,6 +62,14 @@ function preFckEditor(){
 	intensity();
 	event_wave();
 	station_wave();
+}
+function area(){
+	var fckEditor = new FCKeditor( 'area' ) ;
+	  fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
+	  fckEditor.ToolbarSet = 'Basic';
+	  fckEditor.Height = 300;
+	  fckEditor.Width = 700;
+	  fckEditor.ReplaceTextarea();
 }
 function epifocus(){
 	var fckEditor = new FCKeditor( 'epifocus' ) ;
@@ -143,6 +152,9 @@ function station_wave(){
 			items : [ {
 				contentEl : 'basic',
 				title : '地震参数'
+			},{
+				contentEl : 'area',
+				title : '影响地区'
 			}, {
 				contentEl : 'epifocus',
 				title : '震中分布图'
@@ -256,13 +268,6 @@ function station_wave(){
 		<td width="60px"><font color="red">&nbsp;*</font></td>
 	</tr>
 	<tr><td width="10px">&nbsp;</td>
-		<td>影响地区:</td>
-		<td>
-		<s:textfield id="model.area" name="model.area" cssStyle="width:355px"/>
-		</td>
-		<td width="60px">&nbsp;</td>
-	</tr>
-	<tr><td width="10px">&nbsp;</td>
 		<td>专题图片:</td>
 		<td width="50">
 			<s:file id="pic" name="pic" cssClass="FileText" cssStyle="width:355px"/> 
@@ -284,6 +289,16 @@ function station_wave(){
 	</tr>
 	</table>
 	
+</div>
+<div id="area" class="x-hide-display">
+<table id="mytable" height="380" style="margin-top: 5px;width: 800px" align="center">
+	<tr>
+		<td width="15%" align="right" valign="top">影响地区：</td>
+		<td align="left" style="vertical-align: top;" width="85%">
+		<textarea id="area" name="model.area" cols="65" rows="4">${model.area}</textarea>
+		</td>
+	</tr>
+</table>
 </div>
 <div id="epifocus" class="x-hide-display">
 <table id="mytable" height="380" style="margin-top: 5px;width: 800px" align="center">
