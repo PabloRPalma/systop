@@ -64,9 +64,6 @@ public class ExportStationDao extends AbstractStationDao {
 
   /**
    * 导出resp
-   * 
-   * @param id 通道id
-   * @return
    */
   public StringBuffer queryForResp(String id, String staSchema) {
     schema = staSchema;
@@ -84,12 +81,9 @@ public class ExportStationDao extends AbstractStationDao {
 
   /**
    * 0级别显示
-   * 
-   * @return
    */
   private StringBuffer setSensitivity() {
     StringBuffer sb = new StringBuffer();
-
     Map temp = new HashMap();
     temp.put("Stage_sequence", "0");
     temp.put("blockette", "blockette058");
@@ -97,27 +91,23 @@ public class ExportStationDao extends AbstractStationDao {
     if (att != null) {
       sb.append(setTitle("Channel Sensitivity"));
       sb.append("B058F03").append("    ").append("Stage sequence number:");
-      sb.append(setSpace("Stage sequence number:"));
+      sb.append(setSpace(length, "Stage sequence number:"));
       sb.append("0").append(StationConstants.NEW_LINE);
       sb.append("B058F04").append("    ").append("Sensitivity:");
-      sb.append(setSpace("Sensitivity:"));
+      sb.append(setSpace(length, "Sensitivity:"));
       sb.append(att.get("Sensitivity")).append(StationConstants.NEW_LINE);
       sb.append("B058F05").append("    ").append("Frequency of sensitivity:");
-      sb.append(setSpace("Frequency of sensitivity:"));
+      sb.append(setSpace(length, "Frequency of sensitivity:"));
       sb.append(att.get("Freq")).append(StationConstants.NEW_LINE);
       sb.append("B058F06").append("    ").append("Numbet of calibtations:");
-      sb.append(setSpace("Numbet of calibtations:"));
+      sb.append(setSpace(length, "Numbet of calibtations:"));
       sb.append("0").append(StationConstants.NEW_LINE);
     }
-
     return sb;
   }
 
   /**
    * 每个模块显示头
-   * 
-   * @param name
-   * @return
    */
   private StringBuffer setTitle(String name) {
     int length = 25;
@@ -130,9 +120,7 @@ public class ExportStationDao extends AbstractStationDao {
     sb.append(StationConstants.ROW_START).append("    ").append("+").append("               ")
         .append("|   ").append(name).append(",   ").append(channel.get("STA_CODE")).append(" ch ")
         .append(channel.get("CHN_CODE"));
-    for (int i = 0; i < length - name.length(); i++) {
-      sb.append(" ");
-    }
+    sb.append(setSpace(length, name));
     sb.append("  |").append("               ").append("+").append(StationConstants.NEW_LINE);
     sb.append(StationConstants.ROW_START).append("    ").append("+").append("               ")
         .append("+--------------------------------------------+").append("               ").append(
@@ -143,9 +131,6 @@ public class ExportStationDao extends AbstractStationDao {
 
   /**
    * 第一级
-   * 
-   * @param m
-   * @return
    */
   private StringBuffer first() {
     StringBuffer sb = new StringBuffer();
@@ -158,9 +143,6 @@ public class ExportStationDao extends AbstractStationDao {
 
   /**
    * 第二三四级
-   * 
-   * @param m
-   * @return
    */
   private StringBuffer second() {
     String response = getDigitizerResponses();
@@ -178,12 +160,9 @@ public class ExportStationDao extends AbstractStationDao {
 
   /**
    * 数采decimation显示
-   * 
-   * @return
    */
   private StringBuffer setDecimation(int level) {
     StringBuffer sb = new StringBuffer();
-
     /**
      * 获得结点属性
      */
@@ -194,25 +173,24 @@ public class ExportStationDao extends AbstractStationDao {
     if (att != null) {
       sb.append(setTitle("Decimation"));
       sb.append("B057F03").append("    ").append("Stage sequence number:");
-      sb.append(setSpace("Stage sequence number:"));
+      sb.append(setSpace(length, "Stage sequence number:"));
       sb.append(level).append(StationConstants.NEW_LINE);
       sb.append("B057F04").append("    ").append("Input sample rate:");
-      sb.append(setSpace("Input sample rate:"));
+      sb.append(setSpace(length, "Input sample rate:"));
       sb.append(att.get("Input_sample_rate")).append(StationConstants.NEW_LINE);
       sb.append("B057F05").append("    ").append("Decimation factor:");
-      sb.append(setSpace("Decimation factor:"));
+      sb.append(setSpace(length, "Decimation factor:"));
       sb.append(att.get("Decimation_factor")).append(StationConstants.NEW_LINE);
       sb.append("B057F06").append("    ").append("Decimation offset:");
-      sb.append(setSpace("Decimation offset:"));
+      sb.append(setSpace(length, "Decimation offset:"));
       sb.append(att.get("Decimation_offset")).append(StationConstants.NEW_LINE);
       sb.append("B057F07").append("    ").append("Estimated delay (seconds):");
-      sb.append(setSpace("Estimated delay (seconds):"));
+      sb.append(setSpace(length, "Estimated delay (seconds):"));
       sb.append(att.get("Estimated_delay")).append(StationConstants.NEW_LINE);
       sb.append("B057F08").append("    ").append("Correction applied (seconds):");
-      sb.append(setSpace("Correction applied (seconds):"));
+      sb.append(setSpace(length, "Correction applied (seconds):"));
       sb.append(att.get("Correction_applied")).append(StationConstants.NEW_LINE);
     }
-
     return sb;
   }
 
@@ -251,14 +229,9 @@ public class ExportStationDao extends AbstractStationDao {
 
   /**
    * 第二三四级别 Coefficients
-   * 
-   * @param m
-   * @param l
-   * @return
    */
   private StringBuffer setCoefficients(int level) {
     StringBuffer sb = new StringBuffer();
-
     /**
      * 获得结点属性
      */
@@ -270,86 +243,90 @@ public class ExportStationDao extends AbstractStationDao {
       sb.append(setTitle("Response  (Cofficients)"));
       att.put("level", level);
       sb.append(setAtt(att));
-
       temp.put("att", "numerator");
       List numeratorList = getChildCount(digitizerResponse, temp);
       sb.append("B053F07").append("    ").append("Number of numerators :");
-      sb.append(setSpace("Number of numerators :"));
+      sb.append(setSpace(length, "Number of numerators :"));
       sb.append(numeratorList.size()).append(StationConstants.NEW_LINE);
-
       temp.put("att", "denominator");
       List denominatorList = getChildCount(digitizerResponse, temp);
       sb.append("B053F10").append("    ").append("Number of denominators :");
-      sb.append(setSpace("Number of denominators :"));
+      sb.append(setSpace(length, "Number of denominators :"));
       sb.append(denominatorList.size()).append(StationConstants.NEW_LINE);
-
       if (numeratorList.size() > 0) {
-        sb.append(StationConstants.ROW_START).append("    ").append("Numerator cofficients:")
-            .append(StationConstants.NEW_LINE);
-        sb.append(StationConstants.ROW_START).append(
-            "             i,           cofficient,            error")
-            .append(StationConstants.NEW_LINE);
-        for (int j = 0; j < numeratorList.size(); j++) {
-          Map map = (HashMap) numeratorList.get(j);
-          sb.append("B054F08-09").append("    ").append(j).append("        ").append(map.get("coeff"))
-              .append("        ").append(map.get("error")).append(StationConstants.NEW_LINE);
-        }
+        temp.put("att", "B054F08-09");
+        temp.put("list", numeratorList);
+        temp.put("title", "Numerator cofficients:");
+        sb.append(setNumeratorOrDenominator(temp));
       }
       if (denominatorList.size() > 0) {
-        sb.append(StationConstants.ROW_START).append("    ").append("Denominator cofficients:")
-            .append(StationConstants.NEW_LINE);
-        sb.append(StationConstants.ROW_START).append(
-            "              i,          cofficient,           error").append(StationConstants.NEW_LINE);
-
-        for (int j = 0; j < denominatorList.size(); j++) {
-          Map map = (HashMap) denominatorList.get(j);
-          sb.append("B054F11-12").append("    ").append(j).append("        ").append(map.get("coeff"))
-              .append("        ").append(map.get("error")).append(StationConstants.NEW_LINE);
-        }
+        temp.put("att", "B054F11-12");
+        temp.put("list", denominatorList);
+        temp.put("title", "Denominator cofficients:");
+        sb.append(setNumeratorOrDenominator(temp));
       }
     }
+    return sb;
+  }
 
+  /**
+   * 第2，3，4 级别中第一部分Numerator或者Denominator部分显示
+   */
+  public StringBuffer setNumeratorOrDenominator(Map m) {
+    StringBuffer sb = new StringBuffer();
+    int space = 10;
+    sb.append(StationConstants.ROW_START).append("    ").append("Numerator cofficients:").append(
+        StationConstants.NEW_LINE);
+    sb.append(StationConstants.ROW_START).append("             i,       cofficient,        error")
+        .append(StationConstants.NEW_LINE);
+    for (int j = 0; j < ((ArrayList) m.get("list")).size(); j++) {
+      Map map = (HashMap) ((ArrayList) m.get("list")).get(j);
+      sb.append("B054F08-09").append("    ").append(j);
+      if (map.get("coeff").toString().startsWith("-")) {
+        sb.append(setSpace(space - 1, String.valueOf(j)));
+      } else {
+        sb.append(setSpace(space, String.valueOf(j)));
+      }
+      sb.append(map.get("coeff"));
+      if (map.get("coeff").toString().startsWith("-")) {
+        sb.append(setSpace(length, map.get("coeff").toString()));
+      } else {
+        sb.append(setSpace(length - 1, map.get("coeff").toString()));
+      }
+      sb.append(map.get("error")).append(StationConstants.NEW_LINE);
+    }
     return sb;
   }
 
   /**
    * 各级别中的Gain
-   * 
-   * @param m
-   * @return
    */
   private StringBuffer setGain(int level, List l) {
     StringBuffer sb = new StringBuffer();
-
     Map temp = new HashMap();
     temp.put("Stage_sequence", String.valueOf(level));
     temp.put("blockette", "blockette058");
     Map att = getElementValue(l, temp);
     if (att != null) {
       sb.append(setTitle("Channel  Gain"));
-
       sb.append("B058F03").append("    ").append("Stage sequence number:");
-      sb.append(setSpace("Stage sequence number:"));
+      sb.append(setSpace(length, "Stage sequence number:"));
       sb.append(level).append(StationConstants.NEW_LINE);
       sb.append("B058F04").append("    ").append("Gain:");
-      sb.append(setSpace("Gain:"));
+      sb.append(setSpace(length, "Gain:"));
       sb.append(att.get("Sensitivity")).append(StationConstants.NEW_LINE);
       sb.append("B058F05").append("    ").append("Frequency of gain:");
-      sb.append(setSpace("Frequency of gain:"));
+      sb.append(setSpace(length, "Frequency of gain:"));
       sb.append(att.get("Freq")).append(StationConstants.NEW_LINE);
       sb.append("B058F06").append("    ").append("Numbet of calibtations:");
-      sb.append(setSpace("Numbet of calibtations:"));
+      sb.append(setSpace(length, "Numbet of calibtations:"));
       sb.append("0").append(StationConstants.NEW_LINE);
     }
-
     return sb;
   }
 
   /**
    * 第一级中的Poles and Zeros
-   * 
-   * @param m
-   * @return
    */
   private StringBuffer setPoleZero() {
     StringBuffer sb = new StringBuffer();
@@ -364,64 +341,80 @@ public class ExportStationDao extends AbstractStationDao {
       sb.append(setTitle("Response  (Poles & Zeros)"));
       att.put("level", "1");
       sb.append(setAtt(att));
-
       sb.append("B053F07").append("    ").append("A0 Normalization factor:");
-      sb.append(setSpace("A0 Normalization factor:"));
+      sb.append(setSpace(length, "A0 Normalization factor:"));
       sb.append(att.get("Normalization_factor")).append(StationConstants.NEW_LINE);
-
       sb.append("B053F08").append("    ").append("Normalization frequency:");
-      sb.append(setSpace("Normalization frequency:"));
+      sb.append(setSpace(length, "Normalization frequency:"));
       sb.append(att.get("Normalization_frequency")).append(StationConstants.NEW_LINE);
       temp.put("att", "zero");
       List zeroList = getChildCount(channelResponse, temp);
       sb.append("B053F09").append("    ").append("Number of zeros :");
-      sb.append(setSpace("Number of zeros :"));
+      sb.append(setSpace(length, "Number of zeros :"));
       sb.append(zeroList.size()).append(StationConstants.NEW_LINE);
-
       temp.put("att", "pole");
       List poleList = getChildCount(channelResponse, temp);
       sb.append("B053F14").append("    ").append("Number of peles :");
-      sb.append(setSpace("Number of peles :"));
+      sb.append(setSpace(length, "Number of peles :"));
       sb.append(poleList.size()).append(StationConstants.NEW_LINE);
-
       if (zeroList.size() > 0) {
-        sb.append(StationConstants.ROW_START).append("    ").append("Complex zeros:").append(
-            StationConstants.NEW_LINE);
-        sb.append(StationConstants.ROW_START).append(
-            "             i        real        imag        real_error        imag_error")
-            .append(StationConstants.NEW_LINE);
-        for (int j = 0; j < zeroList.size(); j++) {
-          Map map = (HashMap) zeroList.get(j);
-          sb.append("B053F10-13").append("    ").append(j).append("        ").append(map.get("Real"))
-              .append("        ").append(map.get("Imaginary")).append("        ").append(
-                  map.get("Real_error")).append("        ").append(map.get("Imaginary_error")).append(
-                  StationConstants.NEW_LINE);
-        }
+        temp.put("att", "B053F10-13");
+        temp.put("list", zeroList);
+        temp.put("complex", "Complex zeros:");
+        sb.append(setComplex(temp));
       }
       if (poleList.size() > 0) {
-        sb.append(StationConstants.ROW_START).append("    ").append("Complex poles:").append(
-            StationConstants.NEW_LINE);
-        sb.append(StationConstants.ROW_START).append(
-            "             i        real        imag        real_error        imag_error")
-            .append(StationConstants.NEW_LINE);
-
-        for (int j = 0; j < poleList.size(); j++) {
-          Map map = (HashMap) poleList.get(j);
-          sb.append("B053F15-18").append("    ").append(j).append("        ").append(map.get("Real"))
-              .append("        ").append(map.get("Imaginary")).append("        ").append(
-                  map.get("Real_error")).append("        ").append(map.get("Imaginary_error")).append(
-                  StationConstants.NEW_LINE);
-        }
+        temp.put("att", "B053F15-18");
+        temp.put("list", poleList);
+        temp.put("complex", "Complex poles:");
+        sb.append(setComplex(temp));
       }
     }
+    return sb;
+  }
 
+  /**
+   * 第一级别下的poles/zeros
+   */
+  public StringBuffer setComplex(Map m) {
+    int space = 10;
+    StringBuffer sb = new StringBuffer();
+    sb.append(StationConstants.ROW_START).append("    ").append(m.get("complex")).append(
+        StationConstants.NEW_LINE);
+    sb.append(StationConstants.ROW_START).append(
+        "           i       real       imag       real_error       imag_error").append(
+        StationConstants.NEW_LINE);
+    for (int j = 0; j < ((ArrayList) m.get("list")).size(); j++) {
+      Map map = (HashMap) ((ArrayList) m.get("list")).get(j);
+      sb.append(m.get("att")).append("    ").append(j);
+      if (map.get("Real").toString().startsWith("-")) {
+        sb.append(setSpace(space - 1, String.valueOf(j)));
+      } else {
+        sb.append(setSpace(space, String.valueOf(j)));
+      }
+      sb.append(map.get("Real"));
+      if (map.get("Imaginary").toString().startsWith("-")) {
+        sb.append(setSpace(space - 1, map.get("Real").toString()));
+      } else {
+        sb.append(setSpace(space, map.get("Real").toString()));
+      }
+      sb.append(map.get("Imaginary"));
+      if (map.get("Imaginary").toString().startsWith("-")) {
+        sb.append(setSpace(space + 1, map.get("Imaginary").toString()));
+      } else {
+        sb.append(setSpace(space, map.get("Imaginary").toString()));
+      }
+      sb.append(map.get("Real_error"));
+      sb.append(setSpace(space, map.get("Real_error").toString()));
+      sb.append(map.get("Imaginary_error")).append(StationConstants.NEW_LINE);
+    }
     return sb;
   }
 
   /**
    * 填充空格
    */
-  public StringBuffer setSpace(String s) {
+  public StringBuffer setSpace(int length, String s) {
     StringBuffer sb = new StringBuffer();
     for (int i = 0; i < length - s.length(); i++) {
       sb.append(" ");
@@ -431,27 +424,23 @@ public class ExportStationDao extends AbstractStationDao {
 
   /**
    * 通用每一级别第一部分前四个属性
-   * 
-   * @param att
-   * @return
    */
   private StringBuffer setAtt(Map att) {
-
     StringBuffer sb = new StringBuffer();
     sb.append("B053F03").append("    ").append("Transfer function type:");
-    sb.append(setSpace("Transfer function type:"));
+    sb.append(setSpace(length, "Transfer function type:"));
     sb.append(StationConstants.BLOCKETTE053_TYPE.get(att.get("Type"))).append(
         StationConstants.NEW_LINE);
     sb.append("B053F04").append("    ").append("Stage sequence number:");
-    sb.append(setSpace("Stage sequence number:"));
+    sb.append(setSpace(length, "Stage sequence number:"));
     sb.append(att.get("level")).append(StationConstants.NEW_LINE);
 
     sb.append("B053F05").append("    ").append("Response in units lookup:");
-    sb.append(setSpace("Response in units lookup:"));
+    sb.append(setSpace(length, "Response in units lookup:"));
     sb.append(att.get("Signal_input_unit")).append(StationConstants.NEW_LINE);
 
     sb.append("B053F06").append("    ").append("Response out units lookup:");
-    sb.append(setSpace("Response out units lookup:"));
+    sb.append(setSpace(length, "Response out units lookup:"));
     sb.append(att.get("Signal_output_unit")).append(StationConstants.NEW_LINE);
     return sb;
   }
@@ -493,10 +482,6 @@ public class ExportStationDao extends AbstractStationDao {
 
   /**
    * 获得某一级别下的子结点的属性值
-   * 
-   * @param response
-   * @param name
-   * @return
    */
   public Map getElementValue(List l, Map m) {
     Map map = null;
@@ -552,9 +537,6 @@ public class ExportStationDao extends AbstractStationDao {
 
   /**
    * 获得response内容
-   * 
-   * @param response
-   * @return
    */
   public List getResponseValue(String response) {
     List l = new ArrayList();
@@ -590,10 +572,6 @@ public class ExportStationDao extends AbstractStationDao {
 
   /**
    * 递归查询该接点下的所有内容
-   * 
-   * @param et
-   * @param m
-   * @return
    */
   public Map getChildValue(Element et, Map m) {
     List children = new ArrayList();
@@ -614,10 +592,6 @@ public class ExportStationDao extends AbstractStationDao {
 
   /**
    * 根据查询条件执行测震台站数据查询。
-   * 
-   * @param criteria 封装查询条件的<code>Criteria</code>对象
-   * @see {@link Criteria}
-   * @return 查询结果对象。
    */
   public List<Map> queryStationById(Criteria criteria) {
     Assert.notNull(criteria, "Criteria is null.");
@@ -626,10 +600,6 @@ public class ExportStationDao extends AbstractStationDao {
 
   /**
    * 根据查询条件执行通道数据查询。
-   * 
-   * @param criteria 封装查询条件的<code>Criteria</code>对象
-   * @see {@link Criteria}
-   * @return 查询结果对象。
    */
   public List<Map> queryChannel(Criteria criteria) {
     Assert.notNull(criteria, "Criteria is null.");
@@ -638,10 +608,6 @@ public class ExportStationDao extends AbstractStationDao {
 
   /**
    * 根据查询条件执行通道数据查询。
-   * 
-   * @param criteria 封装查询条件的<code>Criteria</code>对象
-   * @see {@link Criteria}
-   * @return 查询结果对象。
    */
   public List<Map> queryChannelById(Criteria c) {
     Assert.notNull(c, "Criteria is null.");
@@ -650,10 +616,6 @@ public class ExportStationDao extends AbstractStationDao {
 
   /**
    * 根据查询条件执行数采查询。
-   * 
-   * @param criteria 封装查询条件的<code>Criteria</code>对象
-   * @see {@link Criteria}
-   * @return 查询结果对象。
    */
   private List<Map> queryDigitizer(Digitizer d) {
     return getTemplate().queryForList(SQL_DIGITIZER, d);
@@ -661,10 +623,6 @@ public class ExportStationDao extends AbstractStationDao {
 
   /**
    * 根据查询条件执行位置信息查询。
-   * 
-   * @param criteria 封装查询条件的<code>Criteria</code>对象
-   * @see {@link Criteria}
-   * @return 查询结果对象。
    */
   private List<Map> queryLoc(Loc l) {
     return getTemplate().queryForList(SQL_LOC, l);
