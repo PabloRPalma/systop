@@ -73,7 +73,6 @@ function remove(id){
 	<ec:row>
 		<ec:column width="40" property="_no" value="${GLOBALROWCOUNT}" title="No." style="text-align:center"/>
 		<ec:column width="300" property="title" title="标题"/>
-		<ec:column width="140" property="area" title="影响地区" style="text-align:center"/>
 		 <ec:column width="60" property="_8" title="审核" sortable="false" style="text-align:center">
 		     <c:if test="${item.state eq '0'}">
 		       未审核
