@@ -123,6 +123,25 @@ public class CatAction extends AbstractQueryAction<Criteria> {
   }
   
   /**
+   * 地震目录查询(按圆形区域)
+   */
+  public String indexRound() {
+    index();
+    return "indexRound";
+  }
+  
+  /**
+   * 地震目录查询结果(按圆形区域)
+   * @return
+   */
+  public String listRound() {
+    //设定按圆形区域查询条件
+    model.setIsRoundQuery(SeismicConstants.ROUND_QUERY_YES);
+    list();
+    return "listRound";
+  }
+  
+  /**
    * 进入震相查询页面，实际是有震相数据的地震目录查询页。此页没有EQT与WKF数据下载功能
    * @return
    */
