@@ -18,6 +18,14 @@ public class SeismicConstants {
    */
   public static String DEFAULT_PHASE_TABLE = "Phase_w";
   /**
+   * 按圆形区域查询
+   */
+  public static String ROUND_QUERY_YES = "1";
+  /**
+   * 按矩形区域查询
+   */
+  public static String ROUND_QUERY_NO = "0";
+  /**
    * 地震目录查询时（不分页），限制最大查询条数
    */
   public static int MAX_SIZE = 1000;
