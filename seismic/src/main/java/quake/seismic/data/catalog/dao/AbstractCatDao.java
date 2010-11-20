@@ -17,14 +17,22 @@ import quake.seismic.data.catalog.model.MagCriteria;
  */
 public abstract class AbstractCatDao<T> extends AbstractSeismicDao {
   /**
-   * 地震目录数据查询在IBatis中的statementName
+   * 地震目录数据查询在IBatis中的statementName,按矩形区域
    */
   protected static final String SQL_ID = "cz.queryCatData";
   /**
-   * 查询数据行数的statementName
+   * 查询数据行数的statementName,按矩形区域
    */
   protected static final String SQL_COUNT_ID = SQL_ID + "Count";
 
+  /**
+   * 地震目录数据查询在IBatis中的statementName,按圆形区域
+   */
+  protected static final String SQL_ROUND_ID = "cz.queryCatDataAsRound";
+  /**
+   * 查询数据行数的statementName,按圆形区域
+   */
+  protected static final String SQL_ROUND_COUNT_ID = SQL_ROUND_ID + "Count";
   /**
    * 地震目录关联震级查询
    */
