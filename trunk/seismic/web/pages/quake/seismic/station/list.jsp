@@ -72,7 +72,7 @@
 		classic="false"	
 		width="100%" 
 		height="280px" 
-		minHeight="300"
+		minHeight="280"
 		excludeParameters="selectedItems"
 		toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	  <ec:row>
