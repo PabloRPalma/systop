@@ -50,25 +50,7 @@
         <result property="Group_id" column="Group_id" javaType="String"/>
     </resultMap>
     
-    <!-- 关联震级震相查询结果，多字段MAG_VAL -->
-    <resultMap class="java.util.HashMap" id="queryCatMagDataResult">
-    	<result property="ID" column="ID" javaType="String"/>
-        <result property="SEQUEN_NAME" column="SEQUEN_NAME" javaType="String"/>
-        <result property="O_TIME" column="O_TIME" javaType="java.util.Date"/>
-        <result property="O_TIME_FRAC" column="O_TIME_FRAC" javaType="Integer"/>
-        <result property="EPI_LAT" column="EPI_LAT" javaType="Double"/>
-        <result property="EPI_LON" column="EPI_LON" javaType="Double"/>
-        <result property="EPI_DEPTH" column="EPI_DEPTH" javaType="Double"/>
-        <result property="M" column="M" javaType="Double"/>
-        <result property="MAG_VAL" column="MAG_VAL" javaType="Double"/>
-        <result property="M_SOURCE" column="M_SOURCE" javaType="String"/>
-        <result property="QLOC" column="QLOC" javaType="String"/>
-        <result property="QCOM" column="QCOM" javaType="String"/>
-        <result property="LOCATION_CNAME" column="LOCATION_CNAME" javaType="String"/>   
-        <result property="EVENT_ID" column="EVENT_ID" javaType="String"/>
-        <result property="MAGC_ID" column="MAGC_ID" javaType="String"/>  	
-    </resultMap>
-    <!-- 无震级关联的地震目录查询 -->
+    <!-- 无震级关联的地震目录查询_按矩形区域查询 -->
 	<select id="queryCatData" parameterClass="quake.seismic.data.catalog.model.Criteria"
 		resultMap="queryCatDataResult">    
 		<![CDATA[
@@ -194,7 +176,7 @@
 			</isNotEmpty>
 		</dynamic>
 	</select>
-	
+		
 	<select id="queryCatDataCount" parameterClass="quake.seismic.data.catalog.model.Criteria"
 		resultClass="Integer">         
 		<![CDATA[
@@ -298,116 +280,80 @@
 		</dynamic>
 	</select>
 	
-	 <!-- 有震级关联的地震目录查询 -->
-	<select id="queryCatMagData" parameterClass="quake.seismic.data.catalog.model.Criteria"
-		resultMap="queryCatMagDataResult">    
+	<!-- 无震级关联的地震目录查询_按圆形区域查询 -->
+	<select id="queryCatDataAsRound" parameterClass="quake.seismic.data.catalog.model.Criteria"
+		resultMap="queryCatDataResult">    
 		<![CDATA[
-		select DISTINCT CL.ID,CL.SEQUEN_NAME,CL.O_TIME,CL.O_TIME_FRAC,CL.EPI_LAT,CL.EPI_LON,CL.EPI_DEPTH,CL.M as M,MC.MAG_VAL as MAG_VAL,CL.M_SOURCE,CL.QLOC,CL.QCOM,CL.LOCATION_CNAME,EVENT_ID,MC.ID as MAGC_ID 
-		FROM $schema$.$tableName$  CL LEFT JOIN $schema$.$magTname$ MC ON CL.ID = MC.CATALOG_ID AND CL.M_SOURCE = MC.MAG_NAME
+		SELECT ID,SEQUEN_NAME,O_TIME,O_TIME_FRAC,EPI_LAT,EPI_LON,EPI_DEPTH,M,M_SOURCE,QLOC,QCOM,LOCATION_CNAME,EVENT_ID,
+		       NET_CODE,Location_sname,Save_time,Auto_flag,Operator,Loc_program,Eq_type,Depfix_flag,SPmin,Dmin,Gap_azi,
+		       Rms,Erh,Erz,Qnet,Sum_stn,Loc_stn,Sum_pha,Loc_pha,Epic_id,Source_id,FE_num,FE_sname,FE_cname,
+		       Eq_name,Model_name,Remark,Lock_flag,Group_id
+		FROM $schema$.$tableName$
 		]]>
 		<dynamic prepend="WHERE">
+			<!-- 台网查询条件 -->
+		    <isNotEmpty prepend="AND" property="netCode">
+		       <![CDATA[(NET_CODE=#netCode#)]]>
+		    </isNotEmpty>
+		    <!-- 地震类型查询条件 -->
+		    <isNotEmpty prepend="AND" property="eqType">
+		       <![CDATA[(Eq_type=#eqType#)]]>
+		    </isNotEmpty>
+		    <!-- 地震序列标识 -->
+		    <isNotEmpty prepend="AND" property="sequenName">
+		       <![CDATA[(SEQUEN_NAME LIKE '%$sequenName$%')]]>
+		    </isNotEmpty>
+		    <!-- 震中地名查询条件 -->
+		    <isNotEmpty prepend="AND" property="location">
+		       <![CDATA[(LOCATION_CNAME LIKE '%$location$%')]]>
+		    </isNotEmpty>
 			<isNotEmpty property="startDate">
 				<isNotEmpty prepend="AND" property="endDate">
 				<![CDATA[
-				((CL.O_TIME>=#startDate#) AND (CL.O_TIME<=#endDate#))
+				((O_TIME>=#startDate#) AND (O_TIME<=#endDate#))
 				]]>
 				</isNotEmpty>
 			</isNotEmpty>
 			<isNotEmpty property="startDate">
 				<isEmpty prepend="AND" property="endDate">
-				<![CDATA[(CL.O_TIME>=#startDate#)]]>
+				<![CDATA[(O_TIME>=#startDate#)]]>
 				</isEmpty>
 			</isNotEmpty>
 			<isNotEmpty property="endDate">
 				<isEmpty prepend="AND" property="startDate">
-				<![CDATA[(CL.O_TIME<=#endDate#)]]>
+				<![CDATA[(O_TIME<=#endDate#)]]>
 				</isEmpty>
 			</isNotEmpty>
-			
+			<!-- 按圆形区域查询 -->
 			<isNotNull property="startLat">
-				<isNotNull prepend="AND" property="endLat">
+				<isNotNull prepend="AND" property="startLon">
 				<![CDATA[
-				((CL.EPI_LAT>=#startLat#) AND (CL.EPI_LAT<=#endLat#))
+				 (get_distance(#startLon#,#startLat#,EPI_LON,EPI_LAT)<=#range#)
 				]]>
 				</isNotNull>
 			</isNotNull>
-			<isNotNull property="startLat">
-				<isNull prepend="AND" property="endLat">
-				<![CDATA[(CL.EPI_LAT>=#startLat#)]]>
-				</isNull>
-			</isNotNull>
-			<isNotNull property="endLat">
-				<isNull prepend="AND" property="startLat">
-				<![CDATA[(CL.EPI_LAT<=#endLat#)]]>
-				</isNull>
-			</isNotNull>
 			
-			<isNotNull property="startLon">
-				<isNotNull prepend="AND" property="endLon">
-				<![CDATA[
-				((CL.EPI_LON>=#startLon#) AND (CL.EPI_LON<=#endLon#))
-				]]>
-				</isNotNull>
-			</isNotNull>
-			<isNotNull property="startLon">
-				<isNull prepend="AND" property="endLon">
-				<![CDATA[(CL.EPI_LON>=#startLon#)]]>
-				</isNull>
-			</isNotNull>
-			<isNotNull property="endLon">
-				<isNull prepend="AND" property="startLon">
-				<![CDATA[(CL.EPI_LON<=#endLon#)]]>
-				</isNull>
-			</isNotNull>
-			<!-- 关联震级表查询，按照震级表中的震级作为查询条件 -->
-			<!--
 			<isNotNull property="startM">
 				<isNotNull prepend="AND" property="endM">
 				<![CDATA[
-				((MC.MAG_VAL>=#startM# AND MC.MAG_VAL<=#endM#) OR (CL.M>=#startM# AND CL.M<=#endM#))
+				((M>=#startM#) AND (M<=#endM#))
 				]]>
 				</isNotNull>
 			</isNotNull>
 			<isNotNull property="startM">
 				<isNull prepend="AND" property="endM">
-				<![CDATA[(MC.MAG_VAL>=#startM# OR CL.M>=#startM#)]]>
+				<![CDATA[(M>=#startM#)]]>
 				</isNull>
 			</isNotNull>
 			<isNotNull property="endM">
 				<isNull prepend="AND" property="startM">
-				<![CDATA[(MC.MAG_VAL<=#endM# OR CL.M<=#endM#)]]>
+				<![CDATA[(M<=#endM#)]]>
 				</isNull>
 			</isNotNull>
-			-->
-			<!--只显示大于-10的震级,两个震级有一个>-10就可以-->
-			<!--
+			<!--只显示大于-10的震级-->
 			<isNull property="startM">
 				<isNull prepend="AND" property="endM">
-					<![CDATA[(MC.MAG_VAL>-10 OR CL.M>-10)]]>
-				</isNull>
-			</isNull>
-			-->
-			<isNotNull property="startM">
-				<isNotNull prepend="AND" property="endM">
-				<![CDATA[
-				(CL.M>=#startM# AND CL.M<=#endM#)
-				]]>
-				</isNotNull>
-			</isNotNull>
-			<isNotNull property="startM">
-				<isNull prepend="AND" property="endM">
-				<![CDATA[CL.M>=#startM#]]>
-				</isNull>
-			</isNotNull>
-			<isNotNull property="endM">
-				<isNull prepend="AND" property="startM">
-				<![CDATA[CL.M<=#endM#]]>
-				</isNull>
-			</isNotNull>
-			<!--只显示大于-10的震级,两个震级有一个>-10就可以-->
-			<isNull property="startM">
-				<isNull prepend="AND" property="endM">
-					<![CDATA[CL.M>-10]]>
+					<![CDATA[(M>-10)]]>
 				</isNull>
 			</isNull>
 		</dynamic>
@@ -421,94 +367,88 @@
 			
 			<isEmpty property="sortProperty">
 				<isEmpty property="sortDir">
-					<![CDATA[CL.O_TIME desc]]>
+					<![CDATA[O_TIME desc]]>
 				</isEmpty>
 			</isEmpty>
+			<!-- 地震目录分页查询条件 -->
+			<isNotEmpty property="start">
+				<isGreaterThan property="size" compareValue="0">
+					LIMIT <![CDATA[$start$,$size$]]>
+				</isGreaterThan>
+			</isNotEmpty>
 		</dynamic>
-		LIMIT $start$, $size$
 	</select>
-	<select id="queryCatMagDataCount" parameterClass="quake.seismic.data.catalog.model.Criteria"
+	
+	<select id="queryCatDataAsRoundCount" parameterClass="quake.seismic.data.catalog.model.Criteria"
 		resultClass="Integer">         
 		<![CDATA[
 		SELECT count(0)
-		FROM $schema$.$tableName$ CL
+		FROM $schema$.$tableName$
 		]]>
 		<dynamic prepend="WHERE">
+			<!-- 台网查询条件 -->
+		    <isNotEmpty prepend="AND" property="netCode">
+		       <![CDATA[(NET_CODE=#netCode#)]]>
+		    </isNotEmpty>
+		    <!-- 地震类型查询条件 -->
+		    <isNotEmpty prepend="AND" property="eqType">
+		       <![CDATA[(Eq_type=#eqType#)]]>
+		    </isNotEmpty>
+		    <!-- 地震序列标识 -->
+		    <isNotEmpty prepend="AND" property="sequenName">
+		       <![CDATA[(SEQUEN_NAME LIKE '%$sequenName$%')]]>
+		    </isNotEmpty>
+		    <!-- 震中地名查询条件 -->
+		    <isNotEmpty prepend="AND" property="location">
+		       <![CDATA[(LOCATION_CNAME LIKE '%$location$%')]]>
+		    </isNotEmpty>
 			<isNotEmpty property="startDate">
 				<isNotEmpty prepend="AND" property="endDate">
 				<![CDATA[
-				((CL.O_TIME>=#startDate#) AND (CL.O_TIME<=#endDate#))
+				((O_TIME>=#startDate#) AND (O_TIME<=#endDate#))
 				]]>
 				</isNotEmpty>
 			</isNotEmpty>
 			<isNotEmpty property="startDate">
 				<isEmpty prepend="AND" property="endDate">
-				<![CDATA[(CL.O_TIME>=#startDate#)]]>
+				<![CDATA[(O_TIME>=#startDate#)]]>
 				</isEmpty>
 			</isNotEmpty>
 			<isNotEmpty property="endDate">
 				<isEmpty prepend="AND" property="startDate">
-				<![CDATA[(CL.O_TIME<=#endDate#)]]>
+				<![CDATA[(O_TIME<=#endDate#)]]>
 				</isEmpty>
-			</isNotEmpty>
-			
+			</isNotEmpty>			
+			<!-- 按圆形区域查询 -->
 			<isNotNull property="startLat">
-				<isNotNull prepend="AND" property="endLat">
+				<isNotNull prepend="AND" property="startLon">
 				<![CDATA[
-				((CL.EPI_LAT>=#startLat#) AND (CL.EPI_LAT<=#endLat#))
+				 (get_distance(#startLon#,#startLat#,EPI_LON,EPI_LAT)<=#range#)
 				]]>
 				</isNotNull>
-			</isNotNull>
-			<isNotNull property="startLat">
-				<isNull prepend="AND" property="endLat">
-				<![CDATA[(CL.EPI_LAT>=#startLat#)]]>
-				</isNull>
-			</isNotNull>
-			<isNotNull property="endLat">
-				<isNull prepend="AND" property="startLat">
-				<![CDATA[(CL.EPI_LAT<=#endLat#)]]>
-				</isNull>
-			</isNotNull>
-			
-			<isNotNull property="startLon">
-				<isNotNull prepend="AND" property="endLon">
-				<![CDATA[
-				((CL.EPI_LON>=#startLon#) AND (CL.EPI_LON<=#endLon#))
-				]]>
-				</isNotNull>
-			</isNotNull>
-			<isNotNull property="startLon">
-				<isNull prepend="AND" property="endLon">
-				<![CDATA[(CL.EPI_LON>=#startLon#)]]>
-				</isNull>
-			</isNotNull>
-			<isNotNull property="endLon">
-				<isNull prepend="AND" property="startLon">
-				<![CDATA[(CL.EPI_LON<=#endLon#)]]>
-				</isNull>
 			</isNotNull>
 			
 			<isNotNull property="startM">
 				<isNotNull prepend="AND" property="endM">
 				<![CDATA[
-				(CL.M>=#startM# AND CL.M<=#endM#)
+				((M>=#startM#) AND (M<=#endM#))
 				]]>
 				</isNotNull>
 			</isNotNull>
 			<isNotNull property="startM">
 				<isNull prepend="AND" property="endM">
-				<![CDATA[CL.M>=#startM#]]>
+				<![CDATA[(M>=#startM#)]]>
 				</isNull>
 			</isNotNull>
 			<isNotNull property="endM">
 				<isNull prepend="AND" property="startM">
-				<![CDATA[CL.M<=#endM#]]>
+				<![CDATA[(M<=#endM#)]]>
 				</isNull>
 			</isNotNull>
-			<!--只显示大于-10的震级,两个震级有一个>-10就可以-->
+			<!--只显示大于-10的震级-->
 			<isNull property="startM">
 				<isNull prepend="AND" property="endM">
-					<![CDATA[CL.M>-10]]>
+					<![CDATA[(M>-10)]]>
 				</isNull>
 			</isNull>
 		</dynamic>
