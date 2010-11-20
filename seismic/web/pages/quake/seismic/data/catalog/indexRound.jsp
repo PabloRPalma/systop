@@ -26,10 +26,10 @@ $(function() {
 </head>
 <body>
 <table width="100%" style="margin-top: -10px;margin-bottom: -2px;">
-  <tr><s:form id="queryFrm" action="list" namespace="/quake/seismic/data/catalog" theme="simple">
+  <tr><s:form id="queryFrm" action="listRound" namespace="/quake/seismic/data/catalog" theme="simple">
 	<td>
 		<fieldset>
-		<legend>地震目录查询(矩形区域)</legend>
+		<legend>地震目录查询(圆形区域)</legend>
   			<s:hidden name="model.tableName"/>
   			<s:hidden name="model.magTname"/>
   			<s:hidden name="model.phaseTname"/>
@@ -50,43 +50,42 @@ $(function() {
 			       value="<s:date name="model.endDate" format="yyyy-MM-dd"/>"
 			       onclick="WdatePicker({minDate:'#F{$dp.$D(\'startDate\')}',maxDate:'now',skin:'whyGreen'})" style="width:70px;">
 		  	    </td>
-		  	    <td align="right">震级：</td>
+		  	    <td align="right">经度：</td>
+		  	    <td>
+		  	      <s:textfield name="model.startLon" cssStyle="width:70px;" cssClass="number" title="度.度，-180至180"/> 
+		  	    </td>
+		  	    <td align="right">纬度：</td> 
+		  	    <td>
+		  	      <s:textfield name="model.startLat" cssStyle="width:70px;" cssClass="number" title="度.度，-90至90"/>
+		  	    </td>
+		  	    <td align="right">距离：</td> 
+		  	    <td>
+		  	      <s:textfield name="model.range" cssStyle="width:100px;" cssClass="number" />
+		  	    </td>
+			</tr>
+			<tr>
+				<td align="right">震级：</td>
 		  	     <td>
 		  	      <s:textfield name="model.startM" cssStyle="width:70px;" cssClass="number" title="大于等于1的正数"/>
 		  	    </td>
 		  	    <td>至</td>
-		  	     <td>
+		  	    <td>
 		  	      <s:textfield name="model.endM" cssStyle="width:70px;" cssClass="number" title="大于等于1的正数"/>
+		  	    </td>
+		  	    <td align="right">地名：</td>
+				<td><s:textfield name="model.location" cssStyle="width:70px;"/></td>
+				<td>
+		  	      	序列：
+		  	    </td>
+		  	    <td>
+		  	      	<s:textfield name="model.sequenName" cssStyle="width:70px;"/>
 		  	    </td>
 		  	    <td align="right">类型：</td>
 				<td><s:select list="EqTypesMap" name="model.eqType" headerKey="" headerValue="--请选择类型--" cssStyle="width:100px;">
         			</s:select>
         		</td>
 		  	    <td>
-		  	      	序列：<s:textfield name="model.sequenName" cssStyle="width:100px;"/>
-		  	    </td>
-			</tr>
-			<tr>
-				<td align="right">纬度：</td> 
-		  	    <td>
-		  	      <s:textfield name="model.startLat" cssStyle="width:70px;" cssClass="number" title="度.度，-90至90"/>
-		  	    </td>
-		  	    <td>至</td>
-		  	     <td>
-		  	      <s:textfield name="model.endLat" cssStyle="width:70px;" cssClass="number" title="度.度，-90至90"/>
-		  	    </td>
-		  	    <td align="right">经度：</td>
-		  	    <td>
-		  	      <s:textfield name="model.startLon" cssStyle="width:70px;" cssClass="number" title="度.度，-180至180"/> 
-		  	    </td>
-		  	    <td>至</td>
-		  	    <td>
-		  	      <s:textfield name="model.endLon" cssStyle="width:70px;" cssClass="number" title="度.度，-180至180"/>
-		  	    </td>
-		  	    <td align="right">地名：</td>
-				<td><s:textfield name="model.location" cssStyle="width:100px;"/></td>
-		  	    <td>
-		  	      <input type="button" value="查询" onclick="exportData('${ctx}/quake/seismic/data/catalog/list.do', '')"  class="button"/>&nbsp;
+		  	      <input type="button" value="查询" onclick="exportData('${ctx}/quake/seismic/data/catalog/listRound.do', '')"  class="button"/>&nbsp;
 		  	      <input type="button" value="震中分布图" onclick="exportData('${ctx}/quake/seismic/data/catalog/showGis.do', '_blank')" class="button"/>
 		  	    </td>
 	  	  </tr>
@@ -119,7 +118,7 @@ $(function() {
 </table>
 <div class="x-panel-body">
 <ec:table items="items" var="item" retrieveRowsCallback="limit" sortRowsCallback="limit" 
-	action="list.do"
+	action="listRound.do"
 	useAjax="true" doPreload="false"
 	maxRowsExported="10000000" 
 	xlsFileName="地震目录列表.xls" 
