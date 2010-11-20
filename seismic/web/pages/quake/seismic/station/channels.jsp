@@ -7,6 +7,15 @@
 <title></title>
 </head>
 <body>
+<br>
+<table align="center">
+<tr>
+<td>
+<font size="6">台网:${netName}&nbsp;&nbsp;&nbsp;&nbsp;台站:${staName}</font>
+</td>
+</tr>
+</table>
+<br>
 <div class="x-panel-body">
 	  <ec:table items="items" var="item" retrieveRowsCallback="process" sortRowsCallback="process" 
 		action="list.do"
@@ -21,8 +30,8 @@
 		resizeColWidth="true"	
 		classic="false"	
 		width="100%" 
-		height="480px" 
-		minHeight="500"
+		height="400px" 
+		minHeight="400"
 		excludeParameters="selectedItems"
 		toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	  <ec:row>
