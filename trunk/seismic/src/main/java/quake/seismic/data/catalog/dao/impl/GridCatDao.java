@@ -27,9 +27,16 @@ public class GridCatDao extends AbstractCatDao<Page> {
    */
   @SuppressWarnings("unchecked")
   @Override
-  public Page query(Criteria criteria) {    
-    int count = (Integer) (getTemplate().queryForObject(SQL_COUNT_ID, criteria));
-    List<Map> rows = getTemplate().queryForList(SQL_ID, criteria);
+  public Page query(Criteria criteria) {  
+    String SQL = SQL_ID;
+    String SQL_COUNT = SQL_COUNT_ID;
+    if(SeismicConstants.ROUND_QUERY_YES.equals(criteria.getIsRoundQuery())){
+      logger.debug("地震目录查询，按圆形区域....");
+      SQL = SQL_ROUND_ID;
+      SQL_COUNT = SQL_ROUND_COUNT_ID;
+    }
+    int count = (Integer) (getTemplate().queryForObject(SQL_COUNT, criteria));
+    List<Map> rows = getTemplate().queryForList(SQL, criteria);
     
     if(StringUtils.isNotBlank(criteria.getMagTname())) {//关联震级表
       criteria.getPage().setData(EQTimeFormat.getEqTimeValue(setMagM(rows, criteria), "O_TIME", "O_TIME_FRAC"));
