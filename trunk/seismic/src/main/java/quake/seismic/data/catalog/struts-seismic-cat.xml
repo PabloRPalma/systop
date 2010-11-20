@@ -5,9 +5,12 @@
 <struts>
 	<package name="quake.seismic.data.catalog" extends="default" namespace="/quake/seismic/data/catalog">
 		 <action name="*" class="catAction" method="{1}">
-		 	 <!-- 地震目录查询  -->
+		 	 <!-- 地震目录查询(按矩形区域)  -->
 		     <result name="list">/pages/quake/seismic/data/catalog/index.jsp</result>
 		     <result name="index">/pages/quake/seismic/data/catalog/index.jsp</result>
+		     <!-- 地震目录查询(按圆形区域)  -->
+		     <result name="listRound">/pages/quake/seismic/data/catalog/indexRound.jsp</result>
+		     <result name="indexRound">/pages/quake/seismic/data/catalog/indexRound.jsp</result>
 		     <!--  震相查询  -->
 		     <result name="indexPhase">/pages/quake/seismic/data/phase/index.jsp</result>
 		     <result name="listPhase">/pages/quake/seismic/data/phase/index.jsp</result>
