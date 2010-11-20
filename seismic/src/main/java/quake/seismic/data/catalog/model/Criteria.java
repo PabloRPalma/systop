@@ -23,6 +23,14 @@ public class Criteria extends PageSchemaAware {
    */
   private String sequenName;
   /**
+   * 查询类型 0：矩形；1：圆形
+   */
+  private String isRoundQuery;
+  /**
+   * 离中心经纬度的距离
+   */
+  private String range;
+  /**
    * 目录表名
    */
   private String tableName;
@@ -283,4 +291,21 @@ public class Criteria extends PageSchemaAware {
   public void setSequenName(String sequenName) {
     this.sequenName = sequenName;
   }
+
+  public String getIsRoundQuery() {
+    return isRoundQuery;
+  }
+
+  public void setIsRoundQuery(String isRoundQuery) {
+    this.isRoundQuery = isRoundQuery;
+  }
+
+  public String getRange() {
+    return range;
+  }
+
+  public void setRange(String range) {
+    this.range = range;
+  }
+
 }
