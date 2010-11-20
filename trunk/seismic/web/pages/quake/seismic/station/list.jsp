@@ -71,8 +71,8 @@
 		resizeColWidth="true"	
 		classic="false"	
 		width="100%" 
-		height="280px" 
-		minHeight="280"
+		height="290px" 
+		minHeight="290"
 		excludeParameters="selectedItems"
 		toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	  <ec:row>
