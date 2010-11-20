@@ -362,6 +362,8 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
       model.setNetCode(m.get("NET_CODE").toString());
       List<Map> channelList = exportStationDao.queryChannel(model);
       getRequest().setAttribute("items", channelList);
+      getRequest().setAttribute("staName", m.get("STA_CNAME"));
+      getRequest().setAttribute("netName", SeismicConstants.NETWORK_INFO.get(m.get("NET_CODE")));
     }
     return "viewChannels";
   }
