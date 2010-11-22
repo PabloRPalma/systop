@@ -155,6 +155,13 @@ a:hover{
          document.getElementById("cta_info").style.display="";
          window.parent.main.location.href="${ctx}/quake/seismic/data/catalog/indexPhase.do?model.tableName="+cltName;
      }
+     function queryCatSeeds(cltName){
+         //alert(cltName);
+         document.getElementById("main_info").style.display="none";
+         document.getElementById("cta_info").style.display="";
+         window.parent.main.location.href="${ctx}/quake/seismic/data/catalog/indexSeed.do?model.tableName="+cltName;
+     }
+
      function queryStations(){
          document.getElementById("main_info").style.display="none";
          document.getElementById("cta_info").style.display="";
@@ -203,13 +210,21 @@ border="0" usemap="#Map" />
 <#list CzCatBean.queryMenuCzCats() as czcats>
     <li><a href="#" onclick="queryCzCatsByRound('${czcats.cltName}')">${czcats.clcName}(圆形)</a></li>
  </#list>
-
  </ul>
 </li>
+
 <li><a href="#">震相数据</a>
  <ul>
-  <#list CzCatBean.queryMenuCzCats() as czcats>
+  <#list CzCatBean.queryMenuPhaseCats() as czcats>
     <li><a href="#" onclick="queryCatPhases('${czcats.cltName}')">${czcats.clcName}</a></li>
+ </#list>
+ </ul>
+</li>
+
+<li><a href="#">事件波形</a>
+ <ul>
+  <#list CzCatBean.queryMenuSeedCats() as czcats>
+    <li><a href="#" onclick="queryCatSeeds('${czcats.cltName}')">${czcats.clcName}</a></li>
  </#list>
  </ul>
 </li>
