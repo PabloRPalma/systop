@@ -126,6 +126,8 @@ public class CatAction extends AbstractQueryAction<Criteria> {
    * 地震目录查询(按圆形区域)
    */
   public String indexRound() {
+    //设定按圆形区域查询条件
+    model.setIsRoundQuery(SeismicConstants.ROUND_QUERY_YES);
     index();
     return "indexRound";
   }
