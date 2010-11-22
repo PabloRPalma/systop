@@ -41,8 +41,13 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
   @Override
   public StringBuffer query(Criteria criteria) {
     Assert.notNull(criteria, "Criteria is null.");
+    String SQL = SQL_ID;
+    if(SeismicConstants.ROUND_QUERY_YES.equals(criteria.getIsRoundQuery())){
+      logger.debug("导出EQT WKF数据，按圆形区域....");
+      SQL = SQL_ROUND_ID;
+    }
     //查询地震目录    
-    List<Map> rows = getTemplate().queryForList(SQL_ID, criteria);
+    List<Map> rows = getTemplate().queryForList(SQL, criteria);
     StringBuffer buf = new StringBuffer(100000);
     for (Iterator<Map> itr = rows.iterator(); itr.hasNext();) {
       Map row = itr.next();
@@ -61,7 +66,12 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
   public StringBuffer queryForVlm(Criteria criteria) {
     Assert.notNull(criteria, "Criteria is null.");
     //查询地震目录    
-    List<Map> rows = getTemplate().queryForList(SQL_ID, criteria);
+    String SQL = SQL_ID;
+    if(SeismicConstants.ROUND_QUERY_YES.equals(criteria.getIsRoundQuery())){
+      logger.debug("导出VLM数据，按圆形区域....");
+      SQL = SQL_ROUND_ID;
+    }
+    List<Map> rows = getTemplate().queryForList(SQL, criteria);
     StringBuffer buf = new StringBuffer(100000);
     //基本目录数据格式
     if (SeismicConstants.Catalog_basic.equals(criteria.getExpType())) {
