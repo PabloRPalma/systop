@@ -10,6 +10,8 @@ import quake.base.model.PageSchemaAware;
  * @author DU
  */
 public class Criteria extends PageSchemaAware {
+  
+  private String seedId;
   /**
    * 台网代码
    */
@@ -292,6 +294,15 @@ public class Criteria extends PageSchemaAware {
     this.sequenName = sequenName;
   }
 
+  public String getSeedId() {
+    return seedId;
+  }
+
+  public void setSeedId(String seedId) {
+    this.seedId = seedId;
+  }
+
+
   public String getIsRoundQuery() {
     return isRoundQuery;
   }
@@ -307,5 +318,4 @@ public class Criteria extends PageSchemaAware {
   public void setRange(String range) {
     this.range = range;
   }
-
 }
