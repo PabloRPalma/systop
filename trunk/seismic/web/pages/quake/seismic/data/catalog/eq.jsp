@@ -69,7 +69,7 @@
 %>
 		var markerIcon = getMarkerIcon(<%=mag%>);
 		//var markerIcon = G_DEFAULT_ICON;
-		showMarker(markerIcon, '<%=eq.get("LOCATION_CNAME")%>', "<%=dateFormat.format(eq.get("O_TIME"))%>", <%=NumberFormatUtil.format(lng, 1) %>, <%=NumberFormatUtil.format(lat, 1) %>,'<%=msource%>',<%=NumberFormatUtil.format(mag, 1)%>, <%=NumberFormatUtil.format(depth, 0)%>);
+		showMarker(markerIcon, '<%=eq.get("LOCATION_CNAME")%>', "<%=dateFormat.format(eq.get("O_TIME"))%>", <%=NumberFormatUtil.format(lng, 2) %>, <%=NumberFormatUtil.format(lat, 2) %>,'<%=msource%>',<%=NumberFormatUtil.format(mag, 1)%>, <%=NumberFormatUtil.format(depth, 0)%>);
 <%
 	}	
 %>
