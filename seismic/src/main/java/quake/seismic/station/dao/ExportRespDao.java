@@ -23,7 +23,7 @@ import quake.seismic.station.model.Digitizer;
 import quake.seismic.station.model.Loc;
 
 /**
- * 导出台站数据DAO
+ * 导出台站数据respDAO
  * 
  * @author yj
  */
@@ -588,22 +588,6 @@ public class ExportRespDao extends AbstractStationDao {
     m.put("etName", et.getName());
     m.put("childrenList", children);
     return m;
-  }
-
-  /**
-   * 根据查询条件执行测震台站数据查询。
-   */
-  public List<Map> queryStationById(Criteria criteria) {
-    Assert.notNull(criteria, "Criteria is null.");
-    return getTemplate().queryForList(SQL_STATION_ID, criteria);
-  }
-
-  /**
-   * 根据查询条件执行通道数据查询。
-   */
-  public List<Map> queryChannel(Criteria criteria) {
-    Assert.notNull(criteria, "Criteria is null.");
-    return getTemplate().queryForList(SQL_CHANNEL, criteria);
   }
 
   /**
