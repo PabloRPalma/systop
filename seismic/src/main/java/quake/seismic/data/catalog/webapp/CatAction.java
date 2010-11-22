@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.ecside.core.TableConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -68,6 +69,7 @@ public class CatAction extends AbstractQueryAction<Criteria> {
   private SeedDao seedDao;
 
   private List<Map> cats = new ArrayList<Map>();
+  
   /**
    * 进入地震目录查询页面
    * @return
@@ -347,4 +349,5 @@ public class CatAction extends AbstractQueryAction<Criteria> {
   public void setModel(Criteria model) {
     this.model = model;
   }
+  
 }
