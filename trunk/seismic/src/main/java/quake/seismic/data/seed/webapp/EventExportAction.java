@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
-import java.io.Writer;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -42,6 +41,11 @@ public class EventExportAction extends BaseAction implements Preparable{
    */
   @Autowired(required = true)
   private SeedpathManager manager;
+  
+  /**
+   * 全部台站
+   */
+  private String allStations;
   
   /**
    * 台站列表，用逗号分隔
@@ -80,12 +84,25 @@ public class EventExportAction extends BaseAction implements Preparable{
     OUTPUT_FORMAT.put("6", "sac ascii");
     OUTPUT_FORMAT.put("7", "SEGY");
   }
+  
+ public static final Map OUTPUT_POSTFIX = new LinkedHashMap(8);
+  
+  static {
+    //(1=SAC), 2=AH, 3=CSS, 4=mini seed, 5=seed, 6=sac ascii, 7=SEGY
+    OUTPUT_POSTFIX.put("1", "*.SAC");
+    OUTPUT_POSTFIX.put("2", "*.AH");
+    OUTPUT_POSTFIX.put("3", "*");
+    OUTPUT_POSTFIX.put("4", "*");
+    OUTPUT_POSTFIX.put("5", "seed.rdseed");
+    OUTPUT_POSTFIX.put("6", "*.SAC_ASC");
+    OUTPUT_POSTFIX.put("7", "*.SEGY");
+  }
   /**
-   * rdseed的参数
+   * rdseed的参数，第9步之后多输入几个，以适应不同的输出格式
    */
   private String[] args = new String[] {"quit","\n","\n","d\n",
       "\n","\n","\n","\n","\n","\n","\n","\n",
-      "\n","\n","\n","N\n","quit\n"};
+      "\n","\n","\n","\n","\n","N\n","quit\n"};
   /**
    * 设置rdseed执行过程中的参数：
    * <pre>
@@ -99,13 +116,27 @@ public class EventExportAction extends BaseAction implements Preparable{
       //7-Network List (ALL)
       //8-Loc Ids (ALL ["--" for spaces]) :
       //9-Output Format [(1=SAC), 2=AH, 3=CSS, 4=mini seed, 5=seed, 6=sac ascii, 7=SEGY] : 5
-      //10-Strip out records with zero sample count? [Y/N]? [Y/N]
-      //11-Select Data Type [(E=Everything), D=Data of Undetermined State, R=Raw waveform Data, Q=QC'd data] :
-      //12-Start Time(s) YYYY,DDD,HH:MM:SS.FFFF :
-      //13-End Time(s)   YYYY,DDD,HH:MM:SS.FFFF :
-      //14 Sample Buffer Length [2000000]:
-      //15-Extract Responses [Y/(N)]
-      //16-Input  File (/dev/nrst0) or 'Quit' to Exit: QUit      
+      第九步之后，如果选择SAC则：
+         Output file names include endtime? [Y/(N)]
+         Output poles & zeroes ? [Y/(N)]
+         Check Reversal [(0=No), 1=Dip.Azimuth, 2=Gain, 3=Both]:
+       如果选择AH，则：
+         Output file names include endtime? [Y/(N)]
+         Check Reversal [(0=No), 1=Dip.Azimuth, 2=Gain, 3=Both]: 
+       如果选择CSS，则：
+         Check Reversal [(0=No), 1=Dip.Azimuth, 2=Gain, 3=Both]:
+       如果选择mini seed和seed，则：       
+         Strip out records with zero sample count? [Y/N]? [Y/N]
+       如果选择sac ascii,则:
+         Check Reversal [(0=No), 1=Dip.Azimuth, 2=Gain, 3=Both]:
+       如果选择SEGY，则： 
+         Check Reversal [(0=No), 1=Dip.Azimuth, 2=Gain, 3=Both]:
+      //Select Data Type [(E=Everything), D=Data of Undetermined State, R=Raw waveform Data, Q=QC'd data] :
+      //Start Time(s) YYYY,DDD,HH:MM:SS.FFFF :
+      //End Time(s)   YYYY,DDD,HH:MM:SS.FFFF :
+      //Sample Buffer Length [2000000]:
+      //Extract Responses [Y/(N)]
+      //Input  File (/dev/nrst0) or 'Quit' to Exit: QUit      
    * </pre>
    */
   @Override
@@ -124,7 +155,8 @@ public class EventExportAction extends BaseAction implements Preparable{
     seed = seedPath.getPath() + "data/seed/" + seed + "\n";
     args[0] = seed; //Input  File (/dev/nrst0) or 'Quit' to Exit
     //台站列表
-    if(ArrayUtils.isNotEmpty(stations)) {
+    logger.debug("Export all stations {}", StringUtils.hasText(allStations));
+    if(ArrayUtils.isNotEmpty(stations) && !StringUtils.hasText(allStations)) {
       args[5] = StringUtils.arrayToCommaDelimitedString(stations) + "\n";
     }
     //通道列表
@@ -142,7 +174,7 @@ public class EventExportAction extends BaseAction implements Preparable{
    * 导出地震数据并下载
    * @return
    */
-  public String export() {    
+  public String export() {   
     Seedpath seedPath = manager.get();
     if (seedPath == null) {
       logger.warn("Seed 路径未设置！");
@@ -167,7 +199,7 @@ public class EventExportAction extends BaseAction implements Preparable{
       Process process = procBuilder.start();
       reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
       writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
-      readString(reader, writer);
+      readString(reader, false);
       for(String arg : args) {
         logger.debug(arg);
         writer.write(arg);
@@ -177,7 +209,7 @@ public class EventExportAction extends BaseAction implements Preparable{
       logger.info("rdseed 执行完毕 [{}]", exit);
       
       if(exit == 0) {
-        download(); //下载数据  
+        download(); //打包下载数据  
       }
       
     } catch (Exception e) {
@@ -198,13 +230,13 @@ public class EventExportAction extends BaseAction implements Preparable{
         }
       }
       
-      rmOutput();
+      rmOutput(); //删除输出目录，包括rdseed生成的文件和打包的文件
     }
     return null;
   }  
   
   /**
-   * 删除输出目录
+   * 删除输出目录，包括rdseed生成的文件和打包的文件
    */
   private void rmOutput() {
     ProcessBuilder procBuilder = new ProcessBuilder();
@@ -220,30 +252,73 @@ public class EventExportAction extends BaseAction implements Preparable{
     }
   }
   
+  /**
+   * 打包生成的文件
+   */
+  public File tar(File target, String output, String input) {
+    ProcessBuilder procBuilder = new ProcessBuilder();
+    procBuilder.directory(target.getParentFile());
+    procBuilder.redirectErrorStream(true);
+    
+    procBuilder.command("tar", "-czf", output, target.getName(), input);
+    
+    try {
+      Process process = procBuilder.start();
+      process.waitFor();
+      if(true) {
+        return new File(target.getParentFile().getAbsolutePath() + "/" + output);
+      }  
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    
+    return null;
+  }
+  
+  /**
+   * 打包生成的文件，并下载
+   */
   private void download() {
-    File expFile = new File(exeDir.getAbsolutePath() + "/seed.rdseed"); 
-    if(!expFile.exists()) {
+    if(!OUTPUT_FORMAT.containsKey(format)) {
+      render(getResponse(), "输出格式不支持" + format, "text/html");
+      return;
+    }
+    String filename = OUTPUT_FORMAT.get(format).toString() + ".tar.gz";
+    //将生成的文件进行打包
+    File expFile = tar(exeDir, filename, 
+        OUTPUT_POSTFIX.get(format).toString());
+    
+    if(expFile == null || !expFile.exists()) {
       render(getResponse(), "暂无数据", "text/html");
       return;
     }
     
     getResponse().setContentType("application/x-download");
-    getResponse().addHeader("Content-Disposition", "attachment;filename=\"" + seed + "\"");
+    getResponse().addHeader("Content-Disposition", "attachment;filename=\"" + filename + "\"");
     FileChannelUtil fcu = new FileChannelUtil();
     try {
       fcu.read(expFile, getResponse().getOutputStream());
     } catch (IOException e) {
       e.printStackTrace();
+    } finally {
+      expFile.delete();
     }
   }
   
-  private void readString(final Reader reader, final Writer writer) throws Exception {
+  /**
+   * 多线程读取rdseed输出的信息，使得rdseed可以正确运行
+   */
+  private void readString(final Reader reader, final boolean print) throws Exception {
     new Thread(new Runnable() {
       public void run() {
         try {
           char [] buf = new char[300];
           while (reader.read(buf) >= 0) {
-            System.out.println(buf);
+            if(print)  System.out.println(buf);
           }
         } catch (IOException e) {
           // return on IOException
@@ -290,5 +365,13 @@ public class EventExportAction extends BaseAction implements Preparable{
 
   public void setFormat(String format) {
     this.format = format;
+  }
+
+  public String getAllStations() {
+    return allStations;
+  }
+
+  public void setAllStations(String allStations) {
+    this.allStations = allStations;
   }
 }

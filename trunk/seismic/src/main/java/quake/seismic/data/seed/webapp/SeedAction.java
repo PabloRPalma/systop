@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import quake.admin.ds.service.DataSourceManager;
 import quake.admin.seedpath.service.SeedpathManager;
 import quake.base.webapp.AbstractQueryAction;
+import quake.seismic.data.catalog.dao.impl.GridCatDao;
 import quake.seismic.data.catalog.model.Criteria;
 import quake.seismic.data.seed.dao.impl.SeedDao;
 import quake.seismic.data.seed.model.StaCriteria;
@@ -41,11 +42,19 @@ public class SeedAction extends AbstractQueryAction<Criteria> {
   @Qualifier("seedDao")
   private SeedDao seedDao;
   
+  @Autowired
+  private GridCatDao catDao;
+  
   /**
    * 数据源Manager，用于获取测震schema
    */
   @Autowired
   private DataSourceManager dataSourceManager;
+  
+  /**
+   * 地震目录表名
+   */
+  private String tableName;
 
   /**
    * seed存储路径Manager
@@ -94,6 +103,7 @@ public class SeedAction extends AbstractQueryAction<Criteria> {
         criteria.setStaCode(station.substring(station.lastIndexOf(".") + 1));
         logger.debug("criteria:" + criteria.getNetCode() + "." + criteria.getStaCode());
         station = seedDao.queryStaName(criteria);// 获取台站中文名
+        map.put("stationCode", criteria.getStaCode());
       }
       if(StringUtils.isNotBlank(station)) {
         map.put("Station", station);
@@ -101,6 +111,19 @@ public class SeedAction extends AbstractQueryAction<Criteria> {
     }
     getRequest().setAttribute("items", items);
     return "show";
+  }
+  
+  /**
+   * 根据波形文件名称查询地震目录（单条）
+   * @return
+   */
+  public Map getCatalogBySeed() {
+    Criteria criteria = new Criteria();
+    criteria.setTableName(tableName);
+    criteria.setSchema(dataSourceManager.getSeismicSchema());
+    String seedName = getRequest().getParameter("seedname");
+    criteria.setSeedId(seedName.substring(0, seedName.lastIndexOf(".")) + "%");
+    return (Map) catDao.getTemplate().queryForObject("cz.queryBySeed", criteria);
   }
 
   /**
@@ -190,6 +213,14 @@ public class SeedAction extends AbstractQueryAction<Criteria> {
 
   public void setId(String id) {
     this.id = id;
+  }
+
+  public String getTableName() {
+    return tableName;
+  }
+
+  public void setTableName(String tableName) {
+    this.tableName = tableName;
   }
 
 }

@@ -120,7 +120,7 @@ public class SeedDao extends AbstractSeedDao<Page> {
    * @param seedName Seed文件全路径
    */
   public List<Map<String, Object>> querySeedPlotsData(String seedFile) {
-    List<Map<String, Object>> list = jdbcTemplate.queryForList("select * from seed_plots where seedfile = ?",
+    List<Map<String, Object>> list = jdbcTemplate.queryForList("select * from seed_plots where seedfile = ? order by station asc",
         new Object[] { seedFile });
     return list;
   }
