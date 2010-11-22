@@ -324,12 +324,23 @@
 				<![CDATA[(O_TIME<=#endDate#)]]>
 				</isEmpty>
 			</isNotEmpty>
-			<!-- 按圆形区域查询 -->
+			
 			<isNotNull property="startLat">
 				<isNotNull prepend="AND" property="startLon">
 				<![CDATA[
-				 (get_distance(#startLon#,#startLat#,EPI_LON,EPI_LAT)<=#range#)
+				 ((EPI_LON != -99999) AND (EPI_LAT != -99999))
 				]]>
+				</isNotNull>
+			</isNotNull>
+			
+			<!-- 按圆形区域查询 -->
+			<isNotNull property="startLat">
+				<isNotNull property="startLon">
+					<isNotEmpty prepend="AND" property="range">
+						<![CDATA[
+				 		(get_distance(#startLon#,#startLat#,EPI_LON,EPI_LAT)<=#range#)
+						]]>
+					</isNotEmpty>
 				</isNotNull>
 			</isNotNull>
 			
@@ -418,13 +429,24 @@
 				<isEmpty prepend="AND" property="startDate">
 				<![CDATA[(O_TIME<=#endDate#)]]>
 				</isEmpty>
-			</isNotEmpty>			
-			<!-- 按圆形区域查询 -->
+			</isNotEmpty>
+			
 			<isNotNull property="startLat">
 				<isNotNull prepend="AND" property="startLon">
 				<![CDATA[
-				 (get_distance(#startLon#,#startLat#,EPI_LON,EPI_LAT)<=#range#)
+				 ((EPI_LON != -99999) AND (EPI_LAT != -99999))
 				]]>
+				</isNotNull>
+			</isNotNull>
+						
+			<!-- 按圆形区域查询 -->
+			<isNotNull property="startLat">
+				<isNotNull property="startLon">
+					<isNotEmpty prepend="AND" property="range">
+						<![CDATA[
+				 		(get_distance(#startLon#,#startLat#,EPI_LON,EPI_LAT)<=#range#)
+						]]>
+					</isNotEmpty>
 				</isNotNull>
 			</isNotNull>
 			
