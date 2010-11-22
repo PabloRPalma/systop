@@ -21,23 +21,111 @@ fieldset {
 	padding: 2px;
 	margin: 10px;
 }
+a.sta:link{
+   color: #0099bb;
+}
+a.sta:hover{
+	color: #bb3300;
+	text-decoration:none;
+}
 </style>
 </head>
 <body>
 <s:form id="queryFrm" action="view" theme="simple">
-
+<fieldset>
+   <legend>地震目录信息</legend>
+   <table WIDTH="95%" BORDER="0" CELLSPACING="1" CELLPADDING="1" ALIGN="CENTER">
+       <tr>
+           <td>发震时刻:<s:date name="catalogBySeed.O_TIME" format="yyyy-MM-dd HH:mm:ss"/></td>
+           <td>震级(${catalogBySeed.M_SOURCE})：<s:property value="catalogBySeed.M"></s:property></td>
+           <td>经度(°):<s:property value="catalogBySeed.EPI_LON"></s:property></td>
+           <td>纬度(°):<s:property value="catalogBySeed.EPI_LAT"></s:property></td>
+           <td>深度(KM):<s:property value="catalogBySeed.EPI_DEPTH"></s:property></td>
+           <td>震中地名:<s:property value="catalogBySeed.LOCATION_CNAME"></s:property></td>
+       </tr>
+   </table>
+</fieldset>
+<fieldset>
+   <legend>通道</legend>
+   <table WIDTH="95%" BORDER="0"  CELLSPACING="0" CELLPADDING="0" ALIGN="CENTER">
+		<TR BGCOLOR="#FFFFFF">
+		<td WIDTH="14">&nbsp;</td>
+		<td><INPUT TYPE=checkbox NAME=channels VALUE="BHE,BHN,BHZ,SHE,SHN,SHZ"><font color=red>ALL</font></td>
+		<td><INPUT TYPE=checkbox NAME=channels VALUE="BHE,SHE"><font color=brown>??E</font></td>
+		<td><INPUT TYPE=checkbox NAME=channels VALUE="BHN,SHN"><font color=brown>??N</font></td>
+		<td><INPUT TYPE=checkbox NAME=channels VALUE="BHZ,SHZ"><font color=brown>??Z</font></td>
+		<td WIDTH="14">&nbsp;</td>
+		<td WIDTH="14">&nbsp;</td>
+		<td WIDTH="14">&nbsp;</td>
+		</TR>
+		<TR BGCOLOR="#FFFFFF">
+		<td WIDTH="14">&nbsp;</td>
+		<td><INPUT TYPE=checkbox NAME=channels VALUE="BHE,BHN,BHZ"><font color=green>B??</font></td>
+		<td><INPUT TYPE=checkbox NAME=channels VALUE="BHE"><font color=blue>BHE</font></td>
+		<td><INPUT TYPE=checkbox NAME=channels VALUE="BHN"><font color=blue>BHN</font></td>
+		<td><INPUT TYPE=checkbox NAME=channels VALUE="BHZ"><font color=blue>BHZ</font></td>
+		<td WIDTH="14">&nbsp;</td>
+		<td WIDTH="14">&nbsp;</td>
+		<td WIDTH="14">&nbsp;</td>
+		</TR>
+		<TR BGCOLOR="#FFFFFF">
+		<td WIDTH="14">&nbsp;</td>
+		<td><INPUT TYPE=checkbox NAME=channels VALUE="SHE,SHN,SHZ"><font color=green>S??</font></td>
+		<td><INPUT TYPE=checkbox NAME=channels VALUE="SHE"><font color=blue>SHE</font></td>
+		<td><INPUT TYPE=checkbox NAME=channels VALUE="SHN"><font color=blue>SHN</font></td>
+		<td><INPUT TYPE=checkbox NAME=channels VALUE="SHZ"><font color=blue>SHZ</font></td>
+		<td WIDTH="14">&nbsp;</td>
+		<td WIDTH="14">&nbsp;</td>
+		<td WIDTH="14">&nbsp;</td>
+		</TR>
+  	</table>
+</fieldset>
+<fieldset>
+    <legend>台站</legend>
+    <table WIDTH="95%" BORDER="0" CELLSPACING="1" CELLPADDING="1" ALIGN="CENTER">
+        <tr>
+	            <td style="color:#0099bb;" align="left" colspan='3'>
+	               <ul>
+	                   <li>点击台站名称可查看台站测震波形图。</li>
+	                   <li>选择台站，可将该台站数据包含在导出的数据中。</li>
+	               </ul>
+	            </td>
+	      </tr>
+         <tr>
+	            <td style="color:#990000;" align="left">
+	               <input type="checkbox" name="allStations" value="*" onclick="selecteAll(this)"></input>
+	               全部台站
+	            </td>
+	      </tr>
+	      <s:iterator value="#request.items" var="item" status="status">
+	         
+	         <s:if test="(#status.index)>0 && (#status.index)%4==0">
+	             </tr>
+	         </s:if>
+	         <s:if test="(#status.index)%4==0">
+	             <tr>
+	         </s:if>
+	         <td>
+	               <input type="checkbox" name="stations" value="${item.stationCode}"></input>
+	               <a href="javascript:void(0);" onclick="showGraph('${item.id}');" title="查看波形图" class="sta">
+	                 <s:property value="station"/>
+	               </a>
+	         </td>
+		</s:iterator>
+	</table>
+</fieldset>
 <fieldset>
 		<legend>事件波形</legend>
 		<table width="98%" align="center">
 			<tr>				
 		  	    <td>
+		  	    
 		  	    输出格式:
 		  	    <s:select list="@quake.seismic.data.seed.webapp.EventExportAction@OUTPUT_FORMAT"
 		  	        name="format"></s:select>
 		  	    <input type="hidden" name="seed" value="${param.seedname}"></input>
 		  	    
 		  	      <input type="button" align="center" value="导出数据" onclick="return exp();"  class="button"/>
-		  	      <input type="button" align="center" value="查看波形图" onclick="return post();"  class="button"/>
 		  	      
 		  	     &nbsp;&nbsp; <input type="button" align="center" value="返回上一页" onclick="history.go(-1);"  class="button"/>
 		  	    </td>
@@ -45,42 +133,9 @@ fieldset {
 		</table>
 </fieldset>
 </s:form>
-
-<table width="98%">
-  <tr>
-    <td>
-<ec:table items="items" var="item"  retrieveRowsCallback="process" sortRowsCallback="process" 
-	action="showSeed.do"
-	useAjax="true" doPreload="false"
-	maxRowsExported="10000000" 
-	pageSizeList="30,60,80,100" 
-	editable="false" 
-	sortable="false"	
-	rowsDisplayed="30"	
-	generateScript="true"	
-	resizeColWidth="true"	
-	classic="false"	
-	width="100%" 	
-	height="477px"	
-	minHeight="300"
-	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status"     
-	>
-	<ec:row>
-		<ec:column width="40" property="_0" title="序号" value="${GLOBALROWCOUNT}" style="text-align:center"/>
-		<ec:column width="200" property="SeedFile" title="SEED"/>	
-		<ec:column width="80" property="Station" title="台站名" style="text-align:center"/>	
-		<ec:column width="80" property="_9" title="&nbsp;<input type='checkbox' onclick='selecteAll(this);'/>" style="text-align:center" >			
-			<input type="checkbox" name="selectedItems" value="${item.ID}"/>
-		</ec:column>
-	</ec:row>   
-</ec:table>
-    </td>
-  </tr>
-</table>
-</body>
 <script type="text/javascript">	
 	function selecteAll(val) {
-     var checkBox = document.getElementsByName("selectedItems");
+     var checkBox = document.getElementsByName("stations");
      if (val.checked) {
        for (var i=0;i<checkBox.length;i++) {
 	      if (!checkBox[i].disabled) {
@@ -100,27 +155,12 @@ fieldset {
 		$('#queryFrm').attr("action", "${ctx}/quake/seismic/data/seed/eventexp/export.do");
 		$('#queryFrm').submit();
 	}
-	   
-	function post(){
-		var ids = new Array();
-		var obj = document.getElementsByName('selectedItems');
-		for(i = 0,j=0;i < obj.length;i++){
-			if(obj[i].type == 'checkbox'){
-				if(obj[i].checked){
-					ids[j] = obj[i].value;
-					j++;
-				}				
-			}
-			if(i == obj.length -1 && j == 0){
-					alert('请至少选择一个台站！');
-					return false;
-			}
-		}
-		if(ids.length != 0)
-			queryFrm.action = "view.do?id=" + ids;
-		else
-			queryFrm.action = "view.do";
-		queryFrm.submit();
+
+	function showGraph(id) {
+		$('#queryFrm').attr("action", "view.do?id=" + id);
+		$('#queryFrm').attr("target", "_blank");
+		$('#queryFrm').submit();
 	}
 </script>
+</body>
 </html>
