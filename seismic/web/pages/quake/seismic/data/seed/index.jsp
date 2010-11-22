@@ -16,65 +16,76 @@ $(function() {
 </head>
 <body>
 
-<fieldset>
-	<legend>地震目录查询</legend>
+
 	<s:form id="queryFrm" action="listSeed" namespace="/quake/seismic/data/catalog" theme="simple">
-		<s:hidden name="model.tableName"/>
-		<s:hidden name="model.magTname"/>
-		<s:hidden name="model.phaseTname"/>
-		<s:hidden name="model.clcName"/>
-		<s:hidden name="model.clDescn"/>
-		<s:hidden name="model.disType"/>
-		<table width="99%" align="center">
-		  <tr>
-			<td align="right" title="(YYYY-MM-DD)">发震日期：</td>
-	  	    <td>
-	  	      <input type="text" id="startDate" name="model.startDate" 
-		       value="<s:date name="model.startDate" format="yyyy-MM-dd"/>"
-		       onclick="WdatePicker({maxDate:'#F{$dp.$D(\'endDate\')||\'now\'}',skin:'whyGreen'})" style="width:80px;">
-	  	    </td>
-	  	    <td>至</td>
-	  	    <td>
-	  	      <input type="text" id="endDate" name="model.endDate" 
-		       value="<s:date name="model.endDate" format="yyyy-MM-dd"/>"
-		       onclick="WdatePicker({minDate:'#F{$dp.$D(\'startDate\')}',maxDate:'now',skin:'whyGreen'})" style="width:80px;">
-	  	    </td>
-	  	    <td align="right">震级：</td>
-	  	     <td>
-	  	      <s:textfield name="model.startM" cssStyle="width:80px;" cssClass="number" title="大于等于1的正数"/>
-	  	    </td>
-	  	    <td>至</td>
-	  	     <td>
-	  	      <s:textfield name="model.endM" cssStyle="width:80px;" cssClass="number" title="大于等于1的正数"/>
-	  	    </td>
-	  	    <td>
-	  	      <input type="button" value="查询" onclick="exportData('${ctx}/quake/seismic/data/catalog/listSeed.do', '')"  class="button"/>
-	  	    </td>
-		</tr>
-		<tr>
-			<td align="right">纬度(°)：</td> 
-	  	    <td>
-	  	      <s:textfield name="model.startLat" cssStyle="width:80px;" cssClass="number" title="度.度，-90至90"/>
-	  	    </td>
-	  	    <td>至</td>
-	  	     <td>
-	  	      <s:textfield name="model.endLat" cssStyle="width:80px;" cssClass="number" title="度.度，-90至90"/>
-	  	    </td>
-	  	    <td align="right">经度(°)：</td>
-	  	    <td>
-	  	      <s:textfield name="model.startLon" cssStyle="width:80px;" cssClass="number" title="度.度，-180至180"/> 
-	  	    </td>
-	  	    <td>至</td>
-	  	    <td>
-	  	      <s:textfield name="model.endLon" cssStyle="width:80px;" cssClass="number" title="度.度，-180至180"/>
-	  	    </td>
-	  	    <td>
-	  	      &nbsp;
-	  	    </td>
-  	  </tr>
-	</table>
+				<fieldset>
+		<legend>地震目录查询</legend>
+  			<s:hidden name="model.tableName"/>
+  			<s:hidden name="model.magTname"/>
+  			<s:hidden name="model.phaseTname"/>
+  			<s:hidden name="model.clcName"/>
+  			<s:hidden name="model.clDescn"/>
+  			<s:hidden name="model.disType"/>
+		<table width="100%" style="margin:0px;">
+			<tr>
+				<td align="right" title="(YYYY-MM-DD)">日期：</td>
+		  	    <td>
+		  	      <input type="text" id="startDate" name="model.startDate" 
+			       value="<s:date name="model.startDate" format="yyyy-MM-dd"/>"
+			       onclick="WdatePicker({maxDate:'#F{$dp.$D(\'endDate\')||\'now\'}',skin:'whyGreen'})" style="width:70px;">
+		  	    </td>
+		  	    <td>至</td>
+		  	    <td>
+		  	      <input type="text" id="endDate" name="model.endDate" 
+			       value="<s:date name="model.endDate" format="yyyy-MM-dd"/>"
+			       onclick="WdatePicker({minDate:'#F{$dp.$D(\'startDate\')}',maxDate:'now',skin:'whyGreen'})" style="width:70px;">
+		  	    </td>
+		  	    <td align="right">震级：</td>
+		  	     <td>
+		  	      <s:textfield name="model.startM" cssStyle="width:70px;" cssClass="number" title="大于等于1的正数"/>
+		  	    </td>
+		  	    <td>至</td>
+		  	     <td>
+		  	      <s:textfield name="model.endM" cssStyle="width:70px;" cssClass="number" title="大于等于1的正数"/>
+		  	    </td>
+		  	    <td align="right">类型：</td>
+				<td><s:select list="EqTypesMap" name="model.eqType" headerKey="" headerValue="--请选择类型--" cssStyle="width:100px;">
+        			</s:select>
+        		</td>
+		  	    <td>
+		  	      	序列：<s:textfield name="model.sequenName" cssStyle="width:100px;"/>
+		  	    </td>
+			</tr>
+			<tr>
+				<td align="right">纬度：</td> 
+		  	    <td>
+		  	      <s:textfield name="model.startLat" cssStyle="width:70px;" cssClass="number" title="度.度，-90至90"/>
+		  	    </td>
+		  	    <td>至</td>
+		  	     <td>
+		  	      <s:textfield name="model.endLat" cssStyle="width:70px;" cssClass="number" title="度.度，-90至90"/>
+		  	    </td>
+		  	    <td align="right">经度：</td>
+		  	    <td>
+		  	      <s:textfield name="model.startLon" cssStyle="width:70px;" cssClass="number" title="度.度，-180至180"/> 
+		  	    </td>
+		  	    <td>至</td>
+		  	    <td>
+		  	      <s:textfield name="model.endLon" cssStyle="width:70px;" cssClass="number" title="度.度，-180至180"/>
+		  	    </td>
+		  	    <td align="right">地名：</td>
+				<td><s:textfield name="model.location" cssStyle="width:100px;"/></td>
+		  	    <td>
+		  	       <input type="button" value="查询" onclick="exportData('${ctx}/quake/seismic/data/catalog/listSeed.do', '')"  class="button"/>&nbsp;
+		  	      
+		  	    </td>
+	  	  </tr>
+		</table>
+				
+	   </fieldset>
 	</s:form>
-</fieldset>
+
+
 <div class="x-panel-body">
 <ec:table items="items" var="item" retrieveRowsCallback="limit" sortRowsCallback="limit" 
 	action="listSeed.do"
@@ -101,7 +112,7 @@ $(function() {
 			<s:else>
 			   <span style="color:#CCC">下载</span>
 			</s:else> | 
-			<s:if test="#attr.item.SEED_ANALYSIS == 1"><a href="${ctx}/quake/seismic/data/seed/showSeed.do?seedname=${item.SEED_NAME}">事件波形</a></s:if>
+			<s:if test="#attr.item.SEED_ANALYSIS == 1"><a href="${ctx}/quake/seismic/data/seed/showSeed.do?seedname=${item.SEED_NAME}&tableName=${model.tableName}">事件波形</a></s:if>
 			<s:else>
 			   <span style="color:#CCC">事件波形</span> 
 			</s:else>
