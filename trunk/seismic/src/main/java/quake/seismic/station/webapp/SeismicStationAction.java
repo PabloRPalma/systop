@@ -23,6 +23,7 @@ import quake.seismic.instrument.InstrumentConstants;
 import quake.seismic.station.StationConstants;
 import quake.seismic.station.dao.AbstractStationDao;
 import quake.seismic.station.dao.ExportRespDao;
+import quake.seismic.station.dao.ExportXmlDao;
 import quake.seismic.station.dao.GridStationDao;
 import quake.seismic.station.model.Criteria;
 import quake.seismic.station.model.InstrDic;
@@ -59,9 +60,16 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
    * 用于导出台站DAO
    */
   @Autowired(required = true)
-  @Qualifier("exportStationDao")
+  @Qualifier("exportRespDao")
   private ExportRespDao exportRespDao;
 
+  
+  /**
+   * 用于导出台站DAO
+   */
+  @Autowired(required = true)
+  @Qualifier("exportXmlDao")
+  private ExportXmlDao exportXmlDao;
   @Autowired
   private ProvinceLatlng provinceLatlng;
 
@@ -297,7 +305,7 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
   }
 
   /**
-   * 导出EQT格式数据
+   * 导出resp格式数据
    * 
    * @return
    */
@@ -309,6 +317,28 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
     render(getResponse(), data, "text/html");
     return null;
 
+  }
+  /**
+   * 导出xml格式数据
+   * 
+   * @return
+   */
+  public String xml() {
+    String data = exportXmlData();
+    logger.debug("导出的数据：{}", data);
+    getResponse().addHeader("Content-Disposition", "attachment;filename=\"text.xml\"");
+    renderXml(getResponse(), data);
+    return null;
+  }
+  /**
+   * 根据数据格式导出相应数据
+   * 
+   * @return
+   */
+  private String exportXmlData() {
+    StringBuffer buf = exportXmlDao.queryForXml(stataionId, dataSourceManager
+        .getStationSchema());
+    return buf.toString();
   }
 
   /**
@@ -355,12 +385,12 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
 
     model.setSchema(dataSourceManager.getStationSchema());
     model.setId(stataionId);
-    List<Map> stationList = exportRespDao.queryStationById(model);
+    List<Map> stationList = exportXmlDao.queryStationById(model);
     if (stationList.size() == 1) {
       Map m = stationList.get(0);
       model.setStaCode(m.get("STA_CODE").toString());
       model.setNetCode(m.get("NET_CODE").toString());
-      List<Map> channelList = exportRespDao.queryChannel(model);
+      List<Map> channelList = exportXmlDao.queryChannel(model);
       getRequest().setAttribute("items", channelList);
       getRequest().setAttribute("staName", m.get("STA_CNAME"));
       getRequest().setAttribute("netName", SeismicConstants.NETWORK_INFO.get(m.get("NET_CODE")));
