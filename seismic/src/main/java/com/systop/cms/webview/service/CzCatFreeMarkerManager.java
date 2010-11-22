@@ -70,11 +70,27 @@ public class CzCatFreeMarkerManager{
   }
   
   /**
-   * 取得首页下拉菜单显示的地址目录列表
+   * 取得首页下拉菜单显示的地震目录列表
    * @return
    */
   public List<Map<String, String>> queryMenuCzCats() {
     return catalogManager.getCat();
+  }
+  
+  /**
+   * 取得首页下拉菜单显示的有震相表关联的地震目录列表
+   * @return
+   */
+  public List<Map<String, String>> queryMenuPhaseCats() {
+    return catalogManager.getPhaseCat();
+  }
+  
+  /**
+   * 取得首页下拉菜单显示的有事件波形的地震目录
+   * @return
+   */
+  public List<Map<String, String>> queryMenuSeedCats() {
+    return catalogManager.getSeedCat();
   }
   
   /**
