@@ -29,7 +29,7 @@ $(function() {
   <tr><s:form id="queryFrm" action="list" namespace="/quake/seismic/data/catalog" theme="simple">
 	<td>
 		<fieldset>
-		<legend>地震目录查询(矩形区域)</legend>
+		<legend>${model.clcName}地震目录查询(矩形区域)</legend>
   			<s:hidden name="model.tableName"/>
   			<s:hidden name="model.magTname"/>
   			<s:hidden name="model.phaseTname"/>

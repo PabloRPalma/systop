@@ -29,13 +29,14 @@ $(function() {
   <tr><s:form id="queryFrm" action="listRound" namespace="/quake/seismic/data/catalog" theme="simple">
 	<td>
 		<fieldset>
-		<legend>地震目录查询(圆形区域)</legend>
+		<legend>${model.clcName}地震目录查询(圆形区域)</legend>
   			<s:hidden name="model.tableName"/>
   			<s:hidden name="model.magTname"/>
   			<s:hidden name="model.phaseTname"/>
   			<s:hidden name="model.clcName"/>
   			<s:hidden name="model.clDescn"/>
   			<s:hidden name="model.disType"/>
+  			<s:hidden name="model.isRoundQuery"/>
 		<table width="100%" style="margin:0px;">
 			<tr>
 				<td align="right" title="(YYYY-MM-DD)">日期：</td>
