@@ -22,7 +22,7 @@ import quake.seismic.SeismicConstants;
 import quake.seismic.instrument.InstrumentConstants;
 import quake.seismic.station.StationConstants;
 import quake.seismic.station.dao.AbstractStationDao;
-import quake.seismic.station.dao.ExportStationDao;
+import quake.seismic.station.dao.ExportRespDao;
 import quake.seismic.station.dao.GridStationDao;
 import quake.seismic.station.model.Criteria;
 import quake.seismic.station.model.InstrDic;
@@ -60,7 +60,7 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
    */
   @Autowired(required = true)
   @Qualifier("exportStationDao")
-  private ExportStationDao exportStationDao;
+  private ExportRespDao exportRespDao;
 
   @Autowired
   private ProvinceLatlng provinceLatlng;
@@ -320,7 +320,7 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
     Criteria c = new Criteria();
     c.setChannelId(channelId);
     c.setSchema(dataSourceManager.getStationSchema());
-    List<Map> ChannelList = exportStationDao.queryChannelById(c);
+    List<Map> ChannelList = exportRespDao.queryChannelById(c);
     Map channel = null;
     if (ChannelList.size() == 1) {
       channel = ChannelList.get(0);
@@ -341,7 +341,7 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
    * @return
    */
   private String exportRespData() {
-    StringBuffer buf = exportStationDao.queryForResp(channelId, dataSourceManager
+    StringBuffer buf = exportRespDao.queryForResp(channelId, dataSourceManager
         .getStationSchema());
     return buf.toString();
   }
@@ -355,12 +355,12 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
 
     model.setSchema(dataSourceManager.getStationSchema());
     model.setId(stataionId);
-    List<Map> stationList = exportStationDao.queryStationById(model);
+    List<Map> stationList = exportRespDao.queryStationById(model);
     if (stationList.size() == 1) {
       Map m = stationList.get(0);
       model.setStaCode(m.get("STA_CODE").toString());
       model.setNetCode(m.get("NET_CODE").toString());
-      List<Map> channelList = exportStationDao.queryChannel(model);
+      List<Map> channelList = exportRespDao.queryChannel(model);
       getRequest().setAttribute("items", channelList);
       getRequest().setAttribute("staName", m.get("STA_CNAME"));
       getRequest().setAttribute("netName", SeismicConstants.NETWORK_INFO.get(m.get("NET_CODE")));
