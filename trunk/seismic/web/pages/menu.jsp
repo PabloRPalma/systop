@@ -138,12 +138,12 @@
 				<img src="${ctx}/images/icons/resource.gif" class="icon">
 				<a href="${ctx}/security/resource/index.do" target="main">资源管理</a>
 			</div>
-			
+			-->
 			<div style="padding-top:2px">
 				<img src="${ctx}/images/icons/user_go.gif" class="icon">
 				<a href="${ctx}/regist/index.do" target="main">注册用户管理</a>
 			</div>
-			-->
+			
 		</div>
 	</div>
 	<div id="smtpsetting">
@@ -165,22 +165,20 @@
 				<img src="${ctx}/images/icons/template.gif" class="icon">
                   <a href="${ctx}/quake/admin/catalog/index.do" target="main">地震目录管理</a>
 			</div>  
-			<!--
 			<div style="padding-top:2px">	
 				<img src="${ctx}/images/icons/template.gif" class="icon">
                   <a href="${ctx}/regist/regMemo/edit.do" target="main">注册说明设置</a>
 			</div>
-			-->
 			<div style="padding-top:2px">	
 				<img src="${ctx}/images/icons/template.gif" class="icon">
                   <a href="${ctx}/quake/email/admin/edit.do" target="main">邮件订阅属性设置</a>
 			</div>
-			<!--
+			
 			<div style="padding-top:2px">	
 				<img src="${ctx}/images/icons/template.gif" class="icon">
-                  <a href="${ctx}/quake/email/admin/seisverify/list.do" target="main">测震邮件审核</a>
+                  <a href="${ctx}/quake/email/admin/seisverify/list.do" target="main">测震邮件订阅审核</a>
 			</div>
-			-->
+			
 			<div style="padding-top:2px">	
 				<img src="${ctx}/images/icons/template.gif" class="icon">
                   <a href="${ctx}/quake/admin/sitecfg/index.do" target="main">网站基本信息设置</a>
