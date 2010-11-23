@@ -99,6 +99,7 @@ public class SeismicEmailJob {
       Page page = new Page(0, GlobalConstants.MAX_RESULTS);
       criteria.setPage(page);
       criteria.setSchema(dsManager.getSeismicSchema()); // 这个Schema是数据库的“方案名称”
+      logger.debug("测震邮件发送时查询参数：{}, {}",criteria.getTableName(),criteria.getMagTname());
       page = cataDao.query(criteria); // 数据查询
       List data = page.getData();
       if (!CollectionUtils.isEmpty(data)) { //有数据的时候才发邮件        
