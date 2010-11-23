@@ -19,6 +19,7 @@ import quake.email.admin.service.EmailDefinitionManager;
  * @author Sam
  *
  */
+@SuppressWarnings("unchecked")
 public class CronFactoryBean implements FactoryBean {
   private static Logger logger = LoggerFactory.getLogger(CronFactoryBean.class);
   @Autowired
@@ -31,9 +32,9 @@ public class CronFactoryBean implements FactoryBean {
   private EmailDefinitionManager emailDefManager;
   /**
    * 如果<code>isForSign</code>，那么<code>CronFactoryBean</code>
-   * 将创建用于前兆数据订阅的cron表达式，否则，创建测震数据订阅cron表达式.
+   * 将创建用于测震数据订阅的cron表达式，否则，创建前兆数据订阅cron表达式.
    */
-  private boolean isForSign = true;
+  private boolean isForSign = false;
   
   /**
    * 从数据库中取得CRON表达式，如果数据库中没有则取缺省值.
@@ -55,7 +56,6 @@ public class CronFactoryBean implements FactoryBean {
     return new CronExpression(cronEx.trim());
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public Class getObjectType() {
     return CronExpression.class;
