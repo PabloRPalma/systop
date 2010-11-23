@@ -74,20 +74,19 @@ public class EmailDefinitionManager implements Definable {
    * @throws ApplicationException 如果CRON无法解析，或原来的任务无法关闭，以及无法启动新任务.
    */
   private void restartJobs(String seisCron, String signCron) {
-    if(StringUtils.isBlank(seisCron) || StringUtils.isBlank(signCron)) {
-      logger.warn("测震或前兆CRON未设定。");
+    if(StringUtils.isBlank(seisCron)) {
+      logger.warn("测震CRON未设定。");
       return;
     }
     //trim一下，难保数据库里面没有空格
     seisCron = seisCron.trim();
-    signCron = signCron.trim();
+    //signCron = signCron.trim();
     //得到两个trigger
     CronTrigger seismicCronTrigger = (CronTrigger) ctx.getBean("seismicEmailCronTrigger", CronTrigger.class);
-    CronTrigger signCronTrigger = (CronTrigger) ctx.getBean("signEmailCronTrigger", CronTrigger.class);
+    //CronTrigger signCronTrigger = (CronTrigger) ctx.getBean("signEmailCronTrigger", CronTrigger.class);
     //如果测震和前兆发送频率都没有变，则不必重新启动.
-    if(seisCron.equals(seismicCronTrigger.getCronExpression()) &&
-        signCron.equals(signCronTrigger.getCronExpression())) {
-      logger.info("前兆和测震发送频率都未改变，Quartz不必重新启动.");
+    if(seisCron.equals(seismicCronTrigger.getCronExpression())) {
+      logger.info("测震发送频率都未改变，Quartz不必重新启动.");
       return;
     }
     
@@ -96,10 +95,10 @@ public class EmailDefinitionManager implements Definable {
     try {
       //重新设定trigger
       seismicCronTrigger.setCronExpression(seisCron);
-      signCronTrigger.setCronExpression(signCron);
+      //signCronTrigger.setCronExpression(signCron);
       schedulerFactory.destroy(); //关闭原来的任务
       schedulerFactory.afterPropertiesSet(); //启动新的任务
-      logger.info("前兆和测震邮件发送任务启动成功.");
+      logger.info("测震邮件发送任务启动成功.");
     } catch (ParseException e) {
       throw new ApplicationException("Cron表达式解析错误." + e.getMessage());
     } catch (SchedulerException e) {
