@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@include file="/common/taglibs.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<%@include file="/common/quake.jsp" %>
+<%@include file="/common/quake.jsp"%>
 <script type="text/javascript">
 $(document).ready(function() {
 	$("#saveFrm").validate();
-	//初始化前兆schema缺省值
+	//初始化测震schema缺省值
 	$('#minM').attr("min", '${emailDef.minM}');
 	$('#maxM').attr("min", '${emailDef.minM}');
 	//电子邮件缺省值
@@ -91,66 +91,63 @@ $(document).ready(function() {
 <title></title>
 </head>
 <body>
+<div class="x-panel-body" align="center"><s:form action="save"
+	theme="simple" id="saveFrm" method="POST">
+	<s:hidden name="model.id" />
+	<fieldset style="width: 700; margin: 25px; padding: 10px;">
+	<legend>测震数据订阅</legend>
 
-    	<div class="x-panel-body" align="center">
-			<s:form action="save" theme="simple" id="saveFrm" method="POST">
-		   		<s:hidden name="model.id"/>
-		   		<fieldset style="width:600; margin:25px;padding:10px;">
-			    <legend>测震数据订阅</legend>
-			    
-				<table width="90%" align="center">
-						<tr>
-							<td colspan="2"><%@ include file="/common/messages.jsp"%></td>
-						</tr>
-                        <tr>
-                             <td>地震目录：</td>
-                             <td style="text-align:left;">
-                             <s:select list="catalogs" name="model.catalog"
-                             id="catalog" cssStyle="width:180px;"
-                             listKey="cltName" listValue="clcName"></s:select>
-                             </td>
-                        </tr>
-                        <tr>
-                             <td>震级(大于等于${emailDef.minM}的正数)：</td>
-                             <td style="text-align:left;">
-		                         <s:textfield size="8" name="model.minM" cssClass="number mCheck" id="minM"/>
-		                         至：
-		                         <s:textfield size="8" name="model.maxM" cssClass="number mCheck" id="maxM"/>
-                             </td>
-                        </tr>
-                        
-                        <tr>
-                             <td>纬度(度.度，-90至90)：</td>
-                             <td style="text-align:left;">
-                             <s:textfield size="8" name="startEpiLat" cssClass="number epiLatCheck" id="lat1"/>
-                             至：
-                             <s:textfield size="8" name="model.endEpiLat" cssClass="number epiLatCheck" id="lat2"/></td>
-                        </tr>
-                        <tr>
-                             <td>经度(度.度，-180至180)：</td>
-                             <td style="text-align:left;">
-                             <s:textfield size="8" name="model.startEpiLon" cssClass="number lonCheck" id="lon1"/>
-                             至：
-                             <s:textfield size="8" name="model.endEpiLon" cssClass="number lonCheck" id="lon2"/></td>
-                        </tr>
-                        <tr>
-                             <td>电子邮件：</td>
-                             <td style="text-align:left;">
-                             	<s:textfield size="30" name="model.emailAddr" cssClass="email required" id="email"/>
-                             </td>
-                        </tr>
-                        
-                </table>
-			    </fieldset>
-                <table width="90%" style="margin-bottom:10px;">
-                       <tr>
-                        <td style="text-align:center;">
-                            <s:submit value="保存" cssClass="button"></s:submit>
-                            <s:reset value="重置" cssClass="button"></s:reset></td>
-                        </tr>
-                </table>
-                </s:form>
-                </div>
-    	
+	<table width="90%" align="center">
+		<tr>
+			<td colspan="3"><%@ include file="/common/messages.jsp"%></td>
+		</tr>
+		<tr>
+			<td align="right" width="150">地震目录：</td>
+			<td style="text-align: left;"><s:select list="catalogs"
+				name="model.catalog" id="catalog" cssStyle="width:180px;"
+				listKey="cltName" listValue="clcName"></s:select></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td align="right">震级：</td>
+			<td style="text-align: left;"><s:textfield size="8"
+				name="model.minM" cssClass="number mCheck" id="minM" /> 至： <s:textfield
+				size="8" name="model.maxM" cssClass="number mCheck" id="maxM" /></td>
+			<td>(大于等于${emailDef.minM}的正数)</td>
+		</tr>
+
+		<tr>
+			<td align="right">纬度：</td>
+			<td style="text-align: left;"><s:textfield size="8"
+				name="startEpiLat" cssClass="number epiLatCheck" id="lat1" /> 至： <s:textfield
+				size="8" name="model.endEpiLat" cssClass="number epiLatCheck"
+				id="lat2" /></td>
+			<td>(度.度，-90至90)</td>
+		</tr>
+		<tr>
+			<td align="right">经度：</td>
+			<td style="text-align: left;"><s:textfield size="8"
+				name="model.startEpiLon" cssClass="number lonCheck" id="lon1" /> 至：
+			<s:textfield size="8" name="model.endEpiLon"
+				cssClass="number lonCheck" id="lon2" /></td>
+			<td>(度.度，-180至180)</td>
+		</tr>
+		<tr>
+			<td align="right">电子邮件：</td>
+			<td style="text-align: left;"><s:textfield size="30"
+				name="model.emailAddr" cssClass="email required" id="email" /></td>
+			<td></td>
+		</tr>
+
+	</table>
+	</fieldset>
+	<table width="90%" style="margin-bottom: 10px;margin-top: 10px;">
+		<tr>
+			<td style="text-align: center;"><s:submit value="保存"
+				cssClass="button">&nbsp;&nbsp;</s:submit> <s:reset value="重置" cssClass="button"></s:reset></td>
+		</tr>
+	</table>
+</s:form></div>
+
 </body>
 </html>
