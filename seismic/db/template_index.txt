@@ -161,6 +161,11 @@ a:hover{
          document.getElementById("cta_info").style.display="";
          window.parent.main.location.href="${ctx}/quake/seismic/data/catalog/indexSeed.do?model.tableName="+cltName;
      }
+     function setMailsOfSeis(){
+         document.getElementById("main_info").style.display="none";
+         document.getElementById("cta_info").style.display="";
+         window.parent.main.location.href="${ctx}/quake/email/seismic/index.do"
+     }
 
      function queryStations(){
          document.getElementById("main_info").style.display="none";
@@ -231,6 +236,8 @@ border="0" usemap="#Map" />
 
 </ul>
 </td>
+<td class="menu">&nbsp;<a href="#" onclick="setMailsOfSeis()">ÓÊ¼ş¶©ÔÄ</a>&nbsp;</td>
+
 <td>&nbsp;
 <span class="menu">
     
