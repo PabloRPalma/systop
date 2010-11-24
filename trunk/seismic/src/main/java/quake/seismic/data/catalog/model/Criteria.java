@@ -33,6 +33,22 @@ public class Criteria extends PageSchemaAware {
    */
   private String range;
   /**
+   * 定位台数
+   */
+  private String locStn;
+  /**
+   * 台站名称（台网代码/台站代码）用于震相表查询时的字段
+   */
+  private String staNetCode;
+  /**
+   * 震相类型_用于震相表查询时的字段
+   */
+  private String phaseType;
+  /**
+   * 震相名称_用于震相表查询时的字段
+   */
+  private String phaseName;
+  /**
    * 目录表名
    */
   private String tableName;
@@ -317,5 +333,37 @@ public class Criteria extends PageSchemaAware {
 
   public void setRange(String range) {
     this.range = range;
+  }
+
+  public String getLocStn() {
+    return locStn;
+  }
+
+  public void setLocStn(String locStn) {
+    this.locStn = locStn;
+  }
+
+  public String getStaNetCode() {
+    return staNetCode;
+  }
+
+  public void setStaNetCode(String staNetCode) {
+    this.staNetCode = staNetCode;
+  }
+
+  public String getPhaseType() {
+    return phaseType;
+  }
+
+  public void setPhaseType(String phaseType) {
+    this.phaseType = phaseType;
+  }
+
+  public String getPhaseName() {
+    return phaseName;
+  }
+
+  public void setPhaseName(String phaseName) {
+    this.phaseName = phaseName;
   }
 }
