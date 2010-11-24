@@ -54,7 +54,7 @@
                         resultMap="queryStationResult">
 		<![CDATA[
 		SELECT ST.ID,ST.NET_CODE,ST.STA_CODE,STA_CNAME,STA_TYPE,ROCK_TYPE,STA_LAT,STA_LON,STA_ELEV,STA_STARTDATE,STA_ENDDATE,SITE_NAME,DIGITIZER_RESPID,DIGITIZER_MODEL
-		FROM $schema$.Station_info ST ,$schema$.Loc_info loc WHERE ST.NET_CODE=loc.NET_CODE and ST.STA_CODE=LOC.STA_CODE
+		FROM $schema$.Station_info ST ,$schema$.Loc_info loc WHERE ST.NET_CODE=loc.NET_CODE and ST.STA_CODE=loc.STA_CODE
 		]]>
 		<dynamic>
 		    <!-- 加入台网查询条件 BY Sam 20090707 -->

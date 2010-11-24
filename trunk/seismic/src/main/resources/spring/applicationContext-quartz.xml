@@ -43,6 +43,29 @@
 			<value>0 0 0 * * ?</value>
 		</property>
 	</bean>
+	<!-- StationSeed程序执行任务 -->
+	<bean id="stationSeedJobDetail" 
+		  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="stationSeedQuartzService"/>
+		</property>
+		<property name="targetMethod">
+			<value>parseStationSeed</value>
+		</property>
+		<property name="concurrent">
+			<value>false</value>
+		</property>
+	</bean>
+	<!-- StationSeed程序执行触发器(trigger) -->
+	<bean id="stationSeedTrigger" 
+		  class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="stationSeedJobDetail"/>
+		</property>
+		<property name="cronExpression">
+			<value>0 0/5 * * * ?</value>
+		</property>
+	</bean>
 	<!-- 启动Quartz任务 -->
 	<bean id="emailSchedulerFactory"
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
@@ -56,6 +79,7 @@
 			<list>
 				<ref local="seismicEmailCronTrigger" />
 				<ref local="seedProTrigger"/>
+				<ref local="stationSeedTrigger"/>
 			</list>
 		</property>
 	</bean>
