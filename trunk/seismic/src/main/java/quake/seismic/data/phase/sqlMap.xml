@@ -10,6 +10,7 @@
         <result property="CHN_CODE" column="CHN_CODE" javaType="String"/>
         <result property="REC_TYPE" column="REC_TYPE" javaType="String"/>
         <result property="PHASE_NAME" column="PHASE_NAME" javaType="String"/>
+        <result property="PHASE_TYPE" column="PHASE_TYPE" javaType="String"/>
         <result property="PHASE_TIME" column="PHASE_TIME" javaType="java.util.Date"/>
         <result property="PHASE_TIME_FRAC" column="PHASE_TIME_FRAC" javaType="Integer"/>
         <result property="AMP_TYPE" column="AMP_TYPE" javaType="String"/>
@@ -28,9 +29,32 @@
 	<select id="queryPhaseData" parameterClass="quake.seismic.data.phase.model.PhaseCriteria"
 		resultMap="queryPhaseDataResult">    
 		<![CDATA[
-		SELECT NET_CODE,STA_CODE,CHN_CODE,REC_TYPE,PHASE_NAME,PHASE_TIME,PHASE_TIME_FRAC,
+		SELECT NET_CODE,STA_CODE,CHN_CODE,REC_TYPE,PHASE_NAME,PHASE_TYPE,PHASE_TIME,PHASE_TIME_FRAC,
 		AMP_TYPE,AMP,PERIOD,WEIGHT,CLARITY,WSIGN,RESI,MAG_NAME,MAG_VAL,DISTANCE,AZI,S_P	
-		FROM $schema$.$tableName$ WHERE CATALOG_ID = #catId# ORDER BY NET_CODE,STA_CODE ASC
+		FROM $schema$.$tableName$
 		]]>
+		<dynamic prepend="WHERE">
+			<!-- 地震目录ID查询条件 -->
+		    <isNotEmpty prepend="AND" property="catId">
+		       <![CDATA[(CATALOG_ID=#catId#)]]>
+		    </isNotEmpty>
+			<!-- 台网查询条件 -->
+		    <isNotEmpty prepend="AND" property="netName">
+		       <![CDATA[(NET_CODE=#netName#)]]>
+		    </isNotEmpty>
+		    <!-- 台站查询条件 -->
+		    <isNotEmpty prepend="AND" property="staName">
+		       <![CDATA[(STA_CODE=#staName#)]]>
+		    </isNotEmpty>
+		    <!-- 震相名称查询条件 -->
+		    <isNotEmpty prepend="AND" property="phaseName">
+		       <![CDATA[(PHASE_NAME=#phaseName#)]]>
+		    </isNotEmpty>
+		    <!-- 震相类型查询条件 -->
+		    <isNotEmpty prepend="AND" property="phaseType">
+		       <![CDATA[(PHASE_TYPE=#phaseType#)]]>
+		    </isNotEmpty>
+		</dynamic>
+		<![CDATA[ORDER BY NET_CODE,STA_CODE ASC]]>
 	</select>
 </sqlMap>
