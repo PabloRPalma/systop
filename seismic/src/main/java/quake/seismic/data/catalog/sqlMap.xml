@@ -77,6 +77,10 @@
 		    <isNotEmpty prepend="AND" property="location">
 		       <![CDATA[(LOCATION_CNAME LIKE '%$location$%')]]>
 		    </isNotEmpty>
+		    <!-- 定位台数查询条件 -->
+		    <isNotEmpty prepend="AND" property="locStn">
+		       <![CDATA[(Loc_stn>=#locStn#)]]>
+		    </isNotEmpty>
 			<isNotEmpty property="startDate">
 				<isNotEmpty prepend="AND" property="endDate">
 				<![CDATA[
@@ -199,6 +203,10 @@
 		    <!-- 震中地名查询条件 -->
 		    <isNotEmpty prepend="AND" property="location">
 		       <![CDATA[(LOCATION_CNAME LIKE '%$location$%')]]>
+		    </isNotEmpty>
+		    <!-- 定位台数查询条件 -->
+		    <isNotEmpty prepend="AND" property="locStn">
+		       <![CDATA[(Loc_stn>=#locStn#)]]>
 		    </isNotEmpty>
 			<isNotEmpty property="startDate">
 				<isNotEmpty prepend="AND" property="endDate">
