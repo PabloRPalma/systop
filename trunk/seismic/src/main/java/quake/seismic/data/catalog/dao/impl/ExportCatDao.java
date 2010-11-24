@@ -398,6 +398,19 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
       phaseCriteria.setTableName(SeismicConstants.DEFAULT_PHASE_TABLE);
     }
     phaseCriteria.setCatId(catalogId);
+    String staNetCode = criteria.getStaNetCode();
+    if(StringUtils.isNotEmpty(staNetCode)) {
+      String[] sncode = staNetCode.split("/");
+      logger.debug("原始数据：{}", sncode);
+      phaseCriteria.setNetName(sncode[0]);
+      if(sncode.length > 1) {
+        logger.debug("解析出来的台网台站代码分别是：{}, {}", sncode[0], sncode[1]);
+        phaseCriteria.setStaName(sncode[1]);
+      }
+    }
+    
+    phaseCriteria.setPhaseName(criteria.getPhaseName());
+    phaseCriteria.setPhaseType(criteria.getPhaseType());
     return getTemplate().queryForList("cz.queryPhaseData", phaseCriteria);
   }
   
