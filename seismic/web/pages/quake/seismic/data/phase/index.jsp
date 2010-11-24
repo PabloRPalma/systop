@@ -15,72 +15,107 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-<fieldset>
-		<legend>地震目录查询</legend>
-		<s:form id="queryFrm" action="listPhase" namespace="/quake/seismic/data/catalog" theme="simple">
+<table width="100%" style="margin-top: -10px;margin-bottom: -2px;">
+  <tr><s:form id="queryFrm" action="listPhase" namespace="/quake/seismic/data/catalog" theme="simple">
+	<td>
+		<fieldset>
+		<legend>${model.clcName}震相数据查询</legend>
   			<s:hidden name="model.tableName"/>
-  			<s:hidden name="model.clcName"/>
   			<s:hidden name="model.magTname"/>
   			<s:hidden name="model.phaseTname"/>
+  			<s:hidden name="model.clcName"/>
+  			<s:hidden name="model.clDescn"/>
   			<s:hidden name="model.disType"/>
-		<table width="99%" align="center">
+		<table width="100%" style="margin:0px;">
 			<tr>
-				<td align="right">台网：</td>
-				<td><s:select list="netCodes" name="model.netCode" headerKey="" headerValue="--请选择台网--" cssStyle="width:100px;">
-        			</s:select>
-        		</td>
-				<td align="right" title="(YYYY-MM-DD)">发震日期：</td>
+				<td align="right" title="(YYYY-MM-DD)">日&nbsp;&nbsp;期：</td>
 		  	    <td>
 		  	      <input type="text" id="startDate" name="model.startDate" 
 			       value="<s:date name="model.startDate" format="yyyy-MM-dd"/>"
-			       onclick="WdatePicker({maxDate:'#F{$dp.$D(\'endDate\')||\'now\'}',skin:'whyGreen'})" style="width:80px;">
+			       onclick="WdatePicker({maxDate:'#F{$dp.$D(\'endDate\')||\'now\'}',skin:'whyGreen'})" style="width:70px;">
 		  	    </td>
 		  	    <td>至</td>
 		  	    <td>
 		  	      <input type="text" id="endDate" name="model.endDate" 
 			       value="<s:date name="model.endDate" format="yyyy-MM-dd"/>"
-			       onclick="WdatePicker({minDate:'#F{$dp.$D(\'startDate\')}',maxDate:'now',skin:'whyGreen'})" style="width:80px;">
+			       onclick="WdatePicker({minDate:'#F{$dp.$D(\'startDate\')}',maxDate:'now',skin:'whyGreen'})" style="width:70px;">
 		  	    </td>
-		  	    <td align="right">震级：</td>
+		  	    <td align="right">震&nbsp;&nbsp;级：</td>
 		  	     <td>
-		  	      <s:textfield name="model.startM" cssStyle="width:80px;" cssClass="number" title="大于等于1的正数"/>
+		  	      <s:textfield name="model.startM" cssStyle="width:70px;" cssClass="number" title="大于等于1的正数"/>
 		  	    </td>
 		  	    <td>至</td>
 		  	     <td>
-		  	      <s:textfield name="model.endM" cssStyle="width:80px;" cssClass="number" title="大于等于1的正数"/>
+		  	      <s:textfield name="model.endM" cssStyle="width:70px;" cssClass="number" title="大于等于1的正数"/>
 		  	    </td>
+		  	    <td align="right">类&nbsp;&nbsp;型：</td>
+				<td><s:select list="EqTypesMap" name="model.eqType" headerKey="" headerValue="--请选择类型--" cssStyle="width:100px;">
+        			</s:select>
+        		</td>
 		  	    <td>
-		  	      <input type="button" value="查询" onclick="exportData('${ctx}/quake/seismic/data/catalog/listPhase.do', '')"  class="button"/>
-		  	      <input type="button" value="震中分布图" onclick="exportData('${ctx}/quake/seismic/data/catalog/showGis.do', '_blank')" class="button"/>
-		  	      <input type="button" value="观测报告" onclick="exportData('${ctx}/quake/seismic/data/catalog/exportBulletin.do', '_blank')" class="button"/>
+		  	      	序列标识：<s:textfield name="model.sequenName" cssStyle="width:100px;"/>
 		  	    </td>
 			</tr>
 			<tr>
-				<td align="right">地名：</td>
-				<td><s:textfield name="model.location" cssStyle="width:100px;"/></td>
-				<td align="right">纬度(°)：</td> 
+				<td align="right">纬&nbsp;&nbsp;度：</td> 
 		  	    <td>
-		  	      <s:textfield name="model.startLat" cssStyle="width:80px;" cssClass="number" title="度.度，-90至90"/>
+		  	      <s:textfield name="model.startLat" cssStyle="width:70px;" cssClass="number" title="度.度，-90至90"/>
 		  	    </td>
 		  	    <td>至</td>
 		  	     <td>
-		  	      <s:textfield name="model.endLat" cssStyle="width:80px;" cssClass="number" title="度.度，-90至90"/>
+		  	      <s:textfield name="model.endLat" cssStyle="width:70px;" cssClass="number" title="度.度，-90至90"/>
 		  	    </td>
-		  	    <td align="right">经度(°)：</td>
+		  	    <td align="right">经&nbsp;&nbsp;度：</td>
 		  	    <td>
-		  	      <s:textfield name="model.startLon" cssStyle="width:80px;" cssClass="number" title="度.度，-180至180"/> 
+		  	      <s:textfield name="model.startLon" cssStyle="width:70px;" cssClass="number" title="度.度，-180至180"/> 
 		  	    </td>
 		  	    <td>至</td>
 		  	    <td>
-		  	      <s:textfield name="model.endLon" cssStyle="width:80px;" cssClass="number" title="度.度，-180至180"/>
+		  	      <s:textfield name="model.endLon" cssStyle="width:70px;" cssClass="number" title="度.度，-180至180"/>
 		  	    </td>
+		  	    <td align="right">地&nbsp;&nbsp;名：</td>
+				<td><s:textfield name="model.location" cssStyle="width:100px;"/></td>
 		  	    <td>
-		  	      
+		  	      	定位台数：<s:textfield name="locStn" cssStyle="width:100px;"/>
+		  	    </td>
+	  	  </tr>
+	  	  <tr>
+				<td align="right">台站名称：</td> 
+		  	    <td colspan="3">
+		  	      <s:textfield name="model.staNetCode" cssStyle="width:163px;" cssClass="string" title="如：HE/XIL"/>
+		  	    </td>
+		  	    
+		  	    <td align="right">震相名称：</td>
+		  	    <td colspan="3">
+		  	      <s:textfield name="model.phaseName" cssStyle="width:163px;" cssClass="string"/> 
+		  	    </td>
+		  	    
+		  	    <td align="right">震相类型：</td>
+				<td><s:textfield name="model.phaseType" cssStyle="width:100px;"/></td>
+		  	    <td>&nbsp;&nbsp;&nbsp;
+		  	      <input type="button" value="查询" onclick="exportData('${ctx}/quake/seismic/data/catalog/listPhase.do', '')"  class="button"/>&nbsp;
+		  	      <input type="button" value="震中分布图" onclick="exportData('${ctx}/quake/seismic/data/catalog/showGis.do', '_blank')" class="button"/>
 		  	    </td>
 	  	  </tr>
 		</table>
-		</s:form>
-</fieldset>
+				
+	   </fieldset>
+	</td>
+	<td align="right">
+		<fieldset>
+			<legend>下载</legend>
+			<table width="100%" style="margin:0px;">
+			<tr>
+				<td height="75">&nbsp;
+		  	      <input type="button" value="观测报告" onclick="exportData('${ctx}/quake/seismic/data/catalog/exportBulletin.do', '_blank')" class="button"/>
+				  <input type="button" id="look" value="简介" class="button"/>
+				</td>
+			</tr>
+			</table>
+		</fieldset>
+	</td></s:form>
+  </tr>
+</table>
 <div class="x-panel-body">
 <ec:table items="items" var="item" retrieveRowsCallback="limit" sortRowsCallback="limit" 
 	action="listPhase.do"
@@ -94,8 +129,8 @@ $(document).ready(function() {
 	resizeColWidth="true"	
 	classic="false"	
 	width="100%" 	
-	height="280px"	
-	minHeight="280"
+	height="265px"	
+	minHeight="265"
 	toolbarContent="navigation|pagejump|pagesize|extend|status"     
 	>
 	<ec:row>
