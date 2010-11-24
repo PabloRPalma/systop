@@ -374,4 +374,8 @@ public class EventExportAction extends BaseAction implements Preparable{
   public void setAllStations(String allStations) {
     this.allStations = allStations;
   }
+
+  public String[] getArgs() {
+    return args;
+  }
 }

@@ -2,9 +2,9 @@ package quake.seismic.data.seed.webapp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.systop.core.test.BaseTestCase;
+import com.systop.core.test.BaseTransactionalTestCase;
 
-public class EventExportActionTest extends BaseTestCase {
+public class EventExportActionTest extends BaseTransactionalTestCase {
   @Autowired
   private EventExportAction action;
   

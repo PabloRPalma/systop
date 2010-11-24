@@ -31,6 +31,12 @@
 	<logger name="quake">
 		<level value="DEBUG" />
 	</logger>
+	<logger name="quake.base.dao.ibatis">
+	    <level value="INFO" />
+	</logger>
+	<logger name="quake.admin.ds.service">
+	    <level value="INFO"/>
+	</logger>
 	<logger name="org.ecside">
 		<level value="INFO" />
 	</logger>
