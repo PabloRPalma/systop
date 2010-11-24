@@ -15,7 +15,22 @@ public class PhaseCriteria extends PageSchemaAware {
    * 震相表名
    */
   private String tableName;
-  
+  /**
+   * 台网名称
+   */
+  private String netName;
+  /**
+   * 台站名称
+   */
+  private String staName;
+  /**
+   * 震相类型
+   */
+  private String phaseType;
+  /**
+   * 震相名称
+   */
+  private String phaseName;
   /**
    * 地震目录ID
    */
@@ -45,5 +60,37 @@ public class PhaseCriteria extends PageSchemaAware {
 
   public void setCatalog(Map<String, String> catalog) {
     this.catalog = catalog;
+  }
+
+  public String getNetName() {
+    return netName;
+  }
+
+  public void setNetName(String netName) {
+    this.netName = netName;
+  }
+
+  public String getStaName() {
+    return staName;
+  }
+
+  public void setStaName(String staName) {
+    this.staName = staName;
+  }
+
+  public String getPhaseType() {
+    return phaseType;
+  }
+
+  public void setPhaseType(String phaseType) {
+    this.phaseType = phaseType;
+  }
+
+  public String getPhaseName() {
+    return phaseName;
+  }
+
+  public void setPhaseName(String phaseName) {
+    this.phaseName = phaseName;
   }
 }
