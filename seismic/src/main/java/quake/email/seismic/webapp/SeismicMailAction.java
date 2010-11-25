@@ -71,6 +71,9 @@ public class SeismicMailAction extends DefaultCrudAction<SeismicMail, SeismicMai
       User user = null;
       try {
         user = UserUtil.getPrincipal(getRequest());
+        if(user == null) {
+          return "login";
+        }
       } catch (ApplicationException e) {
         return "login";
       }
