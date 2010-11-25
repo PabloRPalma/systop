@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.ecside.core.TableConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -313,6 +312,12 @@ public class CatAction extends AbstractQueryAction<Criteria> {
    */
   public Map<String, String> getEqTypesMap() {
     return SeismicConstants.QUERY_EQ_TYPE;
+  }
+  /**
+   * 震相类型
+   */
+  public Map<String, String> getPhaseTypeMap() {
+    return SeismicConstants.PHASE_TYPE_MAP;
   }
   /**
    * 台网代码名称Map
