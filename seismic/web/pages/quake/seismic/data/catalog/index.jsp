@@ -131,8 +131,8 @@ $(function() {
 	resizeColWidth="true"	
 	classic="false"	
 	width="100%" 	
-	height="280px"	
-	minHeight="280"
+	height="287px"	
+	minHeight="287"
 	toolbarContent="navigation|pagejump|pagesize|extend|status"     
 	>
 	<ec:row>
