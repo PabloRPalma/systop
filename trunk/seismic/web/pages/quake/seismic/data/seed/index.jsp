@@ -15,11 +15,9 @@ $(function() {
 </script>
 </head>
 <body>
-
-
 	<s:form id="queryFrm" action="listSeed" namespace="/quake/seismic/data/catalog" theme="simple">
 				<fieldset>
-		<legend>地震目录查询</legend>
+		<legend>${model.clcName}事件波形数据查询</legend>
   			<s:hidden name="model.tableName"/>
   			<s:hidden name="model.magTname"/>
   			<s:hidden name="model.phaseTname"/>
@@ -81,11 +79,8 @@ $(function() {
 		  	    </td>
 	  	  </tr>
 		</table>
-				
 	   </fieldset>
 	</s:form>
-
-
 <div class="x-panel-body">
 <ec:table items="items" var="item" retrieveRowsCallback="limit" sortRowsCallback="limit" 
 	action="listSeed.do"
@@ -99,27 +94,27 @@ $(function() {
 	resizeColWidth="true"	
 	classic="false"	
 	width="100%" 	
-	height="477px"	
-	minHeight="300"
+	height="285px"	
+	minHeight="285"
 	toolbarContent="navigation|pagejump|pagesize|extend|status"     
 	>
 	<ec:row>
 		<ec:column width="40" property="_0" title="序号" value="${GLOBALROWCOUNT}" style="text-align:center"/>
-		<ec:column width="98.5" property="_9" title="操作">
+		<ec:column width="75" property="_9" title="操作" style="text-align:center">
 			<s:if test="#attr.item.SEED_EXISTS == 1">
 			   <a href="${ctx}/quake/seismic/data/seed/down.do?seedname=${item.SEED_NAME}">下载</a>
 			</s:if>
 			<s:else>
 			   <span style="color:#CCC">下载</span>
 			</s:else> | 
-			<s:if test="#attr.item.SEED_ANALYSIS == 1"><a href="${ctx}/quake/seismic/data/seed/showSeed.do?seedname=${item.SEED_NAME}&tableName=${model.tableName}">事件波形</a></s:if>
+			<s:if test="#attr.item.SEED_ANALYSIS == 1"><a href="${ctx}/quake/seismic/data/seed/showSeed.do?seedname=${item.SEED_NAME}&tableName=${model.tableName}">波形</a></s:if>
 			<s:else>
-			   <span style="color:#CCC">事件波形</span> 
+			   <span style="color:#CCC">波形</span> 
 			</s:else>
 		</ec:column>
 		<ec:column width="160" property="O_TIME" title="发震时刻" sortable="true">${item.EQ_TIME}</ec:column>	
-		<ec:column width="80" property="EPI_LAT" title="震中纬度" cell="quake.base.webapp.DoubleCell"/>	
-		<ec:column width="80" property="EPI_LON" title="震中经度" cell="quake.base.webapp.DoubleCell"/>
+		<ec:column width="60" property="EPI_LAT" title="震中纬度" cell="quake.base.webapp.DoubleCell"/>	
+		<ec:column width="60" property="EPI_LON" title="震中经度" cell="quake.base.webapp.DoubleCell"/>
 		<c:if test="${model.magTname != ''}">
 			<ec:column width="40" property="ML" title="ML" cell="quake.seismic.data.catalog.webapp.cell.EMCell"/>		
 			<ec:column width="40" property="Ms" title="Ms" cell="quake.seismic.data.catalog.webapp.cell.EMCell"/>		
@@ -132,10 +127,10 @@ $(function() {
 		<c:if test="${model.magTname == ''}">
 			<ec:column width="40" property="M" title="${model.disType}" cell="quake.seismic.data.catalog.webapp.cell.EMCell"/>		
 		</c:if>
-		<ec:column width="80" property="EPI_DEPTH" title="深度(Km)" cell="quake.seismic.data.catalog.webapp.cell.DepthFomat"/>	
+		<ec:column width="70" property="EPI_DEPTH" title="深度(Km)" cell="quake.seismic.data.catalog.webapp.cell.DepthFomat"/>	
 		<ec:column width="60" property="QLOC" title="定位质量" />	
 		<ec:column width="60" property="QCOM" title="综合质量" />	
-		<ec:column width="120" property="LOCATION_CNAME" title="震中地名" />
+		<ec:column width="100" property="LOCATION_CNAME" title="震中地名" />
 	</ec:row>   
 </ec:table>
 </div>
