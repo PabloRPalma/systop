@@ -54,7 +54,19 @@ public class SeismicConstants {
   public static String vp = "火山爆炸";
   public static String vt = "火山颤动";
   public static String ot = "其它";
-
+  /**
+   * 震相类型
+   */
+  public static String PHASE_TYPE_AMP = "amp";
+  public static String PHASE_TYPE_TIME = "time";
+  /**
+   * 震相类型Map
+   */
+  public static final Map<String, String> PHASE_TYPE_MAP = new LinkedHashMap<String, String>();
+  static {
+    PHASE_TYPE_MAP.put(PHASE_TYPE_TIME, "到时类");
+    PHASE_TYPE_MAP.put(PHASE_TYPE_AMP, "振幅类");
+  }
   /**
    * 地震类型代码Map_用于地震目录下载时用
    */
