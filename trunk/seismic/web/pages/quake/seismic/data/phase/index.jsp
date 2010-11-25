@@ -76,13 +76,13 @@ $(document).ready(function() {
 		  	    <td align="right">地&nbsp;&nbsp;名：</td>
 				<td><s:textfield name="model.location" cssStyle="width:100px;"/></td>
 		  	    <td>
-		  	      	定位台数：<s:textfield name="locStn" cssStyle="width:100px;"/>
+		  	      	定位台数：<s:textfield name="locStn" cssStyle="width:100px;" title="大于等于数"/>
 		  	    </td>
 	  	  </tr>
 	  	  <tr>
 				<td align="right">台站名称：</td> 
 		  	    <td colspan="3">
-		  	      <s:textfield name="model.staNetCode" cssStyle="width:163px;" cssClass="string" title="如：HE/XIL"/>
+		  	      <s:textfield name="model.staNetCode" cssStyle="width:163px;" cssClass="string" title="台网代码/台站代码，如：HE/XIL"/>
 		  	    </td>
 		  	    
 		  	    <td align="right">震相名称：</td>
@@ -91,7 +91,10 @@ $(document).ready(function() {
 		  	    </td>
 		  	    
 		  	    <td align="right">震相类型：</td>
-				<td><s:textfield name="model.phaseType" cssStyle="width:100px;"/></td>
+				<td>
+					<s:select list="phaseTypeMap" name="model.phaseType" headerKey="" headerValue="--请选择类型--" cssStyle="width:100px;">
+        			</s:select>
+				</td>
 		  	    <td>&nbsp;&nbsp;&nbsp;
 		  	      <input type="button" value="查询" onclick="exportData('${ctx}/quake/seismic/data/catalog/listPhase.do', '')"  class="button"/>&nbsp;
 		  	      <input type="button" value="震中分布图" onclick="exportData('${ctx}/quake/seismic/data/catalog/showGis.do', '_blank')" class="button"/>
