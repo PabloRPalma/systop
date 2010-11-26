@@ -235,6 +235,8 @@ public class EventExportAction extends BaseAction implements Preparable{
     return null;
   }  
   
+  
+  
   /**
    * 删除输出目录，包括rdseed生成的文件和打包的文件
    */

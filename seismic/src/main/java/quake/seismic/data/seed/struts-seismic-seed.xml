@@ -13,4 +13,8 @@
     		<action name="*" class="eventExportAction" method="{1}">
     		</action>
     	</package>
+    	<package name="quake.seismic.stationSeedExp" extends="default" namespace="/quake/seismic/data/seed/stationseed">
+    		<action name="*" class="stationSeedAction" method="{1}">
+    		</action>
+    	</package>
     </struts>

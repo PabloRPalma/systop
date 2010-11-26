@@ -10,6 +10,8 @@
 		     <result name="xmlUrl">/pages/quake/seismic/station/gis.jsp</result>
 		     <result name="stationmap">/pages/quake/seismic/station/station.jsp</result>
 			 <result name="viewChannels">/pages/quake/seismic/station/channels.jsp</result>
+			 <result name="stationSeeds">/pages/quake/seismic/data/seed/staSeeds.jsp</result>
+			 <result name="viewStaForSeed">/pages/quake/seismic/data/seed/viewStaForSeed.jsp</result>
 		 </action>		 
 	</package>
 </struts>

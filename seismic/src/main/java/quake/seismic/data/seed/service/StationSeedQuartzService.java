@@ -9,6 +9,8 @@ import java.io.InputStreamReader;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.xwork.ArrayUtils;
 import org.codehaus.plexus.util.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -19,10 +21,11 @@ import quake.admin.seedpath.service.SeedpathManager;
 import quake.seismic.data.seed.model.StationSeed;
 
 import com.systop.core.dao.hibernate.BaseHibernateDao;
-import com.systop.core.webapp.struts2.action.BaseAction;
 
 @Service
-public class StationSeedQuartzService extends BaseAction {
+public class StationSeedQuartzService {
+  private static Logger logger = LoggerFactory.getLogger(StationSeedQuartzService.class);
+  
   @Autowired
   private SeedpathManager seedpathManager;
   @Autowired

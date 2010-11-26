@@ -2,12 +2,15 @@ package quake.seismic.station.webapp;
 
 import java.io.StringWriter;
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,6 +22,7 @@ import quake.ProvinceLatlng;
 import quake.admin.ds.service.DataSourceManager;
 import quake.base.webapp.AbstractQueryAction;
 import quake.seismic.SeismicConstants;
+import quake.seismic.data.seed.dao.impl.SeedDao;
 import quake.seismic.instrument.InstrumentConstants;
 import quake.seismic.station.StationConstants;
 import quake.seismic.station.dao.AbstractStationDao;
@@ -31,6 +35,7 @@ import quake.seismic.station.model.InstrDic;
 import com.systop.common.modules.template.Template;
 import com.systop.common.modules.template.TemplateContext;
 import com.systop.common.modules.template.TemplateRender;
+import com.systop.core.dao.hibernate.BaseHibernateDao;
 import com.systop.core.util.DateUtil;
 
 /**
@@ -85,6 +90,13 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
   @Autowired
   @Qualifier("freeMarkerTemplateRender")
   private TemplateRender templateRender;
+  
+  @Autowired
+  private SeedDao seedDao;
+  
+  @Autowired
+  @Qualifier("baseHibernateDao")
+  private BaseHibernateDao dao;
 
   /**
    * 测震台站查询条件类
@@ -208,6 +220,61 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
       getRequest().setAttribute("currentProvince", provinceLatlng.getCurrentProvince());
     }
     return "stationmap";
+  }
+  
+  /**
+   * 查询台站信息，并加入台站连续波形信息
+   * @return
+   */
+  public String stationSeeds() {
+    list();
+    List<Map> stations = (List<Map>) getRequest().getAttribute("items");
+    if(CollectionUtils.isNotEmpty(stations)) {
+      for(Map sta : stations) {
+        if(MapUtils.isNotEmpty(sta) && sta.get("NET_CODE") != null
+            && sta.get("STA_CODE") != null) {
+          if(seedDao.isStationSeedExists(sta.get("NET_CODE").toString(), 
+              sta.get("STA_CODE").toString())) {
+            sta.put("HAS_SEED", Boolean.TRUE);
+          } else {
+            sta.put("HAS_SEED", Boolean.FALSE);
+          }
+        }
+      }
+    }
+    getRequest().setAttribute("items", stations);
+    return "stationSeeds";  
+  }
+  
+  /**
+   * 进入波形文件导出页面
+   * @return
+   */
+  public String viewStaForSeed() {
+    getModel().setSchema(dataSourceManager.getStationSchema());
+    //用于输出当前台站信息
+    List<Map> list = gridStationDao.queryStation(getModel());
+    if(CollectionUtils.isNotEmpty(list)) {
+      getRequest().setAttribute("sta", list.get(0));
+    }
+    // 查询当前台站的最大和最小时间
+    Object obj = dao.findObject("select min(s.startTime), max(s.endTime)"
+        + " from StationSeed s where s.net=? and s.sta=?",
+        getModel().getNetCode(), 
+        getModel().getStaCode());
+    if(obj != null && obj.getClass().isArray()) {
+      getRequest().setAttribute("startTime", ((Object[]) obj)[0]);
+      getRequest().setAttribute("endTime", ((Object[]) obj)[1]);
+    }
+    //查询当前台站的通道
+    List l = dao.query("select distinct(s.cha) from StationSeed s where s.net=? and s.sta=?",
+        getModel().getNetCode(), 
+        getModel().getStaCode());
+    if(CollectionUtils.isNotEmpty(l)) {
+      getRequest().setAttribute("cha", this.toJson(l));
+    }
+    
+    return "viewStaForSeed";
   }
 
   /**
