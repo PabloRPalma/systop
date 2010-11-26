@@ -45,41 +45,7 @@ a.sta:hover{
        </tr>
    </table>
 </fieldset>
-<fieldset>
-   <legend>通道</legend>
-   <table WIDTH="95%" BORDER="0"  CELLSPACING="0" CELLPADDING="0" ALIGN="CENTER">
-		<TR BGCOLOR="#FFFFFF">
-		<td WIDTH="14">&nbsp;</td>
-		<td><INPUT TYPE=checkbox NAME=channels VALUE="BHE,BHN,BHZ,SHE,SHN,SHZ"><font color=red>ALL</font></td>
-		<td><INPUT TYPE=checkbox NAME=channels VALUE="BHE,SHE"><font color=brown>??E</font></td>
-		<td><INPUT TYPE=checkbox NAME=channels VALUE="BHN,SHN"><font color=brown>??N</font></td>
-		<td><INPUT TYPE=checkbox NAME=channels VALUE="BHZ,SHZ"><font color=brown>??Z</font></td>
-		<td WIDTH="14">&nbsp;</td>
-		<td WIDTH="14">&nbsp;</td>
-		<td WIDTH="14">&nbsp;</td>
-		</TR>
-		<TR BGCOLOR="#FFFFFF">
-		<td WIDTH="14">&nbsp;</td>
-		<td><INPUT TYPE=checkbox NAME=channels VALUE="BHE,BHN,BHZ"><font color=green>B??</font></td>
-		<td><INPUT TYPE=checkbox NAME=channels VALUE="BHE"><font color=blue>BHE</font></td>
-		<td><INPUT TYPE=checkbox NAME=channels VALUE="BHN"><font color=blue>BHN</font></td>
-		<td><INPUT TYPE=checkbox NAME=channels VALUE="BHZ"><font color=blue>BHZ</font></td>
-		<td WIDTH="14">&nbsp;</td>
-		<td WIDTH="14">&nbsp;</td>
-		<td WIDTH="14">&nbsp;</td>
-		</TR>
-		<TR BGCOLOR="#FFFFFF">
-		<td WIDTH="14">&nbsp;</td>
-		<td><INPUT TYPE=checkbox NAME=channels VALUE="SHE,SHN,SHZ"><font color=green>S??</font></td>
-		<td><INPUT TYPE=checkbox NAME=channels VALUE="SHE"><font color=blue>SHE</font></td>
-		<td><INPUT TYPE=checkbox NAME=channels VALUE="SHN"><font color=blue>SHN</font></td>
-		<td><INPUT TYPE=checkbox NAME=channels VALUE="SHZ"><font color=blue>SHZ</font></td>
-		<td WIDTH="14">&nbsp;</td>
-		<td WIDTH="14">&nbsp;</td>
-		<td WIDTH="14">&nbsp;</td>
-		</TR>
-  	</table>
-</fieldset>
+<%@include file="channels_table.jsp" %>
 <fieldset>
     <legend>台站</legend>
     <table WIDTH="95%" BORDER="0" CELLSPACING="1" CELLPADDING="1" ALIGN="CENTER">

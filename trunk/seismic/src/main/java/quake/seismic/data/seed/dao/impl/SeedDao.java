@@ -8,7 +8,9 @@ import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +19,7 @@ import quake.seismic.data.seed.dao.AbstractSeedDao;
 import quake.seismic.data.seed.model.StaCriteria;
 
 import com.systop.core.ApplicationException;
+import com.systop.core.dao.hibernate.BaseHibernateDao;
 import com.systop.core.dao.support.Page;
 
 /**
@@ -36,6 +39,10 @@ public class SeedDao extends AbstractSeedDao<Page> {
   
   @Autowired
   private SeedpathManager seedpathManager;
+  
+  @Autowired
+  @Qualifier("baseHibernateDao")
+  private BaseHibernateDao dao;
   
   /**
    * 获取系统路径分隔符(Windows "\"，Linux "/")
@@ -104,6 +111,14 @@ public class SeedDao extends AbstractSeedDao<Page> {
       logger.debug("Got station name by code and net from cache");
     }
     return staName;
+  }
+  
+  /**
+   * 根据台网代码和台站代码，判断连续波形文件是否存在并被解析
+   */
+  public Boolean isStationSeedExists(String net, String sta) {
+    List staSeeds = dao.query("from StationSeed s where s.net=? and s.sta=?", net ,sta);
+    return CollectionUtils.isNotEmpty(staSeeds);
   }
   
   /**
