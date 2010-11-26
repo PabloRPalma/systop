@@ -59,7 +59,7 @@
 		<dynamic>
 		    <!-- 加入台网查询条件 BY Sam 20090707 -->
 		     <isNotEmpty prepend="AND" property="netCode">
-		       <![CDATA[(NET_CODE=#netCode#)]]>
+		       <![CDATA[(ST.NET_CODE=#netCode#)]]>
 		    </isNotEmpty>
 		     <isNotEmpty prepend="AND" property="sensorModel">
 		       <![CDATA[(SENSOR_MODEL=#sensorModel#)]]>
@@ -67,8 +67,11 @@
 		    <isNotEmpty prepend="AND" property="digitizerModel">
 		       <![CDATA[(DIGITIZER_MODEL=#digitizerModel#)]]>
 		    </isNotEmpty>
-		      <isNotEmpty prepend="AND" property="staType">
+		    <isNotEmpty prepend="AND" property="staType">
 		       <![CDATA[(STA_TYPE=#staType#)]]>
+		    </isNotEmpty>
+		    <isNotEmpty prepend="AND" property="staCode">
+		       <![CDATA[(ST.STA_CODE=#staCode#)]]>
 		    </isNotEmpty>
 		     <isNotEmpty prepend="AND" property="rockType">
 		       <![CDATA[(ROCK_TYPE=#rockType#)]]>
