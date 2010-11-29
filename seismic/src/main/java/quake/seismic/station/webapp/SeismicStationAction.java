@@ -68,7 +68,6 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
   @Qualifier("exportRespDao")
   private ExportRespDao exportRespDao;
 
-  
   /**
    * 用于导出台站DAO
    */
@@ -379,12 +378,13 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
   public String resp() {
     String data = exportRespData();
     logger.debug("导出的数据：{}", data);
-    String fileName = getFileName();
+    String fileName = getRespName();
     getResponse().addHeader("Content-Disposition", fileName);
     render(getResponse(), data, "text/html");
     return null;
 
   }
+
   /**
    * 导出xml格式数据
    * 
@@ -393,27 +393,51 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
   public String xml() {
     String data = exportXmlData();
     logger.debug("导出的数据：{}", data);
-    getResponse().addHeader("Content-Disposition", "attachment;filename=\"text.xml\"");
+    String fileName = getXmlName();
+    getResponse().addHeader("Content-Disposition", fileName);
     renderXml(getResponse(), data);
     return null;
   }
+
+  /**
+   * xml下载文件名称
+   * 
+   * @return
+   */
+  private String getXmlName() {
+    Criteria c = new Criteria();
+    c.setId(stataionId);
+    c.setSchema(dataSourceManager.getStationSchema());
+    List<Map> stationList = exportXmlDao.queryStationById(c);
+    Map station = null;
+    if (stationList.size() == 1) {
+      station = stationList.get(0);
+    }
+    StringBuffer sb = new StringBuffer();
+    if (station != null) {
+      sb.append("\"").append(station.get("NET_CODE").toString()).append(".").append(
+          station.get("STA_CODE").toString()).append(".XML").append("\"");
+    }
+    String fileName = "attachment;filename=" + sb.toString();
+    return fileName;
+  }
+
   /**
    * 根据数据格式导出相应数据
    * 
    * @return
    */
   private String exportXmlData() {
-    StringBuffer buf = exportXmlDao.queryForXml(stataionId, dataSourceManager
-        .getStationSchema());
-    return buf.toString();
+    String buf = exportXmlDao.queryForXml(stataionId, dataSourceManager.getStationSchema());
+    return buf;
   }
 
   /**
-   * 下载文件命名
+   * resp下载文件命名
    * 
    * @return
    */
-  private String getFileName() {
+  private String getRespName() {
     Criteria c = new Criteria();
     c.setChannelId(channelId);
     c.setSchema(dataSourceManager.getStationSchema());
@@ -438,8 +462,7 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
    * @return
    */
   private String exportRespData() {
-    StringBuffer buf = exportRespDao.queryForResp(channelId, dataSourceManager
-        .getStationSchema());
+    StringBuffer buf = exportRespDao.queryForResp(channelId, dataSourceManager.getStationSchema());
     return buf.toString();
   }
 
