@@ -40,15 +40,26 @@ public final class StationConstants {
   /**
    * 响应类型
    */
-  /**
-   * 台网代码名称Map
-   */
+  
   public static final Map<String, String> BLOCKETTE053_TYPE = new HashMap<String, String>();
   static {
     BLOCKETTE053_TYPE.put("A", "A [Laplace Transform (Rad/sec)]");
     BLOCKETTE053_TYPE.put("B", "B");
     BLOCKETTE053_TYPE.put("C", "C");
     BLOCKETTE053_TYPE.put("D", "D");
+  }
+ 
+  public static final Map<String, String> BLOCKETTE053_IN_UNITS = new HashMap<String, String>();
+  static {
+    BLOCKETTE053_IN_UNITS.put("M/S", "M/S - Velocity in Meters Per Second");
+    BLOCKETTE053_IN_UNITS.put("V", "V - Volts");
+    BLOCKETTE053_IN_UNITS.put("COUNTS", "COUNTS - COUNTS");
+  }
+  public static final Map<String, String> BLOCKETTE053_OUT_UNITS = new HashMap<String, String>();
+  static {
+    BLOCKETTE053_OUT_UNITS.put("M/S", "M/S - Velocity in Meters Per Second");
+    BLOCKETTE053_OUT_UNITS.put("V", "V - Volts");
+    BLOCKETTE053_OUT_UNITS.put("COUNTS", "COUNTS - COUNTS");
   }
   /**
    * 台站类型

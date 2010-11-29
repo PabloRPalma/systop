@@ -1,26 +1,19 @@
 package quake.seismic.station.dao;
 
-import java.io.IOException;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.xwork.StringUtils;
-import org.jdom.Attribute;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
-import org.xml.sax.InputSource;
 
 import quake.seismic.station.StationConstants;
 import quake.seismic.station.model.Criteria;
 import quake.seismic.station.model.Digitizer;
 import quake.seismic.station.model.Loc;
+import quake.seismic.station.util.JdomUtil;
 
 /**
  * 导出台站数据respDAO
@@ -70,8 +63,8 @@ public class ExportRespDao extends AbstractStationDao {
     getChannel(id);
     StringBuffer sb = new StringBuffer();
     sb.append(setChannelMeg());
-    if (channel.get("RESPONSE") != null) {
-      channelResponse = getResponseValue(channel.get("RESPONSE").toString());
+    if (channel != null && channel.get("RESPONSE") != null) {
+      channelResponse = JdomUtil.getResponseValue(channel.get("RESPONSE").toString());
       sb.append(first());
       sb.append(second());
       sb.append(setSensitivity());
@@ -87,22 +80,22 @@ public class ExportRespDao extends AbstractStationDao {
     Map temp = new HashMap();
     temp.put("Stage_sequence", "0");
     temp.put("blockette", "blockette058");
-    Map att = getElementValue(channelResponse, temp);
-    if (att != null) {
-      sb.append(setTitle("Channel Sensitivity"));
-      sb.append("B058F03").append("    ").append("Stage sequence number:");
-      sb.append(setSpace(length, "Stage sequence number:"));
-      sb.append("0").append(StationConstants.NEW_LINE);
-      sb.append("B058F04").append("    ").append("Sensitivity:");
-      sb.append(setSpace(length, "Sensitivity:"));
-      sb.append(att.get("Sensitivity")).append(StationConstants.NEW_LINE);
-      sb.append("B058F05").append("    ").append("Frequency of sensitivity:");
-      sb.append(setSpace(length, "Frequency of sensitivity:"));
-      sb.append(att.get("Freq")).append(StationConstants.NEW_LINE);
-      sb.append("B058F06").append("    ").append("Numbet of calibtations:");
-      sb.append(setSpace(length, "Numbet of calibtations:"));
-      sb.append("0").append(StationConstants.NEW_LINE);
-    }
+    Map att = JdomUtil.getElementValue(channelResponse, temp);
+
+    sb.append(setTitle("Channel Sensitivity"));
+    sb.append("B058F03").append("    ").append("Stage sequence number:");
+    sb.append(setSpace(length, "Stage sequence number:"));
+    sb.append("0").append(StationConstants.NEW_LINE);
+    sb.append("B058F04").append("    ").append("Sensitivity:");
+    sb.append(setSpace(length, "Sensitivity:"));
+    sb.append(getValue(att, "Sensitivity")).append(StationConstants.NEW_LINE);
+    sb.append("B058F05").append("    ").append("Frequency of sensitivity:");
+    sb.append(setSpace(length, "Frequency of sensitivity:"));
+    sb.append(getValue(att, "Freq")).append(StationConstants.NEW_LINE);
+    sb.append("B058F06").append("    ").append("Numbet of calibtations:");
+    sb.append(setSpace(length, "Numbet of calibtations:"));
+    sb.append("0").append(StationConstants.NEW_LINE);
+
     return sb;
   }
 
@@ -147,7 +140,7 @@ public class ExportRespDao extends AbstractStationDao {
   private StringBuffer second() {
     String response = getDigitizerResponses();
     if (StringUtils.isNotBlank(response)) {
-      digitizerResponse = getResponseValue(response);
+      digitizerResponse = JdomUtil.getResponseValue(response);
     }
     StringBuffer sb = new StringBuffer();
     for (int i = 2; i < 5; i++) {
@@ -169,28 +162,28 @@ public class ExportRespDao extends AbstractStationDao {
     Map temp = new HashMap();
     temp.put("Stage_sequence", String.valueOf(level));
     temp.put("blockette", "blockette057");
-    Map att = getElementValue(digitizerResponse, temp);
-    if (att != null) {
-      sb.append(setTitle("Decimation"));
-      sb.append("B057F03").append("    ").append("Stage sequence number:");
-      sb.append(setSpace(length, "Stage sequence number:"));
-      sb.append(level).append(StationConstants.NEW_LINE);
-      sb.append("B057F04").append("    ").append("Input sample rate:");
-      sb.append(setSpace(length, "Input sample rate:"));
-      sb.append(att.get("Input_sample_rate")).append(StationConstants.NEW_LINE);
-      sb.append("B057F05").append("    ").append("Decimation factor:");
-      sb.append(setSpace(length, "Decimation factor:"));
-      sb.append(att.get("Decimation_factor")).append(StationConstants.NEW_LINE);
-      sb.append("B057F06").append("    ").append("Decimation offset:");
-      sb.append(setSpace(length, "Decimation offset:"));
-      sb.append(att.get("Decimation_offset")).append(StationConstants.NEW_LINE);
-      sb.append("B057F07").append("    ").append("Estimated delay (seconds):");
-      sb.append(setSpace(length, "Estimated delay (seconds):"));
-      sb.append(att.get("Estimated_delay")).append(StationConstants.NEW_LINE);
-      sb.append("B057F08").append("    ").append("Correction applied (seconds):");
-      sb.append(setSpace(length, "Correction applied (seconds):"));
-      sb.append(att.get("Correction_applied")).append(StationConstants.NEW_LINE);
-    }
+    Map att = JdomUtil.getElementValue(digitizerResponse, temp);
+
+    sb.append(setTitle("Decimation"));
+    sb.append("B057F03").append("    ").append("Stage sequence number:");
+    sb.append(setSpace(length, "Stage sequence number:"));
+    sb.append(level).append(StationConstants.NEW_LINE);
+    sb.append("B057F04").append("    ").append("Input sample rate:");
+    sb.append(setSpace(length, "Input sample rate:"));
+    sb.append(getValue(att, "Input_sample_rate")).append(StationConstants.NEW_LINE);
+    sb.append("B057F05").append("    ").append("Decimation factor:");
+    sb.append(setSpace(length, "Decimation factor:"));
+    sb.append(getValue(att, "Decimation_factor")).append(StationConstants.NEW_LINE);
+    sb.append("B057F06").append("    ").append("Decimation offset:");
+    sb.append(setSpace(length, "Decimation offset:"));
+    sb.append(getValue(att, "Decimation_offset")).append(StationConstants.NEW_LINE);
+    sb.append("B057F07").append("    ").append("Estimated delay (seconds):");
+    sb.append(setSpace(length, "Estimated delay (seconds):"));
+    sb.append(getValue(att, "Estimated_delay")).append(StationConstants.NEW_LINE);
+    sb.append("B057F08").append("    ").append("Correction applied (seconds):");
+    sb.append(setSpace(length, "Correction applied (seconds):"));
+    sb.append(getValue(att, "Correction_applied")).append(StationConstants.NEW_LINE);
+
     return sb;
   }
 
@@ -220,7 +213,7 @@ public class ExportRespDao extends AbstractStationDao {
     String response = null;
     if (digitizerList.size() == 1) {
       Map m = digitizerList.get(0);
-      if (m.get("RESPONSE") != null) {
+      if (m != null && m.get("RESPONSE") != null) {
         response = m.get("RESPONSE").toString();
       }
     }
@@ -238,34 +231,35 @@ public class ExportRespDao extends AbstractStationDao {
     Map temp = new HashMap();
     temp.put("Stage_sequence", String.valueOf(level));
     temp.put("blockette", "blockette054");
-    Map att = getElementValue(digitizerResponse, temp);
-    if (att != null) {
-      sb.append(setTitle("Response  (Cofficients)"));
-      att.put("level", level);
-      sb.append(setAtt(att));
-      temp.put("att", "numerator");
-      List numeratorList = getChildCount(digitizerResponse, temp);
-      sb.append("B053F07").append("    ").append("Number of numerators :");
-      sb.append(setSpace(length, "Number of numerators :"));
-      sb.append(numeratorList.size()).append(StationConstants.NEW_LINE);
-      temp.put("att", "denominator");
-      List denominatorList = getChildCount(digitizerResponse, temp);
-      sb.append("B053F10").append("    ").append("Number of denominators :");
-      sb.append(setSpace(length, "Number of denominators :"));
-      sb.append(denominatorList.size()).append(StationConstants.NEW_LINE);
-      if (numeratorList.size() > 0) {
-        temp.put("att", "B054F08-09");
-        temp.put("list", numeratorList);
-        temp.put("title", "Numerator cofficients:");
-        sb.append(setNumeratorOrDenominator(temp));
-      }
-      if (denominatorList.size() > 0) {
-        temp.put("att", "B054F11-12");
-        temp.put("list", denominatorList);
-        temp.put("title", "Denominator cofficients:");
-        sb.append(setNumeratorOrDenominator(temp));
-      }
+    Map att = JdomUtil.getElementValue(digitizerResponse, temp);
+
+    sb.append(setTitle("Response  (Cofficients)"));
+    att.put("level", level);
+    att.put("blockette", "B054");
+    sb.append(setAtt(att));
+    temp.put("att", "numerator");
+    List numeratorList = JdomUtil.getChildCount(digitizerResponse, temp);
+    sb.append("B054F07").append("    ").append("Number of numerators :");
+    sb.append(setSpace(length, "Number of numerators :"));
+    sb.append(numeratorList.size()).append(StationConstants.NEW_LINE);
+    temp.put("att", "denominator");
+    List denominatorList = JdomUtil.getChildCount(digitizerResponse, temp);
+    sb.append("B054F10").append("    ").append("Number of denominators :");
+    sb.append(setSpace(length, "Number of denominators :"));
+    sb.append(denominatorList.size()).append(StationConstants.NEW_LINE);
+    if (numeratorList.size() > 0) {
+      temp.put("att", "B054F08-09");
+      temp.put("list", numeratorList);
+      temp.put("title", "Numerator cofficients:");
+      sb.append(setNumeratorOrDenominator(temp));
     }
+    if (denominatorList.size() > 0) {
+      temp.put("att", "B054F11-12");
+      temp.put("list", denominatorList);
+      temp.put("title", "Denominator cofficients:");
+      sb.append(setNumeratorOrDenominator(temp));
+    }
+
     return sb;
   }
 
@@ -306,22 +300,22 @@ public class ExportRespDao extends AbstractStationDao {
     Map temp = new HashMap();
     temp.put("Stage_sequence", String.valueOf(level));
     temp.put("blockette", "blockette058");
-    Map att = getElementValue(l, temp);
-    if (att != null) {
-      sb.append(setTitle("Channel  Gain"));
-      sb.append("B058F03").append("    ").append("Stage sequence number:");
-      sb.append(setSpace(length, "Stage sequence number:"));
-      sb.append(level).append(StationConstants.NEW_LINE);
-      sb.append("B058F04").append("    ").append("Gain:");
-      sb.append(setSpace(length, "Gain:"));
-      sb.append(att.get("Sensitivity")).append(StationConstants.NEW_LINE);
-      sb.append("B058F05").append("    ").append("Frequency of gain:");
-      sb.append(setSpace(length, "Frequency of gain:"));
-      sb.append(att.get("Freq")).append(StationConstants.NEW_LINE);
-      sb.append("B058F06").append("    ").append("Numbet of calibtations:");
-      sb.append(setSpace(length, "Numbet of calibtations:"));
-      sb.append("0").append(StationConstants.NEW_LINE);
-    }
+    Map att = JdomUtil.getElementValue(l, temp);
+
+    sb.append(setTitle("Channel  Gain"));
+    sb.append("B058F03").append("    ").append("Stage sequence number:");
+    sb.append(setSpace(length, "Stage sequence number:"));
+    sb.append(level).append(StationConstants.NEW_LINE);
+    sb.append("B058F04").append("    ").append("Gain:");
+    sb.append(setSpace(length, "Gain:"));
+    sb.append(getValue(att, "Sensitivity")).append(StationConstants.NEW_LINE);
+    sb.append("B058F05").append("    ").append("Frequency of gain:");
+    sb.append(setSpace(length, "Frequency of gain:"));
+    sb.append(getValue(att, "Freq")).append(StationConstants.NEW_LINE);
+    sb.append("B058F06").append("    ").append("Numbet of calibtations:");
+    sb.append(setSpace(length, "Numbet of calibtations:"));
+    sb.append("0").append(StationConstants.NEW_LINE);
+
     return sb;
   }
 
@@ -336,39 +330,39 @@ public class ExportRespDao extends AbstractStationDao {
     Map temp = new HashMap();
     temp.put("Stage_sequence", "1");
     temp.put("blockette", "blockette053");
-    Map att = getElementValue(channelResponse, temp);
-    if (att != null) {
-      sb.append(setTitle("Response  (Poles & Zeros)"));
-      att.put("level", "1");
-      sb.append(setAtt(att));
-      sb.append("B053F07").append("    ").append("A0 Normalization factor:");
-      sb.append(setSpace(length, "A0 Normalization factor:"));
-      sb.append(att.get("Normalization_factor")).append(StationConstants.NEW_LINE);
-      sb.append("B053F08").append("    ").append("Normalization frequency:");
-      sb.append(setSpace(length, "Normalization frequency:"));
-      sb.append(att.get("Normalization_frequency")).append(StationConstants.NEW_LINE);
-      temp.put("att", "zero");
-      List zeroList = getChildCount(channelResponse, temp);
-      sb.append("B053F09").append("    ").append("Number of zeros :");
-      sb.append(setSpace(length, "Number of zeros :"));
-      sb.append(zeroList.size()).append(StationConstants.NEW_LINE);
-      temp.put("att", "pole");
-      List poleList = getChildCount(channelResponse, temp);
-      sb.append("B053F14").append("    ").append("Number of peles :");
-      sb.append(setSpace(length, "Number of peles :"));
-      sb.append(poleList.size()).append(StationConstants.NEW_LINE);
-      if (zeroList.size() > 0) {
-        temp.put("att", "B053F10-13");
-        temp.put("list", zeroList);
-        temp.put("complex", "Complex zeros:");
-        sb.append(setComplex(temp));
-      }
-      if (poleList.size() > 0) {
-        temp.put("att", "B053F15-18");
-        temp.put("list", poleList);
-        temp.put("complex", "Complex poles:");
-        sb.append(setComplex(temp));
-      }
+    Map att = JdomUtil.getElementValue(channelResponse, temp);
+
+    sb.append(setTitle("Response  (Poles & Zeros)"));
+    att.put("level", "1");
+    att.put("blockette", "B053");
+    sb.append(setAtt(att));
+    sb.append("B053F07").append("    ").append("A0 Normalization factor:");
+    sb.append(setSpace(length, "A0 Normalization factor:"));
+    sb.append(getValue(att, "Normalization_factor")).append(StationConstants.NEW_LINE);
+    sb.append("B053F08").append("    ").append("Normalization frequency:");
+    sb.append(setSpace(length, "Normalization frequency:"));
+    sb.append(getValue(att, "Normalization_frequency")).append(StationConstants.NEW_LINE);
+    temp.put("att", "zero");
+    List zeroList = JdomUtil.getChildCount(channelResponse, temp);
+    sb.append("B053F09").append("    ").append("Number of zeros :");
+    sb.append(setSpace(length, "Number of zeros :"));
+    sb.append(zeroList.size()).append(StationConstants.NEW_LINE);
+    temp.put("att", "pole");
+    List poleList = JdomUtil.getChildCount(channelResponse, temp);
+    sb.append("B053F14").append("    ").append("Number of peles :");
+    sb.append(setSpace(length, "Number of peles :"));
+    sb.append(poleList.size()).append(StationConstants.NEW_LINE);
+    if (zeroList.size() > 0) {
+      temp.put("att", "B053F10-13");
+      temp.put("list", zeroList);
+      temp.put("complex", "Complex zeros:");
+      sb.append(setComplex(temp));
+    }
+    if (poleList.size() > 0) {
+      temp.put("att", "B053F15-18");
+      temp.put("list", poleList);
+      temp.put("complex", "Complex poles:");
+      sb.append(setComplex(temp));
     }
     return sb;
   }
@@ -427,21 +421,38 @@ public class ExportRespDao extends AbstractStationDao {
    */
   private StringBuffer setAtt(Map att) {
     StringBuffer sb = new StringBuffer();
-    sb.append("B053F03").append("    ").append("Transfer function type:");
+
+    sb.append(att.get("blockette")).append("F03").append("    ").append("Transfer function type:");
     sb.append(setSpace(length, "Transfer function type:"));
-    sb.append(StationConstants.BLOCKETTE053_TYPE.get(att.get("Type"))).append(
-        StationConstants.NEW_LINE);
-    sb.append("B053F04").append("    ").append("Stage sequence number:");
+    if (getValue(att, "Type").equals("")) {
+      sb.append("").append(StationConstants.NEW_LINE);
+    } else {
+      sb.append(StationConstants.BLOCKETTE053_TYPE.get(att.get("Type"))).append(
+          StationConstants.NEW_LINE);
+    }
+    sb.append(att.get("blockette")).append("F04").append("    ").append("Stage sequence number:");
     sb.append(setSpace(length, "Stage sequence number:"));
     sb.append(att.get("level")).append(StationConstants.NEW_LINE);
 
-    sb.append("B053F05").append("    ").append("Response in units lookup:");
+    sb.append(att.get("blockette")).append("F05").append("    ")
+        .append("Response in units lookup:");
     sb.append(setSpace(length, "Response in units lookup:"));
-    sb.append(att.get("Signal_input_unit")).append(StationConstants.NEW_LINE);
+    if (getValue(att, "Signal_input_unit").endsWith("")) {
+      sb.append("").append(StationConstants.NEW_LINE);
+    } else {
+      sb.append(StationConstants.BLOCKETTE053_IN_UNITS.get(att.get("Signal_input_unit"))).append(
+          StationConstants.NEW_LINE);
+    }
 
-    sb.append("B053F06").append("    ").append("Response out units lookup:");
+    sb.append(att.get("blockette")).append("F06").append("    ").append(
+        "Response out units lookup:");
     sb.append(setSpace(length, "Response out units lookup:"));
-    sb.append(att.get("Signal_output_unit")).append(StationConstants.NEW_LINE);
+    if (getValue(att, "Signal_output_unit").endsWith("")) {
+      sb.append("").append(StationConstants.NEW_LINE);
+    } else {
+      sb.append(StationConstants.BLOCKETTE053_OUT_UNITS.get(att.get("Signal_output_unit"))).append(
+          StationConstants.NEW_LINE);
+    }
     return sb;
   }
 
@@ -481,116 +492,6 @@ public class ExportRespDao extends AbstractStationDao {
   }
 
   /**
-   * 获得某一级别下的子结点的属性值
-   */
-  public Map getElementValue(List l, Map m) {
-    Map map = null;
-    for (int i = 0; i < l.size(); i++) {
-      Map temp = (HashMap) l.get(i);
-      if (temp.get("etName").equals("stage")) {
-        logger.debug("temp-- {} --m--{} --{}", temp.get("Stage_sequence"), m.get("Stage_sequence"));
-        if (temp.get("Stage_sequence").equals(m.get("Stage_sequence"))) {
-          List childrenList = (ArrayList) temp.get("childrenList");
-          for (int j = 0; j < childrenList.size(); j++) {
-            Map child = (HashMap) childrenList.get(j);
-            if (child.get("etName").equals(m.get("blockette"))) {
-              map = child;
-            }
-          }
-        }
-      } else {
-        map = getElementValue((ArrayList) temp.get("childrenList"), m);
-      }
-    }
-    return map;
-  }
-
-  /**
-   * 获得某一节点下包含指定的子节点的集合
-   */
-  public List getChildCount(List l, Map m) {
-    List nodeList = new ArrayList();
-    for (int i = 0; i < l.size(); i++) {
-      Map temp = (HashMap) l.get(i);
-      if (temp.get("etName").equals("stage")) {
-        if (temp.get("Stage_sequence").equals(m.get("Stage_sequence"))) {
-          List childrenList = (ArrayList) temp.get("childrenList");
-          for (int j = 0; j < childrenList.size(); j++) {
-            Map child = (HashMap) childrenList.get(j);
-            if (child.get("etName").equals(m.get("blockette"))) {
-              List list = (ArrayList) child.get("childrenList");
-              for (int p = 0; p < list.size(); p++) {
-                Map mTemp = (HashMap) list.get(p);
-                if (mTemp.get("etName").equals(m.get("att"))) {
-                  nodeList.add(mTemp);
-                }
-              }
-            }
-          }
-        }
-      } else {
-        nodeList = getChildCount((ArrayList) temp.get("childrenList"), m);
-      }
-    }
-    return nodeList;
-  }
-
-  /**
-   * 获得response内容
-   */
-  public List getResponseValue(String response) {
-    List l = new ArrayList();
-    // 创建一个新的字符串
-    StringReader read = new StringReader(response);
-    // 创建新的输入源SAX 解析器将使用 InputSource 对象来确定如何读取 XML 输入
-    InputSource source = new InputSource(read);
-    // 创建一个新的SAXBuilder
-    SAXBuilder sAXBuilder = new SAXBuilder();
-    // 通过输入源构造一个Document
-    try {
-      Document doc = sAXBuilder.build(source);
-      // 取的根元素
-      Element root = doc.getRootElement();
-      // 得到根元素所有子元素的集合
-      List nodeList = root.getChildren();
-      Element et = null;
-      for (int i = 0; i < nodeList.size(); i++) {
-        et = (Element) nodeList.get(i);// 循环依次得到子元素
-        Map m = new HashMap();
-        m = getChildValue(et, m);
-        l.add(m);
-      }
-    } catch (JDOMException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    } catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    return l;
-  }
-
-  /**
-   * 递归查询该接点下的所有内容
-   */
-  public Map getChildValue(Element et, Map m) {
-    List children = new ArrayList();
-    List attList = et.getAttributes();
-    for (int i = 0; i < attList.size(); i++) {
-      Attribute att = (Attribute) attList.get(i);
-      m.put(att.getName(), att.getValue());
-    }
-    List childs = et.getChildren();
-    for (int i = 0; i < childs.size(); i++) {
-      Map childMap = new HashMap();
-      children.add(this.getChildValue((Element) childs.get(i), childMap));
-    }
-    m.put("etName", et.getName());
-    m.put("childrenList", children);
-    return m;
-  }
-
-  /**
    * 根据查询条件执行通道数据查询。
    */
   public List<Map> queryChannelById(Criteria c) {
@@ -610,5 +511,22 @@ public class ExportRespDao extends AbstractStationDao {
    */
   private List<Map> queryLoc(Loc l) {
     return getTemplate().queryForList(SQL_LOC, l);
+  }
+
+  /**
+   * 节点属性不存在的时候返回""
+   * 
+   * @param m
+   * @param key
+   * @return
+   */
+  private String getValue(Map m, String key) {
+    String value = null;
+    if (m != null && m.get(key) != null) {
+      value = m.get(key).toString();
+    } else {
+      value = "";
+    }
+    return value;
   }
 }
