@@ -18,7 +18,6 @@
 -- Create schema quake
 --
 
-CREATE DATABASE IF NOT EXISTS quake;
 USE quake;
 
 --
