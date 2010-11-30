@@ -31,17 +31,17 @@ img{
 </style>
 </head>
 <body bgcolor="#ECF3F9">
-<table border="0" width="230" height="120" cellpadding="0" cellspacing="0">
+<table border="0" width="230" height="180" cellpadding="0" cellspacing="0">
 	<tr>
-		<td align="right" width="80">用户名：</td>
+		<td align="right" width="80" height="27">用户名：</td>
 		<td width="150">${user.loginId}&nbsp;</td>
 	</tr>
 	<tr>
-		<td align="right">姓　名：</td>
+		<td align="right" height="27">姓　名：</td>
 		<td>${user.name}&nbsp;</td>
 	</tr>
 	<tr>
-		<td align="right">性　别：</td>
+		<td align="right" height="27">性　别：</td>
 		<td>
 			<c:if test="${user.sex == 'M'}">
 				男&nbsp;
@@ -52,7 +52,7 @@ img{
 		</td>
 	</tr>
 	<tr>
-		<td align="right">类　别：</td>
+		<td align="right" height="27">类　别：</td>
 		<td>
 			<stc:role ifAnyGranted="ROLE_ADMIN">
 				管理员
@@ -65,6 +65,7 @@ img{
 			&nbsp;
 	   </td>
 	</tr>
+	<tr><td height="10" colspan="2"></td></tr>
 	<tr>
 		<td colspan="2" align="center" style="border-top:1px dotted #2D6FA9; padding-top:5px;">
 			<a href="${ctx}/j_acegi_logout" target="_parent" title="退出系统">
