@@ -88,7 +88,7 @@
 		    <ec:column width="60" property="STA_ELEV" title="高程(m)" />
 		</stc:role>
 		<ec:column width="120" property="SITE_NAME" title="地址" />
-		<ec:column width="200" property="-8" title="操作" style="text-align:center">
+		<ec:column width="200" property="-8" title="操作" style="text-align:center" viewsDenied="xls" >
 			<a href="viewChannels.do?stataionId=${item.ID}" target="_blank">查看通道</a> |
 			<a href="xml.do?stataionId=${item.ID}" title="XML下载">XML</a>  
 			<c:forEach var="c" items="${item.staChannels}">
