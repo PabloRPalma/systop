@@ -30,7 +30,7 @@ img{
 }
 </style>
 </head>
-<body bgcolor="#ECF3F9">
+<body bgcolor="#FAFAFA">
 <table border="0" width="230" height="180" cellpadding="0" cellspacing="0">
 	<tr>
 		<td align="right" width="80" height="27">用户名：</td>
