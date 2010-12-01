@@ -536,7 +536,7 @@
 		<![CDATA[
 		SELECT Net_code,Net_cname,Net_sname,Net_Lat,Net_lon,Net_elev,Net_type,Net_startdate,Net_enddate,
 				Sta_num,Director,Mail_address,Telphone,Postalcode,Address,Ondate,Offdate,Remark
-		FROM $schema$.network_info
+		FROM $schema$.Network_info
 		WHERE 1=1
 		]]>
 		<dynamic>
