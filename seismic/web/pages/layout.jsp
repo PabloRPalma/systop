@@ -64,7 +64,7 @@
                         iconCls:'template'
                     },
                     {                    
-                        title:'链接、反馈',
+                        title:'链接管理',
                         html:document.getElementById('announce').innerHTML,
                         border:false,
                         iconCls:'announce'

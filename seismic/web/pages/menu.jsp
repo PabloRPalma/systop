@@ -106,10 +106,12 @@
 				<img src="${ctx}/images/icons/link_go.gif" class="icon">
 				<a href="${ctx }/admin/links/orderLink.do" target="main">链接排序</a>
 			</div>
+			<!-- 
 			<div style="padding-top:2px">	
 				<img src="${ctx}/images/icons/template.gif" class="icon">
                   <a href="${ctx}/admin/advisory/list.do" target="main">反馈管理</a>
-			</div>		
+			</div>
+			-->		
 		</div>
 	</div>
 	
