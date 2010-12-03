@@ -20,8 +20,9 @@ import com.systop.core.model.BaseModel;
 
 /**
  * 网站配置管理model
- * @author wbb
+ * @author DU
  */
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "site_cfg", uniqueConstraints = {})
 public class SiteCfg extends BaseModel implements Serializable {
