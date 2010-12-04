@@ -182,6 +182,20 @@ public class ArticleFreeMarkerManager extends BaseGenericsManager<Articles> {
   }
 
   /**
+   * @param name 顶级栏目名_用于首页flash显示
+   * @param size 个数
+   * @return list
+   */
+  @SuppressWarnings("unchecked")
+  public List<Articles> getArtsByTopCatName(String name, int size) {
+    String hql = "from Articles a " + "where a.catalog.name=? and a.audited=? "
+        + "order by a.onTop DESC ,serialNo ,createTime DESC";
+    Page page = new Page(Page.start(1, size), size);
+    page = pageQuery(page, hql, new Object[] { name, CmsConstants.Y });
+    return page.getData();
+  }
+  
+  /**
    * 去除字符串最后一位
    * 
    * @param arg
