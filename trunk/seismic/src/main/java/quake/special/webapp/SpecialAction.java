@@ -132,9 +132,6 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
       cats = page.getData();
      logger.info("--------------cats {}"+cats.size());
       Special s = null;
-      if(getModel().getId()!=null){
-        s = getManager().getSpecialById(getModel().getId());
-      }
       if (StringUtils.isNotBlank(specialId)) {
         s = getManager().getSpecialById(Integer.valueOf(specialId));
       }
@@ -245,11 +242,6 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
       jsonResult.put("M", "");
       jsonResult.put("EQ_TIME", "");
     }
-    /*
-     * jsonResult.put("LOCATION_CNAME", "test"); jsonResult.put("EPI_LON", "test");
-     * jsonResult.put("EPI_LAT", "test"); jsonResult.put("M", "test"); jsonResult.put("EQ_TIME",
-     * "test");
-     */
     return "jsonResult";
   }
 
