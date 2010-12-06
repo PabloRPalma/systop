@@ -191,9 +191,13 @@ public final class CmsConstants {
   public static final String SITECFG_BENA = ResourceBundleUtil.getString(RESOURCE_BUNDLE,
       "SiteCfgFreeMarkerManager.beanName", "SiteCfgBean");
 
+  /** 地震专题在模板中使用的名称*/
+  public static final String SPECIAL_BEAN = ResourceBundleUtil.getString(RESOURCE_BUNDLE, 
+      "SpecialFreeMarkerManager.beanName", "SpecialBean");
+  
   /** 网站开始访问目录 */
   public static final String START_ROOT = ResourceBundleUtil.getString(RESOURCE_BUNDLE,
-      "cms.webview.startroot", "/eq-ds");
+      "cms.webview.startroot", "/seismic");
 
   /** 解析自定义模板表达示 */
   public static final String FM_TMPT_REGEX = ResourceBundleUtil.getString(RESOURCE_BUNDLE,
