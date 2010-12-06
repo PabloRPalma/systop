@@ -15,6 +15,7 @@ import com.systop.cms.webview.service.CzCatFreeMarkerManager;
 import com.systop.cms.webview.service.FreeMarkerViewManager;
 import com.systop.cms.webview.service.LinkFreeMarkerManager;
 import com.systop.cms.webview.service.SoftwareFreeMarkerManager;
+import com.systop.cms.webview.service.SpecialFreeMarkerManager;
 import com.systop.cms.webview.servlet.base.BaseFreeMarkerServlet;
 import com.systop.common.modules.template.freemarker.servlet.StringTemplateContext;
 
@@ -54,7 +55,8 @@ public class CmsWebViewServlet extends BaseFreeMarkerServlet {
       stc.getModel().put(CmsConstants.LINK_BENA, getLinkFmMgr());
       stc.getModel().put(CmsConstants.CZCAT_BENA, getCzCatFmMgr());
       stc.getModel().put(CmsConstants.SOFTWARE_BENA, getSoftFmMgr());
-
+      stc.getModel().put(CmsConstants.SPECIAL_BEAN, getSpecialFmMgr());
+      
       // 设置request对象
       stc.getModel().put("req", req);
       // 网站访问根目录
@@ -105,5 +107,8 @@ public class CmsWebViewServlet extends BaseFreeMarkerServlet {
     return (SoftwareFreeMarkerManager) getBean("softwareFreeMarkerManager");
   }
   
-  
+  /** 通过Spring获得SpecialFreeMarkerManager */
+  private SpecialFreeMarkerManager getSpecialFmMgr() {
+    return (SpecialFreeMarkerManager) getBean("specialFreeMarkerManager");
+  }
 }
