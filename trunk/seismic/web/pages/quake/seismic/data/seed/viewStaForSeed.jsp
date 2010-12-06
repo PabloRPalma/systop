@@ -58,11 +58,11 @@ a.sta:hover{
            </td>
            <td>开始时间：
            <input name="model.startTime" class="Wdate" id="startTime" style="width:150px;"
-           onclick="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd, HH:mm:ss',minDate:'<fmt:formatDate value="${startTime}" pattern="yyyy-MM-dd HH:mm:ss"/>',maxDate:'#F{$dp.$D(\'endTime\');}'});"></input>
+           onclick="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'<fmt:formatDate value="${startTime}" pattern="yyyy-MM-dd HH:mm:ss"/>',maxDate:'#F{$dp.$D(\'endTime\');}'});"></input>
            </td>
            <td>终止时间：
            <input name="model.endTime" class="Wdate" id="endTime" style="width:150px;"
-           onclick="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd, HH:mm:ss',maxDate:'<fmt:formatDate value="${endTime}" pattern="yyyy-MM-dd HH:mm:ss"/>',minDate:'#F{$dp.$D(\'startTime\');}'});"></input>
+           onclick="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'<fmt:formatDate value="${endTime}" pattern="yyyy-MM-dd HH:mm:ss"/>',minDate:'#F{$dp.$D(\'startTime\');}'});"></input>
            </td>
            
            <td><input type="submit" align="center" value="导出数据"  class="button"/>
