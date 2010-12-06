@@ -179,28 +179,32 @@ var win = new Ext.Window({
 			}, {
 				text : '确定',
 				handler : function() {
+				if(qcId!=null){
 					Ext.Ajax.request({
-								url : '/admin/special/ensureQc.do',
-								params : {
-									'qcId' : qcId,
-									'tableName' : qcTableName
-								},
-								method : 'POST',
-								success : function(response) {
+						url : '/admin/special/ensureQc.do',
+						params : {
+							'qcId' : qcId,
+							'tableName' : qcTableName
+						},
+						method : 'POST',
+						success : function(response) {
 							
-										 Ext.my().msg('', '您已经成功选择地震目录.');
-										 var jsonResult = Ext.util.JSON.decode(response.responseText);
-										 document.getElementById("location").value=jsonResult.LOCATION_CNAME;
-										 document.getElementById("longitude").value=jsonResult.EPI_LON;
-										 document.getElementById("latitude").value=jsonResult.EPI_LAT;
-										 document.getElementById("magnitude").value=jsonResult.M;
-										 document.getElementById("quakeTime").value=jsonResult.EQ_TIME;
-										 document.getElementById("model.qc_id").value=qcId;
-										 document.getElementById("model.tableName").value=qcTableName;
-								
-										 win.hide();
-										 }
-							});
+								Ext.my().msg('', '您已经成功选择地震目录.');
+								var jsonResult = Ext.util.JSON.decode(response.responseText);
+								document.getElementById("location").value=jsonResult.LOCATION_CNAME;
+								document.getElementById("longitude").value=jsonResult.EPI_LON;
+								document.getElementById("latitude").value=jsonResult.EPI_LAT;
+								document.getElementById("magnitude").value=jsonResult.M;
+								document.getElementById("quakeTime").value=jsonResult.EQ_TIME;
+								document.getElementById("model.qc_id").value=qcId;
+								document.getElementById("model.tableName").value=qcTableName;										
+								 
+								win.hide();
+								 }
+					});
+				}else{
+					Ext.my().msg('', '请选择地震目录.');
+				}		
 				}
 			}, {
 				text : '取消',
