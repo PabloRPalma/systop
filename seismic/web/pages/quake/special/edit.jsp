@@ -136,7 +136,6 @@ function station_wave(){
 	  fckEditor.ReplaceTextarea();
 }
 </script>
-<body>
 <script type="text/javascript">
 
 	Ext.onReady(function() {
@@ -187,7 +186,8 @@ function station_wave(){
 		});
 	});
 </script>
-<div class="x-panel">
+<body>
+<div class="x-panel" style="margin-top: -5px;margin-left: -2px;margin-right: -2px;">
 <div class="x-panel-header">编辑专题地震</div>
 <div class="x-toolbar">
 <table width="99%">
@@ -204,7 +204,7 @@ function station_wave(){
 </div>
 <div><%@ include file="/common/messages.jsp"%></div>
 <s:form id="save" action="save.do" method="post" theme="simple" validate="true" enctype="multipart/form-data">
-<div id="tabs" style="margin-top: -1px;margin-left: -1px;margin-right: 0px;">
+<div id="tabs" style="margin-top: 0px;margin-left: 0px;margin-right: 0px;">
 <div id="basic" class="x-hide-display"><s:hidden name="model.id" />
 <s:hidden name="model.qc_id" id="model.qc_id"/>
 <s:hidden name="model.tableName" id="model.tableName"/>
@@ -224,14 +224,14 @@ function station_wave(){
 	<tr><td width="10px">&nbsp;</td>
 		<td width="80px">地  点:</td>
 		<td>
-		<s:textfield id="location" name="location" disabled="true" cssStyle="width:155px"/>
+		<s:textfield id="location" name="model.location" cssStyle="width:155px"/>
 		</td>
 		<td width="60px">&nbsp;</td>
 	</tr>
 	<tr><td width="10px">&nbsp;</td>
 		<td>经  度:</td>
 		<td>
-		<s:textfield id="longitude" name="longitude" disabled="true" cssStyle="width:155px"/>
+		<s:textfield id="longitude" name="model.longitude"  cssStyle="width:155px"/>
 			
 		</td>
 		<td width="60px">&nbsp;</td>
@@ -239,7 +239,7 @@ function station_wave(){
 	<tr><td width="10px">&nbsp;</td>
 		<td>纬  度:</td>
 		<td>
-		<s:textfield id="latitude" name="latitude" disabled="true" cssStyle="width:155px"/>
+		<s:textfield id="latitude" name="model.latitude" cssStyle="width:155px"/>
 			
 		</td>
 		<td width="60px">&nbsp;</td>
@@ -247,7 +247,7 @@ function station_wave(){
 	<tr><td width="10px">&nbsp;</td>
 		<td>震  级:</td>
 		<td>
-		<s:textfield id="magnitude" name="magnitude" disabled="true" cssStyle="width:155px"/>
+		<s:textfield id="magnitude" name="model.magnitude" cssStyle="width:155px"/>
 			
 		</td>
 		<td width="60px">&nbsp;</td>
@@ -255,7 +255,7 @@ function station_wave(){
 	<tr><td width="10px">&nbsp;</td>
 		<td>发震时刻:</td>
 		<td>
-		<s:textfield id="quakeTime" name="quakeTime" disabled="true" cssStyle="width:155px"/>
+		<s:textfield id="quakeTime" name="model.quakeTime" cssStyle="width:155px"/>
 		</td>
 		<td width="60px">&nbsp;</td>
 	</tr>
