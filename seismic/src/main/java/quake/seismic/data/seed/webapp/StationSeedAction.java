@@ -86,11 +86,11 @@ public class StationSeedAction extends BaseSeedExpAction
       tmIdx = 13;
     }
     if(model.getStartTime() != null) {
-      args[tmIdx] = DateUtil.getDateTime("yyyy,DDD,hh:mm:ss", model.getStartTime())
+      args[tmIdx] = DateUtil.getDateTime("yyyy,DDD,HH:mm:ss", model.getStartTime())
        + ".0001\n"; 
     }
     if(model.getEndTime() != null) {
-      args[tmIdx + 1] = DateUtil.getDateTime("yyyy,DDD,hh:mm:ss", model.getEndTime())
+      args[tmIdx + 1] = DateUtil.getDateTime("yyyy,DDD,HH:mm:ss", model.getEndTime())
        + ".0001\n"; 
     }
     
