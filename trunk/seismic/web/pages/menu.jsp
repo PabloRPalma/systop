@@ -189,6 +189,10 @@
 				<img src="${ctx}/images/icons/template.gif" class="icon">
                   <a href="${ctx}/quake/admin/googlemap/edit.do" target="main">Google Map配置</a>
 			</div>
+			<div style="padding-top:2px">	
+				<img src="${ctx}/images/icons/template.gif" class="icon">
+                  <a href="${ctx}/quake/wap/wap.do" target="_black">测试wap</a>
+			</div>
 		</div>		
 	</div>
 	<div id="counter">
