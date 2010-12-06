@@ -27,6 +27,30 @@ public class Special extends BaseModel {
    */
   private String tableName;
   
+  /**
+   * 发震时间
+   */
+  private String quakeTime;
+  /**
+   * 地点
+   */
+  private String location;
+  /**
+   * 经度
+   */
+  private String longitude;
+  /**
+   * 纬度
+   */
+  private String latitude;
+  /**
+   * 深度
+   */
+  private String depth;
+  /**
+   * 震级
+   */
+  private String magnitude;
 
   /**
    * 创建时间
@@ -228,5 +252,53 @@ public class Special extends BaseModel {
 
   public void setTableName(String tableName) {
     this.tableName = tableName;
+  }
+
+  public String getQuakeTime() {
+    return quakeTime;
+  }
+
+  public void setQuakeTime(String quakeTime) {
+    this.quakeTime = quakeTime;
+  }
+
+  public String getLocation() {
+    return location;
+  }
+
+  public void setLocation(String location) {
+    this.location = location;
+  }
+
+  public String getLongitude() {
+    return longitude;
+  }
+
+  public void setLongitude(String longitude) {
+    this.longitude = longitude;
+  }
+
+  public String getLatitude() {
+    return latitude;
+  }
+
+  public void setLatitude(String latitude) {
+    this.latitude = latitude;
+  }
+
+  public String getDepth() {
+    return depth;
+  }
+
+  public void setDepth(String depth) {
+    this.depth = depth;
+  }
+
+  public String getMagnitude() {
+    return magnitude;
+  }
+
+  public void setMagnitude(String magnitude) {
+    this.magnitude = magnitude;
   }
 }
