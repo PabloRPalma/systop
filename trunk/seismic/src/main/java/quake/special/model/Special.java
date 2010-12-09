@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import com.systop.core.model.BaseModel;
 
@@ -142,6 +143,7 @@ public class Special extends BaseModel {
     this.state = state;
   }
   @Column(name = "fracture")
+  @Type(type = "text")
   public String getFracture() {
     return fracture;
   }
@@ -150,6 +152,7 @@ public class Special extends BaseModel {
     this.fracture = fracture;
   }
   @Column(name = "event_wave")
+  @Type(type = "text")
   public String getEvent_wave() {
     return event_wave;
   }
@@ -158,6 +161,7 @@ public class Special extends BaseModel {
     event_wave = eventWave;
   }
   @Column(name = "station_wave")
+  @Type(type = "text")
   public String getStation_wave() {
     return station_wave;
   }
@@ -166,6 +170,7 @@ public class Special extends BaseModel {
     station_wave = stationWave;
   }
   @Column(name = "intensity")
+  @Type(type = "text")
   public String getIntensity() {
     return intensity;
   }
@@ -174,6 +179,7 @@ public class Special extends BaseModel {
     this.intensity = intensity;
   }
   @Column(name = "mechanism")
+  @Type(type = "text")
   public String getMechanism() {
     return mechanism;
   }
@@ -182,6 +188,7 @@ public class Special extends BaseModel {
     this.mechanism = mechanism;
   }
   @Column(name = "m_t")
+  @Type(type = "text")
   public String getM_t() {
     return m_t;
   }
@@ -190,6 +197,7 @@ public class Special extends BaseModel {
     m_t = mT;
   }
   @Column(name = "area")
+  @Type(type = "text")
   public String getArea() {
     return area;
   }
@@ -198,6 +206,7 @@ public class Special extends BaseModel {
     this.area = area;
   }
   @Column(name = "epifocus")
+  @Type(type = "text")
   public String getEpifocus() {
     return epifocus;
   }
@@ -214,6 +223,7 @@ public class Special extends BaseModel {
     front_pic = frontPic;
   }
   @Column(name = "desn")
+  @Type(type = "text")
   public String getDesn() {
     return desn;
   }
@@ -222,6 +232,7 @@ public class Special extends BaseModel {
     this.desn = desn;
   }
   @Column(name = "history_pic")
+  @Type(type = "text")
   public String getHistory_pic() {
     return history_pic;
   }
