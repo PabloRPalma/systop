@@ -76,6 +76,12 @@
                         iconCls:'template'
                     },
                     {                    
+                        title:'邮件审核',
+                        html:document.getElementById('seisEmail').innerHTML,
+                        border:false,
+                        iconCls:'template'
+                    },
+                    {                    
                         title:'许可管理',
                         html:document.getElementById('menu_sys').innerHTML,
                         border:false,
