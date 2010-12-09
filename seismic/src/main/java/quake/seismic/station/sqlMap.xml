@@ -135,7 +135,7 @@
 	  <select id="queryDigitizer" parameterClass="quake.seismic.station.model.Digitizer"
 			resultMap="queryDigitizerResult">
 		<![CDATA[
-		SELECT RESPONSE FROM $schema$.DIGITIZER_RESP_DIC  WHERE INSTR_MODEL = #instr_model# and RESP_ID=#resp_id#
+		SELECT RESPONSE FROM $schema$.Digitizer_resp_dic  WHERE INSTR_MODEL = #instr_model# and RESP_ID=#resp_id#
 		]]>
 	</select>
 	  <select id="queryLoc" parameterClass="quake.seismic.station.model.Loc"
