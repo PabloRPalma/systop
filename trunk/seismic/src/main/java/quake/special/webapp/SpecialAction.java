@@ -269,6 +269,15 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
     return INDEX;
   }
 
+  /**
+   * 首页地震专题‘更多’列表
+   * @return
+   */
+  public String indexMore() {
+    index();
+    return "indexMore";
+  }
+  
   public Criteria getCriteria() {
     return criteria;
   }
