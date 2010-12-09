@@ -82,18 +82,16 @@
 			</div>
 		</div>
 	</div>
+	<div id="seisEmail">
+		<div style="padding-left:5px;">          
+			<div style="padding-top:2px">	
+				<img src="${ctx}/images/icons/template.gif" class="icon">
+                  <a href="${ctx}/quake/email/admin/seisverify/list.do" target="main">测震邮件订阅审核</a>
+			</div>
+		</div>
+	</div>
 	<div id="announce">
-		<div style="padding-left:5px;">       
-		    <!--   
-			<div style="padding-top:2px">
-				<img src="${ctx}/images/icons/sound_add.gif" class="icon">
-				<a href="${ctx}/admin/announce/newAnnounce.do" target="main">公告添加</a>
-			</div>
-			<div style="padding-top:2px">
-				<img src="${ctx}/images/icons/a_list.gif" class="icon">
-				<a href="${ctx}/admin/announce/listAnnounce.do" target="main">公告列表</a>
-			</div>
-			-->  
+		<div style="padding-left:5px;">    
 			<div style="padding-top:2px">
 				<img src="${ctx}/images/icons/link_catalog.gif" class="icon">
 				<a href="${ctx}/admin/links/listCatas.do" target="main">类别管理</a>
@@ -106,21 +104,8 @@
 				<img src="${ctx}/images/icons/link_go.gif" class="icon">
 				<a href="${ctx }/admin/links/orderLink.do" target="main">链接排序</a>
 			</div>
-			<!-- 
-			<div style="padding-top:2px">	
-				<img src="${ctx}/images/icons/template.gif" class="icon">
-                  <a href="${ctx}/admin/advisory/list.do" target="main">反馈管理</a>
-			</div>
-			-->		
 		</div>
-	</div>
-	
-	<div id="links">
-		<div style="padding-left:5px;">          
-			
-		</div>
-	</div>
-	
+	</div>	
 	<div id="menu_sys">
 		<div style="padding-left:5px;">          
 			<div style="padding-top:2px">
@@ -175,12 +160,6 @@
 				<img src="${ctx}/images/icons/template.gif" class="icon">
                   <a href="${ctx}/quake/email/admin/edit.do" target="main">邮件订阅属性设置</a>
 			</div>
-			
-			<div style="padding-top:2px">	
-				<img src="${ctx}/images/icons/template.gif" class="icon">
-                  <a href="${ctx}/quake/email/admin/seisverify/list.do" target="main">测震邮件订阅审核</a>
-			</div>
-			
 			<div style="padding-top:2px">	
 				<img src="${ctx}/images/icons/template.gif" class="icon">
                   <a href="${ctx}/quake/admin/sitecfg/index.do" target="main">网站基本信息设置</a>
@@ -194,25 +173,5 @@
                   <a href="${ctx}/quake/wap/wap.do" target="_black">测试wap</a>
 			</div>
 		</div>		
-	</div>
-	<div id="counter">
-		<div  style="padding-left:5px;">
-			<div style="padding-top:2px">
-			<img src="${ctx}/images/icons/template.gif" class="icon">
-				<a href="${ctx}/quake/admin/counter/set/index.do" target="main">网站点击率统计</a>
-			</div>
-			<div style="padding-top:2px">
-			<img src="${ctx}/images/icons/template.gif" class="icon">
-				<a href="${ctx}/quake/admin/counter/down/index.do" target="main">在线数据下载统计</a>
-			</div>
-			<div style="padding-top:2px">
-			<img src="${ctx}/images/icons/template.gif" class="icon">
-				<a href="${ctx}/quake/admin/counter/offline/index.do" target="main">离线数据下载管理</a>
-			</div style="padding-top:2px">
-			<div style="padding-top:2px">
-			<img src="${ctx}/images/icons/template.gif" class="icon">
-				<a href="${ctx}/quake/admin/counter/user/index.do" target="main">注册用户统计</a>
-			</div>
-		</div>
 	</div>
 </div>
