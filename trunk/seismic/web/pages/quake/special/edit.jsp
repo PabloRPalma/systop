@@ -53,6 +53,7 @@ window.onload = function(){
 
 //文本编辑组件
 function preFckEditor(){
+	desn();
 	area();
 	epifocus();
 	history_pic();
@@ -62,6 +63,14 @@ function preFckEditor(){
 	intensity();
 	event_wave();
 	station_wave();
+}
+function desn(){
+	var fckEditor = new FCKeditor( 'desn' ) ;
+	  fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
+	  fckEditor.ToolbarSet = 'Basic';
+	  fckEditor.Height = 180;
+	  fckEditor.Width = 455;
+	  fckEditor.ReplaceTextarea();
 }
 function area(){
 	var fckEditor = new FCKeditor( 'area' ) ;
@@ -283,7 +292,7 @@ function station_wave(){
 	<tr><td width="10px">&nbsp;</td>
 		<td>地震描述:</td>
 		<td>
-		<s:textarea id="model.desn" name="model.desn" cssStyle="width:355px;height:100px" cssClass="required" />
+		<s:textarea id="desn" name="model.desn" cssStyle="width:355px;height:100px" cssClass="required" />
 		</td>
 		<td width="60px"><font color="red">&nbsp;*</font></td>
 	</tr>
