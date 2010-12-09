@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="cz">		
+	<select id="queryCatCount" parameterClass="quake.seismic.data.catalog.model.Criteria"
+		resultClass="Integer">         
+		<![CDATA[
+		SELECT count(0)
+		FROM $schema$.$tableName$
+		]]>
+		<dynamic prepend="WHERE">	
+			<isNotEmpty property="startDate">
+				<isNotEmpty prepend="AND" property="endDate">
+				<![CDATA[
+				((O_TIME>=#startDate#) AND (O_TIME<=#endDate#))
+				]]>
+				</isNotEmpty>
+			</isNotEmpty>
+			<!--只显示大于-10的震级-->
+			<isNull property="startM">
+				<isNull prepend="AND" property="endM">
+					<![CDATA[(M>-10)]]>
+				</isNull>
+			</isNull>
+		</dynamic>
+	</select>
+</sqlMap>
