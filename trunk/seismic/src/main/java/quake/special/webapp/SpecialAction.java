@@ -36,7 +36,6 @@ import com.systop.core.dao.support.Page;
 import com.systop.core.util.DateUtil;
 import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
 import com.systop.core.webapp.upload.UpLoadUtil;
-import com.systop.fsmis.model.Corp;
 
 /**
  * 专题Action
@@ -125,16 +124,10 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
           try {
             criteria.setStartDate(DateUtil.add(DateUtil.convertStringToDate(SpecialConstants.TIME),
                 Calendar.DATE, SpecialConstants.QUERY_QC_DAY));
+            criteria.setEndDate(DateUtil.convertStringToDate(SpecialConstants.TIME));
           } catch (ParseException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
           }
-        }
-        try {
-          criteria.setEndDate(DateUtil.convertStringToDate(SpecialConstants.TIME));
-        } catch (ParseException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
         }
       }
       page = PageUtil.getPage(getPageNo(), getPageSize());
@@ -145,36 +138,26 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
 
       page = gridCatDao.query(criteria);
       cats = page.getData();
-      logger.info("--------------cats {}" + cats.size());
+
       Special s = null;
       if (StringUtils.isNotBlank(specialId)) {
         s = getManager().get(Integer.valueOf(specialId));
       }
       for (int i = 0; i < cats.size(); i++) {
         Map map = cats.get(i);
-        if (map.get("M") != null) {
-          map.put("M", NumberFormatUtil.format(map.get("M"), 1));
-        }
-        if (map.get("EPI_LON") != null) {
-          map.put("EPI_LON", NumberFormatUtil.format(map.get("EPI_LON"), 2));
-        }
-        if (map.get("EPI_LAT") != null) {
-          map.put("EPI_LAT", NumberFormatUtil.format(map.get("EPI_LAT"), 2));
-        }
-
+        map.put("M", map.get("M") != null ? NumberFormatUtil.format(map.get("M"), 1) : "");
+        map.put("EPI_LON", map.get("EPI_LON") != null ? NumberFormatUtil.format(map.get("EPI_LON"),
+            2) : "");
+        map.put("EPI_LAT", map.get("EPI_LAT") != null ? NumberFormatUtil.format(map.get("EPI_LAT"),
+            2) : "");
         if (s != null) {
-          if (map.get("ID").equals(s.getQc_id())) {
-            map.put("changed", true);
-          } else {
-            map.put("changed", false);
-          }
+          map.put("changed", map.get("ID").equals(s.getQc_id()) ? true : false);
         } else {
           map.put("changed", false);
         }
       }
       page.setData(cats);
     }
-
     return JSON;
   }
 
@@ -218,6 +201,16 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
       getRequest().setAttribute("catalogName", catalogName);
     }
     return VIEW;
+  }
+
+  /**
+   * 前台访问
+   * 
+   * @return
+   */
+  public String frontView() {
+    view();
+    return "frontView";
   }
 
   /**
@@ -295,21 +288,16 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
 
     return INDEX;
   }
+
   /**
    * 删除地震专题
    */
   @Override
   public String remove() {
-    Special special = getManager().get(getModel().getId());
-    // 检查是否与事件关联
-    if (corp.getFsCases().size() != 0) {
-      addActionError("该企业涉及食品安全事件，无法删除！");
-      return INDEX;
-    }
-    // 如果存在照片，则连照片一起删除
-    String Path = getModel().getPhotoUrl();
-    if (StringUtils.isNotBlank(Path)) {
-      getManager().remove(corp, getRealPath(Path));
+    Special s = getManager().get(getModel().getId());
+    String path = s.getFront_pic();
+    if (StringUtils.isNotBlank(path)) {
+      getManager().remove(s, getRealPath(path));
       return SUCCESS;
     }
     return super.remove();
@@ -317,13 +305,14 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
 
   /**
    * 首页地震专题‘更多’列表
+   * 
    * @return
    */
   public String indexMore() {
     index();
     return "indexMore";
   }
-  
+
   public Criteria getCriteria() {
     return criteria;
   }
