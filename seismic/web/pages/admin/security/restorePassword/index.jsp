@@ -7,7 +7,7 @@
 <%@include file="/common/meta.jsp" %>
 </head>
 <body>
-
+<%@include file="/common/top.jsp" %>
 <fieldset>
    <legend><img src="${ctx}/images/icons/password_title.gif" border="0"></legend>
    <%@ include file="/common/messages.jsp"%>
