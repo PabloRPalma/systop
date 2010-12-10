@@ -51,11 +51,14 @@
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	<ec:row>
 		<ec:column width="40" property="_no" value="${GLOBALROWCOUNT}" title="No." style="text-align:center"/>
-		<ec:column width="180" property="title" title="标题"/>
+		<ec:column width="190" property="title" title="标题">
+			<a href="frontView.do?model.id=${item.id}" target="_black"><font color="blue">${item.title}</font></a>
+		</ec:column>
 		<ec:column width="180" property="quakeTime" title="发震时刻" style="text-align:center"/>
 		<ec:column width="60" property="longitude" title="经度" style="text-align:center"/>
 		<ec:column width="60" property="latitude" title="纬度" style="text-align:center"/>
 		<ec:column width="60" property="magnitude" title="震级" style="text-align:center"/>
+		<ec:column width="65" property="depth" title="深度(km)" style="text-align:center"/>
 		<ec:column width="160" property="location" title="地点"/>
 		<ec:column width="160" property="createDate" title="创建时间" style="text-align:center" cell="date" format="yyyy-MM-dd HH:mm"/>
 	</ec:row>
