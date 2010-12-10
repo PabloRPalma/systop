@@ -194,7 +194,7 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  <!-- 
+  
   <error-page>
     <error-code>403</error-code>
     <location>/pages/error/403.jsp</location>
@@ -207,5 +207,5 @@
     <error-code>500</error-code>
     <location>/pages/error/500.jsp</location>
   </error-page>
-  -->
+  
 </web-app>
