@@ -18,11 +18,14 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import quake.admin.catalog.model.QuakeCatalog;
 import quake.admin.catalog.service.QuakeCatalogManager;
 import quake.admin.ds.service.DataSourceManager;
 import quake.base.webapp.NumberFormatUtil;
 import quake.seismic.data.catalog.dao.impl.GridCatDao;
 import quake.seismic.data.catalog.model.Criteria;
+import quake.seismic.data.phase.dao.impl.GridPhaseDao;
+import quake.seismic.data.phase.model.PhaseCriteria;
 import quake.special.SpecialConstants;
 import quake.special.dao.SpecialDao;
 import quake.special.model.Special;
@@ -33,6 +36,7 @@ import com.systop.core.dao.support.Page;
 import com.systop.core.util.DateUtil;
 import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
 import com.systop.core.webapp.upload.UpLoadUtil;
+import com.systop.fsmis.model.Corp;
 
 /**
  * 专题Action
@@ -49,6 +53,8 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
 
   private Criteria criteria = new Criteria();
 
+  private PhaseCriteria phaseCriteria = new PhaseCriteria();
+
   private List<Map<String, String>> catalogs = null;
 
   @Autowired(required = true)
@@ -58,7 +64,7 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
   private QuakeCatalogManager catalogManager;
 
   private List<Map> cats = new ArrayList<Map>();
-  
+
   private String specialId;
 
   private String tableName;
@@ -68,6 +74,13 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
   @Autowired(required = true)
   @Qualifier("specialDao")
   private SpecialDao specialDao;
+
+  /**
+   * 用于表格查询的测震DAO
+   */
+  @Autowired(required = true)
+  @Qualifier("gridPhaseDao")
+  private GridPhaseDao gridPhaseDao;
   /**
    * /** 用于表格查询的测震DAO
    */
@@ -75,9 +88,11 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
   @Qualifier("gridCatDao")
   private GridCatDao gridCatDao;
 
+  @Autowired(required = true)
+  private QuakeCatalogManager czCatalogManager;
+
   /** 显示图片 */
   private File pic;
-
 
   /** 首页显示图片名称 */
   private String picFileName;
@@ -123,17 +138,17 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
         }
       }
       page = PageUtil.getPage(getPageNo(), getPageSize());
-      
+
       int start = Page.start(getPageNo(), getPageSize());
       criteria.setStart(start);
       criteria.setSize(getPageSize());
 
       page = gridCatDao.query(criteria);
       cats = page.getData();
-     logger.info("--------------cats {}"+cats.size());
+      logger.info("--------------cats {}" + cats.size());
       Special s = null;
       if (StringUtils.isNotBlank(specialId)) {
-        s = getManager().getSpecialById(Integer.valueOf(specialId));
+        s = getManager().get(Integer.valueOf(specialId));
       }
       for (int i = 0; i < cats.size(); i++) {
         Map map = cats.get(i);
@@ -187,6 +202,25 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
   }
 
   /**
+   *查看地震专题
+   */
+  public String view() {
+    Special s = getManager().get(getModel().getId());
+    if (StringUtils.isNotBlank(s.getQc_id()) && StringUtils.isNotBlank(s.getTableName())) {
+      phaseCriteria.setCatId(s.getQc_id());
+      QuakeCatalog czCat = czCatalogManager.queryByCltName(s.getTableName());
+      phaseCriteria.setTableName(czCat.getPhaseTname());
+      phaseCriteria.setSchema(dataSourceManager.getSeismicSchema());
+      List items = gridPhaseDao.query(phaseCriteria);
+      getRequest().setAttribute("items", items);
+
+      String catalogName = czCat.getClcName() + "地震目录";
+      getRequest().setAttribute("catalogName", catalogName);
+    }
+    return VIEW;
+  }
+
+  /**
    * 审核专题地震
    * 
    * @return
@@ -225,22 +259,15 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
       qcList = page.getData();
       if (page.getData() != null) {
         jsonResult = qcList.get(0);
-        if (jsonResult.get("M") != null) {
-          jsonResult.put("M", NumberFormatUtil.format(jsonResult.get("M"), 1));
-        }
-        if (jsonResult.get("EPI_LON") != null) {
-          jsonResult.put("EPI_LON", NumberFormatUtil.format(jsonResult.get("EPI_LON"), 2));
-        }
-        if (jsonResult.get("EPI_LAT") != null) {
-          jsonResult.put("EPI_LAT", NumberFormatUtil.format(jsonResult.get("EPI_LAT"), 2));
-        }
+        jsonResult.put("M", jsonResult.get("M") != null ? NumberFormatUtil.format(jsonResult
+            .get("M"), 1) : "");
+        jsonResult.put("EPI_LON", jsonResult.get("EPI_LON") != null ? NumberFormatUtil.format(
+            jsonResult.get("EPI_LON"), 2) : "");
+        jsonResult.put("EPI_LAT", jsonResult.get("EPI_LAT") != null ? NumberFormatUtil.format(
+            jsonResult.get("EPI_LAT"), 2) : "");
+        jsonResult.put("EPI_DEPTH", jsonResult.get("EPI_DEPTH") != null ? NumberFormatUtil.format(
+            jsonResult.get("EPI_DEPTH"), 0) : "");
       }
-    } else {
-      jsonResult.put("LOCATION_CNAME", "");
-      jsonResult.put("EPI_LON", "");
-      jsonResult.put("EPI_LAT", "");
-      jsonResult.put("M", "");
-      jsonResult.put("EQ_TIME", "");
     }
     return "jsonResult";
   }
@@ -267,6 +294,25 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
     restorePageData(page);
 
     return INDEX;
+  }
+  /**
+   * 删除地震专题
+   */
+  @Override
+  public String remove() {
+    Special special = getManager().get(getModel().getId());
+    // 检查是否与事件关联
+    if (corp.getFsCases().size() != 0) {
+      addActionError("该企业涉及食品安全事件，无法删除！");
+      return INDEX;
+    }
+    // 如果存在照片，则连照片一起删除
+    String Path = getModel().getPhotoUrl();
+    if (StringUtils.isNotBlank(Path)) {
+      getManager().remove(corp, getRealPath(Path));
+      return SUCCESS;
+    }
+    return super.remove();
   }
 
   /**
@@ -325,6 +371,7 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
   public void setEndDate(Date endDate) {
     this.endDate = endDate;
   }
+
   public File getPic() {
     return pic;
   }
