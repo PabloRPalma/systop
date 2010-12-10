@@ -246,7 +246,7 @@ public class CatAction extends AbstractQueryAction<Criteria> {
     //导出数据格式
     model.setExpType(SeismicConstants.Catalog_basic);
     String data = exportVlmData();
-    logger.debug("基本目录格式导出的数据：{}", data);
+    //logger.debug("基本目录格式导出的数据：{}", data);
     getResponse().addHeader("Content-Disposition", "attachment;filename=\"BASIC_VLM.txt\"");
     render(getResponse(), data, "text/html");
     return null;
@@ -258,7 +258,7 @@ public class CatAction extends AbstractQueryAction<Criteria> {
   public String exportFullVlm() {
     model.setExpType(SeismicConstants.Catalog_full);
     String data = exportVlmData();
-    logger.debug("完全目录格式导出的数据：{}", data);
+    //logger.debug("完全目录格式导出的数据：{}", data);
     getResponse().addHeader("Content-Disposition", "attachment;filename=\"FULL_VLM.txt\"");
     render(getResponse(), data, "text/html");
     return null;
@@ -271,7 +271,7 @@ public class CatAction extends AbstractQueryAction<Criteria> {
   public String exportBulletin() {
     model.setExpType(SeismicConstants.Bulletin_full);
     String data = exportVlmData();
-    logger.debug("观测报告导出的数据：{}", data);
+    //logger.debug("观测报告导出的数据：{}", data);
     getResponse().addHeader("Content-Disposition", "attachment;filename=\"Bulletin_FULL_VLM.txt\"");
     render(getResponse(), data, "text/html");
     return null;
