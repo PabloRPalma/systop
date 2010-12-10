@@ -1,6 +1,7 @@
 package quake.seismic.data.catalog.dao.impl;
 
 import java.text.MessageFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -71,18 +72,30 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
       logger.debug("导出VLM数据，按圆形区域....");
       SQL = SQL_ROUND_ID;
     }
-    List<Map> rows = getTemplate().queryForList(SQL, criteria);
+    List<Map> rows = Collections.EMPTY_LIST;
+    if (SeismicConstants.Catalog_basic.equals(criteria.getExpType())) {
+      rows = getTemplate().queryForList(SQL, criteria, 0, SeismicConstants.CATALOG_BASIC_MAX_SIZE);
+    }
+    if (SeismicConstants.Catalog_full.equals(criteria.getExpType())) {
+      rows = getTemplate().queryForList(SQL, criteria, 0, SeismicConstants.CATALOG_FULL_MAX_SIZE);
+    }
+    if (SeismicConstants.Bulletin_full.equals(criteria.getExpType())) {
+      rows = getTemplate().queryForList(SQL, criteria, 0, SeismicConstants.BULLETIN_FULL_MAX_SIZE);
+    }
     StringBuffer buf = new StringBuffer(100000);
     //基本目录数据格式
     if (SeismicConstants.Catalog_basic.equals(criteria.getExpType())) {
+      logger.debug("基本目录数据格式下载时地震目录条数：{}", rows.size());
       buf.append(extractBasicVlm(rows, criteria));
     }
     //完全目录数据格式
     if (SeismicConstants.Catalog_full.equals(criteria.getExpType())) {
+      logger.debug("完全目录数据格式下载时地震目录条数：{}", rows.size());
       buf.append(extractFullVlm(rows, criteria));
     }
     //观测报告数据格式
     if (SeismicConstants.Bulletin_full.equals(criteria.getExpType())) {
+      logger.debug("观测报告数据格式下载时地震目录条数：{}", rows.size());
       buf.append(extractBulletinVlm(rows, criteria));
     }
     return buf;
@@ -214,7 +227,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
         "Mag_name", "Mag_value",  "Rms", "Qloc",  "Sum_stn", "Loc_stn", 
         "Eq_type", "Epic_id", "Source_id", "Location_cname"
     });
-    logger.debug("HBO数据格式内容：{}", hboFormat);
+    //logger.debug("HBO数据格式内容：{}", hboFormat);
     return hboFormat;
   }
   
@@ -231,7 +244,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
                SeismicConstants.EQ_TYPE_MAP.get(row.get("Eq_type")), 
                  row.get("Epic_id"), row.get("Source_id"), row.get("LOCATION_CNAME")
     });
-    logger.debug("DBO数据格式内容：{}", dboData);
+    //logger.debug("DBO数据格式内容：{}", dboData);
     return dboData;
   }
   
@@ -246,7 +259,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
         "SPmin", "Dmin",  "Gap_azi", "Erh",  "Erz", "Qnet", "Qcom", 
         "Sum_pha", "Loc_pha", "FE_num", "FE_sname"
     });
-    logger.debug("HEO数据格式内容：{}", heoFormat);
+    //logger.debug("HEO数据格式内容：{}", heoFormat);
     return heoFormat;
   }
   
@@ -262,7 +275,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
              row.get("Erh"), row.get("Erz"), row.get("Qnet"),row.get("QCOM"), row.get("Sum_pha"),
                 row.get("Loc_pha"), row.get("FE_num"), row.get("FE_sname")
     });
-    logger.debug("DEO数据格式内容：{}", deoData);
+    //logger.debug("DEO数据格式内容：{}", deoData);
     return deoData;
   }
   
@@ -275,7 +288,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
         "{0} {1} {2} {3} {4}\n\r",new Object[] {
         "Mag_name", "Mag_val", "Mag_gap", "Mag_stn", "Mag_error"
     });
-    logger.debug("HMB数据格式内容：{}", hmbFormat);
+    //logger.debug("HMB数据格式内容：{}", hmbFormat);
     return hmbFormat;
   }
   
@@ -288,7 +301,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
         "{0} {1} {2} {3} {4}\n\r",new Object[] {
         mag.get("MAG_NAME"), mag.get("MAG_VAL"), mag.get("MAG_GAP"), mag.get("MAG_STN"), mag.get("MAG_ERROR")
     });
-    logger.debug("DMB数据格式内容：{}", dmbFormat);
+    //logger.debug("DMB数据格式内容：{}", dmbFormat);
     return dmbFormat;
   }
   
@@ -303,7 +316,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
         "Phase_name", "Weight",  "Rec_type", "Phase_time",  "Resi", "Distance", 
         "Azi", "Amp", "Period", "Mag_name", "Mag_val"
     });
-    logger.debug("HPB数据格式内容：{}", hpbFormat);
+    //logger.debug("HPB数据格式内容：{}", hpbFormat);
     return hpbFormat;
   }
   
@@ -320,7 +333,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
               phase.get("RESI"), phase.get("DISTANCE"), phase.get("AZI"), phase.get("AMP"), phase.get("PERIOD"),
                 phase.get("MAG_NAME"), phase.get("MAG_VAL")
     });
-    logger.debug("HPB数据格式内容：{}", hpbFormat);
+    //logger.debug("HPB数据格式内容：{}", hpbFormat);
     return hpbFormat;
   }
   
@@ -342,11 +355,11 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
   private StringBuffer getVlmIndexBlock1(Criteria criteria) {
     StringBuffer indexBlock1 = new StringBuffer();
     Map networkInfo = (Map) queryNetwordInfo(criteria);
-    logger.debug("台网信息：{}",networkInfo);
+    //logger.debug("台网信息：{}",networkInfo);
     if (networkInfo != null) {
       String netCode = (String)networkInfo.get("Net_code");
       String netName = (String)networkInfo.get("Net_cname");
-      logger.debug("台网代码：{}，台网名称：{}", netCode, netName);
+      //logger.debug("台网代码：{}，台网名称：{}", netCode, netName);
       String startDate = null;
       String endDate = null;
       if (networkInfo.get("Net_startdate") != null) {
@@ -355,7 +368,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
       if (networkInfo.get("Net_enddate") != null) {
         endDate = DateUtil.getDateTime("yyyy/MM/dd HH:ss:ss.ss", (Date)networkInfo.get("Net_enddate"));
       }
-      logger.debug("台网起始时间：{} ----- 结束时间：{}", startDate, endDate);
+      //logger.debug("台网起始时间：{} ----- 结束时间：{}", startDate, endDate);
       
       indexBlock1.append("VI1").append(" ").append("Net_code").append(" ").append(
           netCode).append(" ").append("Net_cname").append(" ").append(
@@ -401,10 +414,10 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
     String staNetCode = criteria.getStaNetCode();
     if(StringUtils.isNotEmpty(staNetCode)) {
       String[] sncode = staNetCode.split("/");
-      logger.debug("原始数据：{}", sncode);
+      //logger.debug("原始数据：{}", sncode);
       phaseCriteria.setNetName(sncode[0]);
       if(sncode.length > 1) {
-        logger.debug("解析出来的台网台站代码分别是：{}, {}", sncode[0], sncode[1]);
+        //logger.debug("解析出来的台网台站代码分别是：{}, {}", sncode[0], sncode[1]);
         phaseCriteria.setStaName(sncode[1]);
       }
     }
