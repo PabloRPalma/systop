@@ -29,28 +29,6 @@
 </style>
 </head>
 <script type="text/javascript">
-window.onload = function(){
-	var id = document.getElementById("model.qc_id").value;
-	var name =document.getElementById("model.tableName").value;
-	Ext.Ajax.request({
-		url : '/admin/special/ensureQc.do',
-		params : {
-			'qcId' : id,
-			'tableName' : name
-		},
-		method : 'POST',
-		success : function(response) {
-			var jsonResult = Ext.util.JSON.decode(response.responseText);
-			 document.getElementById("location").value=jsonResult.LOCATION_CNAME;
-			 document.getElementById("longitude").value=jsonResult.EPI_LON;
-			 document.getElementById("latitude").value=jsonResult.EPI_LAT;
-			 document.getElementById("magnitude").value=jsonResult.M;
-			 document.getElementById("quakeTime").value=jsonResult.EQ_TIME;
-		}
-	});
-	preFckEditor();	
-}
-
 //文本编辑组件
 function preFckEditor(){
 	desn();
@@ -151,7 +129,7 @@ function station_wave(){
 		var tabs = new Ext.TabPanel( {
 			renderTo : 'tabs',
 			anchor : '100% 100%',
-			height : 380,
+			height : 420,
 			activeTab : 0,
 			frame : false,
 			defaults : {
@@ -195,7 +173,7 @@ function station_wave(){
 		});
 	});
 </script>
-<body>
+<body onload="preFckEditor()">
 <div class="x-panel" style="margin-top: -5px;margin-left: -2px;margin-right: -2px;">
 <div class="x-panel-header">编辑专题地震</div>
 <div class="x-toolbar">
@@ -224,8 +202,7 @@ function station_wave(){
 		<s:iterator value="catalogs">
 					<a href="#" onclick="javascript:selectQc('<s:property value="cltName"/>','${model.id}')">
 						<s:property value="clcName"/>&nbsp;&nbsp;&nbsp;&nbsp;
-					</a>
-					
+					</a>		
 		</s:iterator>
 		</td>
 		<td width="60px">&nbsp;</td>
@@ -257,6 +234,14 @@ function station_wave(){
 		<td>震  级:</td>
 		<td>
 		<s:textfield id="magnitude" name="model.magnitude" cssStyle="width:155px"/>
+			
+		</td>
+		<td width="60px">&nbsp;</td>
+	</tr>
+	<tr><td width="10px">&nbsp;</td>
+		<td>深 度:</td>
+		<td>
+		<s:textfield id="depth" name="model.depth" cssStyle="width:155px"/>
 			
 		</td>
 		<td width="60px">&nbsp;</td>
