@@ -196,6 +196,7 @@ var win = new Ext.Window({
 								document.getElementById("latitude").value=jsonResult.EPI_LAT;
 								document.getElementById("magnitude").value=jsonResult.M;
 								document.getElementById("quakeTime").value=jsonResult.EQ_TIME;
+								document.getElementById("depth").value=jsonResult.EPI_DEPTH;
 								document.getElementById("model.qc_id").value=qcId;
 								document.getElementById("model.tableName").value=qcTableName;										
 								 
