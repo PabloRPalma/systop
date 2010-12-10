@@ -26,9 +26,21 @@ public class SeismicConstants {
    */
   public static String ROUND_QUERY_NO = "0";
   /**
-   * 地震目录查询时（不分页），限制最大查询条数
+   * 地震目录查询时（不分页），限制最大查询条数_用于震中分布图显示
    */
-  public static int MAX_SIZE = 1000;
+  public static int MAX_SIZE = 500;
+  /**
+   * 地震目录基本格式下载时最大地震目录条数
+   */
+  public static int CATALOG_BASIC_MAX_SIZE = 500;
+  /**
+   * 地震目录完全格式下载时最大地震目录条数
+   */
+  public static int CATALOG_FULL_MAX_SIZE = 100;
+  /**
+   * 震相观测报告下载时最大地震目录条数
+   */
+  public static int BULLETIN_FULL_MAX_SIZE = 50;
   /**
    * 测震台站信息查询访问地址
    */
