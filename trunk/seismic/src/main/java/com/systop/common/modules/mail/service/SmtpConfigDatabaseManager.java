@@ -12,7 +12,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import quake.admin.samplerate.service.SampleRateManager;
 import quake.base.service.Definable;
 
 import com.systop.common.modules.mail.MailSender;
@@ -24,7 +23,7 @@ import com.systop.core.dao.hibernate.BaseHibernateDao;
 
 @Service
 public class SmtpConfigDatabaseManager implements Definable {
-  private static Logger logger = LoggerFactory.getLogger(SampleRateManager.class);
+  protected Logger logger = LoggerFactory.getLogger(getClass());
   /**
    * 数据源表主键（为了配合Hibernate）
    */
