@@ -13,7 +13,7 @@ margin-top:5px;
 }
 </style>
 <script type="text/javascript">
-
+/**
 Ext.onReady(function(){
 
        Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
@@ -58,6 +58,7 @@ Ext.onReady(function(){
         });
         
     });
+*/
 </script>
 </head>
 <body>
