@@ -120,12 +120,12 @@
 				<img src="${ctx}/images/icons/authority.gif" class="icon">
 				<a href="${ctx}/security/permission/index.do" target="main">权限管理</a>
 			</div>
-			<!--  
+			
 			<div style="padding-top:2px"> 
 				<img src="${ctx}/images/icons/resource.gif" class="icon">
 				<a href="${ctx}/security/resource/index.do" target="main">资源管理</a>
 			</div>
-			-->
+			
 			<div style="padding-top:2px">
 				<img src="${ctx}/images/icons/user_go.gif" class="icon">
 				<a href="${ctx}/regist/index.do" target="main">注册用户管理</a>
