@@ -4,6 +4,7 @@
 <head>
 <title>专题地震</title>
 <%@include file="/common/ec.jsp"%>
+<LINK type="text/css" rel="stylesheet" href="${ctx}/styles/quake.css">
 <%@include file="/common/extjs.jsp"%>
 <%@include file="/common/meta.jsp"%>
 </head>
@@ -12,7 +13,8 @@
 		var tabs = new Ext.TabPanel( {
 			renderTo : 'tabs',
 			anchor : '100% 100%',
-			height : 580,
+			height : 560,
+			width : '99.9%',
 			activeTab : 0,
 			frame : false,
 			defaults : {
@@ -64,6 +66,70 @@
 <div id="basic" class="x-hide-display" >
 	<table>
 		<tr>
+		<td width="700" valign="top">
+				<table>
+					<tr>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td>地震目录:</td>
+						<td>${catalogName}</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td>地  点:</td>
+						<td>${model.location}</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td>经  度:</td>
+						<td>${model.longitude}</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td>纬  度:</td>
+						<td>${model.latitude}</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td>震  级:</td>
+						<td>${model.magnitude}</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td>深 度:</td>
+						<td>${model.depth}</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td>发震时刻:</td>
+						<td>${model.quakeTime}</td>
+					</tr>	
+					<tr>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>	
+				</table>
+			</td>
 			<td width="325">
 				<table>
 					<tr>
@@ -79,42 +145,7 @@
 					</tr>		
 				</table>
 			</td>
-			<td width="700" valign="top">
-				<table>
-					<tr>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-					</tr>
-					<tr>
-						<td>地震目录:</td>
-						<td>${catalogName}</td>
-					</tr>
-					<tr>
-						<td>地  点:</td>
-						<td>${model.location}</td>
-					</tr>
-					<tr>
-						<td>经  度:</td>
-						<td>${model.longitude}</td>
-					</tr>
-					<tr>
-						<td>纬  度:</td>
-						<td>${model.latitude}</td>
-					</tr>
-					<tr>
-						<td>震  级:</td>
-						<td>${model.magnitude}</td>
-					</tr>
-					<tr>
-						<td>深 度:</td>
-						<td>${model.depth}</td>
-					</tr>
-					<tr>
-						<td>发震时刻:</td>
-						<td>${model.quakeTime}</td>
-					</tr>		
-				</table>
-			</td>
+			
 		</tr>
 		<tr>
 			<td colspan="2">
@@ -124,7 +155,11 @@
 						<td>${model.title} </td>
 					</tr>
 					<tr>
-						<td>地震描述:</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>	
+					<tr>
+						<td valign="top">地震描述:</td>
 						<td><div style="overflow: auto;height: 400px;">${model.desn}</div> </td>
 					</tr>
 				</table>
