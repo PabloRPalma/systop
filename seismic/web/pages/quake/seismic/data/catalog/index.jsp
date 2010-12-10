@@ -100,14 +100,14 @@ $(function() {
 			<table width="100%" style="margin:0px;">
 			<tr>
 				<td height="24">&nbsp;
-				  <input type="button" value="基本目录格式" onclick="exportData('${ctx}/quake/seismic/data/catalog/exportBasicVlm.do', '_blank')" class="button"/>
-				  <input type="button" value="WKF" onclick="exportData('${ctx}/quake/seismic/data/catalog/exportWkf.do', '_blank')" class="button"/>
-	  	      	  <input type="button" value="EQT" onclick="exportData('${ctx}/quake/seismic/data/catalog/exportEqt.do', '_blank')" class="button"/>
+				  <input type="button" value="基本目录格式" onclick="exportDataConfirm('${ctx}/quake/seismic/data/catalog/exportBasicVlm.do', '_blank')" class="button"/>
+				  <input type="button" value="WKF" onclick="exportDataConfirm('${ctx}/quake/seismic/data/catalog/exportWkf.do', '_blank')" class="button"/>
+	  	      	  <input type="button" value="EQT" onclick="exportDataConfirm('${ctx}/quake/seismic/data/catalog/exportEqt.do', '_blank')" class="button"/>
 		  	    </td> 
 			</tr>
 			<tr>
 				<td height="24">&nbsp;
-		  	      <input type="button" value="完全目录格式" onclick="exportData('${ctx}/quake/seismic/data/catalog/exportFullVlm.do', '_blank')" class="button"/>
+		  	      <input type="button" value="完全目录格式" onclick="exportDataConfirm('${ctx}/quake/seismic/data/catalog/exportFullVlm.do', '_blank')" class="button"/>
 		  	      <input type="button" value="XLS" onclick="downloadInXls()" class="button" style="width: 40px;"/>
 				  <input type="button" id="look" value="简介" class="button"/>
 				</td>
@@ -159,11 +159,8 @@ $(function() {
 	</ec:row>   
 </ec:table>
 </div>
-<div id="dialog" title="查看目录简介">
+<div id="dialog" title="${model.clcName}目录简介">
    <table>
-       <tr>
-          <td align="center">${model.clcName}</td>
-       </tr>
        <tr>
           <td>&nbsp;&nbsp;&nbsp;&nbsp;${model.clDescn}</td>
        </tr>
@@ -174,6 +171,13 @@ function exportData(url, target) {
 	$("#queryFrm").attr("action", url);
 	$("#queryFrm").attr("target", target);
 	$("#queryFrm").submit();
+}
+function exportDataConfirm(url, target) {
+	$("#queryFrm").attr("action", url);
+	$("#queryFrm").attr("target", target);
+	if(confirm("确定要下载地震目录相关数据吗?")){
+		$("#queryFrm").submit();
+	}
 }
 //以xls格式导出测震台站信息列表
 function downloadInXls() {
