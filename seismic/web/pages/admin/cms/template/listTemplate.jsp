@@ -57,20 +57,20 @@ function remove(id, name) {
 		    	<ec:table items="items" var="item" retrieveRowsCallback="limit" sortRowsCallback="limit"
 				action="listTemplate.do"
 				useAjax="false" doPreload="false"
-				pageSizeList="20,50,100,200" 
+				pageSizeList="30,50,100,200" 
 				editable="false" 
 				sortable="true"	
-				rowsDisplayed="20"	
+				rowsDisplayed="30"	
 				generateScript="true"	
 				resizeColWidth="true"	
 				classic="true"
 				width="100%" 	
-				height="477"	
+				height="400"	
 				minHeight="400"  
 				toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 				<ec:row>
 				    <ec:column width="40" property="_s" title="序号" value="${GLOBALROWCOUNT}" style="text-align:center" sortable="false"/>
-					<ec:column width="120" property="name" title="模板名称" />
+					<ec:column width="160" property="name" title="模板名称" />
 					<ec:column width="80" property="type" mappingItem="types" title="模板类别" style="text-align:center"/>
 					<ec:column width="80" property="isDef" mappingItem="yns" title="默认模板" style="text-align:center"/>
 					<ec:column width="80" property="_0" title="操作" style="text-align:center" sortable="false">
