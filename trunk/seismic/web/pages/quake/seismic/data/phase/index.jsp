@@ -11,6 +11,16 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$("#queryFrm").validate();
+	$("#dialog").dialog({
+		bgiframe: true,
+		autoOpen: false,
+		height: 300,
+		width: 500,
+		modal: false
+		});
+	$('#look').click(function() {
+			$('#dialog').dialog('open');
+		});
 });
 </script>
 </head>
@@ -110,7 +120,7 @@ $(document).ready(function() {
 			<table width="100%" style="margin:0px;">
 			<tr>
 				<td height="75">&nbsp;
-		  	      <input type="button" value="观测报告" onclick="exportData('${ctx}/quake/seismic/data/catalog/exportBulletin.do', '_blank')" class="button"/>
+		  	      <input type="button" value="观测报告" onclick="exportBulletin('${ctx}/quake/seismic/data/catalog/exportBulletin.do', '_blank')" class="button"/>
 				  <input type="button" id="look" value="简介" class="button"/>
 				</td>
 			</tr>
@@ -165,11 +175,28 @@ $(document).ready(function() {
 	</ec:row>   
 </ec:table>
 </div>
+<div id="dialog" title="${model.clcName}目录简介">
+   <table>
+       <tr>
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;${model.clDescn}</td>
+       </tr>
+   </table>
+</div>
 <script type="text/javascript">
 function exportData(url, target) {
 	$("#queryFrm").attr("action", url);
 	$("#queryFrm").attr("target", target);
 	$("#queryFrm").submit();
+}
+/**
+ * 下载震相数据
+ */
+function exportBulletin(url, target) {
+	$("#queryFrm").attr("action", url);
+	$("#queryFrm").attr("target", target);
+	if(confirm("请确保地震目录条数小于50")){
+		$("#queryFrm").submit();
+	}
 }
 function phase(url, id, O_TIME, O_TIME_FRAC, EPI_LAT, EPI_LON, EPI_DEPTH, M, M_SOURCE, QLOC, QCOM, LOCATION_CNAME){
 	$("#phaseFrm").attr("action", url);
