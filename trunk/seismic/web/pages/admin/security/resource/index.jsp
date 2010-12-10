@@ -27,8 +27,8 @@
          <td align="right">
          <table>
           	  <tr>
-         <td><a href="#" onclick="importResources()"><img src="${ctx}/images/icons/import.gif"/> 导入资源</a></td>
-         <td><span class="ytb-sep"></span></td>
+         <td><!--<a href="#" onclick="importResources()"><img src="${ctx}/images/icons/import.gif"/> 导入资源</a>--></td>
+         <td><!-- <span class="ytb-sep"></span>--></td>
          <td><a href="${ctx}/security/resource/editNew.do"><img src="${ctx}/images/icons/add.gif"/> 新建资源</a></td>
          <td><span class="ytb-sep"></span></td>
          <td><a href="#" onclick="onRemove()"><img src="${ctx}/images/icons/delete.gif"/> 删除资源</a></td>
@@ -44,16 +44,16 @@
 	  action="index.do"
 	  useAjax="true" doPreload="false"
 	  maxRowsExported="1000" 
-	  pageSizeList="10,20,50,100" 
+	  pageSizeList="30,50,100" 
 	  editable="false" 
 	  sortable="true"	
-	  rowsDisplayed="10"	
+	  rowsDisplayed="30"	
 	  generateScript="true"	
 	  resizeColWidth="true"	
 	  classic="false"	
 	  width="100%" 	
-	  height="350px"	
-	  minHeight="300"  
+	  height="400px"	
+	  minHeight="400"  
 	  toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	<ec:row>
 	    <ec:column width="50" property="_s" title="选择" style="text-align:center" viewsAllowed="html" sortable="false">
