@@ -7,7 +7,7 @@
 <%@include file="/common/meta.jsp" %>
 </head>
 <body>
-
+<%@include file="/common/top.jsp" %>
 <table width="100%" border="0" cellpadding="5" cellspacing="1">
 	<tr>
 		<td><%@ include file="/common/messages.jsp"%></td>
