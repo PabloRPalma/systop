@@ -4,6 +4,7 @@
 <head>
 <title>专题地震</title>
 <%@include file="/common/ec.jsp"%>
+<LINK type="text/css" rel="stylesheet" href="${ctx}/styles/quake.css">
 <%@include file="/common/extjs.jsp"%>
 <%@include file="/common/meta.jsp"%>
 </head>
@@ -13,6 +14,7 @@
 			renderTo : 'tabs',
 			anchor : '100% 100%',
 			height : 480,
+			width : '100%',
 			activeTab : 0,
 			frame : false,
 			defaults : {
@@ -58,14 +60,86 @@
 	});
 </script>
 <body>
-<%@include file="/common/top.jsp" %>
-<div class="x-panel" style="width: 99.99%">
-<div class="x-panel-header">查看专题地震</div>
-<div id="tabs" style="margin-top: 0px;margin-left: 0px;margin-right: 0px;">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="100%" height="126" align="center" valign="top"><img src="${ctx}/ResRoot/index/images/index_01.jpg" alt="" width="100%" height="126" border="0" usemap="#Map" />
+      <map name="Map" id="Map">
+        <area shape="rect" coords="818,20,871,38" href="${ctx}/index.shtml" />
+        <area shape="rect" coords="884,20,938,38" href="#" onClick="addBookmark()"/>
+      </map>    </td>
+  </tr>  
+</table>
+<div class="x-panel">
+<div id="tabs" align="center">
 <div id="basic" class="x-hide-display" >
-	<table>
+	<table> 
 		<tr>
-			<td width="325">
+		<td width="500" valign="top">
+				<table>
+					<tr>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td>地震目录:</td>
+						<td>${catalogName}</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td>地  点:</td>
+						<td>${model.location}</td>
+						
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td>经  度:</td>
+						<td>${model.longitude}</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td>纬  度:</td>
+						<td>${model.latitude}</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td>震  级:</td>
+						<td>${model.magnitude}</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td>深 度:</td>
+						<td>${model.depth}</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td>发震时刻:</td>
+						<td>${model.quakeTime}</td>
+					</tr>	
+					<tr>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>	
+				</table>
+			</td>
+			<td width="330">
 				<table>
 					<tr>
 						<td width="80">专题图片:</td>
@@ -80,53 +154,22 @@
 					</tr>		
 				</table>
 			</td>
-			<td width="700" valign="top">
-				<table>
-					<tr>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-					</tr>
-					<tr>
-						<td>地震目录:</td>
-						<td>${catalogName}</td>
-					</tr>
-					<tr>
-						<td>地  点:</td>
-						<td>${model.location}</td>
-					</tr>
-					<tr>
-						<td>经  度:</td>
-						<td>${model.longitude}</td>
-					</tr>
-					<tr>
-						<td>纬  度:</td>
-						<td>${model.latitude}</td>
-					</tr>
-					<tr>
-						<td>震  级:</td>
-						<td>${model.magnitude}</td>
-					</tr>
-					<tr>
-						<td>深 度:</td>
-						<td>${model.depth}</td>
-					</tr>
-					<tr>
-						<td>发震时刻:</td>
-						<td>${model.quakeTime}</td>
-					</tr>		
-				</table>
-			</td>
+			
 		</tr>
 		<tr>
-			<td colspan="2">
+			<td colspan="2" valign="top">
 				<table>
 					<tr>
 						<td width="80">专题标题:</td>
 						<td>${model.title} </td>
 					</tr>
 					<tr>
-						<td>地震描述:</td>
-						<td><div style="overflow: auto;height: 400px;">${model.desn}</div> </td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td valign="top">地震描述:</td>
+						<td><div style="overflow: auto;height: 140px;width: 900px">${model.desn}</div> </td>
 					</tr>
 				</table>
 			</td>
@@ -205,16 +248,16 @@
 </div>
 <div id="wave" class="x-hide-display">
 <table id="mytable" height="380" style="margin-top: 5px;width: 800px" align="center">
-	<tr height="250">
+	<tr height="220">
 		<td width="15%" align="right" valign="top">事件波形数据：</td>
 		<td align="left" style="vertical-align: top;" width="85%">
-		<div style="overflow: auto;height: 240px;">${model.event_wave}</div>
+		<div style="overflow: auto;height: 210px;">${model.event_wave}</div>
 		</td>
 	   </tr> 
 	<tr>
 		<td width="15%" align="right" valign="top">台站波形记录图：</td>
 		<td align="left" style="vertical-align: top;" width="85%">
-		<div style="overflow: auto;height: 240px;">${model.station_wave}</div>
+		<div style="overflow: auto;height: 210px;">${model.station_wave}</div>
 		</td>
 	 </tr>
 </table>
