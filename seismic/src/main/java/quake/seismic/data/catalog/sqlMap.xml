@@ -628,4 +628,21 @@
 		    </isNotEmpty>
 		</dynamic>
 	</select>
+	
+	<!-- 根据地震目录ID查询地震目录 -->
+	<select id="queryCatlogById" parameterClass="quake.seismic.data.catalog.model.Criteria"
+			resultMap="queryCatDataResult">
+		<![CDATA[
+		SELECT ID,SEQUEN_NAME,O_TIME,O_TIME_FRAC,EPI_LAT,EPI_LON,EPI_DEPTH,M,M_SOURCE,QLOC,QCOM,LOCATION_CNAME,EVENT_ID,
+		       NET_CODE,Location_sname,Save_time,Auto_flag,Operator,Loc_program,Eq_type,Depfix_flag,SPmin,Dmin,Gap_azi,
+		       Rms,Erh,Erz,Qnet,Sum_stn,Loc_stn,Sum_pha,Loc_pha,Epic_id,Source_id,FE_num,FE_sname,FE_cname,
+		       Eq_name,Model_name,Remark,Lock_flag,Group_id
+		FROM $schema$.$tableName$
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="qcId">
+		       <![CDATA[(ID=#qcId#)]]>
+		    </isNotEmpty>
+		</dynamic>
+	</select>
 </sqlMap>
