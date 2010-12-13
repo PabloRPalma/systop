@@ -7,6 +7,9 @@ package quake.special;
  *
  */
 public final class SpecialConstants {
+  /**
+   * 查询前30天
+   */
   public static final int QUERY_QC_DAY = -30;
   
   /**
