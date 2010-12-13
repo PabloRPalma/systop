@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import quake.seismic.data.EQTimeFormat;
 import quake.seismic.data.catalog.model.Criteria;
+import quake.seismic.data.phase.model.PhaseCriteria;
 
 import com.systop.core.dao.support.Page;
 
@@ -26,7 +27,11 @@ public class SpecialDao extends AbstractSpecialDao<Page> {
     List<Map> list = getTemplate().queryForList(SQL_QUERY_QC_BY_ID, criteria);
     criteria.getPage().setData(EQTimeFormat.getEqTimeValue(list, "O_TIME", "O_TIME_FRAC"));
     return criteria.getPage();
-    
-
+  }
+  /**
+   * 查询震相数据
+   */
+  public List queryPhaseByCatalogId(PhaseCriteria criteria) {  
+    return EQTimeFormat.getEqTimeValue(getTemplate().queryForList(SQL_PHASE, criteria), "O_TIME", "O_TIME_FRAC");
   }
 }
