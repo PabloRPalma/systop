@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.ecside.util.ExtremeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,6 +102,22 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
       buf.append(extractBulletinVlm(rows, criteria));
     }
     return buf;
+  }
+  
+  /**
+   * 查询单个震相数据(观测报告)
+   */
+  public String queryForSingleBulletin(Criteria criteria) {
+    logger.debug("查询条件：{}", criteria.getQcId() + " : " + criteria.getTableName() + " : ");
+    StringBuffer buf = new StringBuffer();
+    //查询地震目录
+    List<Map> rows = getTemplate().queryForList("cz.queryCatlogById", criteria);
+    logger.debug("地震目录：{}", rows);
+    if(CollectionUtils.isNotEmpty(rows)) {
+      buf.append(extractBulletinVlm(rows, criteria));
+    }
+    
+    return buf.toString();
   }
   
   /**
