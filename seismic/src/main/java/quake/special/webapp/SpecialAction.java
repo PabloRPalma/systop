@@ -202,12 +202,10 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
         phaseCriteria.setTableName(czCat.getPhaseTname());
         phaseCriteria.setSchema(dataSourceManager.getSeismicSchema());
       
-
         List items =specialDao.queryPhaseByCatalogId(phaseCriteria); 
         getRequest().setAttribute("items",items);
       }
-    }
-   
+    } 
     return "phaseResult";
   }
 
