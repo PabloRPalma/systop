@@ -70,6 +70,7 @@ function remove(id){
 		<ec:column width="150" property="title" title="标题">
 			<a href="view.do?model.id=${item.id}" target="_black">
 				${item.title}
+			</a>
 			</ec:column>
 		<ec:column width="140" property="quakeTime" title="发震时刻" style="text-align:center"/>
 		<ec:column width="50" property="longitude" title="经度" style="text-align:center"/>
