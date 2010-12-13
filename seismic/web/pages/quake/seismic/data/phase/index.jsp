@@ -166,10 +166,12 @@ $(document).ready(function() {
 		<ec:column width="70" property="EPI_DEPTH" title="深度(Km)" cell="quake.seismic.data.catalog.webapp.cell.DepthFomat"/>
 		<ec:column width="60" property="QLOC" title="定位质量" />	
 		<ec:column width="60" property="QCOM" title="综合质量" />	
-		<ec:column width="120" property="LOCATION_CNAME" title="震中地名" />
-		<ec:column width="40" property="_1" title="震相" style="text-align:center" viewsAllowed="html" sortable="false">
+		<ec:column width="100" property="LOCATION_CNAME" title="震中地名" />
+		<ec:column width="75" property="_1" title="震相" style="text-align:center" viewsAllowed="html" sortable="false">
 		   <a href="#" onclick="phase('${ctx}/quake/seismic/data/phase/list.do', '${item.ID}', '${item.EQ_TIME}', '${item.O_TIME_FRAC}', '${item.EPI_LAT}', '${item.EPI_LON}', '${item.EPI_DEPTH}', ${item.M}, '${item.M_SOURCE}', '${item.QLOC}', '${item.QCOM}', '${item.LOCATION_CNAME}')" title="查看震相数据"> 
-		      查看
+		      	查看</a> | 
+		   <a href="#" onclick="exportSingleBulletin('${ctx}/quake/seismic/data/catalog/exportSingleBulletin.do?model.qcId=${item.ID}', '_blank')" title="下载震相数据"> 
+		      	下载
 		   </a>
 		</ec:column>
 	</ec:row>   
@@ -195,6 +197,16 @@ function exportBulletin(url, target) {
 	$("#queryFrm").attr("action", url);
 	$("#queryFrm").attr("target", target);
 	if(confirm("请确保地震目录条数小于50")){
+		$("#queryFrm").submit();
+	}
+}
+/**
+ * 单个震相数据下载
+ */
+function exportSingleBulletin(url, target) {
+	$("#queryFrm").attr("action", url);
+	$("#queryFrm").attr("target", target);
+	if(confirm("确定下载该地震目录的观测报告吗?")){
 		$("#queryFrm").submit();
 	}
 }
