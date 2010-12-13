@@ -37,7 +37,14 @@ public abstract class AbstractCatDao<T> extends AbstractSeismicDao {
    * 地震目录关联震级查询
    */
   protected static final String SQL_CAT_MAG_ID = "cz.queryCatMagData";
-
+  /**
+   * 根据台网台站代码取得台站信息
+   */
+  protected static final String SQL_NET_STA_CODE_ID = "cz.queryStationAtBulletin";
+  /**
+   * 根据台网台站代码取得台站信息_台站信息表和位置信息表联合查询
+   */
+  protected static final String SQL_NET_STA_LOC_ID = "cz.queryStationLocAtBulletin";
   /**
    * 查询数据行数的statementName
    */
