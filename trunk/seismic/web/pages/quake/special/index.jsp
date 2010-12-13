@@ -68,7 +68,7 @@ function remove(id){
 	<ec:row>
 		<ec:column width="40" property="_no" value="${GLOBALROWCOUNT}" title="No." style="text-align:center"/>
 		<ec:column width="150" property="title" title="标题">
-			<a href="view.do?model.id=${item.id}" target="_black">
+			<a href="frontView.do?model.id=${item.id}" target="_black">
 				${item.title}
 			</a>
 			</ec:column>
