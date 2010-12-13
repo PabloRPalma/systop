@@ -530,6 +530,42 @@
         <result property="Offdate" column="Offdate" javaType="java.util.Date"/>  
         <result property="Remark" column="Remark" javaType="String"/>    	
     </resultMap>
+    <!-- 台站信息查询结果 -->
+    <resultMap class="java.util.HashMap" id="queryStationAtBulletinResult">
+     	<result property="ID" column="ID" javaType="String"/>
+        <result property="NET_CODE" column="NET_CODE" javaType="String"/>
+        <result property="STA_CODE" column="STA_CODE" javaType="String"/>
+        <result property="STA_CNAME" column="STA_CNAME" javaType="String"/>
+        <result property="ROCK_TYPE" column="ROCK_TYPE" javaType="String"/>
+         <result property="STA_TYPE" column="STA_TYPE" javaType="String"/>
+        <result property="STA_LAT" column="STA_LAT" javaType="Double"/>
+        <result property="STA_LON" column="STA_LON" javaType="Double"/>
+        <result property="STA_ELEV" column="STA_ELEV" javaType="Double"/>
+        <result property="STA_STARTDATE" column="STA_STARTDATE" javaType="java.util.Date"/>
+        <result property="STA_ENDDATE" column="STA_ENDDATE" javaType="java.util.Date"/>
+        <result property="SITE_NAME" column="SITE_NAME" javaType="String"/>
+    </resultMap>
+    <!-- 台站信息查询结果_台站信息表和位置信息表联合查询 -->
+    <resultMap class="java.util.HashMap" id="queryStationLocAtBulletinResult">
+     	<result property="ID" column="ID" javaType="String"/>
+        <result property="NET_CODE" column="NET_CODE" javaType="String"/>
+        <result property="STA_CODE" column="STA_CODE" javaType="String"/>
+        <result property="STA_CNAME" column="STA_CNAME" javaType="String"/>
+        <result property="ROCK_TYPE" column="ROCK_TYPE" javaType="String"/>
+         <result property="STA_TYPE" column="STA_TYPE" javaType="String"/>
+        <result property="STA_LAT" column="STA_LAT" javaType="Double"/>
+        <result property="STA_LON" column="STA_LON" javaType="Double"/>
+        <result property="STA_ELEV" column="STA_ELEV" javaType="Double"/>
+        <result property="STA_STARTDATE" column="STA_STARTDATE" javaType="java.util.Date"/>
+        <result property="STA_ENDDATE" column="STA_ENDDATE" javaType="java.util.Date"/>
+        <result property="SITE_NAME" column="SITE_NAME" javaType="String"/>
+        <!-- 位置信息表字段 -->
+        <result property="CHN_NUM" column="CHN_NUM" javaType="Integer"/>
+        <result property="LOCAL_DEPTH" column="LOCAL_DEPTH" javaType="String"/>
+        <result property="SENSOR_MODEL" column="SENSOR_MODEL" javaType="String"/>
+        <result property="DIGITIZER_MODEL" column="DIGITIZER_MODEL" javaType="String"/>
+    </resultMap>
+    
     <!-- 台网信息查询 -->
 	<select id="queryNetworkInfo" parameterClass="quake.seismic.data.catalog.model.Criteria"
 		resultMap="queryNetworkInfoResult">    
@@ -555,5 +591,41 @@
 		       Eq_name,Model_name,Remark,Lock_flag,Group_id
 		FROM $schema$.$tableName$ where ID like #seedId#
 		]]>
+	</select>
+	<!-- 查询台站信息 -->
+	<select id="queryStationAtBulletin" parameterClass="quake.seismic.station.model.Criteria"
+			resultMap="queryStationAtBulletinResult">
+		<![CDATA[
+		SELECT ID,NET_CODE,STA_CODE,STA_CNAME,ROCK_TYPE,STA_LAT,STA_LON,STA_ELEV,STA_STARTDATE,STA_ENDDATE,SITE_NAME,STA_TYPE
+		FROM $schema$.Station_info ST
+		]]>
+		<dynamic prepend="WHERE">
+		    <!-- 加入台网查询条件 -->
+		     <isNotEmpty prepend="AND" property="netCode">
+		       <![CDATA[(ST.NET_CODE=#netCode#)]]>
+		    </isNotEmpty>
+		    <isNotEmpty prepend="AND" property="staCode">
+		       <![CDATA[(ST.STA_CODE=#staCode#)]]>
+		    </isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<!-- 查询测震台站数据_台站信息表与位置信息表联合查询 -->
+	<select id="queryStationLocAtBulletin" parameterClass="quake.seismic.station.model.Criteria"
+                        resultMap="queryStationLocAtBulletinResult">
+		<![CDATA[
+		SELECT ST.ID,ST.NET_CODE,ST.STA_CODE,STA_CNAME,STA_TYPE,ROCK_TYPE,STA_LAT,STA_LON,STA_ELEV,
+		STA_STARTDATE,STA_ENDDATE,SITE_NAME,DIGITIZER_RESPID,DIGITIZER_MODEL,CHN_NUM,LOCAL_DEPTH,SENSOR_MODEL
+		FROM $schema$.Station_info ST ,$schema$.Loc_info LOC WHERE ST.NET_CODE=LOC.NET_CODE and ST.STA_CODE=LOC.STA_CODE
+		]]>
+		<dynamic>
+		    <!-- 加入台网查询条件  -->
+		     <isNotEmpty prepend="AND" property="netCode">
+		       <![CDATA[(ST.NET_CODE=#netCode#)]]>
+		    </isNotEmpty>
+		    <isNotEmpty prepend="AND" property="staCode">
+		       <![CDATA[(ST.STA_CODE=#staCode#)]]>
+		    </isNotEmpty>
+		</dynamic>
 	</select>
 </sqlMap>
