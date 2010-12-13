@@ -3,9 +3,11 @@ package quake.seismic.data.catalog.dao.impl;
 import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.ecside.util.ExtremeUtils;
@@ -82,7 +84,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
     if (SeismicConstants.Bulletin_full.equals(criteria.getExpType())) {
       rows = getTemplate().queryForList(SQL, criteria, 0, SeismicConstants.BULLETIN_FULL_MAX_SIZE);
     }
-    StringBuffer buf = new StringBuffer(100000);
+    StringBuffer buf = new StringBuffer();
     //基本目录数据格式
     if (SeismicConstants.Catalog_basic.equals(criteria.getExpType())) {
       logger.debug("基本目录数据格式下载时地震目录条数：{}", rows.size());
@@ -176,13 +178,6 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
     //Write Volume_index_block1; 
     buf.append(getVlmIndexBlock1(criteria));
     
-    /**
-     * 该部分内容需要确定后再加入，有待完善
-    //Write station head block (HSB)
-    
-    //Write station data block (DSB)
-    */
-    
     //Write Basic origin head block (HBO)
     buf.append("HBO").append(" ").append(getHBO());
     //Write Extened origin head block (HEO)
@@ -191,7 +186,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
     buf.append("HMB").append(" ").append(getHMB());
     //Write phase head block (HPB)
     buf.append("HPB").append(" ").append(getHPB());
-    
+    Set nSCodeSet = new HashSet();
     for (Iterator<Map> itr = rows.iterator(); itr.hasNext();) {
       Map row = itr.next();
       //Write Basic origin data block (DBO)
@@ -208,12 +203,55 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
       List<Map> phaseList = getPhaseOfCatalog((String)row.get("ID"), criteria);
       logger.debug("地震目录ID：{},对应的震相个数：{}", (String)row.get("ID"), phaseList.size());
       //Write phase data block (DPB)
+      
       for(Map phase : phaseList) {
+        String netStaCode = "";
+        netStaCode = (String)phase.get("NET_CODE") + ("/") + (String)phase.get("STA_CODE");
+        logger.debug("震相：{}，对应的台站/台网代码：{}", phase.get("PHASE_NAME"), netStaCode);
+        nSCodeSet.add(netStaCode);
         buf.append("DPB").append(" ").append(getDPB(phase));
       }
     }
+    logger.debug("查询出来的台站数：{}", nSCodeSet.size());
+    String hsbAndDsb = getHsbAndDsb(nSCodeSet);
+    //在HBO数据块前面加入(HSB)(DSB)
+    int offset = buf.indexOf("HBO");
+    //Write station head block (HSB)(DSB)
+    buf.insert(offset, hsbAndDsb);
     
     return buf.toString();
+  }
+  
+  /**
+   * 生成HSB和DSB数据
+   * @param nSCodeSet 台网/台站代码
+   */
+  private String getHsbAndDsb(Set nSCodeSet) {
+    StringBuffer hsbAndDsb = new StringBuffer();
+    //HSB格式数据
+    hsbAndDsb.append("HSB").append(" ").append(getHSB());
+    quake.seismic.station.model.Criteria staCriteria = new quake.seismic.station.model.Criteria();
+    staCriteria.setSchema(dataSourceManager.getStationSchema());
+    for(Iterator it = nSCodeSet.iterator(); it.hasNext();) {
+      String netStaCode = (String) it.next().toString();
+      if(StringUtils.isNotEmpty(netStaCode)) {
+        String[] sncode = netStaCode.split("/");
+        logger.debug("台站代码：{}，台网代码：{}",sncode[0],sncode[1]);
+        staCriteria.setNetCode(sncode[0]);
+        staCriteria.setStaCode(sncode[1]);
+        //根据台网和台站代码取得台站信息_单独台站信息_台站信息表中有仪器字段
+        /*Map staInfo = (Map) getTemplate().queryForObject(SQL_NET_STA_CODE_ID, staCriteria);
+        logger.debug("查询取得的台站信息：{}",staInfo);
+        if(staInfo != null) {
+          hsbAndDsb.append("DSB").append(" ").append(getDSB(staInfo));
+        }*/
+        //根据台网和台站代码取得台站和位置信息_多个台站信息_一个台站多个仪器
+        List<Map> staLocList = getTemplate().queryForList(SQL_NET_STA_LOC_ID, staCriteria);
+        hsbAndDsb.append(getDSB(staLocList));
+      }
+    }
+    
+    return hsbAndDsb.toString();
   }
   
   /**
@@ -321,7 +359,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
   }
   
   /**
-   * HPB数据格式内容
+   * DPB数据格式内容
    * @return
    */
   private String getDPB(Map phase) {
@@ -335,6 +373,62 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
     });
     //logger.debug("HPB数据格式内容：{}", hpbFormat);
     return hpbFormat;
+  }
+  
+  /**
+   * HSB数据格式内容
+   * @return
+   */
+  private String getHSB() {
+    String hsbFormat = MessageFormat.format(
+        "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14}\n\r",new Object[] {
+        "Net_code", "Sta_code", "Sta_cname", "Sta_type", "Chan_num", 
+        "Sta_lat", "Sta_lon",  "Sta_elev", "Local_depth",  "sensor", "Datarecord", 
+        "Rock_type", "Sensi-NS", "Sensi-EW", "Sensi-UD"
+    });
+    //logger.debug("HSB数据格式内容：{}", hsbFormat);
+    return hsbFormat;
+  }
+  
+  /**
+   * 取得DSB数据
+   * @param station 单个台站信息
+   * @deprecated 查询单个台站信息时使用，原来的数据结构中台站信息表中有仪器字段
+   * 现在的表结构中没有仪器字段，也就是说现在的一个台站对应多个仪器。
+   */
+  @SuppressWarnings("unused")
+  private String getDSB(Map station) {
+    String dsbFormat = MessageFormat.format(
+        "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14}\n\r",new Object[] {
+            station.get("NET_CODE"), station.get("STA_CODE"), station.get("STA_CNAME"), 
+            station.get("STA_TYPE"), "chan_num", station.get("STA_LAT"), station.get("STA_LON"), 
+            station.get("STA_ELEV"), "Local_depth", "sensor", "Datarecord", station.get("ROCK_TYPE"), 
+            "Sensi-NS", "Sensi-EW", "Sensi-UD"
+    });
+    //logger.debug("DSB数据格式内容：{}", dsbFormat);
+    return dsbFormat;
+  }
+  
+  /**
+   * 取得DSB数据
+   * @param staLocList 台站和位置信息联合表结果集
+   * @return
+   */
+  private String getDSB(List<Map> staLocList) {
+    StringBuffer buf = new StringBuffer();
+    for(Map staLoc : staLocList) {
+      String dsbFormat = MessageFormat.format(
+          "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14}\n\r",new Object[] {
+              staLoc.get("NET_CODE"), staLoc.get("STA_CODE"), staLoc.get("STA_CNAME"), 
+              staLoc.get("STA_TYPE"), staLoc.get("CHN_NUM"), staLoc.get("STA_LAT"), staLoc.get("STA_LON"), 
+              staLoc.get("STA_ELEV"), staLoc.get("LOCAL_DEPTH"), staLoc.get("SENSOR_MODEL"), 
+              staLoc.get("DIGITIZER_MODEL"), staLoc.get("ROCK_TYPE"), 
+              "Sensi-NS", "Sensi-EW", "Sensi-UD"
+      });
+      buf.append("DSB").append(" ").append(dsbFormat);
+    }
+    
+    return buf.toString();
   }
   
   /**
