@@ -19,12 +19,48 @@
         <result property="LOCATION_CNAME" column="LOCATION_CNAME" javaType="String"/>
         <result property="EVENT_ID" column="EVENT_ID" javaType="String"/>
     </resultMap>
-
+	<resultMap class="java.util.HashMap" id="queryPhaseDataResult">
+        <result property="NET_CODE" column="NET_CODE" javaType="String"/>
+        <result property="STA_CODE" column="STA_CODE" javaType="String"/>
+        <result property="CHN_CODE" column="CHN_CODE" javaType="String"/>
+        <result property="REC_TYPE" column="REC_TYPE" javaType="String"/>
+        <result property="PHASE_NAME" column="PHASE_NAME" javaType="String"/>
+        <result property="PHASE_TYPE" column="PHASE_TYPE" javaType="String"/>
+        <result property="PHASE_TIME" column="PHASE_TIME" javaType="java.util.Date"/>
+        <result property="PHASE_TIME_FRAC" column="PHASE_TIME_FRAC" javaType="Integer"/>
+        <result property="AMP_TYPE" column="AMP_TYPE" javaType="String"/>
+        <result property="AMP" column="AMP" javaType="Double"/>
+        <result property="PERIOD" column="PERIOD" javaType="Double"/>
+        <result property="WEIGHT" column="WEIGHT" javaType="Integer"/>
+        <result property="CLARITY" column="CLARITY" javaType="String"/>
+        <result property="WSIGN" column="WSIGN" javaType="String"/>
+        <result property="RESI" column="RESI" javaType="Double"/>
+        <result property="MAG_NAME" column="MAG_NAME" javaType="String"/>
+        <result property="MAG_VAL" column="MAG_VAL" javaType="Double"/>
+        <result property="DISTANCE" column="DISTANCE" javaType="Double"/>
+        <result property="AZI" column="AZI" javaType="Double"/>
+        <result property="S_P" column="S_P" javaType="Double"/>
+    </resultMap>
 	  <select id="queryQcById" parameterClass="quake.seismic.data.catalog.model.Criteria"
 			resultMap="queryQcResult">
 		<![CDATA[
 		SELECT ID,SEQUEN_NAME,O_TIME,O_TIME_FRAC,EPI_LAT,EPI_LON,EPI_DEPTH,M,M_SOURCE,QLOC,QCOM,LOCATION_CNAME,EVENT_ID 
 		FROM $schema$.$tableName$ WHERE ID = #qcId#
 		]]>
+	</select>
+		<select id="queryPhaseData" parameterClass="quake.seismic.data.phase.model.PhaseCriteria"
+		resultMap="queryPhaseDataResult">    
+		<![CDATA[
+		SELECT NET_CODE,STA_CODE,CHN_CODE,REC_TYPE,PHASE_NAME,PHASE_TYPE,PHASE_TIME,PHASE_TIME_FRAC,
+		AMP_TYPE,AMP,PERIOD,WEIGHT,CLARITY,WSIGN,RESI,MAG_NAME,MAG_VAL,DISTANCE,AZI,S_P	
+		FROM $schema$.$tableName$
+		]]>
+		<dynamic prepend="WHERE">
+			<!-- 地震目录ID查询条件 -->
+		    <isNotEmpty prepend="AND" property="catId">
+		       <![CDATA[(CATALOG_ID=#catId#)]]>
+		    </isNotEmpty>
+		</dynamic>
+		<![CDATA[ORDER BY NET_CODE,STA_CODE ASC]]>
 	</select>
 </sqlMap>

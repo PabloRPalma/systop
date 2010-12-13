@@ -24,7 +24,6 @@ import quake.admin.ds.service.DataSourceManager;
 import quake.base.webapp.NumberFormatUtil;
 import quake.seismic.data.catalog.dao.impl.GridCatDao;
 import quake.seismic.data.catalog.model.Criteria;
-import quake.seismic.data.phase.dao.impl.GridPhaseDao;
 import quake.seismic.data.phase.model.PhaseCriteria;
 import quake.special.SpecialConstants;
 import quake.special.dao.SpecialDao;
@@ -74,12 +73,6 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
   @Qualifier("specialDao")
   private SpecialDao specialDao;
 
-  /**
-   * 用于表格查询的测震DAO
-   */
-  @Autowired(required = true)
-  @Qualifier("gridPhaseDao")
-  private GridPhaseDao gridPhaseDao;
   /**
    * /** 用于表格查询的测震DAO
    */
@@ -190,17 +183,32 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
   public String view() {
     Special s = getManager().get(getModel().getId());
     if (StringUtils.isNotBlank(s.getQc_id()) && StringUtils.isNotBlank(s.getTableName())) {
-      phaseCriteria.setCatId(s.getQc_id());
       QuakeCatalog czCat = czCatalogManager.queryByCltName(s.getTableName());
-      phaseCriteria.setTableName(czCat.getPhaseTname());
-      phaseCriteria.setSchema(dataSourceManager.getSeismicSchema());
-      List items = gridPhaseDao.query(phaseCriteria);
-      getRequest().setAttribute("items", items);
-
       String catalogName = czCat.getClcName() + "地震目录";
       getRequest().setAttribute("catalogName", catalogName);
     }
     return VIEW;
+  }
+
+  /**
+   * 获得地震专题震相
+   */
+  public String getPhaseList() {
+    if (StringUtils.isNotBlank(specialId)) {
+      Special s = getManager().get(Integer.valueOf(specialId));
+      if (StringUtils.isNotBlank(s.getQc_id()) && StringUtils.isNotBlank(s.getTableName())) {
+        phaseCriteria.setCatId(s.getQc_id());
+        QuakeCatalog czCat = czCatalogManager.queryByCltName(s.getTableName());
+        phaseCriteria.setTableName(czCat.getPhaseTname());
+        phaseCriteria.setSchema(dataSourceManager.getSeismicSchema());
+      
+
+        List items =specialDao.queryPhaseByCatalogId(phaseCriteria); 
+        getRequest().setAttribute("items",items);
+      }
+    }
+   
+    return "phaseResult";
   }
 
   /**
