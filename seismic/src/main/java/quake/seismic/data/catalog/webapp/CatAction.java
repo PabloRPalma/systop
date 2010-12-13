@@ -1,6 +1,7 @@
 package quake.seismic.data.catalog.webapp;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,7 @@ import quake.seismic.data.catalog.model.Criteria;
 import quake.seismic.data.seed.dao.impl.SeedDao;
 
 import com.systop.core.dao.support.Page;
-
+import com.systop.core.util.DateUtil;
 
 /**
  * 地震目录查询查
@@ -221,7 +222,8 @@ public class CatAction extends AbstractQueryAction<Criteria> {
   public String exportWkf() {
     model.setExpType("WKF");
     String data = exportData();
-    getResponse().addHeader("Content-Disposition", "attachment;filename=\"WKF.txt\"");
+    String fileName = "attachment;filename=\"WKF_" + getCurrentDate() + ".txt\"";
+    getResponse().addHeader("Content-Disposition", fileName);
     render(getResponse(), data, "text/html");
     return null;
   }
@@ -233,7 +235,8 @@ public class CatAction extends AbstractQueryAction<Criteria> {
   public String exportEqt() {
     model.setExpType("EQT");
     String data = exportData();
-    getResponse().addHeader("Content-Disposition", "attachment;filename=\"EQT.txt\"");
+    String fileName = "attachment;filename=\"EQT_" + getCurrentDate() + ".txt\"";
+    getResponse().addHeader("Content-Disposition", fileName);
     render(getResponse(), data, "text/html");
     return null;
   }
@@ -247,7 +250,8 @@ public class CatAction extends AbstractQueryAction<Criteria> {
     model.setExpType(SeismicConstants.Catalog_basic);
     String data = exportVlmData();
     //logger.debug("基本目录格式导出的数据：{}", data);
-    getResponse().addHeader("Content-Disposition", "attachment;filename=\"BASIC_VLM.txt\"");
+    String fileName = "attachment;filename=\"BASIC_VLM_" + getCurrentDate() + ".txt\"";
+    getResponse().addHeader("Content-Disposition", fileName);
     render(getResponse(), data, "text/html");
     return null;
   }
@@ -259,7 +263,8 @@ public class CatAction extends AbstractQueryAction<Criteria> {
     model.setExpType(SeismicConstants.Catalog_full);
     String data = exportVlmData();
     //logger.debug("完全目录格式导出的数据：{}", data);
-    getResponse().addHeader("Content-Disposition", "attachment;filename=\"FULL_VLM.txt\"");
+    String fileName = "attachment;filename=\"FULL_VLM_" + getCurrentDate() + ".txt\"";
+    getResponse().addHeader("Content-Disposition", fileName);
     render(getResponse(), data, "text/html");
     return null;
   }
@@ -272,7 +277,29 @@ public class CatAction extends AbstractQueryAction<Criteria> {
     model.setExpType(SeismicConstants.Bulletin_full);
     String data = exportVlmData();
     //logger.debug("观测报告导出的数据：{}", data);
-    getResponse().addHeader("Content-Disposition", "attachment;filename=\"Bulletin_FULL_VLM.txt\"");
+    String fileName = "attachment;filename=\"Bulletin_VLM_" + getCurrentDate() + ".txt\"";
+    getResponse().addHeader("Content-Disposition", fileName);
+    render(getResponse(), data, "text/html");
+    return null;
+  }
+  
+  /**
+   * 导出单个震相数据
+   * @return
+   */
+  public String exportSingleBulletin() {
+    logger.debug("导出单个震相数据时地震目录ID:{}", model.getQcId());
+    model.setExpType(SeismicConstants.Bulletin_full);
+    String data = "";
+    logger.debug("地震目录表名：{}", model.getTableName());
+    if (StringUtils.isNotBlank(model.getTableName())) {
+      //测震SCHEMA
+      model.setSchema(dataSourceManager.getSeismicSchema());
+      data = exportCatDao.queryForSingleBulletin(model); 
+    }
+    //logger.debug("观测报告导出的数据：{}", data);
+    String fileName = "attachment;filename=\"SINGLE_Bulletin_VLM_" + model.getQcId() + ".txt\"";
+    getResponse().addHeader("Content-Disposition", fileName);
     render(getResponse(), data, "text/html");
     return null;
   }
@@ -344,6 +371,10 @@ public class CatAction extends AbstractQueryAction<Criteria> {
       }
     }
     return map;
+  }
+  
+  private String getCurrentDate() {
+    return DateUtil.getDateTime("yyyyMMddHHmmss", new Date());
   }
   
   @Override
