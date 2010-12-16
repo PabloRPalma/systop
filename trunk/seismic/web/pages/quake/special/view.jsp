@@ -49,8 +49,13 @@
 				title : '烈度分布'
 			}
 			, {
-				contentEl : 'wave',
-				title : '波形图'
+				contentEl : 'event_wave',
+				title : '事件波形数据'
+			}
+			 
+			, {
+				contentEl :'station_wave',
+				title : '台站波形记录图'
 			}
 			, {
 				contentEl : 'phase',
@@ -243,20 +248,17 @@
 	</tr>
 </table>
 </div>
-<div id="wave" class="x-hide-display">
+<div id="event_wave" class="x-hide-display">
+	<iframe height="450" src="${ctx}/admin/special/getEventWave.do?specialId=${model.id}" width="100%" frameborder="0"></iframe>
+</div>
+<div id="station_wave" class="x-hide-display">
 <table id="mytable" height="380" style="margin-top: 5px;width: 800px" align="center">
-	<tr height="250">
-		<td width="15%" align="right" valign="top">事件波形数据：</td>
-		<td align="left" style="vertical-align: top;" width="85%">
-		<iframe height="250" src="${ctx}/admin/special/getEventWave.do?specialId=${model.id}" width="100%" frameborder="0"></iframe>
-		</td>
-	   </tr> 
 	<tr>
 		<td width="15%" align="right" valign="top">台站波形记录图：</td>
 		<td align="left" style="vertical-align: top;" width="85%">
-		<div style="overflow: auto;height: 240px;">${model.station_wave}</div>
+		<div style="overflow: auto;height: 480px;">${model.station_wave}</div>
 		</td>
-	 </tr>
+	</tr>
 </table>
 </div>
 <div id="phase" class="x-hide-display">
