@@ -276,7 +276,7 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
         map.put("Station", station);
       }
     }
-    getRequest().setAttribute("items", items);
+    getRequest().setAttribute("waveItems", items);
   }
 
   /**
