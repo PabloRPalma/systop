@@ -4,8 +4,7 @@
 <html>
 <head>
 <title></title>
-<%@include file="/common/meta.jsp"%>
-<%@include file="/common/ec.jsp"%>
+<%@include file="/common/quake.jsp" %>
 </head>
 <body>
 <div class="x-panel">
@@ -23,7 +22,7 @@
 	generateScript="true"	
 	resizeColWidth="true"	
 	classic="false"	
-	width="100%" 	
+	width="1003" 	
 	height="360px"	
 	minHeight="360"  
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status"     

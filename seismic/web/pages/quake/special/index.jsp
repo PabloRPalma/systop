@@ -62,12 +62,12 @@ function remove(id){
 	resizeColWidth="false" 
 	classic="false" 
 	width="100%" 
-	height="460px"
-	minHeight="460"
+	height="420px"
+	minHeight="420"
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	<ec:row>
 		<ec:column width="40" property="_no" value="${GLOBALROWCOUNT}" title="No." style="text-align:center"/>
-		<ec:column width="150" property="title" title="标题">
+		<ec:column width="130" property="title" title="标题">
 			<a href="frontView.do?model.id=${item.id}" target="_black">
 				${item.title}
 			</a>
