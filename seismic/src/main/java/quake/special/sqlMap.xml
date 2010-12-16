@@ -18,6 +18,7 @@
         <result property="QCOM" column="QCOM" javaType="String"/>
         <result property="LOCATION_CNAME" column="LOCATION_CNAME" javaType="String"/>
         <result property="EVENT_ID" column="EVENT_ID" javaType="String"/>
+        <result property="NET_CODE" column="NET_CODE" javaType="String"/>
     </resultMap>
 	<resultMap class="java.util.HashMap" id="queryPhaseDataResult">
         <result property="NET_CODE" column="NET_CODE" javaType="String"/>
@@ -44,7 +45,7 @@
 	  <select id="queryQcById" parameterClass="quake.seismic.data.catalog.model.Criteria"
 			resultMap="queryQcResult">
 		<![CDATA[
-		SELECT ID,SEQUEN_NAME,O_TIME,O_TIME_FRAC,EPI_LAT,EPI_LON,EPI_DEPTH,M,M_SOURCE,QLOC,QCOM,LOCATION_CNAME,EVENT_ID 
+		SELECT ID,SEQUEN_NAME,O_TIME,O_TIME_FRAC,EPI_LAT,EPI_LON,EPI_DEPTH,M,M_SOURCE,QLOC,QCOM,LOCATION_CNAME,EVENT_ID,NET_CODE 
 		FROM $schema$.$tableName$ WHERE ID = #qcId#
 		]]>
 	</select>
