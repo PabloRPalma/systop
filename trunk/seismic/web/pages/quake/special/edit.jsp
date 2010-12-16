@@ -28,101 +28,7 @@
 }
 </style>
 </head>
-<script type="text/javascript">
-//文本编辑组件
-function preFckEditor(){
-	desn();
-	area();
-	epifocus();
-	history_pic();
-	m_t();
-	mechanism();
-	fracture();
-	intensity();
-	event_wave();
-	station_wave();
-}
-function desn(){
-	var fckEditor = new FCKeditor( 'desn' ) ;
-	  fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
-	  fckEditor.ToolbarSet = 'Basic';
-	  fckEditor.Height = 180;
-	  fckEditor.Width = 455;
-	  fckEditor.ReplaceTextarea();
-}
-function area(){
-	var fckEditor = new FCKeditor( 'area' ) ;
-	  fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
-	  fckEditor.ToolbarSet = 'Basic';
-	  fckEditor.Height = 300;
-	  fckEditor.Width = 700;
-	  fckEditor.ReplaceTextarea();
-}
-function epifocus(){
-	var fckEditor = new FCKeditor( 'epifocus' ) ;
-	  fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
-	  fckEditor.ToolbarSet = 'Basic';
-	  fckEditor.Height = 300;
-	  fckEditor.Width = 700;
-	  fckEditor.ReplaceTextarea();
-}
-function history_pic(){
-	var fckEditor = new FCKeditor( 'history_pic' ) ;
-	  fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
-	  fckEditor.ToolbarSet = 'Basic';
-	  fckEditor.Height = 300;
-	  fckEditor.Width = 700;
-	  fckEditor.ReplaceTextarea();
-}
-function m_t(){
-	var fckEditor = new FCKeditor( 'm_t' ) ;
-	  fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
-	  fckEditor.ToolbarSet = 'Basic';
-	  fckEditor.Height = 300;
-	  fckEditor.Width = 700;
-	  fckEditor.ReplaceTextarea();
-}
-function mechanism(){
-	var fckEditor = new FCKeditor( 'mechanism' ) ;
-	  fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
-	  fckEditor.ToolbarSet = 'Basic';
-	  fckEditor.Height = 300;
-	  fckEditor.Width = 700;
-	  fckEditor.ReplaceTextarea();
-}
-function fracture(){
-	var fckEditor = new FCKeditor( 'fracture' ) ;
-	  fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
-	  fckEditor.ToolbarSet = 'Basic';
-	  fckEditor.Height = 300;
-	  fckEditor.Width = 700;
-	  fckEditor.ReplaceTextarea();
-}
-function intensity(){
-	var fckEditor = new FCKeditor( 'intensity' ) ;
-	  fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
-	  fckEditor.ToolbarSet = 'Basic';
-	  fckEditor.Height = 300;
-	  fckEditor.Width = 700;
-	  fckEditor.ReplaceTextarea();
-}
-function event_wave(){
-	var fckEditor = new FCKeditor( 'event_wave' ) ;
-	  fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
-	  fckEditor.ToolbarSet = 'Basic';
-	  fckEditor.Height = 300;
-	  fckEditor.Width = 700;
-	  fckEditor.ReplaceTextarea();
-}
-function station_wave(){
-	var fckEditor = new FCKeditor( 'station_wave' ) ;
-	  fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
-	  fckEditor.ToolbarSet = 'Basic';
-	  fckEditor.Height = 300;
-	  fckEditor.Width = 700;
-	  fckEditor.ReplaceTextarea();
-}
-</script>
+
 <script type="text/javascript">
 
 	Ext.onReady(function() {
@@ -163,10 +69,11 @@ function station_wave(){
 				contentEl : 'intensity',
 				title : '烈度分布'
 			}
-			, {
+			/**,{
 				contentEl : 'event_wave',
 				title : '事件波形数据'
-			}, {
+			}*/
+			,{
 				contentEl : 'station_wave',
 				title : '台站波形记录图'
 			}  ]
@@ -289,7 +196,7 @@ function station_wave(){
 	<tr>
 		<td width="15%" align="right" valign="top">影响地区：</td>
 		<td align="left" style="vertical-align: top;" width="85%">
-		<textarea id="area" name="model.area" cols="65" rows="4">${model.area}</textarea>
+		<textarea id="model.area" name="model.area" cols="65" rows="4">${model.area}</textarea>
 		</td>
 	</tr>
 </table>
@@ -299,7 +206,7 @@ function station_wave(){
 	<tr>
 		<td width="15%" align="right" valign="top">震中分布图：</td>
 		<td align="left" style="vertical-align: top;" width="85%">
-		<textarea id="epifocus" name="model.epifocus" cols="65" rows="4">${model.epifocus}</textarea>
+		<textarea id="model.epifocus" name="model.epifocus" cols="65" rows="4">${model.epifocus}</textarea>
 		</td>
 	</tr>
 </table>
@@ -309,7 +216,7 @@ function station_wave(){
 	<tr>
 		<td width="15%" align="right" valign="top">历史地震分布图：</td>
 		<td align="left" style="vertical-align: top;" width="85%">
-		<textarea id="history_pic" name="model.history_pic" cols="65" rows="4">${model.history_pic}</textarea></td>
+		<textarea id="model.history_pic" name="model.history_pic" cols="65" rows="4">${model.history_pic}</textarea></td>
 	</tr>
 </table>
 </div>
@@ -318,7 +225,7 @@ function station_wave(){
 	<tr>
 		<td width="15%" align="right" valign="top">震中区M-T图：</td>
 		<td align="left" style="vertical-align: top;" width="85%">
-		<textarea id="m_t" name="model.m_t" cols="65" rows="4">${model.m_t}</textarea></td>
+		<textarea id="model.m_t" name="model.m_t" cols="65" rows="4">${model.m_t}</textarea></td>
 	</tr>
 </table>
 </div>
@@ -327,7 +234,7 @@ function station_wave(){
 	<tr>
 		<td width="15%" align="right" valign="top">震源机制解：</td>
 		<td align="left" style="vertical-align: top;" width="85%">
-		<textarea id="mechanism" name="model.mechanism" cols="65" rows="4">${model.mechanism}</textarea></td>
+		<textarea id="model.mechanism" name="model.mechanism" cols="65" rows="4">${model.mechanism}</textarea></td>
 	</tr>
 </table>
 </div>
@@ -336,7 +243,7 @@ function station_wave(){
 	<tr>
 		<td width="15%" align="right" valign="top">震源破裂过程：</td>
 		<td align="left" style="vertical-align: top;" width="85%">
-		<textarea id="fracture" name="model.fracture" cols="65" rows="4">${model.fracture}</textarea></td>
+		<textarea id="model.fracture" name="model.fracture" cols="65" rows="4">${model.fracture}</textarea></td>
 	</tr>
 </table>
 </div>
@@ -345,25 +252,27 @@ function station_wave(){
 	<tr>
 		<td width="15%" align="right" valign="top">烈度分布：</td>
 		<td align="left" style="vertical-align: top;" width="85%">
-		<textarea id="intensity" name="model.intensity" cols="65" rows="4">${model.intensity}</textarea></td>
+		<textarea id="model.intensity" name="model.intensity" cols="65" rows="4">${model.intensity}</textarea></td>
 	</tr>
 </table>
 </div>
+<!-- 
 <div id="event_wave" class="x-hide-display">
 <table id="mytable" height="380" style="margin-top: 5px;width: 800px" align="center">
 	<tr>
 		<td width="15%" align="right" valign="top">事件波型数据：</td>
 		<td align="left" style="vertical-align: top;" width="85%">
-		<textarea id="event_wave" name="model.event_wave" cols="65" rows="4">${model.event_wave}</textarea></td>
+		<textarea id="model.event_wave" name="model.event_wave" cols="65" rows="4">${model.event_wave}</textarea></td>
 	</tr>
 </table>
 </div>
+ -->
 <div id="station_wave" class="x-hide-display">
 <table id="mytable" height="380" style="margin-top: 5px;width: 800px" align="center">
 	<tr>
 		<td width="15%" align="right" valign="top">台站波形记录图：</td>
 		<td align="left" style="vertical-align: top;" width="85%">
-		<textarea id="station_wave" name="model.station_wave" cols="65" rows="4">${model.station_wave}</textarea></td>
+		<textarea id="model.station_wave" name="model.station_wave" cols="65" rows="4">${model.station_wave}</textarea></td>
 	</tr>
 </table>
 </div>
@@ -388,6 +297,103 @@ function station_wave(){
 	$(document).ready(function() {
 	$("#save").validate();
 });
+</script>
+<script type="text/javascript">
+//文本编辑组件
+function preFckEditor(){
+	desn();
+	area();
+	epifocus();
+	history_pic();
+	m_t();
+	mechanism();
+	fracture();
+	intensity();
+	//event_wave();
+	station_wave();
+}
+function desn(){
+	var fckEditor = new FCKeditor( 'desn' ) ;
+	  fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
+	  fckEditor.ToolbarSet = 'Basic';
+	  fckEditor.Height = 180;
+	  fckEditor.Width = 455;
+	  fckEditor.ReplaceTextarea();
+}
+function area(){
+	var fckEditor = new FCKeditor( 'model.area' ) ;
+	  fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
+	  fckEditor.ToolbarSet = 'Basic';
+	  fckEditor.Height = 300;
+	  fckEditor.Width = 700;
+	  fckEditor.ReplaceTextarea();
+}
+function epifocus(){
+	var fckEditor = new FCKeditor( 'model.epifocus' ) ;
+	  fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
+	  fckEditor.ToolbarSet = 'Basic';
+	  fckEditor.Height = 300;
+	  fckEditor.Width = 700;
+	  fckEditor.ReplaceTextarea();
+}
+function history_pic(){
+	var fckEditor = new FCKeditor( 'model.history_pic' ) ;
+	  fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
+	  fckEditor.ToolbarSet = 'Basic';
+	  fckEditor.Height = 300;
+	  fckEditor.Width = 700;
+	  fckEditor.ReplaceTextarea();
+}
+function m_t(){
+	var fckEditor = new FCKeditor( 'model.m_t' ) ;
+	  fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
+	  fckEditor.ToolbarSet = 'Basic';
+	  fckEditor.Height = 300;
+	  fckEditor.Width = 700;
+	  fckEditor.ReplaceTextarea();
+}
+function mechanism(){
+	var fckEditor = new FCKeditor( 'model.mechanism' ) ;
+	  fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
+	  fckEditor.ToolbarSet = 'Basic';
+	  fckEditor.Height = 300;
+	  fckEditor.Width = 700;
+	  fckEditor.ReplaceTextarea();
+}
+function fracture(){
+	var fckEditor = new FCKeditor( 'model.fracture' ) ;
+	  fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
+	  fckEditor.ToolbarSet = 'Basic';
+	  fckEditor.Height = 300;
+	  fckEditor.Width = 700;
+	  fckEditor.ReplaceTextarea();
+}
+function intensity(){
+	var fckEditor = new FCKeditor( 'model.intensity' ) ;
+	  fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
+	  fckEditor.ToolbarSet = 'Basic';
+	  fckEditor.Height = 300;
+	  fckEditor.Width = 700;
+	  fckEditor.ReplaceTextarea();
+}
+/**
+function event_wave(){
+	var fckEditor = new FCKeditor( 'model.event_wave' ) ;
+	  fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
+	  fckEditor.ToolbarSet = 'Basic';
+	  fckEditor.Height = 300;
+	  fckEditor.Width = 700;
+	  fckEditor.ReplaceTextarea();
+}
+*/
+function station_wave(){
+	var fckEditor = new FCKeditor( 'model.station_wave' ) ;
+	  fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
+	  fckEditor.ToolbarSet = 'Basic';
+	  fckEditor.Height = 300;
+	  fckEditor.Width = 700;
+	  fckEditor.ReplaceTextarea();
+}
 </script>
 </body>
 </html>

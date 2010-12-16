@@ -64,9 +64,10 @@
 <div class="x-panel-header">查看专题地震</div>
 <div id="tabs" style="margin-top: 0px;margin-left: 0px;margin-right: 0px;">
 <div id="basic" class="x-hide-display" >
-	<table>
+	<table border="0">
 		<tr>
-		<td width="700" valign="top">
+		<td width="100">&nbsp;</td>
+		<td width="350" valign="top">
 				<table>
 					<tr>
 						<td>&nbsp;</td>
@@ -130,10 +131,10 @@
 					</tr>	
 				</table>
 			</td>
-			<td width="325">
-				<table>
+			<td width="325" align="center">
+				<table border="0">
 					<tr>
-						<td width="80">专题图片:</td>
+						
 						<td>
 							<c:if test="${not empty model.front_pic}">
 								<img width="225" height="175" src="${ctx}/${model.front_pic}"/>
@@ -142,16 +143,20 @@
 								<img width="225" height="175" src="${ctx}/images/nophoto.gif" />
 							</c:if>
 						</td>
+					</tr>
+					<tr>
+					<td align="center">专题图片</td>
 					</tr>		
 				</table>
 			</td>
-			
+			<td width="100">&nbsp;</td>
 		</tr>
 		<tr>
+		<td width="100">&nbsp;</td>
 			<td colspan="2">
-				<table>
+				<table border="0">
 					<tr>
-						<td width="80">专题标题:</td>
+						<td width="55">专题标题:</td>
 						<td>${model.title} </td>
 					</tr>
 					<tr>
@@ -164,6 +169,7 @@
 					</tr>
 				</table>
 			</td>
+			<td width="100">&nbsp;</td>
 		</tr>
 	</table>	
 </div>
@@ -242,7 +248,7 @@
 	<tr height="250">
 		<td width="15%" align="right" valign="top">事件波形数据：</td>
 		<td align="left" style="vertical-align: top;" width="85%">
-		<div style="overflow: auto;height: 240px;">${model.event_wave}</div>
+		<iframe height="250" src="${ctx}/admin/special/getEventWave.do?specialId=${model.id}" width="100%" frameborder="0"></iframe>
 		</td>
 	   </tr> 
 	<tr>
