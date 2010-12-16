@@ -24,6 +24,6 @@ public final class SpecialConstants {
   /**
    * 查询时间
    */
-  public static final String TIME="2008-01-01";
+  public static final String TIME="2010-01-01";
   
 }

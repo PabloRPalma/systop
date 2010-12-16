@@ -21,10 +21,13 @@ import org.springframework.stereotype.Controller;
 import quake.admin.catalog.model.QuakeCatalog;
 import quake.admin.catalog.service.QuakeCatalogManager;
 import quake.admin.ds.service.DataSourceManager;
+import quake.admin.seedpath.service.SeedpathManager;
 import quake.base.webapp.NumberFormatUtil;
 import quake.seismic.data.catalog.dao.impl.GridCatDao;
 import quake.seismic.data.catalog.model.Criteria;
 import quake.seismic.data.phase.model.PhaseCriteria;
+import quake.seismic.data.seed.dao.impl.SeedDao;
+import quake.seismic.data.seed.model.StaCriteria;
 import quake.special.SpecialConstants;
 import quake.special.dao.SpecialDao;
 import quake.special.model.Special;
@@ -81,7 +84,16 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
   private GridCatDao gridCatDao;
 
   @Autowired(required = true)
+  private SeedDao seedDao;
+
+  @Autowired(required = true)
   private QuakeCatalogManager czCatalogManager;
+
+  /**
+   * seed存储路径Manager
+   */
+  @Autowired
+  private SeedpathManager seedpathManager;
 
   /** 显示图片 */
   private File pic;
@@ -98,6 +110,11 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
    * 查询截至
    */
   private Date endDate;
+
+  /**
+   * 获取系统路径分隔符(Windows "\"，Linux "/")
+   */
+  private String separator = System.getProperties().getProperty("file.separator");
 
   /**
    * 地震目录列表
@@ -170,7 +187,7 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
   }
 
   /**
-   *页面初始化
+   * 页面初始化
    */
   public String edit() {
     catalogs = catalogManager.getCat();
@@ -178,7 +195,7 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
   }
 
   /**
-   *查看地震专题
+   * 查看地震专题
    */
   public String view() {
     Special s = getManager().get(getModel().getId());
@@ -188,6 +205,78 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
       getRequest().setAttribute("catalogName", catalogName);
     }
     return VIEW;
+  }
+
+  /**
+   * 获得事件波形
+   */
+  public String getEventWave() {
+    if (StringUtils.isNotBlank(specialId)) {
+      Special s = getManager().get(Integer.valueOf(specialId));
+      if (StringUtils.isNotBlank(s.getQc_id()) && StringUtils.isNotBlank(s.getTableName())) {
+        criteria.setTableName(s.getTableName());
+        criteria.setPage(new Page(Page.start(getPageNo(), getPageSize()), getPageSize()));
+        // 测震SCHEMA
+        criteria.setSchema(dataSourceManager.getSeismicSchema());
+        criteria.setQcId(s.getQc_id());
+
+        page = PageUtil.getPage(getPageNo(), getPageSize());
+        page = specialDao.queryQcForObeject(criteria);
+
+        cats = page.getData();
+        seedDao.seedExists(cats);
+        if (cats.size() == 1) {
+          if (cats.get(0).get("SEED_NAME") != null) {
+            showSeed(cats.get(0).get("SEED_NAME").toString(),cats.get(0).get("NET_CODE").toString());
+          }
+        }
+      }
+    }
+    return "eventWave";
+  }
+
+  /**
+   * 显示Seed文件解析内容,各台站监测事件数据
+   */
+  public void showSeed(String seedName,String netCode) {
+    StringBuffer seedFile = new StringBuffer("");
+    // 获取Seed文件存储路径
+    if (seedpathManager.get() != null && seedpathManager.get().getPath() != null) {
+      seedFile.append(seedpathManager.get().getPath()).append("data").append(separator).append(
+          "seed").append(separator).append(seedName);
+    }
+    List<Map<String, Object>> items = specialDao.querySeedPlotsData(seedFile.toString(),netCode);
+    StaCriteria criteria = new StaCriteria();
+    criteria.setSchema(dataSourceManager.getStationSchema());
+    // 遍历所有的事件，取出对应Seed文件名，并将台站代码替换为台站中文名
+    for (Map map : items) {
+      String seedFileName = "";
+      if (map.get("SeedFile") != null) {
+        seedFileName = map.get("SeedFile").toString();
+      }
+      if (seedFileName.lastIndexOf(separator) >= 0) {
+        map.put("SeedFile", seedFileName.substring(seedFileName.lastIndexOf(separator) + 1));// 截取文件名，页面只显示名称不显示路径
+      } else {
+        map.put("SeedFile", seedFileName);
+      }
+
+      // 获取台站代码 台站代码由台网代码 + . + 台站代码构成 如 河北省无极 表示为 HB.WUJ
+      String station = "";
+      if (map.get("Station") != null) {
+        station = map.get("Station").toString();
+
+        logger.debug("stationCode:" + station);
+        criteria.setNetCode(station.substring(0, station.lastIndexOf(".")));
+        criteria.setStaCode(station.substring(station.lastIndexOf(".") + 1));
+        logger.debug("criteria:" + criteria.getNetCode() + "." + criteria.getStaCode());
+        station = seedDao.queryStaName(criteria);// 获取台站中文名
+        map.put("stationCode", criteria.getStaCode());
+      }
+      if (StringUtils.isNotBlank(station)) {
+        map.put("Station", station);
+      }
+    }
+    getRequest().setAttribute("items", items);
   }
 
   /**
@@ -201,11 +290,11 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
         QuakeCatalog czCat = czCatalogManager.queryByCltName(s.getTableName());
         phaseCriteria.setTableName(czCat.getPhaseTname());
         phaseCriteria.setSchema(dataSourceManager.getSeismicSchema());
-      
-        List items =specialDao.queryPhaseByCatalogId(phaseCriteria); 
-        getRequest().setAttribute("items",items);
+
+        List items = specialDao.queryPhaseByCatalogId(phaseCriteria);
+        getRequest().setAttribute("items", items);
       }
-    } 
+    }
     return "phaseResult";
   }
 
@@ -248,16 +337,13 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
       criteria.setPage(new Page(Page.start(getPageNo(), getPageSize()), getPageSize()));
       // 测震SCHEMA
       criteria.setSchema(dataSourceManager.getSeismicSchema());
-      criteria.setSortProperty(getSortProperty());
-      criteria.setSortDir(getSortDir());
       criteria.setQcId(qcId);
 
       page = PageUtil.getPage(getPageNo(), getPageSize());
       page = specialDao.queryQcForObeject(criteria);
-      List<Map> qcList = new ArrayList<Map>();
-      qcList = page.getData();
-      if (page.getData() != null) {
-        jsonResult = qcList.get(0);
+      cats = page.getData();
+      if (cats.size() > 0) {
+        jsonResult = cats.get(0);
         jsonResult.put("M", jsonResult.get("M") != null ? NumberFormatUtil.format(jsonResult
             .get("M"), 1) : "");
         jsonResult.put("EPI_LON", jsonResult.get("EPI_LON") != null ? NumberFormatUtil.format(
