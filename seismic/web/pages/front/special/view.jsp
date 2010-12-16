@@ -14,7 +14,7 @@
 			renderTo : 'tabs',
 			anchor : '100% 100%',
 			height : 480,
-			width : '100%',
+			width : '1003',
 			activeTab : 0,
 			frame : false,
 			defaults : {
@@ -60,21 +60,14 @@
 	});
 </script>
 <body>
-<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
-  <tr>
-    <td width="100%" height="126" align="center" valign="top"><img src="${ctx}/ResRoot/index/images/index_01.jpg" alt="" width="100%" height="126" border="0" usemap="#Map" />
-      <map name="Map" id="Map">
-        <area shape="rect" coords="818,20,871,38" href="${ctx}/index.shtml" />
-        <area shape="rect" coords="884,20,938,38" href="#" onClick="addBookmark()"/>
-      </map>    </td>
-  </tr>  
-</table>
+<%@include file="/common/top.jsp" %>
 <div class="x-panel">
 <div id="tabs" align="center">
 <div id="basic" class="x-hide-display" >
-	<table> 
+	<table border="0">
 		<tr>
-		<td width="500" valign="top">
+		<td width="100">&nbsp;</td>
+		<td width="350" valign="top">
 				<table>
 					<tr>
 						<td>&nbsp;</td>
@@ -91,7 +84,6 @@
 					<tr>
 						<td>地  点:</td>
 						<td>${model.location}</td>
-						
 					</tr>
 					<tr>
 						<td>&nbsp;</td>
@@ -139,10 +131,10 @@
 					</tr>	
 				</table>
 			</td>
-			<td width="330">
-				<table>
+			<td width="325" align="center">
+				<table border="0">
 					<tr>
-						<td width="80">专题图片:</td>
+						
 						<td>
 							<c:if test="${not empty model.front_pic}">
 								<img width="225" height="175" src="${ctx}/${model.front_pic}"/>
@@ -151,28 +143,33 @@
 								<img width="225" height="175" src="${ctx}/images/nophoto.gif" />
 							</c:if>
 						</td>
+					</tr>
+					<tr>
+					<td align="center">专题图片</td>
 					</tr>		
 				</table>
 			</td>
-			
+			<td width="100">&nbsp;</td>
 		</tr>
 		<tr>
-			<td colspan="2" valign="top">
-				<table>
+		<td width="100">&nbsp;</td>
+			<td colspan="2">
+				<table border="0">
 					<tr>
-						<td width="80">专题标题:</td>
+						<td width="55">专题标题:</td>
 						<td>${model.title} </td>
 					</tr>
 					<tr>
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>
-					</tr>
+					</tr>	
 					<tr>
 						<td valign="top">地震描述:</td>
-						<td><div style="overflow: auto;height: 140px;width: 900px">${model.desn}</div> </td>
+						<td><div style="overflow: auto;height: 400px;">${model.desn}</div> </td>
 					</tr>
 				</table>
 			</td>
+			<td width="100">&nbsp;</td>
 		</tr>
 	</table>	
 </div>
@@ -251,7 +248,7 @@
 	<tr height="220">
 		<td width="15%" align="right" valign="top">事件波形数据：</td>
 		<td align="left" style="vertical-align: top;" width="85%">
-		<div style="overflow: auto;height: 210px;">${model.event_wave}</div>
+		<iframe height="250" src="${ctx}/admin/special/getEventWave.do?specialId=${model.id}" width="100%" frameborder="0"></iframe>
 		</td>
 	   </tr> 
 	<tr>
