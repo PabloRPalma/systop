@@ -8,25 +8,26 @@
 </head>
 <body>
 <%@include file="/common/top.jsp" %>
-<table width="100%" border="0" cellpadding="5" cellspacing="1">
+<table width="1002" align="center" border="0" cellpadding="5" cellspacing="1">
 	<tr>
 		<td><%@ include file="/common/messages.jsp"%></td>
 	</tr>
 </table>
 <div class="x-panel-body">
+<table align="center" width="1002"><tr><td>
 <fieldset>
    <legend><img src="${ctx}/images/icons/password_title.gif" border="0"/></legend>
    <s:form action="sendPasswordMail" validate="true"  method="POST">
-<table>
+<table align="center" width="1002">
 	<tr>
-		<td>请输入您的用户名：
+		<td align="right">请输入您的用户名：
 		</td>
 		<td>
 		<s:textfield size="30" name="loginId" cssStyle="border:1px #cecece solid"></s:textfield>
 		</td>
 	</tr>
     <tr>
-		<td>
+		<td align="right">
 		请输入您注册的时候登记的电子信箱：
 		</td>
 		<td>
@@ -42,7 +43,7 @@
 	</tr>
 </table>
 </s:form>
-</fieldset>
+</fieldset></td></tr></table>
 </div>
 
 </body>

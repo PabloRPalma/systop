@@ -8,6 +8,7 @@
 </head>
 <body>
 <%@include file="/common/top.jsp" %>
+<table align="center" width="1002"><tr><td>
 <fieldset>
    <legend><img src="${ctx}/images/icons/password_title.gif" border="0"></legend>
    <%@ include file="/common/messages.jsp"%>
@@ -15,5 +16,6 @@
    已经成功的为您修改了密码，请登录您的邮箱(${emailAddr})获取新的密码。
    </div>
 </fieldset>
+</td></tr></table>
 </body>
 </html>
