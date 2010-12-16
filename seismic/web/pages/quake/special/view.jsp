@@ -14,7 +14,7 @@
 			renderTo : 'tabs',
 			anchor : '100% 100%',
 			height : 560,
-			width : '99.9%',
+			width : '1003',
 			activeTab : 0,
 			frame : false,
 			defaults : {
