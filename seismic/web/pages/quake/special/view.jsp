@@ -169,7 +169,7 @@
 					</tr>	
 					<tr>
 						<td valign="top">地震描述:</td>
-						<td><div style="overflow: auto;height: 250px;">${model.desn}</div> </td>
+						<td><div style="overflow: auto;height: 240px;">${model.desn}</div> </td>
 					</tr>
 				</table>
 			</td>
