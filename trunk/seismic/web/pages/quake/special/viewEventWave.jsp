@@ -37,11 +37,14 @@
 	 <c:if test="${!empty waveItems}">	   
 	<ec:extend>
 				<div align="right" style="padding-right: 10px;">
-					<div id="watch" style="cursor: hand;" onclick="return post();">
-						<span style="color: green; font-weight: bold;">查看波形图</span>
+					<div id="watch" onclick="return post();">
+						<span style="color: green; font-weight: bold;cursor:pointer;">查看波形图</span>
 					</div>
 				</div>
 			</ec:extend> 
+			<ec:extendbar>
+				<div style="margin: 10 10 10 10;"><b>注</b>：选择台站，点击右下角的<span style="color: green; font-weight: bold; cursor: hand;">查看波形图</span>，可以查看台站波形。</div>
+			</ec:extendbar>
 			 </c:if> 
 </ec:table>
 </div>
