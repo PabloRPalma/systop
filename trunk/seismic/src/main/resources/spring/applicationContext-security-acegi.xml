@@ -197,7 +197,7 @@
 	<bean id="logoutFilter"
 		class="org.acegisecurity.ui.logout.LogoutFilter">
 		<!-- 退出后指向的 URL -->
-		<constructor-arg value="/login.jsp" />
+		<constructor-arg value="/index.shtml" />
 		<constructor-arg>
 			<list>
 				<ref bean="rememberMeServices" />
