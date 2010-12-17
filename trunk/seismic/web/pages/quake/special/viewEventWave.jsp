@@ -21,9 +21,9 @@
 	generateScript="true"	
 	resizeColWidth="true"	
 	classic="false"	
-	width="100%" 	
-	height="340px"	
-	minHeight="340"  
+	width="950" 	
+	height="400px"	
+	minHeight="400"  
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status"     
 	>
 	<ec:row>

@@ -22,9 +22,9 @@
 	generateScript="true"	
 	resizeColWidth="true"	
 	classic="false"	
-	width="1003" 	
-	height="360px"	
-	minHeight="360"  
+	width="950" 	
+	height="400px"	
+	minHeight="400"  
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status"     
 	>
 	<ec:row>

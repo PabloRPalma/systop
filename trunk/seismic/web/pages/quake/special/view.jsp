@@ -4,7 +4,6 @@
 <head>
 <title>专题地震</title>
 <%@include file="/common/ec.jsp"%>
-<LINK type="text/css" rel="stylesheet" href="${ctx}/styles/quake.css">
 <%@include file="/common/extjs.jsp"%>
 <%@include file="/common/meta.jsp"%>
 </head>
@@ -64,9 +63,9 @@
 		});
 	});
 </script>
-<body>
-<div class="x-panel" style="width: 99.99%">
-<div class="x-panel-header">查看专题地震</div>
+<body style="text-align: center;">
+<div class="x-panel" style="width:1003px;margin:0 auto;">
+<div class="x-panel-header"  style="width:1003px;margin:0 auto;text-align: left">查看专题地震</div>
 <div id="tabs" style="margin-top: 0px;margin-left: 0px;margin-right: 0px;">
 <div id="basic" class="x-hide-display" >
 	<table border="0">
@@ -170,7 +169,7 @@
 					</tr>	
 					<tr>
 						<td valign="top">地震描述:</td>
-						<td><div style="overflow: auto;height: 400px;">${model.desn}</div> </td>
+						<td><div style="overflow: auto;height: 250px;">${model.desn}</div> </td>
 					</tr>
 				</table>
 			</td>
@@ -249,7 +248,7 @@
 </table>
 </div>
 <div id="event_wave" class="x-hide-display">
-	<iframe height="450" src="${ctx}/admin/special/getEventWave.do?specialId=${model.id}" width="100%" frameborder="0"></iframe>
+	<iframe height="480" src="${ctx}/admin/special/getEventWave.do?specialId=${model.id}" width="970" frameborder="0"></iframe>
 </div>
 <div id="station_wave" class="x-hide-display">
 <table id="mytable" height="380" style="margin-top: 5px;width: 800px" align="center">
@@ -262,7 +261,7 @@
 </table>
 </div>
 <div id="phase" class="x-hide-display">
-<iframe height="450" src="${ctx}/admin/special/getPhaseList.do?specialId=${model.id}" width="100%" frameborder="0"></iframe>
+<iframe height="480" src="${ctx}/admin/special/getPhaseList.do?specialId=${model.id}" width="970" frameborder="0"></iframe>
 </div>
 </div>
 </div>
