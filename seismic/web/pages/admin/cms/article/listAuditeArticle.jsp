@@ -85,10 +85,10 @@ function setCatalog(){
 			<s:form name="frmQuery" id="frmQuery" method="post">
 			  <table border="0">
 				<tr>
-					<td width="200">
-					  标题：<input type="text" name="articleName" value="${articleName}" style="width:150px"/>&nbsp;&nbsp;
+					<td>
+					  标题：<input type="text" name="articleName" value="${articleName}" style="width:100px"/>&nbsp;&nbsp;
 					</td>
-					<td width="200">
+					<td>
 					  所属栏目：<select id="catalogId" name="catalogId" />
 					</td>
 					<td>
@@ -134,13 +134,13 @@ function setCatalog(){
 	action="listAuditArticles.do" 
 	useAjax="false" 
 	doPreload="false"
-	pageSizeList="10,20,50,100" 
+	pageSizeList="20,50,100" 
 	editable="false" 
 	sortable="true"
-	rowsDisplayed="10" 
+	rowsDisplayed="20" 
 	generateScript="true" 
 	resizeColWidth="true"
-	classic="true" width="100%" height="300px" minHeight="300"
+	classic="true" width="100%" height="450px" minHeight="450"
 	toolbarContent="navigation|pagejump|pagesize|refresh|extend|status">
 	<ec:row>
 		<ec:column width="50" property="_s" title="选择"
