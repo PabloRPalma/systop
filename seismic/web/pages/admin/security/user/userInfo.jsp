@@ -58,9 +58,9 @@ img{
 				管理员
 			</stc:role>
 			<stc:role ifNotGranted ="ROLE_ADMIN">
-				<c:if test="${user.level != null}">
-					<%= ((java.util.Map) request.getAttribute("userLevelMap")).get(request.getAttribute("user.level")) %>
-				</c:if>
+				<stc:role ifAnyGranted="ROLE_NORMAL">
+					普通用户
+				</stc:role>
 			</stc:role>
 			&nbsp;
 	   </td>
