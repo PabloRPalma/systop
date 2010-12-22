@@ -2,7 +2,7 @@
 <%@include file="/common/taglibs.jsp"%>
 <html>
 <head>
-<title>专题地震</title>
+<title>查看专题地震</title>
 <%@include file="/common/ec.jsp"%>
 <%@include file="/common/extjs.jsp"%>
 <%@include file="/common/meta.jsp"%>
