@@ -65,7 +65,7 @@
 </script>
 <body style="text-align: center;">
 <div class="x-panel" style="width:1003px;margin:0 auto;">
-<div class="x-panel-header"  style="width:1003px;margin:0 auto;text-align: left">查看专题地震</div>
+<div class="x-panel-header"  style="width:995px;margin:0 auto;text-align: left">查看专题地震</div>
 <div id="tabs" style="margin-top: 0px;margin-left: 0px;margin-right: 0px;">
 <div id="basic" class="x-hide-display" >
 	<table border="0">
