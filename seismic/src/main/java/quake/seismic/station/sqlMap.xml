@@ -85,7 +85,7 @@
 		     <isNotEmpty property="startTimeOfTheYear">
 		        <isNotEmpty prepend="AND" property="endTimeOfTheYear">
 		           <![CDATA[
-		           ((ONDATE>=#startTimeOfTheYear#) AND (ONDATE<=#endTimeOfTheYear#))
+		           ((ST.ONDATE>=#startTimeOfTheYear#) AND (ST.ONDATE<=#endTimeOfTheYear#))
 		           ]]>
 		        </isNotEmpty>
 		    </isNotEmpty>	 
