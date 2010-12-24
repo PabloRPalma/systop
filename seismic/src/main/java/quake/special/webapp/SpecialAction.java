@@ -1,7 +1,6 @@
 package quake.special.webapp;
 
 import java.io.File;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -129,17 +128,16 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
       criteria.setSchema(dataSourceManager.getSeismicSchema());
       criteria.setSortProperty(getSortProperty());
       criteria.setSortDir(getSortDir());
+      //地震专题 选择地震目录 时间限制
+      /*
       if (criteria.getEndDate() == null) {
         if (criteria.getStartDate() == null) {
-          try {
-            criteria.setStartDate(DateUtil.add(DateUtil.convertStringToDate(SpecialConstants.TIME),
+            criteria.setStartDate(DateUtil.add(DateUtil.getCurrentDate(),
                 Calendar.DATE, SpecialConstants.QUERY_QC_DAY));
-            criteria.setEndDate(DateUtil.convertStringToDate(SpecialConstants.TIME));
-          } catch (ParseException e) {
-            e.printStackTrace();
-          }
+            criteria.setEndDate(DateUtil.getCurrentDate());  
         }
       }
+      */
       page = PageUtil.getPage(getPageNo(), getPageSize());
 
       int start = Page.start(getPageNo(), getPageSize());
