@@ -1,8 +1,6 @@
 package quake.wap.webapp;
 
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -20,11 +18,9 @@ import quake.base.webapp.NumberFormatUtil;
 import quake.seismic.data.catalog.dao.impl.GridCatDao;
 import quake.seismic.data.catalog.model.Criteria;
 import quake.special.dao.SpecialDao;
-import quake.wap.WapConstants;
 import quake.wap.dao.WapDao;
 
 import com.systop.core.dao.support.Page;
-import com.systop.core.util.DateUtil;
 
 @SuppressWarnings( { "serial", "unchecked" })
 @Controller
@@ -86,6 +82,7 @@ public class WapAction extends AbstractQueryAction<Criteria> {
 
       model.setStart(Page.start(pageCurrent, pageSize));
       model.setSize(pageSize);
+      /*
       try {
         model.setStartDate(DateUtil.add(DateUtil.convertStringToDate(WapConstants.TIME),
             Calendar.DATE, WapConstants.QUERY_QC_DAY));
@@ -94,7 +91,7 @@ public class WapAction extends AbstractQueryAction<Criteria> {
         // TODO Auto-generated catch block
         e.printStackTrace();
       }
-
+       */
       Page page = gridCatDao.query(model);
       cats = page.getData();
       for (int i = 0; i < cats.size(); i++) {
