@@ -194,10 +194,10 @@ public class UserAction extends ExtJsCrudAction<User, UserManager> {
     user = UserUtil.getPrincipal(getRequest());
     getModel().setLoginId(user.getLoginId());
     getModel().setPassword(user.getPassword());
-    if(isSelfEdit()){
+    //if(isSelfEdit()){
       getManager().update(getModel());
       addActionMessage("个人信息修改成功!");
-    }
+    //}
     return "bingo";
   }
   
