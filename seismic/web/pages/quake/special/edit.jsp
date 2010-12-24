@@ -112,14 +112,14 @@
 					</a>		
 		</s:iterator>
 		</td>
-		<td>&nbsp;</td>
+		
 	</tr>
 	<tr><td width="10px">&nbsp;</td>
 		<td width="80px">地  点:</td>
 		<td>
 		<s:textfield id="location" name="model.location" cssStyle="width:155px"/>
 		</td>
-		<td>&nbsp;</td>
+		
 	</tr>
 	<tr><td width="10px">&nbsp;</td>
 		<td>经  度:</td>
@@ -127,7 +127,7 @@
 		<s:textfield id="longitude" name="model.longitude"  cssStyle="width:155px"/>
 			
 		</td>
-		<td>&nbsp;</td>
+		
 	</tr>
 	<tr><td width="10px">&nbsp;</td>
 		<td>纬  度:</td>
@@ -135,7 +135,7 @@
 		<s:textfield id="latitude" name="model.latitude" cssStyle="width:155px"/>
 			
 		</td>
-		<td>&nbsp;</td>
+		
 	</tr>
 	<tr><td width="10px">&nbsp;</td>
 		<td>震  级:</td>
@@ -143,7 +143,7 @@
 		<s:textfield id="magnitude" name="model.magnitude" cssStyle="width:155px"/>
 			
 		</td>
-		<td>&nbsp;</td>
+		
 	</tr>
 	<tr><td width="10px">&nbsp;</td>
 		<td>深 度:</td>
@@ -158,15 +158,15 @@
 		<td>
 		<s:textfield id="quakeTime" name="model.quakeTime" cssStyle="width:155px"/>
 		</td>
-		<td>&nbsp;</td>
+		
 	</tr>
 	
 	<tr><td width="10px">&nbsp;</td>
 		<td>专题标题:</td>
 		<td>
-		<s:textfield id="model.title" name="model.title" cssStyle="width:355px" cssClass="required" />
+		<s:textfield id="model.title" name="model.title" cssStyle="width:355px" cssClass="required" /><font color="red">&nbsp;*</font>
 		</td>
-		<td><font color="red">&nbsp;*</font></td>
+		
 	</tr>
 	<tr><td width="10px">&nbsp;</td>
 		<td>专题图片:</td>
@@ -179,14 +179,13 @@
 			              </a>
 			</c:if>
 		</td>
-		<td>&nbsp;</td>
+		
 	</tr>
 	<tr><td width="10px">&nbsp;</td>
 		<td>地震描述:</td>
 		<td>
-		<s:textarea id="desn" name="model.desn" cssStyle="width:355px;height:100px" cssClass="required" />
+		<s:textarea id="desn" name="model.desn" cssStyle="width:355px;height:100px" cssClass="required" /><font color="red">&nbsp;*</font>
 		</td>
-		<td><font color="red">&nbsp;*</font></td>
 	</tr>
 	</table>
 	
