@@ -102,7 +102,7 @@
 <div id="basic" class="x-hide-display"><s:hidden name="model.id" />
 <s:hidden name="model.qc_id" id="model.qc_id"/>
 <s:hidden name="model.tableName" id="model.tableName"/>
-	<table border="1">
+	<table border="0">
 	<tr><td width="10px">&nbsp;</td>
 		<td width="80px">选择地震目录:</td>
 		<td width="530px">
