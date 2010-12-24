@@ -102,24 +102,24 @@
 <div id="basic" class="x-hide-display"><s:hidden name="model.id" />
 <s:hidden name="model.qc_id" id="model.qc_id"/>
 <s:hidden name="model.tableName" id="model.tableName"/>
-	<table border="0">
+	<table border="1">
 	<tr><td width="10px">&nbsp;</td>
 		<td width="80px">选择地震目录:</td>
-		<td>
+		<td width="530px">
 		<s:iterator value="catalogs">
 					<a href="#" onclick="javascript:selectQc('<s:property value="cltName"/>','${model.id}')">
 						<s:property value="clcName"/>&nbsp;&nbsp;&nbsp;&nbsp;
 					</a>		
 		</s:iterator>
 		</td>
-		<td width="60px">&nbsp;</td>
+		<td>&nbsp;</td>
 	</tr>
 	<tr><td width="10px">&nbsp;</td>
 		<td width="80px">地  点:</td>
 		<td>
 		<s:textfield id="location" name="model.location" cssStyle="width:155px"/>
 		</td>
-		<td width="60px">&nbsp;</td>
+		<td>&nbsp;</td>
 	</tr>
 	<tr><td width="10px">&nbsp;</td>
 		<td>经  度:</td>
@@ -127,7 +127,7 @@
 		<s:textfield id="longitude" name="model.longitude"  cssStyle="width:155px"/>
 			
 		</td>
-		<td width="60px">&nbsp;</td>
+		<td>&nbsp;</td>
 	</tr>
 	<tr><td width="10px">&nbsp;</td>
 		<td>纬  度:</td>
@@ -135,7 +135,7 @@
 		<s:textfield id="latitude" name="model.latitude" cssStyle="width:155px"/>
 			
 		</td>
-		<td width="60px">&nbsp;</td>
+		<td>&nbsp;</td>
 	</tr>
 	<tr><td width="10px">&nbsp;</td>
 		<td>震  级:</td>
@@ -143,7 +143,7 @@
 		<s:textfield id="magnitude" name="model.magnitude" cssStyle="width:155px"/>
 			
 		</td>
-		<td width="60px">&nbsp;</td>
+		<td>&nbsp;</td>
 	</tr>
 	<tr><td width="10px">&nbsp;</td>
 		<td>深 度:</td>
@@ -151,14 +151,14 @@
 		<s:textfield id="depth" name="model.depth" cssStyle="width:155px"/>
 			
 		</td>
-		<td width="60px">&nbsp;</td>
+		<td>&nbsp;</td>
 	</tr>
 	<tr><td width="10px">&nbsp;</td>
 		<td>发震时刻:</td>
 		<td>
 		<s:textfield id="quakeTime" name="model.quakeTime" cssStyle="width:155px"/>
 		</td>
-		<td width="60px">&nbsp;</td>
+		<td>&nbsp;</td>
 	</tr>
 	
 	<tr><td width="10px">&nbsp;</td>
@@ -166,7 +166,7 @@
 		<td>
 		<s:textfield id="model.title" name="model.title" cssStyle="width:355px" cssClass="required" />
 		</td>
-		<td width="60px"><font color="red">&nbsp;*</font></td>
+		<td><font color="red">&nbsp;*</font></td>
 	</tr>
 	<tr><td width="10px">&nbsp;</td>
 		<td>专题图片:</td>
@@ -179,14 +179,14 @@
 			              </a>
 			</c:if>
 		</td>
-		<td width="60px">&nbsp;</td>
+		<td>&nbsp;</td>
 	</tr>
 	<tr><td width="10px">&nbsp;</td>
 		<td>地震描述:</td>
 		<td>
 		<s:textarea id="desn" name="model.desn" cssStyle="width:355px;height:100px" cssClass="required" />
 		</td>
-		<td width="60px"><font color="red">&nbsp;*</font></td>
+		<td><font color="red">&nbsp;*</font></td>
 	</tr>
 	</table>
 	
