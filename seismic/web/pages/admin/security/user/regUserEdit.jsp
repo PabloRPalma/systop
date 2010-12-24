@@ -47,16 +47,21 @@
 	   			<%@ include file="/common/messages.jsp"%>
 	   		</td>
 		</tr>
+		<tr>
+	   		<td align="right" style="border:none;"> [
+	   			<a href="${ctx}/security/user/changePassword.do" >修改个人密码</a>]</td>
+		</tr>
 	</table>
 	<table id="mytable" align="center">
 		<tr>
 			<td class="simple" align="right">真实姓名：</td>
-			<td class="simple">&nbsp;<s:textfield name="model.name"
+			<td width="185" class="simple">&nbsp;
+		  <s:textfield name="model.name"
 				cssClass="required" theme="simple" size="25" /> <font color="red">*</font></td>
-			<td colspan="2">请输入真实的姓名</td>
+			<td width="327" colspan="2">请输入真实的姓名</td>
 		</tr>
 		<tr>
-			<td class="simple" align="right" width="100">性&nbsp;别：</td>
+			<td class="simple" align="right" width="85">性&nbsp;别：</td>
 			<td class="simple">&nbsp;<s:radio list="sexMap" cssClass="required"
 				name="model.sex" cssStyle="border:0px;" /> <font color="red">*</font></td>
 			<td colspan="2"></td>
@@ -98,7 +103,7 @@
 			<td colspan="2"></td>
 		</tr>
 		<tr>
-			<td class="simple" align="right" width="100">行业内外：</td>
+			<td class="simple" align="right" width="85">行业内外：</td>
 			<td class="simple">&nbsp;<s:radio list="industryMap" cssClass="required"
 				name="model.industry" cssStyle="border:0px;" /> <font color="red">*</font></td>
 			<td colspan="2"></td>
@@ -124,7 +129,7 @@
 			<td colspan="2"></td>
 		</tr>
 		<tr>
-			<td class="simple" align="right" width="100">邮&nbsp;编：</td>
+			<td class="simple" align="right" width="85">邮&nbsp;编：</td>
 			<td class="simple">&nbsp;<s:textfield name="model.zip"
 				cssClass="required" theme="simple" size="25" /> <font color="red">*</font></td>
 			<td colspan="2"></td>
