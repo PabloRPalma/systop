@@ -82,6 +82,7 @@ public class WapAction extends AbstractQueryAction<Criteria> {
 
       model.setStart(Page.start(pageCurrent, pageSize));
       model.setSize(pageSize);
+      //手机地震目录查询时间限制
       /*
       try {
         model.setStartDate(DateUtil.add(DateUtil.convertStringToDate(WapConstants.TIME),
