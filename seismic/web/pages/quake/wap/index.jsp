@@ -9,7 +9,7 @@
 <body>
 <form action="index.do">
 <select name="tableName">
-<option>请选择地震目录</option>
+<option value="">请选择地震目录</option>
 <c:forEach items="${catalogs}" var="c">
 <option value="${c.cltName}" 
 <c:if test="${c.cltName eq tableName}">
