@@ -125,8 +125,8 @@
 					 var html ="<div>" +
 					 "<p><p>" +
 					 "<b>发震时刻：<\/b>" + eqTime + "<br>" +
-					 "<stc:role ifAnyGranted='ROLE_LONGLAT'><b>纬度：<\/b>" + eqLat + "°<br>" +
-					 "<b>经度：<\/b>" + eqLng + "°<br></stc:role>" +
+					 "<b>纬度：<\/b>" + eqLat + "°<br>" +
+					 "<b>经度：<\/b>" + eqLng + "°<br>" +
 					 //"<b>位置：<\/b>" + formatLatLng(eqLat, eqLng) + "<br>" +
 					 "<b>深度：<\/b>" + eqDep + " 千米<br>" +
 					 "<b>震级：<\/b>" + eqMsource + " " + eqMag + "<br>" +
