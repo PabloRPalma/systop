@@ -169,7 +169,7 @@
 					</tr>	
 					<tr>
 						<td valign="top">地震描述:</td>
-						<td><div style="overflow: auto;height: 240px;">${model.desn}</div> </td>
+						<td style="line-height: 24px;"><div style="overflow: auto;height: 240px;">${model.desn}</div> </td>
 					</tr>
 				</table>
 			</td>
@@ -181,7 +181,7 @@
 <table id="mytable" height="380" style="margin-top: 5px;width: 800px" align="center">
 	<tr>
 		<td width="15%" align="right" valign="top">影响地区：</td>
-		<td align="left" style="vertical-align: top;" width="85%">
+		<td align="left" style="vertical-align: top;line-height: 24px;" width="85%">
 		<div style="overflow: auto;height: 480px;">${model.area}</div>
 		</td>
 	</tr>
@@ -191,7 +191,7 @@
 <table id="mytable" height="380" style="margin-top: 5px;width: 800px" align="center">
 	<tr>
 		<td width="15%" align="right" valign="top">震中分布图：</td>
-		<td align="left" style="vertical-align: top;" width="85%">
+		<td align="left" style="vertical-align: top;line-height: 24px;" width="85%">
 		<div style="overflow: auto;height: 480px;">${model.epifocus}</div>
 		</td>
 	</tr>
@@ -201,7 +201,7 @@
 <table id="mytable" height="380" style="margin-top: 5px;width: 800px" align="center">
 	<tr>
 		<td width="15%" align="right" valign="top">历史地震分布图：</td>
-		<td align="left" style="vertical-align: top;" width="85%">
+		<td align="left" style="vertical-align: top;line-height: 24px;" width="85%">
 		<div style="overflow: auto;height: 480px;">${model.history_pic}</div>
 		</td>
 	</tr>
@@ -211,7 +211,7 @@
 <table id="mytable" height="380" style="margin-top: 5px;width: 800px" align="center">
 	<tr>
 		<td width="15%" align="right" valign="top">震中区M-T图：</td>
-		<td align="left" style="vertical-align: top;" width="85%">
+		<td align="left" style="vertical-align: top;line-height: 24px;" width="85%">
 		<div style="overflow: auto;height: 480px;">${model.m_t}</div>
 		</td>
 	</tr>
@@ -221,7 +221,7 @@
 <table id="mytable" height="380" style="margin-top: 5px;width: 800px" align="center">
 	<tr>
 		<td width="15%" align="right" valign="top">震源机制解：</td>
-		<td align="left" style="vertical-align: top;" width="85%">
+		<td align="left" style="vertical-align: top;line-height: 24px;" width="85%">
 		<div style="overflow: auto;height: 480px;">${model.mechanism}</div>
 		</td>
 	</tr>
@@ -231,7 +231,7 @@
 <table id="mytable" height="380" style="margin-top: 5px;width: 800px" align="center">
 	<tr>
 		<td width="15%" align="right" valign="top">震源破裂过程：</td>
-		<td align="left" style="vertical-align: top;" width="85%">
+		<td align="left" style="vertical-align: top;line-height: 24px;" width="85%">
 		<div style="overflow: auto;height: 480px;">${model.fracture}</div>
 		</td>
 	</tr>
@@ -241,7 +241,7 @@
 <table id="mytable" height="380" style="margin-top: 5px;width: 800px" align="center">
 	<tr>
 		<td width="15%" align="right" valign="top">烈度分布：</td>
-		<td align="left" style="vertical-align: top;" width="85%">
+		<td align="left" style="vertical-align: top;line-height: 24px;" width="85%">
 		<div style="overflow: auto;height: 480px;">${model.intensity}</div>
 		</td>
 	</tr>
