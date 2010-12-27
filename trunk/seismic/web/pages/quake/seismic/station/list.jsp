@@ -82,11 +82,9 @@
 		<ec:column width="60" property="NET_CODE" title="台网名称" mappingItem="networkInfoMap"/>
 		<ec:column width="60" property="ROCK_TYPE" title="台基" />
 		<ec:column width="60" property="STA_TYPE" title="类型" mappingItem="staTypes"/>
-		<stc:role ifAllGranted="ROLE_LONGLAT">
 			<ec:column width="60" property="STA_LON" title="经度"/>
 			<ec:column width="60" property="STA_LAT" title="纬度"/>		
 		    <ec:column width="60" property="STA_ELEV" title="高程(m)" />
-		</stc:role>
 		<ec:column width="120" property="SITE_NAME" title="地址" />
 		<ec:column width="200" property="-8" title="操作" style="text-align:center" viewsDenied="xls" >
 			<a href="viewChannels.do?stataionId=${item.ID}" target="_blank">查看通道</a> |

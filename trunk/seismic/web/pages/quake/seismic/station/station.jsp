@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PgetMarkerIconUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ page language="java" contentType="text/html;charset=UTF-8"%>
 <%@ page import="java.util.*, java.lang.Double, java.text.*, quake.ProvinceLatlng, quake.base.webapp.NumberFormatUtil" %>
 <%@include file="/common/taglibs.jsp"%>
@@ -54,7 +54,7 @@
 			double lng = Double.valueOf(sta.get("STA_LON").toString());
 		%>
 			var markerIcon = getMarkerIcon("<%=sta.get("ROCK_TYPE")%>");
-			showMarker(markerIcon, "<%=sta.get("STA_CNAME")%>", <%=NumberFormatUtil.format(lng, 1)%>, <%=NumberFormatUtil.format(lat, 1)%>, <%=sta.get("STA_ELEV")%>, "<%=sta.get("ROCK_TYPE") %>");
+			showMarker(markerIcon, "<%=sta.get("STA_CNAME")%>", <%=NumberFormatUtil.format(lng, 2)%>, <%=NumberFormatUtil.format(lat, 2)%>, <%=sta.get("STA_ELEV")%>, "<%=sta.get("ROCK_TYPE") %>");
 		<%}	%>
     }
 
@@ -89,11 +89,9 @@
 			var html ="<div>" +
 			"<p><p>" +
 			"<b>台站名称：<\/b>" + name + "<br>" +
-			<stc:role ifAnyGranted="ROLE_LONGLAT">
 			"<b>台站纬度：<\/b>" + latitude + "°<br>" +
 			"<b>台站经度：<\/b>" + longitude + "°<br>" +			
 			"<b>台站高程：<\/b>" + elevation + " 米<br>" +
-			</stc:role>
 			"<b>台基：<\/b>" + rockType + "<br>" +
 			"<\/div>";
 			marker.openInfoWindowHtml(html);
