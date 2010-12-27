@@ -159,11 +159,8 @@ $(function() {
 	</ec:row>   
 </ec:table>
 </div>
-<div id="dialog" title="查看目录简介">
+<div id="dialog" title="${model.clcName}目录简介">
    <table>
-       <tr>
-          <td align="center">${model.clcName}</td>
-       </tr>
        <tr>
           <td>&nbsp;&nbsp;&nbsp;&nbsp;${model.clDescn}</td>
        </tr>
