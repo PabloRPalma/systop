@@ -2,6 +2,7 @@
 <#list SpecialBean.getSpecialToIndex(1) as article>
 <#if article.front_pic??>                         
 <img width="280" height="168" src="${ctx}${article.front_pic}" />
+<table><tr><td height="1"></tr></td></table>
 <a href="${ctx}/admin/special/frontView.do?model.id=${article.id}" target="_blank">${article.title}</a>
 </#if>
 </#list>
