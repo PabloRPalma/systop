@@ -22,7 +22,7 @@ public final class CatalogConstants {
   /**
    * 第一个栏目的名称
    */
-  public static final String FIRST_CATALOG_NAME = "地震数据共享省级网站平台";
+  public static final String FIRST_CATALOG_NAME = "测震数据服务省级网站平台";
 
   /**
    * 栏目类别(内部栏目)
