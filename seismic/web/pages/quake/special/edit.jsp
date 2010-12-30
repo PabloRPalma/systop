@@ -69,10 +69,10 @@
 				contentEl : 'intensity',
 				title : '烈度分布'
 			}
-			/**,{
+			,{
 				contentEl : 'event_wave',
 				title : '事件波形数据'
-			}*/
+			}
 			,{
 				contentEl : 'station_wave',
 				title : '台站波形记录图'
@@ -254,8 +254,7 @@
 		<textarea id="model.intensity" name="model.intensity" cols="65" rows="4">${model.intensity}</textarea></td>
 	</tr>
 </table>
-</div>
-<!-- 
+</div> 
 <div id="event_wave" class="x-hide-display">
 <table id="mytable" height="380" style="margin-top: 5px;width: 800px" align="center">
 	<tr>
@@ -265,7 +264,6 @@
 	</tr>
 </table>
 </div>
- -->
 <div id="station_wave" class="x-hide-display">
 <table id="mytable" height="380" style="margin-top: 5px;width: 800px" align="center">
 	<tr>
@@ -375,7 +373,6 @@ function intensity(){
 	  fckEditor.Width = 700;
 	  fckEditor.ReplaceTextarea();
 }
-/**
 function event_wave(){
 	var fckEditor = new FCKeditor( 'model.event_wave' ) ;
 	  fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
@@ -384,7 +381,6 @@ function event_wave(){
 	  fckEditor.Width = 700;
 	  fckEditor.ReplaceTextarea();
 }
-*/
 function station_wave(){
 	var fckEditor = new FCKeditor( 'model.station_wave' ) ;
 	  fckEditor.BasePath = "${ctx}/scripts/fckeditor/";
