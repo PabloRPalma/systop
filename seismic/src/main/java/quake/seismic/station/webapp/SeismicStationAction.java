@@ -2,7 +2,6 @@ package quake.seismic.station.webapp;
 
 import java.io.StringWriter;
 import java.text.ParseException;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -31,6 +30,7 @@ import quake.seismic.station.dao.ExportXmlDao;
 import quake.seismic.station.dao.GridStationDao;
 import quake.seismic.station.model.Criteria;
 import quake.seismic.station.model.InstrDic;
+import quake.seismic.station.model.Loc;
 
 import com.systop.common.modules.template.Template;
 import com.systop.common.modules.template.TemplateContext;
@@ -138,7 +138,27 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
         }
       }
       List<Map> list = gridStationDao.queryStation(model);
+      //列表中要求显示该台站下的地震计 格式用"/" 分隔
+      for(Map m :list){
+        Loc loc = new Loc();
+        loc.setSchema(dataSourceManager.getStationSchema());     
+        loc.setNetCode(m.get("NET_CODE").toString());
+        loc.setStaCode(m.get("STA_CODE").toString());
 
+        List<Map> locList = exportRespDao.queryLoc(loc);
+        StringBuffer sb=new StringBuffer();
+        int length = 0;
+        for(Map l:locList){
+          if (length == locList.size() - 1) {
+            sb.append(l.get("SENSOR_MODEL"));   
+            break;
+          }
+          sb.append(l.get("SENSOR_MODEL")).append("/");
+          length++;
+        }
+        m.put("sensor",sb.toString());
+      }
+    
       if (list != null) {
         getRequest().setAttribute("items", list);
       } else {
