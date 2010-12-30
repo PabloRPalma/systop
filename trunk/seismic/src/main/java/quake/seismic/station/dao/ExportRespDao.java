@@ -509,7 +509,7 @@ public class ExportRespDao extends AbstractStationDao {
   /**
    * 根据查询条件执行位置信息查询。
    */
-  private List<Map> queryLoc(Loc l) {
+  public List<Map> queryLoc(Loc l) {
     return getTemplate().queryForList(SQL_LOC, l);
   }
 
