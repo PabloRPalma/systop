@@ -141,7 +141,12 @@
 	  <select id="queryLoc" parameterClass="quake.seismic.station.model.Loc"
 			resultMap="queryLocResult">
 		<![CDATA[
-		SELECT ID,SENSOR_MODEL,SENSOR_RESPID,DIGITIZER_MODEL,DIGITIZER_RESPID FROM $schema$.Loc_info  WHERE NET_CODE=#netCode# and STA_CODE=#staCode# and LOC_ID=#Loc_id#
+		SELECT ID,SENSOR_MODEL,SENSOR_RESPID,DIGITIZER_MODEL,DIGITIZER_RESPID FROM $schema$.Loc_info  WHERE NET_CODE=#netCode# and STA_CODE=#staCode# 
 		]]>
+		<dynamic>
+		     <isNotEmpty prepend="AND" property="Loc_id">
+		       <![CDATA[(LOC_ID=#Loc_id#)]]>
+		    </isNotEmpty>	   
+		</dynamic>
 	</select>
 </sqlMap>
