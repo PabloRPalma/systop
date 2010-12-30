@@ -59,9 +59,9 @@ $(function() {
 		  	    <td>
 		  	      <s:textfield name="model.startLat" cssStyle="width:70px;" cssClass="number" title="度.度，-90至90"/>
 		  	    </td>
-		  	    <td align="right">距离：</td> 
+		  	    <td align="right">半径：</td> 
 		  	    <td>
-		  	      <s:textfield name="model.range" cssStyle="width:100px;" cssClass="number" />
+		  	      <s:textfield name="model.range" cssStyle="width:100px;" cssClass="number" title="距中心点(经纬度)的距离"/>
 		  	    </td>
 			</tr>
 			<tr>

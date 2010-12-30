@@ -90,7 +90,7 @@ $(document).ready(function() {
 		  	    </td>
 	  	  </tr>
 	  	  <tr>
-				<td align="right">台站名称：</td> 
+				<td align="right">台站代码：</td> 
 		  	    <td colspan="3">
 		  	      <s:textfield name="model.staNetCode" cssStyle="width:163px;" cssClass="string" title="台网代码/台站代码，如：HE/XIL"/>
 		  	    </td>
