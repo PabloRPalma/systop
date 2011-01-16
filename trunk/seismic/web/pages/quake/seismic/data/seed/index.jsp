@@ -102,15 +102,12 @@ $(function() {
 		<ec:column width="40" property="_0" title="序号" value="${GLOBALROWCOUNT}" style="text-align:center"/>
 		<ec:column width="75" property="_9" title="操作" style="text-align:center">
 			<s:if test="#attr.item.SEED_EXISTS == 1">
-			   <a href="${ctx}/quake/seismic/data/seed/down.do?seedname=${item.SEED_NAME}">下载</a>
+			   <a h<a href="${ctx}/quake/seismic/data/seed/eventexp/showSeed.do?seedname=${item.SEED_NAME}&tableName=${model.tableName}">波形</a>
 			</s:if>
 			<s:else>
-			   <span style="color:#CCC">下载</span>
-			</s:else> | 
-			<s:if test="#attr.item.SEED_ANALYSIS == 1"><a href="${ctx}/quake/seismic/data/seed/showSeed.do?seedname=${item.SEED_NAME}&tableName=${model.tableName}">波形</a></s:if>
-			<s:else>
-			   <span style="color:#CCC">波形</span> 
+			   <span style="color:#CCC">波形</span>
 			</s:else>
+			
 		</ec:column>
 		<ec:column width="160" property="O_TIME" title="发震时刻" sortable="true">${item.EQ_TIME}</ec:column>	
 		<ec:column width="60" property="EPI_LAT" title="震中纬度" cell="quake.base.webapp.DoubleCell"/>	

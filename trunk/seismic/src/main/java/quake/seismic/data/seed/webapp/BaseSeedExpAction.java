@@ -8,7 +8,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 
 import quake.admin.seedpath.service.SeedpathManager;
 
@@ -199,6 +201,17 @@ public abstract class BaseSeedExpAction extends BaseAction {
         }
       }
     }).start();
+  }
+  
+  /**
+   * 解析reseed.stations的一行数据,如果失败，返回null
+   */
+  public static String[] parseLine(String line) {
+    if(StringUtils.isBlank(line)) {
+      return null;
+    }
+    
+    return line.split("\\s *");
   }
 
   public String[] getChannels() {

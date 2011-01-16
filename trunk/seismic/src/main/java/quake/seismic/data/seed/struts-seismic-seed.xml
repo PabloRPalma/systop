@@ -11,6 +11,7 @@
     	</package>
     	<package name="quake.seismic.eventExp" extends="default" namespace="/quake/seismic/data/seed/eventexp">
     		<action name="*" class="eventExportAction" method="{1}">
+    		  <result name="show">/pages/quake/seismic/data/seed/seedData.jsp</result>
     		</action>
     	</package>
     	<package name="quake.seismic.stationSeedExp" extends="default" namespace="/quake/seismic/data/seed/stationseed">

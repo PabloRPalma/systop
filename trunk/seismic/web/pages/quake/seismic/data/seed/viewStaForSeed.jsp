@@ -76,18 +76,7 @@ a.sta:hover{
 <script type="text/javascript">
 
 $(function() {
-//将存在的通道标示出来
-  var cha = ${cha};
-  if(cha) {
-	  $('.cha').each(function(idx, item){
-		  for(var i = 0; i < cha.length; i++) {
-			  var sp = $(item);
-			  if(cha[i] == sp.html()) {
-				  sp.css("font-weight", "bold");
-			  }
-		  }
-	  });
-  }		
+
 });
 </script>
 </body>

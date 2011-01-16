@@ -112,6 +112,7 @@ public class SeedDao extends AbstractSeedDao<Page> {
     }
     return staName;
   }
+ 
   
   /**
    * 根据台网代码和台站代码，判断连续波形文件是否存在并被解析
@@ -130,15 +131,6 @@ public class SeedDao extends AbstractSeedDao<Page> {
         new Object[] { seedName });
   }
 
-  /**
-   * 查询各台站对某一事件监测数据
-   * @param seedName Seed文件全路径
-   */
-  public List<Map<String, Object>> querySeedPlotsData(String seedFile) {
-    List<Map<String, Object>> list = jdbcTemplate.queryForList("select * from seed_plots where seedfile = ? order by station asc",
-        new Object[] { seedFile });
-    return list;
-  }
 
   /**
    * 查询所有图片路径

@@ -98,7 +98,9 @@ public class SeedpathAction extends BaseAction implements ModelDriven<Seedpath> 
   /**
    * 运行rd程序
    * 首先判断rd程序是否正在运行，如果正在运行则不再启动该程序，否则开始运行rd程序。
+   * @deprecated Parse seed immediately
    */
+  @Deprecated
   public String execSeedPro() {
     if(isRunning()) { //检查seed是否正在运行
       jsonResult = "seed程序正在运行,不可同时运行两个seed程序！";

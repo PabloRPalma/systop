@@ -157,7 +157,7 @@ public class StationSeedAction extends BaseSeedExpAction
    * 处理单个Seed文件
    * @param seedName
    */
-  public void exportSingleSeed(String seedName) {
+  private void exportSingleSeed(String seedName) {
     //构建seed文件的完整路径
     String seed = seedPath + seedName + "\n";
     args[0] = seed; //Input  File (/dev/nrst0) or 'Quit' to Exit

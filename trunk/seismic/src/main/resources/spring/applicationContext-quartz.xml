@@ -20,7 +20,7 @@
 		</property>
 	</bean>
 	
-	<!-- seed程序执行任务 -->
+	<!-- seed程序执行任务 
 	<bean id="seedProJobDetail" 
 		  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject">
@@ -33,7 +33,8 @@
 			<value>false</value>
 		</property>
 	</bean>
-	<!-- seed程序执行触发器(trigger) -->
+	-->
+	<!-- seed程序执行触发器(trigger) 
 	<bean id="seedProTrigger" 
 		  class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail">
@@ -42,7 +43,7 @@
 		<property name="cronExpression">
 			<value>0 0 0 * * ?</value>
 		</property>
-	</bean>
+	</bean>-->
 	<!-- StationSeed程序执行任务 -->
 	<bean id="stationSeedJobDetail" 
 		  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
@@ -78,7 +79,6 @@
 		<property name="triggers">
 			<list>
 				<ref local="seismicEmailCronTrigger" />
-				<ref local="seedProTrigger"/>
 				<ref local="stationSeedTrigger"/>
 			</list>
 		</property>

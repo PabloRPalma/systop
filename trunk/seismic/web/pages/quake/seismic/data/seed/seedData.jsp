@@ -45,6 +45,9 @@ a.sta:hover{
        </tr>
    </table>
 </fieldset>
+<div style="padding:5px;font-weight:bold;">
+   可用通道包括:${cha}
+</div>
 <%@include file="channels_table.jsp" %>
 <fieldset>
     <legend>台站</legend>
@@ -65,17 +68,16 @@ a.sta:hover{
 	      </tr>
 	      <s:iterator value="#request.items" var="item" status="status">
 	         
-	         <s:if test="(#status.index)>0 && (#status.index)%4==0">
+	         <s:if test="(#status.index)>0 && (#status.index)%6==0">
 	             </tr>
 	         </s:if>
-	         <s:if test="(#status.index)%4==0">
+	         <s:if test="(#status.index)%6==0">
 	             <tr>
 	         </s:if>
 	         <td>
 	               <input type="checkbox" name="stations" value="${item.stationCode}"></input>
-	               <a href="javascript:void(0);" onclick="showGraph('${item.id}');" title="查看波形图" class="sta">
+	                 <s:if test="station != null"></s:if>	          
 	                 <s:property value="station"/>
-	               </a>
 	         </td>
 		</s:iterator>
 	</table>
