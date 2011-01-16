@@ -5,17 +5,17 @@
    <table WIDTH="95%" BORDER="0"  CELLSPACING="0" CELLPADDING="0" ALIGN="CENTER">
 		<TR BGCOLOR="#FFFFFF">
 		<td WIDTH="14">&nbsp;</td>
-		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="BHE,BHN,BHZ,SHE,SHN,SHZ"><span class="cha" style="color:red;">ALL</span></td>
-		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="BHE,SHE"><span class="cha" style="color:brown;">??E</span></td>
-		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="BHN,SHN"><span class="cha" style="color:brown;">??N</span></td>
-		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="BHZ,SHZ"><span class="cha" style="color:brown;">??Z</span></td>
+		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="BHE,BHN,BHZ,SHE,SHN,SHZ" class="chan"><span class="cha" style="color:red;">ALL</span></td>
+		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="BHE,SHE" class="chan"><span class="cha" style="color:brown;">??E</span></td>
+		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="BHN,SHN" class="chan"><span class="cha" style="color:brown;">??N</span></td>
+		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="BHZ,SHZ" class="chan"><span class="cha" style="color:brown;">??Z</span></td>
 		<td WIDTH="14">&nbsp;</td>
 		<td WIDTH="14">&nbsp;</td>
 		<td WIDTH="14">&nbsp;</td>
 		</TR>
 		<TR BGCOLOR="#FFFFFF">
 		<td WIDTH="14">&nbsp;</td>
-		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="BHE,BHN,BHZ"><span class="cha" style="color:green;">B??</span></td>
+		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="BHE,BHN,BHZ" class="chan"><span class="cha" style="color:green;">B??</span></td>
 		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="BHE" class="chan"><span class="cha" style="color:blue;">BHE</span></td>
 		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="BHN" class="chan"><span class="cha" style="color:blue;">BHN</span></td>
 		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="BHZ" class="chan"><span class="cha" style="color:blue;">BHZ</span></td>
@@ -25,7 +25,7 @@
 		</TR>
 		<TR BGCOLOR="#FFFFFF">
 		<td WIDTH="14">&nbsp;</td>
-		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="SHE,SHN,SHZ"><span class="cha" style="color:green;">S??</span></td>
+		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="SHE,SHN,SHZ" class="chan"><span class="cha" style="color:green;">S??</span></td>
 		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="SHE" class="chan"><span class="cha" style="color:blue;">SHE</span></td>
 		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="SHN" class="chan"><span class="cha" style="color:blue;">SHN</span></td>
 		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="SHZ" class="chan"><span class="cha" style="color:blue;">SHZ</span></td>
@@ -53,9 +53,12 @@ $(function(){
 		  $('.chan').each(function(idx, item){
 			  for(var i = 0; i < cha.length; i++) {
 				  var cbox = $(item);
-				  if(cha[i] == cbox.val()) {
-					  cbox.attr('disabled', '');
-				  }
+				  var val = cbox.val().split(",");
+				  for(var j = 0; j < val.length; j ++) {
+					  if(cha[i] == val[j]) {
+						  cbox.attr('disabled', '');
+					  }
+				  }				  
 			  }
 		  }); 
 	 }		
