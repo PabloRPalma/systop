@@ -92,10 +92,7 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
   
   @Autowired
   private SeedDao seedDao;
-  
-  @Autowired
-  @Qualifier("baseHibernateDao")
-  private BaseHibernateDao dao;
+
 
   /**
    * 测震台站查询条件类
@@ -265,36 +262,7 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
     return "stationSeeds";  
   }
   
-  /**
-   * 进入波形文件导出页面
-   * @return
-   */
-  public String viewStaForSeed() {
-    getModel().setSchema(dataSourceManager.getStationSchema());
-    //用于输出当前台站信息
-    List<Map> list = gridStationDao.queryStation(getModel());
-    if(CollectionUtils.isNotEmpty(list)) {
-      getRequest().setAttribute("sta", list.get(0));
-    }
-    // 查询当前台站的最大和最小时间
-    Object obj = dao.findObject("select min(s.startTime), max(s.endTime)"
-        + " from StationSeed s where s.net=? and s.sta=?",
-        getModel().getNetCode(), 
-        getModel().getStaCode());
-    if(obj != null && obj.getClass().isArray()) {
-      getRequest().setAttribute("startTime", ((Object[]) obj)[0]);
-      getRequest().setAttribute("endTime", ((Object[]) obj)[1]);
-    }
-    //查询当前台站的通道
-    List l = dao.query("select distinct(s.cha) from StationSeed s where s.net=? and s.sta=?",
-        getModel().getNetCode(), 
-        getModel().getStaCode());
-    if(CollectionUtils.isNotEmpty(l)) {
-      getRequest().setAttribute("cha", this.toJson(l));
-    }
-    
-    return "viewStaForSeed";
-  }
+
 
   /**
    * 使用给出的数据，渲染freemarker模板，用于根据查询条件动态生成amcharts 设置文件.

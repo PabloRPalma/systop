@@ -88,7 +88,7 @@ public abstract class BaseSeedExpAction extends BaseAction {
   /**
    * 删除输出目录，包括rdseed生成的文件和打包的文件
    */
-  protected void rmOutput(File dir) {
+  public  static void rmOutput(File dir) {
     ProcessBuilder procBuilder = new ProcessBuilder();
     procBuilder.redirectErrorStream(true);
     procBuilder.command("rm", "-r", dir.getAbsolutePath());
@@ -188,7 +188,7 @@ public abstract class BaseSeedExpAction extends BaseAction {
   /**
    * 多线程读取rdseed输出的信息，使得rdseed可以正确运行
    */
-  protected void readString(final Reader reader, final boolean print) throws Exception {
+  public static void readString(final Reader reader, final boolean print) throws Exception {
     new Thread(new Runnable() {
       public void run() {
         try {
@@ -212,6 +212,21 @@ public abstract class BaseSeedExpAction extends BaseAction {
     }
     
     return line.split("\\s *");
+  }
+  
+  
+  /**
+   * 修正通道
+   */
+  public static String fixChannel(String chl) {
+    if(StringUtils.isBlank(chl)) {
+      return StringUtils.EMPTY;
+    }
+    
+    if(chl.indexOf("\"") >= 0) {
+      chl = StringUtils.replace(chl, "\"", "");
+    }
+    return chl.trim();
   }
 
   public String[] getChannels() {

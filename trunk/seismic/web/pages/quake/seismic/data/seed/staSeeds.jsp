@@ -90,7 +90,7 @@
 		<ec:column width="150" property="SITE_NAME" title="地址" />
 		<ec:column width="100" property="-8" title="连续波形" style="text-align:center">
 			<s:if test = "#attr.item.HAS_SEED">
-			   <a href="${ctx}/quake/seismic/station/viewStaForSeed.do?model.netCode=${item.NET_CODE}&model.staCode=${item.STA_CODE}">导出</a>
+			   <a href="${ctx}/quake/seismic/data/seed/stationseed/viewStaForSeed.do?c.netCode=${item.NET_CODE}&c.staCode=${item.STA_CODE}">导出</a>
 			</s:if>
 			<s:else>
 			   <span style="color:#cecece;">导出</span>
