@@ -16,9 +16,9 @@
 		<TR BGCOLOR="#FFFFFF">
 		<td WIDTH="14">&nbsp;</td>
 		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="BHE,BHN,BHZ"><span class="cha" style="color:green;">B??</span></td>
-		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="BHE"><span class="cha" style="color:blue;">BHE</span></td>
-		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="BHN"><span class="cha" style="color:blue;">BHN</span></td>
-		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="BHZ"><span class="cha" style="color:blue;">BHZ</span></td>
+		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="BHE" class="chan"><span class="cha" style="color:blue;">BHE</span></td>
+		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="BHN" class="chan"><span class="cha" style="color:blue;">BHN</span></td>
+		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="BHZ" class="chan"><span class="cha" style="color:blue;">BHZ</span></td>
 		<td WIDTH="14">&nbsp;</td>
 		<td WIDTH="14">&nbsp;</td>
 		<td WIDTH="14">&nbsp;</td>
@@ -26,12 +26,38 @@
 		<TR BGCOLOR="#FFFFFF">
 		<td WIDTH="14">&nbsp;</td>
 		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="SHE,SHN,SHZ"><span class="cha" style="color:green;">S??</span></td>
-		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="SHE"><span class="cha" style="color:blue;">SHE</span></td>
-		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="SHN"><span class="cha" style="color:blue;">SHN</span></td>
-		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="SHZ"><span class="cha" style="color:blue;">SHZ</span></td>
+		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="SHE" class="chan"><span class="cha" style="color:blue;">SHE</span></td>
+		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="SHN" class="chan"><span class="cha" style="color:blue;">SHN</span></td>
+		<td><INPUT TYPE="checkbox" NAME="channels" VALUE="SHZ" class="chan"><span class="cha" style="color:blue;">SHZ</span></td>
 		<td WIDTH="14">&nbsp;</td>
 		<td WIDTH="14">&nbsp;</td>
 		<td WIDTH="14">&nbsp;</td>
 		</TR>
   	</table>
 </fieldset>
+<script>
+$(function(){
+	var cha = ${cha};
+	$('.chan').attr('disabled', 'disabled');
+	//将存在的通道标示出来
+	if(cha) {
+		  $('.cha').each(function(idx, item){
+			  for(var i = 0; i < cha.length; i++) {
+				  var sp = $(item);
+				  if(cha[i] == sp.html()) {
+					  sp.css("font-weight", "bold");
+				  }
+			  }
+		  });
+		  //不存在的通道设置为disable
+		  $('.chan').each(function(idx, item){
+			  for(var i = 0; i < cha.length; i++) {
+				  var cbox = $(item);
+				  if(cha[i] == cbox.val()) {
+					  cbox.attr('disabled', '');
+				  }
+			  }
+		  }); 
+	 }		
+});
+</script>

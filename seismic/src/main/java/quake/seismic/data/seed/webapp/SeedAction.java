@@ -1,8 +1,12 @@
 package quake.seismic.data.seed.webapp;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -24,12 +28,13 @@ import quake.seismic.data.seed.model.StaCriteria;
 /**
  * Seed事件波形Action
  * @author dhm
- *
+ * @deprecated
  */
+@Deprecated
 @SuppressWarnings( { "serial", "unchecked" })
 @Controller
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-public class SeedAction extends AbstractQueryAction<Criteria> {
+public class SeedAction extends BaseSeedExpAction {
   
   private Criteria model = new Criteria();
   
@@ -78,7 +83,7 @@ public class SeedAction extends AbstractQueryAction<Criteria> {
       seedFile.append(seedpathManager.get().getPath()).append("data").append(separator).append(
           "seed").append(separator).append(seedName);
     }
-    List<Map<String, Object>> items = seedDao.querySeedPlotsData(seedFile.toString());
+    List<Map<String, Object>> items = querySeedPlotsData(seedFile.toString());
     StaCriteria criteria = new StaCriteria();
     criteria.setSchema(dataSourceManager.getStationSchema());
     // 遍历所有的事件，取出对应Seed文件名，并将台站代码替换为台站中文名
@@ -106,7 +111,7 @@ public class SeedAction extends AbstractQueryAction<Criteria> {
         map.put("stationCode", criteria.getStaCode());
       }
       if(StringUtils.isNotBlank(station)) {
-        map.put("Station", station);
+        map.put("station", station);
       }
     }
     getRequest().setAttribute("items", items);
@@ -114,7 +119,7 @@ public class SeedAction extends AbstractQueryAction<Criteria> {
   }
   
   /**
-   * 根据波形文件名称查询地震目录（单条）
+   * 根据波形文件名称查询地震目录（单条）,用于导出波形之前看到地震的情况
    * @return
    */
   public Map getCatalogBySeed() {
@@ -129,6 +134,7 @@ public class SeedAction extends AbstractQueryAction<Criteria> {
   /**
    * 显示事件波形图，获取用户所选择的所有事件波形ID
    */
+  @Deprecated
   public String view() {
     if (id != null) {
       String[] ids = id.split(",");
@@ -149,6 +155,7 @@ public class SeedAction extends AbstractQueryAction<Criteria> {
   /**
    * 输出图片流
    */
+  @Deprecated
   public String jpgUrl() {
     String path = getRequest().getParameter("url");
     if(StringUtils.isNotBlank(path)){
@@ -173,7 +180,9 @@ public class SeedAction extends AbstractQueryAction<Criteria> {
 
   /**
    * SEED文件下载
+   * @deprecated
    */
+  @Deprecated
   public String down() {
     getResponse().setContentType("application/x-download");
     String seedname = getRequest().getParameter("seedname");
@@ -197,6 +206,16 @@ public class SeedAction extends AbstractQueryAction<Criteria> {
       }
     }
     return null;
+  }
+  
+
+  /**
+   * 查询各台站对某一事件监测数据
+   * @param seedName Seed文件全路径
+   */
+  public List<Map<String, Object>> querySeedPlotsData(String seedFile) {
+   return null;
+
   }
 
   public Criteria getModel() {
