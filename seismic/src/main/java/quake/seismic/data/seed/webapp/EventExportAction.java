@@ -328,20 +328,7 @@ public class EventExportAction extends BaseSeedExpAction implements Preparable{
     }
     return list;
   }
-  
-  /**
-   * 修正通道
-   */
-  public static String fixChannel(String chl) {
-    if(StringUtils.isBlank(chl)) {
-      return StringUtils.EMPTY;
-    }
-    
-    if(chl.indexOf("\"") >= 0) {
-      chl = StringUtils.replace(chl, "\"", "");
-    }
-    return chl.trim();
-  }
+
   
   /**
    * 根据波形文件名称查询地震目录（单条）,用于导出波形之前看到地震的情况

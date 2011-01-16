@@ -9,6 +9,7 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
@@ -16,14 +17,18 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.StringUtils;
+import org.hibernate.criterion.MatchMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 
+import quake.admin.ds.service.DataSourceManager;
 import quake.seismic.data.seed.model.StationSeed;
+import quake.seismic.station.dao.GridStationDao;
+import quake.seismic.station.model.Criteria;
 
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
@@ -69,16 +74,16 @@ public class StationSeedAction extends BaseSeedExpAction
   public void prepare() throws Exception {
     //通道列表
     if(!ArrayUtils.isEmpty(channels)) {
-      args[6] = StringUtils.arrayToCommaDelimitedString(channels) + "\n";
+      args[6] = org.springframework.util.StringUtils.arrayToCommaDelimitedString(channels) + "\n";
     }
     //输出格式
-    if(StringUtils.hasText(format)) {
+    if(StringUtils.isNotBlank(format)) {
       args[9] = format + "\n";    
     }
     //时间输入的位置,缺省索引是12
     int tmIdx = 12;
     //1标示输出SAC格式
-    if(!StringUtils.hasText(format) || "1".equals(format)) {
+    if(!StringUtils.isNotBlank(format) || "1".equals(format)) {
       tmIdx = 14;
     }
     //2标示输出AH格式
@@ -129,10 +134,16 @@ public class StationSeedAction extends BaseSeedExpAction
     args.add(model.getSta());
     
     if(!ArrayUtils.isEmpty(channels)) {
-      hql.append(" and s.cha in ")
-      //这里用IN查询，很土的办法...
-      .append(toJson(channels).replace("\"", "'").replace("[", "(").replace("]", ")"));
-      //args.add(channels);
+      hql.append(" and ( ");
+      for(int i = 0; i < channels.length; i++) {
+        hql.append("s.cha like ?");
+        if(i < channels.length - 1) {
+          hql.append(" or ");
+        } else {
+          hql.append(")");
+        }
+        args.add(MatchMode.ANYWHERE.toMatchString(channels[i]));
+      }
     }
     
     if(model.getStartTime() != null) {
@@ -150,6 +161,7 @@ public class StationSeedAction extends BaseSeedExpAction
     for(String name : list) {
       s.add(name);
     }
+    logger.debug("需要导出的文件{}", this.toJson(s));
     return s;
   }
   
@@ -214,9 +226,65 @@ public class StationSeedAction extends BaseSeedExpAction
       }
     }
   }
-  
+  /**
+   * 用于获取Schema
+   */
+  @Autowired(required = true)
+  private DataSourceManager dataSourceManager;
+  private Criteria c = new Criteria();
+  /**
+   * 用于表格查询的测震台站DAO
+   */
+  @Autowired(required = true)
+  @Qualifier("gridStationDao")
+  private GridStationDao gridStationDao;
+  /**
+   * 进入波形文件导出页面
+   * @return
+   */
+  public String viewStaForSeed() {
+    c.setSchema(dataSourceManager.getStationSchema());
+    //用于输出当前台站信息
+    List<Map> list = gridStationDao.queryStation(c);
+    if(CollectionUtils.isNotEmpty(list)) {
+      getRequest().setAttribute("sta", list.get(0));
+    }
+    // 查询当前台站的最大和最小时间
+    Object obj = dao.findObject("select min(s.startTime), max(s.endTime)"
+        + " from StationSeed s where s.net=? and s.sta=?",
+        c.getNetCode(), 
+        c.getStaCode());
+    if(obj != null && obj.getClass().isArray()) {
+      getRequest().setAttribute("startTime", ((Object[]) obj)[0]);
+      getRequest().setAttribute("endTime", ((Object[]) obj)[1]);
+    }
+    //查询当前台站的通道
+    List<String> l = dao.query("select distinct(s.cha) from StationSeed s where s.net=? and s.sta=?",
+        c.getNetCode(), 
+        c.getStaCode());
+    if(CollectionUtils.isNotEmpty(l)) {
+      Set<String> chas = new HashSet<String>(); //存放通道数据
+      for(String chs : l) { //数据库中的通道数据使用comma分割的
+        String[] ch = StringUtils.split(chs, ",");
+        for(String channel : ch) { //得到每一个通道
+          chas.add(channel);
+        }
+      }
+      getRequest().setAttribute("cha", this.toJson(chas));
+    }
+    
+    return "viewStaForSeed";
+  }
 
   
+  public Criteria getC() {
+    return c;
+  }
+
+  public void setC(Criteria c) {
+    this.c = c;
+  }
+
   @Override
   public StationSeed getModel() {
     return model;
