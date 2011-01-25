@@ -35,7 +35,9 @@ public class ExportRespDao extends AbstractStationDao {
    * 数采下的response
    */
   private List digitizerResponse;
-
+  /**
+   * 数据源
+   */
   private String schema;
   /**
    * 定义每行的长度
