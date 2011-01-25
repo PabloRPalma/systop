@@ -1,7 +1,11 @@
 package quake.seismic.station.model;
 
 import quake.base.model.PageSchemaAware;
-
+/**
+ * 位置查询条件
+ * @author yj
+ *
+ */
 public class Loc extends PageSchemaAware {
   /**
    * 台网名称

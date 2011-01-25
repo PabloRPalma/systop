@@ -30,13 +30,19 @@ public class ExportXmlDao extends AbstractStationDao {
    * 台站
    */
   private Map station = null;
-
+  /**
+   * 数据源
+   */
   private String schema;
 
   private Element response;
-
+  /**
+   * 通道列表
+   */
   private List<Map> channelList;
-
+  /**
+   * 位置对象
+   */
   private Map loc_info;
 
   /**

@@ -13,7 +13,11 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.xml.sax.InputSource;
-
+/**
+ * jdom工具类
+ * @author yj
+ *
+ */
 public final class JdomUtil {
   /**
    * cannot be instantiated
