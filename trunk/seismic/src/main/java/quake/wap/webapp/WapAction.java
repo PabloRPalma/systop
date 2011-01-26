@@ -21,7 +21,11 @@ import quake.special.dao.SpecialDao;
 import quake.wap.dao.WapDao;
 
 import com.systop.core.dao.support.Page;
-
+/**
+ * 手机action
+ * @author yj
+ *
+ */
 @SuppressWarnings( { "serial", "unchecked" })
 @Controller
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
@@ -70,7 +74,10 @@ public class WapAction extends AbstractQueryAction<Criteria> {
 
   /** 地震目录 静态化，避免重复查询 */
   private static List<Map<String, String>> catalogs = null;
-
+/**
+ * 地震目录列表
+ * @return
+ */
   public String index() {
     if (StringUtils.isNotBlank(tableName)) {
       model.setTableName(tableName);
