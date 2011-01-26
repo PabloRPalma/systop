@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.interceptor.validation.SkipValidation;
@@ -208,6 +210,28 @@ public class UserAction extends ExtJsCrudAction<User, UserManager> {
   public String userInfo() {
     user = UserUtil.getPrincipal(getRequest());
     return "userInfo";
+  }
+  
+  /**
+   * 当前登录用户是否有该角色
+   * @param roleName 角色名称
+   */
+  @SuppressWarnings("unchecked")
+  public String hasRoleForLoginUser(HttpServletRequest req, String roleName) {
+    User user = UserUtil.getPrincipal(req);
+    if (user != null) {
+      logger.debug("当前登录用户：{}", user.getUsername());
+      List<Role> roleList = getManager().getDao().query("select r from Role r join r.users u "
+          + "where u.id=?", user.getId());
+      for (Role role : roleList) {
+        if (StringUtils.equals(role.getName(), roleName)) {
+          return roleName;
+        }
+      }
+      return null;
+    }
+    
+    return null;
   }
   
   /**
