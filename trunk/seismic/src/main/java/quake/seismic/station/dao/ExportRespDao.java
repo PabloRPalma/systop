@@ -47,7 +47,7 @@ public class ExportRespDao extends AbstractStationDao {
   /**
    * 获得通道
    */
-  public void getChannel(String id) {
+  private void getChannel(String id) {
     Criteria c = new Criteria();
     c.setChannelId(id);
     c.setSchema(schema);
@@ -268,7 +268,7 @@ public class ExportRespDao extends AbstractStationDao {
   /**
    * 第2，3，4 级别中第一部分Numerator或者Denominator部分显示
    */
-  public StringBuffer setNumeratorOrDenominator(Map m) {
+  private StringBuffer setNumeratorOrDenominator(Map m) {
     StringBuffer sb = new StringBuffer();
     int space = 10;
     sb.append(StationConstants.ROW_START).append("    ").append("Numerator cofficients:").append(
@@ -372,7 +372,7 @@ public class ExportRespDao extends AbstractStationDao {
   /**
    * 第一级别下的poles/zeros
    */
-  public StringBuffer setComplex(Map m) {
+  private StringBuffer setComplex(Map m) {
     int space = 10;
     StringBuffer sb = new StringBuffer();
     sb.append(StationConstants.ROW_START).append("    ").append(m.get("complex")).append(
@@ -410,7 +410,7 @@ public class ExportRespDao extends AbstractStationDao {
   /**
    * 填充空格
    */
-  public StringBuffer setSpace(int length, String s) {
+  private StringBuffer setSpace(int length, String s) {
     StringBuffer sb = new StringBuffer();
     for (int i = 0; i < length - s.length(); i++) {
       sb.append(" ");
@@ -461,7 +461,7 @@ public class ExportRespDao extends AbstractStationDao {
   /**
    * RESP开始信息以及通道信息显示
    */
-  public StringBuffer setChannelMeg() {
+  private StringBuffer setChannelMeg() {
     StringBuffer sb = new StringBuffer();
     sb.append(StationConstants.ROW_START).append("    ").append(
         "<< IRIS SEED Reader, Release 5.0 >>").append(StationConstants.NEW_LINE);
