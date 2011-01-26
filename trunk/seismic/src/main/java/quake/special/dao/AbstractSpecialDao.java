@@ -1,6 +1,9 @@
 package quake.special.dao;
 
 import quake.DataType;
+/**
+ * 抽象类
+ */
 import quake.base.dao.AbstractSeismicDao;
 @SuppressWarnings("unchecked")
 public class AbstractSpecialDao<T> extends AbstractSeismicDao {

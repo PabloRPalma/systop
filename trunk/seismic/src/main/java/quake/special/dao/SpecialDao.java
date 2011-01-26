@@ -13,7 +13,11 @@ import quake.seismic.data.catalog.model.Criteria;
 import quake.seismic.data.phase.model.PhaseCriteria;
 
 import com.systop.core.dao.support.Page;
-
+/**
+ * 地震专题dao
+ * @author yj
+ *
+ */
 @SuppressWarnings("unchecked")
 @Repository
 public class SpecialDao extends AbstractSpecialDao<Page> {

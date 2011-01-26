@@ -1,6 +1,9 @@
 package quake.special.service;
 
 import java.io.File;
+/**
+ * 地震目录manager
+ */
 
 import org.apache.commons.lang.xwork.StringUtils;
 import org.springframework.stereotype.Service;

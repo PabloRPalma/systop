@@ -12,7 +12,11 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import com.systop.core.model.BaseModel;
-
+/**
+ * 地震专题
+ * @author yj
+ *
+ */
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "specials")
