@@ -57,7 +57,7 @@ public class ExportXmlDao extends AbstractStationDao {
   /**
    * 获得台站
    */
-  public void getSta(String id) {
+  private void getSta(String id) {
     Criteria c = new Criteria();
     c.setId(id);
     c.setSchema(schema);
