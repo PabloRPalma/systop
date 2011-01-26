@@ -3,10 +3,14 @@ package com.systop.cms.webview.service;
 import java.util.Collections;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.systop.cms.CmsConstants;
 import com.systop.cms.model.Catalogs;
+import com.systop.common.modules.security.user.webapp.UserAction;
 import com.systop.core.service.BaseGenericsManager;
 
 /**
@@ -14,7 +18,10 @@ import com.systop.core.service.BaseGenericsManager;
  */
 @Service
 public class CatalogFreeMarkerManager extends BaseGenericsManager<Catalogs> {
-
+  
+  @Autowired(required = true)
+  private UserAction userAction;
+  
   /***/
   public Catalogs getCatByName(String name) {
     List<Catalogs> list = query("from Catalogs c where c.name=?", name);
@@ -41,7 +48,6 @@ public class CatalogFreeMarkerManager extends BaseGenericsManager<Catalogs> {
    * 根据开始结束位置获得对应数量的栏目。常在编辑主页列表时使用
    * @return
    */
-  @SuppressWarnings("unchecked")
   public List<Catalogs> getRoot() {
     String hql = "from Catalogs c where c.parentCatalog is null and c.isEnable = ? and c.showOnIndex = ?"
         + "order by orderId";
@@ -75,7 +81,6 @@ public class CatalogFreeMarkerManager extends BaseGenericsManager<Catalogs> {
   /**
    * 根据开始位置获取首页导航
    */
-  @SuppressWarnings("unchecked")
   public List<Catalogs> getNavigation(int start, int end) {
     String hql = "from Catalogs c where c.parentCatalog is null and c.isEnable = ? and c.showOnTop = ?"
       + "order by orderId";
@@ -104,4 +109,11 @@ public class CatalogFreeMarkerManager extends BaseGenericsManager<Catalogs> {
     return url.startsWith("http://");
   }
   
+  /**
+   * 当前登录用户是否有该角色
+   * @param roleName 角色名称
+   */
+  public String isGrantRloe(HttpServletRequest req, String roleName) {
+    return userAction.hasRoleForLoginUser(req, roleName);
+  }
 }
