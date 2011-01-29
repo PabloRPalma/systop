@@ -306,7 +306,7 @@ function preFckEditor(){
 	mechanism();
 	fracture();
 	intensity();
-	//event_wave();
+	event_wave();
 	station_wave();
 }
 function desn(){
