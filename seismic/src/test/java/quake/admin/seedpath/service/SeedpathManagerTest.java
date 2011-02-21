@@ -20,7 +20,7 @@ public class SeedpathManagerTest extends BaseTransactionalTestCase {
    * 测试返回数据库中存储的波形文件存储路径信息
    */
   public void testGet() {
-    assertNull(seedpathManager.get());
+    assertNotNull(seedpathManager.get());
   }
   /**
    * 测试保存或者更新路径
@@ -35,15 +35,6 @@ public class SeedpathManagerTest extends BaseTransactionalTestCase {
  * 测试修改seed目录下的dir配置文件
  */
   public void testInitConfigFile() {
-    seedpathManager.initConfigFile("c:/", "root", "root");
+    seedpathManager.initConfigFile("/home/yj/seed/", "root", "root");
   }
-
-  public void testSetBaseHibernateDao() {
-    fail("Not yet implemented");
-  }
-
-  public void testIsDefined() {
-    fail("Not yet implemented");
-  }
-
 }
