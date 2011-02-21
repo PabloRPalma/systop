@@ -29,7 +29,10 @@ import com.systop.core.dao.support.Page;
 import com.systop.core.util.DateUtil;
 
 /**
- * 地震目录查询查
+ * 地震目录查询类，提供两种方式的地址目录查询类，包括按矩形和圆形区域查询
+ * 震中分布图在Google map地图中显示
+ * 地震目录相关数据下载，基本目录格式、完全目录格式、WKF和EQT
+ * 震相相关数据下载，观测报告
  * @author DU
  *
  */
@@ -72,7 +75,8 @@ public class CatAction extends AbstractQueryAction<Criteria> {
   
   /**
    * 进入地震目录查询页面
-   * @return
+   * 根据后台配置的地震目录表名，查询该表中的地震目录数据
+   * @return 
    */
   public String index() {
     if (StringUtils.isNotBlank(model.getTableName())) {
@@ -94,6 +98,8 @@ public class CatAction extends AbstractQueryAction<Criteria> {
   }
   /**
    * 显示GIS信息
+   * 根据所选查询条件，在Google map上显示震中分布图
+   * 将经纬度保留小数点后两位
    * @return
    */
   public String showGis(){
@@ -146,7 +152,8 @@ public class CatAction extends AbstractQueryAction<Criteria> {
   }
   
   /**
-   * 进入震相查询页面，实际是有震相数据的地震目录查询页。此页没有EQT与WKF数据下载功能
+   * 进入震相查询页面，实际是有震相数据的地震目录查询页
+   * 没有EQT与WKF数据下载功能
    * @return
    */
   public String indexPhase() {
@@ -185,6 +192,7 @@ public class CatAction extends AbstractQueryAction<Criteria> {
   }
   /**
    * 地震目录查询返回结果
+   * 按照所选条件分页查询地震目录数据
    * @return
    */
   public String list() {
@@ -284,7 +292,7 @@ public class CatAction extends AbstractQueryAction<Criteria> {
   }
   
   /**
-   * 导出单个震相数据
+   * 导出单个震相数据的观测报告
    * @return
    */
   public String exportSingleBulletin() {
