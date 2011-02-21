@@ -41,6 +41,9 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
   
   /**
    * 查询需要导出的数据
+   * 按圆形或矩形区域查询地震目录数据
+   * 并将地震目录查询出的数据按照指定的格式生成字符串
+   * @param criteria 目录查询参数
    */
   @Override
   public StringBuffer query(Criteria criteria) {
@@ -55,9 +58,10 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
     StringBuffer buf = new StringBuffer(100000);
     for (Iterator<Map> itr = rows.iterator(); itr.hasNext();) {
       Map row = itr.next();
+      //WKF格式数据
       if ("WKF".equals(criteria.getExpType())) {
         buf.append(extractWkf(row));
-      } else {
+      } else {//EQT格式数据
         buf.append(extractEqt(row));
       }
     }
@@ -66,6 +70,10 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
 
   /**
    * 查询需要导出的数据(VLM)
+   * 将地震目录查询出的数据按照指定的格式生成字符串
+   * 导出的数据格式包括：基本目录数据格式、完全目录数据格式和观测报告
+   * 具体数据格式见测震数据规范相关文档
+   * @param criteria 目录查询参数
    */
   public StringBuffer queryForVlm(Criteria criteria) {
     Assert.notNull(criteria, "Criteria is null.");
@@ -106,6 +114,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
   
   /**
    * 查询单个震相数据(观测报告)
+   * @param criteria 目录查询参数
    */
   public String queryForSingleBulletin(Criteria criteria) {
     logger.debug("查询条件：{}", criteria.getQcId() + " : " + criteria.getTableName() + " : ");

@@ -24,6 +24,9 @@ public class GridCatDao extends AbstractCatDao<Page> {
   
   /**
    * 查询地震目录
+   * 两种查询方式，按矩形区域查询和按圆形区域查询
+   * 根据地震目录配置情况判断是否关联震级表
+   * @param criteria 目录查询参数
    */
   @SuppressWarnings("unchecked")
   @Override
@@ -50,7 +53,8 @@ public class GridCatDao extends AbstractCatDao<Page> {
   
   /**
    * 地震目录单表查询,获取GIS显示所需要数据，无分页查询
-   * @param criteria
+   * 两种查询方式，按矩形区域查询和按圆形区域查询
+   * @param criteria 目录查询参数
    * @return
    */
   @SuppressWarnings("unchecked")
@@ -67,7 +71,7 @@ public class GridCatDao extends AbstractCatDao<Page> {
   
   /**
    * 根据地震目录ID查询震级
-   * @param magCriteria
+   * @param magCriteria 震级查询参数
    * @return
    */
   @SuppressWarnings("unchecked")
@@ -78,8 +82,9 @@ public class GridCatDao extends AbstractCatDao<Page> {
   
   /**
    * 查询所有地震目录震级
+   * 将地震目录相关震级，包括ML,Ms,Mb,MB,Ms7,Mw以数据列的形式组织到查询结果中
    * @param rows 地震目录查询结果
-   * @param criteria
+   * @param criteria 震级查询参数
    * @return
    */
   @SuppressWarnings("unchecked")
