@@ -15,6 +15,9 @@ import com.systop.core.test.BaseTransactionalTestCase;
 public class QuakeCatalogManagerTest extends BaseTransactionalTestCase {
   @Autowired(required = true)
   private QuakeCatalogManager quakeCatalogManager;
+  /**
+   * 查询条件
+   */
   private QuakeCatalog model = new QuakeCatalog();
 
   /**

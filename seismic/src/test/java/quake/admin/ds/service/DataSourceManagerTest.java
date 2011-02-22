@@ -16,6 +16,9 @@ import com.systop.core.test.BaseTransactionalTestCase;
 public class DataSourceManagerTest extends BaseTransactionalTestCase {
   @Autowired
   private DataSourceManager dataSourceManager;
+  /**
+   * 数据源
+   */
   private DataSourceInfo dsInfo = new DataSourceInfo();
 
   /**

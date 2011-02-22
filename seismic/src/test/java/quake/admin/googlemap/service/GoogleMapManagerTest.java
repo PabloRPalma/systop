@@ -13,6 +13,9 @@ import com.systop.core.test.BaseTransactionalTestCase;
  * 
  */
 public class GoogleMapManagerTest extends BaseTransactionalTestCase {
+  /**
+   * googleMap密钥manager
+   */
   @Autowired
   private GoogleMapManager googleMapManager;
 
