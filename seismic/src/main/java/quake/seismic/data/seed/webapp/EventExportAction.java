@@ -210,7 +210,7 @@ public class EventExportAction extends BaseSeedExpAction implements Preparable{
   }  
   
   /**
-   * 解析时间波形，从中得出通道、台站、台网等信息
+   * 解析事件波形，从中得出通道、台站、台网等信息
    * @return
    */
   public String showSeed() {

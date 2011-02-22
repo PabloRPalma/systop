@@ -101,8 +101,11 @@ public class StationSeedAction extends BaseSeedExpAction
     
   }
   
+  /**
+   * 导出数据
+   */
   public String export() {
-    Set<String> seedNames = getSeedNames();
+    Set<String> seedNames = getSeedNames(); //找到符合条件的连续波形文件
     if(CollectionUtils.isEmpty(seedNames)) {
       render(getResponse(), "没有找到符合条件的seed文件.", "text/plain");
       return null;
@@ -110,7 +113,7 @@ public class StationSeedAction extends BaseSeedExpAction
     logger.debug("需要处理的连续波形文件包括:{}", seedNames.toString());
     
     for(String seedName : seedNames) {
-      exportSingleSeed(seedName);
+      exportSingleSeed(seedName); //处理单个seed
     }
     try {
       rmRdseedLog(workDir);

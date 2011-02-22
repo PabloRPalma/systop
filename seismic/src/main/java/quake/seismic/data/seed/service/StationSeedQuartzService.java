@@ -34,6 +34,13 @@ import quake.seismic.data.seed.webapp.BaseSeedExpAction;
 
 import com.systop.core.dao.hibernate.BaseHibernateDao;
 
+/**
+ * 连续波形定时处理类，因为连续波形需要处理多个波形文件，并且-S参数执行rdseed不能
+ * 正确的得到连续波形的时间范围，而-t参赛不能得到正确的通道信息。也就是说，正确的信息
+ * 必须执行两次rdseed才能得到，这显然会影响性能。所以用这个类定时处理。
+ * @author sam
+ *
+ */
 @Service
 public class StationSeedQuartzService {
   private static Logger logger = LoggerFactory.getLogger(StationSeedQuartzService.class);
@@ -223,7 +230,7 @@ public class StationSeedQuartzService {
           logger.warn("{}解析失败。", rdseed);
           return Collections.emptySet();
         }
-        return parseRdseedStations(stations);
+        return parseRdseedStations(stations); //解析台站信息和通道信息
       }
       
     } catch (Exception e) {
