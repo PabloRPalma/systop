@@ -13,6 +13,9 @@ import com.systop.core.test.BaseTransactionalTestCase;
  * 
  */
 public class SeedpathManagerTest extends BaseTransactionalTestCase {
+  /**
+   * <code>Seedpath</code>管理类
+   */
   @Autowired
   private SeedpathManager seedpathManager;
 
