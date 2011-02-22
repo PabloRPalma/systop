@@ -10,13 +10,18 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.Assert;
 
 import quake.admin.seedpath.service.SeedpathManager;
 
 import com.systop.core.util.FileChannelUtil;
 import com.systop.core.webapp.struts2.action.BaseAction;
 
+/**
+ * Seed数据导出基类，提供rdseed执行过程的定义，以及数据打包、临时数据清理、数据下载等
+ * 通用函数。
+ * @author sam
+ *
+ */
 public abstract class BaseSeedExpAction extends BaseAction {
   /**
    * <code>Seedpath</code>管理类
@@ -56,7 +61,9 @@ public abstract class BaseSeedExpAction extends BaseAction {
         "\n","\n","\n","\n","\n","\n","\n","\n",
         "\n","\n","\n","\n","\n","N\n","quit\n"};
  
-  
+  /**
+   * 定义rdseed支持的数据格式，页面上生成列表使用
+   */
   public static final Map<String, String> OUTPUT_FORMAT 
     = new LinkedHashMap<String, String>(8);
     
@@ -70,7 +77,10 @@ public abstract class BaseSeedExpAction extends BaseAction {
     OUTPUT_FORMAT.put("6", "sac ascii");
     OUTPUT_FORMAT.put("7", "SEGY");
   }
-  
+ 
+  /**
+   * 导出文件的扩展名，用于调用tar命令，打包导出文件。
+   */
  public static final Map<String, String> OUTPUT_POSTFIX 
    = new LinkedHashMap<String, String>(8);
   
