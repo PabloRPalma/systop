@@ -18,6 +18,7 @@ public class EventExportActionTest extends BaseTransactionalTestCase {
     } catch (Exception e) {
       e.printStackTrace();
     }
+    action.init();
     action.export();
   }
 }
