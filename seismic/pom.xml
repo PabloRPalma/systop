@@ -510,12 +510,19 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.0.2</version>
+				<version>2.3.1</version>
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
 					<encoding>UTF-8</encoding>
 				</configuration>
+				<dependencies>  
+		           <dependency>  
+		             <groupId>org.codehaus.plexus</groupId>  
+		             <artifactId>plexus-compiler-javac</artifactId>  
+		             <version>1.8.1</version>  
+		           </dependency>  
+               </dependencies>  
 			</plugin>
 			<!-- surefire插件,设定自动测试忽略integration 目录下的集成测试用例 -->
 			<plugin>
