@@ -143,8 +143,8 @@ $(function() {
 		<c:if test="${model.magTname != ''}">
 			<ec:column width="40" property="ML" title="ML" cell="quake.seismic.data.catalog.webapp.cell.EMCell"/>		
 			<ec:column width="40" property="Ms" title="Ms" cell="quake.seismic.data.catalog.webapp.cell.EMCell"/>		
-			<ec:column width="40" property="Mb" title="Mb" cell="quake.seismic.data.catalog.webapp.cell.EMCell"/>		
-			<ec:column width="40" property="MB" title="MB" cell="quake.seismic.data.catalog.webapp.cell.EMCell"/>		
+			<ec:column width="40" property="mb" title="mb" cell="quake.seismic.data.catalog.webapp.cell.EMCell"/>		
+			<ec:column width="40" property="mB" title="mB" cell="quake.seismic.data.catalog.webapp.cell.EMCell"/>		
 			<ec:column width="40" property="Ms7" title="Ms7" cell="quake.seismic.data.catalog.webapp.cell.EMCell"/>		
 			<ec:column width="40" property="Mw" title="Mw" cell="quake.seismic.data.catalog.webapp.cell.EMCell"/>
 			<ec:column width="40" property="M" title="M" cell="quake.seismic.data.catalog.webapp.cell.EMCell"/>	
