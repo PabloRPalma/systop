@@ -35,7 +35,6 @@ import quake.seismic.station.model.Loc;
 import com.systop.common.modules.template.Template;
 import com.systop.common.modules.template.TemplateContext;
 import com.systop.common.modules.template.TemplateRender;
-import com.systop.core.dao.hibernate.BaseHibernateDao;
 import com.systop.core.util.DateUtil;
 
 /**
