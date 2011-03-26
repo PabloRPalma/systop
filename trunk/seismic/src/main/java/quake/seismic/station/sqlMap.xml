@@ -17,7 +17,8 @@
         <result property="STA_STARTDATE" column="STA_STARTDATE" javaType="java.util.Date"/>
         <result property="STA_ENDDATE" column="STA_ENDDATE" javaType="java.util.Date"/>
         <result property="SITE_NAME" column="SITE_NAME" javaType="String"/>
-        
+        <result property="ST_ONDATE" column="ST_ONDATE" javaType="java.util.Date"/>
+        <result property="ST_OFFDATE" column="ST_OFFDATE" javaType="java.util.Date"/>
     </resultMap>
     
     <resultMap class="java.util.HashMap" id="queryChannelResult"> 
@@ -56,7 +57,8 @@
 	<select id="queryStation" parameterClass="quake.seismic.station.model.Criteria"
                         resultMap="queryStationResult">
 		<![CDATA[
-		SELECT ST.ID,ST.NET_CODE,ST.STA_CODE,STA_CNAME,STA_TYPE,ROCK_TYPE,STA_LAT,STA_LON,STA_ELEV,STA_STARTDATE,STA_ENDDATE,SITE_NAME,DIGITIZER_RESPID,DIGITIZER_MODEL
+		SELECT ST.ID,ST.NET_CODE,ST.STA_CODE,STA_CNAME,STA_TYPE,ROCK_TYPE,STA_LAT,STA_LON,STA_ELEV,
+			STA_STARTDATE,STA_ENDDATE,SITE_NAME,DIGITIZER_RESPID,DIGITIZER_MODEL,ST.ONDATE as ST_ONDATE,ST.OFFDATE as ST_OFFDATE
 		FROM $schema$.Station_info ST ,$schema$.Loc_info LOC WHERE ST.NET_CODE=LOC.NET_CODE and ST.STA_CODE=LOC.STA_CODE
 		]]>
 		<dynamic>

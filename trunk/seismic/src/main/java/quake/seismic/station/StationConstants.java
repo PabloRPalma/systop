@@ -35,8 +35,10 @@ public final class StationConstants {
   /**
    * 台基类型
    */
+  public static String ROCK_TYPE_JIYAN = "基岩";
   public static String ROCK_TYPE_MOORSTONE = "花岗岩";
   public static String ROCK_TYPE_GNEISS = "片麻岩";
+  public static String ROCK_TYPE_JINGXIA = "井下";
   /**
    * 响应类型
    */
@@ -74,7 +76,9 @@ public final class StationConstants {
    */
   public static final Map<String, String> ROCK_TYPE = new LinkedHashMap<String,String>();
   static {
+    ROCK_TYPE.put(ROCK_TYPE_JIYAN, "基岩");
     ROCK_TYPE.put(ROCK_TYPE_MOORSTONE, "花岗岩");
     ROCK_TYPE.put(ROCK_TYPE_GNEISS, "片麻岩");
+    ROCK_TYPE.put(ROCK_TYPE_JINGXIA, "井下");
   }
 }
