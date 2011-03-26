@@ -248,6 +248,20 @@ public class ArticleFreeMarkerManager extends BaseGenericsManager<Articles> {
   }
 
   /**
+   * 分页查询文章_用于首页文章显示
+   * 
+   * @param cataName 栏目名
+   * @param pageNo 页号
+   * @param pageSize 一页记录数
+   * @return Page
+   */
+  @SuppressWarnings("unchecked")
+  public List<Articles> pageQueryArticles(String cataName, int pageNo, int pageSize) {
+    Page page = queryArticles(cataName, pageNo, pageSize);
+    return page.getData();
+  }
+  
+  /**
    * 根据栏目id 查询文章列表
    * 
    * @param id
