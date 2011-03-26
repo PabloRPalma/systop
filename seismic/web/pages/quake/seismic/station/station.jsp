@@ -71,9 +71,11 @@
 			baseIcon.image = "${ctx}/images/icons/jiyan.png";
 		} else if (rockType == "花岗岩")	{
 			baseIcon.image = "${ctx}/images/icons/huagang.png";
-		}	else if (rockType == "井下")	{
+		} else if (rockType == "片麻岩")	{
+			baseIcon.image = "${ctx}/images/icons/pianma.png";
+		} else if (rockType == "井下")	{
 			baseIcon.image = "${ctx}/images/icons/jingxia.png";
-		}
+		} 
 		baseIcon.iconSize = new GSize(iconSize, iconSize);
 		baseIcon.iconAnchor = new GPoint(iconSize/2, iconSize/2);
 		baseIcon.infoWindowAnchor = new GPoint(iconSize/2, iconSize/2);
@@ -108,6 +110,7 @@
 	<div class="legend">
   图例：<img src="${ctx}/images/icons/jiyan.png" />基岩
   <img src="${ctx}/images/icons/huagang.png" />花岗岩
+  <img src="${ctx}/images/icons/pianma.png" />片麻岩
   <img src="${ctx}/images/icons/jingxia.png" />井下
   </div>
 </div>
