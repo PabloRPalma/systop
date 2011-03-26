@@ -67,6 +67,7 @@
 				请再次输入密码
 			</td>
 		</tr>
+		<!--  
 		<tr>
 			<td class="simple" align="right">用户类别：</td>
 			<td class="simple">&nbsp;<s:radio list="userLevelMap"
@@ -76,6 +77,7 @@
 				<br><font color="blue">普通用户</font>不需要下载申请表，直接在线填写注册，经确认审批后才能生效。
 			</td>
 		</tr>
+		-->
 		<tr>
 			<td class="simple" align="right">真实姓名：</td>
 			<td class="simple">&nbsp;<s:textfield name="model.name"

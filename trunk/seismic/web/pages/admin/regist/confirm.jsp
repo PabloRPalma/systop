@@ -69,12 +69,14 @@ a{text-decoration:none;color:#286e94;
 			<td class="simple">&nbsp;<s:textfield name="model.loginId" readonly="true"
 				theme="simple" size="25" /></td>
 		</tr>
+		<!--
 		<tr>
 			<td class="simple" align="right">用户类别：</td>
 			<td class="simple">&nbsp;
 				<%= ((java.util.Map) request.getAttribute("userLevelMap")).get(request.getAttribute("model.level")) %>
 				<s:hidden name="model.level" /></td>
 		</tr>
+		-->
 		<tr>
 			<td class="simple" align="right">真实姓名：</td>
 			<td class="simple">&nbsp;<s:textfield name="model.name" readonly="true"
