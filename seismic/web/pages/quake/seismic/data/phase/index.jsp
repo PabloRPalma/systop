@@ -163,9 +163,9 @@ $(document).ready(function() {
 		<c:if test="${model.magTname == ''}">	
 			<ec:column width="40" property="M" title="${model.disType}" cell="quake.seismic.data.catalog.webapp.cell.EMCell"/>	
 		</c:if>
-		<ec:column width="70" property="EPI_DEPTH" title="深度(Km)" cell="quake.seismic.data.catalog.webapp.cell.DepthFomat"/>
-		<ec:column width="60" property="QLOC" title="定位质量" />	
-		<ec:column width="60" property="QCOM" title="综合质量" />	
+		<ec:column width="40" property="EPI_DEPTH" title="深度" cell="quake.seismic.data.catalog.webapp.cell.DepthFomat"/>
+		<ec:column width="80" property="Eq_type" title="地震类型" />	
+		<ec:column width="60" property="Loc_stn" title="定位台数" />	
 		<ec:column width="100" property="LOCATION_CNAME" title="震中地名" />
 		<ec:column width="75" property="_1" title="震相" style="text-align:center" viewsAllowed="html" sortable="false">
 		   <a href="#" onclick="phase('${ctx}/quake/seismic/data/phase/list.do', '${item.ID}', '${item.EQ_TIME}', '${item.O_TIME_FRAC}', '${item.EPI_LAT}', '${item.EPI_LON}', '${item.EPI_DEPTH}', ${item.M}, '${item.M_SOURCE}', '${item.QLOC}', '${item.QCOM}', '${item.LOCATION_CNAME}')" title="查看震相数据"> 

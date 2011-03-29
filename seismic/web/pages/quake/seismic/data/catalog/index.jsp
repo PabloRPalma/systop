@@ -52,11 +52,11 @@ $(function() {
 		  	    </td>
 		  	    <td align="right">震级：</td>
 		  	     <td>
-		  	      <s:textfield name="model.startM" cssStyle="width:70px;" cssClass="number" title="大于等于1的正数"/>
+		  	      <s:textfield name="model.startM" cssStyle="width:70px;" cssClass="number" />
 		  	    </td>
 		  	    <td>至</td>
 		  	     <td>
-		  	      <s:textfield name="model.endM" cssStyle="width:70px;" cssClass="number" title="大于等于1的正数"/>
+		  	      <s:textfield name="model.endM" cssStyle="width:70px;" cssClass="number" />
 		  	    </td>
 		  	    <td align="right">类型：</td>
 				<td><s:select list="EqTypesMap" name="model.eqType" headerKey="" headerValue="--请选择类型--" cssStyle="width:100px;">
@@ -69,19 +69,19 @@ $(function() {
 			<tr>
 				<td align="right">纬度：</td> 
 		  	    <td>
-		  	      <s:textfield name="model.startLat" cssStyle="width:70px;" cssClass="number" title="度.度，-90至90"/>
+		  	      <s:textfield name="model.startLat" cssStyle="width:70px;" cssClass="number" />
 		  	    </td>
 		  	    <td>至</td>
 		  	     <td>
-		  	      <s:textfield name="model.endLat" cssStyle="width:70px;" cssClass="number" title="度.度，-90至90"/>
+		  	      <s:textfield name="model.endLat" cssStyle="width:70px;" cssClass="number" />
 		  	    </td>
 		  	    <td align="right">经度：</td>
 		  	    <td>
-		  	      <s:textfield name="model.startLon" cssStyle="width:70px;" cssClass="number" title="度.度，-180至180"/> 
+		  	      <s:textfield name="model.startLon" cssStyle="width:70px;" cssClass="number" /> 
 		  	    </td>
 		  	    <td>至</td>
 		  	    <td>
-		  	      <s:textfield name="model.endLon" cssStyle="width:70px;" cssClass="number" title="度.度，-180至180"/>
+		  	      <s:textfield name="model.endLon" cssStyle="width:70px;" cssClass="number" />
 		  	    </td>
 		  	    <td align="right">地名：</td>
 				<td><s:textfield name="model.location" cssStyle="width:100px;"/></td>
@@ -152,10 +152,14 @@ $(function() {
 		<c:if test="${model.magTname == ''}">
 			<ec:column width="40" property="M" title="${model.disType}" cell="quake.seismic.data.catalog.webapp.cell.EMCell"/>		
 		</c:if>
-		<ec:column width="70" property="EPI_DEPTH" title="深度(Km)" cell="quake.seismic.data.catalog.webapp.cell.DepthFomat"/>	
-		<ec:column width="60" property="QLOC" title="定位质量" />	
-		<ec:column width="60" property="QCOM" title="综合质量" />	
-		<ec:column width="155" property="LOCATION_CNAME" title="震中地名" />
+		<ec:column width="40" property="EPI_DEPTH" title="深度" cell="quake.seismic.data.catalog.webapp.cell.DepthFomat"/>	
+		<ec:column width="80" property="Eq_type" title="地震类型" />	
+		<ec:column width="60" property="_QLOC" title="定位质量" >
+			<c:if test="${item.QLOC == 'nul'}"> </c:if>
+			<c:if test="${item.QLOC != 'nul'}"> ${item.QLOC} </c:if>
+		</ec:column>	
+		<ec:column width="60" property="Loc_stn" title="定位台数" />	
+		<ec:column width="130" property="LOCATION_CNAME" title="震中地名" />
 	</ec:row>   
 </ec:table>
 </div>
