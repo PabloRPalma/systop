@@ -100,15 +100,16 @@ $(function() {
 			<table width="100%" style="margin:0px;">
 			<tr>
 				<td height="24">&nbsp;
-				  <input type="button" value="基本目录格式" onclick="exportDataConfirm('${ctx}/quake/seismic/data/catalog/exportBasicVlm.do', '_blank')" class="button"/>
+				  <input type="button" value="基本目录" onclick="exportDataConfirm('${ctx}/quake/seismic/data/catalog/exportBasicVlm.do', '_blank')" class="button"/>
 				  <input type="button" value="WKF" onclick="exportDataConfirm('${ctx}/quake/seismic/data/catalog/exportWkf.do', '_blank')" class="button"/>
 	  	      	  <input type="button" value="EQT" onclick="exportDataConfirm('${ctx}/quake/seismic/data/catalog/exportEqt.do', '_blank')" class="button"/>
 		  	    </td> 
 			</tr>
 			<tr>
 				<td height="24">&nbsp;
-		  	      <input type="button" value="完全目录格式" onclick="exportDataConfirm('${ctx}/quake/seismic/data/catalog/exportFullVlm.do', '_blank')" class="button"/>
+		  	      <input type="button" value="完全目录" onclick="exportDataConfirm('${ctx}/quake/seismic/data/catalog/exportFullVlm.do', '_blank')" class="button"/>
 		  	      <input type="button" value="XLS" onclick="downloadInXls()" class="button" style="width: 40px;"/>
+				  <input type="button" value="Q01" onclick="exportDataConfirm('${ctx}/quake/seismic/data/catalog/exportQ01.do', '_blank')" class="button" style="width: 37px;"/>
 				  <input type="button" id="look" value="简介" class="button"/>
 				</td>
 			</tr>
