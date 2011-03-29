@@ -55,7 +55,6 @@ a.sta:hover{
         <tr>
 	            <td style="color:#0099bb;" align="left" colspan='3'>
 	               <ul>
-	                   <li>点击台站名称可查看台站测震波形图。</li>
 	                   <li>选择台站，可将该台站数据包含在导出的数据中。</li>
 	               </ul>
 	            </td>
