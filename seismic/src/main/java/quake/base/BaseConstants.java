@@ -8,7 +8,7 @@ public final class BaseConstants {
   /**
    * 用于代表<code>null</code>的字符串。
    */
-  public static final String NULL = "null";
+  public static final String NULL = null;
   
   private BaseConstants() {
     
