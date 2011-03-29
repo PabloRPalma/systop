@@ -31,7 +31,7 @@ public class DoubleCell extends AbstractCell {
       return  null;
     }
     String value = DisplayCell.convert(colName.toString(), obj.toString());
-    logger.debug("转换的列的值："+ value);
+    //logger.debug("转换的列的值："+ value);
     if(StringUtils.equals(BaseConstants.NULL, value)) {
       return value;
     }
