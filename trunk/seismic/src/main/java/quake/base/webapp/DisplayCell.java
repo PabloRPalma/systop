@@ -14,10 +14,12 @@ import org.ecside.view.html.ColumnBuilder;
  *
  */
 public class DisplayCell implements Cell {
+    
   /**
    * 地震数据中，用于代表NULL值的数据。
    */
-  public static final String[] SPECIAL_STRINGS = {"-99999.0", "-99,999.0", "-99999"};
+  public static final String[] SPECIAL_STRINGS = {"-99999.0", "-99,999.0", "-99999", "-99.9", "-999.9", "-99.0", "-999.0", "-9999.0","-99", "-999", "-9999"};
+  public static final String[] SPECIAL_STRINGS_LON = {"-99999.0", "-99,999.0", "-99999", "-999.9", "-999.0", "-9999.0", "-999", "-9999"};
   
   public String getHtmlDisplay(TableModel model, Column column) {
     ColumnBuilder columnBuilder = new ColumnBuilder(column);
@@ -28,13 +30,13 @@ public class DisplayCell implements Cell {
   }
 
   public String getExportDisplay(TableModel model, Column column) {
-    return convert(column.getPropertyValueAsString());
+    return convert(column.getProperty().toString(), column.getPropertyValueAsString());
   }
 
   protected String getCellValue(TableModel model, Column column) {
     boolean useEllipsis = column.getEllipsis() == null ? false : column.getEllipsis()
         .booleanValue();
-    String value = convert(column.getValueAsString());
+    String value = convert(column.getProperty().toString(), column.getValueAsString());
     
     if (useEllipsis) {
       StringBuffer cellHtml = new StringBuffer();
@@ -53,13 +55,27 @@ public class DisplayCell implements Cell {
     return value;
   }
   
- public static String convert(String value) {
+ public static String convert(String name, String value) {
     if(value == null) {
       return value;
     }
-    for(int i = 0; i < SPECIAL_STRINGS.length; i++ ) {
-      if(StringUtils.equals(SPECIAL_STRINGS[i], value.trim())) {
-        return null;
+    if ("EPI_LAT".equals(name)) {
+      for(int i = 0; i < SPECIAL_STRINGS.length; i++ ) {
+        if(StringUtils.equals(SPECIAL_STRINGS[i], value.trim())) {
+          return null;
+        }
+      }
+    }else if ("EPI_LON".equals(name)) {
+      for(int i = 0; i < SPECIAL_STRINGS_LON.length; i++ ) {
+        if(StringUtils.equals(SPECIAL_STRINGS_LON[i], value.trim())) {
+          return null;
+        }
+      }
+    } else {
+      for(int i = 0; i < SPECIAL_STRINGS.length; i++ ) {
+        if(StringUtils.equals(SPECIAL_STRINGS[i], value.trim())) {
+          return null;
+        }
       }
     }
     return value;

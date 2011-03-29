@@ -13,7 +13,7 @@ import quake.base.BaseConstants;
 
 public class NumberCell extends AbstractCell {
   protected String getCellValue(TableModel model, Column column) {
-      String value = DisplayCell.convert(column.getPropertyValueAsString());
+      String value = DisplayCell.convert(column.getProperty().toString(), column.getPropertyValueAsString());
       if (StringUtils.isNotBlank(value) && !StringUtils.equals(BaseConstants.NULL, value)) {
           Locale locale = model.getLocale();
           value = ExtremeUtils.formatNumber(column.getFormat(), value, locale);
