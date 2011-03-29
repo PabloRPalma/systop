@@ -60,13 +60,10 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
       Map row = itr.next();
       //WKF格式数据
       if ("WKF".equals(criteria.getExpType())) {
-        logger.debug("导出WKF格式数据");
         buf.append(extractWkf(row));
       } else if ("EQT".equals(criteria.getExpType())) {//EQT格式数据
-        logger.debug("导出EQT格式数据");
         buf.append(extractEqt(row));
       } else if ("Q01".equals(criteria.getExpType())) {
-        logger.debug("导出Q01格式数据");
         buf.append(extractQ01(row));
       }
     }
