@@ -250,6 +250,19 @@ public class CatAction extends AbstractQueryAction<Criteria> {
   }
 
   /**
+   * 导出Q01格式数据
+   * @return
+   */
+  public String exportQ01() {
+    model.setExpType("Q01");
+    String data = exportData();
+    String fileName = "attachment;filename=\"Q01_" + getCurrentDate() + ".txt\"";
+    getResponse().addHeader("Content-Disposition", fileName);
+    render(getResponse(), data, "text/html");
+    return null;
+  }
+  
+  /**
    * 导出BASIC_VLM(基本目录格式)数据
    * @return
    */
@@ -263,6 +276,7 @@ public class CatAction extends AbstractQueryAction<Criteria> {
     render(getResponse(), data, "text/html");
     return null;
   }
+  
   /**
    * 导出FULL_VLM(完全目录格式)数据
    * @return
