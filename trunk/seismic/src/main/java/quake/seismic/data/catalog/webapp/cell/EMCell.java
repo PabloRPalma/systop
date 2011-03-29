@@ -25,7 +25,7 @@ public class EMCell extends AbstractCell {
     if(obj == null) {
       return  null;
     }
-    String value = DisplayCell.convert(obj.toString());
+    String value = DisplayCell.convert(col.getProperty().toString(), obj.toString());
     if(StringUtils.equals(BaseConstants.NULL, value) || ((Number) obj).doubleValue() < -10) {
       return BaseConstants.NULL;
     }
