@@ -60,9 +60,14 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
       Map row = itr.next();
       //WKF格式数据
       if ("WKF".equals(criteria.getExpType())) {
+        logger.debug("导出WKF格式数据");
         buf.append(extractWkf(row));
-      } else {//EQT格式数据
+      } else if ("EQT".equals(criteria.getExpType())) {//EQT格式数据
+        logger.debug("导出EQT格式数据");
         buf.append(extractEqt(row));
+      } else if ("Q01".equals(criteria.getExpType())) {
+        logger.debug("导出Q01格式数据");
+        buf.append(extractQ01(row));
       }
     }
     return buf;
@@ -616,6 +621,25 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
     return eqtData;
   }
 
+  /**
+   * 导出Q01格式数据
+   * @param row 一行数据
+   * @return
+   */
+  public String extractQ01(Map row) {
+    String q01Data = MessageFormat.format(" {0}{1}{2}{3}{4}{5}{6}\n", new Object[] {// 年前有一空格
+        // 2008-10-04 12:48:14 转成 20081004124814
+        DateUtil.getDateTime("yyyyMMddHHmmss", (Date) row.get("O_TIME")),
+        formatNumber((Double) row.get("EPI_LAT"), 6),// 6位伟度 含（正|负）值 正值 0或空格表示
+        formatNumber((Double) row.get("EPI_LON"), 7),// 7位伟度 含（正|负）值 正值 0或空格表示
+        ExtremeUtils.formatNumber("0.00", row.get("MAG_VAL")),// 4位震级
+        ExtremeUtils.formatNumber("000", row.get("EPI_DEPTH")),// 3位深度
+        row.get("SEQUEN_NAME") == null ? "000" : StringUtils.leftPad((String) row
+            .get("SEQUEN_NAME"), 3, '0'),// 3位序列号
+        row.get("M_SOURCE") });
+    return q01Data;
+  }
+  
   /**
    * 将一个数字格式化为字符串，并且在前面按照一定的长度补，解决经伟度出现负数的情况. 
    * 用ExtremeUtils 的结果是 -0005.9 而要的结果为 000-5.9
