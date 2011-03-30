@@ -1,6 +1,7 @@
 package quake.seismic.data.catalog.dao.impl;
 
 import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -55,7 +56,9 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
     }
     //查询地震目录    
     List<Map> rows = getTemplate().queryForList(SQL, criteria);
-    StringBuffer buf = new StringBuffer(100000);
+    StringBuffer buf = new StringBuffer();
+    //添加WKF、EQT及Q01格式的文件标头
+    buf.append(expTypeTitle(criteria.getExpType()));
     for (Iterator<Map> itr = rows.iterator(); itr.hasNext();) {
       Map row = itr.next();
       //WKF格式数据
@@ -70,6 +73,27 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
     return buf;
   }
 
+  /**
+   * 取得WKF、EQT及Q01格式的文件标头
+   * @param expType
+   */
+  private String expTypeTitle(String expType) {
+    StringBuffer buf = new StringBuffer();
+    buf.append("\n");
+    buf.append(StringUtils.leftPad("全国统一编目地震目录查询结果(." + expType + "格式)", 32, ' ')).append("\n").append("\n");
+    if ("WKF".equals(expType)) {//WKF格式
+      buf.append("年年年年,月月日日,时时,分分,纬度,经度,震级,000,深度").append("\n").append("\n");
+      buf.append("注意：震级包括了Ml、Ms、mb等多种震级类型的测定结果，具体可以看.Q01格式。").append("\n").append("\n");
+    } else if ("EQT".equals(expType)) {//EQT格式
+      buf.append("时间 纬度 经度震级深度000").append("\n").append("\n");
+      buf.append("注意：震级包括了Ml、Ms、mb等多种震级类型的测定结果，具体可以看.Q01格式。").append("\n").append("\n");
+    } else if ("Q01".equals(expType)) {//Q01格式
+      buf.append("时间 纬度 经度 震级 深度 位号精度单位 参考地点(S-P)").append("\n").append("\n");
+    }
+    
+    return buf.toString();
+  }
+  
   /**
    * 查询需要导出的数据(VLM)
    * 将地震目录查询出的数据按照指定的格式生成字符串
@@ -288,7 +312,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
    */
   private String getHBO() {
     String hboFormat = MessageFormat.format(
-        "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14}\n\r",new Object[] {
+        "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14}\n",new Object[] {
         "Net", "dateO_time", "Epi_lat", "Epi_lon", "Epi_depth", 
         "Mag_name", "Mag_value",  "Rms", "Qloc",  "Sum_stn", "Loc_stn", 
         "Eq_type", "Epic_id", "Source_id", "Location_cname"
@@ -303,7 +327,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
    */
   private String getDBO(Map row) {
     String dboData = MessageFormat.format(
-        "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14}\n\r",new Object[] {
+        "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14}\n",new Object[] {
          row.get("NET_CODE"), DateUtil.getDateTime("yyyy/MM/dd HH:ss:ss.ss", (Date)row.get("O_TIME")), 
            row.get("EPI_LAT"), row.get("EPI_LON"), row.get("EPI_DEPTH"), row.get("M_SOURCE"), row.get("M"), 
              row.get("Rms"), row.get("QLOC"),  row.get("Sum_stn"), row.get("Loc_stn"), 
@@ -320,7 +344,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
    */
   private String getHEO() {
     String heoFormat = MessageFormat.format(
-        "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15} {16}\n\r",new Object[] {
+        "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15} {16}\n",new Object[] {
         "Auto_flag", "Event_id", "Sequen_name", "Depfix_flag", "M", "M_source", 
         "SPmin", "Dmin",  "Gap_azi", "Erh",  "Erz", "Qnet", "Qcom", 
         "Sum_pha", "Loc_pha", "FE_num", "FE_sname"
@@ -335,7 +359,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
    */
   private String getDEO(Map row) {
     String deoData = MessageFormat.format(
-        "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15} {16}\n\r",new Object[] {
+        "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15} {16}\n",new Object[] {
          row.get("Auto_flag"), row.get("EVENT_ID"), row.get("SEQUEN_NAME"),row.get("Depfix_flag"), 
            row.get("M"), row.get("M_SOURCE"), row.get("SPmin"), row.get("Dmin"), row.get("Gap_azi"),
              row.get("Erh"), row.get("Erz"), row.get("Qnet"),row.get("QCOM"), row.get("Sum_pha"),
@@ -351,7 +375,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
    */
   private String getHMB() {
     String hmbFormat = MessageFormat.format(
-        "{0} {1} {2} {3} {4}\n\r",new Object[] {
+        "{0} {1} {2} {3} {4}\n",new Object[] {
         "Mag_name", "Mag_val", "Mag_gap", "Mag_stn", "Mag_error"
     });
     //logger.debug("HMB数据格式内容：{}", hmbFormat);
@@ -364,7 +388,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
    */
   private String getDMB(Map mag) {
     String dmbFormat = MessageFormat.format(
-        "{0} {1} {2} {3} {4}\n\r",new Object[] {
+        "{0} {1} {2} {3} {4}\n",new Object[] {
         mag.get("MAG_NAME"), mag.get("MAG_VAL"), mag.get("MAG_GAP"), mag.get("MAG_STN"), mag.get("MAG_ERROR")
     });
     //logger.debug("DMB数据格式内容：{}", dmbFormat);
@@ -377,7 +401,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
    */
   private String getHPB() {
     String hpbFormat = MessageFormat.format(
-        "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15}\n\r",new Object[] {
+        "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15}\n",new Object[] {
         "Net_code", "Sta_code", "Chn_code", "Clarity", "Wsign", 
         "Phase_name", "Weight",  "Rec_type", "Phase_time",  "Resi", "Distance", 
         "Azi", "Amp", "Period", "Mag_name", "Mag_val"
@@ -392,7 +416,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
    */
   private String getDPB(Map phase) {
     String hpbFormat = MessageFormat.format(
-        "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15}\n\r",new Object[] {
+        "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15}\n",new Object[] {
         phase.get("NET_CODE"), phase.get("STA_CODE"), phase.get("CHN_CODE"), phase.get("CLARITY"), phase.get("WSIGN"), 
           phase.get("PHASE_NAME"), phase.get("WEIGHT"),  phase.get("REC_TYPE"), 
             DateUtil.getDateTime("yyyy/MM/dd HH:ss:ss.ss", (Date)phase.get("PHASE_TIME")),  
@@ -409,7 +433,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
    */
   private String getHSB() {
     String hsbFormat = MessageFormat.format(
-        "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14}\n\r",new Object[] {
+        "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14}\n",new Object[] {
         "Net_code", "Sta_code", "Sta_cname", "Sta_type", "Chan_num", 
         "Sta_lat", "Sta_lon",  "Sta_elev", "Local_depth",  "sensor", "Datarecord", 
         "Rock_type", "Sensi-NS", "Sensi-EW", "Sensi-UD"
@@ -427,7 +451,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
   @SuppressWarnings("unused")
   private String getDSB(Map station) {
     String dsbFormat = MessageFormat.format(
-        "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14}\n\r",new Object[] {
+        "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14}\n",new Object[] {
             station.get("NET_CODE"), station.get("STA_CODE"), station.get("STA_CNAME"), 
             station.get("STA_TYPE"), "chan_num", station.get("STA_LAT"), station.get("STA_LON"), 
             station.get("STA_ELEV"), "Local_depth", "sensor", "Datarecord", station.get("ROCK_TYPE"), 
@@ -446,7 +470,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
     StringBuffer buf = new StringBuffer();
     for(Map staLoc : staLocList) {
       String dsbFormat = MessageFormat.format(
-          "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14}\n\r",new Object[] {
+          "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14}\n",new Object[] {
               staLoc.get("NET_CODE"), staLoc.get("STA_CODE"), staLoc.get("STA_CNAME"), 
               staLoc.get("STA_TYPE"), staLoc.get("CHN_NUM"), staLoc.get("STA_LAT"), staLoc.get("STA_LON"), 
               staLoc.get("STA_ELEV"), staLoc.get("LOCAL_DEPTH"), staLoc.get("SENSOR_MODEL"), 
@@ -466,7 +490,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
   private StringBuffer getVlmIndexBlock0(String vlmType) {
     StringBuffer indexBlock0 = new StringBuffer();
     indexBlock0.append("VI0").append(" ").append("Volume_type").append(" ").append(
-        vlmType).append(" ").append("CSF_Ver").append(" ").append("1.0").append("\n\r");
+        vlmType).append(" ").append("CSF_Ver").append(" ").append("1.0").append("\n");
     return indexBlock0;
   }
   
@@ -494,7 +518,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
       
       indexBlock1.append("VI1").append(" ").append("Net_code").append(" ").append(
           netCode).append(" ").append("Net_cname").append(" ").append(
-              netName).append(" ").append(startDate).append(" ").append(endDate).append("\n\r");
+              netName).append(" ").append(startDate).append(" ").append(endDate).append("\n");
     }
     
     return indexBlock1;
@@ -565,19 +589,50 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
    * @return
    */
   public String extractWkf(Map row) {
-    String wkfData = MessageFormat.format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9}\n",
+    String wkfData = MessageFormat.format("{0},{1},{2},{3},{4},{5},{6},{7},{8}\n",
         new Object[] { DateUtil.getDateTime("yyyy", (Date) row.get("O_TIME")),// 4位年
             DateUtil.getDateTime("MMdd", (Date) row.get("O_TIME")),// 4位月日
             DateUtil.getDateTime("HH", (Date) row.get("O_TIME")),// 2位时
             DateUtil.getDateTime("mm", (Date) row.get("O_TIME")),// 2位分
-            convertEpi((Double)row.get("EPI_LAT"), 4),// 4位伟度
-            convertEpi((Double)row.get("EPI_LON"), 5),// 5位经度
-            ExtremeUtils.formatNumber("0.0", row.get("MAG_VAL")),// 3位震级
-            ExtremeUtils.formatNumber("000", row.get("EPI_DEPTH")),// 3位深度
-            row.get("SEQUEN_NAME") == null ? "000" : StringUtils.leftPad((String) row
-                .get("SEQUEN_NAME"), 3, '0'),// 3位序列号
-            row.get("M_SOURCE") });
+            convertEpi((Double)row.get("EPI_LAT"), 5, "LAT"),// 4位伟度，加上负号共5位，不够位数前面补空格
+            convertEpi((Double)row.get("EPI_LON"), 6, "LON"),// 5位经度，加上负号共6位，不够位数前面补空格
+            convertMagVal((Double)row.get("M"), 4),// 3位震级，加上负号共4位，不够位数前面补空格
+            ExtremeUtils.formatNumber("000", "000"),
+            convertDepth((Double)row.get("EPI_DEPTH"), 3)// 3位深度
+            });
     return wkfData;
+  }
+  
+  /**
+   * 转换震级值
+   * @param val
+   * @param len
+   */
+  private String convertMagVal(Double val, int len) {
+    String strVal = null;
+    if (val == null || val <= -99) {
+      strVal = "";
+    } else {
+      strVal = ExtremeUtils.formatNumber("0.0", val);
+    }
+    
+    return StringUtils.leftPad(strVal, len, ' ');
+  }
+  
+  /**
+   * 转换深度值,将空值和-99***等值转换为000
+   * @param val
+   * @param len
+   */
+  private String convertDepth(Double val, int len) {
+    String strVal = null;
+    if (val == null || val <= -99) {
+      strVal = ExtremeUtils.formatNumber("000", "000");
+    } else {
+      strVal = ExtremeUtils.formatNumber("000", val);
+    }
+    
+    return StringUtils.leftPad(strVal, len, ' ');
   }
   
   /**
@@ -587,16 +642,24 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
    * @param len
    * @return
    */
-  private String convertEpi(Double val, int len) {
+  private String convertEpi(Double val, int len, String lonOrlat) {
+    int copVal = -99;
     String strVal = null;
+    int valInt = (int) val.doubleValue();
     if (val == null) {
       strVal = "";
     }
+    if ("LON".equals(lonOrlat)) {
+      copVal = -999;
+    }
+    if (valInt <= copVal) {
+      strVal = "";
+    } else {
+      double valDou = Math.abs(val - valInt);
+      strVal = valInt + ExtremeUtils.formatNumber("00", (valDou * 60));
+    } 
     
-    int valInt = (int) val.doubleValue();
-    double valDou = val - valInt;
-    strVal = valInt + ExtremeUtils.formatNumber("00", (valDou * 60));
-    return StringUtils.leftPad(strVal, len, '0');
+    return StringUtils.leftPad(strVal, len, ' ');
   }
 
   /**
@@ -605,30 +668,94 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
    * @return
    */
   public String extractEqt(Map row) {
-    String eqtData = MessageFormat.format(" {0}{1}{2}{3}{4}{5}{6}\n", new Object[] {// 年前有一空格
+    String eqtData = MessageFormat.format("{0}{1}{2}{3}{4}{5}\n", new Object[] {// 年前有一空格
             // 2008-10-04 12:48:14 转成 20081004124814
             DateUtil.getDateTime("yyyyMMddHHmmss", (Date) row.get("O_TIME")),
-            formatNumber((Double) row.get("EPI_LAT"), 6),// 6位伟度 含（正|负）值 正值 0或空格表示
-            formatNumber((Double) row.get("EPI_LON"), 7),// 7位伟度 含（正|负）值 正值 0或空格表示
-            ExtremeUtils.formatNumber("0.00", row.get("MAG_VAL")),// 4位震级
-            ExtremeUtils.formatNumber("000", row.get("EPI_DEPTH")),// 3位深度
-            row.get("SEQUEN_NAME") == null ? "000" : StringUtils.leftPad((String) row
-                .get("SEQUEN_NAME"), 3, '0'),// 3位序列号
-            row.get("M_SOURCE") });
+            convertEpiOfEQT((Double)row.get("EPI_LAT"), 6, "LAT"),// 5位伟度，加上负号共6位，不够位数前面补空格
+            convertEpiOfEQT((Double)row.get("EPI_LON"), 7, "LON"),// 6位经度，加上负号共7位，不够位数前面补空格
+            convertMagValOfEQT((Double)row.get("M"), 3),// 3位震级，加上负号共4位
+            convertDepthOfEQT((Double)row.get("EPI_DEPTH"), 4),// 4位深度
+            ExtremeUtils.formatNumber("000", "000")
+            });
     return eqtData;
   }
 
+  /**
+   * EQT文件导出时，转换经纬度的值
+   * @param val
+   * @param len
+   * @param lonOrlat
+   * @return
+   */
+  private String convertEpiOfEQT(Double val, int len, String lonOrlat) {
+    int copVal = -99;
+    String strVal = null;
+    if (val == null) {
+      strVal = "";
+    }
+    if ("LON".equals(lonOrlat)) {
+      copVal = -999;
+      if (val <= copVal) {
+        strVal = "";
+      } else {
+        strVal = ExtremeUtils.formatNumber("###.00", val);
+      } 
+    }
+    if ("LAT".equals(lonOrlat)) {
+      if (val <= copVal) {
+        strVal = "";
+      } else {
+        strVal = ExtremeUtils.formatNumber("##.00", val);
+      } 
+    }
+    
+    return StringUtils.leftPad(strVal, len, ' ');
+  }
+  
+  /**
+   * 转换震级值,不够位数后面补零
+   * @param val
+   * @param len
+   */
+  private String convertMagValOfEQT(Double val, int len) {
+    String strVal = null;
+    if (val == null || val <= -99) {
+      strVal = "";
+    } else {
+      strVal = ExtremeUtils.formatNumber("0.0", val);
+    }
+    
+    return StringUtils.rightPad(strVal, len, ' ');
+  }
+  
+  /**
+   * 转换深度值,将空值和-99***等值转换为000
+   * @param val
+   * @param len
+   */
+  private String convertDepthOfEQT(Double val, int len) {
+    String strVal = null;
+    if (val == null || val <= -99) {
+      strVal = ExtremeUtils.formatNumber("0000", "000");
+    } else {
+      strVal = ExtremeUtils.formatNumber("0000", val);
+    }
+    
+    return StringUtils.leftPad(strVal, len, '0');
+  }
+  
   /**
    * 导出Q01格式数据
    * @param row 一行数据
    * @return
    */
   public String extractQ01(Map row) {
-    String q01Data = MessageFormat.format(" {0}{1}{2}{3}{4}{5}{6}\n", new Object[] {// 年前有一空格
+    String q01Data = MessageFormat.format("{0}{1}{2}{3}{4}{5}{6}\n", new Object[] {// 年前有一空格
         // 2008-10-04 12:48:14 转成 20081004124814
-        DateUtil.getDateTime("yyyyMMddHHmmss", (Date) row.get("O_TIME")),
-        formatNumber((Double) row.get("EPI_LAT"), 6),// 6位伟度 含（正|负）值 正值 0或空格表示
-        formatNumber((Double) row.get("EPI_LON"), 7),// 7位伟度 含（正|负）值 正值 0或空格表示
+        //DateUtil.getDateTime("yyyyMMddHHmmss", (Date) row.get("O_TIME")),
+        convertDateFormat((Date) row.get("O_TIME"), String.valueOf(row.get("O_TIME_FRAC"))),
+        convertEpi((Double)row.get("EPI_LAT"), 5, "LAT"),// 4位伟度，加上负号共5位，不够位数前面补空格
+        convertEpi((Double)row.get("EPI_LON"), 6, "LON"),// 5位经度，加上负号共6位，不够位数前面补空格
         ExtremeUtils.formatNumber("0.00", row.get("MAG_VAL")),// 4位震级
         ExtremeUtils.formatNumber("000", row.get("EPI_DEPTH")),// 3位深度
         row.get("SEQUEN_NAME") == null ? "000" : StringUtils.leftPad((String) row
@@ -638,12 +765,22 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
   }
   
   /**
+   * 转换Q01格式的发震时刻
+   * @param eTime
+   * @param timeFrac
+   */
+  private String convertDateFormat(Date eTime, String timeFrac) {
+    return eqFormat(eTime, timeFrac);
+  }
+  
+  /**
    * 将一个数字格式化为字符串，并且在前面按照一定的长度补，解决经伟度出现负数的情况. 
    * 用ExtremeUtils 的结果是 -0005.9 而要的结果为 000-5.9
    * @param value 数字
    * @param len 字符串总长度
    * @return 返回格式化好的字符串
    */
+  @SuppressWarnings("unused")
   private String formatNumber(Double val, int len) {
     String strVal = null;
     // 值为空时
@@ -653,5 +790,47 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
       strVal = ExtremeUtils.formatNumber("###.00", val);
     }
     return StringUtils.leftPad(strVal, len, '0');
+  }
+  
+  /**
+   * 取得指定日期形式的字符串
+   * @param eTime 发震时间
+   * @param timeFrac 秒值
+   */
+  private static String eqFormat(Date eTime, String timeFrac) {
+    Integer n1 = null;
+    StringBuffer rst = new StringBuffer(convertDateToString(eTime));
+    if(timeFrac != null) {
+      n1 = Integer.valueOf(timeFrac.substring(0,1));
+      if(timeFrac.length() >= 2) {
+        if(Integer.valueOf(timeFrac.substring(1,2)) >= 5){
+          if(n1 < 9) {
+            n1 += 1;
+          }
+        }
+      }
+    }
+    return rst.append(".").append(n1).toString();
+  }
+  
+  public static final String convertDateToString(Date aDate) {
+    String s = getDateTime("yyyyMMddHHmmss", aDate);
+    if (StringUtils.isBlank(s)) {
+      return null;
+    }
+
+    return s;
+  }
+  
+  public static final String getDateTime(String aMask, Date aDate) {
+    SimpleDateFormat df = null;
+    String returnValue = null;
+
+    if (aDate != null) {
+      df = new SimpleDateFormat(aMask);
+      returnValue = df.format(aDate);
+    }
+
+    return (returnValue);
   }
 }
