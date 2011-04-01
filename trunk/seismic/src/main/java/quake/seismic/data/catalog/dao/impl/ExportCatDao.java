@@ -759,13 +759,13 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
    * @return
    */
   public String extractQ01(Map row, Criteria criteria) {
-    String q01Data = MessageFormat.format("{0}{1}{2}{3} {4} {5}\n", new Object[] {
+    String q01Data = MessageFormat.format("{0}{1}{2} {3} {4} {5}\n", new Object[] {
         // 2008-10-04 12:48:14 转成 20081004124814
         //DateUtil.getDateTime("yyyyMMddHHmmss", (Date) row.get("O_TIME")),
         convertDateFormat((Date) row.get("O_TIME"), String.valueOf(row.get("O_TIME_FRAC"))),
         convertEpi((Double)row.get("EPI_LAT"), 5, "LAT"),// 4位伟度，加上负号共5位，不够位数前面补空格
         convertEpi((Double)row.get("EPI_LON"), 6, "LON"),// 5位经度，加上负号共6位，不够位数前面补空格
-        getMagOfQ01(row, criteria),// 震级
+        getFormatOfQ01((String)row.get("M_SOURCE"))+ExtremeUtils.formatNumber("0.0", row.get("M")),// 震级
         getFormatOfQ01((String)row.get("Epic_id")),//位号
         getFormatOfQ01((String)row.get("LOCATION_CNAME"))});
     return q01Data;
@@ -776,6 +776,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
    * @param row
    * @param criteria
    */
+  @SuppressWarnings("unused")
   private String getMagOfQ01(Map row, Criteria criteria) {
     StringBuffer mg = new StringBuffer(" ");
     MagCriteria mc = new MagCriteria();
