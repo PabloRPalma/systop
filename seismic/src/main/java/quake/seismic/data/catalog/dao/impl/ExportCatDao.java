@@ -67,7 +67,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
       } else if ("EQT".equals(criteria.getExpType())) {//EQT格式数据
         buf.append(extractEqt(row));
       } else if ("Q01".equals(criteria.getExpType())) {
-        buf.append(extractQ01(row));
+        buf.append(extractQ01(row, criteria));
       }
     }
     return buf;
@@ -328,11 +328,20 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
   private String getDBO(Map row) {
     String dboData = MessageFormat.format(
         "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14}\n",new Object[] {
-         row.get("NET_CODE"), DateUtil.getDateTime("yyyy/MM/dd HH:ss:ss.ss", (Date)row.get("O_TIME")), 
-           row.get("EPI_LAT"), row.get("EPI_LON"), row.get("EPI_DEPTH"), row.get("M_SOURCE"), row.get("M"), 
-             row.get("Rms"), row.get("QLOC"),  row.get("Sum_stn"), row.get("Loc_stn"), 
-               SeismicConstants.EQ_TYPE_MAP.get(row.get("Eq_type")), 
-                 row.get("Epic_id"), row.get("Source_id"), row.get("LOCATION_CNAME")
+         row.get("NET_CODE"), DateUtil.getDateTime("yyyy-MM-dd HH:ss:ss.ss", (Date)row.get("O_TIME")), 
+         ExportDataFormat.convertEpiOfEQT((Double)row.get("EPI_LAT"), 7, "LAT"), //6位纬度，要加上负号，保留3位小数
+         ExportDataFormat.convertEpiOfEQT((Double)row.get("EPI_LON"), 8, "LON"),//7位经度，要加上负号，保留3位小数
+         ExportDataFormat.convertDepth((Double)row.get("EPI_DEPTH"), 3),//3位深度
+         ExportDataFormat.convertMagName((String)row.get("M_SOURCE"), 5), //5位震级名
+         ExportDataFormat.convertMagVal((Double)row.get("M"), 4), //3位震级值，要加上负号，保留1位小数
+         ExportDataFormat.convertRms((Double)row.get("Rms"), 6), //6位Rms值，保留3位小数
+         ExportDataFormat.convertQloc((String)row.get("QLOC")),//1位QLOC
+         ExportDataFormat.convertStn((Integer)row.get("Sum_stn"), 3),//3位编报震相的台站数量
+         ExportDataFormat.convertStn((Integer)row.get("Loc_stn"), 3),//3位定位台站
+         ExportDataFormat.convertTwoStr((String)row.get("Epic_id")),//2位号
+         ExportDataFormat.convertTwoStr((String)row.get("Source_id")),//2数据来源
+         ExportDataFormat.convertTwoStr(SeismicConstants.EQ_TYPE_MAP.get(row.get("Eq_type"))), //2地震类型
+         ExportDataFormat.convertTwoStr((String)row.get("LOCATION_CNAME"))
     });
     //logger.debug("DBO数据格式内容：{}", dboData);
     return dboData;
@@ -509,10 +518,10 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
       String startDate = null;
       String endDate = null;
       if (networkInfo.get("Net_startdate") != null) {
-        startDate = DateUtil.getDateTime("yyyy/MM/dd HH:ss:ss.ss", (Date)networkInfo.get("Net_startdate"));
+        startDate = DateUtil.getDateTime("yyyy-MM-dd HH:ss:ss.ss", (Date)networkInfo.get("Net_startdate"));
       }
       if (networkInfo.get("Net_enddate") != null) {
-        endDate = DateUtil.getDateTime("yyyy/MM/dd HH:ss:ss.ss", (Date)networkInfo.get("Net_enddate"));
+        endDate = DateUtil.getDateTime("yyyy-MM-dd HH:ss:ss.ss", (Date)networkInfo.get("Net_enddate"));
       }
       //logger.debug("台网起始时间：{} ----- 结束时间：{}", startDate, endDate);
       
@@ -749,19 +758,52 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
    * @param row 一行数据
    * @return
    */
-  public String extractQ01(Map row) {
-    String q01Data = MessageFormat.format("{0}{1}{2}{3}{4}{5}{6}\n", new Object[] {// 年前有一空格
+  public String extractQ01(Map row, Criteria criteria) {
+    String q01Data = MessageFormat.format("{0}{1}{2}{3} {4} {5}\n", new Object[] {
         // 2008-10-04 12:48:14 转成 20081004124814
         //DateUtil.getDateTime("yyyyMMddHHmmss", (Date) row.get("O_TIME")),
         convertDateFormat((Date) row.get("O_TIME"), String.valueOf(row.get("O_TIME_FRAC"))),
         convertEpi((Double)row.get("EPI_LAT"), 5, "LAT"),// 4位伟度，加上负号共5位，不够位数前面补空格
         convertEpi((Double)row.get("EPI_LON"), 6, "LON"),// 5位经度，加上负号共6位，不够位数前面补空格
-        ExtremeUtils.formatNumber("0.00", row.get("MAG_VAL")),// 4位震级
-        ExtremeUtils.formatNumber("000", row.get("EPI_DEPTH")),// 3位深度
-        row.get("SEQUEN_NAME") == null ? "000" : StringUtils.leftPad((String) row
-            .get("SEQUEN_NAME"), 3, '0'),// 3位序列号
-        row.get("M_SOURCE") });
+        getMagOfQ01(row, criteria),// 震级
+        getFormatOfQ01((String)row.get("Epic_id")),//位号
+        getFormatOfQ01((String)row.get("LOCATION_CNAME"))});
     return q01Data;
+  }
+  
+  /**
+   * 转换Q01格式的震级列
+   * @param row
+   * @param criteria
+   */
+  private String getMagOfQ01(Map row, Criteria criteria) {
+    StringBuffer mg = new StringBuffer(" ");
+    MagCriteria mc = new MagCriteria();
+    mc.setSchema(criteria.getSchema());
+    mc.setTableName(criteria.getMagTname());
+    mc.setCatId((String)row.get("ID"));
+    mc.setMagName((String)row.get("M_SOURCE"));
+    Double magValue = getMagVal(mc);
+    if (StringUtils.isNotEmpty((String)row.get("M_SOURCE"))) {
+      magValue = getMagVal(mc);
+      mg.append((String)row.get("M_SOURCE"));
+      mg.append(ExtremeUtils.formatNumber("0.0", magValue));
+    } else {
+      mg.append("M");
+      mg.append(ExtremeUtils.formatNumber("0.0", row.get("M")));
+    }
+    //logger.debug("Q01格式的震级列：{}", mg.toString());
+    return mg.toString();
+  }
+  
+  /**
+   * 转换Q01格式的值，为空的话补空格
+   */
+  private String getFormatOfQ01(String val) {
+    if (StringUtils.isNotEmpty(val)) {
+      return val;
+    }
+    return "  ";
   }
   
   /**
