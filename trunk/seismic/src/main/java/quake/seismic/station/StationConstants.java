@@ -18,7 +18,7 @@ public final class StationConstants {
   /**
    * 换行
    */
-  public static final String NEW_LINE = "\n\r";
+  public static final String NEW_LINE = "\n";
   
   /**
    * 台站类型_固定
