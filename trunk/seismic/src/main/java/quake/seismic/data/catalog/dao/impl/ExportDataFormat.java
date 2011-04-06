@@ -2,9 +2,16 @@ package quake.seismic.data.catalog.dao.impl;
 
 import org.apache.commons.lang.StringUtils;
 import org.ecside.util.ExtremeUtils;
+import org.slf4j.LoggerFactory;
+
+import ch.qos.logback.classic.Logger;
 
 public final class ExportDataFormat {
 
+  public static Logger logger = (Logger) LoggerFactory.getLogger(ExportDataFormat.class);
+  
+  public static final String[] SPECIAL_STRINGS = {"-99999.0", "-99,999.0", "-99999"};
+  
   private ExportDataFormat(){
   }
   
@@ -132,5 +139,69 @@ public final class ExportDataFormat {
       return val;
     }
     return "  ";
+  }
+  
+  /**
+   * 转换字符串，不够位数左侧补空格_String类型
+   * @param strVal
+   * @param len
+   */
+  protected static String convertValue(String val, int len) {
+    String strVal = " ";
+    if(StringUtils.isNotEmpty(val) && !val.equalsIgnoreCase("null")) {
+      strVal = val;
+    }
+    return StringUtils.leftPad(strVal, len, ' ');
+  }
+  
+  /**
+   * 转换字符串，不够位数左侧补空格_Integer类型
+   * @param strVal
+   * @param len
+   */
+  protected static String convertValue(Integer intVal, int len) {
+    String strVal = " ";
+    if (intVal != null) {
+      for(int i = 0; i < SPECIAL_STRINGS.length; i++ ) {
+        if(StringUtils.equals(SPECIAL_STRINGS[i], String.valueOf(intVal).trim())) {
+          return StringUtils.leftPad(" ", len, ' ');
+        } else {
+          strVal = String.valueOf(intVal);
+        }
+      }
+    }
+    return StringUtils.leftPad(strVal, len, ' ');
+  }
+  
+  /**
+   * Double类型数据，共5位保留一位小数
+   * @param val
+   * @param len
+   */
+  protected static String convertDoubleVal(Double val, int len, String flag) {
+    String strVal = " ";
+    if (val == null) {
+      strVal = " ";
+    } else {
+      if ("five".equals(flag)) {
+        for(int i = 0; i < SPECIAL_STRINGS.length; i++ ) {
+          if(StringUtils.equals(SPECIAL_STRINGS[i], String.valueOf(val).trim())) {
+            return StringUtils.leftPad(" ", len, ' ');
+          } else {
+            strVal = ExtremeUtils.formatNumber("##0.0", val);
+          }
+        }
+      }
+      if("six".equals(flag)) {
+        for(int i = 0; i < SPECIAL_STRINGS.length; i++ ) {
+          if(StringUtils.equals(SPECIAL_STRINGS[i], String.valueOf(val).trim())) {
+            return StringUtils.leftPad(" ", len, ' ');
+          } else {
+            strVal = ExtremeUtils.formatNumber("###0.0", val);
+          }
+        }
+      }
+    }
+    return StringUtils.leftPad(strVal, len, ' ');
   }
 }
