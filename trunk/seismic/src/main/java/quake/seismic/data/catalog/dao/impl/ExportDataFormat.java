@@ -135,7 +135,7 @@ public final class ExportDataFormat {
    * 转换2位值
    */
   protected static String convertTwoStr(String val) {
-    if (StringUtils.isNotEmpty(val)) {
+    if (StringUtils.isNotEmpty(val) && !val.equalsIgnoreCase("null")) {
       return val;
     }
     return "  ";
