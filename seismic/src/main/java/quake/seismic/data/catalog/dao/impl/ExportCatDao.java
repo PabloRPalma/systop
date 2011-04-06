@@ -385,7 +385,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
          ExportDataFormat.convertValue((Integer)row.get("Sum_pha"), 3), //3位
          ExportDataFormat.convertValue((Integer)row.get("Loc_pha"), 3), //3位
          ExportDataFormat.convertValue((Integer)row.get("FE_num"), 4), //4位
-         ExportDataFormat.convertValue((String)row.get("FE_sname"), 64) //64位
+         ExportDataFormat.convertTwoStr((String)row.get("FE_sname")) //64位
     });
     //logger.debug("DEO数据格式内容：{}", deoData);
     return deoData;
