@@ -369,10 +369,23 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
   private String getDEO(Map row) {
     String deoData = MessageFormat.format(
         "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15} {16}\n",new Object[] {
-         row.get("Auto_flag"), row.get("EVENT_ID"), row.get("SEQUEN_NAME"),row.get("Depfix_flag"), 
-           row.get("M"), row.get("M_SOURCE"), row.get("SPmin"), row.get("Dmin"), row.get("Gap_azi"),
-             row.get("Erh"), row.get("Erz"), row.get("Qnet"),row.get("QCOM"), row.get("Sum_pha"),
-                row.get("Loc_pha"), row.get("FE_num"), row.get("FE_sname")
+         ExportDataFormat.convertValue((String)row.get("Auto_flag"), 1), //Auto_flag,1位
+         ExportDataFormat.convertValue((String)row.get("EVENT_ID"), 20), //Event_id, 20位
+         ExportDataFormat.convertValue((String)row.get("SEQUEN_NAME"), 20), //Sequen_name, 20位
+         ExportDataFormat.convertValue((Integer)row.get("Depfix_flag"), 1), //Depfix_flag, 1位
+         ExportDataFormat.convertMagVal((Double)row.get("M"), 4), //震级, 3位,保留一位小数
+         ExportDataFormat.convertMagName((String)row.get("M_SOURCE"), 5), //5位震级名
+         ExportDataFormat.convertDoubleVal((Double)row.get("SPmin"), 5, "five"), //SPmin，最小S-P，单位：秒, 5位,保留一位小数
+         ExportDataFormat.convertDoubleVal((Double)row.get("Dmin"), 6, "six"), //Dmin，近台距,6位,保留一位小数
+         ExportDataFormat.convertDoubleVal((Double)row.get("Gap_azi"), 5, "five"), //Gap_azi，空隙角, 5位,保留一位小数
+         ExportDataFormat.convertDoubleVal((Double)row.get("Erh"), 5, "five"), //Erh，水平误差估计, 5位,保留一位小数
+         ExportDataFormat.convertDoubleVal((Double)row.get("Erz"), 5, "five"), //Erz，深度误差估计, 5位,保留一位小数
+         ExportDataFormat.convertValue((String)row.get("Qnet"), 1),//1位
+         ExportDataFormat.convertValue((String)row.get("QCOM"), 1), //1位
+         ExportDataFormat.convertValue((Integer)row.get("Sum_pha"), 3), //3位
+         ExportDataFormat.convertValue((Integer)row.get("Loc_pha"), 3), //3位
+         ExportDataFormat.convertValue((Integer)row.get("FE_num"), 4), //4位
+         ExportDataFormat.convertValue((String)row.get("FE_sname"), 64) //64位
     });
     //logger.debug("DEO数据格式内容：{}", deoData);
     return deoData;
@@ -398,7 +411,11 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
   private String getDMB(Map mag) {
     String dmbFormat = MessageFormat.format(
         "{0} {1} {2} {3} {4}\n",new Object[] {
-        mag.get("MAG_NAME"), mag.get("MAG_VAL"), mag.get("MAG_GAP"), mag.get("MAG_STN"), mag.get("MAG_ERROR")
+        ExportDataFormat.convertMagName((String)mag.get("MAG_NAME"), 5), //震级名称,5位
+        ExportDataFormat.convertMagVal((Double)mag.get("MAG_VAL"), 4), //震级值,3位，保留一位小数
+        ExportDataFormat.convertDoubleVal((Double)mag.get("MAG_GAP"), 5, "five"), //参加平均计算震级台站对震中的空隙角,5位保留一位小数
+        ExportDataFormat.convertValue((Integer)mag.get("MAG_STN"), 3), //参加平均计算震级的台站数量, 3位
+        ExportDataFormat.convertMagVal((Double)mag.get("MAG_ERROR"), 5) //标准偏差,4位保留2位小数
     });
     //logger.debug("DMB数据格式内容：{}", dmbFormat);
     return dmbFormat;
