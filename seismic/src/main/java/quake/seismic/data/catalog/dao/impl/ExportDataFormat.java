@@ -174,7 +174,7 @@ public final class ExportDataFormat {
   }
   
   /**
-   * Double类型数据，共5位保留一位小数
+   * Double类型数据，保留一位小数
    * @param val
    * @param len
    */
@@ -199,6 +199,59 @@ public final class ExportDataFormat {
           } else {
             strVal = ExtremeUtils.formatNumber("###0.0", val);
           }
+        }
+      }
+    }
+    return StringUtils.leftPad(strVal, len, ' ');
+  }
+  
+  /**
+   * Double类型数据，保留两位小数
+   * @param val
+   * @param len
+   */
+  protected static String convertDoubleTwoVal(Double val, int len, String flag) {
+    String strVal = " ";
+    if (val == null) {
+      strVal = " ";
+    } else {
+      if ("six".equals(flag)) {
+        for(int i = 0; i < SPECIAL_STRINGS.length; i++ ) {
+          if(StringUtils.equals(SPECIAL_STRINGS[i], String.valueOf(val).trim())) {
+            return StringUtils.leftPad(" ", len, ' ');
+          } else {
+            strVal = ExtremeUtils.formatNumber("##0.00", val);
+          }
+        }
+      }
+      if("seven".equals(flag)) {
+        for(int i = 0; i < SPECIAL_STRINGS.length; i++ ) {
+          if(StringUtils.equals(SPECIAL_STRINGS[i], String.valueOf(val).trim())) {
+            return StringUtils.leftPad(" ", len, ' ');
+          } else {
+            strVal = ExtremeUtils.formatNumber("###0.00", val);
+          }
+        }
+      }
+    }
+    return StringUtils.leftPad(strVal, len, ' ');
+  }
+  
+  /**
+   * 转换震相AMP
+   * @param val
+   * @param len
+   */
+  protected static String convertAMP(Double val, int len) {
+    String strVal = " ";
+    if (val == null) {
+      strVal = " ";
+    } else {
+      for(int i = 0; i < SPECIAL_STRINGS.length; i++ ) {
+        if(StringUtils.equals(SPECIAL_STRINGS[i], String.valueOf(val).trim())) {
+          return StringUtils.leftPad(" ", len, ' ');
+        } else {
+          strVal = ExtremeUtils.formatNumber("######0.0", val);
         }
       }
     }

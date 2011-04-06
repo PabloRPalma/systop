@@ -253,13 +253,13 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
       }
       //取得地震目录相关震相
       List<Map> phaseList = getPhaseOfCatalog((String)row.get("ID"), criteria);
-      logger.debug("地震目录ID：{},对应的震相个数：{}", (String)row.get("ID"), phaseList.size());
+      //logger.debug("地震目录ID：{},对应的震相个数：{}", (String)row.get("ID"), phaseList.size());
       //Write phase data block (DPB)
       
       for(Map phase : phaseList) {
         String netStaCode = "";
         netStaCode = (String)phase.get("NET_CODE") + ("/") + (String)phase.get("STA_CODE");
-        logger.debug("震相：{}，对应的台站/台网代码：{}", phase.get("PHASE_NAME"), netStaCode);
+        //logger.debug("震相：{}，对应的台站/台网代码：{}", phase.get("PHASE_NAME"), netStaCode);
         nSCodeSet.add(netStaCode);
         buf.append("DPB").append(" ").append(getDPB(phase));
       }
@@ -443,11 +443,22 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
   private String getDPB(Map phase) {
     String hpbFormat = MessageFormat.format(
         "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15}\n",new Object[] {
-        phase.get("NET_CODE"), phase.get("STA_CODE"), phase.get("CHN_CODE"), phase.get("CLARITY"), phase.get("WSIGN"), 
-          phase.get("PHASE_NAME"), phase.get("WEIGHT"),  phase.get("REC_TYPE"), 
-            DateUtil.getDateTime("yyyy/MM/dd HH:ss:ss.ss", (Date)phase.get("PHASE_TIME")),  
-              phase.get("RESI"), phase.get("DISTANCE"), phase.get("AZI"), phase.get("AMP"), phase.get("PERIOD"),
-                phase.get("MAG_NAME"), phase.get("MAG_VAL")
+        ExportDataFormat.convertValue((String)phase.get("NET_CODE"), 2), //台网代码,2位
+        ExportDataFormat.convertValue((String)phase.get("STA_CODE"), 5), //台站代码,5位
+        ExportDataFormat.convertValue((String)phase.get("CHN_CODE"), 3), //通道代码，3位
+        ExportDataFormat.convertValue((String)phase.get("CLARITY"), 1), //初动清晰度，1
+        ExportDataFormat.convertValue((String)phase.get("WSIGN"), 1), //初动方向 1
+        ExportDataFormat.convertValue((String)phase.get("PHASE_NAME"), 7), //震相名 7
+        ExportDataFormat.convertValue((Integer)phase.get("WEIGHT"), 3),  //权重 3.1
+        ExportDataFormat.convertValue((String)phase.get("REC_TYPE"), 2), //记录类型 2
+        ExportDataFormat.convertValue(DateUtil.getDateTime("yyyy/MM/dd HH:ss:ss.ss", (Date)phase.get("PHASE_TIME")), 21), //震相到时 21
+        ExportDataFormat.convertDoubleTwoVal((Double)phase.get("RESI"), 7, "seven"), //走时残差 7.2
+        ExportDataFormat.convertDoubleVal((Double)phase.get("DISTANCE"), 6, "six"), //震中距6.1
+        ExportDataFormat.convertDoubleVal((Double)phase.get("AZI"), 5, "five"), //台站对震中的方位角5.1
+        ExportDataFormat.convertAMP((Double)phase.get("AMP"), 9), //振幅 9.1
+        ExportDataFormat.convertDoubleTwoVal((Double)phase.get("PERIOD"), 6, "six"), //周期 6.2
+        ExportDataFormat.convertMagName((String)phase.get("MAG_NAME"), 5), //震级名 5
+        ExportDataFormat.convertMagVal((Double)phase.get("MAG_VAL"), 3)//震级值 3.1
     });
     //logger.debug("HPB数据格式内容：{}", hpbFormat);
     return hpbFormat;
@@ -497,11 +508,21 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
     for(Map staLoc : staLocList) {
       String dsbFormat = MessageFormat.format(
           "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14}\n",new Object[] {
-              staLoc.get("NET_CODE"), staLoc.get("STA_CODE"), staLoc.get("STA_CNAME"), 
-              staLoc.get("STA_TYPE"), staLoc.get("CHN_NUM"), staLoc.get("STA_LAT"), staLoc.get("STA_LON"), 
-              staLoc.get("STA_ELEV"), staLoc.get("LOCAL_DEPTH"), staLoc.get("SENSOR_MODEL"), 
-              staLoc.get("DIGITIZER_MODEL"), staLoc.get("ROCK_TYPE"), 
-              "Sensi-NS", "Sensi-EW", "Sensi-UD"
+              ExportDataFormat.convertValue((String)staLoc.get("NET_CODE"), 2), //台网代码 2
+              ExportDataFormat.convertValue((String)staLoc.get("STA_CODE"), 5), //台站代码 5
+              ExportDataFormat.convertValue((String)staLoc.get("STA_CNAME"), 10), //中文台名 10
+              ExportDataFormat.convertValue((String)staLoc.get("STA_TYPE"), 1), //台站类型代码 1
+              ExportDataFormat.convertValue((Integer)staLoc.get("CHN_NUM"), 1), //通道数量 1
+              ExportDataFormat.convertEpiOfEQT((Double)staLoc.get("STA_LAT"), 8, "LAT"), //从赤道量起以“度”为单位的地球纬度，北纬为正，南纬为负 8.4
+              ExportDataFormat.convertEpiOfEQT((Double)staLoc.get("STA_LON"), 9, "LON"), //从格林威治量起的地球经度，东经为正，西经为负 9.4
+              ExportDataFormat.convertDoubleVal((Double)staLoc.get("STA_ELEV"), 5, "five"), //高程(m) 4
+              ExportDataFormat.convertValue((String)staLoc.get("LOCAL_DEPTH"), 4), //地震计安装位置距本地地面深度 4
+              ExportDataFormat.convertValue((String)staLoc.get("SENSOR_MODEL"), 12), //地震计型号 12
+              ExportDataFormat.convertValue((String)staLoc.get("DIGITIZER_MODEL"), 12), //数据采集器型号 12
+              ExportDataFormat.convertValue((String)staLoc.get("ROCK_TYPE"), 14), //台基岩性 14
+              ExportDataFormat.convertValue((String)staLoc.get("Sensi-NS"), 10), //N-S分向系统灵敏度 10
+              ExportDataFormat.convertValue((String)staLoc.get("Sensi-EW"), 10), //N-S分向系统灵敏度 10
+              ExportDataFormat.convertValue((String)staLoc.get("Sensi-UD"), 10)//N-S分向系统灵敏度 10
       });
       buf.append("DSB").append(" ").append(dsbFormat);
     }
