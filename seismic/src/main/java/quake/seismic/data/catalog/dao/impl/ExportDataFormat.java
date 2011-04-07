@@ -109,7 +109,7 @@ public final class ExportDataFormat {
    * @param len
    */
   protected static String convertQloc(String val) {
-    if (StringUtils.isNotEmpty(val)) {
+    if (StringUtils.isNotEmpty(val) && !"nul".equalsIgnoreCase(val)) {
       return val;
     }
     return " ";

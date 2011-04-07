@@ -49,6 +49,8 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
   @Override
   public StringBuffer query(Criteria criteria) {
     Assert.notNull(criteria, "Criteria is null.");
+    criteria.setSortProperty("O_TIME");
+    criteria.setSortDir("asc");
     String SQL = SQL_ID;
     if(SeismicConstants.ROUND_QUERY_YES.equals(criteria.getIsRoundQuery())){
       logger.debug("导出EQT WKF数据，按圆形区域....");
@@ -109,6 +111,8 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
       logger.debug("导出VLM数据，按圆形区域....");
       SQL = SQL_ROUND_ID;
     }
+    criteria.setSortProperty("O_TIME");
+    criteria.setSortDir("asc");
     List<Map> rows = Collections.EMPTY_LIST;
     if (SeismicConstants.Catalog_basic.equals(criteria.getExpType())) {
       rows = getTemplate().queryForList(SQL, criteria, 0, SeismicConstants.CATALOG_BASIC_MAX_SIZE);
