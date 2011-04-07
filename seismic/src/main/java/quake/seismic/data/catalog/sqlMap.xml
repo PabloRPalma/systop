@@ -167,12 +167,12 @@
 				</isNotEmpty>
 			</isNotEmpty>
 			
-			<isEmpty property="sortProperty">
+			<!--<isEmpty property="sortProperty">
 				<isEmpty property="sortDir">
 					<![CDATA[O_TIME desc]]>
 				</isEmpty>
 			</isEmpty>
-			<!-- 地震目录分页查询条件 -->
+			--><!-- 地震目录分页查询条件 -->
 			<isNotEmpty property="start">
 				<isGreaterThan property="size" compareValue="0">
 					LIMIT <![CDATA[$start$,$size$]]>
@@ -384,12 +384,12 @@
 				</isNotEmpty>
 			</isNotEmpty>
 			
-			<isEmpty property="sortProperty">
+			<!--<isEmpty property="sortProperty">
 				<isEmpty property="sortDir">
 					<![CDATA[O_TIME desc]]>
 				</isEmpty>
 			</isEmpty>
-			<!-- 地震目录分页查询条件 -->
+			--><!-- 地震目录分页查询条件 -->
 			<isNotEmpty property="start">
 				<isGreaterThan property="size" compareValue="0">
 					LIMIT <![CDATA[$start$,$size$]]>
