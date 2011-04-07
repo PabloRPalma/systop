@@ -9,12 +9,10 @@
 </head>
 <body bgcolor="#FFFFFF">
 <p><br />
-  <br />
-  <br />
 </p>
 <table width="637" height="172" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
-    <td><img src="${ctx}/images/404.jpg" width="750" height="400" /></td>
+    <td><img src="${ctx}/images/404.jpg" width="750" height="380" /></td>
   </tr>
 </table>
 </body>
