@@ -58,15 +58,15 @@
                           <td style="text-align:center;">
                             <s:submit value="保存" cssClass="button"></s:submit>&nbsp;&nbsp;
                             <s:reset value="重置" cssClass="button"></s:reset>&nbsp;&nbsp;
-                            <input id="exbtn" value="执行" onclick="exeSeedPro()" size="6" style="text-align: center;cursor: auto;" type="button" class="button"/>
-                       	  </td>
+                            <!--<input id="exbtn" value="执行" onclick="exeSeedPro()" size="6" style="text-align: center;cursor: auto;" type="button" class="button"/>
+                       	  --></td>
                         </tr>
                         <tr id="disEx" style="display: none">
                           <td style="text-align:center;">
                             <input id="exbtn" disabled="disabled" value="保存" size="6" style="text-align: center;cursor: auto;" type="button" class="button"/>&nbsp;&nbsp;&nbsp;
                             <input id="exbtn" disabled="disabled" value="重置" size="6" style="text-align: center;cursor: auto;" type="button" class="button"/>&nbsp;&nbsp;&nbsp;
-                            <input id="exbtn" disabled="disabled" value="执行" size="6" style="text-align: center;cursor: auto;" type="button" class="button"/>
-                       	  </td>
+                            <!--<input id="exbtn" disabled="disabled" value="执行" size="6" style="text-align: center;cursor: auto;" type="button" class="button"/>
+                       	  --></td>
                         </tr>
                 </table>
              </s:form>
