@@ -38,6 +38,8 @@ public class GridCatDao extends AbstractCatDao<Page> {
       SQL = SQL_ROUND_ID;
       SQL_COUNT = SQL_ROUND_COUNT_ID;
     }
+    criteria.setSortProperty("O_TIME");
+    criteria.setSortDir("desc");
     int count = (Integer) (getTemplate().queryForObject(SQL_COUNT, criteria));
     List<Map> rows = getTemplate().queryForList(SQL, criteria);
     
@@ -64,6 +66,8 @@ public class GridCatDao extends AbstractCatDao<Page> {
       logger.debug("地震目录查询，按圆形区域....");
       SQL = SQL_ROUND_ID;
     }
+    criteria.setSortProperty("O_TIME");
+    criteria.setSortDir("desc");
     //GIS显示地震目录条数设定值为常量自定义的最大值
     List<Map> rows = getTemplate().queryForList(SQL, criteria, 0, SeismicConstants.MAX_SIZE);
     return rows;
