@@ -56,14 +56,14 @@ $(function() {
 		<ec:column width="40" property="_0" title="序号" value="${GLOBALROWCOUNT}" style="text-align:center"/>
 		<ec:column width="60" property="Organization_code" title="机构代码" />	
 		<ec:column width="80" property="Instr_type" title="仪器类型" mappingItem="instrTypes"/>
-		<ec:column width="120" property="Instr_model" title="仪器型号" />
-		<ec:column width="120" property="Instru_sn" title="仪器序列号" />	
-		<ec:column width="80" property="Mac" title="MAC地址" />
+		<ec:column width="90" property="Instr_model" title="仪器型号" />
+		<ec:column width="90" property="Instru_sn" title="仪器序列号" />	
+		<ec:column width="70" property="Mac" title="MAC地址" />
 		<ec:column width="60" property="Instr_ver" title="版本号" />	
-		<ec:column width="80" property="Use_type" title="用途类型" mappingItem="UseTypes"/>	
+		<ec:column width="60" property="Use_type" title="用途类型" mappingItem="UseTypes"/>	
 		<ec:column width="120" property="Ondate" title="启用时间" cell="date" format="yyyy-MM-dd HH:ss"/>
 		<ec:column width="120" property="Offdate" title="终止时间" cell="date" format="yyyy-MM-dd HH:ss"/>
-		<ec:column width="80" property="staName" title="所在台站" />
+		<ec:column width="180" property="staName" title="所在台站" />
 	</ec:row>   
 </ec:table>
 </div>
