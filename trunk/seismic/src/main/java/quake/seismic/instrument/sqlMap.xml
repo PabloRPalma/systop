@@ -63,11 +63,6 @@
 				</isNotEmpty>
 			</isNotEmpty>
 			
-			<isEmpty property="sortProperty">
-				<isEmpty property="sortDir">
-					<![CDATA[id asc]]>
-				</isEmpty>
-			</isEmpty>
 		</dynamic>
 	</select>
 	<!-- 查询仪器总数 -->
@@ -114,11 +109,6 @@
 				</isNotEmpty>
 			</isNotEmpty>
 			
-			<isEmpty property="sortProperty">
-				<isEmpty property="sortDir">
-					<![CDATA[id asc]]>
-				</isEmpty>
-			</isEmpty>
 		</dynamic>
 	</select>
 	<!--查询台网代码-->
@@ -131,9 +121,9 @@
 	
 	<!-- 仪器所在台站 -->
 	<select id="queryStaOfInstr" parameterClass="quake.seismic.instrument.model.Instrument"
-                        resultClass="String">
+                        resultClass="java.lang.String">
 		<![CDATA[
-		SELECT sta.Sta_cname
+		SELECT DISTINCT sta.Sta_cname
 		FROM $schema$.Loc_info loc LEFT JOIN $schema$.Station_info sta ON loc.Net_code=sta.Net_code AND loc.Sta_code=sta.Sta_code
 		]]>
 		<dynamic prepend="WHERE">

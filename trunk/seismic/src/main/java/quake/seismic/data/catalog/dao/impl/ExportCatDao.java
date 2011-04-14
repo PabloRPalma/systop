@@ -14,10 +14,13 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.ecside.util.ExtremeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
 import quake.admin.ds.service.DataSourceManager;
+import quake.admin.sitecfg.model.SiteCfg;
+import quake.admin.sitecfg.service.SiteCfgManager;
 import quake.seismic.SeismicConstants;
 import quake.seismic.data.catalog.dao.AbstractCatDao;
 import quake.seismic.data.catalog.model.Criteria;
@@ -39,6 +42,10 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
    */
   @Autowired(required = true)
   private DataSourceManager dataSourceManager;
+  
+  @Autowired(required = true)
+  @Qualifier("siteCfgManager")
+  private SiteCfgManager siteCfgManager;
   
   /**
    * 查询需要导出的数据
@@ -629,9 +636,15 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
    * @param criteria
    */
   public Object queryNetwordInfo(Criteria criteria) {
-    //查询基本信息数据库中的台网表
-    criteria.setSchema(dataSourceManager.getStationSchema());
-    return getTemplate().queryForObject("cz.queryNetworkInfo", criteria);
+    SiteCfg siteCfg = siteCfgManager.getCmsConfig();
+    if (siteCfg != null && StringUtils.isNotEmpty(siteCfg.getCmsCode())) {
+      criteria.setNetCode(siteCfg.getCmsCode());
+      //查询基本信息数据库中的台网表
+      criteria.setSchema(dataSourceManager.getStationSchema());
+      return getTemplate().queryForObject("cz.queryNetworkInfo", criteria);
+    } else {
+      return null;
+    }
   }
   
   /**
