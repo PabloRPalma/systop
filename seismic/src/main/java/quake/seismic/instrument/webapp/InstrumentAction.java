@@ -51,16 +51,22 @@ public class InstrumentAction extends AbstractQueryAction<Instrument> {
   public String index() {
     try {
       model.setPage(getPage());
-      model.setSortProperty(getSortProperty());
-      model.setSortDir(getSortDir());
+      //按机构代码升序
+      model.setSortProperty("Organization_code");
+      model.setSortDir("asc");
       model.setSchema(dataSourceManager.getStationSchema());
-      Page page = instrumentDao.query(model);
-      if (page != null) {
-        getRequest().setAttribute("items", page.getData());
-        restorePageData(page.getRows(), page.getPageSize());
+      if (StringUtils.isNotEmpty(model.getNetCode())) {
+        Page page = instrumentDao.query(model);
+        if (page != null) {
+          getRequest().setAttribute("items", page.getData());
+          restorePageData(page.getRows(), page.getPageSize());
+        } else {
+          clean(); //即使没有查到数据，也要设置页面上的分页信息，确保显示的结果正确
+        }
       } else {
-        clean(); //即使没有查到数据，也要设置页面上的分页信息，确保显示的结果正确
+        clean();
       }
+      
     } catch (Exception e) {
       logger.error("数据查询错误{}", e.getMessage());
       e.printStackTrace();

@@ -352,7 +352,7 @@ public class CatAction extends AbstractQueryAction<Criteria> {
       StringBuffer buf = exportCatDao.queryForVlm(model);
       return buf.toString();
     } else {
-      return null;
+      return "无数据或检查配置本省台网代码！";
     }
   }
 

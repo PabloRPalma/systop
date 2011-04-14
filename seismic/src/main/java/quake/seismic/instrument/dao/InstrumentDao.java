@@ -50,8 +50,10 @@ public class InstrumentDao extends AbstractInstrDao<Page>{
       instrument.setNetCode(netCode);
       instrument.setInstrModel(instrModel);
       if(StringUtils.isNotEmpty(instrModel)) {
-        logger.info("仪器所在台站：{}", getTemplate().queryForObject(SQL_STA_INSTR_ID, instrument));
-        instr.put("staName", getTemplate().queryForObject(SQL_STA_INSTR_ID, instrument));
+        //logger.info("仪器所在台站：{}", getTemplate().queryForObject(SQL_STA_INSTR_ID, instrument));
+        List<String> staList = getTemplate().queryForList(SQL_STA_INSTR_ID, instrument);
+        //logger.debug("仪器：{}, 所在台站数量：{}", instrument.getInstrModel(), staList.size());/
+        instr.put("staName", staList.toString());
       }
     }
     
