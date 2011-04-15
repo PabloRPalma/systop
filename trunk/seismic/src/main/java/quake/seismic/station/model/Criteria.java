@@ -69,6 +69,10 @@ public class Criteria extends PageSchemaAware {
    */
   String rockType;
   /**
+   * 建筑类型
+   */
+  String buildType;
+  /**
    * 台站名称
    */
   String staName;
@@ -260,5 +264,13 @@ public class Criteria extends PageSchemaAware {
 
   public void setChannelId(String channelId) {
     this.channelId = channelId;
+  }
+
+  public String getBuildType() {
+    return buildType;
+  }
+
+  public void setBuildType(String buildType) {
+    this.buildType = buildType;
   }
 }

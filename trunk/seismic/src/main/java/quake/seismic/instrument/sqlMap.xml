@@ -123,12 +123,12 @@
 	<select id="queryStaOfInstr" parameterClass="quake.seismic.instrument.model.Instrument"
                         resultClass="java.lang.String">
 		<![CDATA[
-		SELECT DISTINCT sta.Sta_cname
+		SELECT DISTINCT sta.Sta_cname as staName
 		FROM $schema$.Loc_info loc LEFT JOIN $schema$.Station_info sta ON loc.Net_code=sta.Net_code AND loc.Sta_code=sta.Sta_code
 		]]>
 		<dynamic prepend="WHERE">
 		    <isNotEmpty prepend="AND" property="instrModel">
-		       <![CDATA[(loc.Sensor_model=#instrModel#) or (loc.Digitizer_model=#instrModel#)]]>
+		       <![CDATA[(loc.Sensor_sn=#instrModel#) or (loc.Digitizer_sn=#instrModel#)]]>
 		    </isNotEmpty>
 		</dynamic>
 	</select>
