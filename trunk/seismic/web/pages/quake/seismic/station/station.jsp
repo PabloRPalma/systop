@@ -19,7 +19,7 @@
 </style>
 <%@include file="/common/mapid.jsp" %>
 
-<SCRIPT language=javascript>
+<SCRIPT language=javascript><!--
 
 	var gmap = null;
 	
@@ -53,8 +53,8 @@
 			double lat = Double.valueOf(sta.get("STA_LAT").toString());
 			double lng = Double.valueOf(sta.get("STA_LON").toString());
 		%>
-			var markerIcon = getMarkerIcon("<%=sta.get("ROCK_TYPE")%>");
-			showMarker(markerIcon, "<%=sta.get("STA_CNAME")%>", <%=NumberFormatUtil.format(lng, 2)%>, <%=NumberFormatUtil.format(lat, 2)%>, <%=sta.get("STA_ELEV")%>, "<%=sta.get("ROCK_TYPE") %>");
+			var markerIcon = getMarkerIcon("<%=sta.get("BUILD_TYPE")%>");
+			showMarker(markerIcon, "<%=sta.get("STA_CNAME")%>", <%=NumberFormatUtil.format(lng, 2)%>, <%=NumberFormatUtil.format(lat, 2)%>, <%=sta.get("STA_ELEV")%>, "<%=sta.get("BUILD_TYPE") %>");
 		<%}	%>
     }
 
@@ -63,19 +63,22 @@
 	此处仅为示例
 	***********************************************************************/
 	
-	function getMarkerIcon(rockType) {
+	function getMarkerIcon(buildType) {
 					
 		var baseIcon = new GIcon();
 		var iconSize = 18;
-		if(rockType == "基岩") {
+		/**
+		if(buildType == "基岩") {
 			baseIcon.image = "${ctx}/images/icons/jiyan.png";
-		} else if (rockType == "花岗岩")	{
+		} else if (buildType == "花岗岩")	{
 			baseIcon.image = "${ctx}/images/icons/huagang.png";
-		} else if (rockType == "片麻岩")	{
+		} else if (buildType == "片麻岩")	{
 			baseIcon.image = "${ctx}/images/icons/pianma.png";
-		} else if (rockType == "井下")	{
+		} else if (buildType == "井下")	{
 			baseIcon.image = "${ctx}/images/icons/jingxia.png";
 		} 
+		*/
+		baseIcon.image = "${ctx}/images/icons/jiyan.png";
 		baseIcon.iconSize = new GSize(iconSize, iconSize);
 		baseIcon.iconAnchor = new GPoint(iconSize/2, iconSize/2);
 		baseIcon.infoWindowAnchor = new GPoint(iconSize/2, iconSize/2);
@@ -83,7 +86,7 @@
 		return baseIcon;
 	}
 			
-	function showMarker(markerIcon, name, longitude, latitude, elevation, rockType){		
+	function showMarker(markerIcon, name, longitude, latitude, elevation, buildType){		
 		var latlng = new GLatLng(latitude, longitude);
 		var marker = new GMarker(latlng, markerIcon);
 		gmap.addOverlay(marker);
@@ -94,25 +97,25 @@
 			"<b>台站纬度：<\/b>" + latitude + "°<br>" +
 			"<b>台站经度：<\/b>" + longitude + "°<br>" +			
 			"<b>台站高程：<\/b>" + elevation + " 米<br>" +
-			"<b>台基：<\/b>" + rockType + "<br>" +
+			"<b>建筑类型：<\/b>" + buildType + "<br>" +
 			"<\/div>";
 			marker.openInfoWindowHtml(html);
 		});
 	}
 
-</SCRIPT>
+--></SCRIPT>
 </head>
 
 <body onload="initialize();" onunload="GUnload();">
 <div id="mainDiv" align="center">
 	<div id="mapTitle">台站分布图</div>
 	<div id="gmap"></div>
-	<div class="legend">
+	<div class="legend"><!--
   图例：<img src="${ctx}/images/icons/jiyan.png" />基岩
   <img src="${ctx}/images/icons/huagang.png" />花岗岩
   <img src="${ctx}/images/icons/pianma.png" />片麻岩
   <img src="${ctx}/images/icons/jingxia.png" />井下
-  </div>
+  --></div>
 </div>
 </body>
 </html>

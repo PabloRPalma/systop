@@ -16,7 +16,7 @@
 	<s:form action="list" theme="simple" id="queryFrm">
      <table width="100%">
      <tr>
-       <td>台网:</td>
+       <td>台网名称:</td>
        <td><s:select list="netCodes" name="model.netCode" headerKey="" headerValue="全部" cssStyle="width:100px;"></s:select></td>
   	   <td >台站名称:</td>
   	   <td><s:textfield name="model.staName" cssStyle="width:100px;"/></td>
@@ -27,8 +27,8 @@
 		<td><input value="查询" onclick="queryForList('${ctx}/quake/seismic/station/list.do', '')" size="6" style="text-align: center;cursor: auto;" type="button" class="button"/></td>
 	</tr>
        <tr>
-       	 <td>台基:</td>
-      	 <td><s:select list="rockTypes" name="model.rockType" headerKey="" headerValue="全部" cssStyle="width:100px;"></s:select></td>
+       	 <td>建筑类型:</td>
+      	 <td><s:select list="buildTypes" name="model.buildType" headerKey="" headerValue="全部" cssStyle="width:100px;"></s:select></td>
   	     <td >台站类型:</td>
   	     <td><s:select list="staTypes" name="model.staType" headerKey="" headerValue="全部" cssStyle="width:100px;"></s:select></td>
   		 <td> 地震计:</td>
