@@ -341,13 +341,19 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
 
   /**
    * 台基类型
-   * 
-   * @return
    */
   public Map<String, String> getRockTypes() {
     return StationConstants.ROCK_TYPE;
   }
 
+  /**
+   * 建造类型
+   * @return
+   */
+  public Map<String, String> getBuildTypes() {
+    return StationConstants.BUILD_TYPE;
+  }
+  
   /**
    * 台站类型
    * 
@@ -364,7 +370,7 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
    */
   public String resp() {
     String data = exportRespData();
-    logger.debug("导出的数据：{}", data);
+    //logger.debug("导出的数据：{}", data);
     String fileName = getRespName();
     getResponse().addHeader("Content-Disposition", fileName);
     render(getResponse(), data, "text/html");
@@ -379,7 +385,7 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
    */
   public String xml() {
     String data = exportXmlData();
-    logger.debug("导出的数据：{}", data);
+    //logger.debug("导出的数据：{}", data);
     String fileName = getXmlName();
     getResponse().addHeader("Content-Disposition", fileName);
     renderXml(getResponse(), data);

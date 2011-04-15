@@ -40,6 +40,12 @@ public final class StationConstants {
   public static String ROCK_TYPE_GNEISS = "片麻岩";
   public static String ROCK_TYPE_JINGXIA = "井下";
   /**
+   * 建筑类型
+   */
+  public static String BUILD_TYPE_SHANDONG = "山洞";
+  public static String BUILD_TYPE_JINGXIA = "井下";
+  public static String BUILD_TYPE_DIMIAN = "地面";
+  /**
    * 响应类型
    */
   
@@ -80,5 +86,14 @@ public final class StationConstants {
     ROCK_TYPE.put(ROCK_TYPE_MOORSTONE, "花岗岩");
     ROCK_TYPE.put(ROCK_TYPE_GNEISS, "片麻岩");
     ROCK_TYPE.put(ROCK_TYPE_JINGXIA, "井下");
+  }
+  /**
+   * 建筑类型
+   */
+  public static final Map<String, String> BUILD_TYPE = new LinkedHashMap<String, String>();
+  static {
+    BUILD_TYPE.put(BUILD_TYPE_SHANDONG, BUILD_TYPE_SHANDONG);
+    BUILD_TYPE.put(BUILD_TYPE_JINGXIA, BUILD_TYPE_JINGXIA);
+    BUILD_TYPE.put(BUILD_TYPE_DIMIAN, BUILD_TYPE_DIMIAN);
   }
 }

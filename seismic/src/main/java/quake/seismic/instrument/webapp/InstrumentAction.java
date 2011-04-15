@@ -45,6 +45,9 @@ public class InstrumentAction extends AbstractQueryAction<Instrument> {
   
   private Instrument model = new Instrument();
 
+  /** 用于条件查询 */
+  private String ntCode;
+  
   /**
    * 查询仪器
    */
@@ -54,17 +57,14 @@ public class InstrumentAction extends AbstractQueryAction<Instrument> {
       //按机构代码升序
       model.setSortProperty("Organization_code");
       model.setSortDir("asc");
+      model.setNetCode(ntCode);
       model.setSchema(dataSourceManager.getStationSchema());
-      if (StringUtils.isNotEmpty(model.getNetCode())) {
-        Page page = instrumentDao.query(model);
-        if (page != null) {
-          getRequest().setAttribute("items", page.getData());
-          restorePageData(page.getRows(), page.getPageSize());
-        } else {
-          clean(); //即使没有查到数据，也要设置页面上的分页信息，确保显示的结果正确
-        }
+      Page page = instrumentDao.query(model);
+      if (page != null) {
+        getRequest().setAttribute("items", page.getData());
+        restorePageData(page.getRows(), page.getPageSize());
       } else {
-        clean();
+        clean(); //即使没有查到数据，也要设置页面上的分页信息，确保显示的结果正确
       }
       
     } catch (Exception e) {
@@ -117,6 +117,14 @@ public class InstrumentAction extends AbstractQueryAction<Instrument> {
 
   public void setModel(Instrument model) {
     this.model = model;
+  }
+
+  public String getNtCode() {
+    return ntCode;
+  }
+
+  public void setNtCode(String ntCode) {
+    this.ntCode = ntCode;
   }
 
 

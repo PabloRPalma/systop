@@ -46,14 +46,21 @@ public class InstrumentDao extends AbstractInstrDao<Page>{
   public List<Map> setStationOfInstr(List<Map> rows, Instrument instrument) {
     for(Map instr : rows) {
       String netCode = (String)instr.get("Organization_code");
-      String instrModel = (String)instr.get("Instr_model");
+      //仪器序列号
+      String instrSn = (String)instr.get("Instru_sn");
       instrument.setNetCode(netCode);
-      instrument.setInstrModel(instrModel);
-      if(StringUtils.isNotEmpty(instrModel)) {
+      instrument.setInstrModel(instrSn);
+      if(StringUtils.isNotEmpty(instrSn)) {
         //logger.info("仪器所在台站：{}", getTemplate().queryForObject(SQL_STA_INSTR_ID, instrument));
         List<String> staList = getTemplate().queryForList(SQL_STA_INSTR_ID, instrument);
-        //logger.debug("仪器：{}, 所在台站数量：{}", instrument.getInstrModel(), staList.size());/
-        instr.put("staName", staList.toString());
+        //logger.debug("仪器：{}, 所在台站数量：{}", instrument.getInstrModel(), staList.size());
+        StringBuffer staName = new StringBuffer();
+        for(String sta : staList) {
+          //logger.debug("所在台站名称：{}", sta);
+          staName.append(sta);
+          staName.append(" ");
+        }
+        instr.put("staName", staName.toString());
       }
     }
     

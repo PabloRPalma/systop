@@ -10,6 +10,7 @@
         <result property="STA_CODE" column="STA_CODE" javaType="String"/>
         <result property="STA_CNAME" column="STA_CNAME" javaType="String"/>
         <result property="ROCK_TYPE" column="ROCK_TYPE" javaType="String"/>
+        <result property="BUILD_TYPE" column="BUILD_TYPE" javaType="String"/>
          <result property="STA_TYPE" column="STA_TYPE" javaType="String"/>
         <result property="STA_LAT" column="STA_LAT" javaType="Double"/>
         <result property="STA_LON" column="STA_LON" javaType="Double"/>
@@ -57,7 +58,7 @@
 	<select id="queryStation" parameterClass="quake.seismic.station.model.Criteria"
                         resultMap="queryStationResult">
 		<![CDATA[
-		SELECT ST.ID,ST.NET_CODE,ST.STA_CODE,STA_CNAME,STA_TYPE,ROCK_TYPE,STA_LAT,STA_LON,STA_ELEV,
+		SELECT ST.ID,ST.NET_CODE,ST.STA_CODE,STA_CNAME,STA_TYPE,ROCK_TYPE,BUILD_TYPE,STA_LAT,STA_LON,STA_ELEV,
 			STA_STARTDATE,STA_ENDDATE,SITE_NAME,DIGITIZER_RESPID,DIGITIZER_MODEL,ST.ONDATE as ST_ONDATE,ST.OFFDATE as ST_OFFDATE
 		FROM $schema$.Station_info ST ,$schema$.Loc_info LOC WHERE ST.NET_CODE=LOC.NET_CODE and ST.STA_CODE=LOC.STA_CODE
 		]]>
@@ -80,6 +81,9 @@
 		    </isNotEmpty>
 		     <isNotEmpty prepend="AND" property="rockType">
 		       <![CDATA[(ROCK_TYPE=#rockType#)]]>
+		    </isNotEmpty>
+		    <isNotEmpty prepend="AND" property="buildType">
+		       <![CDATA[(BUILD_TYPE=#buildType#)]]>
 		    </isNotEmpty>
 		    <isNotEmpty prepend="AND" property="staName">
 		       <![CDATA[(STA_CNAME LIKE '%$staName$%')]]>
@@ -106,7 +110,7 @@
 	  <select id="queryStationById" parameterClass="quake.seismic.station.model.Criteria"
 			resultMap="queryStationResult">
 		<![CDATA[
-		SELECT ID,NET_CODE,STA_CODE,STA_CNAME,ROCK_TYPE,STA_LAT,STA_LON,STA_ELEV,STA_STARTDATE,STA_ENDDATE,SITE_NAME,STA_TYPE
+		SELECT ID,NET_CODE,STA_CODE,STA_CNAME,ROCK_TYPE,BUILD_TYPE,STA_LAT,STA_LON,STA_ELEV,STA_STARTDATE,STA_ENDDATE,SITE_NAME,STA_TYPE,ST.ONDATE as ST_ONDATE,ST.OFFDATE as ST_OFFDATE
 		FROM $schema$.Station_info ST WHERE ID = #id#
 		]]>
 	</select>
