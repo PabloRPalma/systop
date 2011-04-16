@@ -139,12 +139,7 @@
 					<tr>
 						
 						<td>
-							<c:if test="${not empty model.front_pic}">
-								<img width="225" height="175" src="${ctx}/${model.front_pic}"/>
-							</c:if> 
-							<c:if test="${empty model.front_pic}">
-								<img width="225" height="175" src="${ctx}/images/nophoto.gif" />
-							</c:if>
+							<img width="225" height="175" src="${ctx}${model.front_pic}" onError="this.src='${ctx}/images/nophoto.gif'"/>
 						</td>
 					</tr>
 					<tr>
