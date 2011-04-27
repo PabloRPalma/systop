@@ -157,6 +157,8 @@ public abstract class BaseSeedExpAction extends BaseAction {
       return;
     }
     
+    logger.debug("{}'s size is {}", expFile.getName(), expFile.length());
+    
     getResponse().setContentType("application/x-download");
     getResponse().addHeader("Content-Disposition", "attachment;filename=\"" + filename + "\"");
     FileChannelUtil fcu = new FileChannelUtil();
