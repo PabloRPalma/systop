@@ -149,13 +149,12 @@ public class StationSeedAction extends BaseSeedExpAction
       }
     }
     
-    if(model.getStartTime() != null) {
-      hql.append(" and s.startTime >= ?");
-      args.add(model.getStartTime());
+    if (model.getStartTime() != null) {
+      hql.append(" and s.endTime >= ?");
+      args.add(model.getStartTime());      
     }
-    
     if(model.getEndTime() != null) {
-      hql.append(" and s.endTime <= ?");
+      hql.append(" and s.startTime <= ?");
       args.add(model.getEndTime());
     }
     
