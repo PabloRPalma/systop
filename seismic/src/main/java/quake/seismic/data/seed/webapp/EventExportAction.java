@@ -334,6 +334,7 @@ public class EventExportAction extends BaseSeedExpAction implements Preparable{
    * 根据波形文件名称查询地震目录（单条）,用于导出波形之前看到地震的情况
    * @return
    */
+  @SuppressWarnings("rawtypes")
   public Map getCatalogBySeed() {
     Criteria criteria = new Criteria();
     criteria.setTableName(tableName);
