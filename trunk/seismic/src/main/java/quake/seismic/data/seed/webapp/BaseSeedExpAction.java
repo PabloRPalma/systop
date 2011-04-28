@@ -124,10 +124,9 @@ public abstract class BaseSeedExpAction extends BaseAction {
     
     try {
       Process process = procBuilder.start();
-      process.waitFor();
-      if(true) {
-        return new File(target.getParentFile().getAbsolutePath() + "/" + output);
-      }  
+      int exit = process.waitFor();
+      logger.debug("tar 执行结果{}", exit);
+      return new File(target.getParentFile().getAbsolutePath() + "/" + output);
     } catch (IOException e) {
       e.printStackTrace();
     } catch (InterruptedException e) {
