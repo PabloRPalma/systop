@@ -339,7 +339,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
   private String getDBO(Map row) {
     String dboData = MessageFormat.format(
         "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14}\n",new Object[] {
-         row.get("NET_CODE"), DateUtil.getDateTime("yyyy-MM-dd HH:ss:ss.ss", (Date)row.get("O_TIME")), 
+         row.get("NET_CODE"), DateUtil.getDateTime("yyyy-MM-dd HH:mm:ss.ss", (Date)row.get("O_TIME")), 
          ExportDataFormat.convertEpiOfEQT((Double)row.get("EPI_LAT"), 7, "LAT"), //6位纬度，要加上负号，保留3位小数
          ExportDataFormat.convertEpiOfEQT((Double)row.get("EPI_LON"), 8, "LON"),//7位经度，要加上负号，保留3位小数
          ExportDataFormat.convertDepth((Double)row.get("EPI_DEPTH"), 3),//3位深度
@@ -462,7 +462,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
         ExportDataFormat.convertValue((String)phase.get("PHASE_NAME"), 7), //震相名 7
         ExportDataFormat.convertValue((Integer)phase.get("WEIGHT"), 3),  //权重 3.1
         ExportDataFormat.convertValue((String)phase.get("REC_TYPE"), 2), //记录类型 2
-        ExportDataFormat.convertValue(DateUtil.getDateTime("yyyy/MM/dd HH:ss:ss.ss", (Date)phase.get("PHASE_TIME")), 21), //震相到时 21
+        ExportDataFormat.convertValue(DateUtil.getDateTime("yyyy/MM/dd HH:mm:ss.ss", (Date)phase.get("PHASE_TIME")), 21), //震相到时 21
         ExportDataFormat.convertDoubleTwoVal((Double)phase.get("RESI"), 7, "seven"), //走时残差 7.2
         ExportDataFormat.convertDoubleVal((Double)phase.get("DISTANCE"), 6, "six"), //震中距6.1
         ExportDataFormat.convertDoubleVal((Double)phase.get("AZI"), 5, "five"), //台站对震中的方位角5.1
@@ -567,10 +567,10 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
       String startDate = null;
       String endDate = null;
       if (networkInfo.get("Net_startdate") != null) {
-        startDate = DateUtil.getDateTime("yyyy-MM-dd HH:ss:ss.ss", (Date)networkInfo.get("Net_startdate"));
+        startDate = DateUtil.getDateTime("yyyy-MM-dd HH:mm:ss.ss", (Date)networkInfo.get("Net_startdate"));
       }
       if (networkInfo.get("Net_enddate") != null) {
-        endDate = DateUtil.getDateTime("yyyy-MM-dd HH:ss:ss.ss", (Date)networkInfo.get("Net_enddate"));
+        endDate = DateUtil.getDateTime("yyyy-MM-dd HH:mm:ss.ss", (Date)networkInfo.get("Net_enddate"));
       }
       //logger.debug("台网起始时间：{} ----- 结束时间：{}", startDate, endDate);
       
