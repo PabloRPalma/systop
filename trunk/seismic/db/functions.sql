@@ -1,3 +1,4 @@
+set global log_bin_trust_function_creators=1
 drop function if exists get_distance;
 delimiter $$
 create function get_distance(lng1 decimal(20,17),lat1 decimal(20,17),lng2 decimal(20,17),lat2 decimal(20,17))
