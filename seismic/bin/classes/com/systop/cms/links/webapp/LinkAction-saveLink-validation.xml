@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC
+  		"-//OpenSymphony Group//XWork Validator 1.0//EN" 
+  		"http://www.opensymphony.com/xwork/xwork-validator-1.0.2.dtd">
+<validators>
+  <field name="model.siteName">
+    <field-validator type="requiredstring">
+      <param name="trim">true</param>
+      <message><![CDATA[网站名称不能为空！]]></message>
+    </field-validator>
+  </field>
+  <field name="model.siteUrl">
+    <field-validator type="requiredstring">
+      <param name="trim">true</param>
+      <message><![CDATA[网站URL不能为空！]]></message>
+    </field-validator>
+    <field-validator type="url">
+      <message><![CDATA[请输入正确的网站地址！]]></message>
+    </field-validator>
+  </field>
+  <field name="model.sitMail">
+    <field-validator type="email">
+      <message><![CDATA[请填写正确的电子邮件地址！]]></message>
+    </field-validator>
+  </field>
+  <field name="model.linkCatas.id">
+    <field-validator type="required">
+      <message><![CDATA[请选择链接类别,不存在链接类别请先添加！]]></message>
+    </field-validator>
+  </field>
+  <field name="model.descn">
+		<field-validator type="stringlength">
+			<param name="maxLength">250</param>
+			<message><![CDATA[网站简介的最大字符为 ${maxLength}个字符!]]></message>
+		</field-validator>
+  </field>
+</validators>

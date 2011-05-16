@@ -1,0 +1,27 @@
+尊敬的<b>${data.user.name!data.user.loginId}</b>：<br>
+您订阅的前兆数据邮件的审核结果是：${data.passed}<br>
+你的邮件详情是：<br>
+<table border="1">
+<thead>
+   <tr>
+      <th>台站名称</th>
+      <th>台站ID</th>
+      <th>测项分量</th>
+      <th>测项ID</th>
+      <th>测点代码</th>
+      <th>采样率</th>
+      <th>数据类型</th>
+   </tr>
+</thead>
+<tbody>
+  <tr>
+      <td>${data.mail.stationName!''}</td>
+      <td>${data.mail.stationId!''}</td>
+      <td>${data.mail.itemName!''}</td>
+      <td>${data.mail.itemId!''}</td>
+      <td>${data.mail.pointId!''}</td>
+      <td>${data.mail.sampleRate!''}</td>
+      <td>${data.mail.dataType!''}</td>
+   </tr>
+</tbody>
+</table>

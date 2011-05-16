@@ -1,0 +1,648 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="cz">
+	<!-- 无关联查询返回结果 -->
+	<resultMap class="java.util.HashMap" id="queryCatDataResult">
+        <result property="ID" column="ID" javaType="String"/>
+        <result property="SEQUEN_NAME" column="SEQUEN_NAME" javaType="String"/>
+        <result property="O_TIME" column="O_TIME" javaType="java.util.Date"/>
+        <result property="O_TIME_FRAC" column="O_TIME_FRAC" javaType="Integer"/>
+        <result property="EPI_LAT" column="EPI_LAT" javaType="Double"/>
+        <result property="EPI_LON" column="EPI_LON" javaType="Double"/>
+        <result property="EPI_DEPTH" column="EPI_DEPTH" javaType="Double"/>
+        <result property="M" column="M" javaType="Double"/>
+        <result property="M_SOURCE" column="M_SOURCE" javaType="String"/>
+        <result property="QLOC" column="QLOC" javaType="String"/>
+        <result property="QCOM" column="QCOM" javaType="String"/>
+        <result property="LOCATION_CNAME" column="LOCATION_CNAME" javaType="String"/>
+        <result property="Location_sname" column="Location_sname" javaType="String"/>
+        <result property="EVENT_ID" column="EVENT_ID" javaType="String"/>
+        <result property="NET_CODE" column="NET_CODE" javaType="String"/>
+        <result property="Save_time" column="Save_time" javaType="java.util.Date"/>
+        <result property="Auto_flag" column="Auto_flag" javaType="String"/>
+        <result property="Operator" column="Operator" javaType="String"/>
+        <result property="Loc_program" column="Loc_program" javaType="String"/>
+        <result property="Eq_type" column="Eq_type" javaType="String"/>
+        <result property="Depfix_flag" column="Depfix_flag" javaType="Integer"/>
+        <result property="SPmin" column="SPmin" javaType="Double"/>
+        <result property="Dmin" column="Dmin" javaType="Double"/>
+        <result property="Gap_azi" column="Gap_azi" javaType="Double"/>
+        <result property="Rms" column="Rms" javaType="Double"/>
+        <result property="Erh" column="Erh" javaType="Double"/>
+        <result property="Erz" column="Erz" javaType="Double"/>
+        <result property="Qnet" column="Qnet" javaType="String"/>
+        <result property="Sum_stn" column="Sum_stn" javaType="Integer"/>
+        <result property="Loc_stn" column="Loc_stn" javaType="Integer"/>
+        <result property="Sum_pha" column="Sum_pha" javaType="Integer"/>
+        <result property="Loc_pha" column="Loc_pha" javaType="Integer"/>
+        <result property="Epic_id" column="Epic_id" javaType="String"/>
+        <result property="Source_id" column="Source_id" javaType="String"/>
+        <result property="FE_num" column="FE_num" javaType="Integer"/>
+        <result property="FE_sname" column="FE_sname" javaType="String"/>
+        <result property="FE_cname" column="FE_cname" javaType="String"/>
+        <result property="Eq_name" column="Eq_name" javaType="String"/>
+        <result property="Model_name" column="Model_name" javaType="String"/>
+        <result property="Remark" column="Remark" javaType="String"/>
+        <result property="Lock_flag" column="Lock_flag" javaType="String"/>
+        <result property="Group_id" column="Group_id" javaType="String"/>
+    </resultMap>
+    
+    <!-- 无震级关联的地震目录查询_按矩形区域查询 -->
+	<select id="queryCatData" parameterClass="quake.seismic.data.catalog.model.Criteria"
+		resultMap="queryCatDataResult">    
+		<![CDATA[
+		SELECT ID,SEQUEN_NAME,O_TIME,O_TIME_FRAC,EPI_LAT,EPI_LON,EPI_DEPTH,M,M_SOURCE,QLOC,QCOM,LOCATION_CNAME,EVENT_ID,
+		       NET_CODE,Location_sname,Save_time,Auto_flag,Operator,Loc_program,Eq_type,Depfix_flag,SPmin,Dmin,Gap_azi,
+		       Rms,Erh,Erz,Qnet,Sum_stn,Loc_stn,Sum_pha,Loc_pha,Epic_id,Source_id,FE_num,FE_sname,FE_cname,
+		       Eq_name,Model_name,Remark,Lock_flag,Group_id
+		FROM $schema$.$tableName$
+		]]>
+		<dynamic prepend="WHERE">
+			<!-- 台网查询条件 -->
+		    <isNotEmpty prepend="AND" property="netCode">
+		       <![CDATA[(NET_CODE=#netCode#)]]>
+		    </isNotEmpty>
+		    <!-- 地震类型查询条件 -->
+		    <isNotEmpty prepend="AND" property="eqType">
+		       <![CDATA[(Eq_type=#eqType#)]]>
+		    </isNotEmpty>
+		    <!-- 地震序列标识 -->
+		    <isNotEmpty prepend="AND" property="sequenName">
+		       <![CDATA[(SEQUEN_NAME LIKE '%$sequenName$%')]]>
+		    </isNotEmpty>
+		    <!-- 震中地名查询条件 -->
+		    <isNotEmpty prepend="AND" property="location">
+		       <![CDATA[(LOCATION_CNAME LIKE '%$location$%')]]>
+		    </isNotEmpty>
+		    <!-- 定位台数查询条件 -->
+		    <isNotEmpty prepend="AND" property="locStn">
+		       <![CDATA[(Loc_stn>=#locStn#)]]>
+		    </isNotEmpty>
+			<isNotEmpty property="startDate">
+				<isNotEmpty prepend="AND" property="endDate">
+				<![CDATA[
+				((O_TIME>=#startDate#) AND (O_TIME<=#endDate#))
+				]]>
+				</isNotEmpty>
+			</isNotEmpty>
+			<isNotEmpty property="startDate">
+				<isEmpty prepend="AND" property="endDate">
+				<![CDATA[(O_TIME>=#startDate#)]]>
+				</isEmpty>
+			</isNotEmpty>
+			<isNotEmpty property="endDate">
+				<isEmpty prepend="AND" property="startDate">
+				<![CDATA[(O_TIME<=#endDate#)]]>
+				</isEmpty>
+			</isNotEmpty>
+			
+			<isNotNull property="startLat">
+				<isNotNull prepend="AND" property="endLat">
+				<![CDATA[
+				((EPI_LAT>=#startLat#) AND (EPI_LAT<=#endLat#))
+				]]>
+				</isNotNull>
+			</isNotNull>
+			<isNotNull property="startLat">
+				<isNull prepend="AND" property="endLat">
+				<![CDATA[(EPI_LAT>=#startLat#)]]>
+				</isNull>
+			</isNotNull>
+			<isNotNull property="endLat">
+				<isNull prepend="AND" property="startLat">
+				<![CDATA[(EPI_LAT<=#endLat#)]]>
+				</isNull>
+			</isNotNull>
+			
+			<isNotNull property="startLon">
+				<isNotNull prepend="AND" property="endLon">
+				<![CDATA[
+				((EPI_LON>=#startLon#) AND (EPI_LON<=#endLon#))
+				]]>
+				</isNotNull>
+			</isNotNull>
+			<isNotNull property="startLon">
+				<isNull prepend="AND" property="endLon">
+				<![CDATA[(EPI_LON>=#startLon#)]]>
+				</isNull>
+			</isNotNull>
+			<isNotNull property="endLon">
+				<isNull prepend="AND" property="startLon">
+				<![CDATA[(EPI_LON<=#endLon#)]]>
+				</isNull>
+			</isNotNull>
+			
+			<isNotNull property="startM">
+				<isNotNull prepend="AND" property="endM">
+				<![CDATA[
+				((M>=#startM#) AND (M<=#endM#))
+				]]>
+				</isNotNull>
+			</isNotNull>
+			<isNotNull property="startM">
+				<isNull prepend="AND" property="endM">
+				<![CDATA[(M>=#startM#)]]>
+				</isNull>
+			</isNotNull>
+			<isNotNull property="endM">
+				<isNull prepend="AND" property="startM">
+				<![CDATA[(M<=#endM#)]]>
+				</isNull>
+			</isNotNull>
+			<!--只显示大于-10的震级-->
+			<isNull property="startM">
+				<isNull prepend="AND" property="endM">
+					<![CDATA[(M>-10)]]>
+				</isNull>
+			</isNull>
+		</dynamic>
+		
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortProperty">
+				<isNotEmpty property="sortDir">
+					<![CDATA[$sortProperty$ $sortDir$]]>
+				</isNotEmpty>
+			</isNotEmpty>
+			
+			<!--<isEmpty property="sortProperty">
+				<isEmpty property="sortDir">
+					<![CDATA[O_TIME desc]]>
+				</isEmpty>
+			</isEmpty>
+			--><!-- 地震目录分页查询条件 -->
+			<isNotEmpty property="start">
+				<isGreaterThan property="size" compareValue="0">
+					LIMIT <![CDATA[$start$,$size$]]>
+				</isGreaterThan>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+		
+	<select id="queryCatDataCount" parameterClass="quake.seismic.data.catalog.model.Criteria"
+		resultClass="Integer">         
+		<![CDATA[
+		SELECT count(0)
+		FROM $schema$.$tableName$
+		]]>
+		<dynamic prepend="WHERE">
+			<!-- 台网查询条件 -->
+		    <isNotEmpty prepend="AND" property="netCode">
+		       <![CDATA[(NET_CODE=#netCode#)]]>
+		    </isNotEmpty>
+		    <!-- 地震类型查询条件 -->
+		    <isNotEmpty prepend="AND" property="eqType">
+		       <![CDATA[(Eq_type=#eqType#)]]>
+		    </isNotEmpty>
+		    <!-- 地震序列标识 -->
+		    <isNotEmpty prepend="AND" property="sequenName">
+		       <![CDATA[(SEQUEN_NAME LIKE '%$sequenName$%')]]>
+		    </isNotEmpty>
+		    <!-- 震中地名查询条件 -->
+		    <isNotEmpty prepend="AND" property="location">
+		       <![CDATA[(LOCATION_CNAME LIKE '%$location$%')]]>
+		    </isNotEmpty>
+		    <!-- 定位台数查询条件 -->
+		    <isNotEmpty prepend="AND" property="locStn">
+		       <![CDATA[(Loc_stn>=#locStn#)]]>
+		    </isNotEmpty>
+			<isNotEmpty property="startDate">
+				<isNotEmpty prepend="AND" property="endDate">
+				<![CDATA[
+				((O_TIME>=#startDate#) AND (O_TIME<=#endDate#))
+				]]>
+				</isNotEmpty>
+			</isNotEmpty>
+			<isNotEmpty property="startDate">
+				<isEmpty prepend="AND" property="endDate">
+				<![CDATA[(O_TIME>=#startDate#)]]>
+				</isEmpty>
+			</isNotEmpty>
+			<isNotEmpty property="endDate">
+				<isEmpty prepend="AND" property="startDate">
+				<![CDATA[(O_TIME<=#endDate#)]]>
+				</isEmpty>
+			</isNotEmpty>
+			
+			<isNotNull property="startLat">
+				<isNotNull prepend="AND" property="endLat">
+				<![CDATA[
+				((EPI_LAT>=#startLat#) AND (EPI_LAT<=#endLat#))
+				]]>
+				</isNotNull>
+			</isNotNull>
+			<isNotNull property="startLat">
+				<isNull prepend="AND" property="endLat">
+				<![CDATA[(EPI_LAT>=#startLat#)]]>
+				</isNull>
+			</isNotNull>
+			<isNotNull property="endLat">
+				<isNull prepend="AND" property="startLat">
+				<![CDATA[(EPI_LAT<=#endLat#)]]>
+				</isNull>
+			</isNotNull>
+			
+			<isNotNull property="startLon">
+				<isNotNull prepend="AND" property="endLon">
+				<![CDATA[
+				((EPI_LON>=#startLon#) AND (EPI_LON<=#endLon#))
+				]]>
+				</isNotNull>
+			</isNotNull>
+			<isNotNull property="startLon">
+				<isNull prepend="AND" property="endLon">
+				<![CDATA[(EPI_LON>=#startLon#)]]>
+				</isNull>
+			</isNotNull>
+			<isNotNull property="endLon">
+				<isNull prepend="AND" property="startLon">
+				<![CDATA[(EPI_LON<=#endLon#)]]>
+				</isNull>
+			</isNotNull>
+			
+			<isNotNull property="startM">
+				<isNotNull prepend="AND" property="endM">
+				<![CDATA[
+				((M>=#startM#) AND (M<=#endM#))
+				]]>
+				</isNotNull>
+			</isNotNull>
+			<isNotNull property="startM">
+				<isNull prepend="AND" property="endM">
+				<![CDATA[(M>=#startM#)]]>
+				</isNull>
+			</isNotNull>
+			<isNotNull property="endM">
+				<isNull prepend="AND" property="startM">
+				<![CDATA[(M<=#endM#)]]>
+				</isNull>
+			</isNotNull>
+			<!--只显示大于-10的震级-->
+			<isNull property="startM">
+				<isNull prepend="AND" property="endM">
+					<![CDATA[(M>-10)]]>
+				</isNull>
+			</isNull>
+		</dynamic>
+	</select>
+	
+	<!-- 无震级关联的地震目录查询_按圆形区域查询 -->
+	<select id="queryCatDataAsRound" parameterClass="quake.seismic.data.catalog.model.Criteria"
+		resultMap="queryCatDataResult">    
+		<![CDATA[
+		SELECT ID,SEQUEN_NAME,O_TIME,O_TIME_FRAC,EPI_LAT,EPI_LON,EPI_DEPTH,M,M_SOURCE,QLOC,QCOM,LOCATION_CNAME,EVENT_ID,
+		       NET_CODE,Location_sname,Save_time,Auto_flag,Operator,Loc_program,Eq_type,Depfix_flag,SPmin,Dmin,Gap_azi,
+		       Rms,Erh,Erz,Qnet,Sum_stn,Loc_stn,Sum_pha,Loc_pha,Epic_id,Source_id,FE_num,FE_sname,FE_cname,
+		       Eq_name,Model_name,Remark,Lock_flag,Group_id
+		FROM $schema$.$tableName$
+		]]>
+		<dynamic prepend="WHERE">
+			<!-- 台网查询条件 -->
+		    <isNotEmpty prepend="AND" property="netCode">
+		       <![CDATA[(NET_CODE=#netCode#)]]>
+		    </isNotEmpty>
+		    <!-- 地震类型查询条件 -->
+		    <isNotEmpty prepend="AND" property="eqType">
+		       <![CDATA[(Eq_type=#eqType#)]]>
+		    </isNotEmpty>
+		    <!-- 地震序列标识 -->
+		    <isNotEmpty prepend="AND" property="sequenName">
+		       <![CDATA[(SEQUEN_NAME LIKE '%$sequenName$%')]]>
+		    </isNotEmpty>
+		    <!-- 震中地名查询条件 -->
+		    <isNotEmpty prepend="AND" property="location">
+		       <![CDATA[(LOCATION_CNAME LIKE '%$location$%')]]>
+		    </isNotEmpty>
+			<isNotEmpty property="startDate">
+				<isNotEmpty prepend="AND" property="endDate">
+				<![CDATA[
+				((O_TIME>=#startDate#) AND (O_TIME<=#endDate#))
+				]]>
+				</isNotEmpty>
+			</isNotEmpty>
+			<isNotEmpty property="startDate">
+				<isEmpty prepend="AND" property="endDate">
+				<![CDATA[(O_TIME>=#startDate#)]]>
+				</isEmpty>
+			</isNotEmpty>
+			<isNotEmpty property="endDate">
+				<isEmpty prepend="AND" property="startDate">
+				<![CDATA[(O_TIME<=#endDate#)]]>
+				</isEmpty>
+			</isNotEmpty>
+			
+			<isNotNull property="startLat">
+				<isNotNull prepend="AND" property="startLon">
+				<![CDATA[
+				 ((EPI_LON != -99999) AND (EPI_LAT != -99999))
+				]]>
+				</isNotNull>
+			</isNotNull>
+			
+			<!-- 按圆形区域查询 -->
+			<isNotNull property="startLat">
+				<isNotNull property="startLon">
+					<isNotEmpty prepend="AND" property="range">
+						<![CDATA[
+				 		(get_distance(#startLon#,#startLat#,EPI_LON,EPI_LAT)<=#range#)
+						]]>
+					</isNotEmpty>
+				</isNotNull>
+			</isNotNull>
+			
+			<isNotNull property="startM">
+				<isNotNull prepend="AND" property="endM">
+				<![CDATA[
+				((M>=#startM#) AND (M<=#endM#))
+				]]>
+				</isNotNull>
+			</isNotNull>
+			<isNotNull property="startM">
+				<isNull prepend="AND" property="endM">
+				<![CDATA[(M>=#startM#)]]>
+				</isNull>
+			</isNotNull>
+			<isNotNull property="endM">
+				<isNull prepend="AND" property="startM">
+				<![CDATA[(M<=#endM#)]]>
+				</isNull>
+			</isNotNull>
+			<!--只显示大于-10的震级-->
+			<isNull property="startM">
+				<isNull prepend="AND" property="endM">
+					<![CDATA[(M>-10)]]>
+				</isNull>
+			</isNull>
+		</dynamic>
+		
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortProperty">
+				<isNotEmpty property="sortDir">
+					<![CDATA[$sortProperty$ $sortDir$]]>
+				</isNotEmpty>
+			</isNotEmpty>
+			
+			<!--<isEmpty property="sortProperty">
+				<isEmpty property="sortDir">
+					<![CDATA[O_TIME desc]]>
+				</isEmpty>
+			</isEmpty>
+			--><!-- 地震目录分页查询条件 -->
+			<isNotEmpty property="start">
+				<isGreaterThan property="size" compareValue="0">
+					LIMIT <![CDATA[$start$,$size$]]>
+				</isGreaterThan>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<select id="queryCatDataAsRoundCount" parameterClass="quake.seismic.data.catalog.model.Criteria"
+		resultClass="Integer">         
+		<![CDATA[
+		SELECT count(0)
+		FROM $schema$.$tableName$
+		]]>
+		<dynamic prepend="WHERE">
+			<!-- 台网查询条件 -->
+		    <isNotEmpty prepend="AND" property="netCode">
+		       <![CDATA[(NET_CODE=#netCode#)]]>
+		    </isNotEmpty>
+		    <!-- 地震类型查询条件 -->
+		    <isNotEmpty prepend="AND" property="eqType">
+		       <![CDATA[(Eq_type=#eqType#)]]>
+		    </isNotEmpty>
+		    <!-- 地震序列标识 -->
+		    <isNotEmpty prepend="AND" property="sequenName">
+		       <![CDATA[(SEQUEN_NAME LIKE '%$sequenName$%')]]>
+		    </isNotEmpty>
+		    <!-- 震中地名查询条件 -->
+		    <isNotEmpty prepend="AND" property="location">
+		       <![CDATA[(LOCATION_CNAME LIKE '%$location$%')]]>
+		    </isNotEmpty>
+			<isNotEmpty property="startDate">
+				<isNotEmpty prepend="AND" property="endDate">
+				<![CDATA[
+				((O_TIME>=#startDate#) AND (O_TIME<=#endDate#))
+				]]>
+				</isNotEmpty>
+			</isNotEmpty>
+			<isNotEmpty property="startDate">
+				<isEmpty prepend="AND" property="endDate">
+				<![CDATA[(O_TIME>=#startDate#)]]>
+				</isEmpty>
+			</isNotEmpty>
+			<isNotEmpty property="endDate">
+				<isEmpty prepend="AND" property="startDate">
+				<![CDATA[(O_TIME<=#endDate#)]]>
+				</isEmpty>
+			</isNotEmpty>
+			
+			<isNotNull property="startLat">
+				<isNotNull prepend="AND" property="startLon">
+				<![CDATA[
+				 ((EPI_LON != -99999) AND (EPI_LAT != -99999))
+				]]>
+				</isNotNull>
+			</isNotNull>
+						
+			<!-- 按圆形区域查询 -->
+			<isNotNull property="startLat">
+				<isNotNull property="startLon">
+					<isNotEmpty prepend="AND" property="range">
+						<![CDATA[
+				 		(get_distance(#startLon#,#startLat#,EPI_LON,EPI_LAT)<=#range#)
+						]]>
+					</isNotEmpty>
+				</isNotNull>
+			</isNotNull>
+			
+			<isNotNull property="startM">
+				<isNotNull prepend="AND" property="endM">
+				<![CDATA[
+				((M>=#startM#) AND (M<=#endM#))
+				]]>
+				</isNotNull>
+			</isNotNull>
+			<isNotNull property="startM">
+				<isNull prepend="AND" property="endM">
+				<![CDATA[(M>=#startM#)]]>
+				</isNull>
+			</isNotNull>
+			<isNotNull property="endM">
+				<isNull prepend="AND" property="startM">
+				<![CDATA[(M<=#endM#)]]>
+				</isNull>
+			</isNotNull>
+			<!--只显示大于-10的震级-->
+			<isNull property="startM">
+				<isNull prepend="AND" property="endM">
+					<![CDATA[(M>-10)]]>
+				</isNull>
+			</isNull>
+		</dynamic>
+	</select>
+	
+	<select id="queryMagData" parameterClass="quake.seismic.data.catalog.model.MagCriteria"
+		resultClass="Double">         
+		<![CDATA[
+		select MAG_VAL from $schema$.$tableName$ WHERE CATALOG_ID = #catId# and MAG_NAME = #magName# 
+		]]>
+	</select>
+	
+	<resultMap class="java.util.HashMap" id="queryMagMResult">
+        <result property="MAG_NAME" column="MAG_NAME" javaType="String"/>
+        <result property="MAG_VAL" column="MAG_VAL" javaType="Double"/>
+        <result property="MAG_GAP" column="MAG_GAP" javaType="Double"/>
+        <result property="MAG_STN" column="MAG_STN" javaType="Integer"/>
+        <!-- 目前数据库中没有该字段
+        <result property="MAG_ERROR" column="MAG_ERROR" javaType="Double"/>
+         -->
+        <result property="REMARK" column="REMARK" javaType="String"/>
+    </resultMap>
+	<select id="queryMagM" parameterClass="quake.seismic.data.catalog.model.MagCriteria"
+			resultMap="queryMagMResult">
+		<![CDATA[
+			select MAG_NAME,MAG_VAL,MAG_GAP,MAG_STN,REMARK
+			from $schema$.$tableName$ WHERE CATALOG_ID = #catId#
+		]]>
+	</select>
+	
+	<!-- 台网信息查询结果 -->
+    <resultMap class="java.util.HashMap" id="queryNetworkInfoResult">
+    	<result property="Net_code" column="Net_code" javaType="String"/>
+        <result property="Net_cname" column="Net_cname" javaType="String"/>
+        <result property="Net_sname" column="Net_sname" javaType="String"/>
+        <result property="Net_Lat" column="Net_Lat" javaType="Double"/>
+        <result property="Net_lon" column="Net_lon" javaType="Double"/>
+        <result property="Net_elev" column="Net_elev" javaType="Double"/>
+        <result property="Net_type" column="Net_type" javaType="String"/>
+        <result property="Net_startdate" column="Net_startdate" javaType="java.util.Date"/>
+        <result property="Net_enddate" column="Net_enddate" javaType="java.util.Date"/>
+        <result property="Sta_num" column="Sta_num" javaType="Integer"/>
+        <result property="Director" column="Director" javaType="String"/>
+        <result property="Mail_address" column="Mail_address" javaType="String"/>
+        <result property="Telphone" column="Telphone" javaType="String"/>   
+        <result property="Postalcode" column="Postalcode" javaType="String"/>
+        <result property="Address" column="Address" javaType="String"/>
+        <result property="Ondate" column="Ondate" javaType="java.util.Date"/>  
+        <result property="Offdate" column="Offdate" javaType="java.util.Date"/>  
+        <result property="Remark" column="Remark" javaType="String"/>    	
+    </resultMap>
+    <!-- 台站信息查询结果 -->
+    <resultMap class="java.util.HashMap" id="queryStationAtBulletinResult">
+     	<result property="ID" column="ID" javaType="String"/>
+        <result property="NET_CODE" column="NET_CODE" javaType="String"/>
+        <result property="STA_CODE" column="STA_CODE" javaType="String"/>
+        <result property="STA_CNAME" column="STA_CNAME" javaType="String"/>
+        <result property="ROCK_TYPE" column="ROCK_TYPE" javaType="String"/>
+         <result property="STA_TYPE" column="STA_TYPE" javaType="String"/>
+        <result property="STA_LAT" column="STA_LAT" javaType="Double"/>
+        <result property="STA_LON" column="STA_LON" javaType="Double"/>
+        <result property="STA_ELEV" column="STA_ELEV" javaType="Double"/>
+        <result property="STA_STARTDATE" column="STA_STARTDATE" javaType="java.util.Date"/>
+        <result property="STA_ENDDATE" column="STA_ENDDATE" javaType="java.util.Date"/>
+        <result property="SITE_NAME" column="SITE_NAME" javaType="String"/>
+    </resultMap>
+    <!-- 台站信息查询结果_台站信息表和位置信息表联合查询 -->
+    <resultMap class="java.util.HashMap" id="queryStationLocAtBulletinResult">
+     	<result property="ID" column="ID" javaType="String"/>
+        <result property="NET_CODE" column="NET_CODE" javaType="String"/>
+        <result property="STA_CODE" column="STA_CODE" javaType="String"/>
+        <result property="STA_CNAME" column="STA_CNAME" javaType="String"/>
+        <result property="ROCK_TYPE" column="ROCK_TYPE" javaType="String"/>
+         <result property="STA_TYPE" column="STA_TYPE" javaType="String"/>
+        <result property="STA_LAT" column="STA_LAT" javaType="Double"/>
+        <result property="STA_LON" column="STA_LON" javaType="Double"/>
+        <result property="STA_ELEV" column="STA_ELEV" javaType="Double"/>
+        <result property="STA_STARTDATE" column="STA_STARTDATE" javaType="java.util.Date"/>
+        <result property="STA_ENDDATE" column="STA_ENDDATE" javaType="java.util.Date"/>
+        <result property="SITE_NAME" column="SITE_NAME" javaType="String"/>
+        <!-- 位置信息表字段 -->
+        <result property="CHN_NUM" column="CHN_NUM" javaType="Integer"/>
+        <result property="LOCAL_DEPTH" column="LOCAL_DEPTH" javaType="String"/>
+        <result property="SENSOR_MODEL" column="SENSOR_MODEL" javaType="String"/>
+        <result property="DIGITIZER_MODEL" column="DIGITIZER_MODEL" javaType="String"/>
+    </resultMap>
+    
+    <!-- 台网信息查询 -->
+	<select id="queryNetworkInfo" parameterClass="quake.seismic.data.catalog.model.Criteria"
+		resultMap="queryNetworkInfoResult">    
+		<![CDATA[
+		SELECT Net_code,Net_cname,Net_sname,Net_Lat,Net_lon,Net_elev,Net_type,Net_startdate,Net_enddate,
+				Sta_num,Director,Mail_address,Telphone,Postalcode,Address,Ondate,Offdate,Remark
+		FROM $schema$.Network_info
+		WHERE 1=1
+		]]>
+		<dynamic>
+		    <!-- 台网代码查询条件 -->
+		    <isNotEmpty prepend="AND" property="netCode">
+		       <![CDATA[(Net_code=#netCode#)]]>
+		    </isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="queryBySeed" parameterClass="quake.seismic.data.catalog.model.Criteria"
+		resultMap="queryCatDataResult">    
+		<![CDATA[
+		SELECT ID,SEQUEN_NAME,O_TIME,O_TIME_FRAC,EPI_LAT,EPI_LON,EPI_DEPTH,M,M_SOURCE,QLOC,QCOM,LOCATION_CNAME,EVENT_ID,
+		       NET_CODE,Location_sname,Save_time,Auto_flag,Operator,Loc_program,Eq_type,Depfix_flag,SPmin,Dmin,Gap_azi,
+		       Rms,Erh,Erz,Qnet,Sum_stn,Loc_stn,Sum_pha,Loc_pha,Epic_id,Source_id,FE_num,FE_sname,FE_cname,
+		       Eq_name,Model_name,Remark,Lock_flag,Group_id
+		FROM $schema$.$tableName$ where ID like #seedId#
+		]]>
+	</select>
+	<!-- 查询台站信息 -->
+	<select id="queryStationAtBulletin" parameterClass="quake.seismic.station.model.Criteria"
+			resultMap="queryStationAtBulletinResult">
+		<![CDATA[
+		SELECT ID,NET_CODE,STA_CODE,STA_CNAME,ROCK_TYPE,STA_LAT,STA_LON,STA_ELEV,STA_STARTDATE,STA_ENDDATE,SITE_NAME,STA_TYPE
+		FROM $schema$.Station_info ST
+		]]>
+		<dynamic prepend="WHERE">
+		    <!-- 加入台网查询条件 -->
+		     <isNotEmpty prepend="AND" property="netCode">
+		       <![CDATA[(ST.NET_CODE=#netCode#)]]>
+		    </isNotEmpty>
+		    <isNotEmpty prepend="AND" property="staCode">
+		       <![CDATA[(ST.STA_CODE=#staCode#)]]>
+		    </isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<!-- 查询测震台站数据_台站信息表与位置信息表联合查询 -->
+	<select id="queryStationLocAtBulletin" parameterClass="quake.seismic.station.model.Criteria"
+                        resultMap="queryStationLocAtBulletinResult">
+		<![CDATA[
+		SELECT ST.ID,ST.NET_CODE,ST.STA_CODE,STA_CNAME,STA_TYPE,ROCK_TYPE,STA_LAT,STA_LON,STA_ELEV,
+		STA_STARTDATE,STA_ENDDATE,SITE_NAME,DIGITIZER_RESPID,DIGITIZER_MODEL,CHN_NUM,LOCAL_DEPTH,SENSOR_MODEL
+		FROM $schema$.Station_info ST ,$schema$.Loc_info LOC WHERE ST.NET_CODE=LOC.NET_CODE and ST.STA_CODE=LOC.STA_CODE
+		]]>
+		<dynamic>
+		    <!-- 加入台网查询条件  -->
+		     <isNotEmpty prepend="AND" property="netCode">
+		       <![CDATA[(ST.NET_CODE=#netCode#)]]>
+		    </isNotEmpty>
+		    <isNotEmpty prepend="AND" property="staCode">
+		       <![CDATA[(ST.STA_CODE=#staCode#)]]>
+		    </isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<!-- 根据地震目录ID查询地震目录 -->
+	<select id="queryCatlogById" parameterClass="quake.seismic.data.catalog.model.Criteria"
+			resultMap="queryCatDataResult">
+		<![CDATA[
+		SELECT ID,SEQUEN_NAME,O_TIME,O_TIME_FRAC,EPI_LAT,EPI_LON,EPI_DEPTH,M,M_SOURCE,QLOC,QCOM,LOCATION_CNAME,EVENT_ID,
+		       NET_CODE,Location_sname,Save_time,Auto_flag,Operator,Loc_program,Eq_type,Depfix_flag,SPmin,Dmin,Gap_azi,
+		       Rms,Erh,Erz,Qnet,Sum_stn,Loc_stn,Sum_pha,Loc_pha,Epic_id,Source_id,FE_num,FE_sname,FE_cname,
+		       Eq_name,Model_name,Remark,Lock_flag,Group_id
+		FROM $schema$.$tableName$
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="qcId">
+		       <![CDATA[(ID=#qcId#)]]>
+		    </isNotEmpty>
+		</dynamic>
+	</select>
+</sqlMap>

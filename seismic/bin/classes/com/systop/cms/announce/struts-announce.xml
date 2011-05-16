@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<!-- 网站公告管理 -->
+	<package name="announce" extends="default" namespace="/admin/announce">
+		<!-- 公告添加 -->
+		<action name="newAnnounce" class="announceAction" method="newAnnounce">
+	      <result>/pages/admin/cms/announce/editAnnounce.jsp</result>
+	    </action>
+	    <!--公告保存 -->  
+		<action name="saveAnnounce" class="announceAction" method="save">
+		     <result name="success" type="redirect">listAnnounce.do</result>
+		     <result name="input">/pages/admin/cms/announce/editAnnounce.jsp</result>
+			 <interceptor-ref name="params" />
+			 <interceptor-ref name="modelDriven" />
+			 <interceptor-ref name="validationWorkflowStack" />
+		</action>
+		<!-- 公告列表 -->
+		<action name="listAnnounce" class="announceAction" method="index">
+	      <result name="index">/pages/admin/cms/announce/listAnnounce.jsp</result>
+	    </action>
+	   <!-- 修改公告 -->
+	    <action name="editAnnounce" class="announceAction" method="edit">
+	      <result name="input">/pages/admin/cms/announce/editAnnounce.jsp</result>
+	    </action>
+	    <!-- 删除公告 -->
+	     <action name="removeAnnounce" class="announceAction" method="remove">
+		     <result name="success" type="redirect">listAnnounce.do</result>
+		 </action>
+		 <!-- 更新最新状态 -->
+		 <action name="editAnnState" class="announceAction" method="updateState">
+		     <result name="success" type="redirect">listAnnounce.do</result>
+		 </action>
+		 </package>
+		 <package name="frontAnnounce" extends="struts-default" namespace="/front/announce">
+		 <!-- 前台查看公告 -->
+		  <action name="lookAnnouncefront" class="announceAction" method="edit">
+		     <result name="input">/pages/front/announce/lookAnnounce.jsp</result>
+		 </action>
+		 <!-- 前台查看公告 -->
+		  <action name="lookAnnouncefrontFrame" class="announceAction" method="edit">
+		     <result name="input">/pages/front/announce/seeAnnounce.jsp</result>
+		 </action>
+		 <!-- 前台公告列表 -->
+		  <action name="listAnnouncefront" class="announceAction" method="myPageQuery">
+		     <result name="success">/pages/front/announce/listAnnounce.jsp</result>
+		 </action>
+		 <!-- 前台公告列表 -->
+		  <action name="listAnnouncefrontFrame" class="announceAction" method="myPageQuery">
+		     <result name="success">/pages/front/announce/announceEc.jsp</result>
+		 </action>
+	</package>
+</struts>

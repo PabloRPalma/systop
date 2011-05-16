@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC
+  		"-//OpenSymphony Group//XWork Validator 1.0//EN" 
+  		"http://www.opensymphony.com/xwork/xwork-validator-1.0.2.dtd">
+<validators>
+  <field name="model.title">
+    <field-validator type="requiredstring">
+      <param name="trim">true</param>
+      <message><![CDATA[网站公告标题不能为空]]></message>
+    </field-validator>
+  </field>
+  
+  <field name="model.url">
+    <field-validator type="url">
+      <message><![CDATA[请输入正确的网站地址！]]></message>
+    </field-validator>
+  </field>
+  <field name="model.conUrl">
+    <field-validator type="url">
+      <message><![CDATA[请输入正确的网站地址！]]></message>
+    </field-validator>
+  </field>
+     <field name="model.content">
+		<field-validator type="stringlength">
+			<param name="maxLength">2000</param>
+			<message><![CDATA[公告内容的最大字符为 ${maxLength}个字符!]]></message>
+		</field-validator>
+  </field>
+</validators>

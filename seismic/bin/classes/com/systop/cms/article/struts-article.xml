@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<!-- 文章管理 -->
+	<package name="article" extends="default" namespace="/admin/article">
+		
+		<!-- 添加文章 -->
+		<action name="newArticle" class="articleAction">
+			<result>/pages/admin/cms/article/editArticle.jsp</result>
+		</action>
+		
+		<!-- 编辑文章 -->
+		<action name="editArticle" class="articleAction" method="edit">
+			<result name="input">/pages/admin/cms/article/editArticle.jsp</result>
+		</action>
+		
+		<!-- 保存文章 -->
+		<action name="saveArticle" class="articleAction" method="saveArticle">
+			<result name="success" type="redirect">listArticles.do?catalogId=${catalogId}</result>
+			<result name="input">/pages/admin/cms/article/editArticle.jsp</result>
+			<interceptor-ref name="fileUpload">
+				<param name="allowedTypes">
+					image/x-png,image/bmp,image/png,image/gif,image/jpeg,image/jpg,image/pjpeg,application/octet-stream,application/octet-stream,
+					application/msword,application/vnd.ms-excel,application/vnd.ms-powerpoint,
+					application/zip,application/x-zip-compressed,text/plain,text/html
+				</param>
+				<param name="maximumSize ">5242880</param>
+			</interceptor-ref>
+			<interceptor-ref name="params" />
+			<interceptor-ref name="modelDriven" />
+			<interceptor-ref name="validationWorkflowStack" />
+		</action>
+		
+		<!-- 查看文章信息 -->
+		<action name="lookArticle" class="articleAction" method="edit">
+			<result name="input">/pages/admin/cms/article/lookArticle.jsp</result>
+		</action>
+		
+		<!-- 删除文章 -->
+		<action name="removeArticle" class="articleAction" method="remove">
+			<result name="success" type="redirect">
+				listAuditArticles.do?catalogId=${catalogId}
+			</result>
+		</action>
+		
+		<!-- 文章列表 -->
+		<action name="listArticles" class="articleAction" method="listArticles">
+			<result name="success">/pages/admin/cms/article/listArticle.jsp</result>
+		</action>
+		
+		<!-- 文章审核列表 -->
+		<action name="listAuditArticles" class="articleAction" method="listArticles">
+			<result name="success">/pages/admin/cms/article/listAuditeArticle.jsp</result>
+		</action>
+		
+		<!-- 更新审核状态-->
+		<action name="auditArticle" class="articleAction" method="updateAudit">
+			<result name="success" type="redirect">listAuditArticles.do?catalogId=${catalogId} </result>
+		</action>
+		
+		<!-- 批量更新审核状态-->
+		<action name="batchAuditArticle" class="articleAction" method="batchUpdateAudit">
+			<result name="success" type="redirect">listAuditArticles.do?catalogId=${catalogId}</result>
+		</action>
+		
+		<!-- 更新推荐状态 -->
+		<action name="eliteArticle" class="articleAction" method="updateElite">
+			<result name="success" type="redirect">
+				listAuditArticles.do?catalogId=${catalogId}
+			</result>
+		</action>
+		<!-- 更新固顶状态 -->
+		<action name="onTopArticle" class="articleAction" method="updateOnTop">
+			<result name="success" type="redirect">
+				listAuditArticles.do?catalogId=${catalogId}
+			</result>
+		</action>
+		<!-- 排序列表 -->
+		<action name="orderArticle" class="articleAction">
+			<result>/pages/admin/cms/article/orderArticle.jsp</result>
+		</action>
+		<!-- 保存排序结果 -->
+		<action name="saveOrderArticle" class="articleAction" method="saveOrderArticle">
+			<result name="success" type="redirect">
+				orderArticle.do?queryValue=${queryValue}
+			</result>
+		</action>
+	</package>
+	<!-- 领导信息管理 -->
+	<package name="lead" extends="struts-default" namespace="/admin/lead">
+		<!-- 领导信息列表 -->
+		<action name="queryLeadInfo" class="articleAction"
+			method="queryLeadInfo">
+			<result name="success" type="dispatcher">
+				/pages/admin/cms/lead/listLead.jsp
+			</result>
+		</action>
+		<!-- 添加领导信息 -->
+		<action name="newLead" class="articleAction">
+			<result>/pages/admin/cms/lead/editLead.jsp</result>
+		</action>
+		<!-- 保存文章 -->
+		<action name="saveLead" class="articleAction" method="savelead">
+			<result name="success" type="redirect">queryLeadInfo.do</result>
+			<result name="input">/pages/admin/cms/lead/editLead.jsp</result>
+			<interceptor-ref name="params" />
+			<interceptor-ref name="modelDriven" />
+			<interceptor-ref name="validationWorkflowStack" />
+		</action>
+		<!-- 编辑领导信息 -->
+		<action name="editLead" class="articleAction"
+			method="edit">
+			<result>/pages/admin/cms/lead/editLead.jsp</result>
+		</action>
+		<!-- 删除领导信息 -->
+		<action name="removeLead" class="articleAction"
+			method="remove">
+			<result name="success" type="redirect">
+				queryLeadInfo.do
+			</result>
+		</action>
+		<!-- 排序列表 -->
+		<action name="orderLead" class="articleAction">
+			<result>/pages/admin/cms/lead/orderLead.jsp</result>
+		</action>
+		<!-- 保存排序结果 -->
+		<action name="saveOrderLead" class="articleAction"
+			method="saveOrderArticle">
+			<result name="success" type="redirect">
+				orderLead.do
+			</result>
+		</action>
+	</package>
+</struts>
