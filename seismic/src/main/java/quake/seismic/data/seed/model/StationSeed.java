@@ -1,6 +1,5 @@
 package quake.seismic.data.seed.model;
 
-import java.text.ParseException;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -12,7 +11,10 @@ import javax.persistence.Table;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.xwork.builder.ToStringBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.mchange.v1.util.ArrayUtils;
 import com.systop.core.model.BaseModel;
 import com.systop.core.util.DateUtil;
 
@@ -119,12 +121,14 @@ public class StationSeed extends BaseModel {
   
   public StationSeed() {    
   }
+  private static Logger logger = LoggerFactory.getLogger(StationSeed.class);
   /**
    * 根据参数，构建StationSeed
    * @param args :Rec# Sta Cha Net Loc Start Time End Time Sample Rate Tot Samples
    * @return
    */
   public StationSeed(String []args, String seed) {
+    logger.info("构造StationSeed{},args{}", seed, ArrayUtils.toString(args));
     this.seed = seed;
     this.sta = args[1];
     this.cha = args[2];
@@ -138,11 +142,13 @@ public class StationSeed extends BaseModel {
   
   private static Date convert(String st) {
     if(StringUtils.isNotBlank(st)) {
-      String time = st.substring(0, st.lastIndexOf("."));
       try {
+        String time = st.substring(0, st.lastIndexOf("."));
         return DateUtil.convertStringToDate("yyyy,DDD,HH:mm:ss", time);
-      } catch (ParseException e) {
-        e.printStackTrace();
+      } catch (Exception e) {
+        logger.warn("连续波形时间解析错误{}", st);
+        logger.error(e.getMessage());
+        return null;
       }
     }
     return null;
