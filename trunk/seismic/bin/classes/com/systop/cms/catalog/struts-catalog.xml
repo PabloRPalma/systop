@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<!-- 栏目管理 -->
+	<package name="catalog" extends="default" namespace="/admin/catalog">
+		<!-- 添加栏目 -->
+		<action name="save" class="catalogAction" method="save">
+		     <result name="success" type="redirect">listCatalog.do?parentId=${parentId}</result>
+		     <result name="input">/pages/admin/cms/catalog/editCatalog.jsp</result>
+		     <interceptor-ref name="params" />
+			 <interceptor-ref name="modelDriven" />
+			 <interceptor-ref name="validationWorkflowStack" />
+		</action>
+		
+		<!-- 添加新栏目 -->
+		<action name="newCatalog" class="catalogAction" method="newCatalog">
+			<result name="success">/pages/admin/cms/catalog/editCatalog.jsp</result>
+		</action>
+		
+		<!-- 栏目列表 -->
+		<action name="listCatalog" class="catalogAction" method="index">
+		     <result name="index">/pages/admin/cms/catalog/listCatalog.jsp</result>
+		</action>
+		
+		<!-- 查看栏目详细信息 -->
+		<action name="catalogDetails" class="catalogAction" method="edit">
+			<result name="input">/pages/admin/cms/catalog/catalogDetails.jsp</result>
+		</action>
+		
+		<!-- 修改栏目 -->
+	    <action name="editCatalog" class="catalogAction" method="edit">
+	    	<result name="input">/pages/admin/cms/catalog/editCatalog.jsp</result>
+	    </action>
+	    
+	    <!-- 添加子栏目 -->
+	    <action name="addChildCatalog" class="catalogAction" method="addChildCatalog">
+	    	<result>/pages/admin/cms/catalog/editCatalog.jsp</result>
+	    </action>
+	    
+	    <!-- 排序列表 -->
+		<action name="listOrderCatalog" class="catalogAction">
+	      <result>/pages/admin/cms/catalog/sortCatalog.jsp</result>
+	    </action>
+	    
+	    <!-- 保存排序结果 -->
+	    <action name="saveOrderCatalog" class="catalogAction" method="saveOrderCatalog">
+	      	<result name="success" type="redirect">listOrderCatalog.do?queryValue=${queryValue}</result>
+	    </action>
+	</package>
+</struts>

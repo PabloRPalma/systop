@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="admin.security" extends="json"
+	         namespace="/security">
+		<action name="*/*" class="{1}Action" method="{2}">
+			<result name="index">/pages/admin/security/{1}/index.jsp</result>
+		    <result name="input">/pages/admin/security/{1}/edit.jsp</result>
+		    <!--
+		    <result name="success" type="chain">{1}/index</result>
+		    -->
+		    <result name="success" type="redirect">{1}/index.do</result>
+		    <result name="changePassword">/pages/admin/security/user/changePassword.jsp</result>
+		    <result type="json" name="json">
+		        <param name="ignoreHierarchy">false</param>
+		        <param name="root">page</param>
+				<param name="excludeProperties">
+				    .*\.roles.*\.permissions
+				    .*\.roles.*\.depts
+				    .*\.roles.*\.childRoles
+				    .*\.roles.*\.parentRole
+				    .*\.dept		    
+				</param>
+		    </result>
+		</action>		
+	</package>
+	<package name="admin.user" extends="default"
+	         namespace="/user">
+		<action name="*/*" class="userAction" method="{1}">
+		    <result name="userInfo">/pages/admin/security/user/userInfo.jsp</result>
+		    <result name="bingo">/pages/admin/security/user/regUserEdit.jsp</result>
+		</action>		
+	</package>
+	<package name="admin.regist.regMemo" extends="default"
+	         namespace="/regist/regMemo">
+		<action name="*" class="regMemoAction" method="{1}">
+			<result name="input">/pages/admin/regist/regMemo/edit.jsp</result>
+		    <result name="success" type="redirect">edit.do</result>
+		</action>		
+	</package>
+	<package name="admin.regist" extends="json" namespace="/regist">
+		<action name="*" class="registAction" method="{1}">
+			<result name="index">/pages/admin/regist/index.jsp</result>
+		    <result name="input">/pages/admin/regist/edit.jsp</result>
+		    <result name="confirm">/pages/admin/regist/confirm.jsp</result>
+			<result name="regist">/pages/admin/regist/regist.jsp</result>
+		    <result name="ok">/pages/admin/regist/ok.jsp</result>
+		    <result name="success" type="redirect">index.do</result>
+		    <result name="regMemo">/pages/admin/regist/regMemo.jsp</result>
+		    <result name="activate">/pages/admin/regist/activated.jsp</result>
+		    <result type="json" name="jsonRst">
+		   		<param name="root">checkResult</param>
+			</result>
+		</action>		
+	</package>
+</struts>
+

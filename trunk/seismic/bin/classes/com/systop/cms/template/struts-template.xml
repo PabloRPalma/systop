@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<!-- 模板管理 -->
+	<package name="template" extends="default" namespace="/admin/template">
+		<!-- 新建模板 -->
+		<action name="newTemplate" class="templateAction" method="newTemplate">
+	      <result name="success">/pages/admin/cms/template/editTemplate.jsp</result>
+	    </action>
+	    
+	    <!-- 编辑模板 -->
+	    <action name="editTemplate" class="templateAction" method="edit">
+	      <result name="input">/pages/admin/cms/template/editTemplate.jsp</result>
+	    </action>
+	    
+	    <!-- 保存模板 -->  
+		<action name="saveTemplate" class="templateAction" method="save">
+		     <result name="success" type="redirect">listTemplate.do?queryType=${queryType}</result>
+		     <result name="input">/pages/admin/cms/template/editTemplate.jsp</result>
+		     <interceptor-ref name="params" />
+			 <interceptor-ref name="modelDriven" />
+			 <interceptor-ref name="validationWorkflowStack" />
+		</action>
+		<!-- 模板列表 -->
+		<action name="listTemplate" class="templateAction" method="index">
+	      <result name="index">/pages/admin/cms/template/listTemplate.jsp</result>
+	    </action>
+	    
+	    <!-- 模板资源文件列表 -->
+	    <action name="filesList" class="templateAction" method="filesList">
+	    	<result>/pages/admin/cms/template/res/resFilesList.jsp</result>	
+	    </action>
+	    
+	    <!-- 资源文件上传 -->  
+		<action name="saveResFiles" class="templateAction" method="saveResFiles">
+		     <result name="success" type="redirect">
+		     	<param name="location">filesList.do?respath=${respath}</param>
+		     	<param name="encode">true</param>
+		     </result>
+			 <result name="input">/pages/admin/cms/template/saveFileError.jsp</result>
+		     <interceptor-ref name="fileUpload">
+				 <param name="allowedTypes">
+				 	image/x-png,image/bmp,image/png,image/gif,image/jpeg,image/jpg,image/pjpeg,application/octet-stream,application/octet-stream,
+					application/msword,application/vnd.ms-excel,application/vnd.ms-powerpoint,
+					application/zip,application/x-zip-compressed,text/plain,text/html
+				 </param> 
+        		 <param name="maximumSize ">1024000</param>  
+			 </interceptor-ref>
+		     <interceptor-ref name="params" />
+			 <interceptor-ref name="modelDriven" />
+			 <interceptor-ref name="validationWorkflowStack" />
+		</action>
+	</package>
+</struts>

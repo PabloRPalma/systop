@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="quake.special" extends="json" namespace="/admin/special">
+		 <action name="*" class="specialAction" method="{1}">
+		      <result name="index">/pages/quake/special/index.jsp</result>
+		    <result name="input">/pages/quake/special/edit.jsp</result>
+		    <result name="view">/pages/quake/special/view.jsp</result>
+		    <result name="frontView">/pages/front/special/view.jsp</result>
+		    <result name="success" type="redirect">index.do</result>
+		    <result name="indexMore">/pages/quake/special/indexMore.jsp</result>
+		    <result name="phaseResult">/pages/quake/special/viewPhase.jsp</result>
+		    <result name="eventWave">/pages/quake/special/viewEventWave.jsp</result>
+		     <result type="json" name="json">
+		        <param name="ignoreHierarchy">false</param>
+		        <param name="root">page</param>
+		    </result>	
+		    <result type="json" name="jsonResult">
+			    <param name="ignoreHierarchy">false</param>
+		   		<param name="root">jsonResult</param>
+			</result>
+		 </action>		 
+	</package>
+</struts>
+
