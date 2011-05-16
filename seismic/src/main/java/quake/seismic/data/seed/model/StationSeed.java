@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.mchange.v1.util.ArrayUtils;
+import com.systop.core.ApplicationException;
 import com.systop.core.model.BaseModel;
 import com.systop.core.util.DateUtil;
 
@@ -148,7 +149,7 @@ public class StationSeed extends BaseModel {
       } catch (Exception e) {
         logger.warn("连续波形时间解析错误{}", st);
         logger.error(e.getMessage());
-        return null;
+        throw new ApplicationException();
       }
     }
     return null;
