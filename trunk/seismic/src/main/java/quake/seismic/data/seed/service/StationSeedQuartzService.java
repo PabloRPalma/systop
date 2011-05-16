@@ -32,6 +32,7 @@ import quake.admin.seedpath.service.SeedpathManager;
 import quake.seismic.data.seed.model.StationSeed;
 import quake.seismic.data.seed.webapp.BaseSeedExpAction;
 
+import com.systop.core.ApplicationException;
 import com.systop.core.dao.hibernate.BaseHibernateDao;
 
 /**
@@ -84,7 +85,12 @@ public class StationSeedQuartzService {
     }
     for(File seed : seeds) {
       if(isNoRecord(seed)) {
-        parseTimes(seed, seedPath); //保存时间数据
+        try {
+          parseTimes(seed, seedPath); //保存时间数据
+        } catch (Exception e) {
+          e.printStackTrace();
+          continue;
+        }
         updateChannel(seed, seedPath); //因为-t不能得到正确的通道信息，所以要用-S更新通道信息  
       }
     }
@@ -126,7 +132,8 @@ public class StationSeedQuartzService {
     try {
       process = procBuilder.start();
       BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-      doOneRec(reader, seed.getName(), false); //处理单个seed
+      doOneRec(reader, seed.getName(), false, process); //处理单个seed
+      
       int exit = process.waitFor();
       logger.info("rdseed 执行完毕 [{}]", exit);
     } catch (IOException e) {
@@ -140,7 +147,7 @@ public class StationSeedQuartzService {
   /**
    * 将rdseed -f seed -t输出的数据保存到数据库
    */
-  private void doOneRec(final BufferedReader reader, final String seed, final boolean print) {
+  private void doOneRec(final BufferedReader reader, final String seed, final boolean print, final Process process) {
     new Thread(new Runnable() {
       public void run() {
         try {
@@ -158,7 +165,12 @@ public class StationSeedQuartzService {
                 if(line.startsWith("rdseed")) {
                   break;
                 } else {
-                  doOneLine(line.trim(), seed);
+                  try {
+                    doOneLine(line.trim(), seed);
+                  } catch (Exception e) {
+                    logger.warn("RDSEED中途退出。");
+                    process.destroy();
+                  }
                 }
               }
               //如果以Rec#开头，则改变标示，下个循环将处理数据
@@ -185,9 +197,14 @@ public class StationSeedQuartzService {
       logger.warn("解析数据不符合标准 {}", line);
       return;
     }
+    try {
+      StationSeed sa = new StationSeed(cols, seed);
+      dao.save(sa);
+    } catch (Exception e) {
+      logger.error("连续波形命令rdseed -f seed -t解析错误" + line);     
+      throw new ApplicationException("连续波形命令rdseed -f seed -t解析错误" + line);
+    }
     
-    StationSeed sa = new StationSeed(cols, seed);
-    dao.save(sa);
   }
   /**
    * 如果波形文件没有被记录，返回ture
