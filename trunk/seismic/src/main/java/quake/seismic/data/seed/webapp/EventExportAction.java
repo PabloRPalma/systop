@@ -184,6 +184,9 @@ public class EventExportAction extends BaseSeedExpAction implements Preparable{
       if(exit == 0) {
         rmRdseedLog(workDir);
         download(workDir, format); //打包下载数据  
+      } else {
+        render(getResponse(), "Seed文件解析错误，未找到文件或文件格式不正确。", "text/plain");
+        return null;
       }
       
     } catch (Exception e) {
