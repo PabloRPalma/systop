@@ -123,11 +123,9 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
        */
       if (StringUtils.isNotEmpty(model.getStartDate())
           && StringUtils.isNotEmpty(model.getEndDate())) {
-        Date first = DateUtil.firstSecondOfDate(DateUtil.convertStringToDate(model.getStartDate()
-            + "-1"));
-        Date end = DateUtil.firstSecondOfDate(DateUtil.convertStringToDate(model.getEndDate()
-            + "-31"));
-        // logger.info("开始日期：" + first + " 结束日期：" + end);
+        Date first = DateUtil.firstSecondOfDate(DateUtil.convertStringToDate(model.getStartDate()));
+        Date end = DateUtil.firstSecondOfDate(DateUtil.convertStringToDate(model.getEndDate()));
+        logger.debug("开始日期：" + first + " 结束日期：" + end);
         if (first != null && end != null) {
           model.setStartTimeOfTheYear(first);
           model.setEndTimeOfTheYear(end);
@@ -181,10 +179,8 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
      */
     if (StringUtils.isNotEmpty(model.getStartDate()) && StringUtils.isNotEmpty(model.getEndDate())) {
       try {
-        Date first = DateUtil.firstSecondOfDate(DateUtil.convertStringToDate(model.getStartDate()
-            + "-1"));
-        Date end = DateUtil.firstSecondOfDate(DateUtil.convertStringToDate(model.getEndDate()
-            + "-31"));
+        Date first = DateUtil.firstSecondOfDate(DateUtil.convertStringToDate(model.getStartDate()));
+        Date end = DateUtil.firstSecondOfDate(DateUtil.convertStringToDate(model.getEndDate()));
         // logger.info("开始日期：" + first + " 结束日期：" + end);
         if (first != null && end != null) {
           model.setStartTimeOfTheYear(first);
@@ -212,10 +208,8 @@ public class SeismicStationAction extends AbstractQueryAction<Criteria> {
      */
     if (StringUtils.isNotEmpty(model.getStartDate()) && StringUtils.isNotEmpty(model.getEndDate())) {
       try {
-        Date first = DateUtil.firstSecondOfDate(DateUtil.convertStringToDate(model.getStartDate()
-            + "-1"));
-        Date end = DateUtil.firstSecondOfDate(DateUtil.convertStringToDate(model.getEndDate()
-            + "-31"));
+        Date first = DateUtil.firstSecondOfDate(DateUtil.convertStringToDate(model.getStartDate()));
+        Date end = DateUtil.firstSecondOfDate(DateUtil.convertStringToDate(model.getEndDate()));
         // logger.info("开始日期：" + first + " 结束日期：" + end);
         if (first != null && end != null) {
           model.setStartTimeOfTheYear(first);
