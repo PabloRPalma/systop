@@ -22,6 +22,7 @@ import quake.admin.ds.service.DataSourceManager;
 import quake.admin.sitecfg.model.SiteCfg;
 import quake.admin.sitecfg.service.SiteCfgManager;
 import quake.seismic.SeismicConstants;
+import quake.seismic.data.EQTimeFormat;
 import quake.seismic.data.catalog.dao.AbstractCatDao;
 import quake.seismic.data.catalog.model.Criteria;
 import quake.seismic.data.catalog.model.MagCriteria;
@@ -65,6 +66,11 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
     }
     //查询地震目录    
     List<Map> rows = getTemplate().queryForList(SQL, criteria);
+    if(StringUtils.isNotBlank(criteria.getMagTname())) {//关联震级表
+      rows = EQTimeFormat.getEqTimeValue(setMagM(rows, criteria), "O_TIME", "O_TIME_FRAC");
+    } else {
+      rows = EQTimeFormat.getEqTimeValue(rows, "O_TIME", "O_TIME_FRAC");
+    }
     StringBuffer buf = new StringBuffer();
     //添加WKF、EQT及Q01格式的文件标头
     buf.append(expTypeTitle(criteria.getExpType()));
@@ -82,6 +88,47 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
     return buf;
   }
 
+  /**
+   * 查询所有地震目录震级
+   * 将地震目录相关震级，包括ML,Ms,Mb,MB,Ms7,Mw以数据列的形式组织到查询结果中
+   * @param rows 地震目录查询结果
+   * @param criteria 震级查询参数
+   * @return
+   */
+  private List<Map> setMagM(List<Map> rows,Criteria criteria){
+    MagCriteria magCriteria = new MagCriteria();
+    magCriteria.setSchema(criteria.getSchema());
+    magCriteria.setTableName(criteria.getMagTname());
+    
+    for (Map catalog : rows) {
+      String catalogId = (String)catalog.get("ID");
+      //String magcId = (String)catalog.get("MAGC_ID");
+      if(StringUtils.isBlank(catalogId)){
+        continue;
+      }
+      magCriteria.setCatId(catalogId);
+      //根据关联震级表的ID查询，只按照catalogId查询MAG_C表里有重复数据
+      //magCriteria.setMagcId(magcId);
+      List<Map> magList = getMagM(magCriteria);
+      if (magList != null && magList.size() > 0){
+        for (Map magtype : magList) {
+          catalog.put(magtype.get("MAG_NAME"), magtype.get("MAG_VAL"));
+        }
+      }
+    }
+    return rows;
+  }
+  
+  /**
+   * 根据地震目录ID查询震级
+   * @param magCriteria 震级查询参数
+   * @return
+   */
+  private List<Map> getMagM(MagCriteria magCriteria){
+    List<Map> list = getTemplate().queryForList(SQL_MAG_NAME,magCriteria);
+    return list.isEmpty() ? null : list;
+  }
+  
   /**
    * 取得WKF、EQT及Q01格式的文件标头
    * @param expType
@@ -344,7 +391,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
          ExportDataFormat.convertEpiOfEQT((Double)row.get("EPI_LON"), 8, "LON"),//7位经度，要加上负号，保留3位小数
          ExportDataFormat.convertDepth((Double)row.get("EPI_DEPTH"), 3),//3位深度
          ExportDataFormat.convertMagName((String)row.get("M_SOURCE"), 5), //5位震级名
-         ExportDataFormat.convertMagVal((Double)row.get("M"), 4), //3位震级值，要加上负号，保留1位小数
+         ExportDataFormat.convertMagVal((Double)row.get((String)row.get("M_SOURCE")), 4), //3位震级值，要加上负号，保留1位小数
          ExportDataFormat.convertRms((Double)row.get("Rms"), 6), //6位Rms值，保留3位小数
          ExportDataFormat.convertQloc((String)row.get("QLOC")),//1位QLOC
          ExportDataFormat.convertStn((Integer)row.get("Sum_stn"), 3),//3位编报震相的台站数量
@@ -384,7 +431,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
          ExportDataFormat.convertValue((String)row.get("EVENT_ID"), 20), //Event_id, 20位
          ExportDataFormat.convertValue((String)row.get("SEQUEN_NAME"), 20), //Sequen_name, 20位
          ExportDataFormat.convertValue((Integer)row.get("Depfix_flag"), 1), //Depfix_flag, 1位
-         ExportDataFormat.convertMagVal((Double)row.get("M"), 4), //震级, 3位,保留一位小数
+         ExportDataFormat.convertMagVal((Double)row.get((String)row.get("M_SOURCE")), 4), //震级, 3位,保留一位小数
          ExportDataFormat.convertMagName((String)row.get("M_SOURCE"), 5), //5位震级名
          ExportDataFormat.convertDoubleVal((Double)row.get("SPmin"), 5, "five"), //SPmin，最小S-P，单位：秒, 5位,保留一位小数
          ExportDataFormat.convertDoubleVal((Double)row.get("Dmin"), 6, "six"), //Dmin，近台距,6位,保留一位小数
@@ -460,7 +507,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
         ExportDataFormat.convertValue((String)phase.get("CLARITY"), 1), //初动清晰度，1
         ExportDataFormat.convertValue((String)phase.get("WSIGN"), 1), //初动方向 1
         ExportDataFormat.convertValue((String)phase.get("PHASE_NAME"), 7), //震相名 7
-        ExportDataFormat.convertValue((Integer)phase.get("WEIGHT"), 3),  //权重 3.1
+        ExportDataFormat.convertValue((Integer)phase.get("WEIGHT"), 1),  //权重 3.1
         ExportDataFormat.convertValue((String)phase.get("REC_TYPE"), 2), //记录类型 2
         ExportDataFormat.convertValue(DateUtil.getDateTime("yyyy/MM/dd HH:mm:ss.ss", (Date)phase.get("PHASE_TIME")), 21), //震相到时 21
         ExportDataFormat.convertDoubleTwoVal((Double)phase.get("RESI"), 7, "seven"), //走时残差 7.2
@@ -560,22 +607,24 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
     StringBuffer indexBlock1 = new StringBuffer();
     Map networkInfo = (Map) queryNetwordInfo(criteria);
     //logger.debug("台网信息：{}",networkInfo);
+    String netCode = " ";
+    String netName = " ";
+    String startDate = " ";
+    String endDate = " ";
     if (networkInfo != null) {
-      String netCode = (String)networkInfo.get("Net_code");
-      String netName = (String)networkInfo.get("Net_cname");
+      netCode = (String)networkInfo.get("Net_code");
+      netName = (String)networkInfo.get("Net_cname");
       //logger.debug("台网代码：{}，台网名称：{}", netCode, netName);
-      String startDate = " ";
-      String endDate = " ";
-      if (criteria.getStartDate() != null) {
-        startDate = DateUtil.getDateTime("yyyy-MM-dd HH:mm:ss.ss", criteria.getStartDate());
-      }
-      if (criteria.getEndDate() != null) {
-        endDate = DateUtil.getDateTime("yyyy-MM-dd HH:mm:ss.ss", criteria.getEndDate());
-      }
-      indexBlock1.append("VI1").append(" ").append("Net_code").append(" ").append(
-          netCode).append(" ").append("Net_cname").append(" ").append(
-              netName).append(" ").append(startDate).append(" ").append(endDate).append("\n");
     }
+    if (criteria.getStartDate() != null) {
+      startDate = DateUtil.getDateTime("yyyy-MM-dd HH:mm:ss.ss", criteria.getStartDate());
+    }
+    if (criteria.getEndDate() != null) {
+      endDate = DateUtil.getDateTime("yyyy-MM-dd HH:mm:ss.ss", criteria.getEndDate());
+    }
+    indexBlock1.append("VI1").append(" ").append("Net_code").append(" ").append(
+        netCode).append(" ").append("Net_cname").append(" ").append(
+            netName).append(" ").append(startDate).append(" ").append(endDate).append("\n");
     
     return indexBlock1;
   }
@@ -658,7 +707,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
             DateUtil.getDateTime("mm", (Date) row.get("O_TIME")),// 2位分
             convertEpi((Double)row.get("EPI_LAT"), 5, "LAT"),// 4位伟度，加上负号共5位，不够位数前面补空格
             convertEpi((Double)row.get("EPI_LON"), 6, "LON"),// 5位经度，加上负号共6位，不够位数前面补空格
-            convertMagVal((Double)row.get("M"), 4),// 3位震级，加上负号共4位，不够位数前面补空格
+            convertMagVal((Double)row.get((String)row.get("M_SOURCE")), 4),// 3位震级，加上负号共4位，不够位数前面补空格
             ExtremeUtils.formatNumber("000", "000"),
             convertDepth((Double)row.get("EPI_DEPTH"), 3)// 3位深度
             });
@@ -735,7 +784,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
             DateUtil.getDateTime("yyyyMMddHHmmss", (Date) row.get("O_TIME")),
             convertEpiOfEQT((Double)row.get("EPI_LAT"), 6, "LAT"),// 5位伟度，加上负号共6位，不够位数前面补空格
             convertEpiOfEQT((Double)row.get("EPI_LON"), 7, "LON"),// 6位经度，加上负号共7位，不够位数前面补空格
-            convertMagValOfEQT((Double)row.get("M"), 3),// 3位震级，加上负号共4位
+            convertMagValOfEQT((Double)row.get((String)row.get("M_SOURCE")), 3),// 3位震级，加上负号共4位
             convertDepthOfEQT((Double)row.get("EPI_DEPTH"), 4),// 4位深度
             ExtremeUtils.formatNumber("000", "000")
             });
@@ -818,7 +867,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
         convertDateFormat((Date) row.get("O_TIME"), String.valueOf(row.get("O_TIME_FRAC"))),
         convertEpi((Double)row.get("EPI_LAT"), 5, "LAT"),// 4位伟度，加上负号共5位，不够位数前面补空格
         convertEpi((Double)row.get("EPI_LON"), 6, "LON"),// 5位经度，加上负号共6位，不够位数前面补空格
-        getFormatOfQ01((String)row.get("M_SOURCE"))+ExtremeUtils.formatNumber("0.0", row.get("M")),// 震级
+        getFormatOfQ01((String)row.get("M_SOURCE"))+ExtremeUtils.formatNumber("0.0", row.get((String)row.get("M_SOURCE"))),// 震级
         convertDepth((Double)row.get("EPI_DEPTH"), 3),// 3位深度
         getFormatOfQ01((String)row.get("Epic_id")),//位号
         ExportDataFormat.convertQloc((String)row.get("QLOC")),//1位精度
