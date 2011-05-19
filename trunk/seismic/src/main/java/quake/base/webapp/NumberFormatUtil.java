@@ -22,7 +22,7 @@ public final class NumberFormatUtil {
       mask.append(".");
     }
     for(int i = 0; i < digits; i ++) {
-      mask.append("#");
+      mask.append("0");
     }
     if (obj != null) {
       if (obj instanceof Double) {
@@ -42,7 +42,7 @@ public final class NumberFormatUtil {
   public static void main(String[] args) {
     System.out.println(format(34.354, 1));
     System.out.println(format(34.354, 0));
-    System.out.println(format(34.354, 2));
+    System.out.println(format(34.354, 5));
     System.out.println(format(34.35433, 3));
   }
 
