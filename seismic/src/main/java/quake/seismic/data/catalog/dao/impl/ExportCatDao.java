@@ -97,7 +97,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
       buf.append("时间 纬度 经度震级深度000").append("\n").append("\n");
       buf.append("注意：震级包括了Ml、Ms、mb等多种震级类型的测定结果，具体可以看.Q01格式。").append("\n").append("\n");
     } else if ("Q01".equals(expType)) {//Q01格式
-      buf.append("时间 纬度 经度 震级 深度 位号精度单位 参考地点(S-P)").append("\n").append("\n");
+      buf.append("时间 纬度 经度 震级 深度位号精度单位 参考地点(S-P)").append("\n").append("\n");
     }
     
     return buf.toString();
@@ -325,8 +325,8 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
     String hboFormat = MessageFormat.format(
         "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14}\n",new Object[] {
         "Net", "dateO_time", "Epi_lat", "Epi_lon", "Epi_depth", 
-        "Mag_name", "Mag_value",  "Rms", "Qloc",  "Sum_stn", "Loc_stn", 
-        "Eq_type", "Epic_id", "Source_id", "Location_cname"
+        "Mag_name", "Mag_value",  "Rms", "Qloc",  "Sum_stn", "Loc_stn", "Epic_id",
+        "Source_id", "Eq_type", "Location_cname"
     });
     //logger.debug("HBO数据格式内容：{}", hboFormat);
     return hboFormat;
@@ -564,16 +564,14 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
       String netCode = (String)networkInfo.get("Net_code");
       String netName = (String)networkInfo.get("Net_cname");
       //logger.debug("台网代码：{}，台网名称：{}", netCode, netName);
-      String startDate = null;
-      String endDate = null;
-      if (networkInfo.get("Net_startdate") != null) {
-        startDate = DateUtil.getDateTime("yyyy-MM-dd HH:mm:ss.ss", (Date)networkInfo.get("Net_startdate"));
+      String startDate = " ";
+      String endDate = " ";
+      if (criteria.getStartDate() != null) {
+        startDate = DateUtil.getDateTime("yyyy-MM-dd HH:mm:ss.ss", criteria.getStartDate());
       }
-      if (networkInfo.get("Net_enddate") != null) {
-        endDate = DateUtil.getDateTime("yyyy-MM-dd HH:mm:ss.ss", (Date)networkInfo.get("Net_enddate"));
+      if (criteria.getEndDate() != null) {
+        endDate = DateUtil.getDateTime("yyyy-MM-dd HH:mm:ss.ss", criteria.getEndDate());
       }
-      //logger.debug("台网起始时间：{} ----- 结束时间：{}", startDate, endDate);
-      
       indexBlock1.append("VI1").append(" ").append("Net_code").append(" ").append(
           netCode).append(" ").append("Net_cname").append(" ").append(
               netName).append(" ").append(startDate).append(" ").append(endDate).append("\n");
@@ -691,9 +689,9 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
   private String convertDepth(Double val, int len) {
     String strVal = null;
     if (val == null || val <= -99) {
-      strVal = ExtremeUtils.formatNumber("000", "000");
+      strVal = ExtremeUtils.formatNumber("###", "000");
     } else {
-      strVal = ExtremeUtils.formatNumber("000", val);
+      strVal = ExtremeUtils.formatNumber("###", val);
     }
     
     return StringUtils.leftPad(strVal, len, ' ');
@@ -814,14 +812,17 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
    * @return
    */
   public String extractQ01(Map row, Criteria criteria) {
-    String q01Data = MessageFormat.format("{0}{1}{2} {3} {4} {5}\n", new Object[] {
+    String q01Data = MessageFormat.format("{0}{1}{2} {3} {4}{5}{6}{7} {8}\n", new Object[] {
         // 2008-10-04 12:48:14 转成 20081004124814
         //DateUtil.getDateTime("yyyyMMddHHmmss", (Date) row.get("O_TIME")),
         convertDateFormat((Date) row.get("O_TIME"), String.valueOf(row.get("O_TIME_FRAC"))),
         convertEpi((Double)row.get("EPI_LAT"), 5, "LAT"),// 4位伟度，加上负号共5位，不够位数前面补空格
         convertEpi((Double)row.get("EPI_LON"), 6, "LON"),// 5位经度，加上负号共6位，不够位数前面补空格
         getFormatOfQ01((String)row.get("M_SOURCE"))+ExtremeUtils.formatNumber("0.0", row.get("M")),// 震级
+        convertDepth((Double)row.get("EPI_DEPTH"), 3),// 3位深度
         getFormatOfQ01((String)row.get("Epic_id")),//位号
+        ExportDataFormat.convertQloc((String)row.get("QLOC")),//1位精度
+        ExportDataFormat.convertTwoStr((String)row.get("Source_id")),//2数据来源
         getFormatOfQ01((String)row.get("LOCATION_CNAME"))});
     return q01Data;
   }

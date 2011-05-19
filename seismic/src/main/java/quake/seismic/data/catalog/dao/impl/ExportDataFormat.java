@@ -68,6 +68,9 @@ public final class ExportDataFormat {
    * @param len
    */
   protected static String convertMagName(String val, int len) {
+    if (StringUtils.isBlank(val)) {
+      return " ";
+    }
     return StringUtils.rightPad(val, len, ' ');
   }
   
