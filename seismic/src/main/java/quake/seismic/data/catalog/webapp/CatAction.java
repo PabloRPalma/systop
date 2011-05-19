@@ -110,7 +110,14 @@ public class CatAction extends AbstractQueryAction<Criteria> {
         model.setSchema(dataSourceManager.getSeismicSchema());
         model.setSortProperty(getSortProperty());
         model.setSortDir(getSortDir());
-        
+        if (model.getStartDate() != null) {
+          Date startDate = DateUtil.firstSecondOfDate(model.getStartDate());
+          model.setStartDate(startDate);
+        }
+        if (model.getEndDate() != null) {
+          Date endDate = DateUtil.lastSecondOfDate(model.getEndDate());
+          model.setEndDate(endDate);
+        }
         //地震目录查询_不分页
         List<Map> list = gridCatDao.queryForGis(model);
         logger.debug("显示GIS信息时查询地震目录条数：{}",list.size());
@@ -208,6 +215,14 @@ public class CatAction extends AbstractQueryAction<Criteria> {
         model.setStart(start);
         model.setSize(getPageSize());
         logger.debug("list方法，开始记录:{},pageSize:{}", start, getPageSize());
+        if (model.getStartDate() != null) {
+          Date startDate = DateUtil.firstSecondOfDate(model.getStartDate());
+          model.setStartDate(startDate);
+        }
+        if (model.getEndDate() != null) {
+          Date endDate = DateUtil.lastSecondOfDate(model.getEndDate());
+          model.setEndDate(endDate);
+        }
         //查询地震目录
         Page page = gridCatDao.query(model);
         logger.debug("查询出的记录数：{}",page.getData().size());
@@ -334,6 +349,14 @@ public class CatAction extends AbstractQueryAction<Criteria> {
     if (StringUtils.isNotBlank(model.getTableName())) {
       //测震SCHEMA
       model.setSchema(dataSourceManager.getSeismicSchema());
+      if (model.getStartDate() != null) {
+        Date startDate = DateUtil.firstSecondOfDate(model.getStartDate());
+        model.setStartDate(startDate);
+      }
+      if (model.getEndDate() != null) {
+        Date endDate = DateUtil.lastSecondOfDate(model.getEndDate());
+        model.setEndDate(endDate);
+      }
       StringBuffer buf = exportCatDao.query(model);
       return buf.toString();
     } else {
@@ -349,6 +372,14 @@ public class CatAction extends AbstractQueryAction<Criteria> {
     if (StringUtils.isNotBlank(model.getTableName())) {
       //测震SCHEMA
       model.setSchema(dataSourceManager.getSeismicSchema());
+      if (model.getStartDate() != null) {
+        Date startDate = DateUtil.firstSecondOfDate(model.getStartDate());
+        model.setStartDate(startDate);
+      }
+      if (model.getEndDate() != null) {
+        Date endDate = DateUtil.lastSecondOfDate(model.getEndDate());
+        model.setEndDate(endDate);
+      }
       StringBuffer buf = exportCatDao.queryForVlm(model);
       return buf.toString();
     } else {
