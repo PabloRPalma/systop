@@ -102,7 +102,7 @@ $(function() {
 		<ec:column width="40" property="_0" title="序号" value="${GLOBALROWCOUNT}" style="text-align:center"/>
 		<ec:column width="75" property="_9" title="操作" style="text-align:center">
 			<s:if test="#attr.item.SEED_EXISTS == 1">
-			   <a h<a href="${ctx}/quake/seismic/data/seed/eventexp/showSeed.do?seedname=${item.SEED_NAME}&tableName=${model.tableName}">波形</a>
+			   <a href="${ctx}/quake/seismic/data/seed/eventexp/showSeed.do?seedname=${item.SEED_NAME}&tableName=${model.tableName}">波形</a>
 			</s:if>
 			<s:else>
 			   <span style="color:#CCC">波形</span>
@@ -110,23 +110,23 @@ $(function() {
 			
 		</ec:column>
 		<ec:column width="160" property="O_TIME" title="发震时刻" sortable="true">${item.EQ_TIME}</ec:column>	
-		<ec:column width="60" property="EPI_LAT" title="震中纬度" cell="quake.base.webapp.DoubleCell"/>	
-		<ec:column width="60" property="EPI_LON" title="震中经度" cell="quake.base.webapp.DoubleCell"/>
+		<ec:column width="60" property="EPI_LAT" title="震中纬度" cell="quake.base.webapp.DoubleCell" style="text-align:right"/>	
+		<ec:column width="60" property="EPI_LON" title="震中经度" cell="quake.base.webapp.DoubleCell" style="text-align:right"/>
 		<c:if test="${model.magTname != ''}">
-			<ec:column width="40" property="ML" title="ML" cell="quake.seismic.data.catalog.webapp.cell.EMCell"/>		
-			<ec:column width="40" property="Ms" title="Ms" cell="quake.seismic.data.catalog.webapp.cell.EMCell"/>		
-			<ec:column width="40" property="Mb" title="Mb" cell="quake.seismic.data.catalog.webapp.cell.EMCell"/>		
-			<ec:column width="40" property="MB" title="MB" cell="quake.seismic.data.catalog.webapp.cell.EMCell"/>		
-			<ec:column width="40" property="Ms7" title="Ms7" cell="quake.seismic.data.catalog.webapp.cell.EMCell"/>		
-			<ec:column width="40" property="Mw" title="Mw" cell="quake.seismic.data.catalog.webapp.cell.EMCell"/>
-			<ec:column width="40" property="M" title="M" cell="quake.seismic.data.catalog.webapp.cell.EMCell"/>	
+			<ec:column width="40" property="ML" title="ML" cell="quake.seismic.data.catalog.webapp.cell.EMCell" style="text-align:right"/>		
+			<ec:column width="40" property="Ms" title="Ms" cell="quake.seismic.data.catalog.webapp.cell.EMCell" style="text-align:right"/>		
+			<ec:column width="40" property="Mb" title="Mb" cell="quake.seismic.data.catalog.webapp.cell.EMCell" style="text-align:right"/>		
+			<ec:column width="40" property="MB" title="MB" cell="quake.seismic.data.catalog.webapp.cell.EMCell" style="text-align:right"/>		
+			<ec:column width="40" property="Ms7" title="Ms7" cell="quake.seismic.data.catalog.webapp.cell.EMCell" style="text-align:right"/>		
+			<ec:column width="40" property="Mw" title="Mw" cell="quake.seismic.data.catalog.webapp.cell.EMCell" style="text-align:right"/>
+			<ec:column width="40" property="M" title="M" cell="quake.seismic.data.catalog.webapp.cell.EMCell" style="text-align:right"/>	
 		</c:if>
 		<c:if test="${model.magTname == ''}">
-			<ec:column width="40" property="M" title="${model.disType}" cell="quake.seismic.data.catalog.webapp.cell.EMCell"/>		
+			<ec:column width="40" property="M" title="${model.disType}" cell="quake.seismic.data.catalog.webapp.cell.EMCell" style="text-align:right"/>		
 		</c:if>
-		<ec:column width="40" property="EPI_DEPTH" title="深度" cell="quake.seismic.data.catalog.webapp.cell.DepthFomat"/>	
+		<ec:column width="40" property="EPI_DEPTH" title="深度" cell="quake.seismic.data.catalog.webapp.cell.DepthFomat" style="text-align:right"/>	
 		<ec:column width="80" property="Eq_type" title="地震类型" />	
-		<ec:column width="60" property="Loc_stn" title="定位台数" />	
+		<ec:column width="60" property="Loc_stn" title="定位台数" style="text-align:right"/>	
 		<ec:column width="100" property="LOCATION_CNAME" title="震中地名" />
 	</ec:row>   
 </ec:table>

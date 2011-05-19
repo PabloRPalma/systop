@@ -80,8 +80,8 @@
 		<ec:column width="160" property="PHASE_TIME" title="震相到时" cell="date" format="yyyy-MM-dd HH:mm:ss"/>	
 		<ec:column width="100" property="PHASE_TIME_FRAC" title="1/10000秒"/>	
 		<ec:column width="100" property="AMP_TYPE" title="振幅类型"/>	
-		<ec:column width="60" property="AMP" title="振幅" cell="quake.seismic.data.phase.webapp.cell.PhaseNumCell"/>	
-		<ec:column width="80" property="PERIOD" title="周期" cell="quake.base.webapp.DoubleCell"/>	
+		<ec:column width="60" property="AMP" title="振幅" cell="quake.seismic.data.phase.webapp.cell.PhaseNumCell" style="text-align:right"/>	
+		<ec:column width="80" property="PERIOD" title="周期" cell="quake.base.webapp.DoubleCell" style="text-align:right"/>	
 		<ec:column width="40" property="WEIGHT" title="权重"/>	
 		<ec:column width="80" property="CLARITY" title="初动清晰度"/>	
 		<ec:column width="80" property="WSIGN" title="初动方向"/>	
