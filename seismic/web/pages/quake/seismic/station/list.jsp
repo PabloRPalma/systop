@@ -21,9 +21,9 @@
   	   <td >台站名称:</td>
   	   <td><s:textfield name="model.staName" cssStyle="width:100px;"/></td>
   	   <td>日期:</td>	
-     	<td><s:textfield size="14" cssClass="Wdate" id="startDate" name="model.startDate" onclick="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM'});" readonly="true"/></td>	
+     	<td><s:textfield size="14" cssClass="Wdate" id="startDate" name="model.startDate" onclick="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'});" readonly="true"/></td>	
 		<td>至:</td>
-		<td><s:textfield size="14" cssClass="Wdate" id="endDate" name="model.endDate" onclick="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM'});" readonly="true"/></td>
+		<td><s:textfield size="14" cssClass="Wdate" id="endDate" name="model.endDate" onclick="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'});" readonly="true"/></td>
 		<td><input value="查询" onclick="queryForList('${ctx}/quake/seismic/station/list.do', '')" size="6" style="text-align: center;cursor: auto;" type="button" class="button"/></td>
 	</tr>
        <tr>
