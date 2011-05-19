@@ -69,19 +69,19 @@ $(function() {
 			<tr>
 				<td align="right">纬度：</td> 
 		  	    <td>
-		  	      <s:textfield name="model.startLat" cssStyle="width:70px;" cssClass="number" />
+		  	      <s:textfield id="startLat" name="model.startLat" cssStyle="width:70px;" onblur="checkLat(this.value)" />
 		  	    </td>
 		  	    <td>至</td>
 		  	     <td>
-		  	      <s:textfield name="model.endLat" cssStyle="width:70px;" cssClass="number" />
+		  	      <s:textfield id="endLat" name="model.endLat" cssStyle="width:70px;" onblur="checkLat(this.value)" />
 		  	    </td>
 		  	    <td align="right">经度：</td>
 		  	    <td>
-		  	      <s:textfield name="model.startLon" cssStyle="width:70px;" cssClass="number" /> 
+		  	      <s:textfield id="startLon" name="model.startLon" cssStyle="width:70px;" onblur="checkLon(this.value)" />
 		  	    </td>
 		  	    <td>至</td>
 		  	    <td>
-		  	      <s:textfield name="model.endLon" cssStyle="width:70px;" cssClass="number" />
+		  	      <s:textfield id="endLon" name="model.endLon" cssStyle="width:70px;" onblur="checkLon(this.value)" />
 		  	    </td>
 		  	    <td align="right">地名：</td>
 				<td><s:textfield name="model.location" cssStyle="width:100px;"/></td>
@@ -91,7 +91,7 @@ $(function() {
 		  	    </td>
 	  	  </tr>
 		</table>
-				
+				<span id="lonSpan"></span>
 	   </fieldset>
 	</td>
 	<td align="right">
@@ -173,20 +173,66 @@ $(function() {
 </div>
 <script type="text/javascript">
 function exportData(url, target) {
-	$("#queryFrm").attr("action", url);
-	$("#queryFrm").attr("target", target);
-	$("#queryFrm").submit();
+	if(checkLon("") && checkLat("")){
+		$("#queryFrm").attr("action", url);
+		$("#queryFrm").attr("target", target);
+		$("#queryFrm").submit();
+	}
 }
 function exportDataConfirm(url, target) {
-	$("#queryFrm").attr("action", url);
-	$("#queryFrm").attr("target", target);
-	if(confirm("确定要下载地震目录相关数据吗?")){
-		$("#queryFrm").submit();
+	if(checkLon("") && checkLat("")){
+		$("#queryFrm").attr("action", url);
+		$("#queryFrm").attr("target", target);
+		if(confirm("确定要下载地震目录相关数据吗?")){
+			$("#queryFrm").submit();
+		}
 	}
 }
 //以xls格式导出测震台站信息列表
 function downloadInXls() {
 	ECSideUtil.doExport('xls','地震目录列表.xls','','ec');
+}
+//经度判断,-180.00000~180.00000
+function checkLon(lonVal) {
+	var startLon = lonVal;
+	var endLon = lonVal;
+	var sLonVal = startLon.replace(/\s/g,"");
+	var eLonVal = endLon.replace(/\s/g,"");
+	if(lonVal == "" || lonVal == null) {
+		startLon = document.getElementById("startLon").value;
+		endLon = document.getElementById("endLon").value;
+		sLonVal = startLon.replace(/\s/g,"");
+		eLonVal = endLon.replace(/\s/g,"");
+	}
+	
+	if(isNaN(Number(sLonVal)) || (sLonVal < -180) || (sLonVal > 180) || isNaN(Number(eLonVal)) || (eLonVal < -180) || (eLonVal > 180)) {
+		document.getElementById("lonSpan").innerHTML = "<font color='red'>请输入合法的经度！(范围：-180~180)</font>";
+		return false;
+	}else {
+		document.getElementById("lonSpan").innerHTML = "";
+		return true;
+	}
+}
+//纬度判断,-90.00000~90.00000
+function checkLat(latVal) {
+	var startLat = latVal;
+	var endLat = latVal;
+	var sLatVal = startLat.replace(/\s/g,"");
+	var eLatVal = endLat.replace(/\s/g,"");
+	if(latVal == "" || latVal == null) {
+		startLat = document.getElementById("startLat").value;
+		endLat = document.getElementById("endLat").value;
+		sLatVal = startLat.replace(/\s/g,"");
+		eLatVal = endLat.replace(/\s/g,"");
+	}
+	
+	if(isNaN(Number(sLatVal)) || (sLatVal < -90) || (sLatVal > 90) || isNaN(Number(eLatVal)) || (eLatVal < -90) || (eLatVal > 90)) {
+		document.getElementById("lonSpan").innerHTML = "<font color='red'>请输入合法的纬度！(范围：-90~90)</font>";
+		return false;
+	}else {
+		document.getElementById("lonSpan").innerHTML = "";
+		return true;
+	}
 }
 </script>
 </body>
