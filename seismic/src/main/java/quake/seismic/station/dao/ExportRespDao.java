@@ -1,5 +1,7 @@
 package quake.seismic.station.dao;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -90,10 +92,11 @@ public class ExportRespDao extends AbstractStationDao {
     sb.append("0").append(StationConstants.NEW_LINE);
     sb.append("B058F04").append("    ").append("Sensitivity:");
     sb.append(setSpace(length, "Sensitivity:"));
-    sb.append(getValue(att, "Sensitivity")).append(StationConstants.NEW_LINE);
+    sb.append(transform(getValue(att, "Sensitivity").toString())).append(StationConstants.NEW_LINE);
     sb.append("B058F05").append("    ").append("Frequency of sensitivity:");
     sb.append(setSpace(length, "Frequency of sensitivity:"));
-    sb.append(getValue(att, "Freq")).append(StationConstants.NEW_LINE);
+    sb.append(transform(getValue(att, "Freq").toString())).append("    HZ").append(
+        StationConstants.NEW_LINE);
     sb.append("B058F06").append("    ").append("Numbet of calibtations:");
     sb.append(setSpace(length, "Numbet of calibtations:"));
     sb.append("0").append(StationConstants.NEW_LINE);
@@ -144,8 +147,16 @@ public class ExportRespDao extends AbstractStationDao {
     if (StringUtils.isNotBlank(response)) {
       digitizerResponse = JdomUtil.getResponseValue(response);
     }
+    String numDigitizer = null;
+    int numd = 0;
+    if (digitizerResponse != null) {
+      numDigitizer = JdomUtil.getDigitizerValue(digitizerResponse);
+    }
+    if (StringUtils.isNotBlank(numDigitizer)) {
+      numd = Integer.valueOf(numDigitizer);
+    }
     StringBuffer sb = new StringBuffer();
-    for (int i = 2; i < 5; i++) {
+    for (int i = 2; i < numd + 2; i++) {
       sb.append(setCoefficients(i));
       sb.append(setDecimation(i));
       sb.append(setGain(i, digitizerResponse));
@@ -172,7 +183,8 @@ public class ExportRespDao extends AbstractStationDao {
     sb.append(level).append(StationConstants.NEW_LINE);
     sb.append("B057F04").append("    ").append("Input sample rate:");
     sb.append(setSpace(length, "Input sample rate:"));
-    sb.append(getValue(att, "Input_sample_rate")).append(StationConstants.NEW_LINE);
+    sb.append(transform(getValue(att, "Input_sample_rate").toString())).append(
+        StationConstants.NEW_LINE);
     sb.append("B057F05").append("    ").append("Decimation factor:");
     sb.append(setSpace(length, "Decimation factor:"));
     sb.append(getValue(att, "Decimation_factor")).append(StationConstants.NEW_LINE);
@@ -181,10 +193,12 @@ public class ExportRespDao extends AbstractStationDao {
     sb.append(getValue(att, "Decimation_offset")).append(StationConstants.NEW_LINE);
     sb.append("B057F07").append("    ").append("Estimated delay (seconds):");
     sb.append(setSpace(length, "Estimated delay (seconds):"));
-    sb.append(getValue(att, "Estimated_delay")).append(StationConstants.NEW_LINE);
+    sb.append(transform(getValue(att, "Estimated_delay").toString())).append(
+        StationConstants.NEW_LINE);
     sb.append("B057F08").append("    ").append("Correction applied (seconds):");
     sb.append(setSpace(length, "Correction applied (seconds):"));
-    sb.append(getValue(att, "Correction_applied")).append(StationConstants.NEW_LINE);
+    sb.append(transform(getValue(att, "Correction_applied").toString())).append(
+        StationConstants.NEW_LINE);
 
     return sb;
   }
@@ -270,26 +284,28 @@ public class ExportRespDao extends AbstractStationDao {
    */
   private StringBuffer setNumeratorOrDenominator(Map m) {
     StringBuffer sb = new StringBuffer();
-    int space = 10;
+
     sb.append(StationConstants.ROW_START).append("    ").append("Numerator cofficients:").append(
         StationConstants.NEW_LINE);
     sb.append(StationConstants.ROW_START).append("             i,       cofficient,        error")
         .append(StationConstants.NEW_LINE);
     for (int j = 0; j < ((ArrayList) m.get("list")).size(); j++) {
+      int space = 10;
+      int s = 9;
       Map map = (HashMap) ((ArrayList) m.get("list")).get(j);
       sb.append("B054F08-09").append("    ").append(j);
       if (map.get("coeff").toString().startsWith("-")) {
-        sb.append(setSpace(space - 1, String.valueOf(j)));
+        sb.append(setSpace(s, String.valueOf(j)));
       } else {
         sb.append(setSpace(space, String.valueOf(j)));
       }
-      sb.append(map.get("coeff"));
-      if (map.get("coeff").toString().startsWith("-")) {
-        sb.append(setSpace(length, map.get("coeff").toString()));
+      sb.append(transform(map.get("coeff").toString()));
+      if (map.get("error").toString().startsWith("-")) {
+        sb.append(setSpace(s));
       } else {
-        sb.append(setSpace(length - 1, map.get("coeff").toString()));
+        sb.append(setSpace(space));
       }
-      sb.append(map.get("error")).append(StationConstants.NEW_LINE);
+      sb.append(transform(map.get("error").toString())).append(StationConstants.NEW_LINE);
     }
     return sb;
   }
@@ -310,10 +326,11 @@ public class ExportRespDao extends AbstractStationDao {
     sb.append(level).append(StationConstants.NEW_LINE);
     sb.append("B058F04").append("    ").append("Gain:");
     sb.append(setSpace(length, "Gain:"));
-    sb.append(getValue(att, "Sensitivity")).append(StationConstants.NEW_LINE);
+    sb.append(transform(getValue(att, "Sensitivity").toString())).append(StationConstants.NEW_LINE);
     sb.append("B058F05").append("    ").append("Frequency of gain:");
     sb.append(setSpace(length, "Frequency of gain:"));
-    sb.append(getValue(att, "Freq")).append(StationConstants.NEW_LINE);
+    sb.append(transform(getValue(att, "Freq").toString())).append("   HZ").append(
+        StationConstants.NEW_LINE);
     sb.append("B058F06").append("    ").append("Numbet of calibtations:");
     sb.append(setSpace(length, "Numbet of calibtations:"));
     sb.append("0").append(StationConstants.NEW_LINE);
@@ -373,7 +390,7 @@ public class ExportRespDao extends AbstractStationDao {
    * 第一级别下的poles/zeros
    */
   private StringBuffer setComplex(Map m) {
-    int space = 10;
+
     StringBuffer sb = new StringBuffer();
     sb.append(StationConstants.ROW_START).append("    ").append(m.get("complex")).append(
         StationConstants.NEW_LINE);
@@ -381,30 +398,64 @@ public class ExportRespDao extends AbstractStationDao {
         "           i       real       imag       real_error       imag_error").append(
         StationConstants.NEW_LINE);
     for (int j = 0; j < ((ArrayList) m.get("list")).size(); j++) {
+      int space = 10;
+      int s = 9;
       Map map = (HashMap) ((ArrayList) m.get("list")).get(j);
       sb.append(m.get("att")).append("    ").append(j);
       if (map.get("Real").toString().startsWith("-")) {
-        sb.append(setSpace(space - 1, String.valueOf(j)));
+        sb.append(setSpace(s, String.valueOf(j)));
       } else {
         sb.append(setSpace(space, String.valueOf(j)));
       }
-      sb.append(map.get("Real"));
+      sb.append(transform(map.get("Real").toString()));
       if (map.get("Imaginary").toString().startsWith("-")) {
-        sb.append(setSpace(space - 1, map.get("Real").toString()));
+        sb.append(setSpace(s));
       } else {
-        sb.append(setSpace(space, map.get("Real").toString()));
+        sb.append(setSpace(space));
       }
-      sb.append(map.get("Imaginary"));
-      if (map.get("Imaginary").toString().startsWith("-")) {
-        sb.append(setSpace(space + 1, map.get("Imaginary").toString()));
+      sb.append(transform(map.get("Imaginary").toString()));
+      if (map.get("Real_error").toString().startsWith("-")) {
+        sb.append(setSpace(s));
       } else {
-        sb.append(setSpace(space, map.get("Imaginary").toString()));
+        sb.append(setSpace(space));
       }
-      sb.append(map.get("Real_error"));
-      sb.append(setSpace(space, map.get("Real_error").toString()));
-      sb.append(map.get("Imaginary_error")).append(StationConstants.NEW_LINE);
+      sb.append(transform(map.get("Real_error").toString()));
+      if (map.get("Imaginary_error").toString().startsWith("-")) {
+        sb.append(setSpace(s));
+      } else {
+        sb.append(setSpace(space));
+      }
+      sb.append(transform(map.get("Imaginary_error").toString())).append(StationConstants.NEW_LINE);
     }
     return sb;
+  }
+
+  /**
+   * 填充空格 2011-05-17
+   * 
+   * @param num
+   */
+  private StringBuffer setSpace(int num) {
+    StringBuffer sb = new StringBuffer();
+    for (int i = 0; i < num; i++) {
+      sb.append(" ");
+    }
+    return sb;
+  }
+
+  /**
+   * 字符串中是否包含“E-”
+   * 
+   * @param str
+   * @return
+   */
+  public static String transform(String str) {
+    DecimalFormat f = new DecimalFormat("0.000000E00");
+    String string = f.format(Double.parseDouble(str));
+    if (!string.contains("E-")) {
+      string = string.replace("E", "E+");
+    }
+    return string;
   }
 
   /**
@@ -439,7 +490,7 @@ public class ExportRespDao extends AbstractStationDao {
     sb.append(att.get("blockette")).append("F05").append("    ")
         .append("Response in units lookup:");
     sb.append(setSpace(length, "Response in units lookup:"));
-    if (getValue(att, "Signal_input_unit").endsWith("")) {
+    if (getValue(att, "Signal_input_unit").equals("")) {
       sb.append("").append(StationConstants.NEW_LINE);
     } else {
       sb.append(StationConstants.BLOCKETTE053_IN_UNITS.get(att.get("Signal_input_unit"))).append(
@@ -449,7 +500,7 @@ public class ExportRespDao extends AbstractStationDao {
     sb.append(att.get("blockette")).append("F06").append("    ").append(
         "Response out units lookup:");
     sb.append(setSpace(length, "Response out units lookup:"));
-    if (getValue(att, "Signal_output_unit").endsWith("")) {
+    if (getValue(att, "Signal_output_unit").equals("")) {
       sb.append("").append(StationConstants.NEW_LINE);
     } else {
       sb.append(StationConstants.BLOCKETTE053_OUT_UNITS.get(att.get("Signal_output_unit"))).append(
@@ -462,6 +513,7 @@ public class ExportRespDao extends AbstractStationDao {
    * RESP开始信息以及通道信息显示
    */
   private StringBuffer setChannelMeg() {
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy,DD, HH:mm:ss");
     StringBuffer sb = new StringBuffer();
     sb.append(StationConstants.ROW_START).append("    ").append(
         "<< IRIS SEED Reader, Release 5.0 >>").append(StationConstants.NEW_LINE);
@@ -474,21 +526,21 @@ public class ExportRespDao extends AbstractStationDao {
         channel.get("NET_CODE")).append(StationConstants.NEW_LINE);
     sb.append("B052F03").append("    ").append("Location:").append("   ").append(
         channel.get("LOC_ID")).append(StationConstants.NEW_LINE);
-    sb.append("B050F04").append("    ").append("Channel:").append("    ").append(
+    sb.append("B052F04").append("    ").append("Channel:").append("    ").append(
         channel.get("CHN_CODE")).append(StationConstants.NEW_LINE);
     if (channel.get("ONDATE") == null) {
-      sb.append("B050F22").append("    ").append("Start date:").append(" ").append(
+      sb.append("B052F22").append("    ").append("Start date:").append(" ").append(
           "No Starting Time").append(StationConstants.NEW_LINE);
     } else {
-      sb.append("B050F22").append("    ").append("Start date:").append(" ").append(
-          channel.get("ONDATE")).append(StationConstants.NEW_LINE);
+      sb.append("B052F22").append("    ").append("Start date:").append(" ").append(
+          sdf.format(channel.get("ONDATE"))).append(StationConstants.NEW_LINE);
     }
     if (channel.get("OFFDATE") == null) {
-      sb.append("B050F23").append("    ").append("End date:").append("   ")
+      sb.append("B052F23").append("    ").append("End date:").append("   ")
           .append("No Ending Time").append(StationConstants.NEW_LINE);
     } else {
-      sb.append("B050F23").append("    ").append("End date:").append("   ").append(
-          channel.get("OFFDATE")).append(StationConstants.NEW_LINE);
+      sb.append("B052F23").append("    ").append("End date:").append("   ").append(
+          sdf.format(channel.get("OFFDATE"))).append(StationConstants.NEW_LINE);
     }
     return sb;
   }
