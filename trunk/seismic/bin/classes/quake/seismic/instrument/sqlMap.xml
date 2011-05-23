@@ -56,6 +56,9 @@
 			</isNotEmpty>
 			
 		</dynamic>
+		<dynamic prepend="AND">
+			<![CDATA[(Offdate=null)]]>
+		</dynamic>
 		<dynamic prepend="ORDER BY">
 			<isNotEmpty property="sortProperty">
 				<isNotEmpty property="sortDir">
@@ -101,6 +104,9 @@
 				</isEmpty>
 			</isNotEmpty>
 			
+		</dynamic>
+		<dynamic prepend="AND">
+			<![CDATA[(Offdate=null)]]>
 		</dynamic>
 		<dynamic prepend="ORDER BY">
 			<isNotEmpty property="sortProperty">
