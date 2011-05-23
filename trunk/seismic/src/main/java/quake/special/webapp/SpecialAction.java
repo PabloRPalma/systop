@@ -35,6 +35,7 @@ import com.systop.cms.utils.PageUtil;
 import com.systop.core.dao.support.Page;
 import com.systop.core.webapp.struts2.action.ExtJsCrudAction;
 import com.systop.core.webapp.upload.UpLoadUtil;
+import org.apache.commons.collections.CollectionUtils;
 
 /**
  * 专题Action
@@ -126,16 +127,12 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
       criteria.setSchema(dataSourceManager.getSeismicSchema());
       criteria.setSortProperty(getSortProperty());
       criteria.setSortDir(getSortDir());
-      //地震专题 选择地震目录 时间限制
+      // 地震专题 选择地震目录 时间限制
       /*
-      if (criteria.getEndDate() == null) {
-        if (criteria.getStartDate() == null) {
-            criteria.setStartDate(DateUtil.add(DateUtil.getCurrentDate(),
-                Calendar.DATE, SpecialConstants.QUERY_QC_DAY));
-            criteria.setEndDate(DateUtil.getCurrentDate());  
-        }
-      }
-      */
+       * if (criteria.getEndDate() == null) { if (criteria.getStartDate() == null) {
+       * criteria.setStartDate(DateUtil.add(DateUtil.getCurrentDate(), Calendar.DATE,
+       * SpecialConstants.QUERY_QC_DAY)); criteria.setEndDate(DateUtil.getCurrentDate()); } }
+       */
       page = PageUtil.getPage(getPageNo(), getPageSize());
 
       int start = Page.start(getPageNo(), getPageSize());
@@ -199,6 +196,15 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
       QuakeCatalog czCat = czCatalogManager.queryByCltName(s.getTableName());
       String catalogName = czCat.getClcName() + "地震目录";
       getRequest().setAttribute("catalogName", catalogName);
+      // 2011-05-23
+      phaseCriteria.setCatId(s.getQc_id());
+      phaseCriteria.setTableName(czCat.getPhaseTname());
+      phaseCriteria.setSchema(dataSourceManager.getSeismicSchema());
+
+      List items = specialDao.queryPhaseByCatalogId(phaseCriteria);
+      if (CollectionUtils.isNotEmpty(items)) {
+        getRequest().setAttribute("phaseCount", "1");
+      } 
     }
     return VIEW;
   }
@@ -223,7 +229,8 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
         seedDao.seedExists(cats);
         if (cats.size() == 1) {
           if (cats.get(0).get("SEED_NAME") != null) {
-            showSeed(cats.get(0).get("SEED_NAME").toString(),cats.get(0).get("NET_CODE").toString());
+            showSeed(cats.get(0).get("SEED_NAME").toString(), cats.get(0).get("NET_CODE")
+                .toString());
           }
         }
       }
@@ -234,14 +241,14 @@ public class SpecialAction extends ExtJsCrudAction<Special, SpecialManager> {
   /**
    * 显示Seed文件解析内容,各台站监测事件数据
    */
-  public void showSeed(String seedName,String netCode) {
+  public void showSeed(String seedName, String netCode) {
     StringBuffer seedFile = new StringBuffer("");
     // 获取Seed文件存储路径
     if (seedpathManager.get() != null && seedpathManager.get().getPath() != null) {
       seedFile.append(seedpathManager.get().getPath()).append("data").append(separator).append(
           "seed").append(separator).append(seedName);
     }
-    List<Map<String, Object>> items = specialDao.querySeedPlotsData(seedFile.toString(),netCode);
+    List<Map<String, Object>> items = specialDao.querySeedPlotsData(seedFile.toString(), netCode);
     StaCriteria criteria = new StaCriteria();
     criteria.setSchema(dataSourceManager.getStationSchema());
     // 遍历所有的事件，取出对应Seed文件名，并将台站代码替换为台站中文名
