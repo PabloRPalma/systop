@@ -10,7 +10,7 @@ public final class ExportDataFormat {
 
   public static Logger logger = (Logger) LoggerFactory.getLogger(ExportDataFormat.class);
   
-  public static final String[] SPECIAL_STRINGS = {"-99999.0", "-99,999.0", "-99999"};
+  public static final String[] SPECIAL_STRINGS = {"-99999.0", "-99,999.0", "-99999", "0.0", "0.00"};
   
   private ExportDataFormat(){
   }
