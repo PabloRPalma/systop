@@ -1,5 +1,6 @@
 package quake.seismic.data.catalog.dao.impl;
 
+import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -176,6 +177,12 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
     }
     if (SeismicConstants.Bulletin_full.equals(criteria.getExpType())) {
       rows = getTemplate().queryForList(SQL, criteria, 0, SeismicConstants.BULLETIN_FULL_MAX_SIZE);
+    }
+    //转换震级及发震时刻
+    if(StringUtils.isNotBlank(criteria.getMagTname())) {//关联震级表
+      rows = EQTimeFormat.getEqTimeValue(setMagM(rows, criteria), "O_TIME", "O_TIME_FRAC");
+    } else {
+      rows = EQTimeFormat.getEqTimeValue(rows, "O_TIME", "O_TIME_FRAC");
     }
     StringBuffer buf = new StringBuffer();
     //基本目录数据格式
@@ -386,7 +393,8 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
   private String getDBO(Map row) {
     String dboData = MessageFormat.format(
         "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14}\n",new Object[] {
-         row.get("NET_CODE"), DateUtil.getDateTime("yyyy-MM-dd HH:mm:ss.ss", (Date)row.get("O_TIME")), 
+         row.get("NET_CODE"), /*DateUtil.getDateTime("yyyy-MM-dd HH:mm:ss.ss", (Date)row.get("O_TIME")), */
+         getOTimeAndFrac((Date) row.get("O_TIME"), String.valueOf(row.get("O_TIME_FRAC")), "yyyy-MM-dd HH:mm:ss"),
          ExportDataFormat.convertEpiOfEQT((Double)row.get("EPI_LAT"), 7, "LAT"), //6位纬度，要加上负号，保留3位小数
          ExportDataFormat.convertEpiOfEQT((Double)row.get("EPI_LON"), 8, "LON"),//7位经度，要加上负号，保留3位小数
          ExportDataFormat.convertDepth((Double)row.get("EPI_DEPTH"), 3),//3位深度
@@ -509,7 +517,8 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
         ExportDataFormat.convertValue((String)phase.get("PHASE_NAME"), 7), //震相名 7
         ExportDataFormat.convertValue((Integer)phase.get("WEIGHT"), 1),  //权重 3.1
         ExportDataFormat.convertValue((String)phase.get("REC_TYPE"), 2), //记录类型 2
-        ExportDataFormat.convertValue(DateUtil.getDateTime("yyyy/MM/dd HH:mm:ss.ss", (Date)phase.get("PHASE_TIME")), 21), //震相到时 21
+        ExportDataFormat.convertValue(getOTimeAndFrac((Date)phase.get("PHASE_TIME"), 
+            String.valueOf(phase.get("PHASE_TIME_FRAC")), "yyyy/MM/dd HH:mm:ss"), 21), //震相到时 21
         ExportDataFormat.convertDoubleTwoVal((Double)phase.get("RESI"), 7, "seven"), //走时残差 7.2
         ExportDataFormat.convertDoubleVal((Double)phase.get("DISTANCE"), 6, "six"), //震中距6.1
         ExportDataFormat.convertDoubleVal((Double)phase.get("AZI"), 5, "five"), //台站对震中的方位角5.1
@@ -961,6 +970,26 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
     return rst.append(".").append(n1).toString();
   }
   
+  /**
+   * 转换发震时刻的值，转换后的格式"yyyy-MM-dd HH:mm:ss.ss.ss"
+   * @param oTime 发震时刻
+   * @param timeFrac 毫秒值
+   */
+  private static String getOTimeAndFrac(Date oTime, String timeFrac, String aMask) {
+    String ftime = "";
+    double frac = 0;
+    StringBuffer rst = new StringBuffer(DateUtil.getDateTime(aMask, oTime));
+    if (StringUtils.isNotBlank(timeFrac)) {
+      frac = Double.valueOf(timeFrac)/10000;
+      //保留2位小数
+      DecimalFormat df = new DecimalFormat("###.00");
+      ftime = df.format(frac);
+      //带小数点，如“.98”
+      ftime = ftime.substring(ftime.indexOf("."));
+    }
+    return rst.append(ftime).toString();
+  }
+  
   public static final String convertDateToString(Date aDate) {
     String s = getDateTime("yyyyMMddHHmmss", aDate);
     if (StringUtils.isBlank(s)) {
@@ -980,5 +1009,10 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
     }
 
     return (returnValue);
+  }
+  
+  public static void main(String[] args) {
+    String rst = ExportCatDao.getOTimeAndFrac(new Date(), "4324", "yyyy-MM-dd HH:mm:ss");
+    System.out.println("转换后的发震时刻：" + rst);
   }
 }
