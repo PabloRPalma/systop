@@ -16,6 +16,7 @@ import org.springframework.util.Assert;
 import quake.seismic.station.model.Criteria;
 import quake.seismic.station.model.Digitizer;
 import quake.seismic.station.model.Loc;
+import quake.seismic.station.model.Sensor;
 import quake.seismic.station.util.JdomUtil;
 
 /**
@@ -55,6 +56,17 @@ public class ExportXmlDao extends AbstractStationDao {
   private List digitizerResponse;
 
   /**
+   * 地震计的response
+   */
+  private List sensorResponse;
+  /**
+   * 通道代码缩写 列如 BHE 缩写成E 地震计response中<channel Code="E" Stage_num="1">
+   */
+  private String staCode;
+
+  private int digitizerStageNum;
+
+  /**
    * 获得台站
    */
   private void getSta(String id) {
@@ -85,11 +97,42 @@ public class ExportXmlDao extends AbstractStationDao {
   private void setChannel() {
     for (int i = 0; i < channelList.size(); i++) {
       Map c = channelList.get(i);
+      // 2010-05-17 添加方法，添加 channel中 Stage_num属性
+      staCode = c.get("CHN_CODE").toString();
+      prepare(c);
       Element channel = new Element("channel");
       setChnAtt(c, channel);
       setFirstAndZero(c, channel);
-      setSecond(c, channel);
+      setSecond(channel);
       response.addContent(channel);
+    }
+  }
+
+  /**
+   * 为通道以下节点做准备工作
+   */
+  private void prepare(Map c) {
+    if (c != null && c.get("RESPONSE") != null) {
+      channelResponse = JdomUtil.getResponseValue(c.get("RESPONSE").toString());
+    }
+    Loc loc = new Loc();
+    loc.setSchema(schema);
+    if (c != null) {
+      loc.setNetCode(c.get("NET_CODE").toString());
+      loc.setStaCode(c.get("STA_CODE").toString());
+      loc.setLoc_id(c.get("LOC_ID").toString());
+    }
+    List<Map> locList = queryLoc(loc);
+    if (locList.size() == 1) {
+      loc_info = locList.get(0);
+    }
+    String responseSensor = getSensorResponses();
+    if (StringUtils.isNotBlank(responseSensor)) {
+      sensorResponse = JdomUtil.getResponseValue(responseSensor);
+    }
+    String responseDigitizer = getDigitizerResponses();
+    if (StringUtils.isNotBlank(responseDigitizer)) {
+      digitizerResponse = JdomUtil.getResponseValue(responseDigitizer);
     }
   }
 
@@ -99,13 +142,8 @@ public class ExportXmlDao extends AbstractStationDao {
    * @param c
    * @param channel
    */
-  private void setSecond(Map c, Element channel) {
-    String response = getDigitizerResponses();
-    if (StringUtils.isNotBlank(response)) {
-      digitizerResponse = JdomUtil.getResponseValue(response);
-    }
-
-    for (int i = 2; i < 5; i++) {
+  private void setSecond(Element channel) {
+    for (int i = 2; i < digitizerStageNum + 2; i++) {
       Element stage = new Element("stage");
       stage.setAttribute("Stage_sequence", String.valueOf(i));
 
@@ -224,11 +262,31 @@ public class ExportXmlDao extends AbstractStationDao {
   }
 
   /**
+   * 获得SensorResponse
+   */
+  private String getSensorResponses() {
+    Sensor s = new Sensor();
+    s.setSchema(schema);
+    if (loc_info != null) {
+      s.setInstr_model(loc_info.get("SENSOR_MODEL").toString());
+      s.setResp_id(loc_info.get("SENSOR_RESPID").toString());
+    }
+    List<Map> sensorList = querySensor(s);
+    String response = null;
+    if (sensorList.size() == 1) {
+      Map m = sensorList.get(0);
+      if (m != null && m.get("RESPONSE") != null) {
+        response = m.get("RESPONSE").toString();
+      }
+    }
+    return response;
+  }
+
+  /**
    * 设置第一级别,0级别
    */
   private void setFirstAndZero(Map c, Element ce) {
     if (c != null && c.get("RESPONSE") != null) {
-      channelResponse = JdomUtil.getResponseValue(c.get("RESPONSE").toString());
       for (int i = 0; i < 2; i++) {
         Element stage = new Element("stage");
         stage.setAttribute("Stage_sequence", String.valueOf(i));
@@ -334,23 +392,33 @@ public class ExportXmlDao extends AbstractStationDao {
    * channel节点属性
    */
   private void setChnAtt(Map c, Element ce) {
-    Loc loc = new Loc();
-    loc.setSchema(schema);
-    if (c != null) {
-      loc.setNetCode(c.get("NET_CODE").toString());
-      loc.setStaCode(c.get("STA_CODE").toString());
-      loc.setLoc_id(c.get("LOC_ID").toString());
-    }
-    List<Map> locList = queryLoc(loc);
-    if (locList.size() == 1) {
-      loc_info = locList.get(0);
-    }
+
     ce.setAttribute("Chn_code", c.get("CHN_CODE").toString());
     ce.setAttribute("Loc_id", c.get("LOC_ID").toString());
     ce.setAttribute("Sensor_model", loc_info.get("SENSOR_MODEL").toString());
     ce.setAttribute("Sensor_RespID", loc_info.get("SENSOR_RESPID").toString());
     ce.setAttribute("Digitizer_model", loc_info.get("DIGITIZER_MODEL").toString());
     ce.setAttribute("Digitizer_RespID", loc_info.get("DIGITIZER_RESPID").toString());
+
+    // 2011-05-17 channel节点缺少Stage_num=""
+    String numSensor = null;
+    String numDigitizer = null;
+    int nums = 0;
+    int numd = 0;
+    if (sensorResponse != null) {
+      numSensor = JdomUtil.getSensorValue(sensorResponse, staCode);
+    }
+    if (digitizerResponse != null) {
+      numDigitizer = JdomUtil.getDigitizerValue(digitizerResponse);
+    }
+    if (StringUtils.isNotBlank(numSensor)) {
+      nums = Integer.valueOf(numSensor);
+    }
+    if (StringUtils.isNotBlank(numDigitizer)) {
+      numd = Integer.valueOf(numDigitizer);
+      digitizerStageNum = numd;
+    }
+    ce.setAttribute("Stage_num", String.valueOf(nums + numd));
   }
 
   /**
@@ -374,7 +442,14 @@ public class ExportXmlDao extends AbstractStationDao {
     response.setAttribute("Net_code", station.get("NET_CODE").toString());
     response.setAttribute("Sta_code", station.get("STA_CODE").toString());
     response.setAttribute("Chn_num", String.valueOf(channelList.size()));
-
+    // 2011--5-17 补充版本 Version
+    if (channelList.size() > 0) {
+      Map c = channelList.get(0);
+      Map m = JdomUtil.getAtt(c.get("RESPONSE").toString());
+      if (m.get("Version") != null) {
+        response.setAttribute("Version", m.get("Version").toString());
+      }
+    }
   }
 
   /**
@@ -418,5 +493,12 @@ public class ExportXmlDao extends AbstractStationDao {
    */
   private List<Map> queryDigitizer(Digitizer d) {
     return getTemplate().queryForList(SQL_DIGITIZER, d);
+  }
+
+  /**
+   * 根据查询条件执行数采查询。
+   */
+  private List<Map> querySensor(Sensor s) {
+    return getTemplate().queryForList(SQL_SENSOR, s);
   }
 }

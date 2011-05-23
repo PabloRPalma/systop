@@ -22,6 +22,7 @@ public abstract class AbstractStationDao <T> extends AbstractSeismicDao {
   protected static final String SQL_CHANNEL = "cz.queryChannel";
   protected static final String SQL_CHANNEL_ID = "cz.queryChannelById";
   protected static final String SQL_DIGITIZER = "cz.queryDigitizer";
+  protected static final String SQL_SENSOR = "cz.querySensor";
   protected static final String SQL_LOC = "cz.queryLoc";
   public static final String SQL_INSTR_TYPE = "cz.queryInstrByType";
   
