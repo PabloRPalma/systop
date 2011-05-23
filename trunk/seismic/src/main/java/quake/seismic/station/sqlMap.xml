@@ -54,13 +54,16 @@
     <resultMap class="java.util.HashMap" id="queryDigitizerResult">
          <result property="RESPONSE" column="RESPONSE" javaType="String"/> 
     </resultMap>
+    <resultMap class="java.util.HashMap" id="querySensorResult">
+         <result property="RESPONSE" column="RESPONSE" javaType="String"/> 
+    </resultMap>
     <!-- 查询测震台站数据 -->
 	<select id="queryStation" parameterClass="quake.seismic.station.model.Criteria"
                         resultMap="queryStationResult">
 		<![CDATA[
 		SELECT ST.ID,ST.NET_CODE,ST.STA_CODE,STA_CNAME,STA_TYPE,ROCK_TYPE,BUILD_TYPE,STA_LAT,STA_LON,STA_ELEV,
 			STA_STARTDATE,STA_ENDDATE,SITE_NAME,DIGITIZER_RESPID,DIGITIZER_MODEL,ST.ONDATE as ST_ONDATE,ST.OFFDATE as ST_OFFDATE
-		FROM $schema$.Station_info ST ,$schema$.Loc_info LOC WHERE ST.NET_CODE=LOC.NET_CODE and ST.STA_CODE=LOC.STA_CODE
+		FROM $schema$.Station_info ST ,$schema$.Loc_info LOC WHERE ST.NET_CODE=LOC.NET_CODE and ST.STA_CODE=LOC.STA_CODE and ST.offdate is NULL
 		]]>
 		<dynamic>
 		    <!-- 加入台网查询条件 BY Sam 20090707 -->
@@ -94,8 +97,7 @@
 		           ((ST.ONDATE>=#startTimeOfTheYear#) AND (ST.ONDATE<=#endTimeOfTheYear#))
 		           ]]>
 		        </isNotEmpty>
-		    </isNotEmpty>	 
-		       
+		    </isNotEmpty>	 	
 		</dynamic>
 	</select>
 	
@@ -142,6 +144,12 @@
 			resultMap="queryDigitizerResult">
 		<![CDATA[
 		SELECT RESPONSE FROM $schema$.Digitizer_resp_dic  WHERE INSTR_MODEL = #instr_model# and RESP_ID=#resp_id#
+		]]>
+	</select>
+	  <select id="querySensor" parameterClass="quake.seismic.station.model.Sensor"
+			resultMap="querySensorResult">
+		<![CDATA[
+		SELECT RESPONSE FROM $schema$.Sensor_resp_dic  WHERE INSTR_MODEL = #instr_model# and RESP_ID=#resp_id#
 		]]>
 	</select>
 	  <select id="queryLoc" parameterClass="quake.seismic.station.model.Loc"
