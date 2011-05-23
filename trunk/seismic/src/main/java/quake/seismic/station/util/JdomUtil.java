@@ -13,10 +13,12 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.xml.sax.InputSource;
+
 /**
  * jdom工具类
+ * 
  * @author yj
- *
+ * 
  */
 public final class JdomUtil {
   /**
@@ -137,5 +139,71 @@ public final class JdomUtil {
     m.put("etName", et.getName());
     m.put("childrenList", children);
     return m;
+  }
+
+  /**
+   * 2011-5-17 补充，获得根节点属性值
+   * 
+   * @return
+   */
+  @SuppressWarnings("unchecked")
+  public static Map getAtt(String response) {
+    Map m = new HashMap();
+    StringReader read = new StringReader(response);
+    InputSource source = new InputSource(read);
+    SAXBuilder sAXBuilder = new SAXBuilder();
+    Document doc;
+    Element root = null;
+    try {
+      doc = sAXBuilder.build(source);
+      root = doc.getRootElement();
+    } catch (JDOMException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    List attList = root.getAttributes();
+    for (int i = 0; i < attList.size(); i++) {
+      Attribute att = (Attribute) attList.get(i);
+      m.put(att.getName(), att.getValue());
+    }
+    return m;
+  }
+
+  /**
+   * Sensor获得结点channel属性值
+   */
+  @SuppressWarnings("unchecked")
+  public static String getSensorValue(List l, String staCode) {
+    String num = null;
+    for (int i = 0; i < l.size(); i++) {
+      Map temp = (HashMap) l.get(i);
+      if (temp.get("etName").equals("channel")) {
+        if (temp.get("Stage_num") != null && temp.get("Code").equals(staCode)) {
+          num = temp.get("Stage_num").toString();
+        }
+      }
+    }
+    return num;
+  }
+
+  /**
+   * Digitizer获得结点channel属性值
+   */
+  @SuppressWarnings("unchecked")
+  public static String getDigitizerValue(List l) {
+    String num = null;
+    for (int i = 0; i < l.size(); i++) {
+
+      Map temp = (HashMap) l.get(i);
+      if (temp.get("etName").equals("channel")) {
+        if (temp.get("Stage_num") != null) {
+          num = temp.get("Stage_num").toString();
+        }
+      }
+    }
+    return num;
   }
 }
