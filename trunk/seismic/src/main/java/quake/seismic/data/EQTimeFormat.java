@@ -1,6 +1,5 @@
 package quake.seismic.data;
 
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
@@ -49,11 +48,11 @@ public class EQTimeFormat {
     StringBuffer rst = new StringBuffer(convertDateToString(eTime));
     if (StringUtils.isNotBlank(timeFrac)) {
       frac = Double.valueOf(timeFrac)/10000;
-      //保留1位小数
-      DecimalFormat df = new DecimalFormat("###.0");
-      ftime = df.format(frac);
+      ftime = String.valueOf(frac);
+      int fg = ftime.indexOf(".");
       //带小数点，如“.9”
-      ftime = ftime.substring(ftime.indexOf("."));
+      ftime = ftime.substring(fg, fg+2);
+      
     }
     return rst.append(ftime).toString();
     
@@ -91,5 +90,10 @@ public class EQTimeFormat {
     }
 
     return (returnValue);
+  }
+  
+  public static void main(String[] args) {
+    String rst = EQTimeFormat.eqFormat(new Date(), "804");
+    System.out.println("转换后的发震时刻：" + rst);
   }
 }
