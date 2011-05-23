@@ -10,6 +10,7 @@
 <div class="x-panel">
 <div class="x-panel-body">
 <div style="margin-left: -3px;" align="center">
+<c:if test="${not empty items}">
 <ec:table items="items" var="item" retrieveRowsCallback="process" sortRowsCallback="process" 
 	action="getPhaseList.do"
 	useAjax="true" doPreload="false"
@@ -50,6 +51,7 @@
 		<ec:column width="120" property="S_P" title="S-P(sec)"/>		
 	</ec:row>  
 </ec:table>
+</c:if>
 </div>
 </div>
 </div>
