@@ -1,5 +1,6 @@
 package quake.seismic.data;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
@@ -43,7 +44,20 @@ public class EQTimeFormat {
    * @param timeFrac 秒值
    */
   private static String eqFormat(Date eTime, String timeFrac) {
-    Integer n1 = null;
+    String ftime = "";
+    double frac = 0;
+    StringBuffer rst = new StringBuffer(convertDateToString(eTime));
+    if (StringUtils.isNotBlank(timeFrac)) {
+      frac = Double.valueOf(timeFrac)/10000;
+      //保留1位小数
+      DecimalFormat df = new DecimalFormat("###.0");
+      ftime = df.format(frac);
+      //带小数点，如“.9”
+      ftime = ftime.substring(ftime.indexOf("."));
+    }
+    return rst.append(ftime).toString();
+    
+    /*Integer n1 = null;
     StringBuffer rst = new StringBuffer(convertDateToString(eTime));
     if(timeFrac != null) {
       n1 = Integer.valueOf(timeFrac.substring(0,1));
@@ -55,7 +69,7 @@ public class EQTimeFormat {
         }
       }
     }
-    return rst.append(".").append(n1).toString();
+    return rst.append(".").append(n1).toString();*/
   }
   
   public static final String convertDateToString(Date aDate) {
