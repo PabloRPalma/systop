@@ -20,7 +20,6 @@ import datashare.admin.czcatalog.dao.ExistTableNameDao;
 import datashare.admin.czcatalog.model.CzCatalog;
 import datashare.admin.sitecfg.model.SiteCfg;
 import datashare.base.service.Definable;
-import datashare.mainpage.MainPageAction;
 
 /**
  * 管理地震目录service
@@ -56,9 +55,9 @@ public class CzCatalogManager extends BaseGenericsManager<CzCatalog> implements 
     }
     super.save(model);
     /** 实现与菜单同步,清空常量 */
-    MainPageAction.setEmptyCZCATALOGS();
-    MainPageAction.setEmptyPHASECATS();
-    MainPageAction.setEmptySEEDCATS();
+    //MainPageAction.setEmptyCZCATALOGS();
+    //MainPageAction.setEmptyPHASECATS();
+    //MainPageAction.setEmptySEEDCATS();
   }
 
   /**

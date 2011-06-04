@@ -1,22 +1,25 @@
 package com.systop.common.modules.security.jcaptcha;
 
-import com.octo.captcha.service.CaptchaServiceException;
-import com.octo.captcha.service.image.ImageCaptchaService;
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
+import com.octo.captcha.service.CaptchaServiceException;
+import com.octo.captcha.service.image.ImageCaptchaService;
 
 /**
  * Servlet generates CAPTCHA jpeg images based on the JCAPTCHA package. It's
@@ -28,6 +31,7 @@ import java.io.IOException;
  */
 @SuppressWarnings("serial")
 public class ImageCaptchaServlet extends HttpServlet {
+  private static Logger logger = LoggerFactory.getLogger(ImageCaptchaServlet.class);
   /**
    * Captcha Service Name
    */
@@ -49,7 +53,7 @@ public class ImageCaptchaServlet extends HttpServlet {
   protected void doGet(HttpServletRequest httpServletRequest,
       HttpServletResponse httpServletResponse) throws ServletException,
       IOException {
-
+   
     byte[] captchaChallengeAsJpeg = null;
     // the output stream to render the captcha image as jpeg into
     ByteArrayOutputStream jpegOutputStream = new ByteArrayOutputStream();
@@ -59,7 +63,7 @@ public class ImageCaptchaServlet extends HttpServlet {
           .getRequiredWebApplicationContext(getServletContext());
       Object bean = ctx.getBean(captchaServiceName);
       ImageCaptchaService imageCaptchaService = (ImageCaptchaService) bean;
-
+      logger.debug("Jcaptcha image service {}", bean);
       // get the session id that will identify the generated captcha.
       // the same id must be used to validate the response, the session id
       // is a good candidate!
@@ -67,20 +71,19 @@ public class ImageCaptchaServlet extends HttpServlet {
       // call the ImageCaptchaService getChallenge method
       BufferedImage challenge = imageCaptchaService.getImageChallengeForID(
           captchaId, httpServletRequest.getLocale());
-
-      // a jpeg encoder
-      JPEGImageEncoder jpegEncoder = JPEGCodec
-          .createJPEGEncoder(jpegOutputStream);
-      jpegEncoder.encode(challenge);
+      ImageIO.write(challenge, "jpg", jpegOutputStream);
+      
     } catch (IllegalArgumentException e) {
+      e.printStackTrace();
       httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
       return;
     } catch (CaptchaServiceException e) {
+      e.printStackTrace();
       httpServletResponse
           .sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
       return;
     }
-
+    logger.debug("Get captcha.");
     captchaChallengeAsJpeg = jpegOutputStream.toByteArray();
 
     // flush it in the response

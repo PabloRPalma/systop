@@ -22,17 +22,7 @@ import datashare.admin.subject.service.SubjectManager;
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class MainPageAction extends JsonCrudAction<Subject, SubjectManager> {
 
-  /** 学科List 静态化，避免重复查询 */
-  private static List<Subject> SUBJECTS = null;
 
-  /** 地震目录 静态化，避免重复查询 */
-  private static List<Map<String, String>> CZCATALOGS = null;
-
-  /** 有震相的地震目录 静态化，避免重复查询 */
-  private static List<Map<String, String>> PHASECATS = null;
-
-  /** 有事件波形的地震目录 静态化，避免重复查询 */
-  private static List<Map<String, String>> SEEDCATS = null;
   
   @Autowired
   private CzCatalogManager czCatalogManager;
@@ -43,52 +33,24 @@ public class MainPageAction extends JsonCrudAction<Subject, SubjectManager> {
    * @return
    */
   public String index() {
-    if (SUBJECTS == null) { // 查询学科
-      SUBJECTS = getManager().get();
-    }
-    if (CZCATALOGS == null) { // 查询地震目录
-      CZCATALOGS = czCatalogManager.getCat();
-    }
-    if (PHASECATS == null) { // 查询震相
-      PHASECATS = czCatalogManager.getPhaseCat();
-    }
-    if (SEEDCATS == null) { //查询事件波形
-      SEEDCATS = czCatalogManager.getSeedCat();
-    }
+    
     return SUCCESS;
   }
-  /** 获取学科列表 */
-  public static List<Subject> getSUBJECTS() {
-    return SUBJECTS;
-  }
-
-  /** 获取地震目录列表 */
-  public static List<Map<String, String>> getCZCATALOGS() {
-    return CZCATALOGS;
-  }
-
-  /** 获取震项列表 */
-  public static List<Map<String, String>> getPHASECATS() {
-    return PHASECATS;
-  }
-
-  /** 获取事件波形列表 */
-  public static List<Map<String, String>> getSEEDCATS() {
-    return SEEDCATS;
-  }
   
-  /** 用于外部修改地震目录，与菜单同步 */
-  public static void setEmptyCZCATALOGS() {
-    CZCATALOGS = null;
+  public List<Subject> getSubjects() {
+    return getManager().get();
   }
 
-  /** 用于外部修地震目录，与菜单同步 */
-  public static void setEmptyPHASECATS() {
-    PHASECATS = null;
+  public List<Map<String, String>> getCzCatalogs() {
+    return  czCatalogManager.getCat();
   }
-  
-  /** 用于外部修地震目录，与菜单同步 */
-  public static void setEmptySEEDCATS() {
-    SEEDCATS = null;
+
+  public List<Map<String, String>> getPhaseCats() {
+    return czCatalogManager.getPhaseCat();
   }
+
+  public List<Map<String, String>> getSeedCats() {
+    return czCatalogManager.getSeedCat();
+  }
+
 }

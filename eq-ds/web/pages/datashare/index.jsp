@@ -142,7 +142,7 @@ a[href='#'] {
 					<stc:role ifAnyGranted="ROLE_NORMAL,ROLE_SENIOR,ROLE_ADMIN,ROLE_CATALOG">
 					  <li><span><b><img id="note_catalog" src="${ctx}/images/icons/folder.gif">&nbsp;<a id="catalog" href="${ctx}/datashare/descr/queryDescribe.do?model.type=catalog&model.hasMetadata=1" target="main">地震目录</a></b></span>
 						<ul>
-							<s:iterator value="CZCATALOGS">
+							<s:iterator value="czCatalogs">
 								<li>
 								  <img src="${ctx}/images/icons/go.gif">
 									<a href="${ctx}/datashare/seismic/data/catalog/index.do?model.tableName=<s:property value="cltName"/>" target="main">
@@ -156,7 +156,7 @@ a[href='#'] {
 					<stc:role ifAnyGranted="ROLE_SENIOR,ROLE_ADMIN,ROLE_PHASE">
 					  <li><span><b><img id="note_phase" src="${ctx}/images/icons/folder.gif">&nbsp;<a id="phase" href="${ctx}/datashare/descr/queryDescribe.do?model.type=phase&model.hasMetadata=1" target="main">震相</a></b></span>
 					    <ul>
-							<s:iterator value="pHASECATS"> 
+							<s:iterator value="phaseCats"> 
 								<li>
 								  <img src="${ctx}/images/icons/go.gif">
 									<a href="${ctx}/datashare/seismic/data/catalog/indexPhase.do?model.tableName=<s:property value="cltName"/>" target="main">
@@ -170,7 +170,7 @@ a[href='#'] {
 					<stc:role ifAnyGranted="ROLE_SENIOR,ROLE_ADMIN,ROLE_EVENT">
 					  <li><span><img id="note_eventWave" src="${ctx}/images/icons/folder.gif">&nbsp;<a id="eventWave" href="${ctx}/datashare/descr/queryDescribe.do?model.type=eventWave&model.hasMetadata=1" target="main"><b>事件波形</b></a></span>
 					    <ul>
-							<s:iterator value="SEEDCATS">
+							<s:iterator value="seedCats">
 								<li>
 								  <img src="${ctx}/images/icons/go.gif">
 									<a href="${ctx}/datashare/seismic/data/catalog/indexSeed.do?model.tableName=<s:property value="cltName"/>" target="main">
@@ -189,7 +189,7 @@ a[href='#'] {
 					<li><span><strong><img id="note_signMetadata" src="${ctx}/images/icons/folder.gif">&nbsp;<a id="signMetadata" href="${ctx}/datashare/descr/queryDescribe.do?model.type=signMetadata&model.hasMetadata=1" target="main"><b>地球物理化学数据</b></a></strong></span>
 						<ul>
 							<li><img src="${ctx}/images/icons/go.gif"><a href="${ctx}/datashare/sign/overview/index.do" target="main" title="前兆数据总览">数据总览</a></li>
-							<s:iterator value="SUBJECTS" var="subject">
+							<s:iterator value="subjects" var="subject">
 							<li><img src="${ctx}/images/icons/go.gif"><a href="${ctx}/datashare/prequery/index.do?subject.id=${subject.id}" target="main">${subject.name}</a></li>	
 							</s:iterator>
 						</ul>
