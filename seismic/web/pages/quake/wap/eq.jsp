@@ -1,10 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<%@ page contentType="application/vnd.wap.xhtml+xml;charset=utf-8" language="java" %>
-<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN"     "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="stc" uri="/systop/common" %>
 <%@ include file="common.jsp" %>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>震中分布图</title>
 </head>
 <body>
