@@ -439,7 +439,7 @@ public class ExportCatDao extends AbstractCatDao<StringBuffer> {
          ExportDataFormat.convertValue((String)row.get("EVENT_ID"), 20), //Event_id, 20位
          ExportDataFormat.convertValue((String)row.get("SEQUEN_NAME"), 20), //Sequen_name, 20位
          ExportDataFormat.convertValue((Integer)row.get("Depfix_flag"), 1), //Depfix_flag, 1位
-         ExportDataFormat.convertMagVal((Double)row.get((String)row.get("M_SOURCE")), 4), //震级, 3位,保留一位小数
+         ExportDataFormat.convertMagVal((Double)row.get("M"), 4), //震级, 3位,保留一位小数
          ExportDataFormat.convertMagName((String)row.get("M_SOURCE"), 5), //5位震级名
          ExportDataFormat.convertDoubleVal((Double)row.get("SPmin"), 5, "five"), //SPmin，最小S-P，单位：秒, 5位,保留一位小数
          ExportDataFormat.convertDoubleVal((Double)row.get("Dmin"), 6, "six"), //Dmin，近台距,6位,保留一位小数
